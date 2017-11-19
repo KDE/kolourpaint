@@ -104,7 +104,7 @@ private slots:
     void slotFieldsAddRowButtonClicked ();
     void slotFieldsDeleteRowButtonClicked ();
 
-    void accept () Q_DECL_OVERRIDE;
+    void accept () override;
 
 private:
     struct kpDocumentMetaInfoDialogPrivate * const d;

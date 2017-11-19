@@ -96,7 +96,7 @@ Q_OBJECT
     int originalHeight () const;
 
   private slots:
-    void accept() Q_DECL_OVERRIDE;
+    void accept() override;
     void setKeepAspectRatio(bool on);
 
   private:

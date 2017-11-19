@@ -67,7 +67,7 @@ public:
     kpColor oldBackgroundColor () const;
 
 public:
-    QSize sizeHint () const Q_DECL_OVERRIDE;
+    QSize sizeHint () const override;
 
 protected:
     QRect swapPixmapRect () const;
@@ -75,17 +75,17 @@ protected:
     QRect foregroundRect () const;
     QRect backgroundRect () const;
 
-    void dragEnterEvent (QDragEnterEvent *e) Q_DECL_OVERRIDE;
-    void dragMoveEvent (QDragMoveEvent *e) Q_DECL_OVERRIDE;
-    void dropEvent (QDropEvent *e) Q_DECL_OVERRIDE;
+    void dragEnterEvent (QDragEnterEvent *e) override;
+    void dragMoveEvent (QDragMoveEvent *e) override;
+    void dropEvent (QDropEvent *e) override;
 
-    void mousePressEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
-    void mouseMoveEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void mousePressEvent (QMouseEvent *e) override;
+    void mouseMoveEvent (QMouseEvent *e) override;
+    void mouseReleaseEvent (QMouseEvent *e) override;
 
-    void mouseDoubleClickEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void mouseDoubleClickEvent (QMouseEvent *e) override;
 
-    void paintEvent (QPaintEvent *e) Q_DECL_OVERRIDE;
+    void paintEvent (QPaintEvent *e) override;
 
     QPoint m_dragStartPoint;
     kpColor m_color [2];

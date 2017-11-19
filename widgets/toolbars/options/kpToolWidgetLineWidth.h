@@ -47,7 +47,7 @@ signals:
     void lineWidthChanged (int width);
 
 protected slots:
-    bool setSelected (int row, int col, bool saveAsDefault) Q_DECL_OVERRIDE;
+    bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 
 

@@ -41,22 +41,22 @@ public:
     kpToolZoom (kpToolEnvironment *environ, QWidget *parent);
     ~kpToolZoom () override;
 
-    bool returnToPreviousToolAfterEndDraw () const Q_DECL_OVERRIDE;
+    bool returnToPreviousToolAfterEndDraw () const override;
 
 private:
     QString haventBegunDrawUserMessage () const;
 
 public:
-    void begin () Q_DECL_OVERRIDE;
-    void end () Q_DECL_OVERRIDE;
+    void begin () override;
+    void end () override;
 
-    void globalDraw () Q_DECL_OVERRIDE;
+    void globalDraw () override;
 
-    void beginDraw () Q_DECL_OVERRIDE;
-    void draw (const QPoint &thisPoint, const QPoint &, const QRect &) Q_DECL_OVERRIDE;
-    void cancelShape () Q_DECL_OVERRIDE;
-    void releasedAllButtons () Q_DECL_OVERRIDE;
-    void endDraw (const QPoint &thisPoint, const QRect &) Q_DECL_OVERRIDE;
+    void beginDraw () override;
+    void draw (const QPoint &thisPoint, const QPoint &, const QRect &) override;
+    void cancelShape () override;
+    void releasedAllButtons () override;
+    void endDraw (const QPoint &thisPoint, const QRect &) override;
 
 private:
     struct kpToolZoomPrivate *d;

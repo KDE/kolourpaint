@@ -96,17 +96,17 @@ protected:
     void cancel ();
 
 protected:
-    void keyReleaseEvent (QKeyEvent *e) Q_DECL_OVERRIDE;
-    void mousePressEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void keyReleaseEvent (QKeyEvent *e) override;
+    void mousePressEvent (QMouseEvent *e) override;
 public:
     QPoint viewDeltaPoint () const;
     void mouseMovedTo (const QPoint &point, bool dueToDragScroll);
 protected:
-    void mouseMoveEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void mouseMoveEvent (QMouseEvent *e) override;
+    void mouseReleaseEvent (QMouseEvent *e) override;
 
-    void enterEvent (QEvent *e) Q_DECL_OVERRIDE;
-    void leaveEvent (QEvent *e) Q_DECL_OVERRIDE;
+    void enterEvent (QEvent *e) override;
+    void leaveEvent (QEvent *e) override;
 
 protected:
     GripType m_type;
@@ -183,8 +183,8 @@ private:
 
     QRect noDragScrollRect () const;
 
-    void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
 
 private slots:
     void slotGripBeganDraw ();

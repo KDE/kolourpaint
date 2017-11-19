@@ -396,7 +396,7 @@ public:
      */
     void updateQueuedArea ();
 
-    QVariant inputMethodQuery (Qt::InputMethodQuery query) const Q_DECL_OVERRIDE;
+    QVariant inputMethodQuery (Qt::InputMethodQuery query) const override;
 
 public slots:
     /**
@@ -500,43 +500,43 @@ public:
 //
 
 protected:
-    void mouseMoveEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
-    void mousePressEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void mouseMoveEvent (QMouseEvent *e) override;
+    void mousePressEvent (QMouseEvent *e) override;
+    void mouseReleaseEvent (QMouseEvent *e) override;
 public:
     // (needs to be public as it may also get event from
     //  QScrollView::contentsWheelEvent())
-    void wheelEvent (QWheelEvent *e) Q_DECL_OVERRIDE;
+    void wheelEvent (QWheelEvent *e) override;
 
 
 protected:
-    void keyPressEvent (QKeyEvent *e) Q_DECL_OVERRIDE;
-    void keyReleaseEvent (QKeyEvent *e) Q_DECL_OVERRIDE;
+    void keyPressEvent (QKeyEvent *e) override;
+    void keyReleaseEvent (QKeyEvent *e) override;
 
 protected:
-    void inputMethodEvent (QInputMethodEvent *e) Q_DECL_OVERRIDE;
+    void inputMethodEvent (QInputMethodEvent *e) override;
 
 protected:
-    bool event (QEvent *e) Q_DECL_OVERRIDE;
-
-
-protected:
-    void focusInEvent (QFocusEvent *e) Q_DECL_OVERRIDE;
-    void focusOutEvent (QFocusEvent *e) Q_DECL_OVERRIDE;
+    bool event (QEvent *e) override;
 
 
 protected:
-    void enterEvent (QEvent *e) Q_DECL_OVERRIDE;
-    void leaveEvent (QEvent *e) Q_DECL_OVERRIDE;
+    void focusInEvent (QFocusEvent *e) override;
+    void focusOutEvent (QFocusEvent *e) override;
 
 
 protected:
-    void dragEnterEvent (QDragEnterEvent *) Q_DECL_OVERRIDE;
-    void dragLeaveEvent (QDragLeaveEvent *) Q_DECL_OVERRIDE;
+    void enterEvent (QEvent *e) override;
+    void leaveEvent (QEvent *e) override;
 
 
 protected:
-    void resizeEvent (QResizeEvent *e) Q_DECL_OVERRIDE;
+    void dragEnterEvent (QDragEnterEvent *) override;
+    void dragLeaveEvent (QDragLeaveEvent *) override;
+
+
+protected:
+    void resizeEvent (QResizeEvent *e) override;
 
 
 //
@@ -588,7 +588,7 @@ protected:
     void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
 
     void paintEventDrawDoc_Unclipped (const QRect &viewRect);
-    void paintEvent (QPaintEvent *e) Q_DECL_OVERRIDE;
+    void paintEvent (QPaintEvent *e) override;
 
 
 private:

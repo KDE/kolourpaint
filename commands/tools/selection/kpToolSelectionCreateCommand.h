@@ -45,13 +45,13 @@ public:
                                   kpCommandEnvironment *environ);
     ~kpToolSelectionCreateCommand () override;
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
     const kpAbstractSelection *fromSelection () const;
     void setFromSelection (const kpAbstractSelection &fromSelection);
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 private:
     kpAbstractSelection *m_fromSelection;

@@ -39,12 +39,12 @@ class kpColorSimilarityFrame : public QWidget, public kpColorSimilarityHolder
 public:
     kpColorSimilarityFrame(QWidget *parent);
 
-    void setColorSimilarity (double similarity) Q_DECL_OVERRIDE;
+    void setColorSimilarity (double similarity) override;
 
-    QSize sizeHint () const Q_DECL_OVERRIDE;
+    QSize sizeHint () const override;
 
 protected:
-    void paintEvent (QPaintEvent *e) Q_DECL_OVERRIDE;
+    void paintEvent (QPaintEvent *e) override;
 };
 
 

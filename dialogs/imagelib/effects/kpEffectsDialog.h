@@ -56,13 +56,13 @@ public:
                      int defaultSelectedEffect = 0);
     ~kpEffectsDialog () override;
 
-    bool isNoOp () const Q_DECL_OVERRIDE;
+    bool isNoOp () const override;
     kpEffectCommandBase *createCommand () const;
 
 protected:
-    QSize newDimensions () const Q_DECL_OVERRIDE;
+    QSize newDimensions () const override;
     QImage transformPixmap (const QImage &pixmap,
-                                     int targetWidth, int targetHeight) const Q_DECL_OVERRIDE;
+                                     int targetWidth, int targetHeight) const override;
 
 public:
     int selectedEffect () const;
@@ -70,8 +70,8 @@ public slots:
     void selectEffect (int which);
 
 protected slots:
-    void slotUpdate () Q_DECL_OVERRIDE;
-    void slotUpdateWithWaitCursor () Q_DECL_OVERRIDE;
+    void slotUpdate () override;
+    void slotUpdateWithWaitCursor () override;
 
     void slotDelayedUpdate ();
 

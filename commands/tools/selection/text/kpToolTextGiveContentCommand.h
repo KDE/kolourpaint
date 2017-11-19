@@ -51,8 +51,8 @@ public:
         kpCommandEnvironment *environ);
     ~kpToolTextGiveContentCommand () override;
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 };
 
 

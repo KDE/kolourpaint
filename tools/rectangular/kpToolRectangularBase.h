@@ -65,7 +65,7 @@ public:
 
     ~kpToolRectangularBase () override;
 
-    bool careAboutModifierState () const Q_DECL_OVERRIDE { return true; }
+    bool careAboutModifierState () const override { return true; }
 
 private slots:
     virtual void slotLineWidthChanged ();
@@ -75,21 +75,21 @@ private:
     QString haventBegunDrawUserMessage () const;
 
 public:
-    void begin () Q_DECL_OVERRIDE;
-    void end () Q_DECL_OVERRIDE;
+    void begin () override;
+    void end () override;
 
 private:
     void applyModifiers ();
-    void beginDraw () Q_DECL_OVERRIDE;
+    void beginDraw () override;
 private:
     kpColor drawingForegroundColor () const;
     kpColor drawingBackgroundColor () const;
     void updateShape ();
 public:
-    void draw (const QPoint &, const QPoint &, const QRect &) Q_DECL_OVERRIDE;
-    void cancelShape () Q_DECL_OVERRIDE;
-    void releasedAllButtons () Q_DECL_OVERRIDE;
-    void endDraw (const QPoint &, const QRect &) Q_DECL_OVERRIDE;
+    void draw (const QPoint &, const QPoint &, const QRect &) override;
+    void cancelShape () override;
+    void releasedAllButtons () override;
+    void endDraw (const QPoint &, const QRect &) override;
 
 private:
     kpToolRectangularBasePrivate * const d;

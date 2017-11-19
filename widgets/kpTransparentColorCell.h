@@ -43,7 +43,7 @@ Q_OBJECT
 public:
     kpTransparentColorCell (QWidget *parent);
 
-    QSize sizeHint () const Q_DECL_OVERRIDE;
+    QSize sizeHint () const override;
 
 signals:
     void transparentColorSelected (int mouseButton);
@@ -53,11 +53,11 @@ signals:
     void backgroundColorChanged (const kpColor &color);
 
 protected:
-    void mousePressEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
-    void contextMenuEvent (QContextMenuEvent *e) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void mousePressEvent (QMouseEvent *e) override;
+    void contextMenuEvent (QContextMenuEvent *e) override;
+    void mouseReleaseEvent (QMouseEvent *e) override;
 
-    void paintEvent (QPaintEvent *e) Q_DECL_OVERRIDE;
+    void paintEvent (QPaintEvent *e) override;
 
     QPixmap m_pixmap;
 };

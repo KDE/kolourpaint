@@ -104,7 +104,7 @@ public:
     //  window without a document at all).
     kpMainWindow (kpDocument *newDoc);
 
-    void finalizeGUI(KXMLGUIClient *client) Q_DECL_OVERRIDE;
+    void finalizeGUI(KXMLGUIClient *client) override;
 
 private:
     void readGeneralSettings ();
@@ -115,11 +115,11 @@ private:
     // (only called for restoring a previous session e.g. starting KDE with
     //  a previously saved session; it's not called on normal KolourPaint
     //  startup)
-    void readProperties (const KConfigGroup &configGroup) Q_DECL_OVERRIDE;
+    void readProperties (const KConfigGroup &configGroup) override;
     // (only called for saving the current session e.g. logging out of KDE
     //  with the KolourPaint window open; it's not called on normal KolourPaint
     //  exit)
-    void saveProperties (KConfigGroup &configGroup) Q_DECL_OVERRIDE;
+    void saveProperties (KConfigGroup &configGroup) override;
 
 public:
     ~kpMainWindow () override;
@@ -140,9 +140,9 @@ private:
 
     void setDocument (kpDocument *newDoc);
 
-    void dragEnterEvent (QDragEnterEvent *e) Q_DECL_OVERRIDE;
-    void dropEvent (QDropEvent *e) Q_DECL_OVERRIDE;
-    void moveEvent (QMoveEvent *e) Q_DECL_OVERRIDE;
+    void dragEnterEvent (QDragEnterEvent *e) override;
+    void dropEvent (QDropEvent *e) override;
+    void moveEvent (QMoveEvent *e) override;
 
 private slots:
     void slotScrollViewAfterScroll ();
@@ -391,7 +391,7 @@ private slots:
     void slotMail ();
 
     bool queryCloseDocument ();
-    bool queryClose () Q_DECL_OVERRIDE;
+    bool queryClose () override;
 
     void slotClose ();
     void slotQuit ();

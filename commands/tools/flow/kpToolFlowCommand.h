@@ -43,10 +43,10 @@ public:
     kpToolFlowCommand (const QString &name, kpCommandEnvironment *environ);
     ~kpToolFlowCommand () override;
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
     // interface for kpToolFlowBase
     void updateBoundingRect (const QPoint &point);

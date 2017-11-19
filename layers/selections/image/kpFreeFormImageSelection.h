@@ -54,7 +54,7 @@ public:
 
     kpFreeFormImageSelection &operator= (const kpFreeFormImageSelection &rhs);
 
-    kpFreeFormImageSelection *clone () const Q_DECL_OVERRIDE;
+    kpFreeFormImageSelection *clone () const override;
 
     ~kpFreeFormImageSelection () override;
 
@@ -65,11 +65,11 @@ public:
 
 public:
     static const int SerialID = 2;
-    int serialID () const Q_DECL_OVERRIDE;
+    int serialID () const override;
 
-    bool readFromStream (QDataStream &stream) Q_DECL_OVERRIDE;
+    bool readFromStream (QDataStream &stream) override;
 
-    void writeToStream (QDataStream &stream) const Q_DECL_OVERRIDE;
+    void writeToStream (QDataStream &stream) const override;
 
 
 //
@@ -77,9 +77,9 @@ public:
 //
 
 public:
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
-    bool isRectangular () const Q_DECL_OVERRIDE;
+    bool isRectangular () const override;
 
     // (as passed to the constructor)
     QPolygon originalPoints () const;
@@ -113,7 +113,7 @@ public:
     // Implements kpAbstractSelection interface - same as
     // cardinallyAdjacentPointsLoop ().
     // This implementation is fast.
-    QPolygon calculatePoints () const Q_DECL_OVERRIDE;
+    QPolygon calculatePoints () const override;
 
 
 //
@@ -121,7 +121,7 @@ public:
 //
 
 public:
-    QRegion shapeRegion () const Q_DECL_OVERRIDE;
+    QRegion shapeRegion () const override;
 
 
 //
@@ -129,7 +129,7 @@ public:
 //
 
 public:
-    bool contains (const QPoint &point) const Q_DECL_OVERRIDE;
+    bool contains (const QPoint &point) const override;
 
 
 //
@@ -137,9 +137,9 @@ public:
 //
 
 public:
-    void moveBy (int dx, int dy) Q_DECL_OVERRIDE;
+    void moveBy (int dx, int dy) override;
 
-    void flip (bool horiz, bool vert) Q_DECL_OVERRIDE;
+    void flip (bool horiz, bool vert) override;
 
 
 //
@@ -148,7 +148,7 @@ public:
 
 public:
     void paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const Q_DECL_OVERRIDE;
+        bool selectionFinished) const override;
 
 
 private:

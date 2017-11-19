@@ -57,7 +57,7 @@ public:
         kpCommandEnvironment *environ);
     ~kpAbstractSelectionContentCommand () override;
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
     // Note: Returned pointer is only valid for as long as this command is
     //       alive.

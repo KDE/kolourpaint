@@ -41,7 +41,7 @@ public:
     kpToolPolyline (kpToolEnvironment *environ, QObject *parent);
 
 private:
-    QString haventBegunShapeUserMessage () const Q_DECL_OVERRIDE;
+    QString haventBegunShapeUserMessage () const override;
 
 public:
     // (used by kpToolLine)
@@ -51,7 +51,7 @@ public:
         const kpColor &bcolor,
         bool isFinal);
 
-    void endDraw (const QPoint &, const QRect &) Q_DECL_OVERRIDE;
+    void endDraw (const QPoint &, const QRect &) override;
 };
 
 

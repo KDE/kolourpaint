@@ -124,7 +124,7 @@ public:
     // Inform kpTool to call draw() when CTRL, SHIFT and friends are
     // pressed.  CTRL is used for copying, instead of moving, the
     // selection.  SHIFT is used for sweeping.
-    bool careAboutModifierState () const Q_DECL_OVERRIDE { return true; }
+    bool careAboutModifierState () const override { return true; }
 
 
 //
@@ -245,12 +245,12 @@ private:
 
 
 public:
-    void begin () Q_DECL_OVERRIDE;
-    void end () Q_DECL_OVERRIDE;
+    void begin () override;
+    void end () override;
 
 
 public:
-    void reselect () Q_DECL_OVERRIDE;
+    void reselect () override;
 
 
 //
@@ -289,7 +289,7 @@ protected:
     // returning "None" instead of calling the base implementation.
     virtual DrawType calculateDrawType () const;
 public:
-    void beginDraw () Q_DECL_OVERRIDE;
+    void beginDraw () override;
 
 
 //
@@ -297,9 +297,9 @@ public:
 //
 
 public:
-    void hover (const QPoint &point) Q_DECL_OVERRIDE;
+    void hover (const QPoint &point) override;
     void draw (const QPoint &thisPoint, const QPoint &lastPoint,
-                       const QRect &normalizedRect) Q_DECL_OVERRIDE;
+                       const QRect &normalizedRect) override;
 
 
 //
@@ -307,8 +307,8 @@ public:
 //
 
 public:
-    void cancelShape () Q_DECL_OVERRIDE;
-    void releasedAllButtons () Q_DECL_OVERRIDE;
+    void cancelShape () override;
+    void releasedAllButtons () override;
 
 
 protected:
@@ -323,7 +323,7 @@ protected:
     //          code in your handler after the call.
     void popupRMBMenu ();
 public:
-    void endDraw (const QPoint &thisPoint, const QRect &normalizedRect) Q_DECL_OVERRIDE;
+    void endDraw (const QPoint &thisPoint, const QRect &normalizedRect) override;
 
 
 //
@@ -589,7 +589,7 @@ protected slots:
 protected:
     // Reimplemented to trap Esc presses for deselecting the selection.
     // All other keypresses are passed to the base implementation.
-    void keyPressEvent (QKeyEvent *e) Q_DECL_OVERRIDE;
+    void keyPressEvent (QKeyEvent *e) override;
 
 
 private:

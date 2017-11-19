@@ -63,7 +63,7 @@ public:
     kpTool *tool() const { return m_tool; }
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent *e) Q_DECL_OVERRIDE
+    void mouseDoubleClickEvent(QMouseEvent *e) override
     {
         if (e->button () == Qt::LeftButton && m_tool)
             m_tool->globalDraw ();

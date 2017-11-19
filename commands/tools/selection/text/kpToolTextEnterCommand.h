@@ -49,10 +49,10 @@ public:
 
     void addEnter ();
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 protected:
     int m_row, m_col;

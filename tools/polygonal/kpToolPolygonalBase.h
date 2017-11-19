@@ -101,7 +101,7 @@ public:
         const QString &name);
     ~kpToolPolygonalBase () override;
 
-    bool careAboutModifierState () const Q_DECL_OVERRIDE { return true; }
+    bool careAboutModifierState () const override { return true; }
 
 protected:
     // The maximum number of points() we should allow (mainly, to ensure
@@ -111,10 +111,10 @@ protected:
     virtual QString haventBegunShapeUserMessage () const = 0;
 
 public:
-    void begin () Q_DECL_OVERRIDE;
-    void end () Q_DECL_OVERRIDE;
+    void begin () override;
+    void end () override;
 
-    void beginDraw () Q_DECL_OVERRIDE;
+    void beginDraw () override;
 
 protected:
     // Adjusts the current line (end points given by the last 2 points of points())
@@ -170,7 +170,7 @@ protected:
     // returns 2 points.
     virtual bool drawingALine () const { return true; }
 public:
-    void draw (const QPoint &, const QPoint &, const QRect &) Q_DECL_OVERRIDE;
+    void draw (const QPoint &, const QPoint &, const QRect &) override;
 private:
     kpColor drawingForegroundColor () const;
 protected:
@@ -183,15 +183,15 @@ protected:
 protected slots:
     void updateShape ();
 public:
-    void cancelShape () Q_DECL_OVERRIDE;
-    void releasedAllButtons () Q_DECL_OVERRIDE;
-    void endShape (const QPoint & = QPoint (), const QRect & = QRect ()) Q_DECL_OVERRIDE;
+    void cancelShape () override;
+    void releasedAllButtons () override;
+    void endShape (const QPoint & = QPoint (), const QRect & = QRect ()) override;
 
-    bool hasBegunShape () const Q_DECL_OVERRIDE;
+    bool hasBegunShape () const override;
 
 protected slots:
-    void slotForegroundColorChanged (const kpColor &) Q_DECL_OVERRIDE;
-    void slotBackgroundColorChanged (const kpColor &) Q_DECL_OVERRIDE;
+    void slotForegroundColorChanged (const kpColor &) override;
+    void slotBackgroundColorChanged (const kpColor &) override;
 
 private:
     kpToolPolygonalBasePrivate * const d;

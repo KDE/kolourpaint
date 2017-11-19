@@ -47,10 +47,10 @@ public:
     //
 
 public:
-    bool isInvertible () const Q_DECL_OVERRIDE { return false; }
+    bool isInvertible () const override { return false; }
 
 protected:
-    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
+    kpImage applyEffect (const kpImage &image) override;
 };
 
 

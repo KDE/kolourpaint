@@ -47,7 +47,7 @@ public:
     static QString nameForType (kpEffectBlurSharpen::Type type);
 
 protected:
-    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
+    kpImage applyEffect (const kpImage &image) override;
 
 protected:
     kpEffectBlurSharpen::Type m_type;

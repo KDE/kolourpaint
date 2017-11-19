@@ -48,17 +48,17 @@ public:
                             kpCommandEnvironment *environ);
     ~kpToolFloodFillCommand () override;
 
-    QString name () const Q_DECL_OVERRIDE;
+    QString name () const override;
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
     // Optimization hack: filling a fresh, unmodified document does not require
     //                    reading any pixels - just set the whole document to
     //                    <color>.
     void setFillEntireImage (bool yes = true);
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 private:
     kpToolFloodFillCommandPrivate * const d;

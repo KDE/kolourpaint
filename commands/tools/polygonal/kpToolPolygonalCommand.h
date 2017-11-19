@@ -54,10 +54,10 @@ public:
         kpCommandEnvironment *environ);
     ~kpToolPolygonalCommand () override;
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 private:
     struct kpToolPolygonalCommandPrivate * const d;

@@ -43,7 +43,7 @@ protected:
     bool drawCreateMoreSelectionAndUpdateStatusBar (
         bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect) Q_DECL_OVERRIDE;
+        const QRect &normalizedRect) override;
 };
 
 

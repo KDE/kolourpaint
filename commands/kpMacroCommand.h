@@ -46,10 +46,10 @@ public:
     // kpCommand Interface
     //
 
-    SizeType size () const Q_DECL_OVERRIDE;
+    SizeType size () const override;
 
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 
     //

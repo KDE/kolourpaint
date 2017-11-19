@@ -70,7 +70,7 @@ class kpOverlay : public QWidget
     {
     }
 
-    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE
+    void paintEvent(QPaintEvent *) override
     {
       m_container->drawResizeLines();
     }

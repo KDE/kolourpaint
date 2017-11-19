@@ -50,7 +50,7 @@ public:
     //
 
 protected:
-    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
+    kpImage applyEffect (const kpImage &image) override;
 
     QColor m_color1, m_color2;
 };

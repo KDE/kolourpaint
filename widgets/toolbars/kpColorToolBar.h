@@ -108,8 +108,8 @@ protected:
     // Eat color drops (which are usually accidental drags from one of our
     // child widgets) to prevent them from being pasted as text in the
     // main window (by kpMainWindow::dropEvent()).
-    void dragEnterEvent (QDragEnterEvent *e) Q_DECL_OVERRIDE;
-    void dragMoveEvent (QDragMoveEvent *e) Q_DECL_OVERRIDE;
+    void dragEnterEvent (QDragEnterEvent *e) override;
+    void dragMoveEvent (QDragMoveEvent *e) override;
 
 private:
     void adjustToOrientation (Qt::Orientation o);

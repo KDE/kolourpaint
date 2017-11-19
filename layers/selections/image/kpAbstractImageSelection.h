@@ -88,7 +88,7 @@ protected:
 
 public:
     // (Covariant return-type specialization of superclass pure virtual method)
-    kpAbstractImageSelection *clone () const Q_DECL_OVERRIDE = 0;
+    kpAbstractImageSelection *clone () const override = 0;
 
     ~kpAbstractImageSelection () override;
 
@@ -100,11 +100,11 @@ public:
 public:
     // You must override this if you have extra serializable fields.
     // Remember to call this base implementation before your code.
-    bool readFromStream (QDataStream &stream) Q_DECL_OVERRIDE;
+    bool readFromStream (QDataStream &stream) override;
 
     // You must override this if you have extra serializable fields.
     // Remember to call this base implementation before your code.
-    void writeToStream (QDataStream &stream) const Q_DECL_OVERRIDE;
+    void writeToStream (QDataStream &stream) const override;
 
 
 //
@@ -112,12 +112,12 @@ public:
 //
 
 public:
-    QString name () const Q_DECL_OVERRIDE;
+    QString name () const override;
 
     // You must override this, if you have extra fields that take a
     // non-constant amount of space, and add the size returned by this
     // implementation.
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
     // Same as virtual size() (it even calls it) but subtracts the size of the
     // baseImage().
@@ -145,8 +145,8 @@ public:
 //
 
 public:
-    int minimumWidth () const Q_DECL_OVERRIDE;
-    int minimumHeight () const Q_DECL_OVERRIDE;
+    int minimumWidth () const override;
+    int minimumHeight () const override;
 
 
 //
@@ -199,9 +199,9 @@ public:
 
 public:
     // Returns whether there's a non-null base image.
-    bool hasContent () const Q_DECL_OVERRIDE;
+    bool hasContent () const override;
 
-    void deleteContent () Q_DECL_OVERRIDE;
+    void deleteContent () override;
 
 public:
     kpImage baseImage () const;
@@ -252,7 +252,7 @@ public:
 
 public:
     // (using transparent image)
-    void paint (QImage *destPixmap, const QRect &docRect) const Q_DECL_OVERRIDE;
+    void paint (QImage *destPixmap, const QRect &docRect) const override;
 
     // (using base image)
     void paintWithBaseImage (QImage *destPixmap, const QRect &docRect) const;

@@ -42,12 +42,12 @@ public:
     ~kpToolCurve () override;
 
 protected:
-    QString haventBegunShapeUserMessage () const Q_DECL_OVERRIDE;
+    QString haventBegunShapeUserMessage () const override;
 
-    bool drawingALine () const Q_DECL_OVERRIDE;
+    bool drawingALine () const override;
 
 public:
-    void endDraw (const QPoint &, const QRect &) Q_DECL_OVERRIDE;
+    void endDraw (const QPoint &, const QRect &) override;
 };
 
 

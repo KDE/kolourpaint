@@ -45,7 +45,7 @@ public:
     ~kpEffectBalanceCommand () override;
 
 protected:
-    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
+    kpImage applyEffect (const kpImage &image) override;
 
 protected:
     int m_channels;

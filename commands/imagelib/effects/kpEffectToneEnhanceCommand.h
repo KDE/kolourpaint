@@ -43,7 +43,7 @@ public:
     ~kpEffectToneEnhanceCommand () override;
 
 protected:
-    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
+    kpImage applyEffect (const kpImage &image) override;
 
 protected:
     double m_granularity, m_amount;

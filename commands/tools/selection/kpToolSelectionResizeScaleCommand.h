@@ -60,7 +60,7 @@ public:
     kpToolSelectionResizeScaleCommand (kpCommandEnvironment *environ);
     ~kpToolSelectionResizeScaleCommand () override;
 
-    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
+    kpCommandSize::SizeType size () const override;
 
 public:
     const kpAbstractSelection *originalSelection () const;
@@ -91,8 +91,8 @@ public:
     void finalize ();
 
 public:
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 protected:
     kpAbstractSelection *m_originalSelectionPtr;

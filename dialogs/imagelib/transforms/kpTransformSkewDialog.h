@@ -49,14 +49,14 @@ private:
 
     void createAngleGroupBox ();
 
-    QSize newDimensions () const Q_DECL_OVERRIDE;
+    QSize newDimensions () const override;
     QImage transformPixmap (const QImage &image,
-                                    int targetWidth, int targetHeight) const Q_DECL_OVERRIDE;
+                                    int targetWidth, int targetHeight) const override;
 
     void updateLastAngles ();
 
 private slots:
-    void slotUpdate () Q_DECL_OVERRIDE;
+    void slotUpdate () override;
 
 public:
     // These are the angles the users sees in the dialog and...
@@ -70,10 +70,10 @@ public:
     int horizontalAngleForPixmapFX () const;
     int verticalAngleForPixmapFX () const;
 
-    bool isNoOp () const Q_DECL_OVERRIDE;
+    bool isNoOp () const override;
 
 private slots:
-    void accept () Q_DECL_OVERRIDE;
+    void accept () override;
 
 private:
     QSpinBox *m_horizontalSkewInput, *m_verticalSkewInput;

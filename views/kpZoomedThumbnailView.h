@@ -71,7 +71,7 @@ public:
     /**
      * Implements @ref kpThumbnailView.
      */
-    QString caption () const Q_DECL_OVERRIDE;
+    QString caption () const override;
 
 
 public slots:
@@ -84,7 +84,7 @@ public slots:
      *
      * Implements @ref kpView.
      */
-    void adjustToEnvironment () Q_DECL_OVERRIDE;
+    void adjustToEnvironment () override;
 
 
 private:

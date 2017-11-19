@@ -44,11 +44,11 @@ public:
         kpCommandEnvironment *environ);
     ~kpDocumentMetaInfoCommand () override;
 
-    SizeType size () const Q_DECL_OVERRIDE;
+    SizeType size () const override;
 
 public:
-    void execute () Q_DECL_OVERRIDE;
-    void unexecute () Q_DECL_OVERRIDE;
+    void execute () override;
+    void unexecute () override;
 
 private:
     struct kpDocumentMetaInfoCommandPrivate * const d;

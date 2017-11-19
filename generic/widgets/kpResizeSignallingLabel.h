@@ -49,7 +49,7 @@ signals:
     void resized ();
 
 protected:
-    void resizeEvent (QResizeEvent *e) Q_DECL_OVERRIDE;
+    void resizeEvent (QResizeEvent *e) override;
 };
 
 

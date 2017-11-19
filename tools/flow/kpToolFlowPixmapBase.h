@@ -51,7 +51,7 @@ public:
                kpToolEnvironment *environ, QObject *parent, const QString &name);
 
 protected:
-    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) Q_DECL_OVERRIDE;
+    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) override;
 };
 
 

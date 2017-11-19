@@ -46,18 +46,18 @@ public:
                                QWidget *parent);
     ~kpEffectToneEnhanceWidget () override;
 
-    QString caption () const Q_DECL_OVERRIDE;
+    QString caption () const override;
 
 private:
     double amount () const;
     double granularity () const;
 
 public:
-    bool isNoOp () const Q_DECL_OVERRIDE;
-    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
+    bool isNoOp () const override;
+    kpImage applyEffect (const kpImage &image) override;
 
     kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const Q_DECL_OVERRIDE;
+        kpCommandEnvironment *cmdEnviron) const override;
 
 protected:
     KDoubleNumInput *m_granularityInput;

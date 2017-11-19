@@ -154,7 +154,7 @@ signals:
     void isModifiedChanged (bool isModified);
 
 protected:
-    void contextMenuEvent (QContextMenuEvent *e) Q_DECL_OVERRIDE;
+    void contextMenuEvent (QContextMenuEvent *e) override;
 
 protected slots:
     void slotColorSelected (int cell, const QColor &color, Qt::MouseButton button);
