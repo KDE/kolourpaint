@@ -46,7 +46,7 @@ kpToolSelectionDestroyCommand::kpToolSelectionDestroyCommand (const QString &nam
         kpCommandEnvironment *environ)
     : kpNamedCommand (name, environ),
       m_pushOntoDocument (pushOntoDocument),
-      m_oldSelectionPtr (0),
+      m_oldSelectionPtr (nullptr),
       m_textRow(0), m_textCol(0)
 {
 }
@@ -166,6 +166,6 @@ void kpToolSelectionDestroyCommand::unexecute ()
     environ ()->somethingBelowTheCursorChanged ();
 
     delete m_oldSelectionPtr;
-    m_oldSelectionPtr = 0;
+    m_oldSelectionPtr = nullptr;
 }
 

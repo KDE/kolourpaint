@@ -45,7 +45,7 @@ class kpColorCellsBase::kpColorCellsBasePrivate
 public:
     kpColorCellsBasePrivate(kpColorCellsBase *q): q(q)
     {
-        colors = 0;
+        colors = nullptr;
         inMouse = false;
         selected = -1;
         shade = false;
@@ -251,7 +251,7 @@ void kpColorCellsBase::setColor( int column, const QColor &colorIn )
 
     if (color.isValid ())
     {
-        if ( tableItem == 0 ) {
+        if ( tableItem == nullptr ) {
             tableItem = new QTableWidgetItem();
             setItem(tableRow,tableColumn,tableItem);
         }

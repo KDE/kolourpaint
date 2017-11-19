@@ -74,10 +74,10 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                            _env,
                            parent),
       m_delayedUpdateTimer (new QTimer (this)),
-      m_effectsComboBox (0),
-      m_settingsGroupBox (0),
-      m_settingsLayout (0),
-      m_effectWidget (0)
+      m_effectsComboBox (nullptr),
+      m_settingsGroupBox (nullptr),
+      m_settingsLayout (nullptr),
+      m_effectWidget (nullptr)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
     qCDebug(kpLogDialogs) << "kpEffectsDialog::kpEffectsDialog()";
@@ -170,7 +170,7 @@ bool kpEffectsDialog::isNoOp () const
 kpEffectCommandBase *kpEffectsDialog::createCommand () const
 {
     if (!m_effectWidget)
-        return 0;
+        return nullptr;
 
     return m_effectWidget->createCommand (m_environ->commandEnvironment ());
 }
@@ -226,7 +226,7 @@ void kpEffectsDialog::selectEffect (int which)
 
 
     delete m_effectWidget;
-    m_effectWidget = 0;
+    m_effectWidget = nullptr;
 
 
     m_settingsGroupBox->setWindowTitle(QString());

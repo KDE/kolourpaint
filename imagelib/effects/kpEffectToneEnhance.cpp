@@ -100,7 +100,7 @@ kpEffectToneEnhanceApplier::kpEffectToneEnhanceApplier ()
   m_nComputedWid = 0;
   m_nComputedHgt = 0;
   m_pHistogram = new unsigned int[TONE_MAP_SIZE];
-  m_pToneMaps = 0;
+  m_pToneMaps = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -120,7 +120,7 @@ void kpEffectToneEnhanceApplier::DeleteToneMaps()
   for(int i = 0; i < nToneMaps; i++)
     delete[] m_pToneMaps[i];
   delete[] m_pToneMaps;
-  m_pToneMaps = 0;
+  m_pToneMaps = nullptr;
   m_nToneMapGranularity = 0;
 }
 

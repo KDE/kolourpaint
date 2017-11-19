@@ -33,7 +33,7 @@
 #include <qcursor.h>
 
 
-static const QCursor *TheLightCursor = 0;
+static const QCursor *TheLightCursor = nullptr;
 
 
 // public static

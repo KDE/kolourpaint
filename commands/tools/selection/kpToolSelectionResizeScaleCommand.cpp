@@ -166,7 +166,7 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 
     killSmoothScaleTimer ();
 
-    kpAbstractSelection *newSelPtr = 0;
+    kpAbstractSelection *newSelPtr = nullptr;
 
     if (textSelection ())
     {

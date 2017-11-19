@@ -55,7 +55,7 @@ const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
     QWidget *parent )
     : kpSubWindow (parent),
-      m_filePixmap (0),
+      m_filePixmap (nullptr),
       m_fileSize (0)
 {
     setWindowTitle (i18nc ("@title:window", "Save Preview"));

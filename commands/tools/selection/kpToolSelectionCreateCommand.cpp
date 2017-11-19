@@ -60,7 +60,7 @@ kpToolSelectionCreateCommand::kpToolSelectionCreateCommand (const QString &name,
         const kpAbstractSelection &fromSelection,
         kpCommandEnvironment *environ)
     : kpNamedCommand (name, environ),
-      m_fromSelection (0),
+      m_fromSelection (nullptr),
       m_textRow (0), m_textCol (0)
 {
     setFromSelection (fromSelection);

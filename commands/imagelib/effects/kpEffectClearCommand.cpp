@@ -42,7 +42,7 @@ kpEffectClearCommand::kpEffectClearCommand (bool actOnSelection,
     : kpCommand (environ),
       m_actOnSelection (actOnSelection),
       m_newColor (newColor),
-      m_oldImagePtr (0)
+      m_oldImagePtr (nullptr)
 {
 }
 
@@ -107,6 +107,6 @@ void kpEffectClearCommand::unexecute ()
 
 
     delete m_oldImagePtr;
-    m_oldImagePtr = 0;
+    m_oldImagePtr = nullptr;
 }
 

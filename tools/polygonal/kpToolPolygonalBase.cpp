@@ -59,7 +59,7 @@
 struct kpToolPolygonalBasePrivate
 {
     kpToolPolygonalBasePrivate ()
-        : drawShapeFunc(0), toolWidgetLineWidth(0), originatingMouseButton(-1)
+        : drawShapeFunc(nullptr), toolWidgetLineWidth(nullptr), originatingMouseButton(-1)
     {
     }
 
@@ -87,7 +87,7 @@ kpToolPolygonalBase::kpToolPolygonalBase (
 {
     d->drawShapeFunc = drawShapeFunc;
 
-    d->toolWidgetLineWidth = 0;
+    d->toolWidgetLineWidth = nullptr;
 
     // (hopefully cause crash if we use it before initialising it)
     d->originatingMouseButton = -1;
@@ -136,7 +136,7 @@ void kpToolPolygonalBase::end ()
         SIGNAL (lineWidthChanged (int)),
         this,
         SLOT (updateShape ()));
-    d->toolWidgetLineWidth = 0;
+    d->toolWidgetLineWidth = nullptr;
 
     viewManager ()->unsetCursor ();
 }

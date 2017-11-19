@@ -68,7 +68,7 @@ int kpAbstractSelectionTool::onSelectionResizeHandle () const
 // private
 void kpAbstractSelectionTool::initResizeScale ()
 {
-    d->currentResizeScaleCommand = 0;
+    d->currentResizeScaleCommand = nullptr;
 
    // d->resizeScaleType
 }
@@ -379,7 +379,7 @@ void kpAbstractSelectionTool::cancelResizeScale ()
     d->currentResizeScaleCommand->finalize ();  // (unneeded but let's be safe)
     d->currentResizeScaleCommand->unexecute ();
     delete d->currentResizeScaleCommand;
-    d->currentResizeScaleCommand = 0;
+    d->currentResizeScaleCommand = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -394,7 +394,7 @@ void kpAbstractSelectionTool::endDrawResizeScale ()
     d->currentResizeScaleCommand->finalize ();
 
     addNeedingContentCommand (d->currentResizeScaleCommand);
-    d->currentResizeScaleCommand = 0;
+    d->currentResizeScaleCommand = nullptr;
 }
 
 //---------------------------------------------------------------------

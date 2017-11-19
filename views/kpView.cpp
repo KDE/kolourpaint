@@ -114,7 +114,7 @@ kpDocument *kpView::document () const
 // protected
 kpAbstractSelection *kpView::selection () const
 {
-    return document () ? document ()->selection () : 0;
+    return document () ? document ()->selection () : nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -122,7 +122,7 @@ kpAbstractSelection *kpView::selection () const
 // protected
 kpTextSelection *kpView::textSelection () const
 {
-    return document () ? document ()->textSelection () : 0;
+    return document () ? document ()->textSelection () : nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -136,7 +136,7 @@ kpToolToolBar *kpView::toolToolBar () const
 // protected
 kpTool *kpView::tool () const
 {
-    return toolToolBar () ? toolToolBar ()->tool () : 0;
+    return toolToolBar () ? toolToolBar ()->tool () : nullptr;
 }
 
 // public
@@ -154,7 +154,7 @@ kpView *kpView::buddyView () const
 // public
 kpViewScrollableContainer *kpView::buddyViewScrollableContainer () const
 {
-    return (buddyView () ? buddyView ()->scrollableContainer () : 0);
+    return (buddyView () ? buddyView ()->scrollableContainer () : nullptr);
 }
 
 // public
@@ -547,7 +547,7 @@ void kpView::setHasMouse (bool yes)
     if (yes && vm->viewUnderCursor () != this)
         vm->setViewUnderCursor (this);
     else if (!yes && vm->viewUnderCursor () == this)
-        vm->setViewUnderCursor (0);
+        vm->setViewUnderCursor (nullptr);
 }
 
 //---------------------------------------------------------------------

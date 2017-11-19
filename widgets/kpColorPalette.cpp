@@ -55,7 +55,7 @@ kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
     : QWidget (parent),
       d (new kpColorPalettePrivate ())
 {
-    d->boxLayout = 0;
+    d->boxLayout = nullptr;
 
     d->transparentColorCell = new kpTransparentColorCell (this);
     connect (d->transparentColorCell, SIGNAL (foregroundColorChanged (const kpColor &)),

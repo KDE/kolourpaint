@@ -81,9 +81,9 @@ kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
 // private
 void kpDocumentSaveOptionsWidget::init ()
 {
-    m_documentPixmap = 0;
-    m_previewDialog = 0;
-    m_visualParent = 0;
+    m_documentPixmap = nullptr;
+    m_previewDialog = nullptr;
+    m_visualParent = nullptr;
 
 
     m_colorDepthLabel = new QLabel (i18n ("Convert &to:"), this);
@@ -655,7 +655,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     #endif
 
         m_previewDialog->deleteLater ();
-        m_previewDialog = 0;
+        m_previewDialog = nullptr;
     }
 }
 

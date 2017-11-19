@@ -36,7 +36,7 @@ class kpDocumentEnvironment;
 struct kpDocumentPrivate
 {
     kpDocumentPrivate ()
-      : environ(0)
+      : environ(nullptr)
     {
     }
 

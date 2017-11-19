@@ -62,11 +62,11 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
     : QDialog (parent),
       m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
-      m_dimensionsGroupBox (0),
-      m_afterTransformDimensionsLabel (0),
-      m_previewGroupBox (0),
-      m_previewPixmapLabel (0),
-      m_gridLayout (0),
+      m_dimensionsGroupBox (nullptr),
+      m_afterTransformDimensionsLabel (nullptr),
+      m_previewGroupBox (nullptr),
+      m_previewPixmapLabel (nullptr),
+      m_gridLayout (nullptr),
       m_environ (_env)
 {
     setWindowTitle (caption);

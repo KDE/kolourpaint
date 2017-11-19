@@ -159,7 +159,7 @@ kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
         qCDebug(kpLogLayers) << "kpSelectionDrag::decode(kpAbstractSelection) mimeSource had no sel "
                       "and could not decode to image" << endl;
       #endif
-      return 0;
+      return nullptr;
     }
 }
 

@@ -64,7 +64,7 @@ kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelectio
       m_actOnSelection (actOnSelection),
       m_type (type),
       m_backgroundColor (environ->backgroundColor ()),
-      m_oldSelectionPtr (0)
+      m_oldSelectionPtr (nullptr)
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);

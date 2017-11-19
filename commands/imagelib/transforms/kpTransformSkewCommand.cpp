@@ -59,7 +59,7 @@ kpTransformSkewCommand::kpTransformSkewCommand (bool actOnSelection,
       m_actOnSelection (actOnSelection),
       m_hangle (hangle), m_vangle (vangle),
       m_backgroundColor (environ->backgroundColor (actOnSelection)),
-      m_oldSelectionPtr (0)
+      m_oldSelectionPtr (nullptr)
 {
 }
 
@@ -188,7 +188,7 @@ void kpTransformSkewCommand::unexecute ()
     else
     {
         doc->setSelection (*m_oldSelectionPtr);
-        delete m_oldSelectionPtr; m_oldSelectionPtr = 0;
+        delete m_oldSelectionPtr; m_oldSelectionPtr = nullptr;
 
         environ ()->somethingBelowTheCursorChanged ();
     }

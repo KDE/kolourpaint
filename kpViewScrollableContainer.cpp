@@ -373,8 +373,8 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
 // TODO: Are we checking for m_view == 0 often enough?  Also an issue in KDE 3.
 kpViewScrollableContainer::kpViewScrollableContainer(QWidget *parent)
     : QScrollArea(parent),
-      m_view(0), m_overlay(new kpOverlay(viewport(), this)),
-      m_docResizingGrip (0),
+      m_view(nullptr), m_overlay(new kpOverlay(viewport(), this)),
+      m_docResizingGrip (nullptr),
       m_dragScrollTimer (new QTimer (this)),
       m_zoomLevel (100),
       m_scrollTimerRunOnce (false),
@@ -504,7 +504,7 @@ void kpViewScrollableContainer::calculateDocResizingGrip ()
     else if (m_rightGrip->isDrawing ())
         m_docResizingGrip = m_rightGrip;
     else
-        m_docResizingGrip = 0;
+        m_docResizingGrip = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -963,9 +963,9 @@ void kpViewScrollableContainer::updateGrips ()
       m_bottomRightGrip->move(m_view->width(), m_view->height());
     }
 
-    m_bottomGrip->setHidden (m_view == 0);
-    m_rightGrip->setHidden (m_view == 0);
-    m_bottomRightGrip->setHidden (m_view == 0);
+    m_bottomGrip->setHidden (m_view == nullptr);
+    m_rightGrip->setHidden (m_view == nullptr);
+    m_bottomRightGrip->setHidden (m_view == nullptr);
 
     recalculateStatusMessage ();
 }
@@ -975,7 +975,7 @@ void kpViewScrollableContainer::updateGrips ()
 // protected slot
 void kpViewScrollableContainer::slotViewDestroyed ()
 {
-    m_view = 0;
+    m_view = nullptr;
     updateGrips ();
 }
 
@@ -1027,7 +1027,7 @@ bool kpViewScrollableContainer::beginDragScroll(int zoomLevel, bool *didSomethin
 bool kpViewScrollableContainer::beginDragScroll(int zoomLevel)
 {
     return beginDragScroll(zoomLevel,
-                           0/*don't want scrolled notification*/);
+                           nullptr/*don't want scrolled notification*/);
 }
 
 //---------------------------------------------------------------------
@@ -1140,7 +1140,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 // protected slot
 bool kpViewScrollableContainer::slotDragScroll ()
 {
-    return slotDragScroll (0/*don't want scrolled notification*/);
+    return slotDragScroll (nullptr/*don't want scrolled notification*/);
 }
 
 //---------------------------------------------------------------------

@@ -95,7 +95,7 @@ void kpToolColorEraser::globalDraw ()
         commandHistory ()->addCommand (cmd, false /* don't exec */);
 
         // don't delete - it's up to the commandHistory
-        cmd = 0;
+        cmd = nullptr;
     }
     else
     {
@@ -103,7 +103,7 @@ void kpToolColorEraser::globalDraw ()
         qCDebug(kpLogTools) << "\tisNOP";
     #endif
         delete cmd;
-        cmd = 0;
+        cmd = nullptr;
     }
 
     QApplication::restoreOverrideCursor ();

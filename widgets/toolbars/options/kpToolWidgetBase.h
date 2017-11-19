@@ -80,8 +80,8 @@ public:
 
     int selected () const;
 
-    bool hasPreviousOption (int *row = 0, int *col = 0) const;
-    bool hasNextOption (int *row = 0, int *col = 0) const;
+    bool hasPreviousOption (int *row = nullptr, int *col = nullptr) const;
+    bool hasNextOption (int *row = nullptr, int *col = nullptr) const;
 
 public slots:
     // (returns whether <row> and <col> were in range)

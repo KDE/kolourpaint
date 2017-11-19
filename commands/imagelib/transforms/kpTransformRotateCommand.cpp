@@ -56,7 +56,7 @@ kpTransformRotateCommand::kpTransformRotateCommand (bool actOnSelection,
       m_angle (angle),
       m_backgroundColor (environ->backgroundColor (actOnSelection)),
       m_losslessRotation (kpPixmapFX::isLosslessRotation (angle)),
-      m_oldSelectionPtr (0)
+      m_oldSelectionPtr (nullptr)
 {
 }
 
@@ -212,7 +212,7 @@ void kpTransformRotateCommand::unexecute ()
     {
         m_oldSelectionPtr->setBaseImage (oldImage);
         doc->setSelection (*m_oldSelectionPtr);
-        delete m_oldSelectionPtr; m_oldSelectionPtr = 0;
+        delete m_oldSelectionPtr; m_oldSelectionPtr = nullptr;
 
         environ ()->somethingBelowTheCursorChanged ();
     }

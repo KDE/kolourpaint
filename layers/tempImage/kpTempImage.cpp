@@ -42,8 +42,8 @@ kpTempImage::kpTempImage (bool isBrush, RenderMode renderMode,
       m_topLeft (topLeft),
       m_image (image),
       m_width (image.width ()), m_height (image.height ()),
-      m_userFunction (0),
-      m_userData (0)
+      m_userFunction (nullptr),
+      m_userData (nullptr)
 {
     // Use below constructor for that.
     Q_ASSERT (renderMode != UserFunction);

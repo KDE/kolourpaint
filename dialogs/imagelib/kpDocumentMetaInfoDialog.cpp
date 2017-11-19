@@ -462,7 +462,7 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
                             .subs (value).subs (r + 1/*count from 1*/).toString ();
 
                     // Print only 1 error message per method invocation.
-                    errorMessage = 0;
+                    errorMessage = nullptr;
                 }
 
                 // Ignore.
@@ -492,7 +492,7 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
                     .toString ();
 
                 // Print only 1 error message per method invocation.
-                errorMessage = 0;
+                errorMessage = nullptr;
             }
 
             // Ignore this duplicate - keep the first value of the key.

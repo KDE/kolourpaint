@@ -86,7 +86,7 @@ public:
     //
 
 private:
-    kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
+    kpColor pixelColor (int x, int y, bool *beenHere = nullptr) const;
     bool shouldGoTo (int x, int y) const;
 
     // Finds the minimum x value at a certain line to be filled.

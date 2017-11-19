@@ -62,7 +62,7 @@
 //---------------------------------------------------------------------
 
 kpMainWindow::kpMainWindow ()
-    : KXmlGuiWindow (0/*parent*/)
+    : KXmlGuiWindow (nullptr/*parent*/)
 {
     init ();
     open (QUrl (), true/*create an empty doc*/);
@@ -73,7 +73,7 @@ kpMainWindow::kpMainWindow ()
 //---------------------------------------------------------------------
 
 kpMainWindow::kpMainWindow (const QUrl &url)
-    : KXmlGuiWindow (0/*parent*/)
+    : KXmlGuiWindow (nullptr/*parent*/)
 {
     init ();
     open (url, true/*create an empty doc with the same url if url !exist*/);
@@ -84,7 +84,7 @@ kpMainWindow::kpMainWindow (const QUrl &url)
 //---------------------------------------------------------------------
 
 kpMainWindow::kpMainWindow (kpDocument *newDoc)
-    : KXmlGuiWindow (0/*parent*/)
+    : KXmlGuiWindow (nullptr/*parent*/)
 {
     init ();
     setDocument (newDoc);
@@ -295,7 +295,7 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tno url - no document";
     #endif
-        setDocument (0);
+        setDocument (nullptr);
     }
     // Have a document.
     else
@@ -464,12 +464,12 @@ kpMainWindow::~kpMainWindow ()
     // Delete document & views.
     // Note: This will disconnects signals from the current kpTool, so kpTool
     //       must not be destructed yet.
-    setDocument (0);
+    setDocument (nullptr);
 
-    delete d->commandHistory; d->commandHistory = 0;
-    delete d->scrollView; d->scrollView = 0;
+    delete d->commandHistory; d->commandHistory = nullptr;
+    delete d->scrollView; d->scrollView = nullptr;
 
-    delete d; d = 0;
+    delete d; d = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -513,7 +513,7 @@ kpColorToolBar *kpMainWindow::colorToolBar () const
 // public
 kpColorCells *kpMainWindow::colorCells () const
 {
-    return d->colorToolBar ? d->colorToolBar->colorCells () : 0;
+    return d->colorToolBar ? d->colorToolBar->colorCells () : nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -611,7 +611,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         enableDocumentActions (false);
     }
 
-    delete d->mainView; d->mainView = 0;
+    delete d->mainView; d->mainView = nullptr;
     slotDestroyThumbnail ();
 
     // viewManager will die and so will the selection
@@ -621,7 +621,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     d->actionDeselect->setEnabled (false);
     d->actionCopyToFile->setEnabled (false);
 
-    delete d->viewManager; d->viewManager = 0;
+    delete d->viewManager; d->viewManager = nullptr;
 
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tdestroying document";
@@ -662,7 +662,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         d->viewManager = new kpViewManager (this);
 
         d->mainView = new kpZoomedView (d->document, d->toolToolBar, d->viewManager,
-                                       0/*buddyView*/,
+                                       nullptr/*buddyView*/,
                                        d->scrollView,
                                        d->scrollView->viewport ());
         d->mainView->setObjectName ( QLatin1String("mainView" ));
@@ -848,7 +848,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         qCDebug(kpLogMainWindow) << "\tpos toGlobal=" << globalPos;
     #endif
 
-        kpView *view = 0;
+        kpView *view = nullptr;
 
         if (d->viewManager)
         {

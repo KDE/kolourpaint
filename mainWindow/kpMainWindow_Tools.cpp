@@ -226,7 +226,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     else if (!enable && d->toolToolBar->isEnabled ())
     {
         // don't have a disabled Tool Box with a checked Tool
-        d->toolToolBar->selectTool (0);
+        d->toolToolBar->selectTool (nullptr);
     }
 
 
@@ -325,7 +325,7 @@ QActionGroup *kpMainWindow::toolsActionGroup ()
 // public
 kpTool *kpMainWindow::tool () const
 {
-    return d->toolToolBar ? d->toolToolBar->tool () : 0;
+    return d->toolToolBar ? d->toolToolBar->tool () : nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -423,7 +423,7 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotToolSelected (" << tool << ")";
 #endif
 
-    kpTool *previousTool = d->toolToolBar ? d->toolToolBar->previousTool () : 0;
+    kpTool *previousTool = d->toolToolBar ? d->toolToolBar->previousTool () : nullptr;
 
     if (previousTool)
     {

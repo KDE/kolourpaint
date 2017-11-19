@@ -134,7 +134,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
                 emit contentsChanged (oldSelection->boundingRect ());
 
             delete oldSelection;
-            oldSelection = 0;
+            oldSelection = nullptr;
         }
 
         if (m_selection->hasContent ())
@@ -253,7 +253,7 @@ void kpDocument::selectionDelete ()
     const bool selectionHadContent = m_selection->hasContent ();
 
     delete m_selection;
-    m_selection = 0;
+    m_selection = nullptr;
 
 
     // HACK to prevent document from being modified when

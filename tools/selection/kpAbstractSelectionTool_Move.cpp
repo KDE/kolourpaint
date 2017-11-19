@@ -58,7 +58,7 @@
 // private
 void kpAbstractSelectionTool::initMove ()
 {
-    d->currentMoveCommand = 0;
+    d->currentMoveCommand = nullptr;
 
     // d->currentMoveCommandIsSmear
 
@@ -305,7 +305,7 @@ void kpAbstractSelectionTool::cancelMove ()
     d->currentMoveCommand->finalize ();
     d->currentMoveCommand->unexecute ();
     delete d->currentMoveCommand;
-    d->currentMoveCommand = 0;
+    d->currentMoveCommand = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -329,7 +329,7 @@ void kpAbstractSelectionTool::endDrawMove ()
 
     d->currentMoveCommand->finalize ();
 
-    kpMacroCommand *renamedCmd = 0;
+    kpMacroCommand *renamedCmd = nullptr;
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "\thave moveCommand";
 #endif
@@ -347,7 +347,7 @@ void kpAbstractSelectionTool::endDrawMove ()
     }
 
     renamedCmd->addCommand (d->currentMoveCommand);
-    d->currentMoveCommand = 0;
+    d->currentMoveCommand = nullptr;
 
     addNeedingContentCommand (renamedCmd);
 }

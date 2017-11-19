@@ -76,7 +76,7 @@ kpDocument::kpDocument (int w, int h,
       m_saveOptions (new kpDocumentSaveOptions ()),
       m_metaInfo (new kpDocumentMetaInfo ()),
       m_modified (false),
-      m_selection (0),
+      m_selection (nullptr),
       m_oldWidth (-1), m_oldHeight (-1),
       d (new kpDocumentPrivate ())
 {

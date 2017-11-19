@@ -83,8 +83,8 @@ public:
 
     static QImage getPixmapFromFile (const QUrl &url, bool suppressDoesntExistDialog,
                                      QWidget *parent,
-                                     kpDocumentSaveOptions *saveOptions = 0,
-                                     kpDocumentMetaInfo *metaInfo = 0);
+                                     kpDocumentSaveOptions *saveOptions = nullptr,
+                                     kpDocumentMetaInfo *metaInfo = nullptr);
     // REFACTOR: fix: open*() should only be called once.
     //                Create a new kpDocument() if you want to open again.
     void openNew (const QUrl &url);
@@ -107,7 +107,7 @@ public:
                                     const kpDocumentMetaInfo &metaInfo,
                                     bool lossyPrompt,
                                     QWidget *parent,
-                                    bool *userCancelled = 0);
+                                    bool *userCancelled = nullptr);
     static bool savePixmapToFile (const QImage &pixmap,
                                   const QUrl &url,
                                   const kpDocumentSaveOptions &saveOptions,

@@ -59,13 +59,13 @@ kpTool::kpTool(const QString &text, const QString &description,
       d(new kpToolPrivate())
 {
     d->key = key;
-    d->action = 0;
+    d->action = nullptr;
     d->ignoreColorSignals = 0;
     d->shiftPressed = false, d->controlPressed = false, d->altPressed = false;  // set in beginInternal()
     d->beganDraw = false;
     d->text = text, d->description = description;
     d->began = false;
-    d->viewUnderStartPoint = 0;
+    d->viewUnderStartPoint = nullptr;
     d->userShapeStartPoint = KP_INVALID_POINT;
     d->userShapeEndPoint = KP_INVALID_POINT;
     d->userShapeSize = KP_INVALID_SIZE;

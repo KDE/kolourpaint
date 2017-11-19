@@ -76,14 +76,14 @@ kpAbstractSelectionTool::kpAbstractSelectionTool (
       d (new kpAbstractSelectionToolPrivate ())
 {
     d->drawType = None;
-    d->currentSelContentCommand = 0;
+    d->currentSelContentCommand = nullptr;
 
     // d->dragAccepted
     // d->hadSelectionBeforeDrag
 
     // d->cancelledShapeButStillHoldingButtons
 
-    d->toolWidgetOpaqueOrTransparent = 0;
+    d->toolWidgetOpaqueOrTransparent = nullptr;
 
 
     initCreate ();
@@ -217,7 +217,7 @@ void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
             cmd->name (), environ ()->commandEnvironment ());
 
         macroCmd->addCommand (d->currentSelContentCommand);
-        d->currentSelContentCommand = 0;
+        d->currentSelContentCommand = nullptr;
 
         macroCmd->addCommand (cmd);
 
@@ -334,7 +334,7 @@ void kpAbstractSelectionTool::end ()
     Q_ASSERT (d->toolWidgetOpaqueOrTransparent);
     disconnect (d->toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
                 this, SLOT (slotIsOpaqueChanged (bool)));
-    d->toolWidgetOpaqueOrTransparent = 0;
+    d->toolWidgetOpaqueOrTransparent = nullptr;
 
 
     viewManager ()->unsetCursor ();
@@ -505,7 +505,7 @@ void kpAbstractSelectionTool::cancelShape ()
         #endif
             d->currentSelContentCommand->unexecute ();
             delete d->currentSelContentCommand;
-            d->currentSelContentCommand = 0;
+            d->currentSelContentCommand = nullptr;
         }
 
 

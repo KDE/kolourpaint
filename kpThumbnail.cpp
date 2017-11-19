@@ -58,7 +58,7 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent)
     Q_ASSERT (parent);
 
     d->mainWindow = parent;
-    d->view = 0;
+    d->view = nullptr;
     d->lay = new QHBoxLayout (this);
 
 
@@ -134,7 +134,7 @@ void kpThumbnail::slotViewDestroyed ()
     qCDebug(kpLogMisc) << "kpThumbnail::slotViewDestroyed()";
 #endif
 
-    d->view = 0;
+    d->view = nullptr;
     updateCaption ();
 }
 

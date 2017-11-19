@@ -79,7 +79,7 @@ kpToolRectangularBase::kpToolRectangularBase (
 {
     d->drawShapeFunc = drawShapeFunc;
 
-    d->toolWidgetLineWidth = 0, d->toolWidgetFillStyle = 0;
+    d->toolWidgetLineWidth = nullptr, d->toolWidgetFillStyle = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -166,7 +166,7 @@ void kpToolRectangularBase::end ()
             SIGNAL (lineWidthChanged (int)),
             this,
             SLOT (slotLineWidthChanged ()));
-        d->toolWidgetLineWidth = 0;
+        d->toolWidgetLineWidth = nullptr;
     }
 
     if (d->toolWidgetFillStyle)
@@ -175,7 +175,7 @@ void kpToolRectangularBase::end ()
             SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
             this,
             SLOT (slotFillStyleChanged ()));
-        d->toolWidgetFillStyle = 0;
+        d->toolWidgetFillStyle = nullptr;
     }
 
     viewManager ()->unsetCursor ();

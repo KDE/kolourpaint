@@ -54,7 +54,7 @@
 // private
 void kpMainWindow::setupViewMenuThumbnailActions ()
 {
-    d->thumbnailSaveConfigTimer = 0;
+    d->thumbnailSaveConfigTimer = nullptr;
 
     KActionCollection *ac = actionCollection ();
 
@@ -308,7 +308,7 @@ void kpMainWindow::createThumbnailView ()
         d->thumbnailView = new kpZoomedThumbnailView (
             d->document, d->toolToolBar, d->viewManager,
             d->mainView,
-            0/*scrollableContainer*/,
+            nullptr/*scrollableContainer*/,
             d->thumbnail);
         d->thumbnailView->setObjectName ( QLatin1String("thumbnailView" ));
     }
@@ -317,7 +317,7 @@ void kpMainWindow::createThumbnailView ()
         d->thumbnailView = new kpUnzoomedThumbnailView (
             d->document, d->toolToolBar, d->viewManager,
             d->mainView,
-            0/*scrollableContainer*/,
+            nullptr/*scrollableContainer*/,
             d->thumbnail);
         d->thumbnailView->setObjectName ( QLatin1String("thumbnailView" ));
     }
@@ -351,9 +351,9 @@ void kpMainWindow::destroyThumbnailView ()
         d->viewManager->unregisterView (d->thumbnailView);
 
     if (d->thumbnail)
-        d->thumbnail->setView (0);
+        d->thumbnail->setView (nullptr);
 
-    d->thumbnailView->deleteLater (); d->thumbnailView = 0;
+    d->thumbnailView->deleteLater (); d->thumbnailView = nullptr;
 }
 
 
@@ -466,6 +466,6 @@ void kpMainWindow::updateThumbnail ()
 
         destroyThumbnailView ();
 
-        d->thumbnail->deleteLater (); d->thumbnail = 0;
+        d->thumbnail->deleteLater (); d->thumbnail = nullptr;
     }
 }

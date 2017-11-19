@@ -134,7 +134,7 @@ void kpToolPolygon::end ()
         SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
         this,
         SLOT (updateShape ()));
-    d->toolWidgetFillStyle = 0;
+    d->toolWidgetFillStyle = nullptr;
 }
 
 

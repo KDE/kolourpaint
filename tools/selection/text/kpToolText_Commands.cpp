@@ -44,14 +44,14 @@
 // private
 void kpToolText::endTypingCommands ()
 {
-    d->insertCommand = 0;
-    d->enterCommand = 0;
+    d->insertCommand = nullptr;
+    d->enterCommand = nullptr;
 
-    d->backspaceCommand = 0;
-    d->backspaceWordCommand = 0;
+    d->backspaceCommand = nullptr;
+    d->backspaceWordCommand = nullptr;
 
-    d->deleteCommand = 0;
-    d->deleteWordCommand = 0;
+    d->deleteCommand = nullptr;
+    d->deleteWordCommand = nullptr;
 }
 
 

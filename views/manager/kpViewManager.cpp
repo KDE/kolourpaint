@@ -56,17 +56,17 @@ kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     d->mainWindow = mainWindow;
 
     // d->views
-    d->viewUnderCursor = 0;
+    d->viewUnderCursor = nullptr;
 
     // d->cursor
 
-    d->tempImage = 0;
+    d->tempImage = nullptr;
 
     d->selectionBorderVisible = false;
     d->selectionBorderFinished = false;
 
 
-    d->textCursorBlinkTimer = 0;
+    d->textCursorBlinkTimer = nullptr;
 
     d->textCursorRow = -1;
     d->textCursorCol = -1;
@@ -124,7 +124,7 @@ void kpViewManager::unregisterView (kpView *view)
     Q_ASSERT (d->views.contains (view));
 
     if (view == d->viewUnderCursor)
-        d->viewUnderCursor = 0;
+        d->viewUnderCursor = nullptr;
 
     view->unsetCursor ();
     d->views.removeAll (view);
@@ -158,7 +158,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
                 return (*it);
         }
 
-        return 0;
+        return nullptr;
     }
 }
 
@@ -277,7 +277,7 @@ void kpViewManager::setTempImage (const kpTempImage &tempImage)
     {
         oldRect = d->tempImage->rect ();
         delete d->tempImage;
-        d->tempImage = 0;
+        d->tempImage = nullptr;
     }
 
     d->tempImage = new kpTempImage (tempImage);
@@ -302,7 +302,7 @@ void kpViewManager::invalidateTempImage ()
     QRect oldRect = d->tempImage->rect ();
 
     delete d->tempImage;
-    d->tempImage = 0;
+    d->tempImage = nullptr;
 
     updateViews (oldRect);
 }

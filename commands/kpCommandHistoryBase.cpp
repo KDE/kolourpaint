@@ -700,7 +700,7 @@ void kpCommandHistoryBase::updateActions ()
 kpCommand *kpCommandHistoryBase::nextUndoCommand () const
 {
     if (m_undoCommandList.isEmpty ())
-        return 0;
+        return nullptr;
 
     return m_undoCommandList.first ();
 }
@@ -709,7 +709,7 @@ kpCommand *kpCommandHistoryBase::nextUndoCommand () const
 kpCommand *kpCommandHistoryBase::nextRedoCommand () const
 {
     if (m_redoCommandList.isEmpty ())
-        return 0;
+        return nullptr;
 
     return m_redoCommandList.first ();
 }

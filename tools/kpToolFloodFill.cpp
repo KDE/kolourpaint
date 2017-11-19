@@ -57,7 +57,7 @@ kpToolFloodFill::kpToolFloodFill (kpToolEnvironment *environ, QObject *parent)
               environ, parent, "tool_flood_fill"),
       d (new kpToolFloodFillPrivate ())
 {
-    d->currentCommand = 0;
+    d->currentCommand = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -139,7 +139,7 @@ void kpToolFloodFill::cancelShape ()
     d->currentCommand->unexecute ();
 
     delete d->currentCommand;
-    d->currentCommand = 0;
+    d->currentCommand = nullptr;
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -161,7 +161,7 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
         false/*no exec - we already did it up there*/);
 
     // Don't delete - it just got added to the history.
-    d->currentCommand = 0;
+    d->currentCommand = nullptr;
     setUserMessage (haventBegunDrawUserMessage ());
 }
 

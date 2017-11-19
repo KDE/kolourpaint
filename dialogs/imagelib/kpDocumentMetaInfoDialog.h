@@ -79,7 +79,7 @@ public:
     //
     // This is a slow method as it recalculates the meta information each
     // time it's called.
-    kpDocumentMetaInfo metaInfo (QString *errorMessage = 0) const;
+    kpDocumentMetaInfo metaInfo (QString *errorMessage = nullptr) const;
 
 private:
     void editCell (int r, int c);

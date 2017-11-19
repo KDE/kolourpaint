@@ -134,7 +134,7 @@ kpView *kpTool::viewUnderStartPoint () const
 kpView *kpTool::viewUnderCursor () const
 {
     kpViewManager *vm = viewManager ();
-    return vm ? vm->viewUnderCursor () : 0;
+    return vm ? vm->viewUnderCursor () : nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -318,7 +318,7 @@ void kpTool::cancelShapeInternal ()
     {
         d->beganDraw = false;
         cancelShape ();
-        d->viewUnderStartPoint = 0;
+        d->viewUnderStartPoint = nullptr;
 
         emit cancelledShape (viewUnderCursor () ? d->currentPoint : KP_INVALID_POINT);
 
@@ -382,7 +382,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     #endif
         endDraw (thisPoint, normalizedRect);
     }
-    d->viewUnderStartPoint = 0;
+    d->viewUnderStartPoint = nullptr;
 
     emit endedDraw (d->currentPoint);
     if (viewUnderCursor ())

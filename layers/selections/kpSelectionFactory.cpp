@@ -59,7 +59,7 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream)
     // Text selections are only ever seen in the clipboard as ordinary text,
     // not selections, since copying text formatting over the clipboard doesn't
     // seem compelling.
-    kpAbstractImageSelection *imageSel = 0;
+    kpAbstractImageSelection *imageSel = nullptr;
     switch (serialID)
     {
     case kpRectangularImageSelection::SerialID:
@@ -76,15 +76,15 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream)
     }
 
     // Unknown selection type?
-    if (imageSel == 0)
+    if (imageSel == nullptr)
     {
-        return 0;
+        return nullptr;
     }
 
     if (!imageSel->readFromStream (stream))
     {
         delete imageSel;
-        return 0;
+        return nullptr;
     }
 
     return imageSel;

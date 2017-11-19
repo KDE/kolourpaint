@@ -96,12 +96,12 @@ kpToolFlowBase::kpToolFlowBase (const QString &text, const QString &description,
     : kpTool (text, description, key, environ, parent, name),
       d (new kpToolFlowBasePrivate ())
 {
-    d->toolWidgetBrush = 0;
-    d->toolWidgetEraserSize = 0;
+    d->toolWidgetBrush = nullptr;
+    d->toolWidgetEraserSize = nullptr;
 
     clearBrushCursorData ();
 
-    d->currentCommand = 0;
+    d->currentCommand = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -116,7 +116,7 @@ kpToolFlowBase::~kpToolFlowBase ()
 // private
 void kpToolFlowBase::clearBrushCursorData ()
 {
-    d->brushDrawFunc = d->cursorDrawFunc = 0;
+    d->brushDrawFunc = d->cursorDrawFunc = nullptr;
 
     memset (&d->brushDrawPackageForMouseButton,
         0,
@@ -179,13 +179,13 @@ void kpToolFlowBase::end ()
     {
         disconnect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
                     this, SLOT (updateBrushAndCursor ()));
-        d->toolWidgetEraserSize = 0;
+        d->toolWidgetEraserSize = nullptr;
     }
     else if (d->toolWidgetBrush)
     {
         disconnect (d->toolWidgetBrush, SIGNAL (brushChanged ()),
                     this, SLOT (updateBrushAndCursor ()));
-        d->toolWidgetBrush = 0;
+        d->toolWidgetBrush = nullptr;
     }
 
     kpViewManager *vm = viewManager ();
@@ -295,7 +295,7 @@ void kpToolFlowBase::cancelShape ()
     d->currentCommand->cancel ();
 
     delete d->currentCommand;
-    d->currentCommand = 0;
+    d->currentCommand = nullptr;
 
     updateBrushAndCursor ();
 
@@ -319,7 +319,7 @@ void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
         false/*don't exec*/);
 
     // don't delete - it's up to the commandHistory
-    d->currentCommand = 0;
+    d->currentCommand = nullptr;
 
     updateBrushAndCursor ();
 

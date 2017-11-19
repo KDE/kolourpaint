@@ -73,7 +73,7 @@ public:
     // WARNING: Only call the <ctor> with imagePtr = 0 if you are going to use
     //          operator= to fill it in with a valid imagePtr immediately
     //          afterwards.
-    kpTransformAutoCropBorder (const kpImage *imagePtr = 0, int processedColorSimilarity = 0);
+    kpTransformAutoCropBorder (const kpImage *imagePtr = nullptr, int processedColorSimilarity = 0);
 
     kpCommandSize::SizeType size () const;
 
@@ -351,10 +351,10 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
     d->rightBorder = rightBorder;
     d->topBorder = topBorder;
     d->botBorder = botBorder;
-    d->leftImage = 0;
-    d->rightImage = 0;
-    d->topImage = 0;
-    d->botImage = 0;
+    d->leftImage = nullptr;
+    d->rightImage = nullptr;
+    d->topImage = nullptr;
+    d->botImage = nullptr;
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -362,7 +362,7 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
     d->oldWidth = doc->width (d->actOnSelection);
     d->oldHeight = doc->height (d->actOnSelection);
 
-    d->oldSelectionPtr = 0;
+    d->oldSelectionPtr = nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -461,10 +461,10 @@ void kpTransformAutoCropCommand::deleteUndoImages ()
     qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::deleteUndoImages()";
 #endif
 
-    delete d->leftImage; d->leftImage = 0;
-    delete d->rightImage; d->rightImage = 0;
-    delete d->topImage; d->topImage = 0;
-    delete d->botImage; d->botImage = 0;
+    delete d->leftImage; d->leftImage = nullptr;
+    delete d->rightImage; d->rightImage = nullptr;
+    delete d->topImage; d->topImage = nullptr;
+    delete d->botImage; d->botImage = nullptr;
 }
 
 
@@ -532,14 +532,14 @@ void kpTransformAutoCropCommand::unexecute ()
     {
         &d->leftBorder, &d->rightBorder,
         &d->topBorder, &d->botBorder,
-        0
+        nullptr
     };
 
     const kpImage *images [] =
     {
         d->leftImage, d->rightImage,
         d->topImage, d->botImage,
-        0
+        nullptr
     };
 
     const kpImage **p = images;
@@ -582,7 +582,7 @@ void kpTransformAutoCropCommand::unexecute ()
         d->oldSelectionPtr->setBaseImage (image);
 
         doc->setSelection (*d->oldSelectionPtr);
-        delete d->oldSelectionPtr; d->oldSelectionPtr = 0;
+        delete d->oldSelectionPtr; d->oldSelectionPtr = nullptr;
 
         environ ()->somethingBelowTheCursorChanged ();
     }

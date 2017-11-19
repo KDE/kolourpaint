@@ -143,7 +143,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);
     d->actionQuit = KStandardAction::quit (this, SLOT (slotQuit ()), ac);
 
-    d->scanDialog = 0;
+    d->scanDialog = nullptr;
 
     enableFileMenuDocumentActions (false);
 }
@@ -382,7 +382,7 @@ kpDocument *kpMainWindow::openInternal (const QUrl &url,
     // If using OpenImagesInSameWindow mode, ask whether to close the
     // current document.
     if (!shouldOpen ())
-        return 0;
+        return nullptr;
 
     // Create/open doc.
     kpDocument *newDoc = new kpDocument (fallbackDocSize.width (),
@@ -394,7 +394,7 @@ kpDocument *kpMainWindow::openInternal (const QUrl &url,
         qCDebug(kpLogMainWindow) << "\topen failed";
     #endif
         delete newDoc;
-        return 0;
+        return nullptr;
     }
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -1100,7 +1100,7 @@ bool kpMainWindow::slotReload ()
     }
 
 
-    kpDocument *doc = 0;
+    kpDocument *doc = nullptr;
 
     // If it's _supposed to_ come from a URL or it exists
     if (d->document->isFromURL (false/*don't bother checking exists*/) ||
@@ -1113,7 +1113,7 @@ bool kpMainWindow::slotReload ()
         doc = new kpDocument (1, 1, documentEnvironment ());
         if (!doc->open (oldURL))
         {
-            delete doc; doc = 0;
+            delete doc; doc = nullptr;
             return false;
         }
 
@@ -1501,7 +1501,7 @@ void kpMainWindow::slotClose ()
     if (!queryCloseDocument ())
         return;
 
-    setDocument (0);
+    setDocument (nullptr);
 }
 
 //---------------------------------------------------------------------

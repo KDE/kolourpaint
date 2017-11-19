@@ -434,7 +434,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
         painter.fillRect (bgRectInside, palette().color (QPalette::Button));
     qDrawShadePanel (&painter, bgRect, palette(),
                      false/*not sunken*/, 2/*lineWidth*/,
-                     0/*never fill*/);
+                     nullptr/*never fill*/);
 
 
     // Draw foreground colour patch.
@@ -458,7 +458,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
     qDrawShadePanel (&painter, fgRect, palette (),
                      false/*not sunken*/, 2/*lineWidth*/,
-                     0/*never fill*/);
+                     nullptr/*never fill*/);
 }
 
 

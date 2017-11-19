@@ -44,8 +44,8 @@
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
                                                       QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent),
-      m_granularityInput (0),
-      m_amountInput (0)
+      m_granularityInput (nullptr),
+      m_amountInput (nullptr)
 
 {
     QGridLayout *lay = new QGridLayout (this);

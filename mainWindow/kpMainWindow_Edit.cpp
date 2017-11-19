@@ -638,7 +638,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     // Requirement 2. transparent pixels in the image must remain as transparent.
     //
 
-    kpMainWindow *win = new kpMainWindow (0/*no document*/);
+    kpMainWindow *win = new kpMainWindow (nullptr/*no document*/);
     win->show ();
 
     // Make "Edit / Paste in New Window" always paste white pixels as white.
@@ -801,7 +801,7 @@ void kpMainWindow::slotDeselect ()
 
     toolEndShape ();
 
-    addDeselectFirstCommand (0);
+    addDeselectFirstCommand (nullptr);
 }
 
 //---------------------------------------------------------------------

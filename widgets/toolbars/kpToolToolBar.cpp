@@ -77,11 +77,11 @@ protected:
 kpToolToolBar::kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *parent)
     : KToolBar(name, parent, Qt::LeftToolBarArea),
       m_vertCols (colsOrRows),
-      m_buttonGroup (0),
-      m_baseWidget (0),
-      m_baseLayout (0),
-      m_toolLayout (0),
-      m_previousTool (0), m_currentTool (0)
+      m_buttonGroup (nullptr),
+      m_baseWidget (nullptr),
+      m_baseLayout (nullptr),
+      m_toolLayout (nullptr),
+      m_previousTool (nullptr), m_currentTool (nullptr)
 {
     m_baseWidget = new QWidget(this);
 
@@ -272,7 +272,7 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
         }
     }
 
-    return 0;
+    return nullptr;
 }
 
 //---------------------------------------------------------------------
@@ -286,7 +286,7 @@ void kpToolToolBar::slotToolButtonClicked ()
     qCDebug(kpLogWidgets) << "kpToolToolBar::slotToolButtonClicked() button=" << b;
 #endif
 
-    kpTool *tool = 0;
+    kpTool *tool = nullptr;
     foreach (const kpToolButton *button, m_toolButtons)
     {
       if ( button == b )

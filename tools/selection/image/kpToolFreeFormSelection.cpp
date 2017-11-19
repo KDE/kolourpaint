@@ -84,7 +84,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
     Q_ASSERT (dragAccepted == (bool) document ()->selection ());
 
-    const kpFreeFormImageSelection *oldPointsSel = 0;
+    const kpFreeFormImageSelection *oldPointsSel = nullptr;
     if (document ()->selection ())
     {
         kpAbstractSelection *sel = document ()->selection ();
@@ -125,7 +125,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
 
     // Prevent accidental usage of dangling pointer to old selection
     // (deleted by kpDocument::setSelection()).
-    oldPointsSel = 0;
+    oldPointsSel = nullptr;
 
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
     qCDebug(kpLogTools) << "\t\tfreeform; #points="

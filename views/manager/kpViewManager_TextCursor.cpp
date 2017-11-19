@@ -83,7 +83,7 @@ void kpViewManager::setTextCursorEnabled (bool yes)
         return;
 
     delete d->textCursorBlinkTimer;
-    d->textCursorBlinkTimer = 0;
+    d->textCursorBlinkTimer = nullptr;
 
     setFastUpdates ();
     setQueueUpdates ();

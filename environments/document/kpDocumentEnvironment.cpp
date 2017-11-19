@@ -108,7 +108,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
 #endif
 
     *isTextChanged = (mainWindow ()->toolIsTextTool () !=
-                     (dynamic_cast <const kpTextSelection *> (&selection) != 0));
+                     (dynamic_cast <const kpTextSelection *> (&selection) != nullptr));
 
     // We don't change the Selection Tool if the new selection's
     // shape is merely different to the current tool's (e.g. rectangular
