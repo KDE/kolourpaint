@@ -312,12 +312,12 @@
       <li xml:lang="zh-TW">旋轉、單色與其他進階效果</li>
     </ul>
   </description>
-  <url type="homepage">http://www.kolourpaint.org/</url>
+  <url type="homepage">https://www.kolourpaint.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kolourpaint</url>
-  <url type="help">http://docs.kde.org/stable/en/kdegraphics/kolourpaint/index.html</url>
+  <url type="help">https://docs.kde.org/?application=kolourpaint</url>
   <screenshots>
     <screenshot type="default">
-      <image>http://kde.org/images/screenshots/kolourpaint.png</image>
+      <image>https://kde.org/images/screenshots/kolourpaint.png</image>
     </screenshot>
   </screenshots>
   <project_group>KDE</project_group>
