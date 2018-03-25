@@ -46,8 +46,8 @@
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2016-07-25</date>
-<releaseinfo>Applications 16.08</releaseinfo>
+<date>2018-03-23</date>
+<releaseinfo>Applications 18.04</releaseinfo>
 
 <abstract>
 <para>
@@ -116,6 +116,10 @@ capabilities:</para>
 
 <chapter id="tools-chapter">
 <title>Tools</title>
+
+<para>An additional option in the <guimenu>Settings</guimenu> menu allows to
+define if the tools draw with anti-aliasing (default) or not.
+</para>
 
 <sect1 id="acquiring-screenshots">
 <title>Acquiring Screenshots</title>
