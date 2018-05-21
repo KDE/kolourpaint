@@ -87,7 +87,9 @@ kpColorCellsBase::kpColorCellsBase( QWidget *parent, int rows, int cols )
     setRowCount( rows );
     setColumnCount( cols );
 
+    verticalHeader()->setMinimumSectionSize(16);
     verticalHeader()->hide();
+    horizontalHeader()->setMinimumSectionSize(16);
     horizontalHeader()->hide();
 
     d->colors = new QColor [ rows * cols ];
