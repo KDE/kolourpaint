@@ -25,7 +25,7 @@ find_package(KF5 REQUIRED COMPONENTS
     KDELibs4Support
 )
 
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DQT_USE_QSTRINGBUILDER)
 
 find_package(KF5Sane)
 
