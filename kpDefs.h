@@ -37,8 +37,6 @@
 #include <qsize.h>
 #include <qstring.h>
 
-#include <kdeversion.h>
-
 
 // approx. 2896x2896x32bpp or 3344x3344x24bpp (TODO: 24==32?) or 4096*4096x16bpp
 #define KP_BIG_IMAGE_SIZE (32 * 1048576)
