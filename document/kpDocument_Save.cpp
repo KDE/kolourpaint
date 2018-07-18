@@ -49,8 +49,8 @@
 #include <QMimeDatabase>
 
 #include "kpLogCategories.h"
-#include <kimageio.h>
-#include <kio/netaccess.h>
+#include <kimageio.h> // kdelibs4support
+#include <kio/netaccess.h> // kdelibs4support
 #include <KLocalizedString>
 #include <kmessagebox.h>
 

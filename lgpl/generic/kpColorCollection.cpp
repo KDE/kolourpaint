@@ -30,7 +30,7 @@
 
 #include "kpUrlFormatter.h"
 
-#include <kio/netaccess.h>
+#include <kio/netaccess.h> // kdelibs4support
 #include <KLocalizedString>
 #include <KMessageBox>
 #include "kpLogCategories.h"

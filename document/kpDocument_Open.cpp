@@ -51,7 +51,7 @@
 #include <QImageReader>
 
 #include "kpLogCategories.h"
-#include <kio/netaccess.h>
+#include <kio/netaccess.h> // kdelibs4support
 #include <KLocalizedString>
 #include <kmessagebox.h>
 

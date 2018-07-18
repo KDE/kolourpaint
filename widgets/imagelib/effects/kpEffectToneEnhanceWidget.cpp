@@ -38,7 +38,7 @@
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
-#include <knuminput.h>
+#include <knuminput.h> // kdelibs4support
 
 
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,

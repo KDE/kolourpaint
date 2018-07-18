@@ -31,7 +31,7 @@
 #include "widgets/colorSimilarity/kpColorSimilarityFrame.h"
 
 #include <KLocalizedString>
-#include <knuminput.h>
+#include <knuminput.h> // kdelibs4support
 
 #include <qboxlayout.h>
 #include <qdialogbuttonbox.h>

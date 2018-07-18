@@ -56,16 +56,16 @@
 #include <KSharedConfig>
 #include <kconfiggroup.h>
 #include <KPluralHandlingSpinBox>
-#include <kfiledialog.h>
+#include <kfiledialog.h> // kdelibs4support
 #include <kiconloader.h>
-#include <kio/netaccess.h>
+#include <kio/netaccess.h> // kdelibs4support
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
 #include <KLocalizedString>
-#include <kdeprintdialog.h>
+#include <kdeprintdialog.h> // kdelibs4support
 
 #include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"

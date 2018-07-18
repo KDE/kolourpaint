@@ -35,7 +35,7 @@
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
-#include <knuminput.h>
+#include <knuminput.h> // kdelibs4support
 
 #include <qgridlayout.h>
 #include <qlabel.h>

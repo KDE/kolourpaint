@@ -33,7 +33,7 @@
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
-#include <knuminput.h>
+#include <knuminput.h> // kdelibs4support
 
 #include "imagelib/effects/kpEffectHSV.h"
 #include "commands/imagelib/effects/kpEffectHSVCommand.h"
