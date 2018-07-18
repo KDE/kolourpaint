@@ -39,7 +39,6 @@
 #include "generic/kpWidgetMapper.h"
 
 #include "kpLogCategories.h"
-#include <knuminput.h>
 #include <KSharedConfig>
 #include <KConfigGroup>
 
@@ -53,6 +52,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
+#include <qspinbox.h>
 #include <qtimer.h>
 
 
