@@ -33,9 +33,9 @@
 
 #include "kpDefs.h"
 
-#include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <ksharedconfig.h>
 #include "kpLogCategories.h"
 
 #include <qbitmap.h>

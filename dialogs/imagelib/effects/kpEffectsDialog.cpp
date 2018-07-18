@@ -44,7 +44,6 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 
-#include <kapplication.h>
 #include <kconfig.h>
 #include "kpLogCategories.h"
 #include <KLocalizedString>
