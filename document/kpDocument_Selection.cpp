@@ -39,7 +39,6 @@
 #include <qrect.h>
 
 #include "kpLogCategories.h"
-#include <kimageio.h>
 #include <KLocalizedString>
 
 #include "imagelib/kpColor.h"

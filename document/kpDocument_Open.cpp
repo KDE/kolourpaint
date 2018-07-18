@@ -51,7 +51,6 @@
 #include <QImageReader>
 
 #include "kpLogCategories.h"
-#include <kimageio.h>
 #include <kio/netaccess.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
