@@ -19,9 +19,19 @@ include(FeatureSummary)
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Widgets
+    PrintSupport
 )
 
 find_package(KF5 REQUIRED COMPONENTS
+    DocTools
+    I18n
+    GuiAddons
+    WidgetsAddons
+    KIO
+    XmlGui
+    IconThemes
+    TextWidgets
+
     KDELibs4Support
 )
 
@@ -322,6 +332,10 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
     KF5::KDELibs4Support
+    KF5::XmlGui
+    KF5::IconThemes
+    KF5::TextWidgets
+    Qt5::PrintSupport
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )
