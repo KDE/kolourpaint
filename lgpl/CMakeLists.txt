@@ -4,6 +4,8 @@
 # This MUST be a dynamic link library to avoid LGPL license infection.
 #
 
+include(GenerateExportHeader)
+
 set(kolourpaint_lgpl_SRCS
     generic/kpUrlFormatter.cpp
     generic/kpColorCollection.cpp
