@@ -183,7 +183,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
     }
     else
     {
-        for (int i = 0; i < qimage.numColors (); i++)
+        for (int i = 0; i < qimage.colorCount (); i++)
         {
             const QRgb rgb = qimage.color (i);
 

@@ -66,7 +66,7 @@ kpImage kpEffectGrayscale::applyEffect (const kpImage &image)
     else
     {
         // 1- & 8- bit images use a color table
-        for (int i = 0; i < qimage.numColors (); i++)
+        for (int i = 0; i < qimage.colorCount (); i++)
             qimage.setColor (i, toGray (qimage.color (i)));
     }
 

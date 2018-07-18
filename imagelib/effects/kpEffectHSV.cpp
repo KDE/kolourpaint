@@ -153,7 +153,7 @@ static void AdjustHSV (QImage* pImage, double hue, double saturation, double val
     }
     else
     {
-        for (int i = 0; i < pImage->numColors (); i++)
+        for (int i = 0; i < pImage->colorCount (); i++)
         {
             QRgb pix = pImage->color (i);
             pix = ::AdjustHSVInternal (pix, hue, saturation, value);

@@ -72,7 +72,7 @@ void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
     }
     else
     {
-        for (int i = 0; i < destImagePtr->numColors (); i++)
+        for (int i = 0; i < destImagePtr->colorCount (); i++)
         {
             destImagePtr->setColor (i, destImagePtr->color (i) ^ mask);
         }

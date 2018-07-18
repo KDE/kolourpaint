@@ -115,7 +115,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         bool moreThan2Colors = false;
 
         QImage monoImage (image.width (), image.height (), QImage::Format_MonoLSB);
-        monoImage.setNumColors (2);
+        monoImage.setColorCount (2);
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
         qCDebug(kpLogImagelib) << "\t\tinitialising output image w=" << monoImage.width ()
                    << ",h=" << monoImage.height ()
