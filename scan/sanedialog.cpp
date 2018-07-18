@@ -25,7 +25,7 @@
 
 #include "sanedialog.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 #include "kpLogCategories.h"
 #include <KMessageBox>
 #include <KSharedConfig>

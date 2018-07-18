@@ -39,7 +39,7 @@
 #include <QScrollBar>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 #include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"

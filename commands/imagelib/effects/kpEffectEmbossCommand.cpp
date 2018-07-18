@@ -33,7 +33,7 @@
 #include "imagelib/effects/kpEffectEmboss.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 
 kpEffectEmbossCommand::kpEffectEmbossCommand (int strength,
