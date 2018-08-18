@@ -121,7 +121,7 @@ void kpTransformRotateCommand::execute ()
         //    reverse.
         // 2. If it's not a lossless rotation, "m_oldImage" already holds
         //    a copy of the old image.  In this case, we actually save very
-        //    little with this line (just, the computed transpareny mask) since
+        //    little with this line (just, the computed transparency mask) since
         //    kpImage is copy-on-write.
         m_oldSelectionPtr->setBaseImage (kpImage ());
 

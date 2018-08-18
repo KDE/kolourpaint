@@ -93,7 +93,7 @@ public:
     // 2. A change to selection transparency (background color, color similarity
     //    percentage, change from opaque to transparent).
     //
-    //    It is not used when the transpareny is opaque or when changing from
+    //    It is not used when the transparency is opaque or when changing from
     //    transparent to opaque, as you're not using Color Similarity in these
     //    cases.
     //

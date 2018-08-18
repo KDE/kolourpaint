@@ -40,7 +40,7 @@ class kpTextSelection;
 // text line.  This must be executed before any manipulations can be made
 // to a text selection.
 //
-// Text analogue of kpToolSelectionPullFromDocumentCommand.
+// Text analog of kpToolSelectionPullFromDocumentCommand.
 class kpToolTextGiveContentCommand :
         public kpAbstractSelectionContentCommand
 {

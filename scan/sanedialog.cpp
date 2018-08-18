@@ -32,7 +32,7 @@
 #include <KWindowConfig>
 #include <KConfigGroup>
 
-#include <QtWidgets/QPushButton>
+#include <QPushButton>
 
 SaneDialog::SaneDialog(QWidget *parent)
     : KPageDialog(parent)

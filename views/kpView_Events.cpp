@@ -44,8 +44,6 @@
 
 #include "tools/kpTool.h"
 
-#include "kpLogCategories.h"
-
 //---------------------------------------------------------------------
 
 // protected virtual [base QWidget]

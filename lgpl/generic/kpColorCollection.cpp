@@ -35,7 +35,6 @@
 #include <KMessageBox>
 #include "kpLogCategories.h"
 #include <kstringhandler.h>
-#include "kpLogCategories.h"
 
 #include <QDir>
 #include <QFile>
@@ -266,7 +265,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    QTextStream str (device);
 
    QString description = d->desc.trimmed();
-   description = '#'+description.split( "\n", QString::KeepEmptyParts).join("\n#");
+   description = '#'+description.split( '\n', QString::KeepEmptyParts).join("\n#");
 
    str << "KDE RGB Palette\n";
    str << description << "\n";

@@ -550,7 +550,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
     defaultMimeTypes << QLatin1String ("image/bmp");
     defaultMimeTypes << QLatin1String ("image/x-pcx");
 
-    // TODO: Only 1, 24 not 8; Qt only sees 32 but "file" cmd realises
+    // TODO: Only 1, 24 not 8; Qt only sees 32 but "file" cmd realizes
     //       it's either 1 or 24.
     defaultMimeTypes << QLatin1String ("image/x-rgb");
 
