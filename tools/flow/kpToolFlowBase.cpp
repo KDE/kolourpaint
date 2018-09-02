@@ -147,8 +147,8 @@ void kpToolFlowBase::begin ()
     if (haveSquareBrushes ())
     {
         d->toolWidgetEraserSize = tb->toolWidgetEraserSize ();
-        connect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
-                 this, SLOT (updateBrushAndCursor ()));
+        connect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged(int)),
+                 this, SLOT (updateBrushAndCursor()));
         d->toolWidgetEraserSize->show ();
 
         updateBrushAndCursor ();
@@ -158,8 +158,8 @@ void kpToolFlowBase::begin ()
     else if (haveDiverseBrushes ())
     {
         d->toolWidgetBrush = tb->toolWidgetBrush ();
-        connect (d->toolWidgetBrush, SIGNAL (brushChanged ()),
-                 this, SLOT (updateBrushAndCursor ()));
+        connect (d->toolWidgetBrush, SIGNAL (brushChanged()),
+                 this, SLOT (updateBrushAndCursor()));
         d->toolWidgetBrush->show ();
 
         updateBrushAndCursor ();
@@ -177,14 +177,14 @@ void kpToolFlowBase::end ()
 {
     if (d->toolWidgetEraserSize)
     {
-        disconnect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
-                    this, SLOT (updateBrushAndCursor ()));
+        disconnect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged(int)),
+                    this, SLOT (updateBrushAndCursor()));
         d->toolWidgetEraserSize = nullptr;
     }
     else if (d->toolWidgetBrush)
     {
-        disconnect (d->toolWidgetBrush, SIGNAL (brushChanged ()),
-                    this, SLOT (updateBrushAndCursor ()));
+        disconnect (d->toolWidgetBrush, SIGNAL (brushChanged()),
+                    this, SLOT (updateBrushAndCursor()));
         d->toolWidgetBrush = nullptr;
     }
 

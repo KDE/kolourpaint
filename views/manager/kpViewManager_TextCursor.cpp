@@ -92,8 +92,8 @@ void kpViewManager::setTextCursorEnabled (bool yes)
         {
             d->textCursorBlinkTimer = new QTimer (this);
             d->textCursorBlinkTimer->setSingleShot (true);
-            connect (d->textCursorBlinkTimer, SIGNAL (timeout ()),
-                    this, SLOT (slotTextCursorBlink ()));
+            connect (d->textCursorBlinkTimer, SIGNAL (timeout()),
+                    this, SLOT (slotTextCursorBlink()));
 
             d->textCursorBlinkState = true;
             slotTextCursorBlink ();

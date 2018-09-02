@@ -275,55 +275,55 @@ void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
         // Got these connect statements by analysing deps of
         // updateBuddyViewScrollableContainerRectangle() rect update code.
 
-        connect (this, SIGNAL (zoomLevelChanged (int, int)),
-                 this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
-        connect (this, SIGNAL (originChanged (const QPoint &)),
-                 this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+        connect (this, SIGNAL (zoomLevelChanged(int,int)),
+                 this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+        connect (this, SIGNAL (originChanged(QPoint)),
+                 this, SLOT (updateBuddyViewScrollableContainerRectangle()));
 
         if (buddyViewScrollableContainer ())
         {
             connect (buddyViewScrollableContainer (), SIGNAL (contentsMoved()),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
-            connect (buddyViewScrollableContainer (), SIGNAL (resized ()),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            connect (buddyViewScrollableContainer (), SIGNAL (resized()),
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
         }
 
         if (buddyView ())
         {
-            connect (buddyView (), SIGNAL (zoomLevelChanged (int, int)),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
-            connect (buddyView (), SIGNAL (originChanged (const QPoint &)),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+            connect (buddyView (), SIGNAL (zoomLevelChanged(int,int)),
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            connect (buddyView (), SIGNAL (originChanged(QPoint)),
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
 
-            connect (buddyView (), SIGNAL (sizeChanged (int, int)),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+            connect (buddyView (), SIGNAL (sizeChanged(int,int)),
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
         }
 
     }
     else
     {
-        disconnect (this, SIGNAL (zoomLevelChanged (int, int)),
-                    this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
-        disconnect (this, SIGNAL (originChanged (const QPoint &)),
-                    this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+        disconnect (this, SIGNAL (zoomLevelChanged(int,int)),
+                    this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+        disconnect (this, SIGNAL (originChanged(QPoint)),
+                    this, SLOT (updateBuddyViewScrollableContainerRectangle()));
 
         if (buddyViewScrollableContainer ())
         {
             disconnect (buddyViewScrollableContainer (), SIGNAL (contentsMoved()),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
-            disconnect (buddyViewScrollableContainer (), SIGNAL (resized ()),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            disconnect (buddyViewScrollableContainer (), SIGNAL (resized()),
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
         }
 
         if (buddyView ())
         {
-            disconnect (buddyView (), SIGNAL (zoomLevelChanged (int, int)),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
-            disconnect (buddyView (), SIGNAL (originChanged (const QPoint &)),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+            disconnect (buddyView (), SIGNAL (zoomLevelChanged(int,int)),
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            disconnect (buddyView (), SIGNAL (originChanged(QPoint)),
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
 
-            disconnect (buddyView (), SIGNAL (sizeChanged (int, int)),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+            disconnect (buddyView (), SIGNAL (sizeChanged(int,int)),
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
         }
 
     }

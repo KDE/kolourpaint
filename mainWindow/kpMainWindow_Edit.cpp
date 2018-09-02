@@ -89,32 +89,32 @@ void kpMainWindow::setupEditMenuActions ()
     }
 
 
-    d->actionCut = KStandardAction::cut (this, SLOT (slotCut ()), ac);
-    d->actionCopy = KStandardAction::copy (this, SLOT (slotCopy ()), ac);
-    d->actionPaste = KStandardAction::paste (this, SLOT (slotPaste ()), ac);
+    d->actionCut = KStandardAction::cut (this, SLOT (slotCut()), ac);
+    d->actionCopy = KStandardAction::copy (this, SLOT (slotCopy()), ac);
+    d->actionPaste = KStandardAction::paste (this, SLOT (slotPaste()), ac);
     d->actionPasteInNewWindow = ac->addAction ("edit_paste_in_new_window");
     d->actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
-    connect (d->actionPasteInNewWindow, SIGNAL (triggered (bool)),
-        SLOT (slotPasteInNewWindow ()));
+    connect (d->actionPasteInNewWindow, SIGNAL (triggered(bool)),
+        SLOT (slotPasteInNewWindow()));
     ac->setDefaultShortcut (d->actionPasteInNewWindow, Qt::CTRL + Qt::SHIFT + Qt::Key_V);
 
-    //d->actionDelete = KStandardAction::clear (this, SLOT (slotDelete ()), ac);
+    //d->actionDelete = KStandardAction::clear (this, SLOT (slotDelete()), ac);
     d->actionDelete = ac->addAction ("edit_clear");
     d->actionDelete->setText (i18n ("&Delete Selection"));
-    connect (d->actionDelete, SIGNAL (triggered (bool)), SLOT (slotDelete ()));
+    connect (d->actionDelete, SIGNAL (triggered(bool)), SLOT (slotDelete()));
 
-    d->actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll ()), ac);
-    d->actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect ()), ac);
+    d->actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll()), ac);
+    d->actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect()), ac);
 
 
     d->actionCopyToFile = ac->addAction ("edit_copy_to_file");
     d->actionCopyToFile->setText (i18n ("C&opy to File..."));
-    connect (d->actionCopyToFile, SIGNAL (triggered (bool)),
-        SLOT (slotCopyToFile ()));
+    connect (d->actionCopyToFile, SIGNAL (triggered(bool)),
+        SLOT (slotCopyToFile()));
     d->actionPasteFromFile = ac->addAction ("edit_paste_from_file");
     d->actionPasteFromFile->setText (i18n ("Paste &From File..."));
-    connect (d->actionPasteFromFile, SIGNAL (triggered (bool)),
-        SLOT (slotPasteFromFile ()));
+    connect (d->actionPasteFromFile, SIGNAL (triggered(bool)),
+        SLOT (slotPasteFromFile()));
 
 
     d->editMenuDocumentActionsEnabled = false;
@@ -122,8 +122,8 @@ void kpMainWindow::setupEditMenuActions ()
 
     // Paste should always be enabled, as long as there is something to paste
     // (independent of whether we have a document or not)
-    connect (QApplication::clipboard (), SIGNAL (dataChanged ()),
-             this, SLOT (slotEnablePaste ()));
+    connect (QApplication::clipboard (), SIGNAL (dataChanged()),
+             this, SLOT (slotEnablePaste()));
     slotEnablePaste ();
 }
 

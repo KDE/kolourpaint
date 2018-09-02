@@ -79,22 +79,22 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
     m_actionUndo = new KToolBarPopupAction(KDE::icon("edit-undo"), undoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
     ac->setDefaultShortcuts (m_actionUndo, KStandardShortcut::shortcut (KStandardShortcut::Undo));
-    connect (m_actionUndo, SIGNAL(triggered(bool)), this, SLOT (undo ()));
+    connect (m_actionUndo, SIGNAL(triggered(bool)), this, SLOT (undo()));
 
     m_actionRedo = new KToolBarPopupAction(KDE::icon("edit-redo"), redoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
     ac->setDefaultShortcuts (m_actionRedo, KStandardShortcut::shortcut (KStandardShortcut::Redo));
-    connect (m_actionRedo, SIGNAL(triggered(bool)), this, SLOT (redo ()));
+    connect (m_actionRedo, SIGNAL(triggered(bool)), this, SLOT (redo()));
 
 
     m_actionUndo->setEnabled (false);
     m_actionRedo->setEnabled (false);
 
 
-    connect (m_actionUndo->menu (), SIGNAL (triggered (QAction *)),
-             this, SLOT (undoUpToNumber (QAction *)));
-    connect (m_actionRedo->menu (), SIGNAL (triggered (QAction *)),
-             this, SLOT (redoUpToNumber (QAction *)));
+    connect (m_actionUndo->menu (), SIGNAL (triggered(QAction*)),
+             this, SLOT (undoUpToNumber(QAction*)));
+    connect (m_actionRedo->menu (), SIGNAL (triggered(QAction*)),
+             this, SLOT (redoUpToNumber(QAction*)));
 
 
     m_undoMinLimit = 10;

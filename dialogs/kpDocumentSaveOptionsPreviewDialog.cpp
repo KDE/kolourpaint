@@ -80,8 +80,8 @@ kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
     lay->setRowStretch (0, 1);
 
 
-    connect (m_filePixmapLabel, SIGNAL (resized ()),
-             this, SLOT (updatePixmapPreview ()));
+    connect (m_filePixmapLabel, SIGNAL (resized()),
+             this, SLOT (updatePixmapPreview()));
 }
 
 kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()

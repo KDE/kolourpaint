@@ -66,14 +66,14 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     //                 The second CTRL+H doesn't close the thumbnail.
     ac->setDefaultShortcut (d->actionShowThumbnail, Qt::CTRL + Qt::Key_H);
     //d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
-    connect (d->actionShowThumbnail, SIGNAL (triggered (bool)),
-        SLOT (slotShowThumbnailToggled ()));
+    connect (d->actionShowThumbnail, SIGNAL (triggered(bool)),
+        SLOT (slotShowThumbnailToggled()));
 
     // Please do not use setCheckedState() here - it wouldn't make sense
     d->actionZoomedThumbnail = ac->add <KToggleAction> ("view_zoomed_thumbnail");
     d->actionZoomedThumbnail->setText (i18n ("Zoo&med Thumbnail Mode"));
-    connect (d->actionZoomedThumbnail, SIGNAL (triggered (bool)),
-        SLOT (slotZoomedThumbnailToggled ()));
+    connect (d->actionZoomedThumbnail, SIGNAL (triggered(bool)),
+        SLOT (slotZoomedThumbnailToggled()));
 
     // For consistency with the above action, don't use setCheckedState()
     //
@@ -82,8 +82,8 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     // since rect _surrounds_ entire doc (hence, won't be rendered).
     d->actionShowThumbnailRectangle = ac->add <KToggleAction> ("view_show_thumbnail_rectangle");
     d->actionShowThumbnailRectangle->setText (i18n ("Enable Thumbnail &Rectangle"));
-    connect (d->actionShowThumbnailRectangle, SIGNAL (triggered (bool)),
-        SLOT (slotThumbnailShowRectangleToggled ()));
+    connect (d->actionShowThumbnailRectangle, SIGNAL (triggered(bool)),
+        SLOT (slotThumbnailShowRectangleToggled()));
 }
 
 // private
@@ -139,8 +139,8 @@ void kpMainWindow::notifyThumbnailGeometryChanged ()
     {
         d->thumbnailSaveConfigTimer = new QTimer (this);
         d->thumbnailSaveConfigTimer->setSingleShot (true);
-        connect (d->thumbnailSaveConfigTimer, SIGNAL (timeout ()),
-                 this, SLOT (slotSaveThumbnailGeometry ()));
+        connect (d->thumbnailSaveConfigTimer, SIGNAL (timeout()),
+                 this, SLOT (slotSaveThumbnailGeometry()));
     }
 
     // (single shot)
@@ -436,8 +436,8 @@ void kpMainWindow::updateThumbnail ()
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tconnecting signal thumbnail::windowClosed to destroy slot";
     #endif
-        connect (d->thumbnail, SIGNAL (windowClosed ()),
-                 this, SLOT (slotDestroyThumbnailInitatedByUser ()));
+        connect (d->thumbnail, SIGNAL (windowClosed()),
+                 this, SLOT (slotDestroyThumbnailInitatedByUser()));
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tDONE";
     #endif
@@ -457,8 +457,8 @@ void kpMainWindow::updateThumbnail ()
 
         // Must be done before hiding the thumbnail to avoid triggering
         // this signal - re-entering this code.
-        disconnect (d->thumbnail, SIGNAL (windowClosed ()),
-                    this, SLOT (slotDestroyThumbnailInitatedByUser ()));
+        disconnect (d->thumbnail, SIGNAL (windowClosed()),
+                    this, SLOT (slotDestroyThumbnailInitatedByUser()));
 
         // Avoid change/flicker of caption due to view delete
         // (destroyThumbnailView())

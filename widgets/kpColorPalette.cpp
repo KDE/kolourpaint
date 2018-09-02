@@ -58,16 +58,16 @@ kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
     d->boxLayout = nullptr;
 
     d->transparentColorCell = new kpTransparentColorCell (this);
-    connect (d->transparentColorCell, SIGNAL (foregroundColorChanged (const kpColor &)),
-             this, SIGNAL (foregroundColorChanged (const kpColor &)));
-    connect (d->transparentColorCell, SIGNAL (backgroundColorChanged (const kpColor &)),
-             this, SIGNAL (backgroundColorChanged (const kpColor &)));
+    connect (d->transparentColorCell, SIGNAL (foregroundColorChanged(kpColor)),
+             this, SIGNAL (foregroundColorChanged(kpColor)));
+    connect (d->transparentColorCell, SIGNAL (backgroundColorChanged(kpColor)),
+             this, SIGNAL (backgroundColorChanged(kpColor)));
 
     d->colorCells = new kpColorCells (this);
-    connect (d->colorCells, SIGNAL (foregroundColorChanged (const kpColor &)),
-             this, SIGNAL (foregroundColorChanged (const kpColor &)));
-    connect (d->colorCells, SIGNAL (backgroundColorChanged (const kpColor &)),
-             this, SIGNAL (backgroundColorChanged (const kpColor &)));
+    connect (d->colorCells, SIGNAL (foregroundColorChanged(kpColor)),
+             this, SIGNAL (foregroundColorChanged(kpColor)));
+    connect (d->colorCells, SIGNAL (backgroundColorChanged(kpColor)),
+             this, SIGNAL (backgroundColorChanged(kpColor)));
 
     setOrientation (o);
 }

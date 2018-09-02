@@ -63,8 +63,8 @@ kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
     m_newHeight = selection ()->height ();
 
     m_smoothScaleTimer->setSingleShot (true);
-    connect (m_smoothScaleTimer, SIGNAL (timeout ()),
-             this, SLOT (resizeScaleAndMove ()));
+    connect (m_smoothScaleTimer, SIGNAL (timeout()),
+             this, SLOT (resizeScaleAndMove()));
 }
 
 kpToolSelectionResizeScaleCommand::~kpToolSelectionResizeScaleCommand ()

@@ -176,12 +176,12 @@ kpColorCells::kpColorCells (QWidget *parent,
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 
-    connect (this, SIGNAL (colorSelected (int, const QColor &, Qt::MouseButton)),
-             SLOT (slotColorSelected (int, const QColor &, Qt::MouseButton)));
-    connect (this, SIGNAL (colorDoubleClicked (int, const QColor &)),
-             SLOT (slotColorDoubleClicked (int, const QColor &)));
-    connect (this, SIGNAL (colorChanged (int, const QColor &)),
-             SLOT (slotColorChanged (int, const QColor &)));
+    connect (this, SIGNAL (colorSelected(int,QColor,Qt::MouseButton)),
+             SLOT (slotColorSelected(int,QColor,Qt::MouseButton)));
+    connect (this, SIGNAL (colorDoubleClicked(int,QColor)),
+             SLOT (slotColorDoubleClicked(int,QColor)));
+    connect (this, SIGNAL (colorChanged(int,QColor)),
+             SLOT (slotColorChanged(int,QColor)));
 
 
     setColorCollection (DefaultColorCollection ());

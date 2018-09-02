@@ -243,26 +243,26 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     d->fieldsTableWidget = new QTableWidget (fieldsGroupBox);
     d->fieldsTableWidget->setEditTriggers(QAbstractItemView::AllEditTriggers);
 
-    connect (d->fieldsTableWidget, SIGNAL (currentCellChanged (int, int, int, int)),
-             SLOT (slotFieldsCurrentCellChanged (int, int, int, int)));
+    connect (d->fieldsTableWidget, SIGNAL (currentCellChanged(int,int,int,int)),
+             SLOT (slotFieldsCurrentCellChanged(int,int,int,int)));
 
-    connect (d->fieldsTableWidget, SIGNAL (itemChanged (QTableWidgetItem *)),
-             SLOT (slotFieldsItemChanged (QTableWidgetItem *)));
+    connect (d->fieldsTableWidget, SIGNAL (itemChanged(QTableWidgetItem*)),
+             SLOT (slotFieldsItemChanged(QTableWidgetItem*)));
 
     d->fieldsAddRowButton = new QPushButton (i18n ("&Add Row"),
         fieldsGroupBox);
-    connect (d->fieldsAddRowButton, SIGNAL (clicked ()),
-             SLOT (slotFieldsAddRowButtonClicked ()));
+    connect (d->fieldsAddRowButton, SIGNAL (clicked()),
+             SLOT (slotFieldsAddRowButtonClicked()));
 
     d->fieldsDeleteRowButton = new QPushButton (i18n ("&Delete Row"),
         fieldsGroupBox);
-    connect (d->fieldsDeleteRowButton, SIGNAL (clicked ()),
-             SLOT (slotFieldsDeleteRowButtonClicked ()));
+    connect (d->fieldsDeleteRowButton, SIGNAL (clicked()),
+             SLOT (slotFieldsDeleteRowButtonClicked()));
 
     d->fieldsResetButton = new QPushButton (i18n ("&Reset"),
         fieldsGroupBox);
-    connect (d->fieldsResetButton, SIGNAL (clicked ()),
-             SLOT (setUIToOriginalMetaInfo ()));
+    connect (d->fieldsResetButton, SIGNAL (clicked()),
+             SLOT (setUIToOriginalMetaInfo()));
 
     QHBoxLayout *fieldsButtonsLayout = new QHBoxLayout ();
     fieldsButtonsLayout->addWidget (d->fieldsAddRowButton);

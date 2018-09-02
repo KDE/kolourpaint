@@ -66,7 +66,7 @@ kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
         connect (buddyViewScrollableContainer (),
                 SIGNAL (contentsMoved()),
                 this,
-                SLOT (adjustToEnvironment ()));
+                SLOT (adjustToEnvironment()));
     }
 
     // Call to virtual function - this is why the class is sealed

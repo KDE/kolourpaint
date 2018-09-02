@@ -91,8 +91,8 @@ void kpMainWindow::setupFileMenuActions ()
 #endif
     KActionCollection *ac = actionCollection ();
 
-    d->actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
-    d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
+    d->actionNew = KStandardAction::openNew (this, SLOT (slotNew()), ac);
+    d->actionOpen = KStandardAction::open (this, SLOT (slotOpen()), ac);
 
     d->actionOpenRecent = KStandardAction::openRecent(this, &kpMainWindow::slotOpenRecent, ac);
     connect(d->actionOpenRecent, &KRecentFilesAction::recentListCleared, this, &kpMainWindow::slotRecentListCleared);
@@ -101,13 +101,13 @@ void kpMainWindow::setupFileMenuActions ()
     qCDebug(kpLogMainWindow) << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
 
-    d->actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
-    d->actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
+    d->actionSave = KStandardAction::save (this, SLOT (slotSave()), ac);
+    d->actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs()), ac);
 
     d->actionExport = ac->addAction("file_export");
     d->actionExport->setText (i18n ("E&xport..."));
     d->actionExport->setIcon(KDE::icon("document-export"));
-    connect(d->actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
+    connect(d->actionExport, SIGNAL(triggered(bool)), SLOT (slotExport()));
 
     d->actionScan = ac->addAction("file_scan");
     d->actionScan->setText(i18n ("Scan..."));
@@ -125,23 +125,23 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionProperties = ac->addAction ("file_properties");
     d->actionProperties->setText (i18n ("Properties"));
     d->actionProperties->setIcon(KDE::icon("document-properties"));
-    connect (d->actionProperties, SIGNAL (triggered (bool)), SLOT (slotProperties ()));
+    connect (d->actionProperties, SIGNAL (triggered(bool)), SLOT (slotProperties()));
 
-    //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
+    //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert()), ac);
     d->actionReload = ac->addAction ("file_revert");
     d->actionReload->setText (i18n ("Reloa&d"));
     d->actionReload->setIcon(KDE::icon("view-refresh"));
-    connect(d->actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
+    connect(d->actionReload, SIGNAL(triggered(bool)), SLOT (slotReload()));
     ac->setDefaultShortcuts (d->actionReload, KStandardShortcut::reload ());
     slotEnableReload ();
 
-    d->actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
-    d->actionPrintPreview = KStandardAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
+    d->actionPrint = KStandardAction::print (this, SLOT (slotPrint()), ac);
+    d->actionPrintPreview = KStandardAction::printPreview (this, SLOT (slotPrintPreview()), ac);
 
-    d->actionMail = KStandardAction::mail (this, SLOT (slotMail ()), ac);
+    d->actionMail = KStandardAction::mail (this, SLOT (slotMail()), ac);
 
-    d->actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);
-    d->actionQuit = KStandardAction::quit (this, SLOT (slotQuit ()), ac);
+    d->actionClose = KStandardAction::close (this, SLOT (slotClose()), ac);
+    d->actionQuit = KStandardAction::quit (this, SLOT (slotQuit()), ac);
 
     d->scanDialog = nullptr;
 
@@ -556,8 +556,8 @@ void kpMainWindow::slotScan ()
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tcreated scanDialog=" << d->scanDialog;
     #endif
-        connect (d->scanDialog, SIGNAL (finalImage (const QImage &, int)),
-                 SLOT (slotScanned (const QImage &, int)));
+        connect (d->scanDialog, SIGNAL (finalImage(QImage,int)),
+                 SLOT (slotScanned(QImage,int)));
     }
 
 
@@ -896,8 +896,8 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (localOnly)
         fd.setMode (KFile::File | KFile::LocalOnly);
 
-    connect (&fd, SIGNAL (filterChanged (const QString &)),
-             saveOptionsWidget, SLOT (setMimeType (const QString &)));
+    connect (&fd, SIGNAL (filterChanged(QString)),
+             saveOptionsWidget, SLOT (setMimeType(QString)));
 
     if ( fd.exec() == QDialog::Accepted )
     {

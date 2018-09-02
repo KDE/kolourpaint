@@ -77,11 +77,11 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
         lay->setColumnStretch (1, 1);
 
 
-        connect (m_granularityInput, SIGNAL (valueChanged (double)),
-                 this, SIGNAL (settingsChangedDelayed ()));
+        connect (m_granularityInput, SIGNAL (valueChanged(double)),
+                 this, SIGNAL (settingsChangedDelayed()));
 
-        connect (m_amountInput, SIGNAL (valueChanged (double)),
-                 this, SIGNAL (settingsChangedDelayed ()));
+        connect (m_amountInput, SIGNAL (valueChanged(double)),
+                 this, SIGNAL (settingsChangedDelayed()));
     }
 }
 

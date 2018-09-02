@@ -60,15 +60,15 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
 
     setWhatsThis (WhatsThisWithClickInstructions ());
 
-    connect (this, SIGNAL (clicked ()), SLOT (openDialog ()));
+    connect (this, SIGNAL (clicked()), SLOT (openDialog()));
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
     setColorSimilarityInternal (cfg.readEntry (kpSettingColorSimilarity, 0.0),
         false/*don't write config*/);
 
     m_flashTimer->setInterval (100/*ms*/);
-    connect (m_flashTimer, SIGNAL (timeout ()),
-             SLOT (slotFlashTimerTimeout ()));
+    connect (m_flashTimer, SIGNAL (timeout()),
+             SLOT (slotFlashTimerTimeout()));
 }
 
 //---------------------------------------------------------------------

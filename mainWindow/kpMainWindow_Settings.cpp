@@ -59,13 +59,13 @@ void kpMainWindow::setupSettingsMenuActions ()
     createStandardStatusBarAction ();
 
 
-    d->actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen ()),
+    d->actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen()),
                                                       this/*window*/, ac);
 
 
     d->actionShowPath = ac->add<KToggleAction> ("settings_show_path");
     d->actionShowPath->setText (i18n ("Show &Path"));
-    connect(d->actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
+    connect(d->actionShowPath, SIGNAL(triggered(bool)), SLOT (slotShowPathToggled()));
     slotEnableSettingsShowPath ();
 
     KToggleAction *action = ac->add<KToggleAction>("settings_draw_antialiased");
@@ -73,7 +73,7 @@ void kpMainWindow::setupSettingsMenuActions ()
     action->setChecked(kpToolEnvironment::drawAntiAliased);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotDrawAntiAliasedToggled(bool)));
 
-    d->actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
+    d->actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings()), ac);
 
     KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
 

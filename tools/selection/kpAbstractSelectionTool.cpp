@@ -288,8 +288,8 @@ void kpAbstractSelectionTool::begin ()
 
     d->toolWidgetOpaqueOrTransparent = tb->toolWidgetOpaqueOrTransparent ();
     Q_ASSERT (d->toolWidgetOpaqueOrTransparent);
-    connect (d->toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
-             this, SLOT (slotIsOpaqueChanged (bool)));
+    connect (d->toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged(bool)),
+             this, SLOT (slotIsOpaqueChanged(bool)));
     d->toolWidgetOpaqueOrTransparent->show ();
 
     /*virtual*/setSelectionBorderForHaventBegunDraw ();
@@ -332,8 +332,8 @@ void kpAbstractSelectionTool::end ()
 
 
     Q_ASSERT (d->toolWidgetOpaqueOrTransparent);
-    disconnect (d->toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
-                this, SLOT (slotIsOpaqueChanged (bool)));
+    disconnect (d->toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged(bool)),
+                this, SLOT (slotIsOpaqueChanged(bool)));
     d->toolWidgetOpaqueOrTransparent = nullptr;
 
 

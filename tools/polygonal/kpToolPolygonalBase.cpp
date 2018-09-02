@@ -113,8 +113,8 @@ void kpToolPolygonalBase::begin ()
 #endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
-    connect (d->toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
-                this, SLOT (updateShape ()));
+    connect (d->toolWidgetLineWidth, SIGNAL (lineWidthChanged(int)),
+                this, SLOT (updateShape()));
     d->toolWidgetLineWidth->show ();
 
     viewManager ()->setCursor (QCursor (Qt::ArrowCursor));
@@ -133,9 +133,9 @@ void kpToolPolygonalBase::end ()
     endShape ();
 
     disconnect (d->toolWidgetLineWidth,
-        SIGNAL (lineWidthChanged (int)),
+        SIGNAL (lineWidthChanged(int)),
         this,
-        SLOT (updateShape ()));
+        SLOT (updateShape()));
     d->toolWidgetLineWidth = nullptr;
 
     viewManager ()->unsetCursor ();

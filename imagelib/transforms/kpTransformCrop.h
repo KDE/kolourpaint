@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_CROP_H
-#define KP_TOOL_CROP_H
+#ifndef KP_TRANSFORM_CROP_H
+#define KP_TRANSFORM_CROP_H
 
 
 class kpMainWindow;
@@ -80,4 +80,4 @@ class kpMainWindow;
 void kpTransformCrop (kpMainWindow *mainWindow);
 
 
-#endif  // KP_TOOL_CROP_H
+#endif  // KP_TRANSFORM_CROP_H

@@ -62,8 +62,8 @@ void kpAbstractSelectionTool::initCreate ()
 {
     d->createNOPTimer = new QTimer (this);
     d->createNOPTimer->setSingleShot (true);
-    connect (d->createNOPTimer, SIGNAL (timeout ()),
-             this, SLOT (delayedDrawCreate ()));
+    connect (d->createNOPTimer, SIGNAL (timeout()),
+             this, SLOT (delayedDrawCreate()));
 }
 
 // private

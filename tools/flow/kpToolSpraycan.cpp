@@ -60,7 +60,7 @@ kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
 {
     m_timer = new QTimer (this);
     m_timer->setInterval (25/*ms*/);
-    connect (m_timer, SIGNAL (timeout ()), this, SLOT (timeoutDraw ()));
+    connect (m_timer, SIGNAL (timeout()), this, SLOT (timeoutDraw()));
 }
 
 //---------------------------------------------------------------------
@@ -80,8 +80,8 @@ void kpToolSpraycan::begin ()
     Q_ASSERT (tb);
 
     m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
-    connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
-            this, SLOT (slotSpraycanSizeChanged (int)));
+    connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged(int)),
+            this, SLOT (slotSpraycanSizeChanged(int)));
     m_toolWidgetSpraycanSize->show ();
 
     kpToolFlowBase::begin ();
@@ -92,8 +92,8 @@ void kpToolSpraycan::end ()
 {
     kpToolFlowBase::end ();
 
-    disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
-                this, SLOT (slotSpraycanSizeChanged (int)));
+    disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged(int)),
+                this, SLOT (slotSpraycanSizeChanged(int)));
     m_toolWidgetSpraycanSize = nullptr;
 }
 

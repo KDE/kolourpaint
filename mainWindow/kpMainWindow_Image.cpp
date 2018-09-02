@@ -116,68 +116,68 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionResizeScale = ac->addAction ("image_resize_scale");
     d->actionResizeScale->setText (i18n ("R&esize / Scale..."));
-    connect (d->actionResizeScale, SIGNAL (triggered (bool)), SLOT (slotResizeScale ()));
+    connect (d->actionResizeScale, SIGNAL (triggered(bool)), SLOT (slotResizeScale()));
     ac->setDefaultShortcut (d->actionResizeScale, Qt::CTRL + Qt::Key_E);
 
     d->actionCrop = ac->addAction ("image_crop");
     d->actionCrop->setText (i18n ("Se&t as Image (Crop)"));
-    connect (d->actionCrop, SIGNAL (triggered (bool)), SLOT (slotCrop ()));
+    connect (d->actionCrop, SIGNAL (triggered(bool)), SLOT (slotCrop()));
     ac->setDefaultShortcut (d->actionCrop, Qt::CTRL + Qt::Key_T);
 
     d->actionAutoCrop = ac->addAction ("image_auto_crop");
     d->actionAutoCrop->setText (autoCropText ());
-    connect (d->actionAutoCrop, SIGNAL (triggered (bool)), SLOT (slotAutoCrop ()));
+    connect (d->actionAutoCrop, SIGNAL (triggered(bool)), SLOT (slotAutoCrop()));
     ac->setDefaultShortcut (d->actionAutoCrop, Qt::CTRL + Qt::Key_U);
 
     d->actionFlip = ac->addAction ("image_flip");
     d->actionFlip->setText (i18n ("&Flip (upside down)"));
-    connect (d->actionFlip, SIGNAL (triggered (bool)), SLOT (slotFlip ()));
+    connect (d->actionFlip, SIGNAL (triggered(bool)), SLOT (slotFlip()));
     ac->setDefaultShortcut (d->actionFlip, Qt::CTRL + Qt::Key_F);
 
     d->actionMirror = ac->addAction ("image_mirror");
     d->actionMirror->setText (i18n ("Mirror (horizontally)"));
-    connect (d->actionMirror, SIGNAL (triggered (bool)), SLOT (slotMirror ()));
+    connect (d->actionMirror, SIGNAL (triggered(bool)), SLOT (slotMirror()));
     //ac->setDefaultShortcut (d->actionMirror, Qt::CTRL + Qt::Key_M);
 
     d->actionRotate = ac->addAction ("image_rotate");
     d->actionRotate->setText (i18n ("&Rotate..."));
     d->actionRotate->setIcon(KDE::icon("transform-rotate"));
-    connect (d->actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
+    connect (d->actionRotate, SIGNAL (triggered(bool)), SLOT (slotRotate()));
     ac->setDefaultShortcut (d->actionRotate, Qt::CTRL + Qt::Key_R);
 
     d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
     d->actionRotateLeft->setIcon(KDE::icon("object-rotate-left"));
-    connect (d->actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
+    connect (d->actionRotateLeft, SIGNAL (triggered(bool)), SLOT (slotRotate270()));
     ac->setDefaultShortcut (d->actionRotateLeft, Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
     d->actionRotateRight = ac->addAction ("image_rotate_90deg");
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
     d->actionRotateRight->setIcon(KDE::icon("object-rotate-right"));
-    connect (d->actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
+    connect (d->actionRotateRight, SIGNAL (triggered(bool)), SLOT (slotRotate90()));
     ac->setDefaultShortcut (d->actionRotateRight, Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
     d->actionSkew = ac->addAction ("image_skew");
     d->actionSkew->setText (i18n ("S&kew..."));
-    connect (d->actionSkew, SIGNAL (triggered (bool)), SLOT (slotSkew ()));
+    connect (d->actionSkew, SIGNAL (triggered(bool)), SLOT (slotSkew()));
     ac->setDefaultShortcut (d->actionSkew, Qt::CTRL + Qt::Key_K);
 
     d->actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
     d->actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
-    connect (d->actionConvertToBlackAndWhite, SIGNAL (triggered (bool)), SLOT (slotConvertToBlackAndWhite ()));
+    connect (d->actionConvertToBlackAndWhite, SIGNAL (triggered(bool)), SLOT (slotConvertToBlackAndWhite()));
 
     d->actionConvertToGrayscale = ac->addAction ("image_convert_to_grayscale");
     d->actionConvertToGrayscale->setText (i18n ("Reduce to &Grayscale"));
-    connect (d->actionConvertToGrayscale, SIGNAL (triggered (bool)), SLOT (slotConvertToGrayscale ()));
+    connect (d->actionConvertToGrayscale, SIGNAL (triggered(bool)), SLOT (slotConvertToGrayscale()));
 
     d->actionInvertColors = ac->addAction ("image_invert_colors");
     d->actionInvertColors->setText (i18n ("&Invert Colors"));
-    connect (d->actionInvertColors, SIGNAL (triggered (bool)), SLOT (slotInvertColors ()));
+    connect (d->actionInvertColors, SIGNAL (triggered(bool)), SLOT (slotInvertColors()));
     ac->setDefaultShortcut (d->actionInvertColors, Qt::CTRL + Qt::Key_I);
 
     d->actionClear = ac->addAction ("image_clear");
     d->actionClear->setText (i18n ("C&lear"));
-    connect (d->actionClear, SIGNAL (triggered (bool)), SLOT (slotClear ()));
+    connect (d->actionClear, SIGNAL (triggered(bool)), SLOT (slotClear()));
     ac->setDefaultShortcut (d->actionClear, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
     d->actionBlur = ac->addAction("image_make_confidential");
@@ -186,7 +186,7 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionMoreEffects = ac->addAction ("image_more_effects");
     d->actionMoreEffects->setText (i18n ("&More Effects..."));
-    connect (d->actionMoreEffects, SIGNAL (triggered (bool)), SLOT (slotMoreEffects ()));
+    connect (d->actionMoreEffects, SIGNAL (triggered(bool)), SLOT (slotMoreEffects()));
     ac->setDefaultShortcut (d->actionMoreEffects, Qt::CTRL + Qt::Key_M);
 
 

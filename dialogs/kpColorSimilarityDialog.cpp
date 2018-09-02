@@ -69,8 +69,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 
 
-    connect (updatePushButton, SIGNAL (clicked ()),
-             this, SLOT (slotColorSimilarityValueChanged ()));
+    connect (updatePushButton, SIGNAL (clicked()),
+             this, SLOT (slotColorSimilarityValueChanged()));
 
 
     QGroupBox *inputGroupBox = new QGroupBox (i18n ("&RGB Color Cube Distance"),
@@ -90,8 +90,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
               "What is Color Similarity?</a>"),
         inputGroupBox);
     m_whatIsLabel->setAlignment (Qt::AlignHCenter);
-    connect (m_whatIsLabel, SIGNAL (linkActivated (const QString &)),
-        SLOT (slotWhatIsLabelClicked ()));
+    connect (m_whatIsLabel, SIGNAL (linkActivated(QString)),
+        SLOT (slotWhatIsLabelClicked()));
 
 
     QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox);
@@ -102,8 +102,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
     // COMPAT: This is not firing properly when the user is typing in a
     //         new value.
-    connect (m_colorSimilarityInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotColorSimilarityValueChanged ()));
+    connect (m_colorSimilarityInput, SIGNAL (valueChanged(int)),
+             this, SLOT (slotColorSimilarityValueChanged()));
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);

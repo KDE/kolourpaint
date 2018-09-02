@@ -410,8 +410,8 @@ kpViewScrollableContainer::kpViewScrollableContainer(QWidget *parent)
     connect (verticalScrollBar(), SIGNAL(valueChanged(int)),
              this, SLOT(slotContentsMoved()));
 
-    connect (m_dragScrollTimer, SIGNAL (timeout ()),
-             this, SLOT (slotDragScroll ()));
+    connect (m_dragScrollTimer, SIGNAL (timeout()),
+             this, SLOT (slotDragScroll()));
 
     m_overlay->hide();
 }
@@ -421,20 +421,20 @@ kpViewScrollableContainer::kpViewScrollableContainer(QWidget *parent)
 // protected
 void kpViewScrollableContainer::connectGripSignals (kpGrip *grip)
 {
-    connect (grip, SIGNAL (beganDraw ()),
-             this, SLOT (slotGripBeganDraw ()));
-    connect (grip, SIGNAL (continuedDraw (int, int, bool)),
-             this, SLOT (slotGripContinuedDraw (int, int, bool)));
-    connect (grip, SIGNAL (cancelledDraw ()),
-             this, SLOT (slotGripCancelledDraw ()));
-    connect (grip, SIGNAL (endedDraw (int, int)),
-             this, SLOT (slotGripEndedDraw (int, int)));
+    connect (grip, SIGNAL (beganDraw()),
+             this, SLOT (slotGripBeganDraw()));
+    connect (grip, SIGNAL (continuedDraw(int,int,bool)),
+             this, SLOT (slotGripContinuedDraw(int,int,bool)));
+    connect (grip, SIGNAL (cancelledDraw()),
+             this, SLOT (slotGripCancelledDraw()));
+    connect (grip, SIGNAL (endedDraw(int,int)),
+             this, SLOT (slotGripEndedDraw(int,int)));
 
-    connect (grip, SIGNAL (statusMessageChanged (const QString &)),
-             this, SLOT (slotGripStatusMessageChanged (const QString &)));
+    connect (grip, SIGNAL (statusMessageChanged(QString)),
+             this, SLOT (slotGripStatusMessageChanged(QString)));
 
-    connect (grip, SIGNAL (releasedAllButtons ()),
-             this, SLOT (recalculateStatusMessage ()));
+    connect (grip, SIGNAL (releasedAllButtons()),
+             this, SLOT (recalculateStatusMessage()));
 }
 
 //---------------------------------------------------------------------
@@ -889,10 +889,10 @@ void kpViewScrollableContainer::slotContentsMoved ()
 // protected
 void kpViewScrollableContainer::disconnectViewSignals ()
 {
-    disconnect (m_view, SIGNAL (sizeChanged (const QSize &)),
-                this, SLOT (updateGrips ()));
-    disconnect (m_view, SIGNAL (destroyed ()),
-                this, SLOT (slotViewDestroyed ()));
+    disconnect (m_view, SIGNAL (sizeChanged(QSize)),
+                this, SLOT (updateGrips()));
+    disconnect (m_view, SIGNAL (destroyed()),
+                this, SLOT (slotViewDestroyed()));
 }
 
 //---------------------------------------------------------------------
@@ -900,10 +900,10 @@ void kpViewScrollableContainer::disconnectViewSignals ()
 // protected
 void kpViewScrollableContainer::connectViewSignals ()
 {
-    connect (m_view, SIGNAL (sizeChanged (const QSize &)),
-             this, SLOT (updateGrips ()));
-    connect (m_view, SIGNAL (destroyed ()),
-             this, SLOT (slotViewDestroyed ()));
+    connect (m_view, SIGNAL (sizeChanged(QSize)),
+             this, SLOT (updateGrips()));
+    connect (m_view, SIGNAL (destroyed()),
+             this, SLOT (slotViewDestroyed()));
 }
 
 //---------------------------------------------------------------------

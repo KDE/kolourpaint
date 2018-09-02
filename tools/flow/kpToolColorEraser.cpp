@@ -27,9 +27,9 @@
 
 #define DEBUG_KP_TOOL_COLOR_ERASER 0
 
-#include <QApplication>
-
 #include "kpToolColorEraser.h"
+
+#include <QApplication>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

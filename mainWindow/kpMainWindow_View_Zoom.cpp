@@ -95,19 +95,19 @@ void kpMainWindow::setupViewMenuZoomActions ()
     KActionCollection *ac = actionCollection ();
 
 
-    d->actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize ()), ac);
-    d->actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
-    d->actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth ()), ac);
-    d->actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);
+    d->actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize()), ac);
+    d->actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage()), ac);
+    d->actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth()), ac);
+    d->actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight()), ac);
 
 
-    d->actionZoomIn = KStandardAction::zoomIn (this, SLOT (slotZoomIn ()), ac);
-    d->actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
+    d->actionZoomIn = KStandardAction::zoomIn (this, SLOT (slotZoomIn()), ac);
+    d->actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut()), ac);
 
 
     d->actionZoom = ac->add <KSelectAction> ("view_zoom_to");
     d->actionZoom->setText (i18n ("&Zoom"));
-    connect (d->actionZoom, SIGNAL (triggered (QAction *)), SLOT (slotZoom ()));
+    connect (d->actionZoom, SIGNAL (triggered(QAction*)), SLOT (slotZoom()));
     d->actionZoom->setEditable (true);
 
     // create the zoom list for the 1st call to zoomTo() below

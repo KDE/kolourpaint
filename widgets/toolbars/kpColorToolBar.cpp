@@ -66,33 +66,33 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     // This holds the current global foreground and background colors, for
     // tools.
     m_dualColorButton = new kpDualColorButton (base);
-    connect (m_dualColorButton, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
-             this, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)));
-    connect (m_dualColorButton, SIGNAL (foregroundColorChanged (const kpColor &)),
-             this, SIGNAL (foregroundColorChanged (const kpColor &)));
-    connect (m_dualColorButton, SIGNAL (backgroundColorChanged (const kpColor &)),
-             this, SIGNAL (backgroundColorChanged (const kpColor &)));
+    connect (m_dualColorButton, SIGNAL (colorsSwapped(kpColor,kpColor)),
+             this, SIGNAL (colorsSwapped(kpColor,kpColor)));
+    connect (m_dualColorButton, SIGNAL (foregroundColorChanged(kpColor)),
+             this, SIGNAL (foregroundColorChanged(kpColor)));
+    connect (m_dualColorButton, SIGNAL (backgroundColorChanged(kpColor)),
+             this, SIGNAL (backgroundColorChanged(kpColor)));
     m_boxLayout->addWidget (m_dualColorButton, 0/*stretch*/, Qt::AlignVCenter);
 
     m_colorPalette = new kpColorPalette (base);
-    connect (m_colorPalette, SIGNAL (foregroundColorChanged (const kpColor &)),
-             m_dualColorButton, SLOT (setForegroundColor (const kpColor &)));
-    connect (m_colorPalette, SIGNAL (backgroundColorChanged (const kpColor &)),
-             m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
+    connect (m_colorPalette, SIGNAL (foregroundColorChanged(kpColor)),
+             m_dualColorButton, SLOT (setForegroundColor(kpColor)));
+    connect (m_colorPalette, SIGNAL (backgroundColorChanged(kpColor)),
+             m_dualColorButton, SLOT (setBackgroundColor(kpColor)));
 
-    connect (m_colorPalette->colorCells (), SIGNAL (isModifiedChanged (bool)),
-             SLOT (updateNameOrUrlLabel ()));
-    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const QUrl &)),
-             SLOT (updateNameOrUrlLabel ()));
-    connect (m_colorPalette->colorCells (), SIGNAL (nameChanged (const QString &)),
-             SLOT (updateNameOrUrlLabel ()));
+    connect (m_colorPalette->colorCells (), SIGNAL (isModifiedChanged(bool)),
+             SLOT (updateNameOrUrlLabel()));
+    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged(QUrl)),
+             SLOT (updateNameOrUrlLabel()));
+    connect (m_colorPalette->colorCells (), SIGNAL (nameChanged(QString)),
+             SLOT (updateNameOrUrlLabel()));
     updateNameOrUrlLabel ();
 
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
     m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (base);
-    connect (m_colorSimilarityToolBarItem, SIGNAL (colorSimilarityChanged (double, int)),
-             this, SIGNAL (colorSimilarityChanged (double, int)));
+    connect (m_colorSimilarityToolBarItem, SIGNAL (colorSimilarityChanged(double,int)),
+             this, SIGNAL (colorSimilarityChanged(double,int)));
     m_boxLayout->addWidget (m_colorSimilarityToolBarItem, 0/*stretch*/);
 
     // Pad out all the horizontal space on the right of the Color Tool Bar so that

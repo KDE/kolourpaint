@@ -191,8 +191,8 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
     lay->addWidget (m_actOnCombo, 1);
 
 
-    connect (m_actOnCombo, SIGNAL (activated (int)),
-             this, SLOT (slotActOnChanged ()));
+    connect (m_actOnCombo, SIGNAL (activated(int)),
+             this, SLOT (slotActOnChanged()));
 
     return actOnBox;
 }
@@ -264,12 +264,12 @@ QGroupBox *kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseW
     operationLayout->addWidget (m_scaleButton, 0, 1, Qt::AlignCenter);
     operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
 
-    connect (m_resizeButton, SIGNAL (toggled (bool)),
-             this, SLOT (slotTypeChanged ()));
-    connect (m_scaleButton, SIGNAL (toggled (bool)),
-             this, SLOT (slotTypeChanged ()));
-    connect (m_smoothScaleButton, SIGNAL (toggled (bool)),
-             this, SLOT (slotTypeChanged ()));
+    connect (m_resizeButton, SIGNAL (toggled(bool)),
+             this, SLOT (slotTypeChanged()));
+    connect (m_scaleButton, SIGNAL (toggled(bool)),
+             this, SLOT (slotTypeChanged()));
+    connect (m_smoothScaleButton, SIGNAL (toggled(bool)),
+             this, SLOT (slotTypeChanged()));
 
     return operationGroupBox;
 }
@@ -360,10 +360,10 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     dimensionsLayout->setRowMinimumHeight (4/*row*/, dimensionsLayout->rowMinimumHeight (4) * 2);
 
 
-    connect (m_newWidthInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotWidthChanged (int)));
-    connect (m_newHeightInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotHeightChanged (int)));
+    connect (m_newWidthInput, SIGNAL (valueChanged(int)),
+             this, SLOT (slotWidthChanged(int)));
+    connect (m_newHeightInput, SIGNAL (valueChanged(int)),
+             this, SLOT (slotHeightChanged(int)));
 
     // COMPAT: KDoubleNumInput only fires valueChanged(double) once per
     //         edit.  It should either fire:
@@ -376,13 +376,13 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     //             2. Once per keystroke.
     //
     //         Bug in KDoubleNumInput.
-    connect (m_percentWidthInput, SIGNAL (valueChanged (double)),
-             this, SLOT (slotPercentWidthChanged (double)));
-    connect (m_percentHeightInput, SIGNAL (valueChanged (double)),
-             this, SLOT (slotPercentHeightChanged (double)));
+    connect (m_percentWidthInput, SIGNAL (valueChanged(double)),
+             this, SLOT (slotPercentWidthChanged(double)));
+    connect (m_percentHeightInput, SIGNAL (valueChanged(double)),
+             this, SLOT (slotPercentHeightChanged(double)));
 
-    connect (m_keepAspectRatioCheckBox, SIGNAL (toggled (bool)),
-             this, SLOT (setKeepAspectRatio (bool)));
+    connect (m_keepAspectRatioCheckBox, SIGNAL (toggled(bool)),
+             this, SLOT (setKeepAspectRatio(bool)));
 
     return dimensionsGroupBox;
 }
@@ -524,7 +524,7 @@ void kpTransformResizeScaleDialog::slotWidthChanged (int width)
 #endif
     const double newPercentWidth = double (width) * 100 / double (originalWidth ());
 
-    SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentWidthInput, newPercentWidth);
+    SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentWidthInput,newPercentWidth);
 
     widthFitHeightToAspectRatio ();
 
@@ -542,7 +542,7 @@ void kpTransformResizeScaleDialog::slotHeightChanged (int height)
 #endif
     const double newPercentHeight = double (height) * 100 / double (originalHeight ());
 
-    SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentHeightInput, newPercentHeight);
+    SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentHeightInput,newPercentHeight);
 
     heightFitWidthToAspectRatio ();
 

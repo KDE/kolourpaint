@@ -173,13 +173,13 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
 
     m_previewPixmapLabel = new kpResizeSignallingLabel (m_previewGroupBox);
     m_previewPixmapLabel->setMinimumSize (150, 110);
-    connect (m_previewPixmapLabel, SIGNAL (resized ()),
-             this, SLOT (updatePreview ()));
+    connect (m_previewPixmapLabel, SIGNAL (resized()),
+             this, SLOT (updatePreview()));
 
     QPushButton *updatePushButton = new QPushButton (i18n ("&Update"),
                                                      m_previewGroupBox);
-    connect (updatePushButton, SIGNAL (clicked ()),
-             this, SLOT (slotUpdateWithWaitCursor ()));
+    connect (updatePushButton, SIGNAL (clicked()),
+             this, SLOT (slotUpdateWithWaitCursor()));
 
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox);

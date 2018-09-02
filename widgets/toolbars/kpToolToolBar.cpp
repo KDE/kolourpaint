@@ -100,7 +100,7 @@ kpToolToolBar::kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *p
 
     foreach(kpToolWidgetBase *w, m_toolWidgets)
     {
-      connect(w, SIGNAL(optionSelected(int, int)),
+      connect(w, SIGNAL(optionSelected(int,int)),
               this, SIGNAL(toolWidgetOptionSelected()));
     }
 
@@ -109,14 +109,14 @@ kpToolToolBar::kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *p
             this, SLOT(adjustToOrientation(Qt::Orientation)));
 
     m_buttonGroup = new QButtonGroup (this);
-    connect (m_buttonGroup, SIGNAL (buttonClicked (int)), SLOT (slotToolButtonClicked ()));
+    connect (m_buttonGroup, SIGNAL (buttonClicked(int)), SLOT (slotToolButtonClicked()));
 
     hideAllToolWidgets ();
 
     addWidget(m_baseWidget);
 
-    connect(this, SIGNAL(iconSizeChanged(const QSize &)),
-            this, SLOT(slotIconSizeChanged(const QSize &)));
+    connect(this, SIGNAL(iconSizeChanged(QSize)),
+            this, SLOT(slotIconSizeChanged(QSize)));
 
     connect(this, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)),
             this, SLOT(slotToolButtonStyleChanged(Qt::ToolButtonStyle)));
@@ -157,8 +157,8 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
     m_toolButtons.append(b);
 
-    connect (tool, SIGNAL (actionActivated ()),
-             this, SLOT (slotToolActionActivated ()));
+    connect (tool, SIGNAL (actionActivated()),
+             this, SLOT (slotToolActionActivated()));
 
     adjustSizeConstraint();
 }

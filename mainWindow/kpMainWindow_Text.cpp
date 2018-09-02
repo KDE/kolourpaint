@@ -55,37 +55,37 @@ void kpMainWindow::setupTextToolBarActions ()
 
     d->actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
     d->actionTextFontFamily->setText (i18n ("Font Family"));
-    connect (d->actionTextFontFamily, SIGNAL (triggered (const QString &)),
-             this, SLOT (slotTextFontFamilyChanged ()));
+    connect (d->actionTextFontFamily, SIGNAL (triggered(QString)),
+             this, SLOT (slotTextFontFamilyChanged()));
 
     d->actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
     d->actionTextFontSize->setText (i18n ("Font Size"));
-    connect (d->actionTextFontSize, SIGNAL (fontSizeChanged (int)),
-             this, SLOT (slotTextFontSizeChanged ()));
+    connect (d->actionTextFontSize, SIGNAL (fontSizeChanged(int)),
+             this, SLOT (slotTextFontSizeChanged()));
 
     d->actionTextBold = ac->add<KToggleAction> ("text_bold");
     d->actionTextBold->setIcon(KDE::icon("format-text-bold"));
     d->actionTextBold->setText (i18n ("Bold"));
-    connect (d->actionTextBold, SIGNAL (triggered (bool)),
-        SLOT (slotTextBoldChanged ()));
+    connect (d->actionTextBold, SIGNAL (triggered(bool)),
+        SLOT (slotTextBoldChanged()));
 
     d->actionTextItalic = ac->add<KToggleAction> ("text_italic");
     d->actionTextItalic->setIcon (KDE::icon("format-text-italic"));
     d->actionTextItalic->setText (i18n ("Italic"));
-    connect (d->actionTextItalic, SIGNAL (triggered (bool)),
-        SLOT (slotTextItalicChanged ()));
+    connect (d->actionTextItalic, SIGNAL (triggered(bool)),
+        SLOT (slotTextItalicChanged()));
 
     d->actionTextUnderline = ac->add<KToggleAction> ("text_underline");
     d->actionTextUnderline->setIcon (KDE::icon("format-text-underline"));
     d->actionTextUnderline->setText (i18n ("Underline"));
-    connect (d->actionTextUnderline, SIGNAL (triggered (bool)),
-        SLOT (slotTextUnderlineChanged ()));
+    connect (d->actionTextUnderline, SIGNAL (triggered(bool)),
+        SLOT (slotTextUnderlineChanged()));
 
     d->actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
     d->actionTextStrikeThru->setIcon(KDE::icon("format-text-strikethrough"));
     d->actionTextStrikeThru->setText (i18n ("Strike Through"));
-    connect (d->actionTextStrikeThru, SIGNAL (triggered (bool)),
-        SLOT (slotTextStrikeThruChanged ()));
+    connect (d->actionTextStrikeThru, SIGNAL (triggered(bool)),
+        SLOT (slotTextStrikeThruChanged()));
 
 
     readAndApplyTextSettings ();

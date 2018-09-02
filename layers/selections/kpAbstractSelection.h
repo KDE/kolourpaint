@@ -28,8 +28,8 @@
 */
 
 
-#ifndef kpAstractSelection_H
-#define kpAstractSelection_H
+#ifndef KPABSTRACTSELECTION_H
+#define KPABSTRACTSELECTION_H
 
 
 #include <QObject>
@@ -275,4 +275,4 @@ private:
 };
 
 
-#endif  // kpAstractSelection_H
+#endif  // KPABSTRACTSELECTION_H

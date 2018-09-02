@@ -122,28 +122,28 @@ void kpDocumentSaveOptionsWidget::init ()
     lay->addWidget (m_previewButton, 0/*stretch*/, Qt::AlignRight);
 
 
-    connect (m_colorDepthCombo, SIGNAL (activated (int)),
-             this, SLOT (slotColorDepthSelected ()));
-    connect (m_colorDepthCombo, SIGNAL (activated (int)),
-             this, SLOT (updatePreview ()));
+    connect (m_colorDepthCombo, SIGNAL (activated(int)),
+             this, SLOT (slotColorDepthSelected()));
+    connect (m_colorDepthCombo, SIGNAL (activated(int)),
+             this, SLOT (updatePreview()));
 
-    connect (m_qualityInput, SIGNAL (valueChanged (int)),
-             this, SLOT (updatePreviewDelayed ()));
+    connect (m_qualityInput, SIGNAL (valueChanged(int)),
+             this, SLOT (updatePreviewDelayed()));
 
-    connect (m_previewButton, SIGNAL (toggled (bool)),
-             this, SLOT (showPreview (bool)));
+    connect (m_previewButton, SIGNAL (toggled(bool)),
+             this, SLOT (showPreview(bool)));
 
 
     m_updatePreviewDelay = 200/*ms*/;
 
     m_updatePreviewTimer = new QTimer (this);
     m_updatePreviewTimer->setSingleShot (true);
-    connect (m_updatePreviewTimer, SIGNAL (timeout ()),
-             this, SLOT (updatePreview ()));
+    connect (m_updatePreviewTimer, SIGNAL (timeout()),
+             this, SLOT (updatePreview()));
 
     m_updatePreviewDialogLastRelativeGeometryTimer = new QTimer (this);
-    connect (m_updatePreviewDialogLastRelativeGeometryTimer, SIGNAL (timeout ()),
-             this, SLOT (updatePreviewDialogLastRelativeGeometry ()));
+    connect (m_updatePreviewDialogLastRelativeGeometryTimer, SIGNAL (timeout()),
+             this, SLOT (updatePreviewDialogLastRelativeGeometry()));
 
 
     setMode (None);
@@ -499,7 +499,7 @@ void kpDocumentSaveOptionsWidget::setMode (Mode mode)
     //       we change the height of "this", causing the text on the labels
     //       to move but the first instance of the text doesn't get erased.
     //       Qt bug.
-    QTimer::singleShot (0, this, SLOT (repaintLabels ()));
+    QTimer::singleShot (0, this, SLOT (repaintLabels()));
 }
 
 // protected slot
@@ -533,8 +533,8 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         m_previewDialog->setObjectName( QLatin1String( "previewSaveDialog" ) );
         updatePreview ();
 
-        connect (m_previewDialog, SIGNAL (finished ()),
-                 this, SLOT (hidePreview ()));
+        connect (m_previewDialog, SIGNAL (finished()),
+                 this, SLOT (hidePreview()));
 
 
         KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
@@ -627,10 +627,10 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 
         updatePreviewDialogLastRelativeGeometry ();
 
-        connect (m_previewDialog, SIGNAL (moved ()),
-                 this, SLOT (updatePreviewDialogLastRelativeGeometry ()));
-        connect (m_previewDialog, SIGNAL (resized ()),
-                 this, SLOT (updatePreviewDialogLastRelativeGeometry ()));
+        connect (m_previewDialog, SIGNAL (moved()),
+                 this, SLOT (updatePreviewDialogLastRelativeGeometry()));
+        connect (m_previewDialog, SIGNAL (resized()),
+                 this, SLOT (updatePreviewDialogLastRelativeGeometry()));
 
         m_updatePreviewDialogLastRelativeGeometryTimer->start (200/*ms*/);
     }
