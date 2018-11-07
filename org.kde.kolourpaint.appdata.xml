@@ -323,6 +323,7 @@
   <url type="homepage">http://www.kolourpaint.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kolourpaint</url>
   <url type="help">https://docs.kde.org/?application=kolourpaint</url>
+  <url type="donation">https://www.kde.org/community/donations/?app=kolourpaint&amp;source=appdata</url>
   <screenshots>
     <screenshot type="default">
       <image>https://kde.org/images/screenshots/kolourpaint.png</image>
