@@ -326,6 +326,7 @@
   <url type="donation">https://www.kde.org/community/donations/?app=kolourpaint&amp;source=appdata</url>
   <screenshots>
     <screenshot type="default">
+      <caption>Painting in KolourPaint</caption>
       <image>https://kde.org/images/screenshots/kolourpaint.png</image>
     </screenshot>
   </screenshots>
