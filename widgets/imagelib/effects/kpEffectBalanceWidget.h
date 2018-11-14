@@ -37,7 +37,7 @@
 class QLabel;
 
 class QComboBox;
-class KIntNumInput;
+class kpIntNumInput;
 
 
 
@@ -74,7 +74,7 @@ protected slots:
     void resetAll ();
 
 protected:
-    KIntNumInput *m_brightnessInput,
+    kpIntNumInput *m_brightnessInput,
                  *m_contrastInput,
                  *m_gammaInput;
     QLabel *m_gammaLabel;

@@ -281,6 +281,7 @@ set(kolourpaint_app_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/colorSimilarity/kpColorSimilarityFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/colorSimilarity/kpColorSimilarityHolder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpNumInput.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectBalanceWidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectEmbossWidget.cpp

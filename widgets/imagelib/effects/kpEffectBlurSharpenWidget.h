@@ -38,7 +38,7 @@
 
 class QLabel;
 
-class KIntNumInput;
+class kpIntNumInput;
 
 
 class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
@@ -64,7 +64,7 @@ protected:
     kpEffectBlurSharpen::Type type () const;
     int strength () const;
 
-    KIntNumInput *m_amountInput;
+    kpIntNumInput *m_amountInput;
     QLabel *m_typeLabel;
 };
 

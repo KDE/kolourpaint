@@ -32,14 +32,13 @@
 #include "imagelib/effects/kpEffectToneEnhance.h"
 #include "commands/imagelib/effects/kpEffectToneEnhanceCommand.h"
 #include "pixmapfx/kpPixmapFX.h"
+#include "kpNumInput.h"
 
 #include <QGridLayout>
 #include <QLabel>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
-#include <knuminput.h> // kdelibs4support
-
 
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
                                                       QWidget *parent)
@@ -58,11 +57,11 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
 
         QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
 
-        m_granularityInput = new KDoubleNumInput (this);
-        m_granularityInput->setRange (0, 1, .1/*step*/, true/*slider*/);
+        m_granularityInput = new kpDoubleNumInput (this);
+        m_granularityInput->setRange (0, 1, .1/*step*/);
 
-        m_amountInput = new KDoubleNumInput (this);
-        m_amountInput->setRange (0, 1, .1/*step*/, true/*slider*/);
+        m_amountInput = new kpDoubleNumInput (this);
+        m_amountInput->setRange (0, 1, .1/*step*/);
 
         granularityLabel->setBuddy (m_granularityInput);
         amountLabel->setBuddy (m_amountInput);

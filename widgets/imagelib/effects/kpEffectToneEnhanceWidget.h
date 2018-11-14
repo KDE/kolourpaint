@@ -32,9 +32,9 @@
 
 
 #include "kpEffectWidgetBase.h"
+#include "kpNumInput.h"
 
-
-class KDoubleNumInput;
+class kpDoubleNumInput;
 
 
 class kpEffectToneEnhanceWidget : public kpEffectWidgetBase
@@ -60,8 +60,8 @@ public:
         kpCommandEnvironment *cmdEnviron) const override;
 
 protected:
-    KDoubleNumInput *m_granularityInput;
-    KDoubleNumInput *m_amountInput;
+    kpDoubleNumInput *m_granularityInput;
+    kpDoubleNumInput *m_amountInput;
 };
 
 

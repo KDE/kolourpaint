@@ -35,7 +35,7 @@
 
 class QLabel;
 
-class KIntNumInput;
+class kpIntNumInput;
 
 class kpColorSimilarityFrame;
 
@@ -60,7 +60,7 @@ private slots:
 
 private:
     kpColorSimilarityFrame *m_colorSimilarityFrame;
-    KIntNumInput *m_colorSimilarityInput;
+    kpIntNumInput *m_colorSimilarityInput;
     QLabel *m_whatIsLabel;
 };
 

@@ -31,9 +31,9 @@
 
 
 #include "kpEffectWidgetBase.h"
+#include "kpNumInput.h"
 
-
-class KDoubleNumInput;
+class kpDoubleNumInput;
 
 
 class kpEffectHSVWidget : public kpEffectWidgetBase
@@ -53,9 +53,9 @@ public:
         kpCommandEnvironment *cmdEnviron) const override;
 
 protected:
-    KDoubleNumInput *m_hueInput;
-    KDoubleNumInput *m_saturationInput;
-    KDoubleNumInput *m_valueInput;
+    kpDoubleNumInput *m_hueInput;
+    kpDoubleNumInput *m_saturationInput;
+    kpDoubleNumInput *m_valueInput;
 };
 
 

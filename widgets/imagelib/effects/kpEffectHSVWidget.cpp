@@ -33,8 +33,8 @@
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
-#include <knuminput.h> // kdelibs4support
 
+#include "kpNumInput.h"
 #include "imagelib/effects/kpEffectHSV.h"
 #include "commands/imagelib/effects/kpEffectHSVCommand.h"
 
@@ -49,14 +49,14 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     QLabel *saturationLabel = new QLabel (i18n ("&Saturation:"), this);
     QLabel *valueLabel = new QLabel (i18nc ("The V of HSV", "&Value:"), this);
 
-    m_hueInput = new KDoubleNumInput (this);
-    m_hueInput->setRange (-180, 180, 15/*step*/, true/*slider*/);
+    m_hueInput = new kpDoubleNumInput (this);
+    m_hueInput->setRange (-180, 180, 15/*step*/);
 
-    m_saturationInput = new KDoubleNumInput (this);
-    m_saturationInput->setRange (-1, 1, .1/*step*/, true/*slider*/);
+    m_saturationInput = new kpDoubleNumInput (this);
+    m_saturationInput->setRange (-1, 1, .1/*step*/);
 
-    m_valueInput = new KDoubleNumInput (this);
-    m_valueInput->setRange (-1, 1, .1/*step*/, true/*slider*/);
+    m_valueInput = new kpDoubleNumInput (this);
+    m_valueInput->setRange (-1, 1, .1/*step*/);
 
     hueLabel->setBuddy (m_hueInput);
     saturationLabel->setBuddy (m_saturationInput);
