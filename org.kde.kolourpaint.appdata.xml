@@ -327,6 +327,14 @@
   <screenshots>
     <screenshot type="default">
       <caption>Painting in KolourPaint</caption>
+      <caption xml:lang="ca">Pintant al KolourPaint</caption>
+      <caption xml:lang="de">Malen mit KolourPaint</caption>
+      <caption xml:lang="es">Dibujando con KolourPaint</caption>
+      <caption xml:lang="nl">In KolourPaint tekenen</caption>
+      <caption xml:lang="pt">Pintura no KolourPaint</caption>
+      <caption xml:lang="sv">Rita med KolourPaint</caption>
+      <caption xml:lang="uk">Малювання у KolourPaint</caption>
+      <caption xml:lang="x-test">xxPainting in KolourPaintxx</caption>
       <image>https://kde.org/images/screenshots/kolourpaint.png</image>
     </screenshot>
   </screenshots>
