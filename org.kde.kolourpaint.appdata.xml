@@ -328,6 +328,7 @@
     <screenshot type="default">
       <caption>Painting in KolourPaint</caption>
       <caption xml:lang="ca">Pintant al KolourPaint</caption>
+      <caption xml:lang="ca-valencia">Pintant al KolourPaint</caption>
       <caption xml:lang="de">Malen mit KolourPaint</caption>
       <caption xml:lang="es">Dibujando con KolourPaint</caption>
       <caption xml:lang="gl">Pintando en KolourPaint</caption>
