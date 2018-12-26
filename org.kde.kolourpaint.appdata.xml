@@ -20,6 +20,7 @@
   <name xml:lang="gl">KolourPaint</name>
   <name xml:lang="hu">KolourPaint</name>
   <name xml:lang="ia">KolourPaint</name>
+  <name xml:lang="id">KolourPaint</name>
   <name xml:lang="it">KolourPaint</name>
   <name xml:lang="ko">KolourPaint</name>
   <name xml:lang="lt">KolourPaint</name>
@@ -55,6 +56,7 @@
   <summary xml:lang="gl">Programa para pintar</summary>
   <summary xml:lang="hu">Rajzolóprogram</summary>
   <summary xml:lang="ia">Programma per pinger</summary>
+  <summary xml:lang="id">Program Lukis</summary>
   <summary xml:lang="it">Programma di disegno</summary>
   <summary xml:lang="ko">그리기 프로그램</summary>
   <summary xml:lang="lt">Piešimo programa</summary>
@@ -93,6 +95,7 @@
     <p xml:lang="gl">KolourPaint é un programa para pintar sinxelo que permite crear imaxes de mapa de bits rapidamente. É útil como ferramenta de retoque e para realizar tarefas sinxelas de edición de imaxes.</p>
     <p xml:lang="hu">A KolourPaint egy egyszerű rajzolóprogram raszteres képek gyors létrehozásához. Hasznos retusálóeszközként és egyszerű képszerkesztő feladatokhoz.</p>
     <p xml:lang="ia">KolourPAint es un simple programma per pinger o designar  per crear rapidemente imagines raster. Il es utile como instrumento de retocco e per cargas simplice de modificar imagines.</p>
+    <p xml:lang="id">KolourPaint adalah program melukis sederhana untuk membuat gambar raster dengan cepat. Ini berguna sebagai alat bantu dan tugas pengeditan gambar sederhana.</p>
     <p xml:lang="it">KolourPaint è un semplice programma di disegno per la creazione rapida di immagini. È utile come strumento da usare «al volo» e per effettuare semplici modifiche alle immagini.</p>
     <p xml:lang="ko">KolourPaint는 래스터 그림을 빠르게 만드는 프로그램입니다. 간단한 보정 도구 및 편집 도구로 사용할 수 있습니다.</p>
     <p xml:lang="nb">KolourPaint er et enkelt maleprogram som kjapt kan lage rasterbilder. Det er et nyttig verktøy for retusjering og enkle redigeringsoppgaver.</p>
@@ -127,6 +130,7 @@
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
+    <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Caratteristiche:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="lt">Galimybės:</p>
@@ -162,6 +166,7 @@
       <li xml:lang="gl">Permite debuxar varias formas: liñas, rectángulos, rectángulos arredondados, óvalos e polígonos.</li>
       <li xml:lang="hu">Különféle alakzatok rajzolásának támogatása - vonalak, téglalapok, lekerekített téglalapok, oválisok és sokszögek</li>
       <li xml:lang="ia">Supporto pro designar varie formas - lineas, rectangulos, rectangulos tundite, ovales e polygonos</li>
+      <li xml:lang="id">Dukungan untuk menggambar berbagai bentuk - garis, persegi panjang, persegi panjang, bulat, oval dan poligon</li>
       <li xml:lang="it">Supporto per il disegno di varie forme - linee, rettangoli, rettangoli arrotondati, ovali e poligoni</li>
       <li xml:lang="ko">다양한 도형 그리기 - 직선, 사각형, 둥근 사각형, 타원형, 다각형</li>
       <li xml:lang="nb">Støtte for å tegne mange former – linjer, rektangler, avrundede rektangler, ovaler og polygoner</li>
@@ -196,6 +201,7 @@
       <li xml:lang="gl">Curvas, liñas e texto.</li>
       <li xml:lang="hu">Görbék, vonalak és szöveg</li>
       <li xml:lang="ia">Curvas, lineas e texto</li>
+      <li xml:lang="id">Lengkung, garis, dan teks</li>
       <li xml:lang="it">Curve, linee e testo</li>
       <li xml:lang="ko">곡선, 직선 및 텍스트</li>
       <li xml:lang="lt">Kreivės, tiesės ir tekstas</li>
@@ -231,6 +237,7 @@
       <li xml:lang="gl">Selector de cor</li>
       <li xml:lang="hu">Színválasztó</li>
       <li xml:lang="ia">Selector de color</li>
+      <li xml:lang="id">Penukil warna</li>
       <li xml:lang="it">Selettore del colore</li>
       <li xml:lang="ko">색 선택기</li>
       <li xml:lang="lt">Spalvų parinkiklis</li>
@@ -266,6 +273,7 @@
       <li xml:lang="gl">Seleccións</li>
       <li xml:lang="hu">Kijelölések</li>
       <li xml:lang="ia">Selectiones</li>
+      <li xml:lang="id">Pemilihan</li>
       <li xml:lang="it">Selezioni</li>
       <li xml:lang="ko">선택</li>
       <li xml:lang="lt">Žymėjimai</li>
@@ -300,6 +308,7 @@
       <li xml:lang="gl">Rotación, monocroma e outros efectos avanzados.</li>
       <li xml:lang="hu">Forgatás, fekete-fehér és egyéb speciális hatások</li>
       <li xml:lang="ia">Rotation, monochrome e altere effectos avantiate</li>
+      <li xml:lang="id">Perputaran, monokrom, dan efek tingkatlanjut lainnya</li>
       <li xml:lang="it">Rotazione, monocromia e altri effetti avanzati</li>
       <li xml:lang="ko">회전, 흑백, 기타 고급 효과</li>
       <li xml:lang="nb">Dreiing, monokrom og andre avanserte effekter</li>
@@ -334,6 +343,7 @@
       <caption xml:lang="es">Dibujando con KolourPaint</caption>
       <caption xml:lang="fr">Dessin dans KolourPaint</caption>
       <caption xml:lang="gl">Pintando en KolourPaint</caption>
+      <caption xml:lang="id">Melukis di KolourPaint</caption>
       <caption xml:lang="it">Dipingere in KolourPaint</caption>
       <caption xml:lang="nl">In KolourPaint tekenen</caption>
       <caption xml:lang="nn">Teikning med KolourPaint</caption>
