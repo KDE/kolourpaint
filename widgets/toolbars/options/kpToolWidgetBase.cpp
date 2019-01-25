@@ -530,7 +530,8 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
     const int wasSelectedRow = m_selectedRow;
     const int wasSelectedCol = m_selectedCol;
 
-    m_selectedRow = row, m_selectedCol = col;
+    m_selectedRow = row;
+    m_selectedCol = col;
 
     if (wasSelectedRow >= 0 && wasSelectedCol >= 0)
     {

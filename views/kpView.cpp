@@ -77,7 +77,8 @@ kpView::kpView (kpDocument *document,
     d->buddyView = buddyView;
     d->scrollableContainer = scrollableContainer;
 
-    d->hzoom = 100, d->vzoom = 100;
+    d->hzoom = 100;
+    d->vzoom = 100;
     d->origin = QPoint (0, 0);
     d->showGrid = false;
     d->isBuddyViewScrollableContainerRectangleShown = false;

@@ -325,7 +325,8 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 kpDocumentMetaInfoDialog::~kpDocumentMetaInfoDialog ()
 {
-    ::LastWidth = width (), ::LastHeight = height ();
+    ::LastWidth = width ();
+    ::LastHeight = height ();
 
     delete d;
 }

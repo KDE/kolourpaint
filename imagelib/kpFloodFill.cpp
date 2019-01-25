@@ -110,8 +110,10 @@ kpFloodFill::kpFloodFill (kpImage *image, int x, int y,
     : d (new kpFloodFillPrivate ())
 {
     d->imagePtr = image;
-    d->x = x, d->y = y;
-    d->color = color, d->processedColorSimilarity = processedColorSimilarity;
+    d->x = x;
+    d->y = y;
+    d->color = color;
+    d->processedColorSimilarity = processedColorSimilarity;
 
     d->prepared = false;
 }

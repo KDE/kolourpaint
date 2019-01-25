@@ -616,7 +616,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
     // Prevent statusbar updates
     d->docResizeToBeCompleted = true;
 
-    d->docResizeWidth = (size.width () > 0 ? size.width () : 1),
+    d->docResizeWidth = (size.width () > 0 ? size.width () : 1);
     d->docResizeHeight = (size.height () > 0 ? size.height () : 1);
 
     if (d->docResizeWidth == d->document->width () &&

@@ -115,7 +115,8 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
     #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
         qCDebug(kpLogViews) << "\twon't magnify - setting zoom to 100%";
     #endif
-        hzoom = 100, vzoom = 100;
+        hzoom = 100;
+        vzoom = 100;
     }
 
 

@@ -61,9 +61,12 @@ kpTool::kpTool(const QString &text, const QString &description,
     d->key = key;
     d->action = nullptr;
     d->ignoreColorSignals = 0;
-    d->shiftPressed = false, d->controlPressed = false, d->altPressed = false;  // set in beginInternal()
+    d->shiftPressed = false;
+    d->controlPressed = false;
+    d->altPressed = false;  // set in beginInternal()
     d->beganDraw = false;
-    d->text = text, d->description = description;
+    d->text = text;
+    d->description = description;
     d->began = false;
     d->viewUnderStartPoint = nullptr;
     d->userShapeStartPoint = KP_INVALID_POINT;

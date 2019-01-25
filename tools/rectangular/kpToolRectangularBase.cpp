@@ -79,7 +79,8 @@ kpToolRectangularBase::kpToolRectangularBase (
 {
     d->drawShapeFunc = drawShapeFunc;
 
-    d->toolWidgetLineWidth = nullptr, d->toolWidgetFillStyle = nullptr;
+    d->toolWidgetLineWidth = nullptr;
+    d->toolWidgetFillStyle = nullptr;
 }
 
 //---------------------------------------------------------------------

@@ -203,8 +203,11 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     int index = 0;
     QList <int>::Iterator it = d->zoomList.begin ();
 
-    while (index < (int) d->zoomList.count () && zoomLevel > *it)
-        it++, index++;
+    while (index < d->zoomList.count () && zoomLevel > *it)
+    {
+        it++;
+        index++;
+    }
 
     if (zoomLevel != *it)
         d->zoomList.insert (it, zoomLevel);

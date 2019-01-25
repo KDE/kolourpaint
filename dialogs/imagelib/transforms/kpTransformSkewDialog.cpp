@@ -89,7 +89,8 @@ kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
 
 kpTransformSkewDialog::~kpTransformSkewDialog ()
 {
-    s_lastWidth = width (), s_lastHeight = height ();
+    s_lastWidth = width ();
+    s_lastHeight = height ();
 }
 
 

@@ -88,7 +88,8 @@ kpTempImage &kpTempImage::operator= (const kpTempImage &rhs)
     m_renderMode = rhs.m_renderMode;
     m_topLeft = rhs.m_topLeft;
     m_image = rhs.m_image;
-    m_width = rhs.m_width, m_height = rhs.m_height;
+    m_width = rhs.m_width;
+    m_height = rhs.m_height;
     m_userFunction = rhs.m_userFunction;
     m_userData = rhs.m_userData;
 

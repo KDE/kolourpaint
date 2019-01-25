@@ -488,12 +488,15 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                     matrix_x = -edge;
                     while(x+matrix_x < w){
                         CONVOLVE_ACC(*m, *s);
-                        ++matrix_x, ++m, ++s;
+                        ++matrix_x;
+                        ++m;
+                        ++s;
                     }
                     --s;
                     while(matrix_x <= edge){
                         CONVOLVE_ACC(*m, *s);
-                        ++matrix_x, ++m;
+                        ++matrix_x;
+                        ++m;
                     }
                 }
                 r = r < 0.0 ? 0.0 : r > 255.0 ? 255.0 : r+0.5;

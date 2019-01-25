@@ -97,16 +97,16 @@ void kpTool::arrowKeyPressDirection (const QKeyEvent *e, int *dx, int *dy)
 
     switch (e->key ())
     {
-    case Qt::Key_Home:     dxLocal = -1, dyLocal = -1;    break;
-    case Qt::Key_Up:                     dyLocal = -1;    break;
-    case Qt::Key_PageUp:   dxLocal = +1, dyLocal = -1;    break;
+    case Qt::Key_Home:      dxLocal = -1;   dyLocal = -1;   break;
+    case Qt::Key_Up:                        dyLocal = -1;   break;
+    case Qt::Key_PageUp:    dxLocal = +1;   dyLocal = -1;   break;
 
-    case Qt::Key_Left:     dxLocal = -1;                  break;
-    case Qt::Key_Right:    dxLocal = +1;                  break;
+    case Qt::Key_Left:      dxLocal = -1;                   break;
+    case Qt::Key_Right:     dxLocal = +1;                   break;
 
-    case Qt::Key_End:      dxLocal = -1, dyLocal = +1;    break;
-    case Qt::Key_Down:                   dyLocal = +1;    break;
-    case Qt::Key_PageDown: dxLocal = +1, dyLocal = +1;    break;
+    case Qt::Key_End:       dxLocal = -1;   dyLocal = +1;   break;
+    case Qt::Key_Down:                      dyLocal = +1;   break;
+    case Qt::Key_PageDown:  dxLocal = +1;   dyLocal = +1;   break;
     }
 
     if (dx)
@@ -155,7 +155,8 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
     if (view->transformViewToDoc (QPoint (newViewX, newViewY)) ==
         view->transformViewToDoc (oldPoint))
     {
-        newViewX += viewIncX, newViewY += viewIncY;
+        newViewX += viewIncX;
+        newViewY += viewIncY;
 
     #if DEBUG_KP_TOOL && 0
         qCDebug(kpLogTools) << "\tneed adjust for doc - newPoint="

@@ -632,7 +632,8 @@ static void populatePopupMenu (QMenu *popupMenu,
         QAction *action = new QAction(i18n ("%1: %2", undoOrRedo, (*it)->name ()), popupMenu);
         action->setData(i);
         popupMenu->addAction (action);
-        i++, it++;
+        i++;
+        it++;
     }
 
     if (it != commandList.end ())

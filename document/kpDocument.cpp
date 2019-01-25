@@ -370,7 +370,8 @@ kpImage *kpDocument::imagePointer () const
 // public
 void kpDocument::setImage (const kpImage &image)
 {
-    m_oldWidth = width (), m_oldHeight = height ();
+    m_oldWidth = width ();
+    m_oldHeight = height ();
 
     *m_image = image;
 
@@ -418,7 +419,8 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
     qCDebug(kpLogDocument) << "kpDocument::resize (" << w << "," << h << ")";
 #endif
 
-    m_oldWidth = width (), m_oldHeight = height ();
+    m_oldWidth = width ();
+    m_oldHeight = height ();
 
 #if DEBUG_KP_DOCUMENT && 1
     qCDebug(kpLogDocument) << "\toldWidth=" << m_oldWidth
