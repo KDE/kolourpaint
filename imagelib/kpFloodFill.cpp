@@ -192,7 +192,7 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
     if (beenHere)
         *beenHere = false;
 
-    Q_ASSERT (y >= 0 && y < (int) d->fillLinesCache.count ());
+    Q_ASSERT (y >= 0 && y < static_cast<int> (d->fillLinesCache.count ()));
 
     foreach (const kpFillLine &line, d->fillLinesCache [y])
     {

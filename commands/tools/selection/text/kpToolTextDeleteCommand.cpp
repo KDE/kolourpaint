@@ -59,7 +59,7 @@ void kpToolTextDeleteCommand::addDelete ()
 {
     QList <QString> textLines = textSelection ()->textLines ();
 
-    if (m_col < (int) textLines [m_row].length ())
+    if (m_col < static_cast<int> (textLines [m_row].length ()))
     {
         m_deletedText.prepend (textLines [m_row][m_col]);
 
@@ -68,7 +68,7 @@ void kpToolTextDeleteCommand::addDelete ()
     }
     else
     {
-        if (m_row < (int) textLines.size () - 1)
+        if (m_row < static_cast<int> (textLines.size () - 1))
         {
             m_deletedText.prepend ('\n');
 
@@ -88,7 +88,8 @@ void kpToolTextDeleteCommand::addDelete ()
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpToolTextDeleteCommand::size () const
 {
-    return (kpCommandSize::SizeType) m_deletedText.length () * sizeof (QChar);
+    return static_cast<kpCommandSize::SizeType>
+            (static_cast<unsigned int> (m_deletedText.length ()) * sizeof (QChar));
 }
 
 
@@ -112,7 +113,7 @@ void kpToolTextDeleteCommand::unexecute ()
 
     QList <QString> textLines = textSelection ()->textLines ();
 
-    for (int i = 0; i < (int) m_deletedText.length (); i++)
+    for (int i = 0; i < static_cast<int> (m_deletedText.length ()); i++)
     {
         if (m_deletedText [i] == '\n')
         {

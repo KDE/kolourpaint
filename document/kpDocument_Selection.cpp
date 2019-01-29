@@ -84,7 +84,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
 
     d->environ->setQueueViewUpdates ();
     {
-        const bool hadSelection = (bool) m_selection;
+        const bool hadSelection = static_cast<bool> (m_selection);
         kpAbstractSelection *oldSelection = m_selection;
 
 

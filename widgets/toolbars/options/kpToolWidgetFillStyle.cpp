@@ -47,14 +47,14 @@
 kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    for (int i = 0; i < (int) FillStyleNum; i++)
+    for (int i = 0; i < FillStyleNum; i++)
     {
         QPixmap pixmap;
 
-        pixmap = fillStylePixmap ((FillStyle) i,
+        pixmap = fillStylePixmap (static_cast<FillStyle> (i),
                                   (width () - 2/*margin*/) * 3 / 4,
                                   (height () - 2/*margin*/ - 2/*spacing*/) * 3 / (3 * 4));
-        addOption (pixmap, fillStyleName ((FillStyle) i)/*tooltip*/);
+        addOption (pixmap, fillStyleName (static_cast<FillStyle> (i))/*tooltip*/);
 
         startNewOptionRow ();
     }
@@ -144,7 +144,7 @@ kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
                << selectedRow ()
                << endl;
 #endif
-    return (FillStyle) selectedRow ();
+    return static_cast<FillStyle> (selectedRow ());
 }
 
 //---------------------------------------------------------------------

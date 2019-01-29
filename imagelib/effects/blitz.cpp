@@ -183,13 +183,13 @@ bool equalize(QImage &img)
     memset(equalize_map, 0, 256*sizeof(CharPixel));
     for(i=0; i < 256; ++i){
         if(high.red != low.red)
-            equalize_map[i].red=(unsigned char)
+            equalize_map[i].red = static_cast<unsigned char>
                 ((255*(map[i].red-low.red))/(high.red-low.red));
         if(high.green != low.green)
-            equalize_map[i].green=(unsigned char)
+            equalize_map[i].green = static_cast<unsigned char>
                 ((255*(map[i].green-low.green))/(high.green-low.green));
         if(high.blue != low.blue)
-            equalize_map[i].blue=(unsigned char)
+            equalize_map[i].blue = static_cast<unsigned char>
                 ((255*(map[i].blue-low.blue))/(high.blue-low.blue));
     }
 
@@ -198,24 +198,30 @@ bool equalize(QImage &img)
     if(img.format() == QImage::Format_ARGB32_Premultiplied){
         for(i=0; i < count; ++i, ++dest){
             pixel = convertFromPremult(*dest);
-            r = (low.red != high.red) ? equalize_map[qRed(pixel)].red :
-                qRed(pixel);
-            g = (low.green != high.green) ? equalize_map[qGreen(pixel)].green :
-                qGreen(pixel);
-            b = (low.blue != high.blue) ?  equalize_map[qBlue(pixel)].blue :
-                qBlue(pixel);
+            r = static_cast<unsigned char> ((low.red != high.red) ?
+                                                equalize_map[qRed(pixel)].red : qRed(pixel));
+
+            g = static_cast<unsigned char> ((low.green != high.green) ?
+                                                equalize_map[qGreen(pixel)].green : qGreen(pixel));
+
+            b = static_cast<unsigned char> ((low.blue != high.blue) ?
+                                                equalize_map[qBlue(pixel)].blue : qBlue(pixel));
+
             *dest = convertToPremult(qRgba(r, g, b, qAlpha(pixel)));
         }
     }
     else{
         for(i=0; i < count; ++i){
             pixel = *dest;
-            r = (low.red != high.red) ? equalize_map[qRed(pixel)].red :
-                qRed(pixel);
-            g = (low.green != high.green) ? equalize_map[qGreen(pixel)].green :
-                qGreen(pixel);
-            b = (low.blue != high.blue) ?  equalize_map[qBlue(pixel)].blue :
-                qBlue(pixel);
+            r = static_cast<unsigned char> ((low.red != high.red) ?
+                                                equalize_map[qRed(pixel)].red : qRed(pixel));
+
+            g = static_cast<unsigned char> ((low.green != high.green) ?
+                                                equalize_map[qGreen(pixel)].green : qGreen(pixel));
+
+            b = static_cast<unsigned char> ((low.blue != high.blue) ?
+                                                equalize_map[qBlue(pixel)].blue : qBlue(pixel));
+
             *dest++ = qRgba(r, g, b, qAlpha(pixel));
         }
     }
@@ -266,10 +272,10 @@ QImage Blitz::blur(QImage &img, int radius)
             mh = h - my;
 
         p1 = (QRgb *)buffer.scanLine(y);
-        memset(as, 0, w * sizeof(int));
-        memset(rs, 0, w * sizeof(int));
-        memset(gs, 0, w * sizeof(int));
-        memset(bs, 0, w * sizeof(int));
+        memset(as, 0, static_cast<unsigned int> (w) * sizeof(int));
+        memset(rs, 0, static_cast<unsigned int> (w) * sizeof(int));
+        memset(gs, 0, static_cast<unsigned int> (w) * sizeof(int));
+        memset(bs, 0, static_cast<unsigned int> (w) * sizeof(int));
 
         if(img.format() == QImage::Format_ARGB32_Premultiplied){
             QRgb pixel;
@@ -288,7 +294,7 @@ QImage Blitz::blur(QImage &img, int radius)
             QRgb pixel;
             unsigned char *ptr;
             for(yy = 0; yy < mh; yy++){
-                ptr = (unsigned char *)img.scanLine(yy + my);
+                ptr = img.scanLine(yy + my);
                 for(x = 0; x < w; x++, ptr++){
                     pixel = colorTable[*ptr];
                     as[x] += qAlpha(pixel);
@@ -348,27 +354,27 @@ int defaultConvolveMatrixSize(float radius, float sigma, bool quality)
 {
     int i, matrix_size;
     float normalize, value;
-    float sigma2 = sigma*sigma*2.0;
-    float sigmaSQ2PI = M_SQ2PI*sigma;
+    float sigma2 = sigma*sigma*2.0f;
+    float sigmaSQ2PI = static_cast<float>(M_SQ2PI) * sigma;
     int max = quality ? 65535 : 255;
 
-    if(sigma == 0.0){
+    if(sigma == 0.0f){
         qWarning("Blitz::defaultConvolveMatrixSize(): Zero sigma is invalid!");
         return(5);
     }
 
-    if(radius > 0.0)
-        return((int)(2.0*std::ceil(radius)+1.0));
+    if(radius > 0.0f)
+        return(static_cast<int>(2.0f * std::ceil(radius) + 1.0f));
 
     matrix_size = 5;
     do{
         normalize = 0.0;
         for(i=(-matrix_size/2); i <= (matrix_size/2); ++i)
-            normalize += std::exp(-((float) i*i)/sigma2) / sigmaSQ2PI;
+            normalize += std::exp(-(static_cast<float> (i*i))/sigma2) / sigmaSQ2PI;
         i = matrix_size/2;
-        value = std::exp(-((float) i*i)/sigma2) / sigmaSQ2PI / normalize;
+        value = std::exp(-(static_cast<float> (i*i))/sigma2) / sigmaSQ2PI / normalize;
         matrix_size += 2;
-    } while((int)(max*value) > 0);
+    } while(static_cast<int>(max*value) > 0);
 
     matrix_size-=4;
     return(matrix_size);
@@ -411,9 +417,9 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
     normalize = 0.0;
     for(i=0; i < matrix_size*matrix_size; ++i)
         normalize += matrix[i];
-    if(std::abs(normalize) <=  M_EPSILON)
-        normalize = 1.0;
-    normalize = 1.0/normalize;
+    if(std::abs(normalize) <=  static_cast<float> (M_EPSILON))
+        normalize = 1.0f;
+    normalize = 1.0f/normalize;
     for(i=0; i < matrix_size*matrix_size; ++i){
         normalize_matrix[i] = normalize*matrix[i];
     }
@@ -454,11 +460,11 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                         ++matrix_x; ++m; ++s;
                     }
                 }
-                r = r < 0.0 ? 0.0 : r > 255.0 ? 255.0 : r+0.5;
-                g = g < 0.0 ? 0.0 : g > 255.0 ? 255.0 : g+0.5;
-                b = b < 0.0 ? 0.0 : b > 255.0 ? 255.0 : b+0.5;
-                *dest++ = qRgba((unsigned char)r, (unsigned char)g,
-                                (unsigned char)b, qAlpha(*src++));
+                r = r < 0.0f ? 0.0f : r > 255.0f ? 255.0f : r + 0.5f;
+                g = g < 0.0f ? 0.0f : g > 255.0f ? 255.0f : g + 0.5f;
+                b = b < 0.0f ? 0.0f : b > 255.0f ? 255.0f : b + 0.5f;
+                *dest++ = qRgba(static_cast<unsigned char> (r), static_cast<unsigned char> (g),
+                                static_cast<unsigned char> (b), qAlpha(*src++));
             }
             // Okay, now process the middle part where the entire neighborhood
             // is on the image.
@@ -471,11 +477,11 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                         CONVOLVE_ACC(*m, *s);
                     }
                 }
-                r = r < 0.0 ? 0.0 : r > 255.0 ? 255.0 : r+0.5;
-                g = g < 0.0 ? 0.0 : g > 255.0 ? 255.0 : g+0.5;
-                b = b < 0.0 ? 0.0 : b > 255.0 ? 255.0 : b+0.5;
-                *dest++ = qRgba((unsigned char)r, (unsigned char)g,
-                                (unsigned char)b, qAlpha(*src++));
+                r = r < 0.0f ? 0.0f : r > 255.0f ? 255.0f : r + 0.5f;
+                g = g < 0.0f ? 0.0f : g > 255.0f ? 255.0f : g + 0.5f;
+                b = b < 0.0f ? 0.0f : b > 255.0f ? 255.0f : b + 0.5f;
+                *dest++ = qRgba(static_cast<unsigned char> (r), static_cast<unsigned char> (g),
+                                static_cast<unsigned char> (b), qAlpha(*src++));
             }
             // Finally process the right part where the neighborhood extends off
             // the right edge of the image
@@ -499,11 +505,11 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                         ++m;
                     }
                 }
-                r = r < 0.0 ? 0.0 : r > 255.0 ? 255.0 : r+0.5;
-                g = g < 0.0 ? 0.0 : g > 255.0 ? 255.0 : g+0.5;
-                b = b < 0.0 ? 0.0 : b > 255.0 ? 255.0 : b+0.5;
-                *dest++ = qRgba((unsigned char)r, (unsigned char)g,
-                                (unsigned char)b, qAlpha(*src++));
+                r = r < 0.0f ? 0.0f : r > 255.0f ? 255.0f : r + 0.5f;
+                g = g < 0.0f ? 0.0f : g > 255.0f ? 255.0f : g + 0.5f;
+                b = b < 0.0f ? 0.0f : b > 255.0f ? 255.0f : b + 0.5f;
+                *dest++ = qRgba(static_cast<unsigned char> (r), static_cast<unsigned char> (g),
+                                static_cast<unsigned char> (b), qAlpha(*src++));
             }
         }
     }
@@ -517,7 +523,7 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
 
 QImage Blitz::gaussianSharpen(QImage &img, float radius, float sigma)
 {
-    if(sigma == 0.0){
+    if(sigma == 0.0f){
         qWarning("Blitz::gaussianSharpen(): Zero sigma is invalid!");
         return(img);
     }
@@ -525,21 +531,21 @@ QImage Blitz::gaussianSharpen(QImage &img, float radius, float sigma)
     int matrix_size = defaultConvolveMatrixSize(radius, sigma, true);
     int len = matrix_size*matrix_size;
     float alpha, *matrix = new float[len];
-    float sigma2 = sigma*sigma*2.0;
-    float sigmaPI2 = 2.0*M_PI*sigma*sigma;
+    float sigma2 = sigma*sigma*2.0f;
+    float sigmaPI2 = 2.0f*static_cast<float> (M_PI)*sigma*sigma;
 
     int half = matrix_size/2;
     int x, y, i=0, j=half;
     float normalize=0.0;
     for(y=(-half); y <= half; ++y, --j){
         for(x=(-half); x <= half; ++x, ++i){
-            alpha = std::exp(-((float)x*x+y*y)/sigma2);
+            alpha = std::exp(-(static_cast<float> (x*x+y*y))/sigma2);
             matrix[i] = alpha/sigmaPI2;
             normalize += matrix[i];
         }
     }
 
-    matrix[i/2]=(-2.0)*normalize;
+    matrix[i/2]=(-2.0f)*normalize;
     QImage result(convolve(img, matrix_size, matrix));
     delete[] matrix;
     return(result);
@@ -549,7 +555,7 @@ QImage Blitz::gaussianSharpen(QImage &img, float radius, float sigma)
 
 QImage Blitz::emboss(QImage &img, float radius, float sigma)
 {
-    if(sigma == 0.0){
+    if(sigma == 0.0f){
         qWarning("Blitz::emboss(): Zero sigma is invalid!");
         return(img);
     }
@@ -558,15 +564,15 @@ QImage Blitz::emboss(QImage &img, float radius, float sigma)
     int len = matrix_size*matrix_size;
 
     float alpha, *matrix = new float[len];
-    float sigma2 = sigma*sigma*2.0;
-    float sigmaPI2 = 2.0*M_PI*sigma*sigma;
+    float sigma2 = sigma*sigma*2.0f;
+    float sigmaPI2 = 2.0f*static_cast<float> (M_PI)*sigma*sigma;
 
     int half = matrix_size/2;
     int x, y, i=0, j=half;
     for(y=(-half); y <= half; ++y, --j){
         for(x=(-half); x <= half; ++x, ++i){
-            alpha = std::exp(-((float)x*x+y*y)/sigma2);
-            matrix[i]=((x < 0) || (y < 0) ? -8.0 : 8.0)*alpha/sigmaPI2;
+            alpha = std::exp(-(static_cast<float> (x*x+y*y))/sigma2);
+            matrix[i]=((x < 0) || (y < 0) ? -8.0f : 8.0f)*alpha/sigmaPI2;
             if(x == j)
                 matrix[i]=0.0;
         }
@@ -599,7 +605,7 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
     QVector<QRgb> cTable;
     if(img.format() == QImage::Format_Indexed8){
         cTable = img.colorTable();
-        data = (unsigned int *)cTable.data();
+        data = static_cast<unsigned int *> (cTable.data());
         end = data + img.colorCount();
 
     }
@@ -632,16 +638,16 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
     }
 
     // conversion factors
-    float sr = ((float) r2 - r1) / (max - min);
-    float sg = ((float) g2 - g1) / (max - min);
-    float sb = ((float) b2 - b1) / (max - min);
+    float sr = (static_cast<float> (r2 - r1) / (max - min));
+    float sg = (static_cast<float> (g2 - g1) / (max - min));
+    float sb = (static_cast<float> (b2 - b1) / (max - min));
 
     if(img.format() != QImage::Format_ARGB32_Premultiplied){
         while(data != end){
             mean = (qRed(*data) + qGreen(*data) + qBlue(*data)) / 3;
-            *data = qRgba((unsigned char)(sr * (mean - min) + r1 + 0.5),
-                          (unsigned char)(sg * (mean - min) + g1 + 0.5),
-                          (unsigned char)(sb * (mean - min) + b1 + 0.5),
+            *data = qRgba(static_cast<unsigned char> (sr * (mean - min) + r1 + 0.5f),
+                          static_cast<unsigned char> (sg * (mean - min) + g1 + 0.5f),
+                          static_cast<unsigned char> (sb * (mean - min) + b1 + 0.5f),
                           qAlpha(*data));
             ++data;
         }
@@ -652,9 +658,9 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
             pixel = convertFromPremult(*data);
             mean = (qRed(pixel) + qGreen(pixel) + qBlue(pixel)) / 3;
             *data =
-                convertToPremult(qRgba((unsigned char)(sr * (mean - min) + r1 + 0.5),
-                                       (unsigned char)(sg * (mean - min) + g1 + 0.5),
-                                       (unsigned char)(sb * (mean - min) + b1 + 0.5),
+                convertToPremult(qRgba(static_cast<unsigned char> (sr * (mean - min) + r1 + 0.5f),
+                                       static_cast<unsigned char> (sg * (mean - min) + g1 + 0.5f),
+                                       static_cast<unsigned char> (sb * (mean - min) + b1 + 0.5f),
                                        qAlpha(*data)));
             ++data;
         }

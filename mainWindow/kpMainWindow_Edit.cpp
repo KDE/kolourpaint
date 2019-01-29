@@ -455,7 +455,7 @@ void kpMainWindow::pasteText (const QString &text,
             macroCmd->addCommand (giveContentCmd);
         }
 
-        for (int i = 0; i < (int) textLines.size (); i++)
+        for (int i = 0; i < static_cast<int> (textLines.size ()); i++)
         {
             if (i > 0)
             {

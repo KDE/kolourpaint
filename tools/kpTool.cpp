@@ -125,7 +125,7 @@ QString kpTool::text () const
 static bool KeyIsText (int key)
 {
     // TODO: should work like !QKeyEvent::text().isEmpty()
-    return !(key & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier));
+    return !(static_cast<unsigned int> (key) & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier));
 }
 
 //---------------------------------------------------------------------
@@ -163,7 +163,7 @@ QList<QKeySequence> kpTool::shortcutForKey (int key)
         shortcut.append (QKeySequence (key));
         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
         //  all clash with global KDE shortcuts)
-        shortcut.append (QKeySequence (Qt::ALT + Qt::SHIFT + key));
+        shortcut.append (QKeySequence (static_cast<int>(Qt::ALT) + static_cast<int>(Qt::SHIFT) + key));
     }
 
     return shortcut;

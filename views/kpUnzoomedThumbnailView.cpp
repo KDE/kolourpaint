@@ -117,7 +117,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     int x;
     if (document ()->width () > width ())
     {
-        x = (int) buddyView ()->transformViewToDocX (scrollViewContentsX);
+        x = static_cast<int> (buddyView ()->transformViewToDocX (scrollViewContentsX));
         const int rightMostAllowedX = qMax (0, document ()->width () - width ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
         qCDebug(kpLogViews) << "\tdocX=" << x
@@ -140,7 +140,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     int y;
     if (document ()->height () > height ())
     {
-        y = (int) buddyView ()->transformViewToDocY (scrollViewContentsY);
+        y = static_cast<int> (buddyView ()->transformViewToDocY (scrollViewContentsY));
         const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
         qCDebug(kpLogViews) << "\tdocY=" << y

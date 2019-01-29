@@ -113,7 +113,7 @@ QDataStream &operator>> (QDataStream &stream, kpColor &color)
     int a, b;
     stream >> a >> b;
     color.m_rgbaIsValid = a;
-    color.m_rgba = b;
+    color.m_rgba = static_cast<unsigned int> (b);
 
     color.m_colorCacheIsValid = false;
 

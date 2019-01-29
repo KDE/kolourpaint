@@ -201,8 +201,8 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
     const double horizScale = double (m_newWidth) / double (m_oldWidth);
     const double vertScale = double (m_newHeight) / double (m_oldHeight);
 
-    const int newX = (int) (m_oldSelectionPtr->x () * horizScale);
-    const int newY = (int) (m_oldSelectionPtr->y () * vertScale);
+    const int newX = static_cast<int> (m_oldSelectionPtr->x () * horizScale);
+    const int newY = static_cast<int> (m_oldSelectionPtr->y () * vertScale);
 
 
     QPolygon currentPoints = m_oldSelectionPtr->calculatePoints ();

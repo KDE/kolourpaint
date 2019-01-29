@@ -130,22 +130,22 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 
     for (int i = 0; i < 256; i++)
     {
-        quint8 applied = (quint8) brightnessContrastGamma (i, brightness, contrast, gamma);
+        quint8 applied = static_cast<quint8> (brightnessContrastGamma (i, brightness, contrast, gamma));
 
         if (channels & kpEffectBalance::Red)
             transformRed [i] = applied;
         else
-            transformRed [i] = i;
+            transformRed [i] = static_cast<quint8> (i);
 
         if (channels & kpEffectBalance::Green)
             transformGreen [i] = applied;
         else
-            transformGreen [i] = i;
+            transformGreen [i] = static_cast<quint8> (i);
 
         if (channels & kpEffectBalance::Blue)
             transformBlue [i] = applied;
         else
-            transformBlue [i] = i;
+            transformBlue [i] = static_cast<quint8> (i);
     }
 
 #if DEBUG_KP_EFFECT_BALANCE
@@ -161,10 +161,10 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
             {
                 const QRgb rgb = qimage.pixel (x, y);
 
-                const quint8 red = (quint8) qRed (rgb);
-                const quint8 green = (quint8) qGreen (rgb);
-                const quint8 blue = (quint8) qBlue (rgb);
-                const quint8 alpha = (quint8) qAlpha (rgb);
+                const quint8 red = static_cast<quint8> (qRed (rgb));
+                const quint8 green = static_cast<quint8> (qGreen (rgb));
+                const quint8 blue = static_cast<quint8> (qBlue (rgb));
+                const quint8 alpha = static_cast<quint8> (qAlpha (rgb));
 
                 qimage.setPixel (x, y,
                     qRgba (transformRed [red],
@@ -187,10 +187,10 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         {
             const QRgb rgb = qimage.color (i);
 
-            const quint8 red = (quint8) qRed (rgb);
-            const quint8 green = (quint8) qGreen (rgb);
-            const quint8 blue = (quint8) qBlue (rgb);
-            const quint8 alpha = (quint8) qAlpha (rgb);
+            const quint8 red = static_cast<quint8> (qRed (rgb));
+            const quint8 green = static_cast<quint8> (qGreen (rgb));
+            const quint8 blue = static_cast<quint8> (qBlue (rgb));
+            const quint8 alpha = static_cast<quint8> (qAlpha (rgb));
 
             qimage.setColor (i,
                 qRgba (transformRed [red],

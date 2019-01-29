@@ -486,8 +486,8 @@ QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const
     if (!docResizingGrip ())
         return QSize ();
 
-    const int docX = (int) m_view->transformViewToDocX (m_view->width () + viewDX);
-    const int docY = (int) m_view->transformViewToDocY (m_view->height () + viewDY);
+    const int docX = static_cast<int> (m_view->transformViewToDocX (m_view->width () + viewDX));
+    const int docY = static_cast<int> (m_view->transformViewToDocY (m_view->height () + viewDY));
 
     return QSize (qMax (1, docX), qMax (1, docY));
 }
@@ -676,8 +676,11 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
 
     if (viewX >= 0 && viewY >= 0)
     {
-        m_resizeRoundedLastViewX = (int) m_view->transformDocToViewX ((int) m_view->transformViewToDocX (viewX));
-        m_resizeRoundedLastViewY = (int) m_view->transformDocToViewY ((int) m_view->transformViewToDocY (viewY));
+        m_resizeRoundedLastViewX =
+                static_cast<int> (m_view->transformDocToViewX (m_view->transformViewToDocX (viewX)));
+
+        m_resizeRoundedLastViewY =
+                static_cast<int> (m_view->transformDocToViewY (m_view->transformViewToDocY (viewY)));
 
         m_resizeRoundedLastViewDX = viewDX;
         m_resizeRoundedLastViewDY = viewDY;
@@ -752,8 +755,8 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
 
     m_haveMovedFromOriginalDocSize = true;
 
-    updateResizeLines (qMax (1, qMax (m_view->width () + viewDX, (int) m_view->transformDocToViewX (1))),
-                       qMax (1, qMax (m_view->height () + viewDY, (int) m_view->transformDocToViewY (1))),
+    updateResizeLines (qMax (1, qMax (m_view->width () + viewDX, static_cast<int> (m_view->transformDocToViewX (1)))),
+                       qMax (1, qMax (m_view->height () + viewDY, static_cast<int> (m_view->transformDocToViewY (1)))),
                        viewDX, viewDY);
 
     emit continuedDocResize (newDocSize ());
@@ -1157,7 +1160,7 @@ void kpViewScrollableContainer::wheelEvent (QWheelEvent *e)
         QScrollArea::wheelEvent(e);
 }
 
-//---------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 
 QRect kpViewScrollableContainer::noDragScrollRect () const
 {

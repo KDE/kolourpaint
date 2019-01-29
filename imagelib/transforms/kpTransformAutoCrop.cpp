@@ -691,7 +691,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
                    << " botBorder.rect=" << botBorder.rect ()
                    << endl;
     #endif
-        ::ShowNothingToAutocropMessage (mainWindow, (bool) doc->selection ());
+        ::ShowNothingToAutocropMessage (mainWindow, static_cast<bool> (doc->selection ()));
         return false;
     }
 
@@ -755,11 +755,8 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
 
 
     mainWindow->addImageOrSelectionCommand (
-        new kpTransformAutoCropCommand (
-            (bool) doc->selection (),
-            leftBorder, rightBorder,
-            topBorder, botBorder,
-            mainWindow->commandEnvironment ()));
+        new kpTransformAutoCropCommand (static_cast<bool> (doc->selection ()),
+            leftBorder, rightBorder, topBorder, botBorder,  mainWindow->commandEnvironment ()));
 
 
     return true;

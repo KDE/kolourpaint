@@ -60,7 +60,7 @@ kpDefaultColorCollection::kpDefaultColorCollection ()
         kpColor::Tan
     };
 
-    for (int i = 0; i < (int) (sizeof (colors) / sizeof (colors [0])); i++)
+    for (int i = 0; i < static_cast<int> (sizeof (colors) / sizeof (colors [0])); i++)
     {
         addColor (colors [i].toQColor ());
     }

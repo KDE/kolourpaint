@@ -72,7 +72,8 @@ void kpToolTextInsertCommand::addText (const QString &moreText)
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpToolTextInsertCommand::size () const
 {
-    return (kpCommandSize::SizeType) m_newText.length () * sizeof (QChar);
+    return static_cast<kpCommandSize::SizeType>
+            (static_cast<unsigned int> (m_newText.length ()) * sizeof (QChar));
 }
 
 //---------------------------------------------------------------------

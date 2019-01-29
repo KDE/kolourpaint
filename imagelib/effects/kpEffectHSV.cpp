@@ -51,15 +51,15 @@ static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* p
         min = qMin(r, g);
         if(b != min)
         {
-            *pHue = (float)(r - g) / ((b - min) * 6) + (float)2 / 3;
-            *pSaturation = (float)1 - (float)min / (float)b;
+            *pHue = static_cast<float> (r - g) / ((b - min) * 6) + static_cast<float> (2) / 3;
+            *pSaturation = 1.0f - static_cast<float> (min) / static_cast<float> (b);
         }
         else
         {
             *pHue = 0;
             *pSaturation = 0;
         }
-        *pValue = (float)b / 255;
+        *pValue = static_cast<float> (b) / 255;
     }
     else if(g >= r)
     {
@@ -67,15 +67,15 @@ static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* p
         min = qMin(b, r);
         if(g != min)
         {
-            *pHue = (float)(b - r) / ((g - min) * 6) + (float)1 / 3;
-            *pSaturation = (float)1 - (float)min / (float)g;
+            *pHue = static_cast<float> (b - r) / ((g - min) * 6) + static_cast<float> (1) / 3;
+            *pSaturation = 1.0f - static_cast<float> (min) / static_cast<float> (g);
         }
         else
         {
             *pHue = 0;
             *pSaturation = 0;
         }
-        *pValue = (float)g / 255;
+        *pValue = static_cast<float> (g) / 255;
     }
     else
     {
@@ -83,17 +83,17 @@ static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* p
         min = qMin(g, b);
         if(r != min)
         {
-            *pHue = (float)(g - b) / ((r - min) * 6);
+            *pHue = static_cast<float> (g - b) / ((r - min) * 6);
             if(*pHue < 0)
-                (*pHue) += (float)1;
-            *pSaturation = (float)1 - (float)min / (float)r;
+                (*pHue) += 1.0f;
+            *pSaturation = 1.0f - static_cast<float> (min) / static_cast<float> (r);
         }
         else
         {
             *pHue = 0;
             *pSaturation = 0;
         }
-        *pValue = (float)r / 255;
+        *pValue = static_cast<float> (r) / 255;
     }
 }
 
@@ -101,19 +101,36 @@ static unsigned int HSVToColor(int alpha, float hue, float saturation, float val
 {
     //Q_ASSERT (hue >= 0 && hue <= 1 && saturation >= 0 && saturation <= 1 && value >= 0 && value <= 1);
 
-    hue *= (float)5.999999;
-    int h = (int)hue;
+    hue *= 5.999999f;
+    int h = static_cast<int> (hue);
     float f = hue - h;
-    float p = value * ((float)1 - saturation);
-    float q = value * ((float)1 - ((h & 1) == 0 ? (float)1 - f : f) * saturation);
+    float p = value * (1.0f - saturation);
+    float q = value * (1.0f - ((h & 1) == 0 ? 1.0f - f : f) * saturation);
     switch(h)
     {
-        case 0: return qRgba((int)(value * 255.999999), (int)(q * 255.999999), (int)(p * 255.999999), alpha);
-        case 1: return qRgba((int)(q * 255.999999), (int)(value * 255.999999), (int)(p * 255.999999), alpha);
-        case 2: return qRgba((int)(p * 255.999999), (int)(value * 255.999999), (int)(q * 255.999999), alpha);
-        case 3: return qRgba((int)(p * 255.999999), (int)(q * 255.999999), (int)(value * 255.999999), alpha);
-        case 4: return qRgba((int)(q * 255.999999), (int)(p * 255.999999), (int)(value * 255.999999), alpha);
-        case 5: return qRgba((int)(value * 255.999999), (int)(p * 255.999999), (int)(q * 255.999999), alpha);
+        case 0: return qRgba(static_cast<int> (value * 255.999999f),
+                             static_cast<int> (q * 255.999999f),
+                             static_cast<int> (p * 255.999999f), alpha);
+
+        case 1: return qRgba(static_cast<int> (q * 255.999999f),
+                             static_cast<int> (value * 255.999999f),
+                             static_cast<int> (p * 255.999999f), alpha);
+
+        case 2: return qRgba(static_cast<int> (p * 255.999999f),
+                             static_cast<int> (value * 255.999999f),
+                             static_cast<int> (q * 255.999999f), alpha);
+
+        case 3: return qRgba(static_cast<int> (p * 255.999999f),
+                             static_cast<int> (q * 255.999999f),
+                             static_cast<int> (value * 255.999999f), alpha);
+
+        case 4: return qRgba(static_cast<int> (q * 255.999999f),
+                             static_cast<int> (p * 255.999999f),
+                             static_cast<int> (value * 255.999999f), alpha);
+
+        case 5: return qRgba(static_cast<int> (value * 255.999999f),
+                             static_cast<int> (p * 255.999999f),
+                             static_cast<int> (q * 255.999999f), alpha);
     }
     return qRgba(0, 0, 0, alpha);
 }
@@ -125,12 +142,12 @@ static QRgb AdjustHSVInternal (QRgb pix, double hueDiv360, double saturation, do
     
     const int alpha = qAlpha(pix);
 
-    h += (float)hueDiv360;
+    h += static_cast<float> (hueDiv360);
     h -= floor(h);
 
-    s = qMax((float)0, qMin((float)1, s + (float)saturation));
+    s = qMax(0.0f, qMin(1.0f, s + static_cast<float> (saturation)));
 
-    v = qMax((float)0, qMin((float)1, v + (float)value));
+    v = qMax(0.0f, qMin(1.0f, v + static_cast<float> (value)));
 
     return ::HSVToColor(alpha, h, s, v);
 }

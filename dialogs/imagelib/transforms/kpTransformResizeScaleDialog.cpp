@@ -289,11 +289,11 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     QLabel *originalLabel = new QLabel (i18n ("Original:"), dimensionsGroupBox);
     m_originalWidthInput = new QSpinBox;
     m_originalWidthInput->setRange(1, INT_MAX);
-    m_originalWidthInput->setValue(document()->width((bool)selection()));
+    m_originalWidthInput->setValue(document()->width(static_cast<bool> (selection())));
     QLabel *xLabel0 = new QLabel (i18n ("x"), dimensionsGroupBox);
     m_originalHeightInput = new QSpinBox;
     m_originalHeightInput->setRange(1, INT_MAX);
-    m_originalHeightInput->setValue(document()->height((bool)selection()));
+    m_originalHeightInput->setValue(document()->height(static_cast<bool> (selection())));
 
     QLabel *newLabel = new QLabel (i18n ("&New:"), dimensionsGroupBox);
     m_newWidthInput = new QSpinBox;

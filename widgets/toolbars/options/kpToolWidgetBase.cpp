@@ -150,7 +150,7 @@ QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int m
         retOffsets.append (0);
 
     int totalSize = 0;
-    for (int i = 0; i < (int) sizes.count (); i++)
+    for (int i = 0; i <  sizes.count (); i++)
         totalSize += sizes [i];
 
     int margin = 1;
@@ -160,7 +160,7 @@ QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int m
     if (totalSize + margin * 2 > max)
     {
         retOffsets [0] = 0;
-        for (int i = 1; i < (int) sizes.count (); i++)
+        for (int i = 1; i < sizes.count (); i++)
             retOffsets [i] = retOffsets [i - 1] + sizes [i - 1];
 
         return retOffsets;
@@ -181,7 +181,7 @@ QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int m
     }
 
     retOffsets [0] = margin;
-    for (int i = 1; i < (int) sizes.count (); i++)
+    for (int i = 1; i < sizes.count (); i++)
     {
         retOffsets [i] += retOffsets [i - 1] +
                           sizes [i - 1] +
@@ -287,9 +287,9 @@ void kpToolWidgetBase::relayoutOptions ()
     for (int r = 0; r < m_pixmaps.count (); r++)
         maxHeightOfRow.append (0);
 
-    for (int r = 0; r < (int) m_pixmaps.count (); r++)
+    for (int r = 0; r <  m_pixmaps.count (); r++)
     {
-        for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
+        for (int c = 0; c <  m_pixmaps [r].count (); c++)
         {
             if (c == 0 || m_pixmaps [r][c].height () > maxHeightOfRow [r])
                 maxHeightOfRow [r] = m_pixmaps [r][c].height ();
@@ -306,35 +306,35 @@ void kpToolWidgetBase::relayoutOptions ()
         qCDebug(kpLogWidgets) << "\t\t" << r << ": " << rowYOffset [r];
 #endif
 
-    for (int r = 0; r < (int) m_pixmaps.count (); r++)
+    for (int r = 0; r < m_pixmaps.count (); r++)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
         qCDebug(kpLogWidgets) << "\tlaying out row " << r << ":";
     #endif
 
         QList <int> widths;
-        for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
+        for (int c = 0; c < m_pixmaps [r].count (); c++)
             widths.append (m_pixmaps [r][c].width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
         qCDebug(kpLogWidgets) << "\t\twidths of cols:";
-        for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
+        for (int c = 0; c <  m_pixmaps [r].count (); c++)
             qCDebug(kpLogWidgets) << "\t\t\t" << c << ": " << widths [c];
     #endif
 
         QList <int> colXOffset = spreadOutElements (widths, width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
         qCDebug(kpLogWidgets) << "\t\tspread out offsets of cols:";
-        for (int c = 0; c < (int) colXOffset.count (); c++)
+        for (int c = 0; c < colXOffset.count (); c++)
             qCDebug(kpLogWidgets) << "\t\t\t" << c << ": " << colXOffset [c];
     #endif
 
-        for (int c = 0; c < (int) colXOffset.count (); c++)
+        for (int c = 0; c < colXOffset.count (); c++)
         {
             int x = colXOffset [c];
             int y = rowYOffset [r];
             int w, h;
 
-            if (c == (int) colXOffset.count () - 1)
+            if (c == colXOffset.count () - 1)
             {
                 if (x + m_pixmaps [r][c].width () >= width ())
                     w = m_pixmaps [r][c].width ();
@@ -344,7 +344,7 @@ void kpToolWidgetBase::relayoutOptions ()
             else
                 w = colXOffset [c + 1] - x;
 
-            if (r == (int) m_pixmaps.count () - 1)
+            if (r == m_pixmaps.count () - 1)
             {
                 if (y + m_pixmaps [r][c].height () >= height ())
                     h = m_pixmaps [r][c].height ();
@@ -384,7 +384,7 @@ int kpToolWidgetBase::selectedCol () const
 int kpToolWidgetBase::selected () const
 {
     if (m_selectedRow < 0 ||
-        m_selectedRow >= (int) m_pixmaps.count () ||
+        m_selectedRow >= m_pixmaps.count () ||
         m_selectedCol < 0)
     {
         return -1;
@@ -394,7 +394,7 @@ int kpToolWidgetBase::selected () const
     for (int y = 0; y < m_selectedRow; y++)
         upto += m_pixmaps [y].count ();
 
-    if (m_selectedCol >= (int) m_pixmaps [m_selectedRow].count ())
+    if (m_selectedCol >= m_pixmaps [m_selectedRow].count ())
         return -1;
 
     upto += m_selectedCol;
@@ -472,14 +472,14 @@ bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
         newCol = m_selectedCol;
 
     newCol++;
-    if (newCol >= (int) m_pixmaps [newRow].count ())
+    if (newCol >= m_pixmaps [newRow].count ())
     {
         newRow++;
-        if (newRow >= (int) m_pixmaps.count ())
+        if (newRow >= m_pixmaps.count ())
             return false;
 
         newCol = 0;
-        if (newCol >= (int) m_pixmaps [newRow].count ())
+        if (newCol >= m_pixmaps [newRow].count ())
             return false;
     }
 
@@ -507,7 +507,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
 #endif
 
     if (row < 0 || col < 0 ||
-        row >= (int) m_pixmapRects.count () || col >= (int) m_pixmapRects [row].count ())
+        row >= m_pixmapRects.count () || col >= m_pixmapRects [row].count ())
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
         qCDebug(kpLogWidgets) << "\tout of range";
@@ -598,15 +598,15 @@ bool kpToolWidgetBase::event (QEvent *e)
     //       its base which calls ignore() :)
     if (e->type () == QEvent::ToolTip)
     {
-        QHelpEvent *he = (QHelpEvent *) e;
+        QHelpEvent *he = dynamic_cast<QHelpEvent *> (e);
     #if DEBUG_KP_TOOL_WIDGET_BASE
         qCDebug(kpLogWidgets) << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos ();
     #endif
 
         bool showedText = false;
-        for (int r = 0; r < (int) m_pixmapRects.count (); r++)
+        for (int r = 0; r < m_pixmapRects.count (); r++)
         {
-            for (int c = 0; c < (int) m_pixmapRects [r].count (); c++)
+            for (int c = 0; c < m_pixmapRects [r].count (); c++)
             {
                 if (m_pixmapRects [r][c].contains (he->pos ()))
                 {
@@ -654,9 +654,9 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
         return;
 
 
-    for (int i = 0; i < (int) m_pixmapRects.count (); i++)
+    for (int i = 0; i < m_pixmapRects.count (); i++)
     {
-        for (int j = 0; j < (int) m_pixmapRects [i].count (); j++)
+        for (int j = 0; j < m_pixmapRects [i].count (); j++)
         {
             if (m_pixmapRects [i][j].contains (e->pos ()))
             {
@@ -682,13 +682,13 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
     QPainter painter (this);
 
-    for (int i = 0; i < (int) m_pixmaps.count (); i++)
+    for (int i = 0; i < m_pixmaps.count (); i++)
     {
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
             qCDebug(kpLogWidgets) << "\tRow: " << i;
         #endif
 
-        for (int j = 0; j < (int) m_pixmaps [i].count (); j++)
+        for (int j = 0; j < m_pixmaps [i].count (); j++)
         {
             QRect rect = m_pixmapRects [i][j];
             QPixmap pixmap = m_pixmaps [i][j];

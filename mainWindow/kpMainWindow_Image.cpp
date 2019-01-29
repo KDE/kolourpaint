@@ -469,7 +469,7 @@ void kpMainWindow::slotRotate ()
 {
     toolEndShape ();
 
-    kpTransformRotateDialog dialog ((bool) d->document->selection (),
+    kpTransformRotateDialog dialog (static_cast<bool> (d->document->selection ()),
         transformDialogEnvironment (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
@@ -513,7 +513,7 @@ void kpMainWindow::slotSkew ()
 {
     toolEndShape ();
 
-    kpTransformSkewDialog dialog ((bool) d->document->selection (),
+    kpTransformSkewDialog dialog (static_cast<bool> (d->document->selection ()),
         transformDialogEnvironment (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
@@ -594,7 +594,7 @@ void kpMainWindow::slotMoreEffects ()
 {
     toolEndShape ();
 
-    kpEffectsDialog dialog ((bool) d->document->selection (),
+    kpEffectsDialog dialog (static_cast<bool> (d->document->selection ()),
         transformDialogEnvironment (), this,
         d->moreEffectsDialogLastEffect);
 

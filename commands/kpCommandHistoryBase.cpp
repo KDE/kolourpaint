@@ -524,7 +524,7 @@ void kpCommandHistoryBase::trimCommandList (QLinkedList <kpCommand *> *commandLi
                << " undoMaxLimitSizeLimit=" << m_undoMaxLimitSizeLimit
                << endl;
 #endif
-    if ((int) commandList->size () <= m_undoMinLimit)
+    if (static_cast<int> (commandList->size ()) <= m_undoMinLimit)
     {
     #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\t\tsize under undoMinLimit - done";
@@ -604,8 +604,8 @@ void kpCommandHistoryBase::trimCommandLists ()
                    << " redoCmdList.size=" << m_redoCommandList.size ()
                    << endl;
     #endif
-        if (m_documentRestoredPosition > (int) m_redoCommandList.size () ||
-            -m_documentRestoredPosition > (int) m_undoCommandList.size ())
+        if (m_documentRestoredPosition > static_cast<int> (m_redoCommandList.size ()) ||
+            -m_documentRestoredPosition > static_cast<int> (m_undoCommandList.size ()))
         {
         #if DEBUG_KP_COMMAND_HISTORY
             qCDebug(kpLogCommands) << "\t\t\tinvalidate documentRestoredPosition";
@@ -653,7 +653,7 @@ void kpCommandHistoryBase::updateActions ()
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::updateActions()";
 #endif
 
-    m_actionUndo->setEnabled ((bool) nextUndoCommand ());
+    m_actionUndo->setEnabled (static_cast<bool> (nextUndoCommand ()));
     // Don't want to keep changing toolbar text.
     // TODO: As a bad side-effect, the menu doesn't have "Undo: <action>"
     //       anymore.  In any case, the KDE4 KToolBarPopupAction
@@ -674,7 +674,7 @@ void kpCommandHistoryBase::updateActions ()
                << "ms" << endl;;
 #endif
 
-    m_actionRedo->setEnabled ((bool) nextRedoCommand ());
+    m_actionRedo->setEnabled (static_cast<bool> (nextRedoCommand ()));
     // Don't want to keep changing toolbar text.
     // TODO: As a bad side-effect, the menu doesn't have "Undo: <action>"
     //       anymore.  In any case, the KDE4 KToolBarPopupAction

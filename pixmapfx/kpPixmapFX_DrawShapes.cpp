@@ -53,7 +53,7 @@ bool kpPixmapFX::Only1PixelInPointArray (const QPolygon &points)
     if (points.count () == 0)
         return false;
 
-    for (int i = 1; i < (int) points.count (); i++)
+    for (int i = 1; i < static_cast<int> (points.count ()); i++)
     {
         if (points [i] != points [0])
             return false;

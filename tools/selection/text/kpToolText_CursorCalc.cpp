@@ -51,8 +51,8 @@
 bool kpToolText::CursorIsOnWordChar (const QList <QString> &textLines,
     int cursorRow, int cursorCol)
 {
-    return (cursorRow >= 0 && cursorRow < (int) textLines.size () &&
-            cursorCol >= 0 && cursorCol < (int) textLines [cursorRow].length () &&
+    return (cursorRow >= 0 && cursorRow < textLines.size () &&
+            cursorCol >= 0 && cursorCol < textLines [cursorRow].length () &&
             !textLines [cursorRow][cursorCol].isSpace ());
 }
 
@@ -71,8 +71,8 @@ bool kpToolText::CursorIsAtEnd (const QList <QString> &textLines,
     if (textLines.isEmpty ())
         return (cursorRow == 0 && cursorCol == 0);
         
-    return (cursorRow == (int) textLines.size () - 1 &&
-            cursorCol == (int) textLines [cursorRow].length ());
+    return (cursorRow == textLines.size () - 1 &&
+            cursorCol == textLines [cursorRow].length ());
 }
 
 
@@ -107,10 +107,10 @@ void kpToolText::MoveCursorRight (const QList <QString> &textLines,
         
     (*cursorCol)++;
 
-    if (*cursorCol > (int) textLines [*cursorRow].length ())
+    if (*cursorCol > textLines [*cursorRow].length ())
     {
         (*cursorRow)++;
-        if (*cursorRow > (int) textLines.size () - 1)
+        if (*cursorRow > textLines.size () - 1)
         {
             *cursorRow = textLines.size () - 1;
             *cursorCol = textLines [*cursorRow].length ();

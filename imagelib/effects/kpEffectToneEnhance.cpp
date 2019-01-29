@@ -52,7 +52,9 @@
 
 inline unsigned int ComputeTone(unsigned int color)
 {
-  return RED_WEIGHT * qRed(color) + GREEN_WEIGHT * qGreen(color) + BLUE_WEIGHT * qBlue(color);
+  return RED_WEIGHT * static_cast<unsigned int> (qRed(color)) +
+          GREEN_WEIGHT * static_cast<unsigned int> (qGreen(color)) +
+          BLUE_WEIGHT * static_cast<unsigned int> (qBlue(color));
 }
 
 //---------------------------------------------------------------------
@@ -60,9 +62,9 @@ inline unsigned int ComputeTone(unsigned int color)
 inline unsigned int AdjustTone(unsigned int color, unsigned int oldTone, unsigned int newTone, double amount)
 {
   return qRgba(
-      qMax(0, qMin(255, (int) (amount * qRed(color) * newTone / oldTone + (1.0 - amount) * qRed(color)))),
-      qMax(0, qMin(255, (int) (amount * qGreen(color) * newTone / oldTone + (1.0 - amount) * qGreen(color)))),
-      qMax(0, qMin(255, (int) (amount * qBlue(color) * newTone / oldTone + (1.0 - amount) * qBlue(color)))),
+      qMax(0, qMin(255, static_cast<int> (amount * qRed(color) * newTone / oldTone + (1.0 - amount) * qRed(color)))),
+      qMax(0, qMin(255, static_cast<int> (amount * qGreen(color) * newTone / oldTone + (1.0 - amount) * qGreen(color)))),
+      qMax(0, qMin(255, static_cast<int> (amount * qBlue(color) * newTone / oldTone + (1.0 - amount) * qBlue(color)))),
       qAlpha(color)
     );
 }
@@ -172,7 +174,7 @@ unsigned int* kpEffectToneEnhanceApplier::MakeToneMap(QImage* pImage, int u, int
   unsigned int total = m_pHistogram[i - 1];
   unsigned int* pToneMap = new unsigned int[TONE_MAP_SIZE];
   for(i = 0; i < TONE_MAP_SIZE; i++)
-    pToneMap[i] = (uint)((unsigned long long int)m_pHistogram[i] * MAX_TONE_VALUE / total);
+    pToneMap[i] = static_cast<uint> (static_cast<unsigned long long int> (m_pHistogram[i] * MAX_TONE_VALUE / total));
 /*
   // Undo the forward sum and reverse sum the tone histogram
   m_pHistogram[TONE_MAP_SIZE - 1] -= m_pHistogram[TONE_MAP_SIZE - 2];
@@ -191,15 +193,16 @@ unsigned int* kpEffectToneEnhanceApplier::MakeToneMap(QImage* pImage, int u, int
 // protected
 void kpEffectToneEnhanceApplier::ComputeToneMaps(QImage* pImage, int nGranularity)
 {
-  if(nGranularity == m_nToneMapGranularity && pImage->width() == (int) m_nComputedWid && pImage->height() == (int) m_nComputedHgt)
+  if(nGranularity == m_nToneMapGranularity && pImage->width() ==
+          static_cast<int> (m_nComputedWid) && pImage->height() == static_cast<int> (m_nComputedHgt))
   {
     return; // We've already computed tone maps for this granularity
   }
   DeleteToneMaps();
   m_pToneMaps = new unsigned int*[nGranularity * nGranularity];
   m_nToneMapGranularity = nGranularity;
-  m_nComputedWid = pImage->width();
-  m_nComputedHgt = pImage->height();
+  m_nComputedWid = static_cast<unsigned int> (pImage->width());
+  m_nComputedHgt = static_cast<unsigned int> (pImage->height());
   int u, v;
   for(v = 0; v < nGranularity; v++)
   {
@@ -225,12 +228,17 @@ unsigned int kpEffectToneEnhanceApplier::InterpolateNewTone(QImage* pImage, unsi
   int hFac = x - (u * (pImage->width() - 1) / (nGranularity - 1));
   if(hFac > m_areaWid)
     hFac = m_areaWid;
-  unsigned int y1 = (x1y1 * (m_areaWid - hFac) + x2y1 * hFac) / m_areaWid;
-  unsigned int y2 = (x1y2 * (m_areaWid - hFac) + x2y2 * hFac) / m_areaWid;
+  unsigned int y1 = (x1y1 * (static_cast<unsigned int> (m_areaWid) - static_cast<unsigned int> (hFac))
+                     + x2y1 * static_cast<unsigned int> (hFac)) / static_cast<unsigned int> (m_areaWid);
+
+  unsigned int y2 = (x1y2 * (static_cast<unsigned int> (m_areaWid) - static_cast<unsigned int> (hFac))
+                     + x2y2 * static_cast<unsigned int> (hFac)) / static_cast<unsigned int> (m_areaWid);
+
   int vFac = y - (v * (pImage->height() - 1) / (nGranularity - 1));
   if(vFac > m_areaHgt)
     vFac = m_areaHgt;
-  return (y1 * (m_areaHgt - vFac) + y2 * vFac) / m_areaHgt;
+  return (y1 * (static_cast<unsigned int> (m_areaHgt) - static_cast<unsigned int> (vFac))
+          + y2 * static_cast<unsigned int> (vFac)) / static_cast<unsigned int> (m_areaHgt);
 }
 
 //---------------------------------------------------------------------
@@ -240,7 +248,7 @@ void kpEffectToneEnhanceApplier::BalanceImageTone(QImage* pImage, double granula
 {
   if(pImage->width() < MIN_IMAGE_DIM || pImage->height() < MIN_IMAGE_DIM)
       return; // the image is not big enough to perform this operation
-  int nGranularity = (int)(granularity * (MAX_GRANULARITY - 2)) + 1;
+  int nGranularity = static_cast<int> (granularity * (MAX_GRANULARITY - 2)) + 1;
   m_areaWid = pImage->width() / nGranularity;
   if(m_areaWid < MIN_IMAGE_DIM)
       m_areaWid = MIN_IMAGE_DIM;
@@ -268,7 +276,7 @@ void kpEffectToneEnhanceApplier::BalanceImageTone(QImage* pImage, double granula
 kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
                                           double granularity, double amount)
 {
-  if (amount == 0)
+  if (amount == 0.0)
       return image;
 
   QImage qimage(image);

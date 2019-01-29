@@ -69,7 +69,7 @@
 // public
 bool kpViewManager::textCursorEnabled () const
 {
-    return (bool) d->textCursorBlinkTimer;
+    return static_cast<bool> (d->textCursorBlinkTimer);
 }
 
 // public

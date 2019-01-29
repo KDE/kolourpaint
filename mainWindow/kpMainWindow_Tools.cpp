@@ -217,7 +217,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
             d->toolToolBar->selectPreviousTool ();
         else
         {
-            if (d->lastToolNumber >= 0 && d->lastToolNumber < (int) d->tools.count ())
+            if (d->lastToolNumber >= 0 && d->lastToolNumber < d->tools.count ())
                 d->toolToolBar->selectTool (d->tools.at (d->lastToolNumber));
             else
                 d->toolToolBar->selectTool (d->toolPen);
@@ -520,7 +520,7 @@ int kpMainWindow::toolNumber () const
 void kpMainWindow::saveLastTool ()
 {
     int number = toolNumber ();
-    if (number < 0 || number >= (int) d->tools.count ())
+    if (number < 0 || number >= d->tools.count ())
         return;
 
 

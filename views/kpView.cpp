@@ -427,8 +427,8 @@ double kpView::transformViewToDocY (double viewY) const
 // public
 QPoint kpView::transformViewToDoc (const QPoint &viewPoint) const
 {
-    return QPoint ((int) transformViewToDocX (viewPoint.x ()),
-                   (int) transformViewToDocY (viewPoint.y ()));
+    return QPoint (static_cast<int> (transformViewToDocX (viewPoint.x ())),
+                   static_cast<int> (transformViewToDocY (viewPoint.y ())));
 }
 
 //---------------------------------------------------------------------
@@ -473,8 +473,8 @@ double kpView::transformDocToViewY (double docY) const
 // public
 QPoint kpView::transformDocToView (const QPoint &docPoint) const
 {
-    return QPoint ((int) transformDocToViewX (docPoint.x ()),
-                   (int) transformDocToViewY (docPoint.y ()));
+    return QPoint (static_cast<int> (transformDocToViewX (docPoint.x ())),
+                   static_cast<int> (transformDocToViewY (docPoint.y ())));
 }
 
 // public
@@ -514,7 +514,7 @@ QPoint kpView::transformViewToOtherView (const QPoint &viewPoint,
     const double otherViewX = otherView->transformDocToViewX (docX);
     const double otherViewY = otherView->transformDocToViewY (docY);
 
-    return QPoint ((int) otherViewX, (int) otherViewY);
+    return QPoint (static_cast<int> (otherViewX), static_cast<int> (otherViewY));
 }
 
 

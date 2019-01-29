@@ -270,7 +270,7 @@ void kpToolPolygonalBase::applyModifiers ()
         // diagonal (dist from start maintained)
         else
         {
-            const double dist = sqrt ((double)(diffx * diffx + diffy * diffy));
+            const double dist = sqrt (static_cast<double> (diffx * diffx + diffy * diffy));
 
             #define sgn(a) ((a)<0?-1:1)
             // Round distances _before_ adding to any coordinate

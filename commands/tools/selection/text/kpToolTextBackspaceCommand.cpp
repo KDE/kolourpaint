@@ -96,7 +96,8 @@ void kpToolTextBackspaceCommand::addBackspace ()
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpToolTextBackspaceCommand::size () const
 {
-    return (kpCommandSize::SizeType) m_deletedText.length () * sizeof (QChar);
+    return static_cast<kpCommandSize::SizeType>
+            (static_cast<unsigned int> (m_deletedText.length ()) * sizeof (QChar));
 }
 
 
@@ -120,7 +121,7 @@ void kpToolTextBackspaceCommand::unexecute ()
 
     QList <QString> textLines = textSelection ()->textLines ();
 
-    for (int i = 0; i < (int) m_deletedText.length (); i++)
+    for (int i = 0; i < static_cast<int> (m_deletedText.length ()); i++)
     {
         if (m_deletedText [i] == '\n')
         {

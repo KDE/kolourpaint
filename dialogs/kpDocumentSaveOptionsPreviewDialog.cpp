@@ -117,7 +117,7 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QImage &pix
     //  -- i.e. INT_MAX / 100 -- times the pixmap size)
     const int percent = pixmapSize ?
                             qMax (1,
-                                  (int) ((kpCommandSize::SizeType) fileSize * 100 / pixmapSize)) :
+                                  static_cast<int> (static_cast<kpCommandSize::SizeType> (fileSize * 100 / pixmapSize))) :
                             0;
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"

@@ -614,7 +614,7 @@ bool kpPixmapFX::isLosslessRotation (double angle)
         angle = -angle;
 
     // Remove multiples of 90 to make sure 0 <= angle <= 90
-    angle -= ((int) angle) / 90 * 90;
+    angle -= (static_cast<int> (angle)) / 90 * 90;
 
     // "Impossible" situation?
     if (angle < 0 || angle > 90)

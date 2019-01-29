@@ -37,7 +37,7 @@
 SaneDialog::SaneDialog(QWidget *parent)
     : KPageDialog(parent)
 {
-    setFaceType((KPageDialog::FaceType)Plain);
+    setFaceType(static_cast<KPageDialog::FaceType> (Plain));
     setWindowTitle(i18nc("@title:window", "Acquire Image"));
 
     buttonBox()->setStandardButtons(QDialogButtonBox::Close);
@@ -108,7 +108,7 @@ SaneDialog::~SaneDialog()
 void SaneDialog::imageReady(QByteArray &data, int w, int h, int bpl, int f)
 {
     /* copy the image data into img */
-    QImage img = m_ksanew->toQImage(data, w, h, bpl, (KSaneIface::KSaneWidget::ImageFormat)f);
+    QImage img = m_ksanew->toQImage(data, w, h, bpl, static_cast<KSaneIface::KSaneWidget::ImageFormat> (f));
     emit finalImage(img, nextId());
 }
 

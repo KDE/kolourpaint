@@ -149,7 +149,7 @@ void *kpTempImage::userData () const
 // public
 bool kpTempImage::isVisible (const kpViewManager *vm) const
 {
-    return m_isBrush ? (bool) vm->viewUnderCursor () : true;
+    return m_isBrush ? static_cast<bool> (vm->viewUnderCursor ()) : true;
 }
 
 //---------------------------------------------------------------------

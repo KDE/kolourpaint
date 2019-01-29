@@ -53,7 +53,7 @@ int kpTextSelection::closestTextRowForPoint (const QPoint &point) const
 
     int row = (point.y () - textAreaRect ().y ()) /
                fontMetrics.lineSpacing ();
-    if (row >= (int) d->textLines.size ())
+    if (row >= static_cast<int> (d->textLines.size ()))
         row = d->textLines.size () - 1;
 
     return row;
@@ -63,7 +63,7 @@ int kpTextSelection::closestTextRowForPoint (const QPoint &point) const
 int kpTextSelection::closestTextColForPoint (const QPoint &point) const
 {
     int row = closestTextRowForPoint (point);
-    if (row < 0 || row >= (int) d->textLines.size ())
+    if (row < 0 || row >= static_cast<int> (d->textLines.size ()))
         return -1;
 
     const int localX = point.x () - textAreaRect ().x ();
@@ -74,7 +74,7 @@ int kpTextSelection::closestTextColForPoint (const QPoint &point) const
     int charLocalLeft = fontMetrics.width (d->textLines [row], 0);
 
     // OPT: binary search or guess location then move
-    for (int col = 0; col < (int) d->textLines [row].length (); col++)
+    for (int col = 0; col < static_cast<int> (d->textLines [row].length ()); col++)
     {
         // OPT: fontMetrics::charWidth() might be faster
         const int nextCharLocalLeft = fontMetrics.width (d->textLines [row], col + 1);
@@ -95,7 +95,7 @@ QPoint kpTextSelection::pointForTextRowCol (int row, int col) const
     kpPreeditText preeditText = d->preeditText;
     if ((row < 0 || col < 0) ||
         (preeditText.isEmpty () &&
-            (row >= (int) d->textLines.size () || col > (int) d->textLines [row].length ())))
+            (row >= static_cast<int> (d->textLines.size ()) || col > static_cast<int> (d->textLines [row].length ()))))
     {
 #if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpTextSelection::pointForTextRowCol("

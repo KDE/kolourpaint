@@ -82,14 +82,14 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     }
 
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
-    Q_ASSERT (dragAccepted == (bool) document ()->selection ());
+    Q_ASSERT (dragAccepted == static_cast<bool> (document ()->selection ()));
 
     const kpFreeFormImageSelection *oldPointsSel = nullptr;
     if (document ()->selection ())
     {
         kpAbstractSelection *sel = document ()->selection ();
         Q_ASSERT (dynamic_cast <kpFreeFormImageSelection *> (sel));
-        oldPointsSel = static_cast <kpFreeFormImageSelection *> (sel);
+        oldPointsSel = dynamic_cast <kpFreeFormImageSelection *> (sel);
     }
 
 

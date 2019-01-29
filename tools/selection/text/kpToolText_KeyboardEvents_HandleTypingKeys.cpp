@@ -166,7 +166,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
     qCDebug(kpLogTools) << "\ttext=" << e->text();
 #endif
     QString usableText;
-    for (int i = 0; i < (int) e->text ().length (); i++)
+    for (int i = 0; i < e->text ().length (); i++)
     {
         if (e->text ().at (i).isPrint ())
             usableText += e->text ().at (i);

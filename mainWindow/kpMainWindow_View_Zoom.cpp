@@ -234,7 +234,7 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     {
         d->actionActualSize->setEnabled (zoomLevel != 100);
 
-        d->actionZoomIn->setEnabled (d->actionZoom->currentItem () < (int) d->zoomList.count () - 1);
+        d->actionZoomIn->setEnabled (d->actionZoom->currentItem () < d->zoomList.count () - 1);
         d->actionZoomOut->setEnabled (d->actionZoom->currentItem () > 0);
     }
 
@@ -395,7 +395,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             const double viewY = vuc->transformDocToViewY (targetDocY);
             // Rounding error from zooming in and out :(
             // TODO: do everything in terms of tool doc points in type "double".
-            const QPoint viewPoint ((int) viewX, (int) viewY);
+            const QPoint viewPoint (static_cast<int> (viewX), static_cast<int> (viewY));
         #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
                        << " viewUnderCursor: (" << viewX << "," << viewY << ")"
@@ -570,9 +570,9 @@ void kpMainWindow::slotFitToWidth ()
   {
     const QRect docRect (
         0/*x*/,
-        (int) d->mainView->transformViewToDocY (d->scrollView->verticalScrollBar()->value ())/*maintain y*/,
-        d->document->width (),
-        1/*don't care about height*/);
+        static_cast<int> (d->mainView->transformViewToDocY (d->scrollView->verticalScrollBar()->value ()))/*maintain y*/,
+                d->document->width (),
+                1/*don't care about height*/);
     zoomToRect (
         docRect,
         true/*account for grips*/,
@@ -588,10 +588,10 @@ void kpMainWindow::slotFitToHeight ()
   if ( d->document )
   {
     const QRect docRect (
-        (int) d->mainView->transformViewToDocX (d->scrollView->horizontalScrollBar()->value ())/*maintain x*/,
-        0/*y*/,
-        1/*don't care about width*/,
-        d->document->height ());
+        static_cast<int> (d->mainView->transformViewToDocX (d->scrollView->horizontalScrollBar()->value ()))/*maintain x*/,
+                0/*y*/,
+                1/*don't care about width*/,
+                d->document->height ());
     zoomToRect (
         docRect,
         true/*account for grips*/,
@@ -612,7 +612,7 @@ void kpMainWindow::zoomIn (bool centerUnderCursor)
 #endif
     const int targetItem = d->actionZoom->currentItem () + 1;
 
-    if (targetItem >= (int) d->zoomList.count ())
+    if (targetItem >= static_cast<int> (d->zoomList.count ()))
         return;
 
     d->actionZoom->setCurrentItem (targetItem);
