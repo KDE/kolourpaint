@@ -50,9 +50,9 @@ public:
         q(q),
         column1Width(0),
         column2Width(0),
-        label(0),
-        slider(0),
-        labelAlignment(0)
+        label(nullptr),
+        slider(nullptr),
+        labelAlignment(nullptr)
     {
     }
 
@@ -102,8 +102,8 @@ void kpNumInput::setLabel(const QString &label, Qt::Alignment a)
 {
     if (label.isEmpty()) {
         delete d->label;
-        d->label = 0;
-        d->labelAlignment = 0;
+        d->label = nullptr;
+        d->labelAlignment = nullptr;
     } else {
         if (!d->label) {
             d->label = new QLabel(this);
@@ -424,7 +424,7 @@ class kpDoubleNumInput::kpDoubleNumInputPrivate
 {
 public:
     kpDoubleNumInputPrivate()
-        : spin(0) {}
+        : spin(nullptr) {}
     QDoubleSpinBox *spin;
     QSize editSize;
     QString specialValue;
