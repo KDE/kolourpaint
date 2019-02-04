@@ -114,23 +114,19 @@ QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int w, int h)
 // private
 QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
 {
-    // do not complain about the "useless" breaks
-    // as the return statements might not be return statements one day
-
     switch (fs)
     {
     case NoFill:
         return i18n ("No Fill");
-        break;
+
     case FillWithBackground:
         return i18n ("Fill with Background Color");
-        break;
+
     case FillWithForeground:
         return i18n ("Fill with Foreground Color");
-        break;
+
     default:
         return QString();
-        break;
     }
 }
 

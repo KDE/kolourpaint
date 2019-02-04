@@ -67,7 +67,6 @@ static void setPixel (unsigned char *colorBitmap,
         break;
 
     case Transparent:
-    default:
         colorValue = ColorWhite;
         maskValue = MaskTransparent;
         break;

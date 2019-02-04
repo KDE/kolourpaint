@@ -120,15 +120,12 @@ QCursor kpGrip::cursorForType (GripType type)
     {
     case kpGrip::Bottom:
         return Qt::SizeVerCursor;
-        break;  // one day you'll forget
 
     case kpGrip::Right:
         return Qt::SizeHorCursor;
-        break;  // one day you'll forget
 
     case kpGrip::BottomRight:
         return Qt::SizeFDiagCursor;
-        break;  // one day you'll forget
     }
 
     return Qt::ArrowCursor;
