@@ -37,8 +37,8 @@
 #include <KLocalizedString>
 #include "kpNumInput.h"
 
-#include <qgridlayout.h>
-#include <qlabel.h>
+#include <QGridLayout>
+#include <QLabel>
 #include <QSpinBox>
 
 

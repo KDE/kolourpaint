@@ -30,15 +30,15 @@
 #include "kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
 
-#include <qaction.h>
-#include <qdatastream.h>
+#include <QAction>
+#include <QDataStream>
 #include <QDesktopWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFileDialog>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qsize.h>
+#include <QPainter>
+#include <QPixmap>
+#include <QSize>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QScreen>

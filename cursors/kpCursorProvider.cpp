@@ -30,7 +30,7 @@
 
 #include "kpCursorLightCross.h"
 
-#include <qcursor.h>
+#include <QCursor>
 
 
 static const QCursor *TheLightCursor = nullptr;

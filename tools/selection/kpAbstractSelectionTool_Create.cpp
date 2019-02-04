@@ -32,9 +32,9 @@
 #include "kpAbstractSelectionTool.h"
 #include "kpAbstractSelectionToolPrivate.h"
 
-#include <qcursor.h>
-#include <qpixmap.h>
-#include <qtimer.h>
+#include <QCursor>
+#include <QPixmap>
+#include <QTimer>
 
 #include <KLocalizedString>
 

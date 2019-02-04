@@ -31,13 +31,13 @@
 
 #include "kpToolPolygonalBase.h"
 
-#include <float.h>
-#include <math.h>
+#include <cfloat>
+#include <cmath>
 
-#include <qcursor.h>
-#include <qpoint.h>
-#include <qpolygon.h>
-#include <qrect.h>
+#include <QCursor>
+#include <QPoint>
+#include <QPolygon>
+#include <QRect>
 
 #include <KLocalizedString>
 

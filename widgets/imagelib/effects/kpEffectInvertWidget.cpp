@@ -38,10 +38,10 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <qcheckbox.h>
-#include <qimage.h>
-#include <qlayout.h>
-#include <qpixmap.h>
+#include <QCheckBox>
+#include <QImage>
+#include <QLayout>
+#include <QPixmap>
 
 
 kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,

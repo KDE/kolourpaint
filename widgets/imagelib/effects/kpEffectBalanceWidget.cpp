@@ -39,13 +39,12 @@
 #include "kpNumInput.h"
 
 #include <cmath>
-#include <math.h>
 
-#include <qcombobox.h>
-#include <qgridlayout.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QComboBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
 
 #if DEBUG_KP_EFFECT_BALANCE
     #include <qdatetime.h>

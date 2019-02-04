@@ -31,7 +31,7 @@
 
 #include "kpEffectToneEnhance.h"
 
-#include <qimage.h>
+#include <QImage>
 
 #include "kpLogCategories.h"
 

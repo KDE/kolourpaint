@@ -36,8 +36,8 @@
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
 
-#include <qcursor.h>
-#include <qpixmap.h>
+#include <QCursor>
+#include <QPixmap>
 
 #include "kpLogCategories.h"
 #include <kmessagebox.h>

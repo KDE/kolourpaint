@@ -31,21 +31,21 @@
 #include "kpDocument.h"
 #include "kpDocumentPrivate.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qcolor.h>
-#include <qbitmap.h>
-#include <qbrush.h>
-#include <qfile.h>
-#include <qimage.h>
-#include <qlist.h>
+#include <QColor>
+#include <QBitmap>
+#include <QBrush>
+#include <QFile>
 #include <QImage>
-#include <qpainter.h>
-#include <qrect.h>
-#include <qsavefile.h>
-#include <qsize.h>
-#include <qtemporaryfile.h>
-#include <qmatrix.h>
+#include <QList>
+#include <QImage>
+#include <QPainter>
+#include <QRect>
+#include <QSaveFile>
+#include <QSize>
+#include <QTemporaryFile>
+#include <QMatrix>
 #include <QMimeDatabase>
 
 #include "kpLogCategories.h"

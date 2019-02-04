@@ -31,15 +31,15 @@
 
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
-#include <qapplication.h>
-#include <qboxlayout.h>
-#include <qdialogbuttonbox.h>
-#include <qgridlayout.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
+#include <QApplication>
+#include <QBoxLayout>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QPixmap>
+#include <QPushButton>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

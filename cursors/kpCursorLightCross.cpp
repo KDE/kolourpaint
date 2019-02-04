@@ -32,8 +32,8 @@
 
 #include "kpLogCategories.h"
 
-#include <qbitmap.h>
-#include <qcursor.h>
+#include <QBitmap>
+#include <QCursor>
 
 
 enum PixelValue

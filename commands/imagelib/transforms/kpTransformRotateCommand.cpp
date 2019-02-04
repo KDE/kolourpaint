@@ -40,9 +40,9 @@
 #include "views/manager/kpViewManager.h"
 #include "kpLogCategories.h"
 
-#include <qapplication.h>
-#include <qpolygon.h>
-#include <qmatrix.h>
+#include <QApplication>
+#include <QPolygon>
+#include <QMatrix>
 
 #include <KLocalizedString>
 

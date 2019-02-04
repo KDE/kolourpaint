@@ -36,7 +36,7 @@
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
 
-#include <qapplication.h>
+#include <QApplication>
 
 #include "kpLogCategories.h"
 

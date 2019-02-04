@@ -29,10 +29,9 @@
 #include "kpDocumentMetaInfo.h"
 
 #include <cmath>
-#include <math.h>
 
-#include <qlist.h>
-#include <qpoint.h>
+#include <QList>
+#include <QPoint>
 
 #include "kpLogCategories.h"
 

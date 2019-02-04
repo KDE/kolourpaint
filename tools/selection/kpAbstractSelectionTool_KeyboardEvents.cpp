@@ -37,7 +37,7 @@
 #include "commands/tools/selection/kpToolSelectionMoveCommand.h"
 #include "layers/selections/kpAbstractSelection.h"
 
-#include <qevent.h>
+#include <QKeyEvent>
 
 #include "kpLogCategories.h"
 

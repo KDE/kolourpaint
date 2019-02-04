@@ -28,7 +28,7 @@
 
 #include "kpTransformFlipCommand.h"
 
-#include <qapplication.h>
+#include <QApplication>
 
 #include "kpLogCategories.h"
 #include "layers/selections/image/kpAbstractImageSelection.h"

@@ -28,9 +28,9 @@
 
 #include "layers/selections/text/kpTextStyle.h"
 
-#include <qdatastream.h>
-#include <qfont.h>
-#include <qfontmetrics.h>
+#include <QDataStream>
+#include <QFont>
+#include <QFontMetrics>
 
 
 kpTextStyle::kpTextStyle ()

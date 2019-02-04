@@ -30,7 +30,7 @@
 #include "kpMainWindowPrivate.h"
 #include "kpLogCategories.h"
 
-#include <qtimer.h>
+#include <QTimer>
 
 #include <KSharedConfig>
 #include <kconfiggroup.h>

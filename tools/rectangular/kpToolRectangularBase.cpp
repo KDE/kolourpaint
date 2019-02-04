@@ -31,7 +31,7 @@
 
 #include "tools/rectangular/kpToolRectangularBase.h"
 
-#include <qcursor.h>
+#include <QCursor>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

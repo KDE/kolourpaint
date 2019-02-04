@@ -34,7 +34,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "commands/tools/flow/kpToolFlowCommand.h"
 
-#include <qbitmap.h>
+#include <QBitmap>
 
 //---------------------------------------------------------------------
 

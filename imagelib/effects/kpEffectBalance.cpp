@@ -31,9 +31,9 @@
 
 #include "kpEffectBalance.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qimage.h>
+#include <QImage>
 
 #include "kpLogCategories.h"
 

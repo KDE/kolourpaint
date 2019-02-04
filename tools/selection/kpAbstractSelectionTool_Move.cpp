@@ -49,7 +49,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-#include <qtimer.h>
+#include <QTimer>
 
 #include <KLocalizedString>
 

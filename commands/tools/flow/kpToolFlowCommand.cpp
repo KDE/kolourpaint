@@ -37,7 +37,7 @@
 #include "tools/kpTool.h"
 #include "views/manager/kpViewManager.h"
 
-#include <qrect.h>
+#include <QRect>
 
 
 struct kpToolFlowCommandPrivate

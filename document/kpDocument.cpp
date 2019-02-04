@@ -46,23 +46,23 @@
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "lgpl/generic/kpUrlFormatter.h"
 
-#include <math.h>
+#include <cmath>
 
 #include "kpLogCategories.h"
 #include <kio/netaccess.h> // kdelibs4support
 #include <KLocalizedString>
 
-#include <qcolor.h>
-#include <qbitmap.h>
-#include <qbrush.h>
-#include <qfile.h>
-#include <qimage.h>
-#include <qlist.h>
+#include <QColor>
+#include <QBitmap>
+#include <QBrush>
+#include <QFile>
 #include <QImage>
-#include <qpainter.h>
-#include <qrect.h>
-#include <qsize.h>
-#include <qmatrix.h>
+#include <QList>
+#include <QImage>
+#include <QPainter>
+#include <QRect>
+#include <QSize>
+#include <QMatrix>
 
 //---------------------------------------------------------------------
 

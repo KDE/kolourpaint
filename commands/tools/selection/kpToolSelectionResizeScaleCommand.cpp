@@ -40,9 +40,9 @@
 #include "layers/selections/text/kpTextSelection.h"
 #include "kpLogCategories.h"
 
-#include <qapplication.h>
-#include <qcursor.h>
-#include <qtimer.h>
+#include <QApplication>
+#include <QCursor>
+#include <QTimer>
 
 #include <KLocalizedString>
 

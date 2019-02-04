@@ -31,20 +31,20 @@
 
 #include "kpTransformResizeScaleDialog.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qboxlayout.h>
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdialogbuttonbox.h>
-#include <qgridlayout.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qsize.h>
-#include <qtoolbutton.h>
+#include <QBoxLayout>
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QPixmap>
+#include <QSize>
+#include <QToolButton>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 

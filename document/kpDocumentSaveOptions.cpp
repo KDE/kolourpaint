@@ -37,9 +37,9 @@
 #include "kpLogCategories.h"
 #include <ksharedconfig.h>
 
-#include <qbitmap.h>
+#include <QBitmap>
 #include <QImage>
-#include <qstring.h>
+#include <QString>
 
 //---------------------------------------------------------------------
 

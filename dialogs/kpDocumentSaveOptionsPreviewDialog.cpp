@@ -30,11 +30,11 @@
 
 #include "kpDocumentSaveOptionsPreviewDialog.h"
 
-#include <qevent.h>
-#include <qgridlayout.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
+#include <QEvent>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLayout>
+#include <QPixmap>
 
 #include <kconfig.h>
 #include "kpLogCategories.h"

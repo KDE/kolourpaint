@@ -39,9 +39,9 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <qbitmap.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <QBitmap>
+#include <QPainter>
+#include <QPixmap>
 
 
 static int EraserSizes [] = {2, 3, 5, 9, 17, 29};

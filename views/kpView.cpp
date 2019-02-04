@@ -35,13 +35,13 @@
 #include "kpView.h"
 #include "kpViewPrivate.h"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
-#include <qcursor.h>
-#include <qpoint.h>
-#include <qrect.h>
-#include <qregion.h>
+#include <QCursor>
+#include <QPoint>
+#include <QRect>
+#include <QRegion>
 #include <QScrollBar>
 
 #include "kpLogCategories.h"

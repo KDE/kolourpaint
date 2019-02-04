@@ -31,7 +31,7 @@
 
 #include "kpEffectInvert.h"
 
-#include <qimage.h>
+#include <QImage>
 #include <QImage>
 
 #include "kpLogCategories.h"

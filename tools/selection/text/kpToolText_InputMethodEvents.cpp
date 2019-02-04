@@ -34,7 +34,7 @@
 #include "kpToolTextPrivate.h"
 #include "commands/tools/selection/text/kpToolTextInsertCommand.h"
 
-#include <qevent.h>
+#include <QEvent>
 
 #include "kpLogCategories.h"
 

@@ -33,12 +33,12 @@
 #include <KLocalizedString>
 #include "../widgets/imagelib/effects/kpNumInput.h"
 
-#include <qboxlayout.h>
-#include <qdialogbuttonbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QBoxLayout>
+#include <QDialogButtonBox>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
 #include <QWhatsThis>
 
 kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)

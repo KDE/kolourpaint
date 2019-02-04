@@ -42,18 +42,18 @@
 #include <KSharedConfig>
 #include <KConfigGroup>
 
-#include <qapplication.h>
-#include <qboxlayout.h>
-#include <qbuffer.h>
-#include <qcombobox.h>
-#include <qevent.h>
-#include <qgridlayout.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtimer.h>
+#include <QApplication>
+#include <QBoxLayout>
+#include <QBuffer>
+#include <QComboBox>
+#include <QEvent>
+#include <QGridLayout>
+#include <QImage>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QTimer>
 
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (

@@ -41,14 +41,14 @@
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "layers/selections/text/kpTextSelection.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qapplication.h>
-#include <qpoint.h>
-#include <qpolygon.h>
-#include <qrect.h>
-#include <qsize.h>
-#include <qmatrix.h>
+#include <QApplication>
+#include <QPoint>
+#include <QPolygon>
+#include <QRect>
+#include <QSize>
+#include <QMatrix>
 
 #include "kpLogCategories.h"
 

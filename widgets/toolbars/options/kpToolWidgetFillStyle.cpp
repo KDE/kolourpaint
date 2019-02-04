@@ -38,9 +38,9 @@
 
 #include "kpLogCategories.h"
 
-#include <qbrush.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <QBrush>
+#include <QPainter>
+#include <QPixmap>
 
 //---------------------------------------------------------------------
 

@@ -31,7 +31,7 @@
 
 #include "kpColor.h"
 
-#include <qdatastream.h>
+#include <QDataStream>
 
 #include "kpLogCategories.h"
 

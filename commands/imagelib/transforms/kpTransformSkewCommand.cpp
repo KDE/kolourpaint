@@ -41,9 +41,9 @@
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "kpLogCategories.h"
 
-#include <qapplication.h>
-#include <qmatrix.h>
-#include <qpolygon.h>
+#include <QApplication>
+#include <QMatrix>
+#include <QPolygon>
 
 // TODO: nasty, should avoid using GUI class in this command class
 #include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"

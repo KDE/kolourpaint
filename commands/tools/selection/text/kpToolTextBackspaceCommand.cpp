@@ -33,7 +33,7 @@
 #include "layers/selections/text/kpTextSelection.h"
 #include "views/manager/kpViewManager.h"
 
-#include <qlist.h>
+#include <QList>
 
 
 kpToolTextBackspaceCommand::kpToolTextBackspaceCommand (const QString &name,

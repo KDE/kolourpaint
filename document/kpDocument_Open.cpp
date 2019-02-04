@@ -43,10 +43,10 @@
 #include "lgpl/generic/kpUrlFormatter.h"
 #include "views/manager/kpViewManager.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qcolor.h>
-#include <qimage.h>
+#include <QColor>
+#include <QImage>
 #include <QMimeDatabase>
 #include <QImageReader>
 

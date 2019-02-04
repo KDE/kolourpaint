@@ -52,9 +52,9 @@
 #include <kconfiggroup.h>
 #include <KLocalizedString>
 
-#include <qevent.h>
-#include <qmenu.h>
-#include <qtimer.h>
+#include <QEvent>
+#include <QMenu>
+#include <QTimer>
 
 #include "kpLogCategories.h"
 

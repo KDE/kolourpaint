@@ -28,8 +28,8 @@
 
 #include "kpEffectHSVWidget.h"
 
-#include <qgridlayout.h>
-#include <qlabel.h>
+#include <QGridLayout>
+#include <QLabel>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

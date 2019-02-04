@@ -63,7 +63,7 @@
 #include <kmessagebox.h>
 #include <KLocalizedString>
 
-#include <qimage.h>
+#include <QImage>
 
 //---------------------------------------------------------------------
 

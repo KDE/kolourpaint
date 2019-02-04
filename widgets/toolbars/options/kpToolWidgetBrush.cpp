@@ -31,8 +31,8 @@
 
 #include "widgets/toolbars/options/kpToolWidgetBrush.h"
 
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <QPainter>
+#include <QPixmap>
 
 #include <KLocalizedString>
 

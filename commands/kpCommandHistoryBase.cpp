@@ -33,8 +33,8 @@
 
 #include <climits>
 
-#include <qlinkedlist.h>
-#include <qmenu.h>
+#include <QLinkedList>
+#include <QMenu>
 
 #include <KSharedConfig>
 #include <kconfiggroup.h>

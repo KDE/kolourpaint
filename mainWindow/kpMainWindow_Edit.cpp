@@ -29,12 +29,12 @@
 #include "kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qfontmetrics.h>
-#include <qimage.h>
-#include <qlist.h>
-#include <qmenu.h>
+#include <QApplication>
+#include <QClipboard>
+#include <QFontMetrics>
+#include <QImage>
+#include <QList>
+#include <QMenu>
 #include <QDesktopWidget>
 #include <QScrollBar>
 

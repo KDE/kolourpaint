@@ -41,8 +41,8 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QCheckBox>
+#include <QLayout>
 
 
 // public static

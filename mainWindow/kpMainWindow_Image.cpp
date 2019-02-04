@@ -66,9 +66,9 @@
 #include <KLocalizedString>
 #include <KIconLoader>
 
-#include <qaction.h>
-#include <qmenubar.h>
-#include <qsize.h>
+#include <QAction>
+#include <QMenuBar>
+#include <QSize>
 
 
 //---------------------------------------------------------------------

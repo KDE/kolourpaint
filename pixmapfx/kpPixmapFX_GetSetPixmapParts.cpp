@@ -31,12 +31,12 @@
 
 #include "kpPixmapFX.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpoint.h>
-#include <qrect.h>
+#include <QImage>
+#include <QPainter>
+#include <QPoint>
+#include <QRect>
 
 #include "kpLogCategories.h"
 

@@ -43,7 +43,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-#include <qlist.h>
+#include <QList>
 
 #include <KLocalizedString>
 

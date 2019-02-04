@@ -48,11 +48,11 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtimer.h>
+#include <QComboBox>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QTimer>
 #include <QImage>
 
 

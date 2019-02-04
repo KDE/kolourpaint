@@ -50,9 +50,9 @@
 #include "kpViewManager.h"
 #include "kpViewManagerPrivate.h"
 
-#include <qapplication.h>
-#include <qlist.h>
-#include <qtimer.h>
+#include <QApplication>
+#include <QList>
+#include <QTimer>
 //#include <QInputContext>
 
 #include "kpLogCategories.h"

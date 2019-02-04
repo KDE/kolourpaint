@@ -31,7 +31,7 @@
 
 #include "kpColorSimilarityCubeRenderer.h"
 
-#include <math.h>
+#include <cmath>
 
 #include <QPainter>
 #include <QPolygonF>

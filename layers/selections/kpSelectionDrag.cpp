@@ -31,7 +31,7 @@
 
 #include "kpSelectionDrag.h"
 
-#include <qdatastream.h>
+#include <QDataStream>
 #include <QImage>
 #include <QUrl>
 

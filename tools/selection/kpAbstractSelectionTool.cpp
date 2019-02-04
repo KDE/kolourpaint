@@ -32,9 +32,9 @@
 #include "kpAbstractSelectionTool.h"
 #include "kpAbstractSelectionToolPrivate.h"
 
-#include <qcursor.h>
-#include <qmenu.h>
-#include <qtimer.h>
+#include <QCursor>
+#include <QMenu>
+#include <QTimer>
 
 #include "kpLogCategories.h"
 #include "layers/selections/kpAbstractSelection.h"

@@ -31,9 +31,9 @@
 #include "mainWindow/kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
 
-#include <qlabel.h>
-#include <qstatusbar.h>
-#include <qstring.h>
+#include <QLabel>
+#include <QStatusBar>
+#include <QString>
 
 #include "kpLogCategories.h"
 #include "kpDefs.h"

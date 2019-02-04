@@ -35,11 +35,11 @@
 #include "imagelib/kpColor.h"
 #include "kpDefs.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
+#include <QPainter>
+#include <QPixmap>
+#include <QPolygon>
 
 #include "kpLogCategories.h"
 

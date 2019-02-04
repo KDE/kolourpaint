@@ -32,11 +32,11 @@
 #include "kpDocument.h"
 #include "kpDocumentPrivate.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qimage.h>
-#include <qpainter.h>
-#include <qrect.h>
+#include <QImage>
+#include <QPainter>
+#include <QRect>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

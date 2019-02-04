@@ -37,10 +37,10 @@
 #include <kiconloader.h>
 #include <KLocalizedString>
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <QBitmap>
+#include <QImage>
+#include <QPainter>
+#include <QPixmap>
 
 
 static int spraycanSizes [] = {9, 17, 29};

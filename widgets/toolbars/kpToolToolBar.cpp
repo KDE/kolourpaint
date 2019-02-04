@@ -31,11 +31,11 @@
 
 #include "widgets/toolbars/kpToolToolBar.h"
 
-#include <qboxlayout.h>
-#include <qgridlayout.h>
-#include <qbuttongroup.h>
-#include <qevent.h>
-#include <qtoolbutton.h>
+#include <QBoxLayout>
+#include <QGridLayout>
+#include <QButtonGroup>
+#include <QKeyEvent>
+#include <QToolButton>
 
 #include "kpLogCategories.h"
 

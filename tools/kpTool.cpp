@@ -33,7 +33,7 @@
 #include "kpTool.h"
 #include "kpToolPrivate.h"
 
-#include <limits.h>
+#include <climits>
 
 #include <kactioncollection.h>
 #include "kpLogCategories.h"

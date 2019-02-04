@@ -40,16 +40,16 @@
 #include <kiconloader.h>
 #include <KLocalizedString>
 
-#include <qbuttongroup.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QButtonGroup>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
 #include <QImage>
 #include <QSpinBox>
-#include <qpolygon.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qmatrix.h>
+#include <QPolygon>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QMatrix>
 
 
 // private static

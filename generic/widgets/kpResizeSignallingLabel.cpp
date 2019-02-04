@@ -31,7 +31,7 @@
 
 #include "generic/widgets/kpResizeSignallingLabel.h"
 
-#include <qevent.h>
+#include <QEvent>
 
 #include "kpLogCategories.h"
 

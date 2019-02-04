@@ -40,7 +40,7 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <qapplication.h>
+#include <QApplication>
 
 //---------------------------------------------------------------------
 

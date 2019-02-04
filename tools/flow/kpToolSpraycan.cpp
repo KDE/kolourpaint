@@ -46,9 +46,9 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <qpoint.h>
-#include <qrect.h>
-#include <qtimer.h>
+#include <QPoint>
+#include <QRect>
+#include <QTimer>
 
 //---------------------------------------------------------------------
 

@@ -37,11 +37,11 @@
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
 
-#include <limits.h>
+#include <climits>
 
-#include <qapplication.h>
-#include <qcursor.h>
-#include <qevent.h>
+#include <QApplication>
+#include <QCursor>
+#include <QEvent>
 
 #include <kactioncollection.h>
 #include "kpLogCategories.h"

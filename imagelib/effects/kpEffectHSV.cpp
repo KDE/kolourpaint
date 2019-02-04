@@ -29,10 +29,10 @@
 
 #include "kpEffectHSV.h"
 
-#include <math.h>
+#include <cmath>
 
-#include <qbitmap.h>
-#include <qimage.h>
+#include <QBitmap>
+#include <QImage>
 
 #include "kpLogCategories.h"
 

@@ -31,8 +31,8 @@
 #include "tools/selection/text/kpToolText.h"
 #include "kpToolTextPrivate.h"
 
-#include <qevent.h>
-#include <qlist.h>
+#include <QEvent>
+#include <QList>
 
 #include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"

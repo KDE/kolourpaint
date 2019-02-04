@@ -28,9 +28,9 @@
 
 #include "kpWidgetMapper.h"
 
-#include <qpoint.h>
-#include <qrect.h>
-#include <qwidget.h>
+#include <QPoint>
+#include <QRect>
+#include <QWidget>
 
 
 namespace kpWidgetMapper

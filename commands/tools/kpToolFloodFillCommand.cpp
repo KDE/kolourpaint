@@ -37,7 +37,7 @@
 #include "imagelib/kpImage.h"
 #include "kpLogCategories.h"
 
-#include <qapplication.h>
+#include <QApplication>
 
 #include <KLocalizedString>
 
