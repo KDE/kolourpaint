@@ -41,11 +41,12 @@ kpToolAction::kpToolAction(const QString &text,
 {
   ac->setDefaultShortcuts(this, shortcut);
 
+
   if ( receiver && slot )
-    connect(this, SIGNAL(triggered(bool)), receiver, slot);
+      connect (this, SIGNAL(triggered(bool)), receiver, slot);
 
   updateToolTip();
-  connect(this, SIGNAL(changed()), this, SLOT(updateToolTip()));
+  connect (this, &kpToolAction::changed, this, &kpToolAction::updateToolTip);
 
   ac->addAction(name, this);
 }

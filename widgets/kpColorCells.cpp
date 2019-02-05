@@ -175,13 +175,14 @@ kpColorCells::kpColorCells (QWidget *parent,
     // containing widgets to get too big.  Override it.
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 
+    connect (this, &kpColorCells::colorSelectedWhitButton,
+             this, &kpColorCells::slotColorSelected);
 
-    connect (this, SIGNAL (colorSelected(int,QColor,Qt::MouseButton)),
-             SLOT (slotColorSelected(int,QColor,Qt::MouseButton)));
-    connect (this, SIGNAL (colorDoubleClicked(int,QColor)),
-             SLOT (slotColorDoubleClicked(int,QColor)));
-    connect (this, SIGNAL (colorChanged(int,QColor)),
-             SLOT (slotColorChanged(int,QColor)));
+    connect (this, &kpColorCells::colorDoubleClicked,
+             this, &kpColorCells::slotColorDoubleClicked);
+
+    connect (this, &kpColorCells::colorChanged,
+             this, &kpColorCells::slotColorChanged);
 
 
     setColorCollection (DefaultColorCollection ());

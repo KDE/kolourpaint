@@ -47,8 +47,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     setWindowTitle (i18nc ("@title:window", "Color Similarity"));
     QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
                                                       QDialogButtonBox::Cancel, this);
-    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
-    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
+    connect (buttons, &QDialogButtonBox::accepted, this, &kpColorSimilarityDialog::accept);
+    connect (buttons, &QDialogButtonBox::rejected, this, &kpColorSimilarityDialog::reject);
 
     QWidget *baseWidget = new QWidget (this);
 
@@ -69,8 +69,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 
 
-    connect (updatePushButton, SIGNAL (clicked()),
-             this, SLOT (slotColorSimilarityValueChanged()));
+    connect (updatePushButton, &QPushButton::clicked,
+             this, &kpColorSimilarityDialog::slotColorSimilarityValueChanged);
 
 
     QGroupBox *inputGroupBox = new QGroupBox (i18n ("&RGB Color Cube Distance"),
@@ -89,8 +89,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
               "What is Color Similarity?</a>"),
         inputGroupBox);
     m_whatIsLabel->setAlignment (Qt::AlignHCenter);
-    connect (m_whatIsLabel, SIGNAL (linkActivated(QString)),
-        SLOT (slotWhatIsLabelClicked()));
+    connect (m_whatIsLabel, &QLabel::linkActivated,
+             this, &kpColorSimilarityDialog::slotWhatIsLabelClicked);
 
 
     QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox);
@@ -101,8 +101,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
     // COMPAT: This is not firing properly when the user is typing in a
     //         new value.
-    connect (m_colorSimilarityInput, SIGNAL (valueChanged(int)),
-             this, SLOT (slotColorSimilarityValueChanged()));
+    connect (m_colorSimilarityInput, &kpIntNumInput::valueChanged,
+             this, &kpColorSimilarityDialog::slotColorSimilarityValueChanged);
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);

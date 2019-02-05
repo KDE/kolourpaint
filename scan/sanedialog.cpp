@@ -47,8 +47,8 @@ SaneDialog::SaneDialog(QWidget *parent)
     m_ksanew = new KSaneIface::KSaneWidget(this);
     addPage(m_ksanew, QString());
 
-    connect(m_ksanew, SIGNAL(imageReady(QByteArray&,int,int,int,int)),
-            this, SLOT(imageReady(QByteArray&,int,int,int,int)));
+    connect (m_ksanew, &KSaneIface::KSaneWidget::imageReady,
+             this, &SaneDialog::imageReady);
 
     m_openDev = QString();
 }

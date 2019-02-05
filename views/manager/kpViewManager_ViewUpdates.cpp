@@ -186,15 +186,6 @@ void kpViewManager::updateViewRectangleEdges (kpView *v, const QRect &viewRect)
     }
 }
 
-
-// public slot
-void kpViewManager::updateViews ()
-{
-    kpDocument *doc = document ();
-    if (doc)
-        updateViews (QRect (0, 0, doc->width (), doc->height ()));
-}
-
 // public slot
 void kpViewManager::updateViews (const QRect &docRect)
 {
@@ -236,12 +227,6 @@ void kpViewManager::updateViews (const QRect &docRect)
             updateView (view, newRect);
         }
     }
-}
-
-// public slot
-void kpViewManager::updateViews (int x, int y, int w, int h)
-{
-    updateViews (QRect (x, y, w, h));
 }
 
 

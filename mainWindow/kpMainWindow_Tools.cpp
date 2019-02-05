@@ -133,26 +133,26 @@ void kpMainWindow::setupToolActions ()
     d->actionPrevToolOptionGroup1 = ac->addAction ("prev_tool_option_group_1");
     d->actionPrevToolOptionGroup1->setText (i18n ("Previous Tool Option (Group #1)"));
     ac->setDefaultShortcuts (d->actionPrevToolOptionGroup1, kpTool::shortcutForKey (Qt::Key_1));
-    connect (d->actionPrevToolOptionGroup1, SIGNAL (triggered(bool)),
-        SLOT (slotActionPrevToolOptionGroup1()));
+    connect (d->actionPrevToolOptionGroup1, &QAction::triggered,
+             this, &kpMainWindow::slotActionPrevToolOptionGroup1);
 
     d->actionNextToolOptionGroup1 = ac->addAction ("next_tool_option_group_1");
     d->actionNextToolOptionGroup1->setText (i18n ("Next Tool Option (Group #1)"));
     ac->setDefaultShortcuts (d->actionNextToolOptionGroup1, kpTool::shortcutForKey (Qt::Key_2));
-    connect (d->actionNextToolOptionGroup1, SIGNAL (triggered(bool)),
-        SLOT (slotActionNextToolOptionGroup1()));
+    connect (d->actionNextToolOptionGroup1, &QAction::triggered,
+             this, &kpMainWindow::slotActionNextToolOptionGroup1);
 
     d->actionPrevToolOptionGroup2 = ac->addAction ("prev_tool_option_group_2");
     d->actionPrevToolOptionGroup2->setText (i18n ("Previous Tool Option (Group #2)"));
     ac->setDefaultShortcuts (d->actionPrevToolOptionGroup2, kpTool::shortcutForKey (Qt::Key_3));
-    connect (d->actionPrevToolOptionGroup2, SIGNAL (triggered(bool)),
-        SLOT (slotActionPrevToolOptionGroup2()));
+    connect (d->actionPrevToolOptionGroup2, &QAction::triggered,
+             this, &kpMainWindow::slotActionPrevToolOptionGroup2);
 
     d->actionNextToolOptionGroup2 = ac->addAction ("next_tool_option_group_2");
     d->actionNextToolOptionGroup2->setText (i18n ("Next Tool Option (Group #2)"));
     ac->setDefaultShortcuts (d->actionNextToolOptionGroup2, kpTool::shortcutForKey (Qt::Key_4));
-    connect (d->actionNextToolOptionGroup2, SIGNAL (triggered(bool)),
-        SLOT (slotActionNextToolOptionGroup2()));
+    connect (d->actionNextToolOptionGroup2, &QAction::triggered,
+             this, &kpMainWindow::slotActionNextToolOptionGroup2);
 
 
     //
@@ -162,13 +162,13 @@ void kpMainWindow::setupToolActions ()
 
     d->actionDrawOpaque = ac->add <KToggleAction> ("image_draw_opaque");
     d->actionDrawOpaque->setText (i18n ("&Draw Opaque"));
-    connect (d->actionDrawOpaque, SIGNAL (triggered(bool)),
-        SLOT (slotActionDrawOpaqueToggled()));
+    connect (d->actionDrawOpaque, &QAction::triggered,
+             this, &kpMainWindow::slotActionDrawOpaqueToggled);
 
     d->actionDrawColorSimilarity = ac->addAction ("image_draw_color_similarity");
     d->actionDrawColorSimilarity->setText (i18n ("Draw With Color Similarity..."));
-    connect (d->actionDrawColorSimilarity, SIGNAL (triggered(bool)),
-        SLOT (slotActionDrawColorSimilarity()));
+    connect (d->actionDrawColorSimilarity, &QAction::triggered,
+             this, &kpMainWindow::slotActionDrawColorSimilarity);
 }
 
 //---------------------------------------------------------------------
@@ -179,14 +179,16 @@ void kpMainWindow::createToolBox ()
     d->toolToolBar = new kpToolToolBar(QLatin1String("Tool Box"), 2/*columns/rows*/, this);
     d->toolToolBar->setWindowTitle(i18n("Tool Box"));
 
-    connect (d->toolToolBar, SIGNAL (sigToolSelected(kpTool*)),
-             this, SLOT (slotToolSelected(kpTool*)));
-    connect (d->toolToolBar, SIGNAL (toolWidgetOptionSelected()),
-             this, SLOT (updateToolOptionPrevNextActionsEnabled()));
+    connect (d->toolToolBar, &kpToolToolBar::sigToolSelected,
+             this, &kpMainWindow::slotToolSelected);
 
-    connect (d->toolToolBar->toolWidgetOpaqueOrTransparent (),
-             SIGNAL (isOpaqueChanged(bool)),
-             SLOT (updateActionDrawOpaqueChecked()));
+    connect (d->toolToolBar, &kpToolToolBar::toolWidgetOptionSelected,
+             this, &kpMainWindow::updateToolOptionPrevNextActionsEnabled);
+
+    connect (d->toolToolBar->toolWidgetOpaqueOrTransparent(),
+             &kpToolWidgetOpaqueOrTransparent::isOpaqueChanged,
+             this, &kpMainWindow::updateActionDrawOpaqueChecked);
+
     updateActionDrawOpaqueChecked ();
 
     foreach (kpTool *tool, d->tools)
@@ -427,55 +429,73 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (previousTool)
     {
-        disconnect (previousTool, SIGNAL (movedAndAboutToDraw(QPoint,QPoint,int,bool*)),
-                    this, SLOT (slotDragScroll(QPoint,QPoint,int,bool*)));
-        disconnect (previousTool, SIGNAL (endedDraw(QPoint)),
-                    this, SLOT (slotEndDragScroll()));
-        disconnect (previousTool, SIGNAL (cancelledShape(QPoint)),
-                    this, SLOT (slotEndDragScroll()));
+        disconnect (previousTool, &kpTool::movedAndAboutToDraw,
+                    this, &kpMainWindow::slotDragScroll);
 
-        disconnect (previousTool, SIGNAL (userMessageChanged(QString)),
-                    this, SLOT (recalculateStatusBarMessage()));
-        disconnect (previousTool, SIGNAL (userShapePointsChanged(QPoint,QPoint)),
-                    this, SLOT (recalculateStatusBarShape()));
-        disconnect (previousTool, SIGNAL (userShapeSizeChanged(QSize)),
-                    this, SLOT (recalculateStatusBarShape()));
+        disconnect (previousTool, &kpTool::endedDraw,
+                    this, &kpMainWindow::slotEndDragScroll);
 
-        disconnect (d->colorToolBar, SIGNAL (colorsSwapped(kpColor,kpColor)),
-                    previousTool, SLOT (slotColorsSwappedInternal(kpColor,kpColor)));
-        disconnect (d->colorToolBar, SIGNAL (foregroundColorChanged(kpColor)),
-                    previousTool, SLOT (slotForegroundColorChangedInternal(kpColor)));
-        disconnect (d->colorToolBar, SIGNAL (backgroundColorChanged(kpColor)),
-                    previousTool, SLOT (slotBackgroundColorChangedInternal(kpColor)));
-        disconnect (d->colorToolBar, SIGNAL (colorSimilarityChanged(double,int)),
-                    previousTool, SLOT (slotColorSimilarityChangedInternal(double,int)));
+        disconnect (previousTool, &kpTool::cancelledShape,
+                    this, &kpMainWindow::slotEndDragScroll);
+
+        disconnect (previousTool, &kpTool::userMessageChanged,
+                    this, &kpMainWindow::recalculateStatusBarMessage);
+
+        disconnect (previousTool, &kpTool::userShapePointsChanged,
+                    this, &kpMainWindow::recalculateStatusBarShape);
+
+        disconnect (previousTool, &kpTool::userShapeSizeChanged,
+                    this, &kpMainWindow::recalculateStatusBarShape);
+
+
+        disconnect (d->colorToolBar, &kpColorToolBar::colorsSwapped,
+                    previousTool, &kpTool::slotColorsSwappedInternal);
+
+        disconnect (d->colorToolBar, &kpColorToolBar::foregroundColorChanged,
+                    previousTool, &kpTool::slotForegroundColorChangedInternal);
+
+        disconnect (d->colorToolBar, &kpColorToolBar::backgroundColorChanged,
+                    previousTool, &kpTool::slotBackgroundColorChangedInternal);
+
+
+        disconnect (d->colorToolBar, &kpColorToolBar::colorSimilarityChanged,
+                    previousTool, &kpTool::slotColorSimilarityChangedInternal);
     }
 
     if (tool)
     {
-        connect (tool, SIGNAL (movedAndAboutToDraw(QPoint,QPoint,int,bool*)),
-                 this, SLOT (slotDragScroll(QPoint,QPoint,int,bool*)));
-        connect (tool, SIGNAL (endedDraw(QPoint)),
-                 this, SLOT (slotEndDragScroll()));
-        connect (tool, SIGNAL (cancelledShape(QPoint)),
-                 this, SLOT (slotEndDragScroll()));
+        connect (tool, &kpTool::movedAndAboutToDraw,
+                 this, &kpMainWindow::slotDragScroll);
 
-        connect (tool, SIGNAL (userMessageChanged(QString)),
-                 this, SLOT (recalculateStatusBarMessage()));
-        connect (tool, SIGNAL (userShapePointsChanged(QPoint,QPoint)),
-                 this, SLOT (recalculateStatusBarShape()));
-        connect (tool, SIGNAL (userShapeSizeChanged(QSize)),
-                 this, SLOT (recalculateStatusBarShape()));
+        connect (tool, &kpTool::endedDraw,
+                 this, &kpMainWindow::slotEndDragScroll);
+
+        connect (tool, &kpTool::cancelledShape,
+                 this, &kpMainWindow::slotEndDragScroll);
+
+        connect (tool, &kpTool::userMessageChanged,
+                 this, &kpMainWindow::recalculateStatusBarMessage);
+
+        connect (tool, &kpTool::userShapePointsChanged,
+                 this, &kpMainWindow::recalculateStatusBarShape);
+
+        connect (tool, &kpTool::userShapeSizeChanged,
+                 this, &kpMainWindow::recalculateStatusBarShape);
+
         recalculateStatusBar ();
 
-        connect (d->colorToolBar, SIGNAL (colorsSwapped(kpColor,kpColor)),
-                 tool, SLOT (slotColorsSwappedInternal(kpColor,kpColor)));
-        connect (d->colorToolBar, SIGNAL (foregroundColorChanged(kpColor)),
-                 tool, SLOT (slotForegroundColorChangedInternal(kpColor)));
-        connect (d->colorToolBar, SIGNAL (backgroundColorChanged(kpColor)),
-                 tool, SLOT (slotBackgroundColorChangedInternal(kpColor)));
-        connect (d->colorToolBar, SIGNAL (colorSimilarityChanged(double,int)),
-                 tool, SLOT (slotColorSimilarityChangedInternal(double,int)));
+
+        connect (d->colorToolBar, &kpColorToolBar::colorsSwapped,
+                 tool, &kpTool::slotColorsSwappedInternal);
+
+        connect (d->colorToolBar, &kpColorToolBar::foregroundColorChanged,
+                 tool, &kpTool::slotForegroundColorChangedInternal);
+
+        connect (d->colorToolBar, &kpColorToolBar::backgroundColorChanged,
+                 tool, &kpTool::slotBackgroundColorChangedInternal);
+
+        connect (d->colorToolBar, &kpColorToolBar::colorSimilarityChanged,
+                 tool, &kpTool::slotColorSimilarityChangedInternal);
 
 
         saveLastTool ();

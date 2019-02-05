@@ -107,7 +107,9 @@ void kpMainWindow::setupViewMenuZoomActions ()
 
     d->actionZoom = ac->add <KSelectAction> ("view_zoom_to");
     d->actionZoom->setText (i18n ("&Zoom"));
-    connect (d->actionZoom, SIGNAL (triggered(QAction*)), SLOT (slotZoom()));
+    connect (d->actionZoom,
+             static_cast<void (KSelectAction::*)(QAction*)>(&KSelectAction::triggered),
+             this, &kpMainWindow::slotZoom);
     d->actionZoom->setEditable (true);
 
     // create the zoom list for the 1st call to zoomTo() below

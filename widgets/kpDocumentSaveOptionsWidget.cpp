@@ -122,29 +122,33 @@ void kpDocumentSaveOptionsWidget::init ()
     lay->addWidget (m_previewButton, 0/*stretch*/, Qt::AlignRight);
 
 
-    connect (m_colorDepthCombo, SIGNAL (activated(int)),
-             this, SLOT (slotColorDepthSelected()));
-    connect (m_colorDepthCombo, SIGNAL (activated(int)),
-             this, SLOT (updatePreview()));
+    connect (m_colorDepthCombo,
+             static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+             this, &kpDocumentSaveOptionsWidget::slotColorDepthSelected);
 
-    connect (m_qualityInput, SIGNAL (valueChanged(int)),
-             this, SLOT (updatePreviewDelayed()));
+    connect (m_colorDepthCombo,
+             static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+             this, &kpDocumentSaveOptionsWidget::updatePreview);
 
-    connect (m_previewButton, SIGNAL (toggled(bool)),
-             this, SLOT (showPreview(bool)));
+    connect (m_qualityInput,
+             static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+             this, &kpDocumentSaveOptionsWidget::updatePreviewDelayed);
+
+    connect (m_previewButton, &QPushButton::toggled,
+             this, &kpDocumentSaveOptionsWidget::showPreview);
 
 
     m_updatePreviewDelay = 200/*ms*/;
 
     m_updatePreviewTimer = new QTimer (this);
     m_updatePreviewTimer->setSingleShot (true);
-    connect (m_updatePreviewTimer, SIGNAL (timeout()),
-             this, SLOT (updatePreview()));
+    connect (m_updatePreviewTimer, &QTimer::timeout,
+             this, &kpDocumentSaveOptionsWidget::updatePreview);
 
     m_updatePreviewDialogLastRelativeGeometryTimer = new QTimer (this);
-    connect (m_updatePreviewDialogLastRelativeGeometryTimer, SIGNAL (timeout()),
-             this, SLOT (updatePreviewDialogLastRelativeGeometry()));
-
+    connect (m_updatePreviewDialogLastRelativeGeometryTimer,
+             &QTimer::timeout,
+             this, &kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry);
 
     setMode (None);
 
@@ -533,8 +537,8 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         m_previewDialog->setObjectName( QLatin1String( "previewSaveDialog" ) );
         updatePreview ();
 
-        connect (m_previewDialog, SIGNAL (finished()),
-                 this, SLOT (hidePreview()));
+        connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::finished,
+                 this, &kpDocumentSaveOptionsWidget::hidePreview);
 
 
         KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
@@ -627,10 +631,11 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 
         updatePreviewDialogLastRelativeGeometry ();
 
-        connect (m_previewDialog, SIGNAL (moved()),
-                 this, SLOT (updatePreviewDialogLastRelativeGeometry()));
-        connect (m_previewDialog, SIGNAL (resized()),
-                 this, SLOT (updatePreviewDialogLastRelativeGeometry()));
+        connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::moved,
+                 this, &kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry);
+
+        connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::resized,
+                 this, &kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry);
 
         m_updatePreviewDialogLastRelativeGeometryTimer->start (200/*ms*/);
     }

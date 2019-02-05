@@ -262,7 +262,7 @@ protected:
     double colorSimilarity () const;
     int processedColorSimilarity () const;
 
-protected slots:
+public slots:
     void slotColorsSwappedInternal (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor);
     void slotForegroundColorChangedInternal (const kpColor &color);
@@ -422,7 +422,6 @@ signals:
     void userShapePointsChanged (const QPoint &startPoint = KP_INVALID_POINT,
                                  const QPoint &endPoint = KP_INVALID_POINT);
     void userShapeSizeChanged (const QSize &size);
-    void userShapeSizeChanged (int width, int height);
 
 
 public:

@@ -549,8 +549,8 @@ void kpColorCellsBase::mouseReleaseEvent( QMouseEvent *e )
     d->inMouse = false;
     if (cell != -1)
     {
-	emit colorSelected( cell , color(cell) );
-	emit colorSelected( cell , color(cell), e->button() );
+        emit colorSelected( cell , color(cell) );
+        emit colorSelectedWhitButton( cell , color(cell), e->button() );
     }
 }
 

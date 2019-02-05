@@ -107,31 +107,31 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionExport = ac->addAction("file_export");
     d->actionExport->setText (i18n ("E&xport..."));
     d->actionExport->setIcon(KDE::icon("document-export"));
-    connect(d->actionExport, SIGNAL(triggered(bool)), SLOT (slotExport()));
+    connect (d->actionExport, &QAction::triggered, this, &kpMainWindow::slotExport);
 
     d->actionScan = ac->addAction("file_scan");
     d->actionScan->setText(i18n ("Scan..."));
     d->actionScan->setIcon(SmallIcon("scanner"));
 #if HAVE_KSANE
-    connect(d->actionScan, SIGNAL(triggered(bool)), SLOT(slotScan()));
+    connect (d->actionScan, &QAction::triggered, this, &kpMainWindow::slotScan);
 #else
     d->actionScan->setEnabled(false);
 #endif // HAVE_KSANE
 
     d->actionScreenshot = ac->addAction("file_screenshot");
     d->actionScreenshot->setText(i18n("Acquire Screenshot"));
-    connect(d->actionScreenshot, SIGNAL(triggered(bool)), SLOT(slotScreenshot()));
+    connect (d->actionScreenshot, &QAction::triggered, this, &kpMainWindow::slotScreenshot);
 
     d->actionProperties = ac->addAction ("file_properties");
     d->actionProperties->setText (i18n ("Properties"));
     d->actionProperties->setIcon(KDE::icon("document-properties"));
-    connect (d->actionProperties, SIGNAL (triggered(bool)), SLOT (slotProperties()));
+    connect (d->actionProperties, &QAction::triggered, this, &kpMainWindow::slotProperties);
 
     //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert()), ac);
     d->actionReload = ac->addAction ("file_revert");
     d->actionReload->setText (i18n ("Reloa&d"));
     d->actionReload->setIcon(KDE::icon("view-refresh"));
-    connect(d->actionReload, SIGNAL(triggered(bool)), SLOT (slotReload()));
+    connect (d->actionReload, &QAction::triggered, this, &kpMainWindow::slotReload);
     ac->setDefaultShortcuts (d->actionReload, KStandardShortcut::reload ());
     slotEnableReload ();
 
@@ -556,8 +556,7 @@ void kpMainWindow::slotScan ()
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tcreated scanDialog=" << d->scanDialog;
     #endif
-        connect (d->scanDialog, SIGNAL (finalImage(QImage,int)),
-                 SLOT (slotScanned(QImage,int)));
+        connect (d->scanDialog, &SaneDialog::finalImage, this, &kpMainWindow::slotScanned);
     }
 
 
@@ -664,8 +663,8 @@ void kpMainWindow::slotScreenshot()
   QDialog *dialog = new QDialog(this);
   QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok |
                                                    QDialogButtonBox::Cancel, dialog);
-  connect (buttons, SIGNAL (accepted()), dialog, SLOT (accept()));
-  connect (buttons, SIGNAL (rejected()), dialog, SLOT (reject()));
+  connect (buttons, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+  connect (buttons, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
   QLabel *label = new QLabel(i18n("Snapshot Delay"));
   KPluralHandlingSpinBox *seconds = new KPluralHandlingSpinBox;
@@ -896,8 +895,8 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (localOnly)
         fd.setMode (KFile::File | KFile::LocalOnly);
 
-    connect (&fd, SIGNAL (filterChanged(QString)),
-             saveOptionsWidget, SLOT (setMimeType(QString)));
+    connect (&fd, &KFileDialog::filterChanged,
+             saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
 
     if ( fd.exec() == QDialog::Accepted )
     {

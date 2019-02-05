@@ -102,11 +102,11 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     lay->setColumnStretch (1, 1);
 
 
-    connect (m_amountInput, SIGNAL (valueChanged (int)),
-             this, SIGNAL (settingsChangedDelayed ()));
+    connect (m_amountInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectBlurSharpenWidget::settingsChangedDelayed);
 
-    connect (m_amountInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotUpdateTypeLabel ()));
+    connect (m_amountInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectBlurSharpenWidget::slotUpdateTypeLabel);
 }
 
 kpEffectBlurSharpenWidget::~kpEffectBlurSharpenWidget ()

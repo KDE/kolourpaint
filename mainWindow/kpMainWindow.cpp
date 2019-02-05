@@ -238,20 +238,24 @@ void kpMainWindow::init ()
 
     d->scrollView = new kpViewScrollableContainer (this);
     d->scrollView->setObjectName ( QLatin1String("scrollView" ));
-    connect (d->scrollView, SIGNAL (beganDocResize()),
-             this, SLOT (slotBeganDocResize()));
-    connect (d->scrollView, SIGNAL (continuedDocResize(QSize)),
-             this, SLOT (slotContinuedDocResize(QSize)));
-    connect (d->scrollView, SIGNAL (cancelledDocResize()),
-             this, SLOT (slotCancelledDocResize()));
-    connect (d->scrollView, SIGNAL (endedDocResize(QSize)),
-             this, SLOT (slotEndedDocResize(QSize)));
 
-    connect (d->scrollView, SIGNAL (statusMessageChanged(QString)),
-             this, SLOT (slotDocResizeMessageChanged(QString)));
+    connect (d->scrollView, &kpViewScrollableContainer::beganDocResize,
+             this, &kpMainWindow::slotBeganDocResize);
 
-    connect (d->scrollView, SIGNAL(contentsMoved()),
-             this, SLOT(slotScrollViewAfterScroll()));
+    connect (d->scrollView, &kpViewScrollableContainer::continuedDocResize,
+             this, &kpMainWindow::slotContinuedDocResize);
+
+    connect (d->scrollView, &kpViewScrollableContainer::cancelledDocResize,
+             this, &kpMainWindow::slotCancelledDocResize);
+
+    connect (d->scrollView, &kpViewScrollableContainer::endedDocResize,
+             this, &kpMainWindow::slotEndedDocResize);
+
+    connect (d->scrollView, &kpViewScrollableContainer::statusMessageChanged,
+             this, &kpMainWindow::slotDocResizeMessageChanged);
+
+    connect (d->scrollView, &kpViewScrollableContainer::contentsMoved,
+             this, &kpMainWindow::slotScrollViewAfterScroll);
 
     setCentralWidget (d->scrollView);
 
@@ -676,16 +680,20 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     #endif
 
         // Copy/Cut/Deselect/Delete
-        connect (d->document, SIGNAL (selectionEnabled(bool)),
-                 d->actionCut, SLOT (setEnabled(bool)));
-        connect (d->document, SIGNAL (selectionEnabled(bool)),
-                 d->actionCopy, SLOT (setEnabled(bool)));
-        connect (d->document, SIGNAL (selectionEnabled(bool)),
-                 d->actionDelete, SLOT (setEnabled(bool)));
-        connect (d->document, SIGNAL (selectionEnabled(bool)),
-                 d->actionDeselect, SLOT (setEnabled(bool)));
-        connect (d->document, SIGNAL (selectionEnabled(bool)),
-                 d->actionCopyToFile, SLOT (setEnabled(bool)));
+        connect (d->document, &kpDocument::selectionEnabled,
+                 d->actionCut, &QAction::setEnabled);
+
+        connect (d->document, &kpDocument::selectionEnabled,
+                 d->actionCopy, &QAction::setEnabled);
+
+        connect (d->document, &kpDocument::selectionEnabled,
+                 d->actionDelete, &QAction::setEnabled);
+
+        connect (d->document, &kpDocument::selectionEnabled,
+                 d->actionDeselect, &QAction::setEnabled);
+
+        connect (d->document, &kpDocument::selectionEnabled,
+                 d->actionCopyToFile, &QAction::setEnabled);
 
         // this code won't actually enable any actions at this stage
         // (fresh document) but better safe than sorry
@@ -695,45 +703,54 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         d->actionDelete->setEnabled (d->document->selection ());
         d->actionCopyToFile->setEnabled (d->document->selection ());
 
-        connect (d->document, SIGNAL (selectionEnabled(bool)),
-                 this, SLOT (slotImageMenuUpdateDueToSelection()));
-        connect (d->document, SIGNAL (selectionIsTextChanged(bool)),
-                 this, SLOT (slotImageMenuUpdateDueToSelection()));
+        connect (d->document, &kpDocument::selectionEnabled,
+                 this, &kpMainWindow::slotImageMenuUpdateDueToSelection);
+
+        connect (d->document, &kpDocument::selectionIsTextChanged,
+                 this, &kpMainWindow::slotImageMenuUpdateDueToSelection);
 
         // Status bar
-        connect (d->document, SIGNAL (documentOpened()),
-                 this, SLOT (recalculateStatusBar()));
+        connect (d->document, &kpDocument::documentOpened,
+                 this, &kpMainWindow::recalculateStatusBar);
 
         connect (d->document, SIGNAL (sizeChanged(QSize)),
                  this, SLOT (setStatusBarDocSize(QSize)));
 
         // Caption (url, modified)
-        connect (d->document, SIGNAL (documentModified()),
-                 this, SLOT (slotUpdateCaption()));
-        connect (d->document, SIGNAL (documentOpened()),
-                 this, SLOT (slotUpdateCaption()));
-        connect (d->document, SIGNAL (documentSaved()),
-                 this, SLOT (slotUpdateCaption()));
+        connect (d->document, &kpDocument::documentModified,
+                 this, &kpMainWindow::slotUpdateCaption);
+
+        connect (d->document, &kpDocument::documentOpened,
+                 this, &kpMainWindow::slotUpdateCaption);
+
+        connect (d->document, &kpDocument::documentSaved,
+                 this, &kpMainWindow::slotUpdateCaption);
 
         // File/Reload action only available with non-empty URL
-        connect (d->document, SIGNAL (documentSaved()),
-                 this, SLOT (slotEnableReload()));
+        connect (d->document, &kpDocument::documentSaved,
+                 this, &kpMainWindow::slotEnableReload);
 
-        connect (d->document, SIGNAL (documentSaved()),
-                 this, SLOT (slotEnableSettingsShowPath()));
+        connect (d->document, &kpDocument::documentSaved,
+                 this, &kpMainWindow::slotEnableSettingsShowPath);
 
         // Command history
         Q_ASSERT (d->commandHistory);
-        connect (d->commandHistory, SIGNAL (documentRestored()),
-                 this, SLOT (slotDocumentRestored()));  // caption "!modified"
-        connect (d->document, SIGNAL (documentSaved()),
-                 d->commandHistory, SLOT (documentSaved()));
+        connect (d->commandHistory, &kpCommandHistory::documentRestored,
+                 this, &kpMainWindow::slotDocumentRestored); // caption "!modified"
+
+        connect (d->document, &kpDocument::documentSaved,
+                 d->commandHistory, &kpCommandHistory::documentSaved);
 
         // Sync document -> views
-        connect (d->document, SIGNAL (contentsChanged(QRect)),
-                 d->viewManager, SLOT (updateViews(QRect)));
-        connect (d->document, SIGNAL (sizeChanged(int,int)),
-                 d->viewManager, SLOT (adjustViewsToEnvironment()));
+        connect (d->document, &kpDocument::contentsChanged,
+                 d->viewManager, &kpViewManager::updateViews);
+
+        connect (d->document, static_cast<void (kpDocument::*)(int, int)>(&kpDocument::sizeChanged),
+                 d->viewManager, &kpViewManager::adjustViewsToEnvironment);
+
+        connect (d->document,
+                 static_cast<void (kpDocument::*)(int, int)>(&kpDocument::sizeChanged),
+                 d->viewManager, &kpViewManager::adjustViewsToEnvironment);
 
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tenabling actions";

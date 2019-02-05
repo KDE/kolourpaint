@@ -118,10 +118,8 @@ void kpToolPolygon::begin ()
     Q_ASSERT (tb);
 
     d->toolWidgetFillStyle = tb->toolWidgetFillStyle ();
-    connect (d->toolWidgetFillStyle,
-        SIGNAL (fillStyleChanged(kpToolWidgetFillStyle::FillStyle)),
-        this,
-        SLOT (updateShape()));
+    connect (d->toolWidgetFillStyle, &kpToolWidgetFillStyle::fillStyleChanged,
+             this, &kpToolPolygon::updateShape);
     d->toolWidgetFillStyle->show ();
 }
 
@@ -130,10 +128,8 @@ void kpToolPolygon::end ()
 {
     kpToolPolygonalBase::end ();
 
-    disconnect (d->toolWidgetFillStyle,
-        SIGNAL (fillStyleChanged(kpToolWidgetFillStyle::FillStyle)),
-        this,
-        SLOT (updateShape()));
+    disconnect (d->toolWidgetFillStyle, &kpToolWidgetFillStyle::fillStyleChanged,
+                this, &kpToolPolygon::updateShape);
     d->toolWidgetFillStyle = nullptr;
 }
 

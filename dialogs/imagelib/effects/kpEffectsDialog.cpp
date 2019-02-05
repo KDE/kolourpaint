@@ -92,8 +92,8 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
     m_delayedUpdateTimer->setSingleShot (true);
-    connect (m_delayedUpdateTimer, SIGNAL (timeout()),
-             this, SLOT (slotUpdateWithWaitCursor()));
+    connect (m_delayedUpdateTimer, &QTimer::timeout,
+             this, &kpEffectsDialog::slotUpdateWithWaitCursor);
 
 
     QWidget *effectContainer = new QWidget (mainWidget ());
@@ -128,8 +128,10 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     addCustomWidgetToBack (m_settingsGroupBox);
 
 
-    connect (m_effectsComboBox, SIGNAL (activated(int)),
-             this, SLOT (selectEffect(int)));
+    connect (m_effectsComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+             this, &kpEffectsDialog::selectEffect);
+
+
     selectEffect (defaultSelectedEffect);
 
 
@@ -293,12 +295,12 @@ void kpEffectsDialog::selectEffect (int which)
     #endif
         m_effectWidget->show ();
 
-        connect (m_effectWidget, SIGNAL (settingsChangedNoWaitCursor()),
-                 this, SLOT (slotUpdate()));
-        connect (m_effectWidget, SIGNAL (settingsChanged()),
-                 this, SLOT (slotUpdateWithWaitCursor()));
-        connect (m_effectWidget, SIGNAL (settingsChangedDelayed()),
-                 this, SLOT (slotDelayedUpdate()));
+        connect (m_effectWidget, &kpEffectWidgetBase::settingsChangedNoWaitCursor,
+                 this, &kpEffectsDialog::slotUpdate);
+        connect (m_effectWidget, &kpEffectWidgetBase::settingsChanged,
+                 this, &kpEffectsDialog::slotUpdateWithWaitCursor);
+        connect (m_effectWidget, &kpEffectWidgetBase::settingsChangedDelayed,
+                 this, &kpEffectsDialog::slotDelayedUpdate);
 
     #if DEBUG_KP_EFFECTS_DIALOG
         qCDebug(kpLogDialogs) << "about to setUpdatesEnabled()";

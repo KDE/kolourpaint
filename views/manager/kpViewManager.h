@@ -238,9 +238,8 @@ public slots:
 
     void updateViewRectangleEdges (kpView *v, const QRect &viewRect);
 
-    void updateViews ();
     void updateViews (const QRect &docRect);
-    void updateViews (int x, int y, int w, int h);
+
 
 public slots:
     void adjustViewsToEnvironment ();

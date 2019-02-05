@@ -401,14 +401,13 @@ kpViewScrollableContainer::kpViewScrollableContainer(QWidget *parent)
     connectGripSignals (m_bottomRightGrip);
 
 
-    connect (horizontalScrollBar(), SIGNAL(valueChanged(int)),
-             this, SLOT(slotContentsMoved()));
+    connect (horizontalScrollBar(), &QScrollBar::valueChanged,
+             this, &kpViewScrollableContainer::slotContentsMoved);
 
-    connect (verticalScrollBar(), SIGNAL(valueChanged(int)),
-             this, SLOT(slotContentsMoved()));
+    connect (verticalScrollBar(), &QScrollBar::valueChanged,
+             this, &kpViewScrollableContainer::slotContentsMoved);
 
-    connect (m_dragScrollTimer, SIGNAL (timeout()),
-             this, SLOT (slotDragScroll()));
+    connect (m_dragScrollTimer, &QTimer::timeout, this, [this]{slotDragScroll();});
 
     m_overlay->hide();
 }
@@ -418,20 +417,23 @@ kpViewScrollableContainer::kpViewScrollableContainer(QWidget *parent)
 // protected
 void kpViewScrollableContainer::connectGripSignals (kpGrip *grip)
 {
-    connect (grip, SIGNAL (beganDraw()),
-             this, SLOT (slotGripBeganDraw()));
-    connect (grip, SIGNAL (continuedDraw(int,int,bool)),
-             this, SLOT (slotGripContinuedDraw(int,int,bool)));
-    connect (grip, SIGNAL (cancelledDraw()),
-             this, SLOT (slotGripCancelledDraw()));
-    connect (grip, SIGNAL (endedDraw(int,int)),
-             this, SLOT (slotGripEndedDraw(int,int)));
+    connect (grip, &kpGrip::beganDraw,
+             this, &kpViewScrollableContainer::slotGripBeganDraw);
 
-    connect (grip, SIGNAL (statusMessageChanged(QString)),
-             this, SLOT (slotGripStatusMessageChanged(QString)));
+    connect (grip, &kpGrip::continuedDraw,
+             this, &kpViewScrollableContainer::slotGripContinuedDraw);
 
-    connect (grip, SIGNAL (releasedAllButtons()),
-             this, SLOT (recalculateStatusMessage()));
+    connect (grip, &kpGrip::cancelledDraw,
+             this, &kpViewScrollableContainer::slotGripCancelledDraw);
+
+    connect (grip, &kpGrip::endedDraw,
+             this, &kpViewScrollableContainer::slotGripEndedDraw);
+
+    connect (grip, &kpGrip::statusMessageChanged,
+             this, &kpViewScrollableContainer::slotGripStatusMessageChanged);
+
+    connect (grip, &kpGrip::releasedAllButtons,
+             this, &kpViewScrollableContainer::recalculateStatusMessage);
 }
 
 //---------------------------------------------------------------------
@@ -889,10 +891,12 @@ void kpViewScrollableContainer::slotContentsMoved ()
 // protected
 void kpViewScrollableContainer::disconnectViewSignals ()
 {
-    disconnect (m_view, SIGNAL (sizeChanged(QSize)),
-                this, SLOT (updateGrips()));
-    disconnect (m_view, SIGNAL (destroyed()),
-                this, SLOT (slotViewDestroyed()));
+    disconnect (m_view,
+                static_cast<void (kpView::*)(int, int)>(&kpView::sizeChanged),
+                this, &kpViewScrollableContainer::updateGrips);
+
+    disconnect (m_view, &kpView::destroyed,
+                this, &kpViewScrollableContainer::slotViewDestroyed);
 }
 
 //---------------------------------------------------------------------
@@ -900,10 +904,12 @@ void kpViewScrollableContainer::disconnectViewSignals ()
 // protected
 void kpViewScrollableContainer::connectViewSignals ()
 {
-    connect (m_view, SIGNAL (sizeChanged(QSize)),
-             this, SLOT (updateGrips()));
-    connect (m_view, SIGNAL (destroyed()),
-             this, SLOT (slotViewDestroyed()));
+    connect (m_view,
+             static_cast<void (kpView::*)(int, int)>(&kpView::sizeChanged),
+             this, &kpViewScrollableContainer::updateGrips);
+
+    connect (m_view, &kpView::destroyed,
+             this, &kpViewScrollableContainer::slotViewDestroyed);
 }
 
 //---------------------------------------------------------------------
@@ -1135,13 +1141,6 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     return scrolled;
 }
 
-//---------------------------------------------------------------------
-
-// protected slot
-bool kpViewScrollableContainer::slotDragScroll ()
-{
-    return slotDragScroll (nullptr/*don't want scrolled notification*/);
-}
 
 //---------------------------------------------------------------------
 

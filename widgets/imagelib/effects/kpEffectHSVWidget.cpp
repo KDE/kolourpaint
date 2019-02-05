@@ -74,14 +74,14 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     lay->setColumnStretch (1, 1);
 
 
-    connect (m_hueInput, SIGNAL (valueChanged(double)),
-             this, SIGNAL (settingsChangedDelayed()));
+    connect (m_hueInput, &kpDoubleNumInput::valueChanged,
+             this, &kpEffectHSVWidget::settingsChangedDelayed);
 
-    connect (m_saturationInput, SIGNAL (valueChanged(double)),
-             this, SIGNAL (settingsChangedDelayed()));
+    connect (m_saturationInput, &kpDoubleNumInput::valueChanged,
+             this, &kpEffectHSVWidget::settingsChangedDelayed);
 
-    connect (m_valueInput, SIGNAL (valueChanged(double)),
-             this, SIGNAL (settingsChangedDelayed()));
+    connect (m_valueInput, &kpDoubleNumInput::valueChanged,
+             this, &kpEffectHSVWidget::settingsChangedDelayed);
 }
 
 kpEffectHSVWidget::~kpEffectHSVWidget ()

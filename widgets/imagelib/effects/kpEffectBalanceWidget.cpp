@@ -127,29 +127,29 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
 
 
     // (no need for settingsChangedDelayed() since BCG effect is so fast :))
-    connect (m_brightnessInput, SIGNAL (valueChanged (int)),
-             this, SIGNAL (settingsChangedNoWaitCursor ()));
-    connect (m_contrastInput, SIGNAL (valueChanged (int)),
-             this, SIGNAL (settingsChangedNoWaitCursor ()));
+    connect (m_brightnessInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
+    connect (m_contrastInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
 
-    connect (m_gammaInput, SIGNAL (valueChanged (int)),
-             this, SLOT (recalculateGammaLabel ()));
-    connect (m_gammaInput, SIGNAL (valueChanged (int)),
-             this, SIGNAL (settingsChangedNoWaitCursor ()));
+    connect (m_gammaInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectBalanceWidget::recalculateGammaLabel);
+    connect (m_gammaInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
 
-    connect (m_channelsComboBox, SIGNAL (activated (int)),
-             this, SIGNAL (settingsChanged ()));
+    connect (m_channelsComboBox,
+             static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+             this, &kpEffectBalanceWidget::settingsChanged);
 
-    connect (brightnessResetPushButton, SIGNAL (clicked ()),
-             this, SLOT (resetBrightness ()));
-    connect (contrastResetPushButton, SIGNAL (clicked ()),
-             this, SLOT (resetContrast ()));
-    connect (gammaResetPushButton, SIGNAL (clicked ()),
-             this, SLOT (resetGamma ()));
+    connect (brightnessResetPushButton, &QPushButton::clicked,
+             this, &kpEffectBalanceWidget::resetBrightness);
+    connect (contrastResetPushButton, &QPushButton::clicked,
+             this, &kpEffectBalanceWidget::resetContrast);
+    connect (gammaResetPushButton, &QPushButton::clicked,
+             this, &kpEffectBalanceWidget::resetGamma);
 
-    connect (resetPushButton, SIGNAL (clicked ()),
-             this, SLOT (resetAll ()));
-
+    connect (resetPushButton, &QPushButton::clicked,
+             this, &kpEffectBalanceWidget::resetAll);
 
     recalculateGammaLabel ();
 }

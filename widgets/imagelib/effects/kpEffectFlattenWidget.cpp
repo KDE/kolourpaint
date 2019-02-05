@@ -84,13 +84,14 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
     lay->addWidget (m_color2Button);
 
 
-    connect (m_enableCheckBox, SIGNAL (toggled(bool)),
-             this, SLOT (slotEnableChanged(bool)));
+    connect (m_enableCheckBox, &QCheckBox::toggled,
+             this, &kpEffectFlattenWidget::slotEnableChanged);
 
-    connect (m_color1Button, SIGNAL (changed(QColor)),
-             this, SIGNAL (settingsChanged()));
-    connect (m_color2Button, SIGNAL (changed(QColor)),
-             this, SIGNAL (settingsChanged()));
+    connect (m_color1Button, &KColorButton::changed,
+             this, &kpEffectFlattenWidget::settingsChanged);
+
+    connect (m_color2Button, &KColorButton::changed,
+             this, &kpEffectFlattenWidget::settingsChanged);
 }
 
 kpEffectFlattenWidget::~kpEffectFlattenWidget ()

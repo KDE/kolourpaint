@@ -66,8 +66,8 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     lay->setColumnStretch (1, 1);
 
 
-    connect (m_amountInput, SIGNAL (valueChanged(int)),
-             this, SIGNAL (settingsChanged()));
+    connect (m_amountInput, &kpIntNumInput::valueChanged,
+             this, &kpEffectEmbossWidget::settingsChanged);
 #endif
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
@@ -79,8 +79,8 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     // (settingsChangedDelayed() instead of settingsChanged() so that the
     //  user can quickly press OK to apply effect to document directly and
     //  not have to wait for the also slow preview)
-    connect (m_enableCheckBox, SIGNAL (toggled(bool)),
-             this, SIGNAL (settingsChangedDelayed()));
+    connect (m_enableCheckBox, &QCheckBox::toggled,
+             this, &kpEffectEmbossWidget::settingsChangedDelayed);
 }
 
 kpEffectEmbossWidget::~kpEffectEmbossWidget ()

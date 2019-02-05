@@ -82,10 +82,7 @@ protected:
     // If <delayed>, does a fast, low-quality scale and then calls itself
     // with <delayed> unset for a smooth scale, a short time later.
     // If acting on a text box, <delayed> is ignored.
-    void resizeScaleAndMove (bool delayed);
-
-protected slots:
-    void resizeScaleAndMove (/*delayed = false*/);
+    void resizeScaleAndMove (bool delayed = false);
 
 public:
     void finalize ();

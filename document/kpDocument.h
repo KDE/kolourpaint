@@ -311,7 +311,6 @@ public:
 public slots:
     // these will emit signals!
     void slotContentsChanged (const QRect &rect);
-    void slotSizeChanged (int newWidth, int newHeight);
     void slotSizeChanged (const QSize &newSize);
 
 signals:

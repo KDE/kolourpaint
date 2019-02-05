@@ -196,8 +196,7 @@ private slots:
 
     void slotContentsMoved ();
     void slotViewDestroyed ();
-    bool slotDragScroll (bool *didSomething);
-    bool slotDragScroll ();
+    bool slotDragScroll (bool *didSomething = nullptr);
 
 private:
     kpView *m_view;

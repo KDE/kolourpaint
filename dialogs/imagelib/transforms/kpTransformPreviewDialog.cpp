@@ -72,8 +72,8 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
     setWindowTitle (caption);
     QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
                                                       QDialogButtonBox::Cancel, this);
-    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
-    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
+    connect (buttons, &QDialogButtonBox::accepted, this, &kpTransformPreviewDialog::accept);
+    connect (buttons, &QDialogButtonBox::rejected, this, &kpTransformPreviewDialog::reject);
 
     QWidget *baseWidget = new QWidget (this);
     m_mainWidget = baseWidget;
@@ -173,13 +173,13 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
 
     m_previewPixmapLabel = new kpResizeSignallingLabel (m_previewGroupBox);
     m_previewPixmapLabel->setMinimumSize (150, 110);
-    connect (m_previewPixmapLabel, SIGNAL (resized()),
-             this, SLOT (updatePreview()));
+    connect (m_previewPixmapLabel, &kpResizeSignallingLabel::resized,
+             this, &kpTransformPreviewDialog::updatePreview);
 
     QPushButton *updatePushButton = new QPushButton (i18n ("&Update"),
                                                      m_previewGroupBox);
-    connect (updatePushButton, SIGNAL (clicked()),
-             this, SLOT (slotUpdateWithWaitCursor()));
+    connect (updatePushButton, &QPushButton::clicked,
+             this, &kpTransformPreviewDialog::slotUpdateWithWaitCursor);
 
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox);

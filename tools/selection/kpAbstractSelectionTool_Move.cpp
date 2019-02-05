@@ -66,8 +66,8 @@ void kpAbstractSelectionTool::initMove ()
 
     d->RMBMoveUpdateGUITimer = new QTimer (this);
     d->RMBMoveUpdateGUITimer->setSingleShot (true);
-    connect (d->RMBMoveUpdateGUITimer, SIGNAL (timeout()),
-             this, SLOT (slotRMBMoveUpdateGUI()));
+    connect (d->RMBMoveUpdateGUITimer, &QTimer::timeout,
+             this, &kpAbstractSelectionTool::slotRMBMoveUpdateGUI);
 }
 
 //---------------------------------------------------------------------

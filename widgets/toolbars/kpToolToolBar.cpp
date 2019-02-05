@@ -100,26 +100,28 @@ kpToolToolBar::kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *p
 
     foreach(kpToolWidgetBase *w, m_toolWidgets)
     {
-      connect(w, SIGNAL(optionSelected(int,int)),
-              this, SIGNAL(toolWidgetOptionSelected()));
+      connect (w, &kpToolWidgetBase::optionSelected,
+               this, &kpToolToolBar::toolWidgetOptionSelected);
     }
 
     adjustToOrientation(orientation());
-    connect(this, SIGNAL(orientationChanged(Qt::Orientation)),
-            this, SLOT(adjustToOrientation(Qt::Orientation)));
+    connect (this, &kpToolToolBar::orientationChanged,
+             this, &kpToolToolBar::adjustToOrientation);
 
     m_buttonGroup = new QButtonGroup (this);
-    connect (m_buttonGroup, SIGNAL (buttonClicked(int)), SLOT (slotToolButtonClicked()));
+    connect (m_buttonGroup,
+             static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+             this, &kpToolToolBar::slotToolButtonClicked);
 
     hideAllToolWidgets ();
 
     addWidget(m_baseWidget);
 
-    connect(this, SIGNAL(iconSizeChanged(QSize)),
-            this, SLOT(slotIconSizeChanged(QSize)));
+    connect (this, &kpToolToolBar::iconSizeChanged,
+             this, &kpToolToolBar::slotIconSizeChanged);
 
-    connect(this, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)),
-            this, SLOT(slotToolButtonStyleChanged(Qt::ToolButtonStyle)));
+    connect (this, &kpToolToolBar::toolButtonStyleChanged,
+             this, &kpToolToolBar::slotToolButtonStyleChanged);
 }
 
 //---------------------------------------------------------------------
@@ -157,8 +159,8 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
     m_toolButtons.append(b);
 
-    connect (tool, SIGNAL (actionActivated()),
-             this, SLOT (slotToolActionActivated()));
+    connect (tool, &kpTool::actionActivated,
+             this, &kpToolToolBar::slotToolActionActivated);
 
     adjustSizeConstraint();
 }
@@ -173,8 +175,8 @@ void kpToolToolBar::unregisterTool(kpTool *tool)
       if ( m_toolButtons[i]->tool() == tool )
       {
         delete m_toolButtons.takeAt(i);
-        disconnect(tool, SIGNAL(actionActivated()),
-                   this, SLOT(slotToolActionActivated()));
+        disconnect (tool, &kpTool::actionActivated,
+                 this, &kpToolToolBar::slotToolActionActivated);
         return;
       }
     }

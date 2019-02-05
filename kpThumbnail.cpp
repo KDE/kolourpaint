@@ -93,10 +93,11 @@ void kpThumbnail::setView (kpThumbnailView *view)
 
     if (d->view)
     {
-        disconnect (d->view, SIGNAL (destroyed()),
-                    this, SLOT (slotViewDestroyed()));
-        disconnect (d->view, SIGNAL (zoomLevelChanged(int,int)),
-                    this, SLOT (updateCaption()));
+        disconnect (d->view, &kpThumbnailView::destroyed,
+                    this, &kpThumbnail::slotViewDestroyed);
+
+        disconnect (d->view, &kpThumbnailView::zoomLevelChanged,
+                    this, &kpThumbnail::updateCaption);
 
         d->lay->removeWidget (d->view);
     }
@@ -105,10 +106,11 @@ void kpThumbnail::setView (kpThumbnailView *view)
 
     if (d->view)
     {
-        connect (d->view, SIGNAL (destroyed()),
-                 this, SLOT (slotViewDestroyed()));
-        connect (d->view, SIGNAL (zoomLevelChanged(int,int)),
-                 this, SLOT (updateCaption()));
+        connect (d->view, &kpThumbnailView::destroyed,
+                 this, &kpThumbnail::slotViewDestroyed);
+
+        connect (d->view, &kpThumbnailView::zoomLevelChanged,
+                 this, &kpThumbnail::updateCaption);
 
         Q_ASSERT (d->view->parent () == this);
         d->lay->addWidget (d->view, Qt::AlignCenter);

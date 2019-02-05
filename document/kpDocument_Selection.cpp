@@ -100,8 +100,8 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
 
         // There's no need to uninitialize the old selection
         // (e.g. call disconnect()) since we delete it later.
-        connect (m_selection, SIGNAL (changed(QRect)),
-                 this, SLOT (slotContentsChanged(QRect)));
+        connect (m_selection, &kpAbstractSelection::changed,
+                 this, &kpDocument::slotContentsChanged);
 
 
         //

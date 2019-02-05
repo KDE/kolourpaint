@@ -149,8 +149,6 @@ void kpTool::setUserShapeSize (const QSize &size)
     d->userShapeSize = size;
 
     emit userShapeSizeChanged (d->userShapeSize);
-    emit userShapeSizeChanged (d->userShapeSize.width (),
-                               d->userShapeSize.height ());
 }
 
 //---------------------------------------------------------------------

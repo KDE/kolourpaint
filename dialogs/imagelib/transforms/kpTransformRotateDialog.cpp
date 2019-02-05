@@ -121,10 +121,11 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
     directionLayout->addWidget (m_clockwiseRadioButton, 1, 1, Qt::AlignCenter);
 
 
-    connect (m_antiClockwiseRadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotUpdate()));
-    connect (m_clockwiseRadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotUpdate()));
+    connect (m_antiClockwiseRadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotUpdate);
+
+    connect (m_clockwiseRadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotUpdate);
 }
 
 // private
@@ -162,20 +163,22 @@ void kpTransformRotateDialog::createAngleGroupBox ()
     angleLayout->setColumnStretch (1, 2);  // Stretch Custom Angle Input
 
 
-    connect (m_angle90RadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotUpdate()));
-    connect (m_angle180RadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotUpdate()));
-    connect (m_angle270RadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotUpdate()));
 
-    connect (m_angleCustomRadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotAngleCustomRadioButtonToggled(bool)));
-    connect (m_angleCustomRadioButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotUpdate()));
+    connect (m_angle90RadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotUpdate);
+    connect (m_angle180RadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotUpdate);
+    connect (m_angle270RadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotUpdate);
 
-    connect (m_angleCustomInput, SIGNAL (valueChanged(int)),
-             this, SLOT (slotUpdate()));
+    connect (m_angleCustomRadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotAngleCustomRadioButtonToggled);
+    connect (m_angleCustomRadioButton, &QRadioButton::toggled,
+             this, &kpTransformRotateDialog::slotUpdate);
+
+    connect (m_angleCustomInput,
+             static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+             this, &kpTransformRotateDialog::slotUpdate);
 }
 
 

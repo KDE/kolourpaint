@@ -95,8 +95,8 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
     setWindowTitle (i18nc ("@title:window", "Resize / Scale"));
     QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
                                                       QDialogButtonBox::Cancel, this);
-    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
-    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
+    connect (buttons, &QDialogButtonBox::accepted, this, &kpTransformResizeScaleDialog::accept);
+    connect (buttons, &QDialogButtonBox::rejected, this, &kpTransformResizeScaleDialog::reject);
 
     QWidget *baseWidget = new QWidget (this);
 
@@ -191,8 +191,8 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
     lay->addWidget (m_actOnCombo, 1);
 
 
-    connect (m_actOnCombo, SIGNAL (activated(int)),
-             this, SLOT (slotActOnChanged()));
+    connect (m_actOnCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+             this, &kpTransformResizeScaleDialog::slotActOnChanged);
 
     return actOnBox;
 }
@@ -264,12 +264,12 @@ QGroupBox *kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseW
     operationLayout->addWidget (m_scaleButton, 0, 1, Qt::AlignCenter);
     operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
 
-    connect (m_resizeButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotTypeChanged()));
-    connect (m_scaleButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotTypeChanged()));
-    connect (m_smoothScaleButton, SIGNAL (toggled(bool)),
-             this, SLOT (slotTypeChanged()));
+    connect (m_resizeButton, &QToolButton::toggled,
+             this, &kpTransformResizeScaleDialog::slotTypeChanged);
+    connect (m_scaleButton, &QToolButton::toggled,
+             this, &kpTransformResizeScaleDialog::slotTypeChanged);
+    connect (m_smoothScaleButton, &QToolButton::toggled,
+             this, &kpTransformResizeScaleDialog::slotTypeChanged);
 
     return operationGroupBox;
 }
@@ -360,10 +360,12 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     dimensionsLayout->setRowMinimumHeight (4/*row*/, dimensionsLayout->rowMinimumHeight (4) * 2);
 
 
-    connect (m_newWidthInput, SIGNAL (valueChanged(int)),
-             this, SLOT (slotWidthChanged(int)));
-    connect (m_newHeightInput, SIGNAL (valueChanged(int)),
-             this, SLOT (slotHeightChanged(int)));
+
+    connect (m_newWidthInput, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+             this, &kpTransformResizeScaleDialog::slotWidthChanged);
+
+    connect (m_newHeightInput, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+             this, &kpTransformResizeScaleDialog::slotHeightChanged);
 
     // COMPAT: KDoubleNumInput only fires valueChanged(double) once per
     //         edit.  It should either fire:
@@ -376,13 +378,16 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     //             2. Once per keystroke.
     //
     //         Bug in KDoubleNumInput.
-    connect (m_percentWidthInput, SIGNAL (valueChanged(double)),
-             this, SLOT (slotPercentWidthChanged(double)));
-    connect (m_percentHeightInput, SIGNAL (valueChanged(double)),
-             this, SLOT (slotPercentHeightChanged(double)));
+    connect (m_percentWidthInput,
+             static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+             this, &kpTransformResizeScaleDialog::slotPercentWidthChanged);
 
-    connect (m_keepAspectRatioCheckBox, SIGNAL (toggled(bool)),
-             this, SLOT (setKeepAspectRatio(bool)));
+    connect (m_percentHeightInput,
+             static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+             this, &kpTransformResizeScaleDialog::slotPercentHeightChanged);
+
+    connect (m_keepAspectRatioCheckBox, &QCheckBox::toggled,
+             this, &kpTransformResizeScaleDialog::setKeepAspectRatio);
 
     return dimensionsGroupBox;
 }

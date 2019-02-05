@@ -109,7 +109,7 @@ void kpTool::initAction ()
 
     d->action->setWhatsThis(d->description);
 
-    connect(d->action, SIGNAL(changed()), this, SIGNAL (actionToolTipChanged()));
+    connect (d->action, &kpToolAction::changed, this, &kpTool::actionToolTipChanged);
 }
 
 //---------------------------------------------------------------------

@@ -121,8 +121,9 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     setWindowTitle (i18nc ("@title:window", "Document Properties"));
     QDialogButtonBox * buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
                                                        QDialogButtonBox::Cancel, this);
-    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
-    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
+
+    connect (buttons, &QDialogButtonBox::accepted, this, &kpDocumentMetaInfoDialog::accept);
+    connect (buttons, &QDialogButtonBox::rejected, this, &kpDocumentMetaInfoDialog::reject);
 
     QWidget *baseWidget = new QWidget (this);
 
@@ -243,26 +244,26 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     d->fieldsTableWidget = new QTableWidget (fieldsGroupBox);
     d->fieldsTableWidget->setEditTriggers(QAbstractItemView::AllEditTriggers);
 
-    connect (d->fieldsTableWidget, SIGNAL (currentCellChanged(int,int,int,int)),
-             SLOT (slotFieldsCurrentCellChanged(int,int,int,int)));
+    connect (d->fieldsTableWidget, &QTableWidget::currentCellChanged,
+             this, &kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged);
 
-    connect (d->fieldsTableWidget, SIGNAL (itemChanged(QTableWidgetItem*)),
-             SLOT (slotFieldsItemChanged(QTableWidgetItem*)));
+    connect (d->fieldsTableWidget, &QTableWidget::itemChanged,
+             this, &kpDocumentMetaInfoDialog::slotFieldsItemChanged);
 
     d->fieldsAddRowButton = new QPushButton (i18n ("&Add Row"),
         fieldsGroupBox);
-    connect (d->fieldsAddRowButton, SIGNAL (clicked()),
-             SLOT (slotFieldsAddRowButtonClicked()));
+    connect (d->fieldsAddRowButton, &QPushButton::clicked,
+             this, &kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked);
 
     d->fieldsDeleteRowButton = new QPushButton (i18n ("&Delete Row"),
         fieldsGroupBox);
-    connect (d->fieldsDeleteRowButton, SIGNAL (clicked()),
-             SLOT (slotFieldsDeleteRowButtonClicked()));
+    connect (d->fieldsDeleteRowButton, &QPushButton::clicked,
+             this, &kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked);
 
     d->fieldsResetButton = new QPushButton (i18n ("&Reset"),
         fieldsGroupBox);
-    connect (d->fieldsResetButton, SIGNAL (clicked()),
-             SLOT (setUIToOriginalMetaInfo()));
+    connect (d->fieldsResetButton, &QPushButton::clicked,
+             this, &kpDocumentMetaInfoDialog::setUIToOriginalMetaInfo);
 
     QHBoxLayout *fieldsButtonsLayout = new QHBoxLayout ();
     fieldsButtonsLayout->addWidget (d->fieldsAddRowButton);

@@ -138,7 +138,7 @@ Q_SIGNALS:
 
       Added for KolourPaint.
   */
-  void colorSelected( int index , const QColor& color, Qt::MouseButton button );
+  void colorSelectedWhitButton( int index , const QColor& color, Qt::MouseButton button );
 
   /** Emitted when a color in the table is double-clicked */
   void colorDoubleClicked( int index , const QColor& color );

@@ -65,8 +65,8 @@ void kpMainWindow::setupViewMenuActions ()
     d->actionShowGrid->setText (i18n ("Show &Grid"));
     ac->setDefaultShortcut (d->actionShowGrid, Qt::CTRL + Qt::Key_G);
     //d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
-    connect (d->actionShowGrid, SIGNAL (triggered(bool)),
-        SLOT (slotShowGridToggled()));
+    connect (d->actionShowGrid, &KToggleAction::triggered,
+             this, &kpMainWindow::slotShowGridToggled);
 
 
     setupViewMenuThumbnailActions ();

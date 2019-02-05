@@ -134,17 +134,13 @@ void kpToolRectangularBase::begin ()
 #endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
-    connect (d->toolWidgetLineWidth,
-        SIGNAL (lineWidthChanged(int)),
-        this,
-        SLOT (slotLineWidthChanged()));
+    connect (d->toolWidgetLineWidth, &kpToolWidgetLineWidth::lineWidthChanged,
+             this, &kpToolRectangularBase::slotLineWidthChanged);
     d->toolWidgetLineWidth->show ();
 
     d->toolWidgetFillStyle = tb->toolWidgetFillStyle ();
-    connect (d->toolWidgetFillStyle,
-        SIGNAL (fillStyleChanged(kpToolWidgetFillStyle::FillStyle)),
-        this,
-        SLOT (slotFillStyleChanged()));
+    connect (d->toolWidgetFillStyle, &kpToolWidgetFillStyle::fillStyleChanged,
+             this, &kpToolRectangularBase::slotFillStyleChanged);
     d->toolWidgetFillStyle->show ();
 
     viewManager ()->setCursor (QCursor (Qt::ArrowCursor));
@@ -163,19 +159,15 @@ void kpToolRectangularBase::end ()
 
     if (d->toolWidgetLineWidth)
     {
-        disconnect (d->toolWidgetLineWidth,
-            SIGNAL (lineWidthChanged(int)),
-            this,
-            SLOT (slotLineWidthChanged()));
+        disconnect (d->toolWidgetLineWidth, &kpToolWidgetLineWidth::lineWidthChanged,
+                 this, &kpToolRectangularBase::slotLineWidthChanged);
         d->toolWidgetLineWidth = nullptr;
     }
 
     if (d->toolWidgetFillStyle)
     {
-        disconnect (d->toolWidgetFillStyle,
-            SIGNAL (fillStyleChanged(kpToolWidgetFillStyle::FillStyle)),
-            this,
-            SLOT (slotFillStyleChanged()));
+        disconnect (d->toolWidgetFillStyle, &kpToolWidgetFillStyle::fillStyleChanged,
+                 this, &kpToolRectangularBase::slotFillStyleChanged);
         d->toolWidgetFillStyle = nullptr;
     }
 

@@ -94,14 +94,14 @@ void kpMainWindow::setupEditMenuActions ()
     d->actionPaste = KStandardAction::paste (this, SLOT (slotPaste()), ac);
     d->actionPasteInNewWindow = ac->addAction ("edit_paste_in_new_window");
     d->actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
-    connect (d->actionPasteInNewWindow, SIGNAL (triggered(bool)),
-        SLOT (slotPasteInNewWindow()));
+    connect (d->actionPasteInNewWindow, &QAction::triggered,
+             this, &kpMainWindow::slotPasteInNewWindow);
     ac->setDefaultShortcut (d->actionPasteInNewWindow, Qt::CTRL + Qt::SHIFT + Qt::Key_V);
 
     //d->actionDelete = KStandardAction::clear (this, SLOT (slotDelete()), ac);
     d->actionDelete = ac->addAction ("edit_clear");
     d->actionDelete->setText (i18n ("&Delete Selection"));
-    connect (d->actionDelete, SIGNAL (triggered(bool)), SLOT (slotDelete()));
+    connect (d->actionDelete, &QAction::triggered, this, &kpMainWindow::slotDelete);
 
     d->actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll()), ac);
     d->actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect()), ac);
@@ -109,12 +109,11 @@ void kpMainWindow::setupEditMenuActions ()
 
     d->actionCopyToFile = ac->addAction ("edit_copy_to_file");
     d->actionCopyToFile->setText (i18n ("C&opy to File..."));
-    connect (d->actionCopyToFile, SIGNAL (triggered(bool)),
-        SLOT (slotCopyToFile()));
+    connect (d->actionCopyToFile, &QAction::triggered, this, &kpMainWindow::slotCopyToFile);
+
     d->actionPasteFromFile = ac->addAction ("edit_paste_from_file");
     d->actionPasteFromFile->setText (i18n ("Paste &From File..."));
-    connect (d->actionPasteFromFile, SIGNAL (triggered(bool)),
-        SLOT (slotPasteFromFile()));
+    connect (d->actionPasteFromFile, &QAction::triggered, this, &kpMainWindow::slotPasteFromFile);
 
 
     d->editMenuDocumentActionsEnabled = false;
@@ -122,8 +121,9 @@ void kpMainWindow::setupEditMenuActions ()
 
     // Paste should always be enabled, as long as there is something to paste
     // (independent of whether we have a document or not)
-    connect (QApplication::clipboard (), SIGNAL (dataChanged()),
-             this, SLOT (slotEnablePaste()));
+    connect (QApplication::clipboard(), &QClipboard::dataChanged,
+             this, &kpMainWindow::slotEnablePaste);
+
     slotEnablePaste ();
 }
 

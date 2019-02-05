@@ -276,55 +276,65 @@ void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
         // Got these connect statements by analysing deps of
         // updateBuddyViewScrollableContainerRectangle() rect update code.
 
-        connect (this, SIGNAL (zoomLevelChanged(int,int)),
-                 this, SLOT (updateBuddyViewScrollableContainerRectangle()));
-        connect (this, SIGNAL (originChanged(QPoint)),
-                 this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+        connect (this, &kpView::zoomLevelChanged,
+                 this, &kpView::updateBuddyViewScrollableContainerRectangle);
+
+        connect (this, &kpView::originChanged,
+                 this, &kpView::updateBuddyViewScrollableContainerRectangle);
 
         if (buddyViewScrollableContainer ())
         {
-            connect (buddyViewScrollableContainer (), SIGNAL (contentsMoved()),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
-            connect (buddyViewScrollableContainer (), SIGNAL (resized()),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            connect (buddyViewScrollableContainer (),
+                     &kpViewScrollableContainer::contentsMoved,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
+
+            connect (buddyViewScrollableContainer (), &kpViewScrollableContainer::resized,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
         }
 
         if (buddyView ())
         {
-            connect (buddyView (), SIGNAL (zoomLevelChanged(int,int)),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
-            connect (buddyView (), SIGNAL (originChanged(QPoint)),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            connect (buddyView (), &kpView::zoomLevelChanged,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
 
-            connect (buddyView (), SIGNAL (sizeChanged(int,int)),
-                     this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            connect (buddyView (), &kpView::originChanged,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
+
+            connect (buddyView (),
+                     static_cast<void (kpView::*)(int,int)>(&kpView::sizeChanged),
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
         }
 
     }
     else
     {
-        disconnect (this, SIGNAL (zoomLevelChanged(int,int)),
-                    this, SLOT (updateBuddyViewScrollableContainerRectangle()));
-        disconnect (this, SIGNAL (originChanged(QPoint)),
-                    this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+        disconnect (this, &kpView::zoomLevelChanged,
+                    this, &kpView::updateBuddyViewScrollableContainerRectangle);
+
+        disconnect (this, &kpView::originChanged,
+                 this, &kpView::updateBuddyViewScrollableContainerRectangle);
 
         if (buddyViewScrollableContainer ())
         {
-            disconnect (buddyViewScrollableContainer (), SIGNAL (contentsMoved()),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
-            disconnect (buddyViewScrollableContainer (), SIGNAL (resized()),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            disconnect (buddyViewScrollableContainer (),
+                     &kpViewScrollableContainer::contentsMoved,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
+
+            disconnect (buddyViewScrollableContainer (), &kpViewScrollableContainer::resized,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
         }
 
         if (buddyView ())
         {
-            disconnect (buddyView (), SIGNAL (zoomLevelChanged(int,int)),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
-            disconnect (buddyView (), SIGNAL (originChanged(QPoint)),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            disconnect (buddyView (), &kpView::zoomLevelChanged,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
 
-            disconnect (buddyView (), SIGNAL (sizeChanged(int,int)),
-                        this, SLOT (updateBuddyViewScrollableContainerRectangle()));
+            disconnect (buddyView (), &kpView::originChanged,
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
+
+            disconnect (buddyView (),
+                     static_cast<void (kpView::*)(int,int)>(&kpView::sizeChanged),
+                     this, &kpView::updateBuddyViewScrollableContainerRectangle);
         }
 
     }

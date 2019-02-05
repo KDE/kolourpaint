@@ -378,7 +378,7 @@ void kpDocument::setImage (const kpImage &image)
     if (m_oldWidth == width () && m_oldHeight == height ())
         slotContentsChanged (image.rect ());
     else
-        slotSizeChanged (width (), height ());
+        slotSizeChanged (QSize (width (), height ()));
 }
 
 //---------------------------------------------------------------------
@@ -433,7 +433,7 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 
     kpPixmapFX::resize (m_image, w, h, backgroundColor);
 
-    slotSizeChanged (width (), height ());
+    slotSizeChanged (QSize (width (), height ()));
 }
 
 //---------------------------------------------------------------------
@@ -446,18 +446,11 @@ void kpDocument::slotContentsChanged (const QRect &rect)
 
 //---------------------------------------------------------------------
 
-void kpDocument::slotSizeChanged (int newWidth, int newHeight)
-{
-    setModified ();
-    emit sizeChanged (newWidth, newHeight);
-    emit sizeChanged (QSize (newWidth, newHeight));
-}
-
-//---------------------------------------------------------------------
-
 void kpDocument::slotSizeChanged (const QSize &newSize)
 {
-    slotSizeChanged (newSize.width (), newSize.height ());
+    setModified ();
+    emit sizeChanged (newSize.width(), newSize.height());
+    emit sizeChanged (newSize);
 }
 
 //---------------------------------------------------------------------

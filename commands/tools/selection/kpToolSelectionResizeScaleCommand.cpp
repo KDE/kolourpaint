@@ -63,8 +63,7 @@ kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
     m_newHeight = selection ()->height ();
 
     m_smoothScaleTimer->setSingleShot (true);
-    connect (m_smoothScaleTimer, SIGNAL (timeout()),
-             this, SLOT (resizeScaleAndMove()));
+    connect (m_smoothScaleTimer, &QTimer::timeout, this, [this]{resizeScaleAndMove(false);});
 }
 
 kpToolSelectionResizeScaleCommand::~kpToolSelectionResizeScaleCommand ()
@@ -205,15 +204,6 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
     document ()->setSelection (*newSelPtr);
 
     delete newSelPtr;
-}
-
-// protected slots
-void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
-{
-#if DEBUG_KP_TOOL_SELECTION
-    qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()";
-#endif
-    resizeScaleAndMove (false/*no delay*/);
 }
 
 
