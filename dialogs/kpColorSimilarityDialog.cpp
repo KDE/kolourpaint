@@ -77,7 +77,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
         baseWidget);
 
     m_colorSimilarityInput = new kpIntNumInput (inputGroupBox);
-    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityHolder::MaxColorSimilarity * 100 + .1/*don't floor below target int*/),
+    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityHolder::MaxColorSimilarity * 100 + 0.1/*don't floor below target int*/),
                                       5/*step*/);
     m_colorSimilarityInput->setSuffix (i18n ("%"));
     m_colorSimilarityInput->setSpecialValueText (i18n ("Exact Match"));

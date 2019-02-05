@@ -53,10 +53,10 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     m_hueInput->setRange (-180, 180, 15/*step*/);
 
     m_saturationInput = new kpDoubleNumInput (this);
-    m_saturationInput->setRange (-1, 1, .1/*step*/);
+    m_saturationInput->setRange (-1, 1, 0.1/*step*/);
 
     m_valueInput = new kpDoubleNumInput (this);
-    m_valueInput->setRange (-1, 1, .1/*step*/);
+    m_valueInput->setRange (-1, 1, 0.1/*step*/);
 
     hueLabel->setBuddy (m_hueInput);
     saturationLabel->setBuddy (m_saturationInput);

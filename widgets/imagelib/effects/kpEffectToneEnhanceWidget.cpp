@@ -58,10 +58,10 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
         QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
 
         m_granularityInput = new kpDoubleNumInput (this);
-        m_granularityInput->setRange (0, 1, .1/*step*/);
+        m_granularityInput->setRange (0, 1, 0.1/*step*/);
 
         m_amountInput = new kpDoubleNumInput (this);
-        m_amountInput->setRange (0, 1, .1/*step*/);
+        m_amountInput->setRange (0, 1, 0.1/*step*/);
 
         granularityLabel->setBuddy (m_granularityInput);
         amountLabel->setBuddy (m_amountInput);

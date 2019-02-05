@@ -102,14 +102,14 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
     //
     // I still have no idea what "radius" and "sigma" mean.
 
-    const double RadiusMin = .1;
+    const double RadiusMin = 0.1;
     const double RadiusMax = 2.5;
     const double radius = RadiusMin +
        (strength - 1) *
        (RadiusMax - RadiusMin) /
        (kpEffectBlurSharpen::MaxStrength - 1);
 
-    const double SigmaMin = .5;
+    const double SigmaMin = 0.5;
     const double SigmaMax = 3.0;
     const double sigma = SigmaMin +
         (strength - 1) *
@@ -128,7 +128,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
 #if 0
     const double radius = 0/*auto-calculate*/;
 
-    const double SigmaMin = .6;
+    const double SigmaMin = 0.6;
     const double SigmaMax = 1.0;
     const double sigma = SigmaMin +
         (strength - 1) *

@@ -47,7 +47,7 @@
 
 // (round up to guarantee at least 1 dot per inch)
 const int kpDocumentMetaInfo::MinDotsPerMeter =
-    int (ceil (1/*single dot per inch - a very low DPI*/ * KP_INCHES_PER_METER) + .1);
+    int (ceil (1/*single dot per inch - a very low DPI*/ * KP_INCHES_PER_METER) + 0.1);
 
 const int kpDocumentMetaInfo::MaxDotsPerMeter =
     int ((600 * 100)/*a lot of DPI*/ * KP_INCHES_PER_METER);

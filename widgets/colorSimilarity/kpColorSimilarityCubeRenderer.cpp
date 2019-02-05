@@ -51,7 +51,7 @@ static QColor Color (int redOrGreenOrBlue,
 {
     int brightness = int (baseBrightness +
                           similarityDirection *
-                              .5 * colorSimilarity * kpColorSimilarityHolder::ColorCubeDiagonalDistance);
+                              0.5 * colorSimilarity * kpColorSimilarityHolder::ColorCubeDiagonalDistance);
 
     if (brightness < 0)
         brightness = 0;
