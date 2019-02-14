@@ -30,7 +30,7 @@
 #define kpEffectFlattenCommand_H
 
 
-#include <qcolor.h>
+#include <QColor>
 
 #include "kpEffectCommandBase.h"
 #include "imagelib/kpImage.h"

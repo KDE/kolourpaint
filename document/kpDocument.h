@@ -30,10 +30,10 @@
 #define KP_DOCUMENT_H
 
 
-#include <qbitmap.h>
-#include <qobject.h>
-#include <qstring.h>
-#include <qurl.h>
+#include <QBitmap>
+#include <QObject>
+#include <QString>
+#include <QUrl>
 
 #include "imagelib/kpImage.h"
 #include "pixmapfx/kpPixmapFX.h"

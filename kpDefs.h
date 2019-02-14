@@ -32,10 +32,10 @@
 
 #include <limits.h>
 
-#include <qglobal.h>
-#include <qpoint.h>
-#include <qsize.h>
-#include <qstring.h>
+#include <QtGlobal>
+#include <QPoint>
+#include <QSize>
+#include <QString>
 
 
 // approx. 2896x2896x32bpp or 3344x3344x24bpp (TODO: 24==32?) or 4096*4096x16bpp

@@ -31,8 +31,8 @@
 
 
 #include <QDockWidget>
-#include <qframe.h>
-#include <qwidget.h>
+#include <QFrame>
+#include <QWidget>
 
 #include "imagelib/kpColor.h"
 

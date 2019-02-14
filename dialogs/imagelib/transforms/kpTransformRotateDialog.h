@@ -31,7 +31,7 @@
 
 
 #include <QImage>
-#include <qpoint.h>
+#include <QPoint>
 
 #include "imagelib/kpColor.h"
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"

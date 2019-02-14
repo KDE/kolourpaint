@@ -30,7 +30,7 @@
 #define kpDualColorButton_H
 
 
-#include <qframe.h>
+#include <QFrame>
 
 #include "imagelib/kpColor.h"
 

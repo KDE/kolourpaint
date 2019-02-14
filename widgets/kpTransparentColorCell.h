@@ -30,7 +30,7 @@
 #define kpTransparentColorCell_H
 
 
-#include <qframe.h>
+#include <QFrame>
 
 
 class kpColor;

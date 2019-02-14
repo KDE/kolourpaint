@@ -33,7 +33,7 @@
 #include "imagelib/kpColor.h"
 #include "layers/tempImage/kpTempImage.h"
 
-#include <qpixmap.h>
+#include <QPixmap>
 
 
 class kpColor;

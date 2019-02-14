@@ -31,7 +31,7 @@
 #define KP_TOOL_TOOL_BAR_H
 
 
-#include <qlist.h>
+#include <QList>
 
 #include <KToolBar>
 

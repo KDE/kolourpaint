@@ -30,9 +30,9 @@
 #define kpDocumentSaveOptionsWidget_H
 
 
-#include <qrect.h>
-#include <qsize.h>
-#include <qwidget.h>
+#include <QRect>
+#include <QSize>
+#include <QWidget>
 
 #include "imagelib/kpDocumentMetaInfo.h"
 #include "document/kpDocumentSaveOptions.h"

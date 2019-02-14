@@ -30,8 +30,8 @@
 #define kpToolPolygonalBase_H
 
 
-#include <qpoint.h>
-#include <qrect.h>
+#include <QPoint>
+#include <QRect>
 
 #include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"

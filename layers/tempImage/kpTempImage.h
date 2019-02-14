@@ -32,7 +32,7 @@
 #define kpTempImage_H
 
 
-#include <qpoint.h>
+#include <QPoint>
 
 #include "imagelib/kpImage.h"
 

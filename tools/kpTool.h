@@ -30,11 +30,11 @@
 #define KP_TOOL_H
 
 
-#include <qobject.h>
-#include <qpoint.h>
-#include <qrect.h>
-#include <qsize.h>
-#include <qstring.h>
+#include <QObject>
+#include <QPoint>
+#include <QRect>
+#include <QSize>
+#include <QString>
 
 #include "kpDefs.h"
 #ifdef Q_OS_WIN

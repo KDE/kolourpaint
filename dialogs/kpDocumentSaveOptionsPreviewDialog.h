@@ -31,7 +31,7 @@
 
 #include "generic/widgets/kpSubWindow.h"
 
-#include <qsize.h>
+#include <QSize>
 
 
 class QCloseEvent;

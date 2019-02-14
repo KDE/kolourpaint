@@ -30,7 +30,7 @@
 #define kpEffectWidgetBase_H
 
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "imagelib/kpImage.h"
 

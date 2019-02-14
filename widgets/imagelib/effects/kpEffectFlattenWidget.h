@@ -30,7 +30,7 @@
 #define kpEffectFlattenWidget_H
 
 
-#include <qcolor.h>
+#include <QColor>
 
 #include "kpEffectWidgetBase.h"
 

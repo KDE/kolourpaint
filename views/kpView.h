@@ -30,7 +30,7 @@
 #define KP_VIEW_H
 
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "kpDefs.h"
 

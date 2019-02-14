@@ -30,10 +30,10 @@
 #define KP_VIEW_SCROLLABLE_CONTAINER_H
 
 
-#include <qlabel.h>
-#include <qpoint.h>
+#include <QLabel>
+#include <QPoint>
 #include <QScrollArea>
-#include <qsize.h>
+#include <QSize>
 
 
 class QCursor;

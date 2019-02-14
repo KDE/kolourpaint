@@ -30,10 +30,10 @@
 #define KP_DOCUMENT_META_INFO_H
 
 
-#include <qimage.h>
-#include <qlist.h>
-#include <qmap.h>
-#include <qstring.h>
+#include <QImage>
+#include <QList>
+#include <QMap>
+#include <QString>
 
 #include "commands/kpCommandSize.h"
 

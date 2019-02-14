@@ -30,7 +30,7 @@
 #define KP_RESIZE_SIGNALLING_LABEL_H
 
 
-#include <qlabel.h>
+#include <QLabel>
 
 
 class QResizeEvent;

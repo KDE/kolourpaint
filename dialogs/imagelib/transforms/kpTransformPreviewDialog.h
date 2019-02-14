@@ -31,7 +31,7 @@
 
 
 #include <QDialog>
-#include <qpixmap.h>
+#include <QPixmap>
 
 
 class QLabel;

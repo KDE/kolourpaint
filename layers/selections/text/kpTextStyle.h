@@ -30,7 +30,7 @@
 #define KP_TEXT_STYLE_H
 
 
-#include <qstring.h>
+#include <QString>
 
 #include "imagelib/kpColor.h"
 

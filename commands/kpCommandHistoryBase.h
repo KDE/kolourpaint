@@ -30,9 +30,10 @@
 #define kpCommandHistoryBase_H
 
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qlinkedlist.h>
+#include <QObject>
+#include <QString>
+#include <QLinkedList>
+
 
 #include "commands/kpCommandSize.h"
 

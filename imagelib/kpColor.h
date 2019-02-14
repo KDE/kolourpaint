@@ -30,7 +30,7 @@
 #define KP_COLOR_H
 
 
-#include <qcolor.h>
+#include <QColor>
 
 
 class QDataStream;

@@ -30,12 +30,12 @@
 #define KP_TOOL_WIDGET_BASE_H
 
 
-#include <qframe.h>
-#include <qpair.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qlist.h>
-#include <qwidget.h>
+#include <QFrame>
+#include <QPair>
+#include <QPixmap>
+#include <QRect>
+#include <QList>
+#include <QWidget>
 
 
 class QMouseEvent;

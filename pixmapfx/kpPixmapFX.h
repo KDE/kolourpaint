@@ -33,8 +33,8 @@
 #define KP_PIXMAP_FX_H
 
 
-#include <qrect.h>
-#include <qstring.h>
+#include <QRect>
+#include <QString>
 
 #include <klocalizedstring.h>
 

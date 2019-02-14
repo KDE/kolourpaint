@@ -30,7 +30,7 @@
 #define KP_TOOL_FLOW_BASE_H
 
 
-#include <qrect.h>
+#include <QRect>
 
 #include "layers/tempImage/kpTempImage.h"
 #include "tools/kpTool.h"
