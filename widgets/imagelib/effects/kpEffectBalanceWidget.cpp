@@ -235,7 +235,7 @@ void kpEffectBalanceWidget::recalculateGammaLabel ()
 {
     m_gammaLabel->setText (
         QLatin1String (" ") +
-        QString::number (pow (10, gamma () / 50.0),
+        QString::number (std::pow (10, gamma () / 50.0),
                          'f'/*[-]9.9*/,
                          2/*precision*/) +
         QLatin1String (" "));

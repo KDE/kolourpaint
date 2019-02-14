@@ -35,7 +35,6 @@
 #include "kpView.h"
 #include "kpViewPrivate.h"
 
-#include <cmath>
 #include <cstdlib>
 
 #include <QCursor>

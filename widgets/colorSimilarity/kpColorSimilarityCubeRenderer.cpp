@@ -31,7 +31,7 @@
 
 #include "kpColorSimilarityCubeRenderer.h"
 
-#include <cmath>
+#include <QtMath>
 
 #include <QPainter>
 #include <QPolygonF>
@@ -185,20 +185,20 @@ void kpColorSimilarityCubeRenderer::Paint(QPaintDevice *target,
     //
     //
 
-    const double angle = KP_DEGREES_TO_RADIANS (45);
+    const double angle = qDegreesToRadians (45.0);
     // S + S sin A = cubeRectSize
     // (1 + sin A) x S = cubeRectSize
-    const double side = double(cubeRectSize) / (1.0 + sin(angle));
+    const double side = double(cubeRectSize) / (1.0 + std::sin(angle));
 
 
-    const QPointF pointP(x + (side * cos (angle)),
+    const QPointF pointP(x + (side * std::cos (angle)),
                          y);
     const QPointF pointQ(x + cubeRectSize - 1,
                          y);
     const QPointF pointR(x,
-                         y + (side * sin (angle)));
+                         y + (side * std::sin (angle)));
     const QPointF pointS(x + (side),
-                         y + (side * sin (angle)));
+                         y + (side * std::sin (angle)));
     const QPointF pointT(x + cubeRectSize - 1,
                          y + (side));
     const QPointF pointU(x,

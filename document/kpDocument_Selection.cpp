@@ -32,7 +32,6 @@
 #include "kpDocument.h"
 #include "kpDocumentPrivate.h"
 
-#include <cmath>
 
 #include <QImage>
 #include <QPainter>

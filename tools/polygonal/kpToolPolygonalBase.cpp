@@ -32,7 +32,7 @@
 #include "kpToolPolygonalBase.h"
 
 #include <cfloat>
-#include <cmath>
+#include <QtMath>
 
 #include <QCursor>
 #include <QPoint>
@@ -232,18 +232,18 @@ void kpToolPolygonalBase::applyModifiers ()
         int numAngles = 0;
         angles [numAngles++] = 0;
         if (controlPressed ())
-            angles [numAngles++] = KP_PI / 6;
+            angles [numAngles++] = M_PI / 6;
         if (shiftPressed ())
-            angles [numAngles++] = KP_PI / 4;
+            angles [numAngles++] = M_PI / 4;
         if (controlPressed ())
-            angles [numAngles++] = KP_PI / 3;
-        angles [numAngles++] = KP_PI / 2;
+            angles [numAngles++] = M_PI / 3;
+        angles [numAngles++] = M_PI / 2;
         Q_ASSERT (numAngles <= int (sizeof (angles) / sizeof (angles [0])));
 
         double angle = angles [numAngles - 1];
         for (int i = 0; i < numAngles - 1; i++)
         {
-            double acceptingRatio = tan ((angles [i] + angles [i + 1]) / 2.0);
+            double acceptingRatio = std::tan ((angles [i] + angles [i + 1]) / 2.0);
             if (ratio < acceptingRatio)
             {
                 angle = angles [i];
@@ -252,14 +252,14 @@ void kpToolPolygonalBase::applyModifiers ()
         }
 
         // horizontal (dist from start not maintained)
-        if (fabs (KP_RADIANS_TO_DEGREES (angle) - 0)
+        if (std::fabs (qRadiansToDegrees (angle) - 0)
             < kpPixmapFX::AngleInDegreesEpsilon)
         {
             lineEndPoint =
                 QPoint (lineEndPoint.x (), lineStartPoint.y ());
         }
         // vertical (dist from start not maintained)
-        else if (fabs (KP_RADIANS_TO_DEGREES (angle) - 90)
+        else if (std::fabs (qRadiansToDegrees (angle) - 90)
                  < kpPixmapFX::AngleInDegreesEpsilon)
         {
             lineEndPoint =
@@ -268,7 +268,7 @@ void kpToolPolygonalBase::applyModifiers ()
         // diagonal (dist from start maintained)
         else
         {
-            const double dist = sqrt (static_cast<double> (diffx * diffx + diffy * diffy));
+            const double dist = std::sqrt (static_cast<double> (diffx * diffx + diffy * diffy));
 
             #define sgn(a) ((a)<0?-1:1)
             // Round distances _before_ adding to any coordinate

@@ -604,7 +604,7 @@ void kpDoubleNumInput::setRange(double lower, double upper, double singleStep)
     d->spin->setSingleStep(singleStep);
 
     const double range = spin->maximum() - spin->minimum();
-    const double steps = range * pow(10.0, spin->decimals());
+    const double steps = range * std::pow(10.0, spin->decimals());
     if (!priv->slider) {
         priv->slider = new QSlider(Qt::Horizontal, this);
         priv->slider->setTickPosition(QSlider::TicksBelow);

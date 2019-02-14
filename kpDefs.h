@@ -42,13 +42,6 @@
 #define KP_BIG_IMAGE_SIZE (32 * 1048576)
 
 
-#define KP_PI 3.141592653589793238462
-
-
-#define KP_DEGREES_TO_RADIANS(deg) ((deg) * KP_PI / 180.0)
-#define KP_RADIANS_TO_DEGREES(rad) ((rad) * 180.0 / KP_PI)
-
-
 #define KP_INVALID_POINT QPoint (INT_MIN / 8, INT_MIN / 8)
 #define KP_INVALID_WIDTH (INT_MIN / 8)
 #define KP_INVALID_HEIGHT (INT_MIN / 8)

@@ -143,7 +143,7 @@ static QRgb AdjustHSVInternal (QRgb pix, double hueDiv360, double saturation, do
     const int alpha = qAlpha(pix);
 
     h += static_cast<float> (hueDiv360);
-    h -= floor(h);
+    h -= std::floor(h);
 
     s = qMax(0.0f, qMin(1.0f, s + static_cast<float> (saturation)));
 

@@ -41,7 +41,6 @@
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "layers/selections/text/kpTextSelection.h"
 
-#include <cmath>
 
 #include <QApplication>
 #include <QPoint>

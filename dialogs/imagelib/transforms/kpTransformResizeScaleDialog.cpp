@@ -31,7 +31,6 @@
 
 #include "kpTransformResizeScaleDialog.h"
 
-#include <cmath>
 
 #include <QBoxLayout>
 #include <QButtonGroup>

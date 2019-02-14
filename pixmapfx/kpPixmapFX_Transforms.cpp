@@ -31,7 +31,7 @@
 
 #include "kpPixmapFX.h"
 
-#include <cmath>
+#include <QtMath>
 
 #include <QPainter>
 #include <QImage>
@@ -126,7 +126,7 @@ QImage kpPixmapFX::scale (const QImage &image, int w, int h, bool pretty)
 
 // public static
 const double kpPixmapFX::AngleInDegreesEpsilon =
-    KP_RADIANS_TO_DEGREES (atan (1.0 / 10000.0))
+    qRadiansToDegrees (std::tan (1.0 / 10000.0))
         / (2.0/*max error allowed*/ * 2.0/*for good measure*/);
 
 
@@ -235,7 +235,7 @@ static double TrueMatrixEpsilon = 0.000001;
 // QPainter::SmoothPixmapTransform is disabled.
 static double TrueMatrixFixInts (double x)
 {
-    if (fabs (x - qRound (x)) < TrueMatrixEpsilon)
+    if (std::fabs (x - qRound (x)) < TrueMatrixEpsilon)
         return qRound (x);
     else
         return x;
@@ -470,8 +470,8 @@ static QImage TransformPixmap (const QImage &pm, const QMatrix &transformMatrix_
 // public static
 QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
 {
-    if (fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
-        fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
+    if (std::fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+        std::fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
     {
         return QMatrix ();
     }
@@ -508,8 +508,8 @@ QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double van
     //QMatrix matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
     // I think this is clearer than above :)
     QMatrix matrix;
-    matrix.shear (tan (KP_DEGREES_TO_RADIANS (hangle)),
-                  tan (KP_DEGREES_TO_RADIANS (vangle)));
+    matrix.shear (std::tan (qDegreesToRadians (hangle)),
+                  std::tan (qDegreesToRadians (vangle)));
 
     return ::MatrixWithZeroOrigin (matrix, width, height);
 }
@@ -555,15 +555,15 @@ QImage kpPixmapFX::skew (const QImage &pm, double hangle, double vangle,
                << endl;
 #endif
 
-    if (fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
-        fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+    if (std::fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+        std::fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
         (targetWidth <= 0 && targetHeight <= 0)/*don't want to scale?*/)
     {
         return pm;
     }
 
-    if (fabs (hangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon ||
-        fabs (vangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon)
+    if (std::fabs (hangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon ||
+        std::fabs (vangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon)
     {
         qCCritical(kpLogPixmapfx) << "kpPixmapFX::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
         return pm;
@@ -581,7 +581,7 @@ QImage kpPixmapFX::skew (const QImage &pm, double hangle, double vangle,
 // public static
 QMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
 {
-    if (fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
+    if (std::fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
     {
         return QMatrix ();
     }
@@ -659,7 +659,7 @@ QImage kpPixmapFX::rotate (const QImage &pm, double angle,
                             const kpColor &backgroundColor,
                             int targetWidth, int targetHeight)
 {
-    if (fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+    if (std::fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
         (targetWidth <= 0 && targetHeight <= 0)/*don't want to scale?*/)
     {
         return pm;

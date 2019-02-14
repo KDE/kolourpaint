@@ -47,7 +47,7 @@
 
 // public static
 const double kpColorSimilarityHolder::ColorCubeDiagonalDistance =
-    sqrt (255.0 * 255 * 3);
+    std::sqrt (255.0 * 255 * 3);
 
 // public static
 const double kpColorSimilarityHolder::MaxColorSimilarity = 0.30;

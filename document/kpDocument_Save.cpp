@@ -31,7 +31,6 @@
 #include "kpDocument.h"
 #include "kpDocumentPrivate.h"
 
-#include <cmath>
 
 #include <QColor>
 #include <QBitmap>

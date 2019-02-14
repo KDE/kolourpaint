@@ -43,7 +43,6 @@
 #include "lgpl/generic/kpUrlFormatter.h"
 #include "views/manager/kpViewManager.h"
 
-#include <cmath>
 
 #include <QColor>
 #include <QImage>

@@ -31,7 +31,6 @@
 
 #include "kpPixmapFX.h"
 
-#include <cmath>
 
 #include <QImage>
 #include <QPainter>

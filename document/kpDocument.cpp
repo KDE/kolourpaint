@@ -46,7 +46,6 @@
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "lgpl/generic/kpUrlFormatter.h"
 
-#include <cmath>
 
 #include "kpLogCategories.h"
 #include <kio/netaccess.h> // kdelibs4support
