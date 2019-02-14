@@ -399,56 +399,6 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
         #endif
             configGroup.writeEntry (kpSessionSettingNotFromUrlDocumentSize, docSize);
         }
-
-
-        // Local session save i.e. queryClose() was not called beforehand
-        // (see QApplication::saveState())?
-    #if 0
-        if (d->document->isModified ())
-        {
-            // TODO: Implement by saving the current image to a persistent file.
-            //       We do this instead of saving/mutating the backing image file
-            //       as no one expects a file save on a session save without a
-            //       "do you want to save" dialog first.
-            //
-            //       I don't think any KDE application implements local session saving.
-            //
-            //       --- The below code does not compile but shows you want to do ---
-
-            // Create unique name for the document in this main window.
-            const QUrl tempURL = homeDir +
-                "kolourpaint session " + sessionID +
-                mainWindowPtrToString + ".png";
-            // TODO: Use lossless PNG saving options.
-            kpDocumentSaveOptions pngSaveOptions;
-
-            if (kpDocument::savePixmapToFile (d->document->pixmapWithSelection (),
-                    tempURL,
-                    pngSaveOptions, *d->document->metaInfo (),
-                    false/*no overwrite prompt*/,
-                    false/*no lossy prompt*/,
-                    this))
-            {
-                // readProperties() will still open kpSessionSettingDocumentUrl
-                // (as that's the expected URL) and will then add commands to:
-                //
-                // 1. Resize the document to the size of image at
-                //    kpSessionSettingDocumentUnsavedContentsUrl, if the sizes
-                //    differ.
-                // 2. Paste the kpSessionSettingDocumentUnsavedContentsUrl image
-                //    (setting the main window's selection mode to opaque beforehand).
-                //
-                // It will then delete the file at
-                // kpSessionSettingDocumentUnsavedContentsUrl.
-                configGroup.writeEntry (kpSessionSettingDocumentUnsavedContentsUrl,
-                    tempURL.url ());
-            }
-            else
-            {
-                // Not much we can do - we aren't allowed to throw up a dialog.
-            }
-        }
-    #endif
     }
 }
 
@@ -768,30 +718,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         enableToolsDocumentActions (true);
 
         enableDocumentActions (true);
-
-    // TODO: The thumbnail auto zoom doesn't work because it thinks its
-    //       width == 1 when !this->isShown().  So for consistency,
-    //       never create the thumbnail.
-    #if 0
-        if (d->configThumbnailShown)
-        {
-            if (isShown ())
-            {
-            #if DEBUG_KP_MAIN_WINDOW
-                qCDebug(kpLogMainWindow) << "\tcreating thumbnail immediately";
-            #endif
-                slotCreateThumbnail ();
-            }
-            // this' geometry is weird ATM
-            else
-            {
-            #if DEBUG_KP_MAIN_WINDOW
-                qCDebug(kpLogMainWindow) << "\tcreating thumbnail LATER";
-            #endif
-                QTimer::singleShot (0, this, SLOT (slotCreateThumbnail()));
-            }
-        }
-    #endif
     }
 
 #if DEBUG_KP_MAIN_WINDOW

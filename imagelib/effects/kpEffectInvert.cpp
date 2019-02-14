@@ -54,10 +54,6 @@ void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
 
     if (destImagePtr->depth () > 8)
     {
-    #if 0
-        // SYNC: TODO: Qt BUG - invertAlpha argument is inverted!!!
-        destImagePtr->invertPixels (true/*no invert alpha (Qt 3.2)*/);
-    #else
         // Above version works for Qt 3.2 at least.
         // But this version will always work (slower, though) and supports
         // inverting particular channels.
@@ -68,7 +64,6 @@ void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
                 destImagePtr->setPixel (x, y, destImagePtr->pixel (x, y) ^ mask);
             }
         }
-    #endif
     }
     else
     {

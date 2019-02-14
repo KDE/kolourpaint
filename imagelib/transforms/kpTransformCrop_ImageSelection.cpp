@@ -169,12 +169,6 @@ void SetDocumentToSelectionImageCommand::execute ()
         #endif
         }
 
-#if 0
-        kpPixmapFX::paintMaskTransparentWithBrush (&newDocImage,
-            QPoint (0, 0),
-            m_fromSelectionPtr->shapeBitmap ());
-#endif
-
         kpPixmapFX::paintPixmapAt (&newDocImage,
             QPoint (0, 0),
             setTransparentImage);

@@ -184,24 +184,6 @@ void kpMainWindow::zoomToPre (int zoomLevel)
 
     zoomLevel = qBound (kpView::MinZoomLevel, zoomLevel, kpView::MaxZoomLevel);
 
-// mute point since the thumbnail suffers from this too
-#if 0
-    else if (d->mainView && d->mainView->zoomLevelX () % 100 == 0 && zoomLevel % 100)
-    {
-        if (KMessageBox::warningContinueCancel (this,
-            i18n ("Setting the zoom level to a value that is not a multiple of 100% "
-                  "results in imprecise editing and redraw glitches.\n"
-                  "Do you really want to set to zoom level to %1%?",
-                  zoomLevel),
-            QString()/*caption*/,
-            i18n ("Set Zoom Level to %1%", zoomLevel),
-            "DoNotAskAgain_ZoomLevelNotMultipleOf100") != KMessageBox::Continue)
-        {
-            zoomLevel = d->mainView->zoomLevelX ();
-        }
-    }
-#endif
-
     int index = 0;
     QList <int>::Iterator it = d->zoomList.begin ();
 

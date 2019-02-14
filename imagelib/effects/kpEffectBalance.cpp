@@ -171,13 +171,6 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
                            transformGreen [green],
                            transformBlue [blue],
                            alpha));
-
-            #if 0
-                qimage.setPixel (x, y,
-                    brightnessContrastGammaForRGB (qimage.pixel (x, y),
-                        channels,
-                        brightness, contrast, gamma));
-            #endif
             }
         }
     }
@@ -197,13 +190,6 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
                        transformGreen [green],
                        transformBlue [blue],
                        alpha));
-
-        #if 0
-            qimage.setColor (i,
-                brightnessContrastGammaForRGB (qimage.color (i),
-                    channels,
-                    brightness, contrast, gamma));
-        #endif
         }
 
     }

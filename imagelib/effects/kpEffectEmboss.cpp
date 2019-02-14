@@ -51,15 +51,6 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
 
     const double radius = 0;
 
-#if 0
-    const double SigmaMin = 1;
-    const double SigmaMax = 1.2;
-
-    return SigmaMin +
-        (kpEffectEmboss::MaxStrength - strength) *
-        (SigmaMax - SigmaMin) /
-        (kpEffectEmboss::MaxStrength - 1);
-#endif
     const double sigma = 1;
 
     const int repeat = 1;

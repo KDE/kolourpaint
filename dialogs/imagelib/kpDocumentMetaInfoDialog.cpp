@@ -688,23 +688,6 @@ void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
             fieldsAppendEmptyRow ();
         }
     }
-// Deletes a row if it is emptied of text.
-#if 0
-    // At any normal row?
-    else
-    {   // Emptied all the text?
-        if (key.isEmpty () && value.isEmpty ())
-        {
-            // This crashes when the user tabs away after the text is deleted.
-            // We could use a single shot but that's asking for trouble depending
-            // on what happens between us and the single shot.
-            //
-            // In any case, disabling this makes us more consistent with
-            // "Add Row" which allows us to add empty rows.
-            //fieldsDeleteRow (r);
-        }
-    }
-#endif
 }
 
 //---------------------------------------------------------------------

@@ -83,11 +83,6 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
 #define SHOULD_DRAW()  (probabilityTimes1000 == 1000/*avoid ::RandomNumberFrom0to999() call*/ ||  \
                         ::RandomNumberFrom0to999 () < probabilityTimes1000)
 
-#if 0
-    qCDebug(kpLogImagelib) << "prob=" << probability
-               << " *1000=" << probabilityTimes1000;
-#endif
-
 
     // Derived from the zSprite2 Graphics Engine.
     // "MODIFIED" comment shows deviation from zSprite2 and Bresenham's line

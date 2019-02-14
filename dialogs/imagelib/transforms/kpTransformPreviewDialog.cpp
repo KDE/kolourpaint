@@ -333,12 +333,6 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
             scaleDimension (m_oldHeight,
                             keepsAspectScale,
                             1, m_previewPixmapLabel->height ()));
-    #if 0
-        m_shrunkenDocumentPixmap = kpPixmapFX::scale (
-            m_actOnSelection ? doc->getSelectedPixmap () : *doc->pixmap (),
-            m_previewPixmapLabel->width (),
-            m_previewPixmapLabel->height ());
-    #endif
 
         m_previewPixmapLabelSizeWhenUpdatedPixmap = m_previewPixmapLabel->size ();
     }

@@ -49,27 +49,6 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     lay->setMargin (0);
 
 
-#if 0
-    QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
-    m_amountInput = new kpIntNumInput (this);
-    m_amountInput->setRange (kpEffectEmboss::MinStrength,
-        kpEffectEmboss::MaxStrength, 1/*step*/, true/*slider*/);
-    m_amountInput->setSpecialValueText (i18n ("None"));
-
-
-    amountLabel->setBuddy (m_amountInput);
-
-
-    lay->addWidget (amountLabel, 0, 0);
-    lay->addWidget (m_amountInput, 0, 1);
-
-    lay->setColumnStretch (1, 1);
-
-
-    connect (m_amountInput, &kpIntNumInput::valueChanged,
-             this, &kpEffectEmbossWidget::settingsChanged);
-#endif
-
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
 

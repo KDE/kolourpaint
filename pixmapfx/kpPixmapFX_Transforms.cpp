@@ -150,18 +150,6 @@ static void MatrixDebug (const QString matrixName, const QMatrix &matrix,
         qCDebug(kpLogPixmapfx) << "(w-1,h-1) ->" << matrix.map (QPoint (w - 1, h - 1));
     }
 
-#if 0
-    QMatrix trueMatrix = QPixmap::trueMatrix (matrix, w, h);
-    qCDebug(kpLogPixmapfx) << matrixName << "trueMatrix=" << trueMatrix;
-    if (w > 0 && h > 0)
-    {
-        qCDebug(kpLogPixmapfx) << "(0,0) ->" << trueMatrix.map (QPoint (0, 0));
-        qCDebug(kpLogPixmapfx) << "(w-1,0) ->" << trueMatrix.map (QPoint (w - 1, 0));
-        qCDebug(kpLogPixmapfx) << "(0,h-1) ->" << trueMatrix.map (QPoint (0, h - 1));
-        qCDebug(kpLogPixmapfx) << "(w-1,h-1) ->" << trueMatrix.map (QPoint (w - 1, h - 1));
-    }
-#endif
-
 #else
 
     Q_UNUSED (matrixName);

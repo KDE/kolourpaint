@@ -123,25 +123,6 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
         (RepeatMax - RepeatMin) /
         (kpEffectBlurSharpen::MaxStrength - 1));
 
-// I guess these values are more proper as they use an auto-calculated
-// radius but they cause sharpen() to be too slow.
-#if 0
-    const double radius = 0/*auto-calculate*/;
-
-    const double SigmaMin = 0.6;
-    const double SigmaMax = 1.0;
-    const double sigma = SigmaMin +
-        (strength - 1) *
-        (SigmaMax - SigmaMin) /
-        (kpEffectBlurSharpen::MaxStrength - 1);
-
-    const double RepeatMin = 1;
-    const double RepeatMax = 3;
-    const double repeat = qRound (RepeatMin +
-        (strength - 1) *
-        (RepeatMax - RepeatMin) /
-        (kpEffectBlurSharpen::MaxStrength - 1));
-#endif
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
