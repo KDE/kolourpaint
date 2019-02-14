@@ -39,6 +39,7 @@
 #include <QContextMenuEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
@@ -113,11 +114,8 @@ void kpTransparentColorCell::paintEvent (QPaintEvent *e)
 
     if (isEnabled ())
     {
-    #if DEBUG_KP_TRANSPARENT_COLOR_CELL
         qCDebug(kpLogWidgets) << "kpTransparentColorCell::paintEvent() contentsRect="
-                   << contentsRect ()
-                   << endl;
-    #endif
+                   << contentsRect ();
         QPainter p (this);
         p.drawPixmap (contentsRect (), m_pixmap);
     }

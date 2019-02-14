@@ -75,9 +75,7 @@ bool kpViewManager::textCursorEnabled () const
 // public
 void kpViewManager::setTextCursorEnabled (bool yes)
 {
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "kpViewManager::setTextCursorEnabled(" << yes << ")";
-#endif
 
     if (yes == textCursorEnabled ())
         return;
@@ -192,9 +190,7 @@ QRect kpViewManager::textCursorRect () const
 // protected
 void kpViewManager::updateTextCursor ()
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
     qCDebug(kpLogViews) << "kpViewManager::updateTextCursor()";
-#endif
 
     const QRect r = textCursorRect ();
     if (!r.isValid ())
@@ -211,10 +207,8 @@ void kpViewManager::updateTextCursor ()
 // protected slot
 void kpViewManager::slotTextCursorBlink ()
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
     qCDebug(kpLogViews) << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
                << d->textCursorBlinkState << endl;
-#endif
 
     if (d->textCursorBlinkTimer)
     {

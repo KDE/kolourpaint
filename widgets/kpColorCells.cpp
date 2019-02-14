@@ -25,10 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_COLOR_CELLS 0
-
-
 #include "widgets/kpColorCells.h"
 
 #include "imagelib/kpColor.h"
@@ -262,7 +258,6 @@ void kpColorCells::makeCellsMatchColorCollection ()
         r = ::TableNumColumns (d->colorCol);;
     }
 
-#if DEBUG_KP_COLOR_CELLS
     qCDebug(kpLogWidgets) << "kpColorCells::makeCellsMatchColorCollection():"
               << "r=" << r << "c=" << c;
     qCDebug(kpLogWidgets) << "verticalScrollBar=" << verticalScrollBar ()
@@ -270,7 +265,6 @@ void kpColorCells::makeCellsMatchColorCollection ()
               << (verticalScrollBar () ?
                     verticalScrollBar ()->sizeHint () :
                     QSize (-12, -34));
-#endif
 
     // Delete all cell widgets.  This ensures that there will be no left-over
     // cell widgets, for the colors in the new color collection that are
@@ -316,12 +310,10 @@ void kpColorCells::makeCellsMatchColorCollection ()
             // int x = c - 1 - i / r;
             pos = y * c + x;
         }
-    #if DEBUG_KP_COLOR_CELLS && 0
         qCDebug(kpLogWidgets) << "\tSetting cell " << i << ": y=" << y << " x=" << x
                   << " pos=" << pos << endl;
         qCDebug(kpLogWidgets) << "\t\tcolor=" << (int *) d->colorCol.color (i).rgba()
                   << "isValid=" << d->colorCol.color (i).isValid ();
-    #endif
 
         // (color may be invalid resulting in a hole in the middle of the table)
         setColor (pos, d->colorCol.color (i));
@@ -342,9 +334,7 @@ bool kpColorCells::isModified () const
 
 void kpColorCells::setModified (bool yes)
 {
-#if DEBUG_KP_COLOR_CELLS
     qCDebug(kpLogWidgets) << "kpColorCells::setModified(" << yes << ")";
-#endif
 
     if (yes == d->isModified)
         return;
@@ -525,14 +515,10 @@ void kpColorCells::contextMenuEvent (QContextMenuEvent *e)
 void kpColorCells::slotColorSelected (int cell, const QColor &color,
         Qt::MouseButton button)
 {
-#if DEBUG_KP_COLOR_CELLS
     qCDebug(kpLogWidgets) << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << button
                << " rgb=" << (int *) color.rgba()
                << endl;
-#else
-    Q_UNUSED (cell);
-#endif
 
     if (button == Qt::LeftButton)
     {
@@ -574,10 +560,8 @@ void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 // protected slot
 void kpColorCells::slotColorChanged (int cell, const QColor &color)
 {
-#if DEBUG_KP_COLOR_CELLS
     qCDebug(kpLogWidgets) << "cell=" << cell << "color=" << (const int *) color.rgba()
               << "d->colorCol.count()=" << d->colorCol.count ();
-#endif
 
     if (d->blockColorChangedSig)
         return;

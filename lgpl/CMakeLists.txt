@@ -10,6 +10,7 @@ set(kolourpaint_lgpl_SRCS
     generic/kpUrlFormatter.cpp
     generic/kpColorCollection.cpp
     generic/widgets/kpColorCellsBase.cpp
+    ../kpLogCategories.cpp
 )
 
 add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})

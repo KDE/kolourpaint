@@ -60,10 +60,8 @@ QString kpToolLine::haventBegunShapeUserMessage () const
 // public virtual [base kpTool]
 void kpToolLine::endDraw (const QPoint &, const QRect &)
 {
-#if DEBUG_KP_TOOL_LINE
     qCDebug(kpLogTools) << "kpToolLine::endDraw()  points="
-        << points ()->toList () << endl;
-#endif
+        << points ()->toList ();
 
     // After the first drag, we should have a line.
     Q_ASSERT (points ()->count () == 2);

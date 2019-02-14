@@ -75,11 +75,9 @@ kpTextSelection *kpDocument::textSelection () const
 // public
 void kpDocument::setSelection (const kpAbstractSelection &selection)
 {
-#if DEBUG_KP_DOCUMENT && 1
     qCDebug(kpLogDocument) << "kpDocument::setSelection() sel boundingRect="
                << selection.boundingRect ()
                << endl;
-#endif
 
     d->environ->setQueueViewUpdates ();
     {
@@ -119,11 +117,9 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         // "wider environment") may access the document and the environment.
         //
 
-    #if DEBUG_KP_DOCUMENT && 1
         qCDebug(kpLogDocument) << "\tcheck sel " << (int *) m_selection
                    << " boundingRect=" << m_selection->boundingRect ()
                    << endl;
-    #endif
         if (oldSelection)
         {
             if (oldSelection->hasContent ())
@@ -149,9 +145,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
     }
     d->environ->restoreQueueViewUpdates ();
 
-#if DEBUG_KP_DOCUMENT && 1
     qCDebug(kpLogDocument) << "\tkpDocument::setSelection() ended";
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -307,9 +301,7 @@ void kpDocument::selectionPushOntoDocument (bool applySelTransparency)
 // public
 kpImage kpDocument::imageWithSelection () const
 {
-#if DEBUG_KP_DOCUMENT && 1
     qCDebug(kpLogDocument) << "kpDocument::imageWithSelection()";
-#endif
 
     // Have selection?
     //
@@ -317,9 +309,7 @@ kpImage kpDocument::imageWithSelection () const
     // background, but no content, is still visually there.
     if (m_selection)
     {
-    #if DEBUG_KP_DOCUMENT && 1
         qCDebug(kpLogDocument) << "\tselection @ " << m_selection->boundingRect ();
-    #endif
         kpImage output = *m_image;
 
         // (this is a NOP for image selections without content)
@@ -329,9 +319,7 @@ kpImage kpDocument::imageWithSelection () const
     }
     else
     {
-    #if DEBUG_KP_DOCUMENT && 1
         qCDebug(kpLogDocument) << "\tno selection";
-    #endif
         return *m_image;
     }
 }

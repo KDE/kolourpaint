@@ -122,16 +122,12 @@ QString kpToolRectangularBase::haventBegunDrawUserMessage () const
 // virtual
 void kpToolRectangularBase::begin ()
 {
-#if DEBUG_KP_TOOL_RECTANGULAR_BASE
     qCDebug(kpLogTools) << "kpToolRectangularBase::begin ()";
-#endif
 
     kpToolToolBar *tb = toolToolBar ();
     Q_ASSERT (tb);
 
-#if DEBUG_KP_TOOL_RECTANGULAR_BASE
     qCDebug(kpLogTools) << "\ttoolToolBar=" << tb;
-#endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
     connect (d->toolWidgetLineWidth, &kpToolWidgetLineWidth::lineWidthChanged,
@@ -153,9 +149,7 @@ void kpToolRectangularBase::begin ()
 // virtual
 void kpToolRectangularBase::end ()
 {
-#if DEBUG_KP_TOOL_RECTANGULAR_BASE
     qCDebug(kpLogTools) << "kpToolRectangularBase::end ()";
-#endif
 
     if (d->toolWidgetLineWidth)
     {
@@ -180,12 +174,9 @@ void kpToolRectangularBase::applyModifiers ()
 {
     QRect rect = normalizedRect ();
 
-#if DEBUG_KP_TOOL_RECTANGULAR_BASE
     qCDebug(kpLogTools) << "kpToolRectangularBase::applyModifiers(" << rect
                << ") shift=" << shiftPressed ()
-               << " ctrl=" << controlPressed ()
-               << endl;
-#endif
+               << " ctrl=" << controlPressed ();
 
     // user wants to startPoint () == center
     if (controlPressed ())

@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_RESIZE_SIGNALLING_LABEL 0
-
-
 #include "generic/widgets/kpResizeSignallingLabel.h"
 
 #include <QEvent>
+#include <QResizeEvent>
 
 #include "kpLogCategories.h"
 
@@ -55,10 +52,8 @@ kpResizeSignallingLabel::~kpResizeSignallingLabel ()
 // protected virtual [base QLabel]
 void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
 {
-#if DEBUG_KP_RESIZE_SIGNALLING_LABEL
     qCDebug(kpLogMisc) << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
                << " oldSize=" << e->oldSize () << endl;
-#endif
     QLabel::resizeEvent (e);
 
     emit resized ();

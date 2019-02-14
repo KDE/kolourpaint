@@ -293,12 +293,10 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     bool addSelCreateCmdIfSelAvail,
     bool addSelContentCmdIfSelAvail)
 {
-#if DEBUG_KP_MAIN_WINDOW && 1
     qCDebug(kpLogMainWindow) << "kpMainWindow::addImageOrSelectionCommand()"
                << " addSelCreateCmdIfSelAvail=" << addSelCreateCmdIfSelAvail
                << " addSelContentCmdIfSelAvail=" << addSelContentCmdIfSelAvail
                << endl;
-#endif
 
     Q_ASSERT (d->document);
 
@@ -308,11 +306,9 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
 
     kpAbstractSelection *sel = d->document->selection ();
-#if DEBUG_KP_MAIN_WINDOW && 1
     qCDebug(kpLogMainWindow) << "\timage sel=" << sel
                << " sel->hasContent=" << (sel ? sel->hasContent () : 0)
                << endl;
-#endif
     if (addSelCreateCmdIfSelAvail && sel && !sel->hasContent ())
     {
         QString createCmdName;

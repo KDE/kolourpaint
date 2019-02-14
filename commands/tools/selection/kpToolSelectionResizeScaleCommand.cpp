@@ -158,10 +158,8 @@ void kpToolSelectionResizeScaleCommand::killSmoothScaleTimer ()
 // protected
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 {
-#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
                << delayed << ")" << endl;
-#endif
 
     killSmoothScaleTimer ();
 
@@ -210,12 +208,10 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 // public
 void kpToolSelectionResizeScaleCommand::finalize ()
 {
-#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::finalize()"
                << " smoothScaleTimer->isActive="
                << m_smoothScaleTimer->isActive ()
                << endl;
-#endif
 
     // Make sure the selection contains the final image and the timer won't
     // fire afterwards.

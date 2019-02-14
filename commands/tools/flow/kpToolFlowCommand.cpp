@@ -36,6 +36,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
 #include "views/manager/kpViewManager.h"
+#include "kpLogCategories.h"
 
 #include <QRect>
 
@@ -102,17 +103,13 @@ void kpToolFlowCommand::updateBoundingRect (const QPoint &point)
 // public
 void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
 {
-#if DEBUG_KP_TOOL_FLOW_COMMAND & 0
     qCDebug(kpLogCommands) << "kpToolFlowCommand::updateBoundingRect()  existing="
                << d->boundingRect
                << " plus="
                << rect
                << endl;
-#endif
     d->boundingRect = d->boundingRect.united (rect);
-#if DEBUG_KP_TOOL_FLOW_COMMAND & 0
     qCDebug(kpLogCommands) << "\tresult=" << d->boundingRect;
-#endif
 }
 
 // public

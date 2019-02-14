@@ -30,20 +30,11 @@
 
 
 #include "kpEffectBalance.h"
-
 #include <cmath>
-
 #include <QImage>
-
 #include "kpLogCategories.h"
-
 #include "pixmapfx/kpPixmapFX.h"
-
-
-#if DEBUG_KP_EFFECT_BALANCE
-    #include <qdatetime.h>
-#endif
-
+#include <qdatetime.h>
 
 static inline int between0And255 (int val)
 {
@@ -90,14 +81,12 @@ static inline QRgb brightnessContrastGammaForRGB (QRgb rgb,
     int green = qGreen (rgb);
     int blue = qBlue (rgb);
 
-
     if (channels & kpEffectBalance::Red)
         red = brightnessContrastGamma (red, brightness, contrast, gamma);
     if (channels & kpEffectBalance::Green)
         green = brightnessContrastGamma (green, brightness, contrast, gamma);
     if (channels & kpEffectBalance::Blue)
         blue = brightnessContrastGamma (blue, brightness, contrast, gamma);
-
 
     return qRgba (red, green, blue, qAlpha (rgb));
 }
@@ -108,7 +97,6 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         int channels,
         int brightness, int contrast, int gamma)
 {
-#if DEBUG_KP_EFFECT_BALANCE
     qCDebug(kpLogImagelib) << "kpEffectBalance::applyEffect("
                << "channels=" << channels
                << ",brightness=" << brightness
@@ -116,13 +104,9 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
                << ",gamma=" << gamma
                << ")" << endl;
     QTime timer; timer.start ();
-#endif
 
     QImage qimage = image;
-#if DEBUG_KP_EFFECT_BALANCE
     qCDebug(kpLogImagelib) << "\tconvertToImage=" << timer.restart ();
-#endif
-
 
     quint8 transformRed [256],
             transformGreen [256],
@@ -148,10 +132,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
             transformBlue [i] = static_cast<quint8> (i);
     }
 
-#if DEBUG_KP_EFFECT_BALANCE
     qCDebug(kpLogImagelib) << "\tbuild lookup=" << timer.restart ();
-#endif
-
 
     if (qimage.depth () > 8)
     {

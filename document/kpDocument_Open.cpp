@@ -80,9 +80,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
                                      kpDocumentSaveOptions *saveOptions,
                                      kpDocumentMetaInfo *metaInfo)
 {
-#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")";
-#endif
 
     if (saveOptions)
         *saveOptions = kpDocumentSaveOptions ();
@@ -113,11 +111,9 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     if (saveOptions)
         saveOptions->setMimeType(mimeType.name());
 
-#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\ttempFile=" << tempFile;
     qCDebug(kpLogDocument) << "\tmimetype=" << mimeType.name();
     qCDebug(kpLogDocument) << "\tsrc=" << url.path ();
-#endif
 
     QImageReader reader(tempFile);
     reader.setAutoTransform(true);
@@ -136,11 +132,9 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         return QImage ();
     }
 
-#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tpixmap: depth=" << image.depth ()
                 << " hasAlphaChannel=" << image.hasAlphaChannel ()
                 << endl;
-#endif
 
     if ( saveOptions  && metaInfo )
       getDataFromImage(image, *saveOptions, *metaInfo);
@@ -157,9 +151,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
 
 void kpDocument::openNew (const QUrl &url)
 {
-#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::openNew (" << url << ")";
-#endif
 
     m_image->fill(QColor(Qt::white).rgb());
 
@@ -189,9 +181,7 @@ void kpDocument::openNew (const QUrl &url)
 
 bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
-#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::open (" << url << ")";
-#endif
 
     kpDocumentSaveOptions newSaveOptions;
     kpDocumentMetaInfo newMetaInfo;

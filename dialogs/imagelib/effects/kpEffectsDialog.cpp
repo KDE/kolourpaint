@@ -78,9 +78,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
       m_settingsLayout (nullptr),
       m_effectWidget (nullptr)
 {
-#if DEBUG_KP_EFFECTS_DIALOG
     qCDebug(kpLogDialogs) << "kpEffectsDialog::kpEffectsDialog()";
-#endif
     const bool e = updatesEnabled ();
     setUpdatesEnabled (false);
 
@@ -138,17 +136,10 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     resize (s_lastWidth, s_lastHeight);
 
 
-#if DEBUG_KP_EFFECTS_DIALOG
     qCDebug(kpLogDialogs) << "about to setUpdatesEnabled()";
-#endif
     // OPT: The preview pixmap gets recalculated here and then possibly
     //      again when QResizeEvent fires, when the dialog is shown.
     setUpdatesEnabled (e);
-#if DEBUG_KP_EFFECTS_DIALOG
-    qCDebug(kpLogDialogs) << endl
-              << endl
-              << endl;
-#endif
 }
 
 kpEffectsDialog::~kpEffectsDialog ()
@@ -277,22 +268,16 @@ void kpEffectsDialog::selectEffect (int which)
         const bool e = updatesEnabled ();
         setUpdatesEnabled (false);
 
-    #if DEBUG_KP_EFFECTS_DIALOG
         qCDebug(kpLogDialogs) << "widget exists for effect #";
-    #endif
         m_settingsGroupBox->setTitle (m_effectWidget->caption ());
 
         // Show widget.
         //
         // Don't resize the whole dialog when doing this.
         // This seems to work magically without any extra code with Qt4.
-    #if DEBUG_KP_EFFECTS_DIALOG
         qCDebug(kpLogDialogs) << "addWidget";
-    #endif
         m_settingsLayout->addWidget (m_effectWidget);
-    #if DEBUG_KP_EFFECTS_DIALOG
         qCDebug(kpLogDialogs) << "show widget";
-    #endif
         m_effectWidget->show ();
 
         connect (m_effectWidget, &kpEffectWidgetBase::settingsChangedNoWaitCursor,
@@ -302,30 +287,19 @@ void kpEffectsDialog::selectEffect (int which)
         connect (m_effectWidget, &kpEffectWidgetBase::settingsChangedDelayed,
                  this, &kpEffectsDialog::slotDelayedUpdate);
 
-    #if DEBUG_KP_EFFECTS_DIALOG
         qCDebug(kpLogDialogs) << "about to setUpdatesEnabled()";
-    #endif
         setUpdatesEnabled (e);
     }
 
-
-#if DEBUG_KP_EFFECTS_DIALOG
-    qCDebug(kpLogDialogs) << "done"
-              << endl
-              << endl
-              << endl;
-#endif
+    qCDebug(kpLogDialogs) << "done";
 }
 
 
 // protected slot virtual [base kpTransformPreviewDialog]
 void kpEffectsDialog::slotUpdate ()
 {
-#if DEBUG_KP_EFFECTS_DIALOG
     qCDebug(kpLogDialogs) << "kpEffectsDialog::slotUpdate()"
-               << " timerActive=" << m_delayedUpdateTimer->isActive ()
-               << endl;
-#endif
+               << " timerActive=" << m_delayedUpdateTimer->isActive ();
 
     m_delayedUpdateTimer->stop ();
 
@@ -335,11 +309,8 @@ void kpEffectsDialog::slotUpdate ()
 // protected slot virtual [base kpTransformPreviewDialog]
 void kpEffectsDialog::slotUpdateWithWaitCursor ()
 {
-#if DEBUG_KP_EFFECTS_DIALOG
     qCDebug(kpLogDialogs) << "kpEffectsDialog::slotUpdateWithWaitCursor()"
-               << " timerActive=" << m_delayedUpdateTimer->isActive ()
-               << endl;
-#endif
+               << " timerActive=" << m_delayedUpdateTimer->isActive ();
 
     m_delayedUpdateTimer->stop ();
 
@@ -350,15 +321,11 @@ void kpEffectsDialog::slotUpdateWithWaitCursor ()
 // protected slot
 void kpEffectsDialog::slotDelayedUpdate ()
 {
-#if DEBUG_KP_EFFECTS_DIALOG
     qCDebug(kpLogDialogs) << "kpEffectsDialog::slotDelayedUpdate()"
-               << " timerActive=" << m_delayedUpdateTimer->isActive ()
-               << endl;
-#endif
+               << " timerActive=" << m_delayedUpdateTimer->isActive ();
     m_delayedUpdateTimer->stop ();
 
     // (single shot)
     m_delayedUpdateTimer->start (400/*ms*/);
 }
-
 

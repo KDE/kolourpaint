@@ -66,9 +66,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     // contain and fixing its height to the maximum seen size hint height.
 
     int h = m_typeLabel->sizeHint ().height ();
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogWidgets) << "initial size hint height=" << h;
-#endif
 
     m_typeLabel->setText (
         kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Blur));
@@ -84,9 +82,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
         kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::None));
     h = qMax (h, m_typeLabel->sizeHint ().height ());
 
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogWidgets) << "maximum size hint height" << h;
-#endif
     m_typeLabel->setFixedHeight (h);
     m_typeLabel->setAlignment (Qt::AlignCenter);
 
@@ -149,10 +145,8 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
 {
     QString text = kpEffectBlurSharpenCommand::nameForType (type ());
 
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogWidgets) << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
                << text << endl;
-#endif
     const int h = m_typeLabel->height ();
     m_typeLabel->setText (text);
     if (m_typeLabel->height () != h)

@@ -161,9 +161,7 @@ void kpPixmapFX::drawPolyline (QImage *image,
     // Qt bug: single point doesn't show up depending on penWidth.
     if (Only1PixelInPointArray(points))
     {
-    #if DEBUG_KP_PIXMAP_FX
         qCDebug(kpLogPixmapfx) << "\tinvoking single point hack";
-    #endif
         painter.drawPoint(points[0]);
         return;
     }
@@ -199,9 +197,7 @@ void kpPixmapFX::drawPolygon (QImage *image,
     // Qt bug: single point doesn't show up depending on penWidth.
     if (Only1PixelInPointArray (points))
     {
-    #if DEBUG_KP_PIXMAP_FX
         qCDebug(kpLogPixmapfx) << "\tinvoking single point hack";
-    #endif
         p.drawPoint(points [0]);
         return;
     }

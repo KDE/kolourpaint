@@ -25,10 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_TOOL_CROP 0
-
-
 #include "kpTransformCrop.h"
 #include "kpTransformCropPrivate.h"
 
@@ -42,6 +38,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "commands/tools/selection/kpToolSelectionCreateCommand.h"
 #include "views/manager/kpViewManager.h"
+#include "kpLogCategories.h"
 
 
 // See the "image selection" part of the kpTransformCrop() API Doc.
@@ -106,9 +103,7 @@ SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand ()
 // public virtual [base kpCommand]
 void SetDocumentToSelectionImageCommand::execute ()
 {
-#if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "SetDocumentToSelectionImageCommand::execute()";
-#endif
 
     viewManager ()->setQueueUpdates ();
     {
@@ -142,31 +137,25 @@ void SetDocumentToSelectionImageCommand::execute ()
         QImage newDocImage(document()->width(), document()->height(), QImage::Format_ARGB32_Premultiplied);
         newDocImage.fill(m_backgroundColor.toQRgb());
 
-    #if DEBUG_KP_TOOL_CROP
         qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
                    << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
-    #endif
         QImage setTransparentImage;
 
         if (m_fromSelectionPtr->hasContent ())
         {
             setTransparentImage = m_fromSelectionPtr->transparentImage ();
 
-        #if DEBUG_KP_TOOL_CROP
             qCDebug(kpLogImagelib) << "\thave pixmap; rect="
                        << setTransparentImage.rect ()
                        << endl;
-        #endif
         }
         else
         {
             setTransparentImage = m_imageIfFromSelectionDoesntHaveOne;
-        #if DEBUG_KP_TOOL_CROP
             qCDebug(kpLogImagelib) << "\tno pixmap in sel - get it; rect="
                        << setTransparentImage.rect ()
                        << endl;
-        #endif
         }
 
         kpPixmapFX::paintPixmapAt (&newDocImage,
@@ -188,20 +177,16 @@ void SetDocumentToSelectionImageCommand::execute ()
 // public virtual [base kpCommand]
 void SetDocumentToSelectionImageCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "SetDocumentToSelectionImageCommand::unexecute()";
-#endif
 
     viewManager ()->setQueueUpdates ();
     {
         document ()->setImageAt (m_oldImage, QPoint (0, 0));
         m_oldImage = kpImage ();
 
-    #if DEBUG_KP_TOOL_CROP
         qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
                    << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
-    #endif
         document ()->setSelection (*m_fromSelectionPtr);
 
         environ ()->somethingBelowTheCursorChanged ();
@@ -228,22 +213,16 @@ void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
     borderImageSel->deleteContent ();
     borderImageSel->moveTo (QPoint (0, 0));
 
-
     kpCommandEnvironment *environ = mainWindow->commandEnvironment ();
-
-
     kpMacroCommand *macroCmd = new kpMacroCommand (commandName, environ);
 
     // (must resize doc _before_ SetDocumentToSelectionImageCommand in case
     //  doc needs to gets bigger - else selection image may not fit)
     macroCmd->addCommand (resizeDocCommand);
 
-#if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "\tis pixmap sel";
     qCDebug(kpLogImagelib) << "\tcreating SetImage cmd";
-#endif
     macroCmd->addCommand (new SetDocumentToSelectionImageCommand (environ));
-
 
     mainWindow->addImageOrSelectionCommand (
         macroCmd,
@@ -257,7 +236,6 @@ void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
             i18n ("Selection: Create"),
             *borderImageSel,
             mainWindow->commandEnvironment ()));
-
 
     delete borderImageSel;
 }

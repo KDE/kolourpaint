@@ -99,30 +99,16 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     const int scrollViewContentsY =
         buddyViewScrollableContainer ()->verticalScrollBar()->value();
 
-#if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-    qCDebug(kpLogViews) << "kpUnzoomedThumbnailView(" << name ()
-               << ")::adjustToEnvironment("
-               << scrollViewContentsX
-               << ","
-               << scrollViewContentsY
-               << ") width=" << width ()
-               << " height=" << height ()
-               << endl;
-#endif
-
-
 #if 1
     int x;
     if (document ()->width () > width ())
     {
         x = static_cast<int> (buddyView ()->transformViewToDocX (scrollViewContentsX));
         const int rightMostAllowedX = qMax (0, document ()->width () - width ());
-    #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
         qCDebug(kpLogViews) << "\tdocX=" << x
                 << " docWidth=" << document ()->width ()
                 << " rightMostAllowedX=" << rightMostAllowedX
                 << endl;
-    #endif
         if (x > rightMostAllowedX)
             x = rightMostAllowedX;
     }
@@ -140,12 +126,10 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     {
         y = static_cast<int> (buddyView ()->transformViewToDocY (scrollViewContentsY));
         const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
-    #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
         qCDebug(kpLogViews) << "\tdocY=" << y
                     << " docHeight=" << document ()->height ()
                     << " bottomMostAllowedY=" << bottomMostAllowedY
                     << endl;
-    #endif
         if (y > bottomMostAllowedY)
             y = bottomMostAllowedY;
     }
@@ -211,5 +195,3 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         viewManager ()->restoreFastUpdates ();
     }
 }
-
-

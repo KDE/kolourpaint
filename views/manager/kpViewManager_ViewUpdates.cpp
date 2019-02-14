@@ -57,20 +57,16 @@ bool kpViewManager::queueUpdates () const
 void kpViewManager::setQueueUpdates ()
 {
     d->queueUpdatesCounter++;
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "kpViewManager::setQueueUpdates() counter="
-               << d->queueUpdatesCounter << endl;
-#endif
+               << d->queueUpdatesCounter;
 }
 
 // public slot
 void kpViewManager::restoreQueueUpdates ()
 {
     d->queueUpdatesCounter--;
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "kpViewManager::restoreQueueUpdates() counter="
                << d->queueUpdatesCounter << endl;
-#endif
     Q_ASSERT (d->queueUpdatesCounter >= 0);
 
     if (d->queueUpdatesCounter == 0)
@@ -95,20 +91,16 @@ bool kpViewManager::fastUpdates () const
 void kpViewManager::setFastUpdates ()
 {
     d->fastUpdatesCounter++;
-#if DEBUG_KP_VIEW_MANAGER && 0
     qCDebug(kpLogViews) << "kpViewManager::setFastUpdates() counter="
-               << d->fastUpdatesCounter << endl;
-#endif
+               << d->fastUpdatesCounter;
 }
 
 // public slot
 void kpViewManager::restoreFastUpdates ()
 {
     d->fastUpdatesCounter--;
-#if DEBUG_KP_VIEW_MANAGER && 0
     qCDebug(kpLogViews) << "kpViewManager::restoreFastUpdates() counter="
-               << d->fastUpdatesCounter << endl;
-#endif
+               << d->fastUpdatesCounter;
     Q_ASSERT (d->fastUpdatesCounter >= 0);
 }
 
@@ -189,9 +181,7 @@ void kpViewManager::updateViewRectangleEdges (kpView *v, const QRect &viewRect)
 // public slot
 void kpViewManager::updateViews (const QRect &docRect)
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
     qCDebug(kpLogViews) << "kpViewManager::updateViews (" << docRect << ")";
-#endif
 
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
@@ -199,14 +189,9 @@ void kpViewManager::updateViews (const QRect &docRect)
     {
         kpView *view = *it;
 
-    #if DEBUG_KP_VIEW_MANAGER && 0
-        qCDebug(kpLogViews) << "\tupdating view " << view->name ();
-    #endif
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
-        #if DEBUG_KP_VIEW_MANAGER && 0
             qCDebug(kpLogViews) << "\t\tviewRect=" << view->transformDocToView (docRect);
-        #endif
             updateView (view, view->transformDocToView (docRect));
         }
         else
@@ -221,9 +206,7 @@ void kpViewManager::updateViews (const QRect &docRect)
                                    viewRect.height () + 2 * diff)
                                 .intersected (QRect (0, 0, view->width (), view->height ()));
 
-        #if DEBUG_KP_VIEW_MANAGER && 0
             qCDebug(kpLogViews) << "\t\tviewRect (+compensate)=" << newRect;
-        #endif
             updateView (view, newRect);
         }
     }
@@ -233,21 +216,13 @@ void kpViewManager::updateViews (const QRect &docRect)
 // public slot
 void kpViewManager::adjustViewsToEnvironment ()
 {
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "kpViewManager::adjustViewsToEnvironment()"
-               << " numViews=" << d->views.count ()
-               << endl;
-#endif
+               << " numViews=" << d->views.count ();
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
          ++it)
     {
         kpView *view = *it;
-
-    #if DEBUG_KP_VIEW_MANAGER && 1
-        qCDebug(kpLogViews) << "\tview: " << view->name ()
-                   << endl;
-    #endif
         view->adjustToEnvironment ();
     }
 }

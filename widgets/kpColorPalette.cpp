@@ -25,10 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_COLOR_PALETTE 0
-
-
 #include "kpColorPalette.h"
 
 #include "kpColorCells.h"

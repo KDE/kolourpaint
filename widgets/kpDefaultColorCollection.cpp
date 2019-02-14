@@ -30,7 +30,6 @@
 
 #include "imagelib/kpColor.h"
 
-
 kpDefaultColorCollection::kpDefaultColorCollection ()
 {
     kpColor colors [] =

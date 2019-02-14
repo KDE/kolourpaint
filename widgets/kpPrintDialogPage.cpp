@@ -51,9 +51,7 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
     : QWidget (parent),
       d (new kpPrintDialogPagePrivate ())
 {
-#if DEBUG_KP_PRINT_DIALOG_PAGE
     qCDebug(kpLogWidgets) << "kpPrintDialogPage::<ctor>()";
-#endif
 
     setWindowTitle (i18nc ("@title:tab", "I&mage Position"));
 
@@ -78,19 +76,15 @@ kpPrintDialogPage::~kpPrintDialogPage ()
 
 bool kpPrintDialogPage::printImageCenteredOnPage ()
 {
-#if DEBUG_KP_PRINT_DIALOG_PAGE
     qCDebug(kpLogWidgets) << "kpPrintDialogPage::printImageCenteredOnPage()"
               << " returning " << d->printCenteredRadio->isChecked() << endl;
-#endif
     return d->printCenteredRadio->isChecked ();
 }
 
 
 void kpPrintDialogPage::setPrintImageCenteredOnPage (bool printCentered)
 {
-#if DEBUG_KP_PRINT_DIALOG_PAGE
     qCDebug(kpLogWidgets) << "kpPrintDialogPage::setOptions(" << printCentered << ")";
-#endif
     if (printCentered)
         d->printCenteredRadio->setChecked (true);
     else

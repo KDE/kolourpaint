@@ -199,11 +199,9 @@ QRect kpDualColorButton::backgroundRect () const
 // protected virtual
 void kpDualColorButton::dragEnterEvent (QDragEnterEvent *e)
 {
-#if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::dragEnterEvent() canDecode="
               << KColorMimeData::canDecode (e->mimeData ())
               << endl;
-#endif
     e->accept ();
 }
 
@@ -212,11 +210,9 @@ void kpDualColorButton::dragEnterEvent (QDragEnterEvent *e)
 // protected virtual [base QWidget]
 void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
-#if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::dragMoveEvent() canDecode="
               << KColorMimeData::canDecode (e->mimeData ())
               << endl;
-#endif
     e->setAccepted (
         (foregroundRect ().contains (e->pos ()) ||
             backgroundRect ().contains (e->pos ())) &&
@@ -229,11 +225,9 @@ void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 void kpDualColorButton::dropEvent (QDropEvent *e)
 {
     QColor col = KColorMimeData::fromMimeData (e->mimeData ());
-#if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::dropEvent() col="
               << (int *) col.rgba()
               << " (with alpha=" << (int *) col.rgba () << ")" << endl;
-#endif
 
     if (col.isValid ())
     {
@@ -250,9 +244,7 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
 // protected virtual [base QWidget]
 void kpDualColorButton::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::mousePressEvent() pos=" << e->pos ();
-#endif
 
     m_dragStartPoint = KP_INVALID_POINT;
 
@@ -264,11 +256,9 @@ void kpDualColorButton::mousePressEvent (QMouseEvent *e)
 
 void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::mouseMoveEvent() pos=" << e->pos ()
               << " buttons=" << e->buttons ()
-              << " dragStartPoint=" << m_dragStartPoint << endl;
-#endif
+              << " dragStartPoint=" << m_dragStartPoint;
 
     if (m_dragStartPoint == KP_INVALID_POINT)
         return;
@@ -285,9 +275,7 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
         e->y () < m_dragStartPoint.y () - delay ||
         e->y () > m_dragStartPoint.y () + delay)
     {
-    #if DEBUG_KP_DUAL_COLOR_BUTTON
         qCDebug(kpLogWidgets) << "\tstarting drag as long as it's in a rectangle";
-    #endif
 
         kpColor color;
 
@@ -300,11 +288,8 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
             // "color" is left as invalid.
         }
 
-    #if DEBUG_KP_DUAL_COLOR_BUTTON
         qCDebug(kpLogWidgets) << "\tcolor.isValid=" << color.isValid ()
-                  << " rgb=" << (color.isValid () ? (int *) color.toQRgb () : 0)
-                  << endl;
-    #endif
+                  << " rgb=" << (color.isValid () ? (int *) color.toQRgb () : 0);
 
         if (color.isValid ())
         {
@@ -326,9 +311,7 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
     if (swapPixmapRect ().contains (e->pos ()) &&
         m_color [0] != m_color [1])
     {
-    #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
         qCDebug(kpLogWidgets) << "kpDualColorButton::mouseReleaseEvent() swap colors:";
-    #endif
         m_oldColor [0] = m_color [0];
         m_oldColor [1] = m_color [1];
 
@@ -371,11 +354,8 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 // protected virtual [base QWidget]
 void kpDualColorButton::paintEvent (QPaintEvent *e)
 {
-#if DEBUG_KP_DUAL_COLOR_BUTTON && 1
     qCDebug(kpLogWidgets) << "kpDualColorButton::draw() rect=" << rect ()
-               << " contentsRect=" << contentsRect ()
-               << endl;
-#endif
+               << " contentsRect=" << contentsRect ();
 
     // Draw frame first.
     QFrame::paintEvent (e);
@@ -421,10 +401,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                                 bgRect.width () - 4, bgRect.height () - 4);
     if (isEnabled ())
     {
-    #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
-        qCDebug(kpLogWidgets) << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ()
-                   << endl;
-    #endif
+        qCDebug(kpLogWidgets) << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ();
         if (m_color [1].isTransparent ())  // only if fully transparent
             painter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
         else
@@ -444,10 +421,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                                 fgRect.width () - 4, fgRect.height () - 4);
     if (isEnabled ())
     {
-    #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
-        qCDebug(kpLogWidgets) << "\tforegroundColor=" << (int *) m_color [0].toQRgb ()
-                   << endl;
-    #endif
+        qCDebug(kpLogWidgets) << "\tforegroundColor=" << (int *) m_color [0].toQRgb ();
         if (m_color [0].isTransparent ())  // only if fully transparent
             painter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
         else

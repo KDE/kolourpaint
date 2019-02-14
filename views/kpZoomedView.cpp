@@ -62,11 +62,6 @@ kpZoomedView::~kpZoomedView ()
 // public virtual [base kpView]
 void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 {
-#if DEBUG_KP_ZOOMED_VIEW
-    qCDebug(kpLogViews) << "kpZoomedView(" << name () << ")::setZoomLevel("
-               << hzoom << "," << vzoom << ")" << endl;
-#endif
-
     if (viewManager ())
         viewManager ()->setQueueUpdates ();
 
@@ -84,13 +79,6 @@ void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 // public slot virtual [base kpView]
 void kpZoomedView::adjustToEnvironment ()
 {
-#if DEBUG_KP_ZOOMED_VIEW
-    qCDebug(kpLogViews) << "kpZoomedView(" << name () << ")::adjustToEnvironment()"
-               << " doc: width=" << document ()->width ()
-               << " height=" << document ()->height ()
-               << endl;
-#endif
-
     if (document ())
     {
         // TODO: use zoomedDocWidth() & zoomedDocHeight()?

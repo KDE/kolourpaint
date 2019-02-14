@@ -175,11 +175,9 @@ QPolygon kpFreeFormImageSelection::originalPoints () const
 
 static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 {
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpFreeFormImageSelection.cpp:RecalculateCardinallyAdjacentPoints()"
               << endl;
     qCDebug(kpLogLayers) << "\tpoints=" << points;
-#endif
 
     // Filter out duplicates.
     QPolygon noDups;
@@ -190,9 +188,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 
         noDups.append (p);
     }
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "\twithout dups=" << noDups;
-#endif
 
     // Interpolate to ensure cardinal adjacency.
     QPolygon cardPoints;
@@ -222,9 +218,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
         else
             cardPoints.append (p);
     }
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "\tcardinally adjacent=" << cardPoints;
-#endif
 
     return cardPoints;
 }

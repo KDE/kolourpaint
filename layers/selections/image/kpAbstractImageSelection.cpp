@@ -140,10 +140,8 @@ bool kpAbstractImageSelection::readFromStream (QDataStream &stream)
 
     QImage qimage;
     stream >> qimage;
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\timage: w=" << qimage.width () << " h=" << qimage.height ()
                << " depth=" << qimage.depth () << endl;
-#endif
 
     if (!qimage.isNull ())
     {
@@ -180,16 +178,12 @@ void kpAbstractImageSelection::writeToStream (QDataStream &stream) const
     if (!d->baseImage.isNull ())
     {
         const QImage image = d->baseImage;
-    #if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\twrote image rect=" << image.rect ();
-    #endif
         stream << image;
     }
     else
     {
-    #if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\twrote no image because no pixmap";
-    #endif
         stream << QImage ();
     }
 }
@@ -270,10 +264,8 @@ QBitmap kpAbstractImageSelection::shapeBitmap (bool nullForRectangular) const
 // public
 kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image) const
 {
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpAbstractImageSelection::givenImageMaskedByShape() boundingRect="
-              << boundingRect () << endl;
-#endif
+              << boundingRect ();
     Q_ASSERT (image.width () == width () && image.height () == height ());
 
     if (isRectangular ())
@@ -281,13 +273,10 @@ kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image)
 
     const QRegion mRegion = shapeRegion ().translated (-topLeft ());
 
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "\tshapeRegion=" << shapeRegion ()
               << " [rect=" << shapeRegion ().boundingRect () << "]"
               << " calculatePoints=" << calculatePoints ()
-              << " [rect=" << calculatePoints ().boundingRect () << "]"
-              << endl;
-#endif
+              << " [rect=" << calculatePoints ().boundingRect () << "]";
 
     kpImage retImage(width (), height (), QImage::Format_ARGB32_Premultiplied);
     retImage.fill(0);  // transparent
@@ -373,9 +362,7 @@ bool kpAbstractImageSelection::setTransparency (
     {
         if (d->transparencyMaskCache.isNull ())
         {
-        #if DEBUG_KP_SELECTION
             qCDebug(kpLogLayers) << "\tboth old and new pixmaps are null - nothing changed";
-        #endif
             haveChanged = false;
         }
         else if (checkTransparentPixmapChanged)
@@ -391,12 +378,9 @@ bool kpAbstractImageSelection::setTransparency (
                     if (kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y) !=
                         kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y))
                     {
-                    #if DEBUG_KP_SELECTION
                         qCDebug(kpLogLayers) << "\tdiffer at " << QPoint (x, y)
                                    << " old=" << kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y).toQRgb ()
-                                   << " new=" << kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ()
-                                   << endl;
-                    #endif
+                                   << " new=" << kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ();
                         changed = true;
                         break;
                     }
@@ -420,24 +404,18 @@ bool kpAbstractImageSelection::setTransparency (
 // private
 void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
 {
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpAbstractImageSelection::recalculateTransparencyMaskCache()";
-#endif
 
     if (d->baseImage.isNull ())
     {
-    #if DEBUG_KP_SELECTION
         qCDebug(kpLogLayers) << "\tno image - no need for transparency mask";
-    #endif
         d->transparencyMaskCache = QBitmap ();
         return;
     }
 
     if (d->transparency.isOpaque ())
     {
-    #if DEBUG_KP_SELECTION
         qCDebug(kpLogLayers) << "\topaque - no need for transparency mask";
-    #endif
         d->transparencyMaskCache = QBitmap ();
         return;
     }
@@ -472,9 +450,7 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
 
     if (!hasTransparent)
     {
-    #if DEBUG_KP_SELECTION
         qCDebug(kpLogLayers) << "\tcolour useless - completely opaque";
-    #endif
         d->transparencyMaskCache = QBitmap ();
         return;
     }
@@ -521,24 +497,18 @@ void kpAbstractImageSelection::fill (const kpColor &color)
 // public virtual
 void kpAbstractImageSelection::flip (bool horiz, bool vert)
 {
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractImageSelection::flip(horiz=" << horiz
                << ",vert=" << vert << ")" << endl;
-#endif
 
     if (!d->baseImage.isNull ())
     {
-    #if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\thave pixmap - flipping that";
-    #endif
         d->baseImage = d->baseImage.mirrored(horiz, vert);
     }
 
     if (!d->transparencyMaskCache.isNull ())
     {
-    #if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\thave transparency mask - flipping that";
-    #endif
         QImage image = d->transparencyMaskCache.toImage().mirrored(horiz, vert);
         d->transparencyMaskCache = QBitmap::fromImage(image);
     }
@@ -578,5 +548,3 @@ void kpAbstractImageSelection::paintWithBaseImage (QImage *destImage,
 }
 
 //---------------------------------------------------------------------
-
-

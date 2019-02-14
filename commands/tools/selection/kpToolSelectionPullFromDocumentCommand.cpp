@@ -46,11 +46,9 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
     : kpAbstractSelectionContentCommand (originalSelBorder, name, environ),
       m_backgroundColor (backgroundColor)
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
                << environ
                << endl;
-#endif
 }
 
 kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand ()
@@ -61,9 +59,7 @@ kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand 
 // public virtual [base kpCommand]
 void kpToolSelectionPullFromDocumentCommand::execute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::execute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -122,9 +118,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolSelectionPullFromDocumentCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::unexecute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);

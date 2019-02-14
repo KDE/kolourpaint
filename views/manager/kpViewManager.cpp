@@ -102,15 +102,11 @@ kpDocument *kpViewManager::document () const
 // public
 void kpViewManager::registerView (kpView *view)
 {
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "kpViewManager::registerView (" << view << ")";
-#endif
     Q_ASSERT (view);
     Q_ASSERT (!d->views.contains (view));
 
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "\tadded view";
-#endif
     view->setCursor (d->cursor);
     d->views.append (view);
 }
@@ -167,12 +163,10 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
 // public
 void kpViewManager::setViewUnderCursor (kpView *view)
 {
-#if DEBUG_KP_VIEW_MANAGER && 1
     qCDebug(kpLogViews) << "kpViewManager::setViewUnderCursor ("
                << (view ? view->objectName () : "(none)") << ")"
                << "  old=" << (d->viewUnderCursor ? d->viewUnderCursor->objectName () : "(none)")
                << endl;
-#endif
     if (view == d->viewUnderCursor)
         return;
 
@@ -186,9 +180,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         // Hide the brush if the mouse cursor just left the view.
         if (d->tempImage && d->tempImage->isBrush ())
         {
-        #if DEBUG_KP_VIEW_MANAGER && 1
             qCDebug(kpLogViews) << "\thiding brush pixmap since cursor left view";
-        #endif
             updateViews (d->tempImage->rect ());
         }
     }
@@ -196,9 +188,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
     {
         if (d->mainWindow->tool ())
         {
-        #if DEBUG_KP_VIEW_MANAGER && 1
             qCDebug(kpLogViews) << "\tnotify tool that something changed below cursor";
-        #endif
             d->mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
     }
@@ -263,13 +253,11 @@ const kpTempImage *kpViewManager::tempImage () const
 // public
 void kpViewManager::setTempImage (const kpTempImage &tempImage)
 {
-#if DEBUG_KP_VIEW_MANAGER
     qCDebug(kpLogViews) << "kpViewManager::setTempImage(isBrush="
                << tempImage.isBrush ()
                << ",topLeft=" << tempImage.topLeft ()
                << ",image.rect=" << tempImage.image ().rect ()
                << ")" << endl;
-#endif
 
     QRect oldRect;
 
@@ -359,6 +347,3 @@ void kpViewManager::setInputMethodEnabled (bool inputMethodEnabled)
     if (d->viewUnderCursor)
         d->viewUnderCursor->setAttribute (Qt::WA_InputMethodEnabled, inputMethodEnabled);
 }
-
-//---------------------------------------------------------------------
-

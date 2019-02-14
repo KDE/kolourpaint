@@ -119,11 +119,9 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 
 void kpColorToolBar::adjustToOrientation (Qt::Orientation o)
 {
-#if DEBUG_KP_COLOR_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpColorToolBar::adjustToOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!";
-#endif
 
     Q_ASSERT (o == Qt::Horizontal);
 
@@ -176,10 +174,8 @@ kpColor kpColorToolBar::foregroundColor () const
 
 void kpColorToolBar::setForegroundColor (const kpColor &color)
 {
-#if DEBUG_KP_COLOR_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpColorToolBar::setForegroundColor("
               << (int *) color.toQRgb () << ")" << endl;
-#endif
     m_dualColorButton->setForegroundColor (color);
 }
 
@@ -194,10 +190,8 @@ kpColor kpColorToolBar::backgroundColor () const
 
 void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
-#if DEBUG_KP_COLOR_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpColorToolBar::setBackgroundColor("
               << (int *) color.toQRgb () << ")" << endl;
-#endif
     m_dualColorButton->setBackgroundColor (color);
 }
 
@@ -316,9 +310,7 @@ void kpColorToolBar::dragEnterEvent (QDragEnterEvent *e)
     // Grab the color drag for this widget, preventing it from being
     // handled by our parent, the main window.
     e->setAccepted (KColorMimeData::canDecode (e->mimeData ()) == true);
-#if DEBUG_KP_COLOR_TOOL_BAR
     qCDebug(kpLogWidgets) << "isAccepted=" << e->isAccepted ();
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -328,10 +320,5 @@ void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 {
     // Stop the grabbed drag from being dropped.
     e->setAccepted (KColorMimeData::canDecode (e->mimeData ()) == false);
-#if DEBUG_KP_COLOR_TOOL_BAR
     qCDebug(kpLogWidgets) << "isAccepted=" << e->isAccepted ();
-#endif
 }
-
-//---------------------------------------------------------------------
-

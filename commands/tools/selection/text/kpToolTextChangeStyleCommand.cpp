@@ -60,7 +60,6 @@ kpCommandSize::SizeType kpToolTextChangeStyleCommand::size () const
 // public virtual [base kpCommand]
 void kpToolTextChangeStyleCommand::execute ()
 {
-#if DEBUG_KP_TOOL_TEXT && 1
     qCDebug(kpLogCommands) << "kpToolTextChangeStyleCommand::execute()"
                << " font=" << m_newTextStyle.fontFamily ()
                << " fontSize=" << m_newTextStyle.fontSize ()
@@ -69,7 +68,6 @@ void kpToolTextChangeStyleCommand::execute ()
                << " isUnderline=" << m_newTextStyle.isUnderline ()
                << " isStrikeThru=" << m_newTextStyle.isStrikeThru ()
                << endl;
-#endif
 
     environ ()->setTextStyle (m_newTextStyle);
 
@@ -80,7 +78,6 @@ void kpToolTextChangeStyleCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolTextChangeStyleCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_TEXT && 1
     qCDebug(kpLogCommands) << "kpToolTextChangeStyleCommand::unexecute()"
                << " font=" << m_newTextStyle.fontFamily ()
                << " fontSize=" << m_newTextStyle.fontSize ()
@@ -89,7 +86,6 @@ void kpToolTextChangeStyleCommand::unexecute ()
                << " isUnderline=" << m_newTextStyle.isUnderline ()
                << " isStrikeThru=" << m_newTextStyle.isStrikeThru ()
                << endl;
-#endif
 
     environ ()->setTextStyle (m_oldTextStyle);
 

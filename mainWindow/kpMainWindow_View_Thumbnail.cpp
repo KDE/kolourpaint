@@ -96,9 +96,7 @@ void kpMainWindow::enableViewMenuThumbnailDocumentActions (bool enable)
 // private slot
 void kpMainWindow::slotDestroyThumbnail ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotDestroyThumbnail()";
-#endif
 
     d->actionShowThumbnail->setChecked (false);
     enableThumbnailOptionActions (false);
@@ -108,9 +106,7 @@ void kpMainWindow::slotDestroyThumbnail ()
 // private slot
 void kpMainWindow::slotDestroyThumbnailInitatedByUser ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotDestroyThumbnailInitiatedByUser()";
-#endif
 
     d->actionShowThumbnail->setChecked (false);
     slotShowThumbnailToggled ();
@@ -119,9 +115,7 @@ void kpMainWindow::slotDestroyThumbnailInitatedByUser ()
 // private slot
 void kpMainWindow::slotCreateThumbnail ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotCreateThumbnail()";
-#endif
 
     d->actionShowThumbnail->setChecked (true);
     enableThumbnailOptionActions (true);
@@ -131,9 +125,7 @@ void kpMainWindow::slotCreateThumbnail ()
 // public
 void kpMainWindow::notifyThumbnailGeometryChanged ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::notifyThumbnailGeometryChanged()";
-#endif
 
     if (!d->thumbnailSaveConfigTimer)
     {
@@ -150,26 +142,20 @@ void kpMainWindow::notifyThumbnailGeometryChanged ()
 // private slot
 void kpMainWindow::slotSaveThumbnailGeometry ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::saveThumbnailGeometry()";
-#endif
 
     if (!d->thumbnail)
         return;
 
     QRect rect (d->thumbnail->x (), d->thumbnail->y (),
                 d->thumbnail->width (), d->thumbnail->height ());
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tthumbnail relative geometry=" << rect;
-#endif
 
     d->configThumbnailGeometry = mapFromGlobal (rect);
 
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tCONFIG: saving thumbnail geometry "
                 << d->configThumbnailGeometry
                 << endl;
-#endif
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
@@ -180,9 +166,7 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
 // private slot
 void kpMainWindow::slotShowThumbnailToggled ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotShowThumbnailToggled()";
-#endif
 
     d->configThumbnailShown = d->actionShowThumbnail->isChecked ();
 
@@ -199,10 +183,8 @@ void kpMainWindow::slotShowThumbnailToggled ()
 // private slot
 void kpMainWindow::updateThumbnailZoomed ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::updateThumbnailZoomed() zoomed="
                << d->actionZoomedThumbnail->isChecked () << endl;
-#endif
 
     if (!d->thumbnailView)
         return;
@@ -214,9 +196,7 @@ void kpMainWindow::updateThumbnailZoomed ()
 // private slot
 void kpMainWindow::slotZoomedThumbnailToggled ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotZoomedThumbnailToggled()";
-#endif
 
     d->configZoomedThumbnail = d->actionZoomedThumbnail->isChecked ();
 
@@ -232,9 +212,7 @@ void kpMainWindow::slotZoomedThumbnailToggled ()
 // private slot
 void kpMainWindow::slotThumbnailShowRectangleToggled ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotThumbnailShowRectangleToggled()";
-#endif
 
     d->configThumbnailShowRectangle = d->actionShowThumbnailRectangle->isChecked ();
 
@@ -254,9 +232,7 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
 // private
 void kpMainWindow::enableViewZoomedThumbnail (bool enable)
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::enableSettingsViewZoomedThumbnail()";
-#endif
 
     d->actionZoomedThumbnail->setEnabled (enable &&
         d->actionShowThumbnail->isChecked ());
@@ -269,9 +245,7 @@ void kpMainWindow::enableViewZoomedThumbnail (bool enable)
 // private
 void kpMainWindow::enableViewShowThumbnailRectangle (bool enable)
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::enableViewShowThumbnailRectangle()";
-#endif
 
     d->actionShowThumbnailRectangle->setEnabled (enable &&
         d->actionShowThumbnail->isChecked ());
@@ -293,9 +267,7 @@ void kpMainWindow::enableThumbnailOptionActions (bool enable)
 // private
 void kpMainWindow::createThumbnailView ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\t\tcreating new kpView:";
-#endif
 
     if (d->thumbnailView)
     {
@@ -326,17 +298,13 @@ void kpMainWindow::createThumbnailView ()
         d->actionShowThumbnailRectangle->isChecked ());
 
 
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\t\tgive kpThumbnail the kpView:";
-#endif
     if (d->thumbnail)
         d->thumbnail->setView (d->thumbnailView);
     else
         qCCritical(kpLogMainWindow) << "kpMainWindow::createThumbnailView() no thumbnail" << endl;
 
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\t\tregistering the kpView:";
-#endif
     if (d->viewManager)
         d->viewManager->registerView (d->thumbnailView);
 }
@@ -360,42 +328,32 @@ void kpMainWindow::destroyThumbnailView ()
 // private
 void kpMainWindow::updateThumbnail ()
 {
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::updateThumbnail()";
-#endif
     bool enable = d->actionShowThumbnail->isChecked ();
 
-#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tthumbnail="
                << bool (d->thumbnail)
                << " action_isChecked="
                << enable
                << endl;
-#endif
 
     if (bool (d->thumbnail) == enable)
         return;
 
     if (!d->thumbnail)
     {
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tcreating thumbnail";
-    #endif
 
         // Read last saved geometry before creating thumbnail & friends
         // in case they call notifyThumbnailGeometryChanged()
         QRect thumbnailGeometry = d->configThumbnailGeometry;
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tlast used geometry=" << thumbnailGeometry;
-    #endif
 
         d->thumbnail = new kpThumbnail (this);
 
         createThumbnailView ();
 
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tmoving thumbnail to right place";
-    #endif
         if (!thumbnailGeometry.isEmpty () &&
             QRect (0, 0, width (), height ()).intersects (thumbnailGeometry))
         {
@@ -415,39 +373,27 @@ void kpMainWindow::updateThumbnail ()
                                     initialWidth,
                                     initialHeight);
 
-            #if DEBUG_KP_MAIN_WINDOW
                 qCDebug(kpLogMainWindow) << "\t\tcreating geometry=" << geometryRect;
-            #endif
 
                 geometryRect = mapToGlobal (geometryRect);
-            #if DEBUG_KP_MAIN_WINDOW
                 qCDebug(kpLogMainWindow) << "\t\tmap to global=" << geometryRect;
-            #endif
                 d->thumbnail->resize (geometryRect.size ());
                 d->thumbnail->move (geometryRect.topLeft ());
             }
         }
 
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tshowing thumbnail";
-    #endif
         d->thumbnail->show ();
 
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tconnecting signal thumbnail::windowClosed to destroy slot";
-    #endif
         connect (d->thumbnail, &kpThumbnail::windowClosed,
                  this, &kpMainWindow::slotDestroyThumbnailInitatedByUser);
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\t\tDONE";
-    #endif
     }
     else
     {
-    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tdestroying thumbnail d->thumbnail="
             << d->thumbnail << endl;
-    #endif
 
         if (d->thumbnailSaveConfigTimer && d->thumbnailSaveConfigTimer->isActive ())
         {

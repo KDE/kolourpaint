@@ -44,11 +44,9 @@ kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (
         kpCommandEnvironment *environ)
     : kpAbstractSelectionContentCommand (originalSelBorder, name, environ)
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::<ctor>() environ="
                << environ
                << endl;
-#endif
 }
 
 kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand ()
@@ -59,9 +57,7 @@ kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand ()
 // public virtual [base kpCommand]
 void kpToolTextGiveContentCommand::execute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::execute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -125,9 +121,7 @@ void kpToolTextGiveContentCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolTextGiveContentCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::unexecute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);

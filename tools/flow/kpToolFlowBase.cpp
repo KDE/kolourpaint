@@ -221,13 +221,6 @@ void kpToolFlowBase::beginDraw ()
 // virtual
 void kpToolFlowBase::hover (const QPoint &point)
 {
-#if DEBUG_KP_TOOL_FLOW_BASE && 0
-    qCDebug(kpLogTools) << "kpToolFlowBase::hover(" << point << ")"
-               << " hasBegun=" << hasBegun ()
-               << " hasBegunDraw=" << hasBegunDraw ()
-               << " cursorPixmap.isNull=" << m_cursorPixmap.isNull ()
-               << endl;
-#endif
     if (point != KP_INVALID_POINT && d->cursorDrawFunc)
     {
         viewManager ()->setFastUpdates ();
@@ -331,9 +324,7 @@ void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
 // TODO: maybe the base should be virtual?
 kpColor kpToolFlowBase::color (int which)
 {
-#if DEBUG_KP_TOOL_FLOW_BASE && 0
     qCDebug(kpLogTools) << "kpToolFlowBase::color (" << which << ")";
-#endif
 
     // Pen & Brush
     if (!colorsAreSwapped ())
@@ -390,9 +381,7 @@ kpToolFlowCommand *kpToolFlowBase::currentCommand () const
 // protected slot
 void kpToolFlowBase::updateBrushAndCursor ()
 {
-#if DEBUG_KP_TOOL_FLOW_BASE && 1
     qCDebug(kpLogTools) << "kpToolFlowBase::updateBrushAndCursor()";
-#endif
 
     if (haveSquareBrushes ())
     {
@@ -438,10 +427,7 @@ void kpToolFlowBase::updateBrushAndCursor ()
 // virtual private slot
 void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 {
-#if DEBUG_KP_TOOL_FLOW_BASE
     qCDebug(kpLogTools) << "kpToolFlowBase::slotForegroundColorChanged()";
-#endif
-
     updateBrushAndCursor ();
 }
 
@@ -450,10 +436,7 @@ void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 // virtual private slot
 void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
 {
-#if DEBUG_KP_TOOL_FLOW_BASE
     qCDebug(kpLogTools) << "kpToolFlowBase::slotBackgroundColorChanged()";
-#endif
-
     updateBrushAndCursor ();
 }
 

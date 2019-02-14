@@ -55,7 +55,6 @@ QImage kpPixmapFX::getPixmapAt (const QImage &image, const QRect &rect)
 void kpPixmapFX::setPixmapAt(QImage *destPtr, const QRect &destRect,
                              const QImage &src)
 {
-#if DEBUG_KP_PIXMAP_FX && 1
     qCDebug(kpLogPixmapfx) << "kpPixmapFX::setPixmapAt(destPixmap->rect="
                << destPtr->rect ()
                << ",destRect="
@@ -64,7 +63,6 @@ void kpPixmapFX::setPixmapAt(QImage *destPtr, const QRect &destRect,
                << src.rect ()
                << ")"
                << endl;
-#endif
 
     Q_ASSERT (destPtr);
 
