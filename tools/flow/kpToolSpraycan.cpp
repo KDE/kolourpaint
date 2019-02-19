@@ -119,7 +119,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 {
     qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint
                << ",lastPoint=" << lastPoint
-               << ")" << endl;
+               << ")";
 
     QList <QPoint> docPoints = kpPainter::interpolatePoints (lastPoint, thisPoint,
         false/*no need for cardinally adjacency points*/,
@@ -127,8 +127,9 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     qCDebug(kpLogTools) << "\tdocPoints=" << docPoints;
 
     // By chance no points to draw?
-    if (docPoints.empty ())
-        return QRect ();
+    if (docPoints.empty ()) {
+        return  {};
+    }
 
     // For efficiency, only get image after NOP check above.
     QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
@@ -143,7 +144,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     //                  appearance.
 
     QList <QPoint> imagePoints;
-    foreach (const QPoint &dp, docPoints)
+    for (const auto &dp : docPoints)
         imagePoints.append (dp - docRect.topLeft ());
 
     kpPainter::sprayPoints (&image,
@@ -164,8 +165,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 QRect kpToolSpraycan::drawPoint (const QPoint &point)
 {
     qCDebug(kpLogTools) << "kpToolSpraycan::drawPoint" << point
-               << " lastPoint=" << lastPoint ()
-               << endl;
+               << " lastPoint=" << lastPoint ();
 
     // If this is the first in the flow or if the user is moving the spray,
     // make the spray line continuous.
@@ -176,7 +176,7 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
             1.0/*100% chance of drawing*/);
     }
 
-    return QRect ();
+    return  {};
 }
 
 // public virtual [base kpToolFlowBase]
@@ -218,7 +218,7 @@ void kpToolSpraycan::endDraw (const QPoint &thisPoint,
     const QRect &normalizedRect)
 {
     qCDebug(kpLogTools) << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint
-               << ")" << endl;
+               << ")";
 
     m_timer->stop ();
     kpToolFlowBase::endDraw (thisPoint, normalizedRect);

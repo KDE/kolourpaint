@@ -58,9 +58,7 @@ kpColorSimilarityHolder::kpColorSimilarityHolder ()
 {
 }
 
-kpColorSimilarityHolder::~kpColorSimilarityHolder ()
-{
-}
+kpColorSimilarityHolder::~kpColorSimilarityHolder () = default;
 
 
 // Don't cause the translators grief by appending strings etc.
@@ -177,13 +175,16 @@ void kpColorSimilarityHolder::setColorSimilarity (double similarity)
     qCDebug(kpLogWidgets) << "kpColorSimilarityHolder::setColorSimilarity(" << similarity << ")";
 #endif
 
-    if (m_colorSimilarity == similarity)
+    if (m_colorSimilarity == similarity) {
         return;
+    }
 
-    if (similarity < 0)
+    if (similarity < 0) {
         similarity = 0;
-    else if (similarity > MaxColorSimilarity)
+    }
+    else if (similarity > MaxColorSimilarity) {
         similarity = MaxColorSimilarity;
+    }
 
     m_colorSimilarity = similarity;
 }

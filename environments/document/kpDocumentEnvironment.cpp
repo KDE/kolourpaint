@@ -91,13 +91,12 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool("
               << &selection << ")"
               << " mainwindow.tool="
-              << (mainWindow ()->tool () ? mainWindow ()->tool ()->objectName () : 0)
+              << (mainWindow ()->tool () ? mainWindow ()->tool ()->objectName () : nullptr)
               << " mainWindow.toolIsTextTool=" << mainWindow ()->toolIsTextTool ()
               << " current selection="
               << document ()->selection ()
               << " new selection is text="
-              << dynamic_cast <const kpTextSelection *> (&selection)
-              << endl;
+              << dynamic_cast <const kpTextSelection *> (&selection);
 
 
     *isTextChanged = (mainWindow ()->toolIsTextTool () !=
@@ -143,8 +142,9 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
             qCDebug(kpLogEnvironments) << "\tswitch to text selection tool";
             mainWindow ()->slotToolText ();
         }
-        else
+        else {
             Q_ASSERT (!"Unknown selection type");
+        }
     }
 
     qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished";
@@ -157,21 +157,20 @@ void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &se
 {
     // Trap and try to recover from bugs.
     // TODO: See kpDocument::setSelection() API comment and determine best fix.
-    const kpAbstractImageSelection *imageSelection =
-        dynamic_cast <const kpAbstractImageSelection *> (&selection);
-    const kpTextSelection *textSelection =
-        dynamic_cast <const kpTextSelection *> (&selection);
+    const auto *imageSelection = dynamic_cast <const kpAbstractImageSelection *> (&selection);
+    const auto *textSelection = dynamic_cast <const kpTextSelection *> (&selection);
+
     if (imageSelection)
     {
         if (imageSelection->transparency () != mainWindow ()->imageSelectionTransparency ())
         {
             qCCritical(kpLogEnvironments) << "kpDocument::setSelection() sel's transparency differs "
                           "from mainWindow's transparency - setting mainWindow's transparency "
-                          "to sel"
-                       << endl;
+                          "to sel";
+
             qCCritical(kpLogEnvironments) << "\tisOpaque: sel=" << imageSelection->transparency ().isOpaque ()
-                       << " mainWindow=" << mainWindow ()->imageSelectionTransparency ().isOpaque ()
-                       << endl;
+                       << " mainWindow=" << mainWindow ()->imageSelectionTransparency ().isOpaque ();
+
             mainWindow ()->setImageSelectionTransparency (imageSelection->transparency ());
         }
     }
@@ -181,8 +180,8 @@ void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &se
         {
             qCCritical(kpLogEnvironments) << "kpDocument::setSelection() sel's textStyle differs "
                           "from mainWindow's textStyle - setting mainWindow's textStyle "
-                          "to sel"
-                       << endl;
+                          "to sel";
+
             mainWindow ()->setTextStyle (textSelection->textStyle ());
         }
     }

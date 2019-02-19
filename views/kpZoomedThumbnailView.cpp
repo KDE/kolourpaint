@@ -53,9 +53,7 @@ kpZoomedThumbnailView::kpZoomedThumbnailView (kpDocument *document,
 }
 
 
-kpZoomedThumbnailView::~kpZoomedThumbnailView ()
-{
-}
+kpZoomedThumbnailView::~kpZoomedThumbnailView () = default;
 
 
 // public virtual [base kpThumbnailView]
@@ -68,8 +66,9 @@ QString kpZoomedThumbnailView::caption () const
 // public slot virtual [base kpView]
 void kpZoomedThumbnailView::adjustToEnvironment ()
 {
-    if (!document ())
+    if (!document ()) {
         return;
+    }
 
     qCDebug(kpLogViews) << "\tdoc: width=" << document ()->width ()
                << " height=" << document ()->height ();
@@ -78,8 +77,7 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
     {
         qCCritical(kpLogViews) << "kpZoomedThumbnailView::adjustToEnvironment() doc:"
                    << " width=" << document ()->width ()
-                   << " height=" << document ()->height ()
-                   << endl;
+                   << " height=" << document ()->height ();
         return;
     }
 
@@ -88,10 +86,12 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
     int vzoom = qMax (1, height () * 100 / document ()->height ());
 
     // keep aspect ratio
-    if (hzoom < vzoom)
+    if (hzoom < vzoom) {
         vzoom = hzoom;
-    else
+    }
+    else {
         hzoom = vzoom;
+    }
 
     qCDebug(kpLogViews) << "\tproposed zoom=" << hzoom;
     if (hzoom > 100 || vzoom > 100)
@@ -102,8 +102,9 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
     }
 
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->setQueueUpdates ();
+    }
 
     {
         setZoomLevel (hzoom, vzoom);
@@ -112,12 +113,14 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
                            (height () - zoomedDocHeight ()) / 2));
         setMaskToCoverDocument ();
 
-        if (viewManager ())
+        if (viewManager ()) {
             viewManager ()->updateView (this);
+        }
     }
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->restoreQueueUpdates ();
+    }
 }
 
 

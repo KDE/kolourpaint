@@ -47,9 +47,9 @@ class kpDocumentSaveOptionsPrivate
 {
 public:
     QString m_mimeType;
-    int m_colorDepth;
-    bool m_dither;
-    int m_quality;
+    int m_colorDepth{};
+    bool m_dither{};
+    int m_quality{};
 };
 
 //---------------------------------------------------------------------
@@ -140,8 +140,7 @@ void kpDocumentSaveOptions::printDebug (const QString &prefix) const
                << "mimeType=" << mimeType ()
                << " colorDepth=" << colorDepth ()
                << " dither=" << dither ()
-               << " quality=" << quality ()
-               << endl;
+               << " quality=" << quality ();
 }
 
 //---------------------------------------------------------------------
@@ -335,10 +334,8 @@ void kpDocumentSaveOptions::saveDefaultDither (KConfigGroup &config, bool dither
 int kpDocumentSaveOptions::defaultQuality (const KConfigGroup &config)
 {
     int val = config.readEntry (kpSettingForcedQuality, -1);
-    if (qualityIsInvalid (val))
-        val = -1;
 
-    return val;
+    return qualityIsInvalid (val) ? -1 : val;
 }
 
 //---------------------------------------------------------------------
@@ -436,7 +433,7 @@ static QStringList mimeTypesSupportingProperty (const QString &property,
 static bool mimeTypeSupportsProperty (const QString &mimeType,
     const QString &property, const QStringList &defaultMimeTypesWithPropertyList)
 {
-    const QStringList mimeTypeList = mimeTypesSupportingProperty (
+    const auto mimeTypeList = mimeTypesSupportingProperty (
         property, defaultMimeTypesWithPropertyList);
 
     return mimeTypeList.contains (mimeType);
@@ -505,17 +502,15 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
 
     defaultList << QLatin1String ("image/x-xbitmap:1");
 
-    const QStringList mimeTypeList = mimeTypesSupportingProperty (
+    const auto mimeTypeList = mimeTypesSupportingProperty (
         kpSettingMimeTypeMaximumColorDepth, defaultList);
 
     const QString mimeTypeColon = mimeType + QLatin1String (":");
-    for (QStringList::const_iterator it = mimeTypeList.begin ();
-         it != mimeTypeList.end ();
-         ++it)
+    for (const auto & it : mimeTypeList)
     {
-        if ((*it).startsWith (mimeTypeColon))
+        if (it.startsWith (mimeTypeColon))
         {
-            int number = (*it).mid (mimeTypeColon.length ()).toInt ();
+            int number = it.mid (mimeTypeColon.length ()).toInt ();
             if (!colorDepthIsInvalid (number))
             {
                 return number;
@@ -596,7 +591,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality () const
 // public
 int kpDocumentSaveOptions::isLossyForSaving (const QImage &image) const
 {
-    int ret = 0;
+    auto ret = 0;
 
     if (mimeTypeMaximumColorDepth () < image.depth ())
     {

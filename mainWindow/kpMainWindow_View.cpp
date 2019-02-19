@@ -133,8 +133,9 @@ void kpMainWindow::updateMainViewGrid ()
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::updateMainViewGrid ()";
 
-    if (d->mainView)
+    if (d->mainView) {
         d->mainView->showGrid (d->actionShowGrid->isChecked ());
+    }
 }
 
 //---------------------------------------------------------------------

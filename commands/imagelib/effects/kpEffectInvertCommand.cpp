@@ -51,9 +51,7 @@ kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
 {
 }
 
-kpEffectInvertCommand::~kpEffectInvertCommand ()
-{
-}
+kpEffectInvertCommand::~kpEffectInvertCommand () = default;
 
 
 //

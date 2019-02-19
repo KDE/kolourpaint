@@ -45,9 +45,7 @@ kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
 {
 }
 
-kpEffectFlattenCommand::~kpEffectFlattenCommand ()
-{
-}
+kpEffectFlattenCommand::~kpEffectFlattenCommand () = default;
 
 
 //

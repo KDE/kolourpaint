@@ -49,9 +49,7 @@ kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *paren
 
 //---------------------------------------------------------------------
 
-kpToolWidgetOpaqueOrTransparent::~kpToolWidgetOpaqueOrTransparent ()
-{
-}
+kpToolWidgetOpaqueOrTransparent::~kpToolWidgetOpaqueOrTransparent () = default;
 
 //---------------------------------------------------------------------
 
@@ -92,11 +90,12 @@ bool kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col, bool saveAs
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
     qCDebug(kpLogWidgets) << "kpToolWidgetOpaqueOrTransparent::setSelected("
-               << row << "," << col << ")" << endl;
+               << row << "," << col << ")";
 #endif
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
-    if (ret)
+    if (ret) {
         emit isOpaqueChanged (isOpaque ());
+    }
     return ret;
 }
 

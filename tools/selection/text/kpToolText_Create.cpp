@@ -131,71 +131,69 @@ bool kpToolText::shouldCreate (bool dragAccepted,
             return false;
         }
         // We are probably creating a new box.
-        else
-        {
-            // This drag is currently a click -- not a drag.
-            // As a special case, allow user to create a text box,
-            // of reasonable ("preferred minimum") size, using a single
-            // click.
-            //
-            // If the user drags further, the normal drag-to-create-a-textbox
-            // branch [x] will execute and the size will be determined based on
-            // the size of the drag instead.
-
-        #if DEBUG_KP_TOOL_TEXT && 1
-            qCDebug(kpLogTools) << "\tclick creating text box";
-        #endif
-
-            // (Click creating text box with RMB would not be obvious
-            //  since RMB menu most likely hides text box immediately
-            //  afterwards)
-            // TODO: I suspect this logic is simply too late
-            // TODO: We setUserShapePoints() on return but didn't before.
-            if (mouseButton () == 1)
-                return false/*do not create text box*/;
 
 
-            // Calculate suggested width.
-            *minimumWidthOut = calcClickCreateDimension (
-                startPoint ().x (),
-                    accidentalDragAdjustedPoint.x (),
-                kpTextSelection::PreferredMinimumWidthForTextStyle (textStyle),
-                    kpTextSelection::MinimumWidthForTextStyle (textStyle),
-                document ()->width ());
+        // This drag is currently a click -- not a drag.
+        // As a special case, allow user to create a text box,
+        // of reasonable ("preferred minimum") size, using a single
+        // click.
+        //
+        // If the user drags further, the normal drag-to-create-a-textbox
+        // branch [x] will execute and the size will be determined based on
+        // the size of the drag instead.
 
-            // Calculate suggested height.
-            *minimumHeightOut = calcClickCreateDimension (
-                startPoint ().y (),
-                    accidentalDragAdjustedPoint.y (),
-                kpTextSelection::PreferredMinimumHeightForTextStyle (textStyle),
-                    kpTextSelection::MinimumHeightForTextStyle (textStyle),
-                document ()->height ());
+#if DEBUG_KP_TOOL_TEXT && 1
+        qCDebug(kpLogTools) << "\tclick creating text box";
+#endif
 
-
-            // Do _not_ set "newDragAccepted" to true as we want
-            // this text box to remain at the click-given size, in the absence
-            // of any dragging.  In other words, if draw() is called again
-            // and therefore, we are called again, but the mouse has not
-            // moved, we do want this branch to execute again, not
-            // Branch [x].
-            return true/*do create text box*/;
+        // (Click creating text box with RMB would not be obvious
+        //  since RMB menu most likely hides text box immediately
+        //  afterwards)
+        // TODO: I suspect this logic is simply too late
+        // TODO: We setUserShapePoints() on return but didn't before.
+        if (mouseButton () == 1) {
+            return false/*do not create text box*/;
         }
+
+
+        // Calculate suggested width.
+        *minimumWidthOut = calcClickCreateDimension (
+                    startPoint ().x (),
+                    accidentalDragAdjustedPoint.x (),
+                    kpTextSelection::PreferredMinimumWidthForTextStyle (textStyle),
+                    kpTextSelection::MinimumWidthForTextStyle (textStyle),
+                    document ()->width ());
+
+        // Calculate suggested height.
+        *minimumHeightOut = calcClickCreateDimension (
+                    startPoint ().y (),
+                    accidentalDragAdjustedPoint.y (),
+                    kpTextSelection::PreferredMinimumHeightForTextStyle (textStyle),
+                    kpTextSelection::MinimumHeightForTextStyle (textStyle),
+                    document ()->height ());
+
+
+        // Do _not_ set "newDragAccepted" to true as we want
+        // this text box to remain at the click-given size, in the absence
+        // of any dragging.  In other words, if draw() is called again
+        // and therefore, we are called again, but the mouse has not
+        // moved, we do want this branch to execute again, not
+        // Branch [x].
+        return true/*do create text box*/;
     }
     // Dragging to create a text box [x].
     //
     // The size will be determined based on the size of the drag.
-    else
-    {
-    #if DEBUG_KP_TOOL_TEXT && 1
-        qCDebug(kpLogTools) << "\tdrag creating text box";
-    #endif
-        *minimumWidthOut = kpTextSelection::MinimumWidthForTextStyle (textStyle);
-        *minimumHeightOut = kpTextSelection::MinimumHeightForTextStyle (textStyle);
 
-        *newDragAccepted = true;
-        return true/*do create text box*/;
-    }
 
+#if DEBUG_KP_TOOL_TEXT && 1
+    qCDebug(kpLogTools) << "\tdrag creating text box";
+#endif
+    *minimumWidthOut = kpTextSelection::MinimumWidthForTextStyle (textStyle);
+    *minimumHeightOut = kpTextSelection::MinimumHeightForTextStyle (textStyle);
+
+    *newDragAccepted = true;
+    return true/*do create text box*/;
 }
 
 // protected virtual [kpAbstractSelectionTool]
@@ -230,27 +228,30 @@ bool kpToolText::drawCreateMoreSelectionAndUpdateStatusBar (
     // calculated.
     if (normalizedRect.width () < minimumWidth)
     {
-        if (accidentalDragAdjustedPoint.x () >= startPoint ().x ())
+        if (accidentalDragAdjustedPoint.x () >= startPoint ().x ()) {
             normalizedRect.setWidth (minimumWidth);
-        else
+        }
+        else {
             normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
+        }
     }
 
     // Make sure the dragged out rectangle is of the minimum height we just
     // calculated.
     if (normalizedRect.height () < minimumHeight)
     {
-        if (accidentalDragAdjustedPoint.y () >= startPoint ().y ())
+        if (accidentalDragAdjustedPoint.y () >= startPoint ().y ()) {
             normalizedRect.setHeight (minimumHeight);
-        else
+        }
+        else {
             normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
+        }
     }
 
 #if DEBUG_KP_TOOL_TEXT && 1
     qCDebug(kpLogTools) << "\t\tnormalizedRect=" << normalizedRect
                 << " kpTextSelection::preferredMinimumSize="
-                    << QSize (minimumWidth, minimumHeight)
-                << endl;
+                    << QSize (minimumWidth, minimumHeight);
 #endif
 
 
@@ -272,14 +273,18 @@ bool kpToolText::drawCreateMoreSelectionAndUpdateStatusBar (
     //
 
     QPoint actualEndPoint = KP_INVALID_POINT;
-    if (startPoint () == normalizedRect.topLeft ())
+    if (startPoint () == normalizedRect.topLeft ()) {
         actualEndPoint = normalizedRect.bottomRight ();
-    else if (startPoint () == normalizedRect.bottomRight ())
+    }
+    else if (startPoint () == normalizedRect.bottomRight ()) {
         actualEndPoint = normalizedRect.topLeft ();
-    else if (startPoint () == normalizedRect.topRight ())
+    }
+    else if (startPoint () == normalizedRect.topRight ()) {
         actualEndPoint = normalizedRect.bottomLeft ();
-    else if (startPoint () == normalizedRect.bottomLeft ())
+    }
+    else if (startPoint () == normalizedRect.bottomLeft ()) {
         actualEndPoint = normalizedRect.topRight ();
+    }
 
     setUserShapePoints (startPoint (), actualEndPoint);
 

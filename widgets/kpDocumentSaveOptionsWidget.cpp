@@ -105,7 +105,7 @@ void kpDocumentSaveOptionsWidget::init ()
     m_qualityLabel->setBuddy (m_qualityInput);
 
 
-    QHBoxLayout *lay = new QHBoxLayout (this);
+    auto *lay = new QHBoxLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
 
     lay->addWidget (m_colorDepthLabel, 0/*stretch*/, Qt::AlignLeft);
@@ -246,12 +246,15 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
 
     m_baseDocumentSaveOptions.setMimeType (string);
 
-    if (mimeTypeHasConfigurableColorDepth ())
+    if (mimeTypeHasConfigurableColorDepth ()) {
         setMode (ColorDepth);
-    else if (mimeTypeHasConfigurableQuality ())
+    }
+    else if (mimeTypeHasConfigurableQuality ()) {
         setMode (Quality);
-    else
+    }
+    else {
         setMode (None);
+    }
 
     updatePreview ();
 }
@@ -295,44 +298,31 @@ bool kpDocumentSaveOptionsWidget::dither () const
         return (m_colorDepthCombo->currentIndex () == 1 ||
                 m_colorDepthCombo->currentIndex () == 3);
     }
-    else
-    {
-        return m_baseDocumentSaveOptions.dither ();
-    }
+
+    return m_baseDocumentSaveOptions.dither ();
 }
 
 // protected static
 int kpDocumentSaveOptionsWidget::colorDepthComboItemFromColorDepthAndDither (
     int depth, bool dither)
 {
-    if (depth == 1)
-    {
-        if (!dither)
-        {
+    switch (depth) {
+    case 1:
+        if (!dither) {
             return 0;
         }
-        else
-        {
-            return 1;
-        }
-    }
-    else if (depth == 8)
-    {
-        if (!dither)
-        {
+        return 1;
+
+    case 8:
+        if (!dither) {
             return 2;
         }
-        else
-        {
-            return 3;
-        }
-    }
-    else if (depth == 32)
-    {
+        return 3;
+
+    case 32:
         return 4;
-    }
-    else
-    {
+
+    default:
         return -1;
     }
 }
@@ -355,8 +345,9 @@ void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDit
     //       This happens if this mimeType has configurable colour depth
     //       and an incorrect maximum colour depth (less than a QImage of
     //       this mimeType, opened by kpDocument).
-    if (comboItem >= 0 && comboItem < m_colorDepthCombo->count ())
+    if (comboItem >= 0 && comboItem < m_colorDepthCombo->count ()) {
         m_colorDepthCombo->setCurrentIndex (comboItem);
+    }
 
 
     slotColorDepthSelected ();
@@ -392,10 +383,8 @@ int kpDocumentSaveOptionsWidget::quality () const
     {
         return m_qualityInput->value ();
     }
-    else
-    {
-        return m_baseDocumentSaveOptions.quality ();
-    }
+
+    return m_baseDocumentSaveOptions.quality ();
 }
 
 // public
@@ -484,10 +473,12 @@ void kpDocumentSaveOptionsWidget::setMode (Mode mode)
 // protected slot
 void kpDocumentSaveOptionsWidget::repaintLabels ()
 {
-    if (mode () != Quality)
+    if (mode () != Quality) {
         m_colorDepthLabel->repaint ();
-    if (mode () == Quality)
+    }
+    if (mode () == Quality) {
         m_qualityLabel->repaint ();
+    }
 }
 
 
@@ -497,11 +488,13 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::showPreview(" << yes << ")"
                << " m_previewDialog=" << bool (m_previewDialog);
 
-    if (yes == bool (m_previewDialog))
+    if (yes == bool (m_previewDialog)) {
         return;
+    }
 
-    if (!m_visualParent)
+    if (!m_visualParent) {
         return;
+    }
 
     if (yes)
     {
@@ -525,10 +518,10 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
             cfg.sync ();
         }
 
-        if (m_updatePreviewDelay < 0)
+        if (m_updatePreviewDelay < 0) {
             m_updatePreviewDelay = 0;
-        qCDebug(kpLogWidgets) << "\tread cfg preview dialog update delay="
-                   << m_updatePreviewDelay;
+        }
+        qCDebug(kpLogWidgets) << "\tread cfg preview dialog update delay=" << m_updatePreviewDelay;
 
 
         if (m_previewDialogLastRelativeGeometry.isEmpty ())
@@ -618,8 +611,9 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 // protected slot
 void kpDocumentSaveOptionsWidget::hidePreview ()
 {
-    if (m_previewButton->isChecked ())
+    if (m_previewButton->isChecked ()) {
         m_previewButton->toggle ();
+    }
 }
 
 
@@ -633,8 +627,9 @@ void kpDocumentSaveOptionsWidget::updatePreviewDelayed ()
 // protected slot
 void kpDocumentSaveOptionsWidget::updatePreview ()
 {
-    if (!m_previewDialog || !m_documentPixmap)
+    if (!m_previewDialog || !m_documentPixmap) {
         return;
+    }
 
 
     m_updatePreviewTimer->stop ();
@@ -693,8 +688,7 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
                 QRect (m_previewDialog->x (), m_previewDialog->y (),
                        m_previewDialog->width (), m_previewDialog->height ()));
         qCDebug(kpLogWidgets) << "\tcaching pos = "
-                   << m_previewDialogLastRelativeGeometry
-                   << endl;
+                   << m_previewDialogLastRelativeGeometry;
     }
     else
     {

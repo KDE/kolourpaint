@@ -51,7 +51,7 @@ kpPreeditText::kpPreeditText (const QInputMethodEvent *event)
       m_position (-1, -1)
 {
     m_preeditString = event->preeditString ();
-    foreach (const QInputMethodEvent::Attribute &attr, event->attributes ())
+    for (const auto &attr : event->attributes ())
     {
         switch (attr.type)
         {

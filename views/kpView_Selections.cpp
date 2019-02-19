@@ -47,8 +47,9 @@ QRect kpView::selectionViewRect () const
 // public
 QPoint kpView::mouseViewPointRelativeToSelection (const QPoint &viewPoint) const
 {
-    if (!selection ())
+    if (!selection ()) {
         return KP_INVALID_POINT;
+    }
 
     return mouseViewPoint (viewPoint) - transformDocToView (selection ()->topLeft ());
 }
@@ -57,8 +58,9 @@ QPoint kpView::mouseViewPointRelativeToSelection (const QPoint &viewPoint) const
 bool kpView::mouseOnSelection (const QPoint &viewPoint) const
 {
     const QRect selViewRect = selectionViewRect ();
-    if (!selViewRect.isValid ())
+    if (!selViewRect.isValid ()) {
         return false;
+    }
 
     return selViewRect.contains (mouseViewPoint (viewPoint));
 }
@@ -67,8 +69,9 @@ bool kpView::mouseOnSelection (const QPoint &viewPoint) const
 // public
 int kpView::textSelectionMoveBorderAtomicSize () const
 {
-    if (!textSelection ())
+    if (!textSelection ()) {
         return 0;
+    }
 
     return qMax (4, zoomLevelX () / 100);
 }
@@ -76,14 +79,17 @@ int kpView::textSelectionMoveBorderAtomicSize () const
 // public
 bool kpView::mouseOnSelectionToMove (const QPoint &viewPoint) const
 {
-    if (!mouseOnSelection (viewPoint))
+    if (!mouseOnSelection (viewPoint)) {
         return false;
+    }
 
-    if (!textSelection ())
+    if (!textSelection ()) {
         return true;
+    }
 
-    if (mouseOnSelectionResizeHandle (viewPoint))
+    if (mouseOnSelectionResizeHandle (viewPoint)) {
         return false;
+    }
 
 
     const QPoint viewPointRelSel = mouseViewPointRelativeToSelection (viewPoint);
@@ -111,8 +117,9 @@ bool kpView::mouseOnSelectionToMove (const QPoint &viewPoint) const
 // protected
 bool kpView::selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const
 {
-    if (!selection ())
+    if (!selection ()) {
         return false;
+    }
 
     const QRect selViewRect = selectionViewRect ();
 
@@ -149,8 +156,9 @@ bool kpView::selectionLargeEnoughToHaveResizeHandles () const
 QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 {
     const int atomicLength = selectionResizeHandleAtomicSize ();
-    if (atomicLength <= 0)
+    if (atomicLength <= 0) {
         return QRegion ();
+    }
 
 
     // HACK: At low zoom (e.g. 100%), resize handles will probably be too
@@ -169,20 +177,24 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
     {
         if (zoomLevelX () <= 150)
         {
-            if (normalAtomicLength > 1)
+            if (normalAtomicLength > 1) {
                 normalAtomicLength--;
+            }
 
-            if (vertEdgeAtomicLength > 1)
+            if (vertEdgeAtomicLength > 1) {
                 vertEdgeAtomicLength--;
+            }
         }
 
         // 1 line of text?
         if (textSelection () && textSelection ()->textLines ().size () == 1)
         {
-            if (zoomLevelX () <= 150)
+            if (zoomLevelX () <= 150) {
                 vertEdgeAtomicLength = qMin (vertEdgeAtomicLength, qMax (2, zoomLevelX () / 100));
-            else if (zoomLevelX () <= 250)
+            }
+            else if (zoomLevelX () <= 250) {
                 vertEdgeAtomicLength = qMin (vertEdgeAtomicLength, qMax (3, zoomLevelX () / 100));
+            }
         }
     }
 
@@ -271,41 +283,47 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
     {
         return kpView::Bottom | kpView::Right;
     }
-    else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength, 0))
+
+    if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength, 0))
     {
         return kpView::Top | kpView::Right;
     }
-    else if (LOCAL_POINT_IN_BOX_AT (0, selViewRect.height () - atomicLength))
+
+    if (LOCAL_POINT_IN_BOX_AT (0, selViewRect.height () - atomicLength))
     {
         return kpView::Bottom | kpView::Left;
     }
-    else if (LOCAL_POINT_IN_BOX_AT (0, 0))
+
+    if (LOCAL_POINT_IN_BOX_AT (0, 0))
     {
         return kpView::Top | kpView::Left;
     }
-    else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
+
+    if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
                                     (selViewRect.height () - atomicLength) / 2))
     {
         return kpView::Right;
     }
-    else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2,
+
+    if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2,
                                     selViewRect.height () - atomicLength))
     {
         return kpView::Bottom;
     }
-    else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2, 0))
+
+    if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2, 0))
     {
         return kpView::Top;
     }
-    else if (LOCAL_POINT_IN_BOX_AT (0, (selViewRect.height () - atomicLength) / 2))
+
+    if (LOCAL_POINT_IN_BOX_AT (0, (selViewRect.height () - atomicLength) / 2))
     {
         return kpView::Left;
     }
-    else
-    {
-        qCDebug(kpLogViews) << "\tnot on sel resize handle";
-        return 0;
-    }
+
+    qCDebug(kpLogViews) << "\tnot on sel resize handle";
+    return 0;
+
 #undef LOCAL_POINT_IN_BOX_AT
 }
 

@@ -75,8 +75,9 @@
 // private
 kpToolSelectionEnvironment *kpMainWindow::toolSelectionEnvironment ()
 {
-    if (!d->toolSelectionEnvironment)
+    if (!d->toolSelectionEnvironment) {
         d->toolSelectionEnvironment = new kpToolSelectionEnvironment (this);
+    }
 
     return d->toolSelectionEnvironment;
 }
@@ -191,8 +192,9 @@ void kpMainWindow::createToolBox ()
 
     updateActionDrawOpaqueChecked ();
 
-    foreach (kpTool *tool, d->tools)
+    for (auto *tool : d->tools) {
       d->toolToolBar->registerTool(tool);
+    }
 
     // (from config file)
     readLastTool ();
@@ -213,14 +215,17 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 
         // select tool for enabled Tool Box
 
-        if (previousTool)
+        if (previousTool) {
             d->toolToolBar->selectPreviousTool ();
+        }
         else
         {
-            if (d->lastToolNumber >= 0 && d->lastToolNumber < d->tools.count ())
+            if (d->lastToolNumber >= 0 && d->lastToolNumber < d->tools.count ()) {
                 d->toolToolBar->selectTool (d->tools.at (d->lastToolNumber));
-            else
+            }
+            else {
                 d->toolToolBar->selectTool (d->toolPen);
+            }
         }
     }
     else if (!enable && d->toolToolBar->isEnabled ())
@@ -233,11 +238,12 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     d->toolToolBar->setEnabled (enable);
 
 
-    foreach (kpTool *tool, d->tools)
+    for (auto *tool : d->tools)
     {
       kpToolAction *action = tool->action();
-      if (!enable && action->isChecked())
+      if (!enable && action->isChecked()) {
           action->setChecked(false);
+      }
 
       action->setEnabled(enable);
     }
@@ -294,9 +300,8 @@ void kpMainWindow::updateActionDrawOpaqueEnabled ()
     const bool enable = d->toolActionsEnabled;
 
     qCDebug(kpLogMainWindow) << "\tenable=" << enable
-              << " tool=" << (tool () ? tool ()->objectName () : 0)
-              << " (is selection=" << toolIsASelectionTool () << ")"
-              << endl;
+              << " tool=" << (tool () ? tool ()->objectName () : nullptr)
+              << " (is selection=" << toolIsASelectionTool () << ")";
 
     d->actionDrawOpaque->setEnabled (enable && toolIsASelectionTool ());
 }
@@ -306,8 +311,9 @@ void kpMainWindow::updateActionDrawOpaqueEnabled ()
 // public
 QActionGroup *kpMainWindow::toolsActionGroup ()
 {
-    if (!d->toolsActionGroup)
+    if (!d->toolsActionGroup) {
         d->toolsActionGroup = new QActionGroup (this);
+    }
 
     return d->toolsActionGroup;
 }
@@ -356,8 +362,9 @@ bool kpMainWindow::toolIsTextTool () const
 // private
 void kpMainWindow::toolEndShape ()
 {
-    if (toolHasBegunShape ())
+    if (toolHasBegunShape ()) {
         tool ()->endShapeInternal ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -377,9 +384,8 @@ kpImageSelectionTransparency kpMainWindow::imageSelectionTransparency () const
 void kpMainWindow::setImageSelectionTransparency (const kpImageSelectionTransparency &transparency, bool forceColorChange)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::setImageSelectionTransparency() isOpaque=" << transparency.isOpaque ()
-               << " color=" << (transparency.transparentColor ().isValid () ? (int *) transparency.transparentColor ().toQRgb () : 0)
-               << " forceColorChange=" << forceColorChange
-               << endl;
+               << " color=" << (transparency.transparentColor ().isValid () ? (int *) transparency.transparentColor ().toQRgb () : nullptr)
+               << " forceColorChange=" << forceColorChange;
 
     kpToolWidgetOpaqueOrTransparent *oot = d->toolToolBar->toolWidgetOpaqueOrTransparent ();
     Q_ASSERT (oot);
@@ -513,8 +519,9 @@ int kpMainWindow::toolNumber () const
          it != d->tools.constEnd ();
          ++it)
     {
-        if (*it == tool ())
+        if (*it == tool ()) {
             return number;
+        }
 
         number++;
     }
@@ -528,8 +535,9 @@ int kpMainWindow::toolNumber () const
 void kpMainWindow::saveLastTool ()
 {
     int number = toolNumber ();
-    if (number < 0 || number >= d->tools.count ())
+    if (number < 0 || number >= d->tools.count ()) {
         return;
+    }
 
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
@@ -559,17 +567,14 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
   Q_UNUSED(docLastPoint)
 
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotDragScroll() maybeDragScrolling="
-               << maybeDragScrollingMainView ()
-               << endl;
+               << maybeDragScrollingMainView ();
 
     if (maybeDragScrollingMainView ())
     {
         return d->scrollView->beginDragScroll(zoomLevel, scrolled);
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 //---------------------------------------------------------------------
@@ -678,11 +683,11 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotDocResizeMessageChanged(" << string
-               << ") docResizeToBeCompleted=" << d->docResizeToBeCompleted
-               << endl;
+               << ") docResizeToBeCompleted=" << d->docResizeToBeCompleted;
 
-    if (d->docResizeToBeCompleted)
+    if (d->docResizeToBeCompleted) {
         return;
+    }
 
     recalculateStatusBarMessage ();
 }
@@ -693,8 +698,9 @@ void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 // private slot
 void kpMainWindow::slotActionPrevToolOptionGroup1 ()
 {
-    if (!d->toolToolBar->shownToolWidget (0))
+    if (!d->toolToolBar->shownToolWidget (0)) {
         return;
+    }
 
     // We don't call toolEndShape() here because we want #23 in the file BUGS
     // to later work.
@@ -708,8 +714,9 @@ void kpMainWindow::slotActionPrevToolOptionGroup1 ()
 // private slot
 void kpMainWindow::slotActionNextToolOptionGroup1 ()
 {
-    if (!d->toolToolBar->shownToolWidget (0))
+    if (!d->toolToolBar->shownToolWidget (0)) {
         return;
+    }
 
     // We don't call toolEndShape() here because we want #23 in the file BUGS
     // to later work.
@@ -724,8 +731,9 @@ void kpMainWindow::slotActionNextToolOptionGroup1 ()
 // private slot
 void kpMainWindow::slotActionPrevToolOptionGroup2 ()
 {
-    if (!d->toolToolBar->shownToolWidget (1))
+    if (!d->toolToolBar->shownToolWidget (1)) {
         return;
+    }
 
     // We don't call toolEndShape() here because we want #23 in the file BUGS
     // to later work.
@@ -739,8 +747,9 @@ void kpMainWindow::slotActionPrevToolOptionGroup2 ()
 // private slot
 void kpMainWindow::slotActionNextToolOptionGroup2 ()
 {
-    if (!d->toolToolBar->shownToolWidget (1))
+    if (!d->toolToolBar->shownToolWidget (1)) {
         return;
+    }
 
     // We don't call toolEndShape() here because we want #23 in the file BUGS
     // to later work.

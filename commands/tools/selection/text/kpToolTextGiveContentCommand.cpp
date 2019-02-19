@@ -45,13 +45,10 @@ kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (
     : kpAbstractSelectionContentCommand (originalSelBorder, name, environ)
 {
     qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::<ctor>() environ="
-               << environ
-               << endl;
+               << environ;
 }
 
-kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand ()
-{
-}
+kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand () = default;
 
 
 // public virtual [base kpCommand]
@@ -96,10 +93,12 @@ void kpToolTextGiveContentCommand::execute ()
         //    b) text selection with no content, at an arbitrary location
         Q_ASSERT (!textSelection () || !textSelection ()->hasContent ());
 
-        const kpTextSelection *originalTextSel =
-            static_cast <const kpTextSelection *> (originalSelection ());
-        if (originalTextSel->textStyle () != environ ()->textStyle ())
+        const auto *originalTextSel = dynamic_cast <const kpTextSelection *>
+                (originalSelection ());
+
+        if (originalTextSel->textStyle () != environ ()->textStyle ()) {
             environ ()->setTextStyle (originalTextSel->textStyle ());
+        }
 
         doc->setSelection (*originalSelection ());
 

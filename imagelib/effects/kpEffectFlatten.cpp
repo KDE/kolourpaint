@@ -33,8 +33,9 @@
 void kpEffectFlatten::applyEffect (QImage *destImagePtr,
         const QColor &color1, const QColor &color2)
 {
-    if (!destImagePtr)
+    if (!destImagePtr) {
         return;
+    }
 
     Blitz::flatten (*destImagePtr/*ref*/, color1, color2);
 }

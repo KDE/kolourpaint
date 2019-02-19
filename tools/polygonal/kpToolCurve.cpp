@@ -109,9 +109,7 @@ kpToolCurve::kpToolCurve (kpToolEnvironment *environ, QObject *parent)
 {
 }
 
-kpToolCurve::~kpToolCurve ()
-{
-}
+kpToolCurve::~kpToolCurve () = default;
 
 
 // protected virtual [base kpToolPolygonalBase]
@@ -134,7 +132,7 @@ bool kpToolCurve::drawingALine () const
 void kpToolCurve::endDraw (const QPoint &, const QRect &)
 {
     qCDebug(kpLogTools) << "kpToolCurve::endDraw()  points="
-        << points ()->toList () << endl;
+        << points ()->toList ();
 
     switch (points ()->count ())
     {

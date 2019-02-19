@@ -174,17 +174,15 @@ kpColor kpTransformAutoCropBorder::averageColor () const
 
     if (m_referenceColor.isTransparent ())
         return kpColor::Transparent;
-    else if (m_processedColorSimilarity == 0)
-        return m_referenceColor;
-    else
-    {
-        int numPixels = (m_rect.width () * m_rect.height ());
-        Q_ASSERT (numPixels > 0);
 
-        return kpColor (m_redSum / numPixels,
-                        m_greenSum / numPixels,
-                        m_blueSum / numPixels);
-    }
+    if (m_processedColorSimilarity == 0)
+        return m_referenceColor;
+
+    int numPixels = (m_rect.width () * m_rect.height ());
+    Q_ASSERT (numPixels > 0);
+
+    return kpColor (m_redSum / numPixels, m_greenSum / numPixels, m_blueSum / numPixels);
+
 }
 
 //---------------------------------------------------------------------
@@ -322,13 +320,13 @@ void kpTransformAutoCropBorder::invalidate ()
 
 struct kpTransformAutoCropCommandPrivate
 {
-    bool actOnSelection;
+    bool actOnSelection{};
     kpTransformAutoCropBorder leftBorder, rightBorder, topBorder, botBorder;
-    kpImage *leftImage, *rightImage, *topImage, *botImage;
+    kpImage *leftImage{}, *rightImage{}, *topImage{}, *botImage{};
 
     QRect contentsRect;
-    int oldWidth, oldHeight;
-    kpAbstractImageSelection *oldSelectionPtr;
+    int oldWidth{}, oldHeight{};
+    kpAbstractImageSelection *oldSelectionPtr{};
 };
 
 // REFACTOR: Move to /commands/
@@ -377,18 +375,17 @@ QString kpTransformAutoCropCommand::text(bool actOnSelection, int options)
 {
     if (actOnSelection)
     {
-        if (options & kpTransformAutoCropCommand::ShowAccel)
+        if (options & kpTransformAutoCropCommand::ShowAccel) {
             return i18n ("Remove Internal B&order");
-        else
-            return i18n ("Remove Internal Border");
+        }
+
+        return i18n ("Remove Internal Border");
     }
-    else
-    {
-        if (options & kpTransformAutoCropCommand::ShowAccel)
-            return i18n ("Autocr&op");
-        else
-            return i18n ("Autocrop");
-    }
+
+    if (options & kpTransformAutoCropCommand::ShowAccel)
+        return i18n ("Autocr&op");
+
+    return i18n ("Autocrop");
 }
 
 //---------------------------------------------------------------------
@@ -418,8 +415,7 @@ void kpTransformAutoCropCommand::getUndoImage (const kpTransformAutoCropBorder &
     qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::getUndoImage()";
     qCDebug(kpLogImagelib) << "\timage=" << image
                << " border: rect=" << border.rect ()
-               << " isSingleColor=" << border.isSingleColor ()
-               << endl;
+               << " isSingleColor=" << border.isSingleColor ();
 
     if (image && border.exists () && !border.isSingleColor ())
     {
@@ -460,8 +456,9 @@ void kpTransformAutoCropCommand::deleteUndoImages ()
 // public virtual [base kpCommand]
 void kpTransformAutoCropCommand::execute ()
 {
-    if (!d->contentsRect.isValid ())
+    if (!d->contentsRect.isValid ()) {
         d->contentsRect = contentsRect ();
+    }
 
 
     getUndoImages ();
@@ -476,10 +473,10 @@ void kpTransformAutoCropCommand::execute ()
                               d->contentsRect);
 
 
-    if (!d->actOnSelection)
+    if (!d->actOnSelection) {
         doc->setImage (imageWithoutBorder);
-    else
-    {
+    }
+    else {
         d->oldSelectionPtr = doc->imageSelection ()->clone ();
         d->oldSelectionPtr->setBaseImage (kpImage ());
 
@@ -532,15 +529,16 @@ void kpTransformAutoCropCommand::unexecute ()
     const kpImage **p = images;
     for (const kpTransformAutoCropBorder **b = borders; *b; b++, p++)
     {
-        if (!(*b)->exists ())
+        if (!(*b)->exists ()) {
             continue;
+        }
 
         if ((*b)->isSingleColor ())
         {
             kpColor col = (*b)->referenceColor ();
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
             qCDebug(kpLogImagelib) << "\tdrawing border " << (*b)->rect ()
-                       << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
+                       << " rgb=" << (int *) col.toQRgb () /* %X hack */;
         #endif
 
             const QRect r = (*b)->rect ();
@@ -562,8 +560,9 @@ void kpTransformAutoCropCommand::unexecute ()
     }
 
 
-    if (!d->actOnSelection)
+    if (!d->actOnSelection) {
         doc->setImage (image);
+    }
     else
     {
         d->oldSelectionPtr->setBaseImage (image);
@@ -597,7 +596,7 @@ QRect kpTransformAutoCropCommand::contentsRect () const
                          d->botBorder.rect ().top () - 1 :
                          image.height () - 1);
 
-    return QRect (topLeft, botRight);
+    return {topLeft, botRight};
 }
 
 
@@ -673,8 +672,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
         qCDebug(kpLogImagelib) << "\tcan't find border; leftBorder.rect=" << leftBorder.rect ()
                    << " rightBorder.rect=" << rightBorder.rect ()
                    << " topBorder.rect=" << topBorder.rect ()
-                   << " botBorder.rect=" << botBorder.rect ()
-                   << endl;
+                   << " botBorder.rect=" << botBorder.rect ();
     #endif
         ::ShowNothingToAutocropMessage (mainWindow, static_cast<bool> (doc->selection ()));
         return false;
@@ -682,21 +680,17 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
 
     qCDebug(kpLogImagelib) << "\tnumRegions=" << numRegions;
     qCDebug(kpLogImagelib) << "\t\tleft=" << leftBorder.rect ()
-               << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : 0)
-               << " avgCol=" << (leftBorder.exists () ? (int *) leftBorder.averageColor ().toQRgb () : 0)
-               << endl;
+               << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : nullptr)
+               << " avgCol=" << (leftBorder.exists () ? (int *) leftBorder.averageColor ().toQRgb () : nullptr);
     qCDebug(kpLogImagelib) << "\t\tright=" << rightBorder.rect ()
-               << " refCol=" << (rightBorder.exists () ? (int *) rightBorder.referenceColor ().toQRgb () : 0)
-               << " avgCol=" << (rightBorder.exists () ? (int *) rightBorder.averageColor ().toQRgb () : 0)
-               << endl;
+               << " refCol=" << (rightBorder.exists () ? (int *) rightBorder.referenceColor ().toQRgb () : nullptr)
+               << " avgCol=" << (rightBorder.exists () ? (int *) rightBorder.averageColor ().toQRgb () : nullptr);
     qCDebug(kpLogImagelib) << "\t\ttop=" << topBorder.rect ()
-               << " refCol=" << (topBorder.exists () ? (int *) topBorder.referenceColor ().toQRgb () : 0)
-               << " avgCol=" << (topBorder.exists () ? (int *) topBorder.averageColor ().toQRgb () : 0)
-               << endl;
+               << " refCol=" << (topBorder.exists () ? (int *) topBorder.referenceColor ().toQRgb () : nullptr)
+               << " avgCol=" << (topBorder.exists () ? (int *) topBorder.averageColor ().toQRgb () : nullptr);
     qCDebug(kpLogImagelib) << "\t\tbot=" << botBorder.rect ()
-               << " refCol=" << (botBorder.exists () ? (int *) botBorder.referenceColor ().toQRgb () : 0)
-               << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : 0)
-               << endl;
+               << " refCol=" << (botBorder.exists () ? (int *) botBorder.referenceColor ().toQRgb () : nullptr)
+               << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : nullptr);
 
 
     // In case e.g. the user pastes a solid, coloured-in rectangle,

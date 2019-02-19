@@ -49,23 +49,19 @@ kpEffectReduceColorsCommand::kpEffectReduceColorsCommand (int depth, bool dither
 // public
 QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
 {
-    if (depth == 1)
-    {
-        if (dither)
+    switch (depth) {
+    case 1: if (dither) {
             return i18n ("Reduce to Monochrome (Dithered)");
-        else
-            return i18n ("Reduce to Monochrome");
-    }
-    else if (depth == 8)
-    {
-        if (dither)
+        }
+        return i18n ("Reduce to Monochrome");
+
+    case 8:
+        if (dither) {
             return i18n ("Reduce to 256 Color (Dithered)");
-        else
-            return i18n ("Reduce to 256 Color");
-    }
-    else
-    {
-        return QString();
+        }
+        return i18n ("Reduce to 256 Color");
+
+    default: return QString();
     }
 }
 

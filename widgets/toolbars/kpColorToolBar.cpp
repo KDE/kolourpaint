@@ -175,7 +175,7 @@ kpColor kpColorToolBar::foregroundColor () const
 void kpColorToolBar::setForegroundColor (const kpColor &color)
 {
     qCDebug(kpLogWidgets) << "kpColorToolBar::setForegroundColor("
-              << (int *) color.toQRgb () << ")" << endl;
+              << (int *) color.toQRgb () << ")";
     m_dualColorButton->setForegroundColor (color);
 }
 
@@ -191,7 +191,7 @@ kpColor kpColorToolBar::backgroundColor () const
 void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
     qCDebug(kpLogWidgets) << "kpColorToolBar::setBackgroundColor("
-              << (int *) color.toQRgb () << ")" << endl;
+              << (int *) color.toQRgb () << ")";
     m_dualColorButton->setBackgroundColor (color);
 }
 
@@ -260,18 +260,22 @@ void kpColorToolBar::updateNameOrUrlLabel ()
     QString name;
 
     kpColorCells *colorCells = m_colorPalette->colorCells ();
-    if (!colorCells->url ().isEmpty ())
+    if (!colorCells->url ().isEmpty ()) {
         name = kpUrlFormatter::PrettyFilename (colorCells->url ());
+    }
     else
     {
-        if (!colorCells->name ().isEmpty ())
+        if (!colorCells->name ().isEmpty ()) {
             name = colorCells->name ();
-        else
+        }
+        else {
             name = i18n ("KolourPaint Defaults");
+        }
     }
 
-    if (name.isEmpty ())
+    if (name.isEmpty ()) {
         name = i18n ("Untitled");
+    }
 
 
     KLocalizedString labelStr;
@@ -309,7 +313,7 @@ void kpColorToolBar::dragEnterEvent (QDragEnterEvent *e)
 {
     // Grab the color drag for this widget, preventing it from being
     // handled by our parent, the main window.
-    e->setAccepted (KColorMimeData::canDecode (e->mimeData ()) == true);
+    e->setAccepted (KColorMimeData::canDecode (e->mimeData ()));
     qCDebug(kpLogWidgets) << "isAccepted=" << e->isAccepted ();
 }
 
@@ -319,6 +323,6 @@ void kpColorToolBar::dragEnterEvent (QDragEnterEvent *e)
 void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 {
     // Stop the grabbed drag from being dropped.
-    e->setAccepted (KColorMimeData::canDecode (e->mimeData ()) == false);
+    e->setAccepted (!KColorMimeData::canDecode (e->mimeData ()));
     qCDebug(kpLogWidgets) << "isAccepted=" << e->isAccepted ();
 }

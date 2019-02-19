@@ -44,9 +44,7 @@ kpCommandHistory::kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow)
 {
 }
 
-kpCommandHistory::~kpCommandHistory ()
-{
-}
+kpCommandHistory::~kpCommandHistory () = default;
 
 
 static bool NextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory)
@@ -54,12 +52,14 @@ static bool NextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory)
     Q_ASSERT (commandHistory);
 
     kpCommand *cmd = commandHistory->nextUndoCommand ();
-    if (!cmd)
+    if (!cmd) {
         return false;
+    }
 
-    kpToolSelectionCreateCommand *c = dynamic_cast <kpToolSelectionCreateCommand *> (cmd);
-    if (!c)
+    auto *c = dynamic_cast <kpToolSelectionCreateCommand *> (cmd);
+    if (!c) {
         return false;
+    }
 
     const kpAbstractSelection *sel = c->fromSelection ();
     Q_ASSERT (sel);
@@ -80,11 +80,13 @@ void kpCommandHistory::addCreateSelectionCommand (kpToolSelectionCreateCommand *
     if (::NextUndoCommandIsCreateBorder (this))
     {
         setNextUndoCommand (cmd);
-        if (execute)
+        if (execute) {
             cmd->execute ();
+        }
     }
-    else
+    else {
         addCommand (cmd, execute);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -98,8 +100,9 @@ void kpCommandHistory::undo ()
         qCDebug(kpLogCommands) << "\thas begun shape - cancel draw";
         m_mainWindow->tool ()->cancelShapeInternal ();
     }
-    else
+    else {
         kpCommandHistoryBase::undo ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -117,8 +120,9 @@ void kpCommandHistory::redo ()
         // down).
         m_mainWindow->tool ()->cancelShapeInternal ();
     }
-    else
+    else {
         kpCommandHistoryBase::redo ();
+    }
 }
 
 

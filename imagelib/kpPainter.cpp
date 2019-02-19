@@ -107,8 +107,9 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
     int x = 0;
     int y = 0;
 
-    if (SHOULD_DRAW ())
+    if (SHOULD_DRAW ()) {
         ret.append (QPoint (plotx, ploty));
+    }
 
 
     for (int i = 0; i <= inc; i++)
@@ -126,10 +127,12 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
             plot++;
             x -= inc;
 
-            if (dx < 0)
+            if (dx < 0) {
                 plotx--;
-            else
+            }
+            else {
                 plotx++;
+            }
         }
 
         if (y > inc)
@@ -137,10 +140,12 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
             plot++;
             y -= inc;
 
-            if (dy < 0)
+            if (dy < 0) {
                 ploty--;
-            else
+            }
+            else {
                 ploty++;
+            }
         }
 
         if (plot)
@@ -152,12 +157,14 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
                 // is more than 1 point, of course).  This is in contrast to the
                 // ordinary line algorithm which can create diagonal adjacencies.
 
-                if (SHOULD_DRAW ())
+                if (SHOULD_DRAW ()) {
                     ret.append (QPoint (plotx, oldploty));
+                }
             }
 
-            if (SHOULD_DRAW ())
+            if (SHOULD_DRAW ()) {
                 ret.append (QPoint (plotx, ploty));
+            }
         }
     }
 
@@ -240,19 +247,22 @@ static bool ReadableImageWashRect (QPainter *rgbPainter,
             if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace, processedColorSimilarity))
             {
                 fprintf (stderr, "similar\n");
-                if (startDrawX < 0)
+                if (startDrawX < 0) {
                     startDrawX = x;
+                }
             }
             else
             {
                 fprintf (stderr, "different\n");
-                if (startDrawX >= 0)
+                if (startDrawX >= 0) {
                     FLUSH_LINE ();
+                }
             }
         }
 
-        if (startDrawX >= 0)
+        if (startDrawX >= 0) {
             FLUSH_LINE ();
+        }
     }
 
 #undef FLUSH_LINE
@@ -266,9 +276,9 @@ struct WashPack
 {
     QPoint startPoint, endPoint;
     kpColor color;
-    int penWidth, penHeight;
+    int penWidth{}, penHeight{};
     kpColor colorToReplace;
-    int processedColorSimilarity;
+    int processedColorSimilarity{};
 
     QRect readableImageRect;
     QImage readableImage;
@@ -312,15 +322,16 @@ void WashHelperSetup (QPainter *rgbPainter, const WashPack *pack)
 {
     // Set the drawing colors for the painters.
 
-    if (rgbPainter)
+    if (rgbPainter) {
         rgbPainter->setPen (pack->color.toQColor());
+    }
 }
 
 //---------------------------------------------------------------------
 
 static QRect WashLineHelper (QPainter *rgbPainter, void *data)
 {
-    WashPack *pack = static_cast <WashPack *> (data);
+    auto *pack = static_cast <WashPack *> (data);
 
     // Setup painters.
     ::WashHelperSetup (rgbPainter, pack);
@@ -376,7 +387,7 @@ QRect kpPainter::washLine (kpImage *image,
 
 static QRect WashRectHelper (QPainter *rgbPainter, void *data)
 {
-    WashPack *pack = static_cast <WashPack *> (data);
+    auto *pack = static_cast <WashPack *> (data);
 
     // Setup painters.
     ::WashHelperSetup (rgbPainter, pack);
@@ -434,7 +445,7 @@ void kpPainter::sprayPoints (kpImage *image,
 
     painter.setPen(color.toQColor());
 
-    foreach (const QPoint &p, points)
+    for (const auto &p : points)
     {
         for (int i = 0; i < 10; i++)
         {
@@ -444,8 +455,9 @@ void kpPainter::sprayPoints (kpImage *image,
             // Make it look circular.
             // TODO: Can be done better by doing a random vector angle & length
             //       but would sin and cos be too slow?
-            if ((dx * dx) + (dy * dy) > (radius * radius))
+            if ((dx * dx) + (dy * dy) > (radius * radius)) {
                 continue;
+            }
 
             const QPoint p2 (p.x () + dx, p.y () + dy);
 

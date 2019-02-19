@@ -91,8 +91,9 @@ QString kpUnzoomedThumbnailView::caption () const
 // public slot virtual [base kpView]
 void kpUnzoomedThumbnailView::adjustToEnvironment ()
 {
-    if (!buddyView () || !buddyViewScrollableContainer () || !document ())
+    if (!buddyView () || !buddyViewScrollableContainer () || !document ()) {
         return;
+    }
 
     const int scrollViewContentsX =
         buddyViewScrollableContainer()->horizontalScrollBar()->value();
@@ -107,10 +108,10 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         const int rightMostAllowedX = qMax (0, document ()->width () - width ());
         qCDebug(kpLogViews) << "\tdocX=" << x
                 << " docWidth=" << document ()->width ()
-                << " rightMostAllowedX=" << rightMostAllowedX
-                << endl;
-        if (x > rightMostAllowedX)
+                << " rightMostAllowedX=" << rightMostAllowedX;
+        if (x > rightMostAllowedX) {
             x = rightMostAllowedX;
+        }
     }
     // Thumbnail width <= doc width
     else
@@ -128,10 +129,10 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
         qCDebug(kpLogViews) << "\tdocY=" << y
                     << " docHeight=" << document ()->height ()
-                    << " bottomMostAllowedY=" << bottomMostAllowedY
-                    << endl;
-        if (y > bottomMostAllowedY)
+                    << " bottomMostAllowedY=" << bottomMostAllowedY;
+        if (y > bottomMostAllowedY) {
             y = bottomMostAllowedY;
+        }
     }
     // Thumbnail height <= doc height
     else
@@ -145,8 +146,9 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
 // But feels awkward for left-to-right users.  So disabled for now.
 // Not totally tested.
 #else
-    if (!buddyViewScrollableContainer ())
+    if (!buddyViewScrollableContainer ()) {
         return;
+    }
 
     QRect docRect = buddyView ()->transformViewToDoc (
         QRect (buddyViewScrollableContainer ()->horizontalScrollBar()->value(),
@@ -157,18 +159,22 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     x = docRect.x () - (width () - docRect.width ()) / 2;
     qCDebug(kpLogViews) << "\tnew suggest x=" << x;
     const int rightMostAllowedX = qMax (0, document ()->width () - width ());
-    if (x < 0)
+    if (x < 0) {
         x = 0;
-    if (x > rightMostAllowedX)
+    }
+    if (x > rightMostAllowedX) {
         x = rightMostAllowedX;
+    }
 
     y = docRect.y () - (height () - docRect.height ()) / 2;
     qCDebug(kpLogViews) << "\tnew suggest y=" << y;
     const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
-    if (y < 0)
+    if (y < 0) {
         y = 0;
-    if (y > bottomMostAllowedY)
+    }
+    if (y > bottomMostAllowedY) {
         y = bottomMostAllowedY;
+    }
 #endif
 
 
@@ -185,8 +191,9 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
 
         // Above might be a NOP even if e.g. doc size changed so force
         // update
-        if (viewManager ())
+        if (viewManager ()) {
             viewManager ()->updateView (this);
+        }
     }
 
     if (viewManager ())

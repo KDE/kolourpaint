@@ -48,9 +48,7 @@ kpToolColorPicker::kpToolColorPicker (kpToolEnvironment *environ, QObject *paren
 {
 }
 
-kpToolColorPicker::~kpToolColorPicker ()
-{
-}
+kpToolColorPicker::~kpToolColorPicker () = default;
 
 
 // private
@@ -122,11 +120,8 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
 
     if (color.isValid ())
     {
-        kpToolColorPickerCommand *cmd =
-            new kpToolColorPickerCommand (
-                mouseButton (),
-                color, m_oldColor,
-                environ ()->commandEnvironment ());
+        auto *cmd = new kpToolColorPickerCommand (  mouseButton (), color, m_oldColor,
+                                                    environ ()->commandEnvironment ());
 
         environ ()->commandHistory ()->addCommand (cmd, false/*no exec*/);
         setUserMessage (haventBegunDrawUserMessage ());

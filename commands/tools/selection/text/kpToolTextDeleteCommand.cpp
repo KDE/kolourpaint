@@ -45,13 +45,12 @@ kpToolTextDeleteCommand::kpToolTextDeleteCommand (const QString &name,
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    if (action == AddDeleteNow)
+    if (action == AddDeleteNow) {
         addDelete ();
+    }
 }
 
-kpToolTextDeleteCommand::~kpToolTextDeleteCommand ()
-{
-}
+kpToolTextDeleteCommand::~kpToolTextDeleteCommand () = default;
 
 
 // public
@@ -102,8 +101,9 @@ void kpToolTextDeleteCommand::execute ()
     int oldNumDeletes = m_numDeletes;
     m_numDeletes = 0;
 
-    for (int i = 0; i < oldNumDeletes; i++)
+    for (int i = 0; i < oldNumDeletes; i++) {
         addDelete ();
+    }
 }
 
 // public virtual [base kpCommand]
@@ -113,9 +113,9 @@ void kpToolTextDeleteCommand::unexecute ()
 
     QList <QString> textLines = textSelection ()->textLines ();
 
-    for (int i = 0; i < static_cast<int> (m_deletedText.length ()); i++)
+    for (auto && i : m_deletedText)
     {
-        if (m_deletedText [i] == '\n')
+        if (i == '\n')
         {
             const QString rightHalf = textLines [m_row].mid (m_col);
 
@@ -127,7 +127,7 @@ void kpToolTextDeleteCommand::unexecute ()
             const QString leftHalf = textLines [m_row].left (m_col);
             const QString rightHalf = textLines [m_row].mid (m_col);
 
-            textLines [m_row] = leftHalf + m_deletedText [i] + rightHalf;
+            textLines [m_row] = leftHalf + i + rightHalf;
         }
     }
 

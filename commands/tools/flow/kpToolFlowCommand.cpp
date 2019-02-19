@@ -106,8 +106,7 @@ void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
     qCDebug(kpLogCommands) << "kpToolFlowCommand::updateBoundingRect()  existing="
                << d->boundingRect
                << " plus="
-               << rect
-               << endl;
+               << rect;
     d->boundingRect = d->boundingRect.united (rect);
     qCDebug(kpLogCommands) << "\tresult=" << d->boundingRect;
 }

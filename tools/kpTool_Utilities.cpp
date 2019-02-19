@@ -56,8 +56,9 @@ QRect kpTool::neededRect (const QRect &rect, int lineWidth)
     int x1, y1, x2, y2;
     rect.getCoords (&x1, &y1, &x2, &y2);
 
-    if (lineWidth < 1)
+    if (lineWidth < 1) {
         lineWidth = 1;
+    }
 
     // TODO: why not divide by 2?
     return QRect (QPoint (x1 - lineWidth + 1, y1 - lineWidth + 1),
@@ -107,8 +108,9 @@ QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
     const QPoint viewPos = v->mapFromGlobal (globalPos);
     qCDebug(kpLogTools) << "\tglobalPos=" << globalPos
                << " viewPos=" << viewPos;
-    if (!zoomToDoc)
+    if (!zoomToDoc) {
         return viewPos;
+    }
 
 
     const QPoint docPos = v->transformViewToDoc (viewPos);
@@ -164,8 +166,9 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
 
 bool kpTool::currentPointNextToLast () const
 {
-    if (d->lastPoint == QPoint (-1, -1))
+    if (d->lastPoint == QPoint (-1, -1)) {
         return true;
+    }
 
     int dx = qAbs (d->currentPoint.x () - d->lastPoint.x ());
     int dy = qAbs (d->currentPoint.y () - d->lastPoint.y ());
@@ -177,8 +180,9 @@ bool kpTool::currentPointNextToLast () const
 
 bool kpTool::currentPointCardinallyNextToLast () const
 {
-    if (d->lastPoint == QPoint (-1, -1))
+    if (d->lastPoint == QPoint (-1, -1)) {
         return true;
+    }
 
     return (d->currentPoint == d->lastPoint ||
             kpPainter::pointsAreCardinallyAdjacent (d->currentPoint, d->lastPoint));
@@ -191,20 +195,24 @@ bool kpTool::currentPointCardinallyNextToLast () const
 int kpTool::mouseButton (Qt::MouseButtons mouseButtons)
 {
     // we have nothing to do with mid-buttons
-    if (mouseButtons & Qt::MidButton)
+    if (mouseButtons & Qt::MidButton) {
         return -1;
+    }
 
     // both left & right together is quite meaningless...
     const Qt::MouseButtons bothButtons = (Qt::LeftButton | Qt::RightButton);
-    if ((mouseButtons & bothButtons) == bothButtons)
+    if ((mouseButtons & bothButtons) == bothButtons) {
         return -1;
+    }
 
-    if (mouseButtons & Qt::LeftButton)
+    if (mouseButtons & Qt::LeftButton) {
         return 0;
-    else if (mouseButtons & Qt::RightButton)
+    }
+    if (mouseButtons & Qt::RightButton) {
         return 1;
-    else
-        return -1;
+    }
+
+    return -1;
 }
 
 //---------------------------------------------------------------------
@@ -216,10 +224,8 @@ int kpTool::calculateLength (int start, int end)
     {
         return end - start + 1;
     }
-    else
-    {
-        return end - start - 1;
-    }
+
+    return end - start - 1;
 }
 
 //---------------------------------------------------------------------
@@ -257,10 +263,8 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
 
         return (accept == KMessageBox::Continue);
     }
-    else
-    {
-        return true;
-    }
+
+    return true;
 }
 
 //---------------------------------------------------------------------

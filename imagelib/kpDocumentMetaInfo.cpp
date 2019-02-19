@@ -60,7 +60,7 @@ const int kpDocumentMetaInfo::MinOffset = -kpDocumentMetaInfo::MaxOffset;
 
 struct kpDocumentMetaInfoPrivate
 {
-    int m_dotsPerMeterX, m_dotsPerMeterY;
+    int m_dotsPerMeterX{}, m_dotsPerMeterY{};
     QPoint m_offset;
 
     QMap <QString, QString> m_textMap;
@@ -120,8 +120,9 @@ bool kpDocumentMetaInfo::operator!= (const kpDocumentMetaInfo &rhs) const
 // public
 kpDocumentMetaInfo &kpDocumentMetaInfo::operator= (const kpDocumentMetaInfo &rhs)
 {
-    if (this == &rhs)
+    if (this == &rhs) {
         return *this;
+    }
 
     d->m_dotsPerMeterX = rhs.dotsPerMeterX ();
     d->m_dotsPerMeterY = rhs.dotsPerMeterY ();
@@ -142,7 +143,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
 
     qCDebug(kpLogImagelib) << "dotsPerMeter X=" << dotsPerMeterX ()
                << " Y=" << dotsPerMeterY ()
-               << " offset=" << offset () << endl;
+               << " offset=" << offset ();
 
     QList <QString> keyList = textKeys ();
     for (QList <QString>::const_iterator it = keyList.constBegin ();
@@ -150,8 +151,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
          ++it)
     {
         qCDebug(kpLogImagelib) << "key=" << (*it)
-                  << " text=" << text (*it)
-                  << endl;
+                  << " text=" << text (*it);
     }
 
     qCDebug(kpLogImagelib) << usedPrefix << "ENDS";
@@ -164,7 +164,7 @@ kpCommandSize::SizeType kpDocumentMetaInfo::size () const
 {
     kpCommandSize::SizeType ret = 0;
 
-    foreach (const QString &key, d->m_textMap.keys ())
+    for (const auto &key : d->m_textMap.keys ())
     {
         ret += kpCommandSize::StringSize (key) +
                kpCommandSize::StringSize (d->m_textMap [key]);
@@ -262,8 +262,9 @@ QList <QString> kpDocumentMetaInfo::textKeys () const
 // public
 QString kpDocumentMetaInfo::text (const QString &key) const
 {
-    if (key.isEmpty ())
-        return QString ();
+    if (key.isEmpty ()) {
+        return {};
+    }
 
     return d->m_textMap [key];
 }
@@ -273,8 +274,9 @@ QString kpDocumentMetaInfo::text (const QString &key) const
 // public
 void kpDocumentMetaInfo::setText (const QString &key, const QString &value)
 {
-    if (key.isEmpty ())
+    if (key.isEmpty ()) {
         return;
+    }
 
     d->m_textMap [key] = value;
 }

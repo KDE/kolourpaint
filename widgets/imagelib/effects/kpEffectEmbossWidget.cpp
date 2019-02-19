@@ -45,9 +45,8 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
                                             QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
-    QGridLayout *lay = new QGridLayout (this);
+    auto *lay = new QGridLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
-
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
@@ -62,9 +61,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
              this, &kpEffectEmbossWidget::settingsChangedDelayed);
 }
 
-kpEffectEmbossWidget::~kpEffectEmbossWidget ()
-{
-}
+kpEffectEmbossWidget::~kpEffectEmbossWidget () = default;
 
 
 // public virtual [base kpEffectWidgetBase]
@@ -84,8 +81,9 @@ bool kpEffectEmbossWidget::isNoOp () const
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectEmbossWidget::applyEffect (const kpImage &image)
 {
-    if (isNoOp ())
+    if (isNoOp ()) {
         return image;
+    }
 
     return kpEffectEmboss::applyEffect (image, strength ());
 }

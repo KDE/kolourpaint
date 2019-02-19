@@ -80,8 +80,9 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         {
             for (int x = 0; x < image.width (); x++)
             {
-                if ((image.pixel (x, y) & RGB_MASK) == 0/*black*/)
+                if ((image.pixel (x, y) & RGB_MASK) == 0/*black*/) {
                     painter.drawPoint (x, y);  // mark as opaque
+                }
             }
         }
 
@@ -90,16 +91,15 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         pixmap.setMask (mask);
         
         addOption (pixmap, i18n ("%1x%2", s, s)/*tooltip*/);
-        if (i == 1)
+        if (i == 1) {
             startNewOptionRow ();
+        }
     }
 
     finishConstruction (0, 0);
 }
 
-kpToolWidgetSpraycanSize::~kpToolWidgetSpraycanSize ()
-{
-}
+kpToolWidgetSpraycanSize::~kpToolWidgetSpraycanSize () = default;
 
 
 // public
@@ -112,8 +112,9 @@ int kpToolWidgetSpraycanSize::spraycanSize () const
 bool kpToolWidgetSpraycanSize::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
-    if (ret)
+    if (ret) {
         emit spraycanSizeChanged (spraycanSize ());
+    }
     return ret;
 }
 

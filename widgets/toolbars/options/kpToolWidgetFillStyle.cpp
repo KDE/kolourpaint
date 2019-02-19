@@ -64,9 +64,7 @@ kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const QString &na
 
 //---------------------------------------------------------------------
 
-kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
-{
-}
+kpToolWidgetFillStyle::~kpToolWidgetFillStyle () = default;
 
 //---------------------------------------------------------------------
 
@@ -137,8 +135,7 @@ kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 {
 #if DEBUG_KP_TOOL_WIDGET_FILL_STYLE
     qCDebug(kpLogWidgets) << "kpToolWidgetFillStyle::fillStyle() selected="
-               << selectedRow ()
-               << endl;
+               << selectedRow ();
 #endif
     return static_cast<FillStyle> (selectedRow ());
 }
@@ -168,8 +165,9 @@ kpColor kpToolWidgetFillStyle::drawingBackgroundColor (
 bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
-    if (ret)
+    if (ret) {
         emit fillStyleChanged (fillStyle ());
+    }
     return ret;
 }
 

@@ -189,7 +189,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
     //       To avoid the crash, make a copy of it before calling
     //       loadEntries() and use this copy, instead of the to-be-dangling
     //       ref.
-    const QUrl url = url_;
+    const QUrl& url = url_;
 
     qCDebug(kpLogMainWindow) << "kpMainWindow::addRecentURL(" << url << ")";
     if (url.isEmpty ())
@@ -220,10 +220,10 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
     // TODO: Is this loop safe since a KMainWindow later along in the list,
     //       could be closed as the code in the body almost certainly re-enters
     //       the event loop?  Problem for KDE 3 as well, I think.
-    foreach (KMainWindow *kmw, KMainWindow::memberList ())
+    for (auto *kmw : KMainWindow::memberList ())
     {
         Q_ASSERT (dynamic_cast <kpMainWindow *> (kmw));
-        kpMainWindow *mw = static_cast <kpMainWindow *> (kmw);
+        auto *mw = dynamic_cast <kpMainWindow *> (kmw);
 
         qCDebug(kpLogMainWindow) << "\t\tmw=" << mw;
 
@@ -239,7 +239,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
 
             mw->d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
             qCDebug(kpLogMainWindow) << "\t\t\tcheck recent URLs="
-                        << mw->d->actionOpenRecent->items () << endl;
+                        << mw->d->actionOpenRecent->items ();
         }
     }
 }
@@ -260,7 +260,7 @@ void kpMainWindow::slotNew ()
         // A document -- empty or otherwise -- is open.
         // Force open a new window.  In contrast, open() might not open
         // a new window in this case.
-        kpMainWindow *win = new kpMainWindow ();
+        auto *win = new kpMainWindow ();
         win->show ();
     }
     else
@@ -340,7 +340,7 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
         !d->configOpenImagesInSameWindow)
     {
         // Send doc to new window.
-        kpMainWindow *win = new kpMainWindow (doc);
+        auto *win = new kpMainWindow (doc);
         win->show ();
     }
     else
@@ -363,9 +363,9 @@ kpDocument *kpMainWindow::openInternal (const QUrl &url,
         return nullptr;
 
     // Create/open doc.
-    kpDocument *newDoc = new kpDocument (fallbackDocSize.width (),
-                                         fallbackDocSize.height (),
-                                         documentEnvironment ());
+    auto *newDoc = new kpDocument (fallbackDocSize.width (),
+                                   fallbackDocSize.height (), documentEnvironment ());
+
     if (!newDoc->open (url, newDocSameNameIfNotExist))
     {
         qCDebug(kpLogMainWindow) << "\topen failed";
@@ -387,7 +387,7 @@ bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::open(" << url
               << ",newDocSameNameIfNotExist=" << newDocSameNameIfNotExist
-              << ")" << endl;
+              << ")";
 
     kpDocument *newDoc = openInternal (url,
                                        defaultDocSize (),
@@ -398,10 +398,8 @@ bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
             addRecentURL (url);
         return true;
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 //---------------------------------------------------------------------
@@ -412,10 +410,11 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
   QMimeDatabase db;
   QStringList filterList;
   QString filter;
-  foreach(const QByteArray &type, QImageReader::supportedMimeTypes())
+  for (const auto &type : QImageReader::supportedMimeTypes())
   {
-    if ( !filter.isEmpty() )
+    if ( !filter.isEmpty() ) {
       filter += QLatin1Char(' ');
+    }
 
     QMimeType mime(db.mimeTypeForName(QString::fromLatin1(type)));
     if ( mime.isValid() )
@@ -439,13 +438,15 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
   fd.setOption(QFileDialog::HideNameFilterDetails);
   fd.setWindowTitle(caption);
 
-  if ( allowMultipleURLs )
+  if ( allowMultipleURLs ) {
     fd.setFileMode(QFileDialog::ExistingFiles);
+  }
 
-  if ( fd.exec() )
+  if ( fd.exec() ) {
     return fd.selectedUrls();
-  else
-    return QList<QUrl>();
+  }
+
+  return QList<QUrl>();
 }
 
 //---------------------------------------------------------------------
@@ -457,11 +458,9 @@ void kpMainWindow::slotOpen ()
 
     const QList<QUrl> urls = askForOpenURLs(i18nc("@title:window", "Open Image"));
 
-    for (QList<QUrl>::const_iterator it = urls.begin ();
-         it != urls.end ();
-         ++it)
+    for (const auto & url : urls)
     {
-        open (*it);
+        open (url);
     }
 }
 
@@ -540,8 +539,9 @@ void kpMainWindow::slotScan ()
     // scan dialogs are shown.  We don't do this between KScanDialog::setup()
     // and KScanDialog::exec() as it could be confusing alternating between
     // scanning and KolourPaint dialogs.
-    if (!shouldOpen ())
+    if (!shouldOpen ()) {
         return;
+    }
 
 
     qCDebug(kpLogMainWindow) << "\tcalling setup";
@@ -599,8 +599,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     kpDocument::getDataFromImage(image, saveOptions, metaInfo);
 
     // Create document from image and meta info.
-    kpDocument *doc = new kpDocument (image.width (), image.height (),
-                                      documentEnvironment ());
+    auto *doc = new kpDocument (image.width (), image.height (), documentEnvironment ());
     doc->setImage (image);
     doc->setSaveOptions (saveOptions);
     doc->setMetaInfo (metaInfo);
@@ -616,22 +615,22 @@ void kpMainWindow::slotScreenshot()
 {
   toolEndShape();
 
-  QDialog *dialog = new QDialog(this);
-  QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok |
+  auto *dialog = new QDialog(this);
+  auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok |
                                                    QDialogButtonBox::Cancel, dialog);
   connect (buttons, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
   connect (buttons, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
-  QLabel *label = new QLabel(i18n("Snapshot Delay"));
-  KPluralHandlingSpinBox *seconds = new KPluralHandlingSpinBox;
+  auto *label = new QLabel(i18n("Snapshot Delay"));
+  auto *seconds = new KPluralHandlingSpinBox;
   seconds->setRange(0, 99);
   seconds->setSuffix(ki18np(" second", " seconds"));
   seconds->setSpecialValueText(i18n("No delay"));
 
-  QCheckBox *hideWindow = new QCheckBox(i18n("Hide Main Window"));
+  auto *hideWindow = new QCheckBox(i18n("Hide Main Window"));
   hideWindow->setChecked(true);
 
-  QVBoxLayout *vbox = new QVBoxLayout(dialog);
+  auto *vbox = new QVBoxLayout(dialog);
   vbox->addWidget(label);
   vbox->addWidget(seconds);
   vbox->addWidget(hideWindow);
@@ -643,8 +642,9 @@ void kpMainWindow::slotScreenshot()
     return;
   }
 
-  if ( hideWindow->isChecked() )
+  if ( hideWindow->isChecked() ) {
     hide();
+  }
 
   // at least 1 seconds to make sure the window is hidden and the hide effect already stopped
   QTimer::singleShot((seconds->value() + 1) * 1000, this, SLOT(slotMakeScreenshot()));
@@ -659,7 +659,7 @@ void kpMainWindow::slotMakeScreenshot()
   QCoreApplication::processEvents();
   QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
 
-  kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(), documentEnvironment());
+  auto *doc = new kpDocument(pixmap.width(), pixmap.height(), documentEnvironment());
   doc->setImage(pixmap.toImage());
 
   // Send document to current or new window.
@@ -703,17 +703,15 @@ bool kpMainWindow::save (bool localOnly)
     {
         return saveAs (localOnly);
     }
-    else
+
+    if (d->document->save (false/*no overwrite prompt*/,
+                           !d->document->savedAtLeastOnceBefore ()/*lossy prompt*/))
     {
-        if (d->document->save (false/*no overwrite prompt*/,
-                              !d->document->savedAtLeastOnceBefore ()/*lossy prompt*/))
-        {
-            addRecentURL (d->document->url ());
-            return true;
-        }
-        else
-            return false;
+        addRecentURL (d->document->url ());
+        return true;
     }
+
+    return false;
 }
 
 //---------------------------------------------------------------------
@@ -761,28 +759,32 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     KConfigGroup cfg (KSharedConfig::openConfig (), forcedSaveOptionsGroup);
 
 
-    if (chosenSaveOptions)
+    if (chosenSaveOptions) {
         *chosenSaveOptions = kpDocumentSaveOptions ();
+    }
 
-    if (allowOverwritePrompt)
+    if (allowOverwritePrompt) {
         *allowOverwritePrompt = true;  // play it safe for now
+    }
 
-    if (allowLossyPrompt)
+    if (allowLossyPrompt) {
         *allowLossyPrompt = true;  // play it safe for now
+    }
 
 
     kpDocumentSaveOptions fdSaveOptions = startSaveOptions;
 
     QStringList mimeTypes;
-    foreach(const QByteArray &type, QImageWriter::supportedMimeTypes())
+    for (const auto &type : QImageWriter::supportedMimeTypes()) {
       mimeTypes << QString::fromLatin1(type);
+    }
 
     qCDebug(kpLogMainWindow) << "\tmimeTypes=" << mimeTypes
-               << "\tsortedMimeTypes=" << endl;
+               << "\tsortedMimeTypes=";
 
     if (mimeTypes.isEmpty ())
     {
-        qCCritical(kpLogMainWindow) << "No output mimetypes!" << endl;
+        qCCritical(kpLogMainWindow) << "No output mimetypes!";
         return QUrl ();
     }
 
@@ -791,7 +793,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (!MIME_TYPE_IS_VALID ())
     {
         qCDebug(kpLogMainWindow) << "\tmimeType=" << fdSaveOptions.mimeType ()
-                   << " not valid, get default" << endl;
+                   << " not valid, get default";
 
         SETUP_READ_CFG ();
 
@@ -801,13 +803,16 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         if (!MIME_TYPE_IS_VALID ())
         {
             qCDebug(kpLogMainWindow) << "\tmimeType=" << fdSaveOptions.mimeType ()
-                       << " not valid, get hardcoded" << endl;
-            if (mimeTypes.contains ("image/png"))
+                       << " not valid, get hardcoded";
+            if (mimeTypes.contains ("image/png")) {
                 fdSaveOptions.setMimeType ("image/png");
-            else if (mimeTypes.contains ("image/bmp"))
+            }
+            else if (mimeTypes.contains ("image/bmp")) {
                 fdSaveOptions.setMimeType ("image/bmp");
-            else
+            }
+            else {
                 fdSaveOptions.setMimeType (mimeTypes.first ());
+            }
         }
     }
 #undef MIME_TYPE_IS_VALID
@@ -828,7 +833,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     }
     fdSaveOptions.printDebug ("\tcorrected saveOptions passed to fileDialog");
 
-    kpDocumentSaveOptionsWidget *saveOptionsWidget =
+    auto *saveOptionsWidget =
         new kpDocumentSaveOptionsWidget (imageToBeSaved,
             fdSaveOptions,
             docMetaInfo,
@@ -840,8 +845,9 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     fd.setWindowTitle (caption);
     fd.setOperationMode (KFileDialog::Saving);
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
-    if (localOnly)
+    if (localOnly) {
         fd.setMode (KFile::File | KFile::LocalOnly);
+    }
 
     connect (&fd, &KFileDialog::filterChanged,
              saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
@@ -859,8 +865,9 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         cfg.sync ();
 
 
-        if (chosenSaveOptions)
+        if (chosenSaveOptions) {
             *chosenSaveOptions = newSaveOptions;
+        }
 
 
         bool shouldAllowOverwritePrompt =
@@ -890,8 +897,8 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         qCDebug(kpLogMainWindow) << "\tselectedUrl=" << fd.selectedUrl ();
         return fd.selectedUrl ();
     }
-    else
-        return QUrl ();
+
+    return QUrl ();
 #undef SETUP_READ_CFG
 }
 
@@ -915,8 +922,9 @@ bool kpMainWindow::saveAs (bool localOnly)
                                     &allowLossyPrompt);
 
 
-    if (chosenURL.isEmpty ())
+    if (chosenURL.isEmpty ()) {
         return false;
+    }
 
 
     if (!d->document->saveAs (chosenURL, chosenSaveOptions,
@@ -964,8 +972,9 @@ bool kpMainWindow::slotExport ()
                                     &allowLossyPrompt);
 
 
-    if (chosenURL.isEmpty ())
+    if (chosenURL.isEmpty ()) {
         return false;
+    }
 
     if (!kpDocument::savePixmapToFile (d->document->imageWithSelection (),
                                        chosenURL,
@@ -1034,8 +1043,9 @@ bool kpMainWindow::slotReload ()
                          KGuiItem(i18n ("&Reload")));
         }
 
-        if (result != KMessageBox::Continue)
+        if (result != KMessageBox::Continue) {
             return false;
+        }
     }
 
 
@@ -1085,14 +1095,14 @@ void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
         dot = fileName.lastIndexOf ('.');
 
         // file.ext but not .hidden-file?
-        if (dot > 0)
+        if (dot > 0) {
             fileName.truncate (dot);
+        }
 
         qCDebug(kpLogMainWindow) << "kpMainWindow::sendDocumentNameToPrinter() fileName="
                    << fileName
                    << " dir="
-                   << url.path()
-                   << endl;
+                   << url.path();
         printer->setDocName (fileName);
     }
 }
@@ -1114,16 +1124,13 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
 
 
     // Get image DPI.
-    double imageDotsPerMeterX =
-        double (d->document->metaInfo ()->dotsPerMeterX ());
-    double imageDotsPerMeterY =
-        double (d->document->metaInfo ()->dotsPerMeterY ());
+    auto imageDotsPerMeterX = double (d->document->metaInfo ()->dotsPerMeterX ());
+    auto imageDotsPerMeterY = double (d->document->metaInfo ()->dotsPerMeterY ());
     qCDebug(kpLogMainWindow) << "kpMainWindow::sendImageToPrinter() image:"
                << " width=" << image.width ()
                << " height=" << image.height ()
                << " dotsPerMeterX=" << imageDotsPerMeterX
-               << " dotsPerMeterY=" << imageDotsPerMeterY
-               << endl;
+               << " dotsPerMeterY=" << imageDotsPerMeterY;
 
     // Image DPI invalid (e.g. new image, could not read from file
     // or Qt3 doesn't implement DPI for JPEG)?
@@ -1152,8 +1159,8 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         // TODO: mysteriously, someone else is setting this to 96dpi always.
         QPixmap arbitraryScreenElement(1, 1);
         const QPaintDevice *screenDevice = &arbitraryScreenElement;
-        const int dpiX = screenDevice->logicalDpiX (),
-            dpiY = screenDevice->logicalDpiY ();
+        const auto dpiX = screenDevice->logicalDpiX ();
+        const auto dpiY = screenDevice->logicalDpiY ();
         qCDebug(kpLogMainWindow) << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY;
 
         imageDotsPerMeterX = dpiX * KP_INCHES_PER_METER;
@@ -1168,15 +1175,14 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     //     m   m       m = margin
     //     m   m
     //     mmmmm
-    const int printerWidthMM = printer->widthMM ();
-    const int printerHeightMM = printer->heightMM ();
+    const auto printerWidthMM = printer->widthMM ();
+    const auto printerHeightMM = printer->heightMM ();
     qCDebug(kpLogMainWindow) << "\tprinter: widthMM=" << printerWidthMM
-               << " heightMM=" << printerHeightMM
-               << endl;
+               << " heightMM=" << printerHeightMM;
 
 
-    double dpiX = imageDotsPerMeterX / KP_INCHES_PER_METER;
-    double dpiY = imageDotsPerMeterY / KP_INCHES_PER_METER;
+    auto dpiX = imageDotsPerMeterX / KP_INCHES_PER_METER;
+    auto dpiY = imageDotsPerMeterY / KP_INCHES_PER_METER;
     qCDebug(kpLogMainWindow) << "\timage: dpiX=" << dpiX << " dpiY=" << dpiY;
 #
 
@@ -1185,16 +1191,13 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     // If image doesn't fit on page at intended DPI, change the DPI.
     //
 
-    const double scaleDpiX =
-        (image.width () / (printerWidthMM / KP_MILLIMETERS_PER_INCH))
-            / dpiX;
-    const double scaleDpiY =
-        (image.height () / (printerHeightMM / KP_MILLIMETERS_PER_INCH))
-            / dpiY;
-    const double scaleDpi = qMax (scaleDpiX, scaleDpiY);
+    const auto scaleDpiX =
+        (image.width () / (printerWidthMM / KP_MILLIMETERS_PER_INCH)) / dpiX;
+    const auto scaleDpiY =
+        (image.height () / (printerHeightMM / KP_MILLIMETERS_PER_INCH)) / dpiY;
+    const auto scaleDpi = qMax (scaleDpiX, scaleDpiY);
     qCDebug(kpLogMainWindow) << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
-               << " --> scale at " << scaleDpi << " to fit?"
-               << endl;
+               << " --> scale at " << scaleDpi << " to fit?";
 
     // Need to increase resolution to fit page?
     if (scaleDpi > 1.0)
@@ -1202,7 +1205,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         dpiX *= scaleDpi;
         dpiY *= scaleDpi;
         qCDebug(kpLogMainWindow) << "\t\t\tto fit page, scaled to:"
-                   << " dpiX=" << dpiX << " dpiY=" << dpiY << endl;
+                   << " dpiX=" << dpiX << " dpiY=" << dpiY;
     }
 
 
@@ -1214,7 +1217,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     if (dpiX > dpiY)
     {
         qCDebug(kpLogMainWindow) << "\tdpiX > dpiY; stretching image height to equalise DPIs to dpiX="
-                   << dpiX << endl;
+                   << dpiX;
         kpPixmapFX::scale (&image,
              image.width (),
              qMax (1, qRound (image.height () * dpiX / dpiY)),
@@ -1225,7 +1228,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     else if (dpiY > dpiX)
     {
         qCDebug(kpLogMainWindow) << "\tdpiY > dpiX; stretching image width to equalise DPIs to dpiY="
-                   << dpiY << endl;
+                   << dpiY;
         kpPixmapFX::scale (&image,
              qMax (1, qRound (image.width () * dpiY / dpiX)),
              image.height (),
@@ -1246,7 +1249,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
 
     if (showPrinterSetupDialog)
     {
-        kpPrintDialogPage *optionsPage = new kpPrintDialogPage (this);
+        auto *optionsPage = new kpPrintDialogPage (this);
         optionsPage->setPrintImageCenteredOnPage (d->configPrintImageCenteredOnPage);
 
         QPrintDialog *printDialog =
@@ -1273,8 +1276,9 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
 
         delete printDialog;
 
-        if (!wantToPrint)
+        if (!wantToPrint) {
             return;
+        }
     }
 
 
@@ -1369,8 +1373,9 @@ bool kpMainWindow::queryCloseDocument ()
 {
     toolEndShape ();
 
-    if (!d->document || !d->document->isModified ())
+    if (!d->document || !d->document->isModified ()) {
         return true;  // ok to close current doc
+    }
 
     int result = KMessageBox::warningYesNoCancel (this,
                      i18n ("The document \"%1\" has been modified.\n"
@@ -1400,11 +1405,13 @@ bool kpMainWindow::queryClose ()
 #endif
     toolEndShape ();
 
-    if (!queryCloseDocument ())
+    if (!queryCloseDocument ()) {
         return false;
+    }
 
-    if (!queryCloseColors ())
+    if (!queryCloseColors ()) {
         return false;
+    }
 
     return true;
 }
@@ -1416,8 +1423,9 @@ void kpMainWindow::slotClose ()
 {
     toolEndShape ();
 
-    if (!queryCloseDocument ())
+    if (!queryCloseDocument ()) {
         return;
+    }
 
     setDocument (nullptr);
 }

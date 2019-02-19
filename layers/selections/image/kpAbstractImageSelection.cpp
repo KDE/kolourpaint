@@ -135,13 +135,14 @@ kpAbstractImageSelection::~kpAbstractImageSelection ()
 // public virtual [base kpAbstractSelection]
 bool kpAbstractImageSelection::readFromStream (QDataStream &stream)
 {
-    if (!kpAbstractSelection::readFromStream (stream ))
+    if (!kpAbstractSelection::readFromStream (stream )) {
         return false;
+    }
 
     QImage qimage;
     stream >> qimage;
     qCDebug(kpLogLayers) << "\timage: w=" << qimage.width () << " h=" << qimage.height ()
-               << " depth=" << qimage.depth () << endl;
+               << " depth=" << qimage.depth ();
 
     if (!qimage.isNull ())
     {
@@ -157,8 +158,9 @@ bool kpAbstractImageSelection::readFromStream (QDataStream &stream)
     }
     // (was just a selection border in the clipboard, even though KolourPaint's
     //  GUI doesn't allow you to copy such a thing into the clipboard)
-    else
+    else {
         d->baseImage = kpImage ();
+    }
 
     // TODO: Reset transparency mask?
     // TODO: Concrete subclass need to emit changed()?
@@ -268,8 +270,9 @@ kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image)
               << boundingRect ();
     Q_ASSERT (image.width () == width () && image.height () == height ());
 
-    if (isRectangular ())
+    if (isRectangular ()) {
         return image;
+    }
 
     const QRegion mRegion = shapeRegion ().translated (-topLeft ());
 
@@ -302,8 +305,9 @@ bool kpAbstractImageSelection::hasContent () const
 // public virtual [kpAbstractSelection]
 void kpAbstractImageSelection::deleteContent ()
 {
-    if (!hasContent ())
+    if (!hasContent ()) {
         return;
+    }
 
     setBaseImage (kpImage ());
 }
@@ -348,8 +352,9 @@ bool kpAbstractImageSelection::setTransparency (
         const kpImageSelectionTransparency &transparency,
         bool checkTransparentPixmapChanged)
 {
-    if (d->transparency == transparency)
+    if (d->transparency == transparency) {
         return false;
+    }
 
     d->transparency = transparency;
 
@@ -387,14 +392,16 @@ bool kpAbstractImageSelection::setTransparency (
                 }
             }
 
-            if (!changed)
+            if (!changed) {
                 haveChanged = false;
+            }
         }
     }
 
 
-    if (haveChanged)
+    if (haveChanged) {
         emit changed (boundingRect ());
+    }
 
     return haveChanged;
 }
@@ -498,7 +505,7 @@ void kpAbstractImageSelection::fill (const kpColor &color)
 void kpAbstractImageSelection::flip (bool horiz, bool vert)
 {
     qCDebug(kpLogLayers) << "kpAbstractImageSelection::flip(horiz=" << horiz
-               << ",vert=" << vert << ")" << endl;
+               << ",vert=" << vert << ")";
 
     if (!d->baseImage.isNull ())
     {

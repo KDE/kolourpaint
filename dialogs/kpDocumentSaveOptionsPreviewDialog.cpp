@@ -60,11 +60,11 @@ kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
 {
     setWindowTitle (i18nc ("@title:window", "Save Preview"));
 
-    QWidget *baseWidget = this;//new QWidget (this);
+    auto *baseWidget = this;//new QWidget (this);
     //setMainWidget (baseWidget);
 
 
-    QGridLayout *lay = new QGridLayout ( baseWidget );
+    auto *lay = new QGridLayout ( baseWidget );
 
     m_filePixmapLabel = new kpResizeSignallingLabel (baseWidget);
     m_fileSizeLabel = new QLabel (baseWidget);
@@ -93,11 +93,10 @@ kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()
 // public
 QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
 {
-    const int contentsWidth = 180;
-    const int totalMarginsWidth = fontMetrics ().height ();
+    const auto contentsWidth = 180;
+    const auto totalMarginsWidth = fontMetrics ().height ();
 
-    return QSize (contentsWidth + totalMarginsWidth,
-                  contentsWidth * 3 / 4 + totalMarginsWidth);
+    return  {contentsWidth + totalMarginsWidth, contentsWidth * 3 / 4 + totalMarginsWidth};
 }
 
 
@@ -123,8 +122,7 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QImage &pix
                << " pixmapSize=" << pixmapSize
                << " fileSize=" << fileSize
                << " raw fileSize/pixmapSize%="
-               << (pixmapSize ? (kpCommandSize::SizeType) fileSize * 100 / pixmapSize : 0)
-               << endl;
+               << (pixmapSize ? (kpCommandSize::SizeType) fileSize * 100 / pixmapSize : 0);
 
     m_fileSizeLabel->setText (i18np ("1 byte (approx. %2%)", "%1 bytes (approx. %2%)",
                                      m_fileSize, percent));
@@ -135,8 +133,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 {
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::updatePreviewPixmap()"
                << " filePixmapLabel.size=" << m_filePixmapLabel->size ()
-               << " filePixmap.size=" << m_filePixmap->size ()
-               << endl;
+               << " filePixmap.size=" << m_filePixmap->size ();
 
     if (m_filePixmap)
     {
@@ -150,8 +147,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
             m_filePixmap->width (), m_filePixmap->height ());
         qCDebug(kpLogDialogs) << "\tmaxNewWidth=" << maxNewWidth
                    << " maxNewHeight=" << maxNewHeight
-                   << " keepsAspect=" << keepsAspect
-                   << endl;
+                   << " keepsAspect=" << keepsAspect;
 
 
         const int newWidth = kpTransformPreviewDialog::scaleDimension (
@@ -165,8 +161,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
             1,
             maxNewHeight);
         qCDebug(kpLogDialogs) << "\tnewWidth=" << newWidth
-                   << " newHeight=" << newHeight
-                   << endl;
+                   << " newHeight=" << newHeight;
 
 
         QImage transformedPixmap =

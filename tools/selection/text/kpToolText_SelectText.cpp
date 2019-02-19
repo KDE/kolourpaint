@@ -43,8 +43,9 @@
 bool kpToolText::onSelectionToSelectText () const
 {
     kpView *v = viewManager ()->viewUnderCursor ();
-    if (!v)
-        return 0;
+    if (!v) {
+        return false;
+    }
 
     return v->mouseOnSelectionToSelectText (currentViewPoint ());
 }

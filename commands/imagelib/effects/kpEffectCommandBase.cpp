@@ -39,7 +39,7 @@
 struct kpEffectCommandBasePrivate
 {
     QString name;
-    bool actOnSelection;
+    bool actOnSelection{false};
 
     kpImage oldImage;
 };
@@ -63,10 +63,7 @@ kpEffectCommandBase::~kpEffectCommandBase ()
 // public virtual [base kpCommand]
 QString kpEffectCommandBase::name () const
 {
-    if (d->actOnSelection)
-        return i18n ("Selection: %1", d->name);
-    else
-        return d->name;
+    return (d->actOnSelection) ? i18n ("Selection: %1", d->name) : d->name;
 }
 
 

@@ -44,9 +44,7 @@ kpEffectGrayscaleCommand::kpEffectGrayscaleCommand (
 {
 }
 
-kpEffectGrayscaleCommand::~kpEffectGrayscaleCommand ()
-{
-}
+kpEffectGrayscaleCommand::~kpEffectGrayscaleCommand () = default;
 
 
 //

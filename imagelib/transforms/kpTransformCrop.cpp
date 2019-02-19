@@ -59,18 +59,19 @@ void kpTransformCrop (kpMainWindow *mainWindow)
             mainWindow->commandEnvironment ());
 
 
-    kpTextSelection *textSel =
-        dynamic_cast <kpTextSelection *> (sel);
-    kpAbstractImageSelection *imageSel =
-        dynamic_cast <kpAbstractImageSelection *> (sel);
+    auto *textSel = dynamic_cast <kpTextSelection *> (sel);
+    auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (sel);
     // It's either a text selection or an image selection, but cannot be
     // neither or both.
     Q_ASSERT (!!textSel != !!imageSel);
 
-    if (textSel)
+    if (textSel) {
         ::kpTransformCrop_TextSelection (mainWindow, i18n ("Set as Image"), resizeDocCommand);
-    else if (imageSel)
+    }
+    else if (imageSel) {
         ::kpTransformCrop_ImageSelection (mainWindow, i18n ("Set as Image"), resizeDocCommand);
-    else
+    }
+    else {
         Q_ASSERT (!"unreachable");
+    }
 }

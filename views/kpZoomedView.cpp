@@ -54,16 +54,15 @@ kpZoomedView::kpZoomedView (kpDocument *document,
     adjustToEnvironment ();
 }
 
-kpZoomedView::~kpZoomedView ()
-{
-}
+kpZoomedView::~kpZoomedView () = default;
 
 
 // public virtual [base kpView]
 void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 {
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->setQueueUpdates ();
+    }
 
     {
         kpView::setZoomLevel (hzoom, vzoom);
@@ -71,8 +70,9 @@ void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
         adjustToEnvironment ();
     }
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->restoreQueueUpdates ();
+    }
 }
 
 

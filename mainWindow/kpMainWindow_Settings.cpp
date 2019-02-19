@@ -68,7 +68,7 @@ void kpMainWindow::setupSettingsMenuActions ()
     connect (d->actionShowPath, &QAction::triggered, this, &kpMainWindow::slotShowPathToggled);
     slotEnableSettingsShowPath ();
 
-    KToggleAction *action = ac->add<KToggleAction>("settings_draw_antialiased");
+    auto *action = ac->add<KToggleAction>("settings_draw_antialiased");
     action->setText(i18n("Draw Anti-Aliased"));
     action->setChecked(kpToolEnvironment::drawAntiAliased);
     connect (action, &KToggleAction::triggered, this, &kpMainWindow::slotDrawAntiAliasedToggled);

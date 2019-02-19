@@ -109,11 +109,11 @@ void kpMainWindow::setStatusBarMessage (const QString &message)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarMessage("
                << message
-               << ") ok=" << d->statusBarCreated
-               << endl;
+               << ") ok=" << d->statusBarCreated;
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     d->statusBarMessageLabel->setText (message);
 }
@@ -126,11 +126,11 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarShapePoints("
                << startPoint << "," << endPoint
-               << ") ok=" << d->statusBarCreated
-               << endl;
+               << ") ok=" << d->statusBarCreated;
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     if (d->statusBarShapeLastPointsInitialised &&
         startPoint == d->statusBarShapeLastStartPoint &&
@@ -173,12 +173,12 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 #if DEBUG_STATUS_BAR && 0
     qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarShapeSize("
                << size
-               << ") ok=" << d->statusBarCreated
-               << endl;
+               << ") ok=" << d->statusBarCreated;
 #endif
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     if (d->statusBarShapeLastSizeInitialised &&
         size == d->statusBarShapeLastSize)
@@ -212,11 +212,11 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarDocSize("
                << size
-               << ") ok=" << d->statusBarCreated
-               << endl;
+               << ") ok=" << d->statusBarCreated;
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemDocSize);
     if (size == KP_INVALID_SIZE)
@@ -238,11 +238,11 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarDocDepth("
                << depth
-               << ") ok=" << d->statusBarCreated
-               << endl;
+               << ") ok=" << d->statusBarCreated;
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemDocDepth);
     if (depth <= 0)
@@ -262,11 +262,11 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarZoom("
                << zoom
-               << ") ok=" << d->statusBarCreated
-               << endl;
+               << ") ok=" << d->statusBarCreated;
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemZoom);
     if (zoom <= 0)
@@ -286,11 +286,9 @@ void kpMainWindow::recalculateStatusBarMessage ()
     qCDebug(kpLogMainWindow) << "kpMainWindow::recalculateStatusBarMessage()";
     QString scrollViewMessage = d->scrollView->statusMessage ();
     qCDebug(kpLogMainWindow) << "\tscrollViewMessage=" << scrollViewMessage;
-    qCDebug(kpLogMainWindow) << "\tresizing doc? " << !d->scrollView->newDocSize ().isEmpty ()
-               << endl;
+    qCDebug(kpLogMainWindow) << "\tresizing doc? " << !d->scrollView->newDocSize ().isEmpty ();
     qCDebug(kpLogMainWindow) << "\tviewUnderCursor? "
-               << (d->viewManager && d->viewManager->viewUnderCursor ())
-               << endl;
+               << (d->viewManager && d->viewManager->viewUnderCursor ());
 
     // HACK: To work around kpViewScrollableContainer's unreliable
     //       status messages (which in turn is due to Qt not updating
@@ -300,8 +298,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
         d->viewManager && d->viewManager->viewUnderCursor ())
     {
     #if DEBUG_STATUS_BAR && 1
-        qCDebug(kpLogMainWindow) << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing"
-                   << endl;
+        qCDebug(kpLogMainWindow) << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing";
     #endif
         d->scrollView->blockSignals (true);
         d->scrollView->clearStatusMessage ();
@@ -344,7 +341,7 @@ void kpMainWindow::recalculateStatusBarShape ()
     {
         const QPoint startPoint (d->document->width (), d->document->height ());
         qCDebug(kpLogMainWindow) << "\thavedMovedFromOrgSize="
-                   << d->scrollView->haveMovedFromOriginalDocSize () << endl;
+                   << d->scrollView->haveMovedFromOriginalDocSize ();
         if (!d->scrollView->haveMovedFromOriginalDocSize ())
         {
             setStatusBarShapePoints (startPoint);
@@ -384,11 +381,11 @@ void kpMainWindow::recalculateStatusBarShape ()
 void kpMainWindow::recalculateStatusBar ()
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::recalculateStatusBar() ok="
-               << d->statusBarCreated
-               << endl;
+               << d->statusBarCreated;
 
-    if (!d->statusBarCreated)
+    if (!d->statusBarCreated) {
         return;
+    }
 
     recalculateStatusBarMessage ();
     recalculateStatusBarShape ();

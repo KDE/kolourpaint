@@ -143,15 +143,17 @@ void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::slotFlashTimerTimeout()"
               << " highlight=" << m_flashHighlight;
     int newHigh = m_flashHighlight - 20;
-    if (newHigh < 0)
+    if (newHigh < 0) {
         newHigh = 0;
+    }
 
     m_flashHighlight = newHigh;
 
     updateIcon ();
 
-    if (newHigh == 0)
+    if (newHigh == 0) {
         m_flashTimer->stop ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -160,8 +162,9 @@ void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
 void kpColorSimilarityToolBarItem::flash ()
 {
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::flash()";
-    if (isSuppressingFlash ())
+    if (isSuppressingFlash ()) {
         return;
+    }
 
     if (m_flashHighlight == 255)
     {
@@ -237,7 +240,7 @@ void kpColorSimilarityToolBarItem::updateIcon ()
 {
     const int side = width () * 6 / 8;
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::updateIcon() width=" << width ()
-              << " side=" << side << endl;
+              << " side=" << side;
 
     QPixmap icon(side, side);
     icon.fill(Qt::transparent);
@@ -256,7 +259,7 @@ void kpColorSimilarityToolBarItem::updateIcon ()
 void kpColorSimilarityToolBarItem::resizeEvent (QResizeEvent *e)
 {
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::resizeEvent() size=" << size ()
-              << " oldSize=" << e->oldSize () << endl;
+              << " oldSize=" << e->oldSize ();
     QToolButton::resizeEvent (e);
 
     updateIcon ();

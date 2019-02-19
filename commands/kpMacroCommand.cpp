@@ -67,11 +67,10 @@ kpCommandSize::SizeType kpMacroCommand::size () const
     SizeType s = 0;
 
     qCDebug(kpLogCommands) << "\tcalculating:";
-    foreach (kpCommand *cmd, m_commandList)
+    for (auto *cmd : m_commandList)
     {
         qCDebug(kpLogCommands) << "\t\tcurrentSize=" << s << " + "
-                   << cmd->name () << ".size=" << cmd->size ()
-                   << endl;
+                   << cmd->name () << ".size=" << cmd->size ();
         s += cmd->size ();
     }
 

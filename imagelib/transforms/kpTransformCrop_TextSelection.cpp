@@ -44,7 +44,7 @@ void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,
     kpCommandEnvironment *environ = mainWindow->commandEnvironment ();
 
 
-    kpMacroCommand *macroCmd = new kpMacroCommand (commandName, environ);
+    auto *macroCmd = new kpMacroCommand (commandName, environ);
 
     macroCmd->addCommand (resizeDocCommand);
 

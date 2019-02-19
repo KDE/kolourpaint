@@ -102,24 +102,25 @@ void kpToolSelectionCreateCommand::execute ()
     if (m_fromSelection)
     {
         qCDebug(kpLogCommands) << "\tusing fromSelection";
-        qCDebug(kpLogCommands) << "\t\thave sel=" << doc->selection ()
-                   << endl;
-        kpAbstractImageSelection *imageSel =
-            dynamic_cast <kpAbstractImageSelection *> (m_fromSelection);
-        kpTextSelection *textSel =
-            dynamic_cast <kpTextSelection *> (m_fromSelection);
+        qCDebug(kpLogCommands) << "\t\thave sel=" << doc->selection ();
+        auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (m_fromSelection);
+        auto *textSel = dynamic_cast <kpTextSelection *> (m_fromSelection);
+
         if (imageSel)
         {
-            if (imageSel->transparency () != environ ()->imageSelectionTransparency ())
+            if (imageSel->transparency () != environ ()->imageSelectionTransparency ()) {
                 environ ()->setImageSelectionTransparency (imageSel->transparency ());
+            }
         }
         else if (textSel)
         {
-            if (textSel->textStyle () != environ ()->textStyle ())
+            if (textSel->textStyle () != environ ()->textStyle ()) {
                 environ ()->setTextStyle (textSel->textStyle ());
+            }
         }
-        else
+        else {
             Q_ASSERT (!"Unknown selection type");
+        }
 
         viewManager ()->setTextCursorPosition (m_textRow, m_textCol);
         doc->setSelection (*m_fromSelection);
@@ -137,8 +138,9 @@ void kpToolSelectionCreateCommand::unexecute ()
     if (!doc->selection ())
     {
         // Was just a border that got deselected?
-        if (m_fromSelection && !m_fromSelection->hasContent ())
+        if (m_fromSelection && !m_fromSelection->hasContent ()) {
             return;
+        }
 
         Q_ASSERT (!"kpToolSelectionCreateCommand::unexecute() without sel region");
         return;

@@ -47,46 +47,43 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
       m_amountInput (nullptr)
 
 {
-    QGridLayout *lay = new QGridLayout (this);
+    auto *lay = new QGridLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
 
-
     // See kpEffectToneEnhance::applyEffect().
-    {
-        QLabel *granularityLabel = new QLabel (i18n ("&Granularity:"), this);
 
-        QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
+    auto *granularityLabel = new QLabel (i18n ("&Granularity:"), this);
 
-        m_granularityInput = new kpDoubleNumInput (this);
-        m_granularityInput->setRange (0, 1, 0.1/*step*/);
+    auto *amountLabel = new QLabel (i18n ("&Amount:"), this);
 
-        m_amountInput = new kpDoubleNumInput (this);
-        m_amountInput->setRange (0, 1, 0.1/*step*/);
+    m_granularityInput = new kpDoubleNumInput (this);
+    m_granularityInput->setRange (0, 1, 0.1/*step*/);
 
-        granularityLabel->setBuddy (m_granularityInput);
-        amountLabel->setBuddy (m_amountInput);
+    m_amountInput = new kpDoubleNumInput (this);
+    m_amountInput->setRange (0, 1, 0.1/*step*/);
 
-
-        lay->addWidget (granularityLabel, 0, 0);
-        lay->addWidget (m_granularityInput, 0, 1);
-
-        lay->addWidget (amountLabel, 1, 0);
-        lay->addWidget (m_amountInput, 1, 1);
-
-        lay->setColumnStretch (1, 1);
+    granularityLabel->setBuddy (m_granularityInput);
+    amountLabel->setBuddy (m_amountInput);
 
 
-        connect (m_granularityInput, &kpDoubleNumInput::valueChanged,
-                 this, &kpEffectToneEnhanceWidget::settingsChangedDelayed);
+    lay->addWidget (granularityLabel, 0, 0);
+    lay->addWidget (m_granularityInput, 0, 1);
 
-        connect (m_amountInput, &kpDoubleNumInput::valueChanged,
-                 this, &kpEffectToneEnhanceWidget::settingsChangedDelayed);
-    }
+    lay->addWidget (amountLabel, 1, 0);
+    lay->addWidget (m_amountInput, 1, 1);
+
+    lay->setColumnStretch (1, 1);
+
+
+    connect (m_granularityInput, &kpDoubleNumInput::valueChanged,
+             this, &kpEffectToneEnhanceWidget::settingsChangedDelayed);
+
+    connect (m_amountInput, &kpDoubleNumInput::valueChanged,
+             this, &kpEffectToneEnhanceWidget::settingsChangedDelayed);
+
 }
 
-kpEffectToneEnhanceWidget::~kpEffectToneEnhanceWidget ()
-{
-}
+kpEffectToneEnhanceWidget::~kpEffectToneEnhanceWidget () = default;
 
 
 // public virtual [base kpEffectWidgetBase]
@@ -116,10 +113,11 @@ bool kpEffectToneEnhanceWidget::isNoOp () const
     // If the "amount" is 0, nothing happens regardless of the granularity.
     // Note that if "granularity" is 0 but "amount" > 0, the effect _is_ active.
     // Therefore, "granularity" should have no involvement in this check.
-    if (amount () == 0)
+    if (amount () == 0) {
         return true;
-    else
-        return false;
+    }
+
+    return false;
 }
 
 // public virtual [base kpEffectWidgetBase]

@@ -46,7 +46,7 @@
 struct kpToolFloodFillCommandPrivate
 {
     kpImage oldImage;
-    bool fillEntireImage;
+    bool fillEntireImage{false};
 };
 
 //---------------------------------------------------------------------
@@ -99,7 +99,7 @@ void kpToolFloodFillCommand::setFillEntireImage (bool yes)
 void kpToolFloodFillCommand::execute ()
 {
     qCDebug(kpLogCommands) << "kpToolFloodFillCommand::execute() fillEntireImage="
-              << d->fillEntireImage << endl;
+              << d->fillEntireImage;
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -136,7 +136,7 @@ void kpToolFloodFillCommand::execute ()
 void kpToolFloodFillCommand::unexecute ()
 {
     qCDebug(kpLogCommands) << "kpToolFloodFillCommand::unexecute() fillEntireImage="
-              << d->fillEntireImage << endl;
+              << d->fillEntireImage;
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);

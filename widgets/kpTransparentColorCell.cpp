@@ -60,8 +60,8 @@ kpTransparentColorCell::kpTransparentColorCell (QWidget *parent)
 // public virtual [base QWidget]
 QSize kpTransparentColorCell::sizeHint () const
 {
-    return QSize (m_pixmap.width () + frameWidth () * 2,
-                  m_pixmap.height () + frameWidth () * 2);
+    return  {m_pixmap.width () + frameWidth () * 2,
+                m_pixmap.height () + frameWidth () * 2};
 }
 
 //---------------------------------------------------------------------

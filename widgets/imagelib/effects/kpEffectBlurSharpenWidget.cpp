@@ -46,11 +46,10 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
                                                       QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
-    QGridLayout *lay = new QGridLayout (this);
+    auto *lay = new QGridLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
 
-
-    QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
+    auto *amountLabel = new QLabel (i18n ("&Amount:"), this);
     m_amountInput = new kpIntNumInput (this);
     m_amountInput->setRange (-kpEffectBlurSharpen::MaxStrength/*- for blur*/,
 			     +kpEffectBlurSharpen::MaxStrength/*+ for sharpen*/);
@@ -65,7 +64,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     // We do this by setting the label to every possible string it could
     // contain and fixing its height to the maximum seen size hint height.
 
-    int h = m_typeLabel->sizeHint ().height ();
+    auto h = m_typeLabel->sizeHint ().height ();
     qCDebug(kpLogWidgets) << "initial size hint height=" << h;
 
     m_typeLabel->setText (
@@ -105,9 +104,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
              this, &kpEffectBlurSharpenWidget::slotUpdateTypeLabel);
 }
 
-kpEffectBlurSharpenWidget::~kpEffectBlurSharpenWidget ()
-{
-}
+kpEffectBlurSharpenWidget::~kpEffectBlurSharpenWidget () = default;
 
 
 // public virtual [base kpEffectWidgetBase]
@@ -145,8 +142,7 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
 {
     QString text = kpEffectBlurSharpenCommand::nameForType (type ());
 
-    qCDebug(kpLogWidgets) << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
-               << text << endl;
+    qCDebug(kpLogWidgets) << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text=" << text;
     const int h = m_typeLabel->height ();
     m_typeLabel->setText (text);
     if (m_typeLabel->height () != h)
@@ -161,12 +157,15 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
 // protected
 kpEffectBlurSharpen::Type kpEffectBlurSharpenWidget::type () const
 {
-    if (m_amountInput->value () == 0)
+    if (m_amountInput->value () == 0) {
         return kpEffectBlurSharpen::None;
-    else if (m_amountInput->value () < 0)
+    }
+
+    if (m_amountInput->value () < 0) {
         return kpEffectBlurSharpen::Blur;
-    else
-        return kpEffectBlurSharpen::Sharpen;
+    }
+
+    return kpEffectBlurSharpen::Sharpen;
 }
 
 // protected

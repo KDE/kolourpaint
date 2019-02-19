@@ -38,12 +38,15 @@
 
 static inline int between0And255 (int val)
 {
-    if (val < 0)
+    if (val < 0) {
         return 0;
-    else if (val > 255)
+    }
+
+    if (val > 255) {
         return 255;
-    else
-        return val;
+    }
+
+    return val;
 }
 
 
@@ -81,12 +84,15 @@ static inline QRgb brightnessContrastGammaForRGB (QRgb rgb,
     int green = qGreen (rgb);
     int blue = qBlue (rgb);
 
-    if (channels & kpEffectBalance::Red)
+    if (channels & kpEffectBalance::Red) {
         red = brightnessContrastGamma (red, brightness, contrast, gamma);
-    if (channels & kpEffectBalance::Green)
+    }
+    if (channels & kpEffectBalance::Green) {
         green = brightnessContrastGamma (green, brightness, contrast, gamma);
-    if (channels & kpEffectBalance::Blue)
+    }
+    if (channels & kpEffectBalance::Blue) {
         blue = brightnessContrastGamma (blue, brightness, contrast, gamma);
+    }
 
     return qRgba (red, green, blue, qAlpha (rgb));
 }
@@ -102,7 +108,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
                << ",brightness=" << brightness
                << ",contrast=" << contrast
                << ",gamma=" << gamma
-               << ")" << endl;
+               << ")";
     QTime timer; timer.start ();
 
     QImage qimage = image;
@@ -114,22 +120,28 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 
     for (int i = 0; i < 256; i++)
     {
-        quint8 applied = static_cast<quint8> (brightnessContrastGamma (i, brightness, contrast, gamma));
+        auto applied = static_cast<quint8> (brightnessContrastGamma (i, brightness, contrast, gamma));
 
-        if (channels & kpEffectBalance::Red)
+        if (channels & kpEffectBalance::Red) {
             transformRed [i] = applied;
-        else
+        }
+        else {
             transformRed [i] = static_cast<quint8> (i);
+        }
 
-        if (channels & kpEffectBalance::Green)
+        if (channels & kpEffectBalance::Green) {
             transformGreen [i] = applied;
-        else
+        }
+        else {
             transformGreen [i] = static_cast<quint8> (i);
+        }
 
-        if (channels & kpEffectBalance::Blue)
+        if (channels & kpEffectBalance::Blue) {
             transformBlue [i] = applied;
-        else
+        }
+        else {
             transformBlue [i] = static_cast<quint8> (i);
+        }
     }
 
     qCDebug(kpLogImagelib) << "\tbuild lookup=" << timer.restart ();
@@ -142,10 +154,10 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
             {
                 const QRgb rgb = qimage.pixel (x, y);
 
-                const quint8 red = static_cast<quint8> (qRed (rgb));
-                const quint8 green = static_cast<quint8> (qGreen (rgb));
-                const quint8 blue = static_cast<quint8> (qBlue (rgb));
-                const quint8 alpha = static_cast<quint8> (qAlpha (rgb));
+                const auto red = static_cast<quint8> (qRed (rgb));
+                const auto green = static_cast<quint8> (qGreen (rgb));
+                const auto blue = static_cast<quint8> (qBlue (rgb));
+                const auto alpha = static_cast<quint8> (qAlpha (rgb));
 
                 qimage.setPixel (x, y,
                     qRgba (transformRed [red],
@@ -161,10 +173,10 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         {
             const QRgb rgb = qimage.color (i);
 
-            const quint8 red = static_cast<quint8> (qRed (rgb));
-            const quint8 green = static_cast<quint8> (qGreen (rgb));
-            const quint8 blue = static_cast<quint8> (qBlue (rgb));
-            const quint8 alpha = static_cast<quint8> (qAlpha (rgb));
+            const auto red = static_cast<quint8> (qRed (rgb));
+            const auto green = static_cast<quint8> (qGreen (rgb));
+            const auto blue = static_cast<quint8> (qBlue (rgb));
+            const auto alpha = static_cast<quint8> (qAlpha (rgb));
 
             qimage.setColor (i,
                 qRgba (transformRed [red],

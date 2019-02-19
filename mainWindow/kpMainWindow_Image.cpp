@@ -235,15 +235,17 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
         "Select&ion");
 
     Q_ASSERT (menuBar ());
-    foreach (QAction *action, menuBar ()->actions ())
+    for (auto *action : menuBar ()->actions ())
     {
         if (action->text () == MenuBarItemTextImage ||
             action->text () == MenuBarItemTextSelection)
         {
-            if (isSelectionActive ())
+            if (isSelectionActive ()) {
                 action->setText (MenuBarItemTextSelection);
-            else
+            }
+            else {
                 action->setText (MenuBarItemTextImage);
+            }
 
             break;
         }
@@ -276,13 +278,12 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 // public
 kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 {
-    if (ofSelection)
+    if (ofSelection) {
         return kpColor::Transparent;
-    else
-    {
-        Q_ASSERT (d->colorToolBar);
-        return d->colorToolBar->backgroundColor ();
     }
+
+    Q_ASSERT (d->colorToolBar);
+    return d->colorToolBar->backgroundColor ();
 }
 
 //---------------------------------------------------------------------
@@ -295,30 +296,32 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::addImageOrSelectionCommand()"
                << " addSelCreateCmdIfSelAvail=" << addSelCreateCmdIfSelAvail
-               << " addSelContentCmdIfSelAvail=" << addSelContentCmdIfSelAvail
-               << endl;
+               << " addSelContentCmdIfSelAvail=" << addSelContentCmdIfSelAvail;
 
     Q_ASSERT (d->document);
 
 
-    if (d->viewManager)
+    if (d->viewManager) {
         d->viewManager->setQueueUpdates ();
+    }
 
 
     kpAbstractSelection *sel = d->document->selection ();
     qCDebug(kpLogMainWindow) << "\timage sel=" << sel
-               << " sel->hasContent=" << (sel ? sel->hasContent () : 0)
-               << endl;
+               << " sel->hasContent=" << (sel ? sel->hasContent () : 0);
     if (addSelCreateCmdIfSelAvail && sel && !sel->hasContent ())
     {
         QString createCmdName;
 
-        if (dynamic_cast <kpAbstractImageSelection *> (sel))
+        if (dynamic_cast <kpAbstractImageSelection *> (sel)) {
             createCmdName = i18n ("Selection: Create");
-        else if (dynamic_cast <kpTextSelection *> (sel))
+        }
+        else if (dynamic_cast <kpTextSelection *> (sel)) {
             createCmdName = i18n ("Text: Create Box");
-        else
+        }
+        else {
             Q_ASSERT (!"Unknown selection type");
+        }
 
         // create selection region
         commandHistory ()->addCreateSelectionCommand (
@@ -332,13 +335,12 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
     if (addSelContentCmdIfSelAvail && sel && !sel->hasContent ())
     {
-        kpAbstractImageSelection *imageSel =
-            dynamic_cast <kpAbstractImageSelection *> (sel);
-        kpTextSelection *textSel =
-            dynamic_cast <kpTextSelection *> (sel);
+        auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (sel);
+        auto *textSel = dynamic_cast <kpTextSelection *> (sel);
 
-        if (imageSel && imageSel->transparency ().isTransparent ())
+        if (imageSel && imageSel->transparency ().isTransparent ()) {
             d->colorToolBar->flashColorSimilarityToolBarItem ();
+        }
 
         kpMacroCommand *macroCmd = new kpMacroCommand (cmd->name (),
             commandEnvironment ());
@@ -360,8 +362,9 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
                     QString()/*uninteresting child of macro cmd*/,
                     commandEnvironment ()));
         }
-        else
+        else {
             Q_ASSERT (!"Unknown selection type");
+        }
 
         macroCmd->addCommand (cmd);
 
@@ -373,8 +376,9 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     }
 
 
-    if (d->viewManager)
+    if (d->viewManager) {
         d->viewManager->restoreQueueUpdates ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -388,7 +392,7 @@ void kpMainWindow::slotResizeScale ()
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
-        kpTransformResizeScaleCommand *cmd = new kpTransformResizeScaleCommand (
+        auto *cmd = new kpTransformResizeScaleCommand (
             dialog.actOnSelection (),
             dialog.imageWidth (), dialog.imageHeight (),
             dialog.type (),

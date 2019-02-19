@@ -148,11 +148,13 @@ void kpDocument::setURL (const QUrl &url, bool isFromURL)
 // public
 bool kpDocument::isFromURL (bool checkURLStillExists) const
 {
-    if (!m_isFromURL)
+    if (!m_isFromURL) {
         return false;
+    }
 
-    if (!checkURLStillExists)
+    if (!checkURLStillExists) {
         return true;
+    }
 
     return (!m_url.isEmpty () &&
             KIO::NetAccess::exists (m_url, KIO::NetAccess::SourceSide/*open*/,
@@ -215,13 +217,15 @@ void kpDocument::setMetaInfo (const kpDocumentMetaInfo &metaInfo)
 
 void kpDocument::setModified (bool yes)
 {
-    if (yes == m_modified)
+    if (yes == m_modified) {
         return;
+    }
 
     m_modified = yes;
 
-    if (yes)
+    if (yes) {
         emit documentModified ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -249,10 +253,7 @@ int kpDocument::constructorWidth () const
 
 int kpDocument::width (bool ofSelection) const
 {
-    if (ofSelection && m_selection)
-        return m_selection->width ();
-    else
-        return m_image->width ();
+    return (ofSelection && m_selection) ? m_selection->width() : m_image->width();
 }
 
 //---------------------------------------------------------------------
@@ -279,11 +280,8 @@ int kpDocument::constructorHeight () const
 //---------------------------------------------------------------------
 
 int kpDocument::height (bool ofSelection) const
-{
-    if (ofSelection && m_selection)
-        return m_selection->height ();
-    else
-        return m_image->height ();
+{   
+    return (ofSelection && m_selection) ? m_selection->height() : m_image->height();
 }
 
 //---------------------------------------------------------------------
@@ -303,11 +301,8 @@ void kpDocument::setHeight (int h, const kpColor &backgroundColor)
 //---------------------------------------------------------------------
 
 QRect kpDocument::rect (bool ofSelection) const
-{
-    if (ofSelection && m_selection)
-        return m_selection->boundingRect ();
-    else
-        return m_image->rect ();
+{   
+    return (ofSelection && m_selection) ? m_selection->boundingRect() : m_image->rect();
 }
 
 //---------------------------------------------------------------------
@@ -327,8 +322,7 @@ void kpDocument::setImageAt (const kpImage &image, const QPoint &at)
                << image.width ()
                << ",h=" << image.height ()
                << "), x=" << at.x ()
-               << ",y=" << at.y ()
-               << endl;
+               << ",y=" << at.y ();
 
     kpPixmapFX::setPixmapAt (m_image, at, image);
     slotContentsChanged (QRect (at.x (), at.y (), image.width (), image.height ()));
@@ -348,8 +342,9 @@ kpImage kpDocument::image (bool ofSelection) const
 
         ret = imageSel->baseImage ();
     }
-    else
+    else {
         ret = *m_image;
+    }
 
     return ret;
 }
@@ -372,10 +367,12 @@ void kpDocument::setImage (const kpImage &image)
 
     *m_image = image;
 
-    if (m_oldWidth == width () && m_oldHeight == height ())
+    if (m_oldWidth == width () && m_oldHeight == height ()) {
         slotContentsChanged (image.rect ());
-    else
+    }
+    else {
         slotSizeChanged (QSize (width (), height ()));
+    }
 }
 
 //---------------------------------------------------------------------
@@ -392,8 +389,9 @@ void kpDocument::setImage (bool ofSelection, const kpImage &image)
 
         imageSel->setBaseImage (image);
     }
-    else
+    else {
         setImage (image);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -416,11 +414,11 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
     m_oldHeight = height ();
 
     qCDebug(kpLogDocument) << "\toldWidth=" << m_oldWidth
-               << " oldHeight=" << m_oldHeight
-               << endl;
+               << " oldHeight=" << m_oldHeight;
 
-    if (w == m_oldWidth && h == m_oldHeight)
+    if (w == m_oldWidth && h == m_oldHeight) {
         return;
+    }
 
     kpPixmapFX::resize (m_image, w, h, backgroundColor);
 

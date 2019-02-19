@@ -50,8 +50,9 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
     //       of the mainView.
     setHasMouse (rect ().contains (e->pos ()));
 
-    if (tool ())
+    if (tool ()) {
         tool ()->mouseMoveEvent (e);
+    }
 
     e->accept ();
 }
@@ -64,8 +65,9 @@ void kpView::mousePressEvent (QMouseEvent *e)
 
     setHasMouse (true);
 
-    if (tool ())
+    if (tool ()) {
         tool ()->mousePressEvent (e);
+    }
 
     e->accept ();
 }
@@ -80,8 +82,9 @@ void kpView::mouseReleaseEvent (QMouseEvent *e)
 
     setHasMouse (rect ().contains (e->pos ()));
 
-    if (tool ())
+    if (tool ()) {
         tool ()->mouseReleaseEvent (e);
+    }
 
     e->accept ();
 }
@@ -91,8 +94,9 @@ void kpView::mouseReleaseEvent (QMouseEvent *e)
 // public virtual [base QWidget]
 void kpView::wheelEvent (QWheelEvent *e)
 {
-    if (tool ())
+    if (tool ()) {
         tool ()->wheelEvent (e);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -102,8 +106,9 @@ void kpView::keyPressEvent (QKeyEvent *e)
 {
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::keyPressEvent()" << e->text();
 
-    if (tool ())
+    if (tool ()) {
         tool ()->keyPressEvent (e);
+    }
 
     e->accept ();
 }
@@ -115,8 +120,9 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 {
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::keyReleaseEvent()";
 
-    if (tool ())
+    if (tool ()) {
         tool ()->keyReleaseEvent (e);
+    }
 
     e->accept ();
 }
@@ -128,8 +134,9 @@ void kpView::inputMethodEvent (QInputMethodEvent *e)
 {
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::inputMethodEvent()";
 
-    if (tool ())
+    if (tool ()) {
         tool ()->inputMethodEvent (e);
+    }
     e->accept ();
 }
 
@@ -152,16 +159,18 @@ bool kpView::event (QEvent *e)
 void kpView::focusInEvent (QFocusEvent *e)
 {
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::focusInEvent()";
-    if (tool ())
+    if (tool ()) {
         tool ()->focusInEvent (e);
+    }
 }
 
 // protected virtual [base QWidget]
 void kpView::focusOutEvent (QFocusEvent *e)
 {
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::focusOutEvent()";
-    if (tool ())
+    if (tool ()) {
         tool ()->focusOutEvent (e);
+    }
 }
 
 
@@ -181,8 +190,9 @@ void kpView::enterEvent (QEvent *e)
     // while RMB menu was up) and hence the cursor is not updated.
     setHasMouse (true);
 
-    if (tool ())
+    if (tool ()) {
         tool ()->enterEvent (e);
+    }
 }
 
 // protected virtual [base QWidget]
@@ -191,8 +201,9 @@ void kpView::leaveEvent (QEvent *e)
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::leaveEvent()";
 
     setHasMouse (false);
-    if (tool ())
+    if (tool ()) {
         tool ()->leaveEvent (e);
+    }
 }
 
 

@@ -49,13 +49,15 @@
 // Returns whether there is only 1 distinct point in <points>.
 bool kpPixmapFX::Only1PixelInPointArray (const QPolygon &points)
 {
-    if (points.count () == 0)
+    if (points.count () == 0) {
         return false;
+    }
 
     for (int i = 1; i < static_cast<int> (points.count ()); i++)
     {
-        if (points [i] != points [0])
+        if (points [i] != points [0]) {
             return false;
+        }
     }
 
     return true;
@@ -188,11 +190,13 @@ void kpPixmapFX::drawPolygon (QImage *image,
         fcolor, penWidth,
         fStippleColor);
 
-    if (bcolor.isValid ())
+    if (bcolor.isValid ()) {
         p.setBrush (QBrush (bcolor.toQColor()));
+    }
     // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
-    else
+    else {
         p.setBrush (Qt::NoBrush);
+    }
 
     // Qt bug: single point doesn't show up depending on penWidth.
     if (Only1PixelInPointArray (points))
@@ -205,11 +209,13 @@ void kpPixmapFX::drawPolygon (QImage *image,
     // TODO: why aren't the ends rounded?
     p.drawPolygon(points, Qt::OddEvenFill);
 
-    if ( isFinal )
+    if ( isFinal ) {
       return;
+    }
 
-    if ( points.count() <= 2 )
+    if ( points.count() <= 2 ) {
       return;
+    }
 
     p.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
     p.setPen(QPen(Qt::white));
@@ -243,10 +249,12 @@ void kpPixmapFX::fillRect (QImage *image,
                 const bool parity = ((dy + dx) / StippleSize) % 2;
 
                 kpColor useColor;
-                if (!parity)
+                if (!parity) {
                     useColor = color;
-                else
+                }
+                else {
                     useColor = stippleColor;
+                }
                     
                 painter.fillRect (x + dx, y + dy, StippleSize, StippleSize, useColor.toQColor());
             }

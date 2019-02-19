@@ -46,20 +46,17 @@ kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Typ
 {
 }
 
-kpEffectBlurSharpenCommand::~kpEffectBlurSharpenCommand ()
-{
-}
+kpEffectBlurSharpenCommand::~kpEffectBlurSharpenCommand () = default;
 
 
 // public static
 QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
 {
-    if (type == kpEffectBlurSharpen::Blur)
-        return i18n ("Soften");
-    else if (type == kpEffectBlurSharpen::Sharpen)
-        return i18n ("Sharpen");
-    else
-        return QString();
+    switch (type) {
+    case kpEffectBlurSharpen::Blur: return i18n ("Soften");
+    case kpEffectBlurSharpen::Sharpen: return i18n ("Sharpen");
+    default: return QString();
+    }
 }
 
 

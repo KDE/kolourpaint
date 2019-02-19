@@ -50,9 +50,7 @@ kpToolColorPickerCommand::kpToolColorPickerCommand (
 {
 }
 
-kpToolColorPickerCommand::~kpToolColorPickerCommand ()
-{
-}
+kpToolColorPickerCommand::~kpToolColorPickerCommand () = default;
 
 
 // public virtual [base kpCommand]

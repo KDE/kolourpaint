@@ -78,10 +78,10 @@ struct kpFloodFillPrivate
     // Copy of whatever was passed to the constructor.
     //
 
-    kpImage *imagePtr;
-    int x, y;
+    kpImage *imagePtr{};
+    int x{}, y{};
     kpColor color;
-    int processedColorSimilarity;
+    int processedColorSimilarity{};
 
 
     //
@@ -100,7 +100,7 @@ struct kpFloodFillPrivate
 
     QRect boundingRect;
 
-    bool prepared;
+    bool prepared{};
 };
 
 //---------------------------------------------------------------------
@@ -147,7 +147,7 @@ int kpFloodFill::processedColorSimilarity () const
 kpCommandSize::SizeType kpFloodFill::size () const
 {
     kpCommandSize::SizeType fillLinesCacheSize = 0;
-    foreach (const QLinkedList <kpFillLine> &linesList, d->fillLinesCache)
+    for (const auto &linesList : d->fillLinesCache)
     {
         fillLinesCacheSize += ::FillLinesListSize (linesList);
     }
@@ -162,8 +162,9 @@ kpCommandSize::SizeType kpFloodFill::size () const
 // public
 void kpFloodFill::prepareColorToChange ()
 {
-    if (d->colorToChange.isValid ())
+    if (d->colorToChange.isValid ()) {
         return;
+    }
 
     qCDebug(kpLogImagelib) << "kpFloodFill::prepareColorToChange()";
 
@@ -187,17 +188,19 @@ kpColor kpFloodFill::colorToChange ()
 // private
 kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
 {
-    if (beenHere)
+    if (beenHere) {
         *beenHere = false;
+    }
 
     Q_ASSERT (y >= 0 && y < static_cast<int> (d->fillLinesCache.count ()));
 
-    foreach (const kpFillLine &line, d->fillLinesCache [y])
+    for (const auto &line : d->fillLinesCache [y])
     {
         if (x >= line.m_x1 && x <= line.m_x2)
         {
-            if (beenHere)
+            if (beenHere) {
                 *beenHere = true;
+            }
             return d->color;
         }
     }
@@ -223,13 +226,16 @@ int kpFloodFill::findMinX (int y, int x) const
 {
     for (;;)
     {
-        if (x < 0)
+        if (x < 0) {
             return 0;
+        }
 
-        if (shouldGoTo (x, y))
+        if (shouldGoTo (x, y)) {
             x--;
-        else
+        }
+        else {
             return x + 1;
+        }
     }
 }
 
@@ -240,13 +246,16 @@ int kpFloodFill::findMaxX (int y, int x) const
 {
     for (;;)
     {
-        if (x > d->imagePtr->width () - 1)
+        if (x > d->imagePtr->width () - 1) {
             return d->imagePtr->width () - 1;
+        }
 
-        if (shouldGoTo (x, y))
+        if (shouldGoTo (x, y)) {
             x++;
-        else
+        }
+        else {
             return x - 1;
+        }
     }
 }
 
@@ -270,8 +279,9 @@ void kpFloodFill::addLine (int y, int x1, int x2)
 void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
 {
     // out of bounds?
-    if (fillLine.m_y + dy < 0 || fillLine.m_y + dy >= d->imagePtr->height ())
+    if (fillLine.m_y + dy < 0 || fillLine.m_y + dy >= d->imagePtr->height ()) {
         return;
+    }
 
     for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
     {
@@ -296,8 +306,9 @@ void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
 // public
 void kpFloodFill::prepare ()
 {
-    if (d->prepared)
+    if (d->prepared) {
         return;
+    }
 
     qCDebug(kpLogImagelib) << "kpFloodFill::prepare()";
 
@@ -319,8 +330,9 @@ void kpFloodFill::prepare ()
     qCDebug(kpLogImagelib) << "\tcreating fillLinesCache";
 
     // ready cache
-    for (int i = 0; i < d->imagePtr->height (); i++)
+    for (int i = 0; i < d->imagePtr->height (); i++) {
          d->fillLinesCache.append (QLinkedList <kpFillLine> ());
+    }
 
     qCDebug(kpLogImagelib) << "\tcreating fill lines";
 
@@ -378,17 +390,20 @@ void kpFloodFill::fill()
 
     // by definition, flood fill with a fully transparent color erases the pixels
     // and sets them to be fully transparent
-    if ( d->color.isTransparent() )
+    if ( d->color.isTransparent() ) {
       painter.setCompositionMode(QPainter::CompositionMode_Clear);
+    }
 
     painter.setPen(d->color.toQColor());
 
-    foreach (const kpFillLine &l, d->fillLines)
+    for (const auto &l : d->fillLines)
     {
-      if ( l.m_x1 == l.m_x2 )
+      if ( l.m_x1 == l.m_x2 ) {
         painter.drawPoint(l.m_x1, l.m_y);
-      else
+      }
+      else {
         painter.drawLine(l.m_x1, l.m_y, l.m_x2, l.m_y);
+      }
     }
 
     QApplication::restoreOverrideCursor();

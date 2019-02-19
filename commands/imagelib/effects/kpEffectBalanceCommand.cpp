@@ -43,9 +43,7 @@ kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
 {
 }
 
-kpEffectBalanceCommand::~kpEffectBalanceCommand ()
-{
-}
+kpEffectBalanceCommand::~kpEffectBalanceCommand () = default;
 
 
 // protected virtual [base kpEffectCommandBase]

@@ -144,8 +144,9 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::saveThumbnailGeometry()";
 
-    if (!d->thumbnail)
+    if (!d->thumbnail) {
         return;
+    }
 
     QRect rect (d->thumbnail->x (), d->thumbnail->y (),
                 d->thumbnail->width (), d->thumbnail->height ());
@@ -153,9 +154,7 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
 
     d->configThumbnailGeometry = mapFromGlobal (rect);
 
-    qCDebug(kpLogMainWindow) << "\tCONFIG: saving thumbnail geometry "
-                << d->configThumbnailGeometry
-                << endl;
+    qCDebug(kpLogMainWindow) << "\tCONFIG: saving thumbnail geometry ";
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
@@ -184,10 +183,11 @@ void kpMainWindow::slotShowThumbnailToggled ()
 void kpMainWindow::updateThumbnailZoomed ()
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::updateThumbnailZoomed() zoomed="
-               << d->actionZoomedThumbnail->isChecked () << endl;
+               << d->actionZoomedThumbnail->isChecked ();
 
-    if (!d->thumbnailView)
+    if (!d->thumbnailView) {
         return;
+    }
 
     destroyThumbnailView ();
     createThumbnailView ();
@@ -299,27 +299,33 @@ void kpMainWindow::createThumbnailView ()
 
 
     qCDebug(kpLogMainWindow) << "\t\tgive kpThumbnail the kpView:";
-    if (d->thumbnail)
+    if (d->thumbnail) {
         d->thumbnail->setView (d->thumbnailView);
-    else
-        qCCritical(kpLogMainWindow) << "kpMainWindow::createThumbnailView() no thumbnail" << endl;
+    }
+    else {
+        qCCritical(kpLogMainWindow) << "kpMainWindow::createThumbnailView() no thumbnail";
+    }
 
     qCDebug(kpLogMainWindow) << "\t\tregistering the kpView:";
-    if (d->viewManager)
+    if (d->viewManager) {
         d->viewManager->registerView (d->thumbnailView);
+    }
 }
 
 // private
 void kpMainWindow::destroyThumbnailView ()
 {
-    if (!d->thumbnailView)
+    if (!d->thumbnailView) {
         return;
+    }
 
-    if (d->viewManager)
+    if (d->viewManager) {
         d->viewManager->unregisterView (d->thumbnailView);
+    }
 
-    if (d->thumbnail)
+    if (d->thumbnail) {
         d->thumbnail->setView (nullptr);
+    }
 
     d->thumbnailView->deleteLater (); d->thumbnailView = nullptr;
 }
@@ -334,11 +340,11 @@ void kpMainWindow::updateThumbnail ()
     qCDebug(kpLogMainWindow) << "\tthumbnail="
                << bool (d->thumbnail)
                << " action_isChecked="
-               << enable
-               << endl;
+               << enable;
 
-    if (bool (d->thumbnail) == enable)
+    if (bool (d->thumbnail) == enable) {
         return;
+    }
 
     if (!d->thumbnail)
     {
@@ -393,7 +399,7 @@ void kpMainWindow::updateThumbnail ()
     else
     {
         qCDebug(kpLogMainWindow) << "\tdestroying thumbnail d->thumbnail="
-            << d->thumbnail << endl;
+            << d->thumbnail;
 
         if (d->thumbnailSaveConfigTimer && d->thumbnailSaveConfigTimer->isActive ())
         {

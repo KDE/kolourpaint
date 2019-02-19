@@ -40,9 +40,7 @@ kpCommand::kpCommand (kpCommandEnvironment *environ)
     Q_ASSERT (environ);
 }
 
-kpCommand::~kpCommand ()
-{
-}
+kpCommand::~kpCommand () = default;
 
 
 kpCommandEnvironment *kpCommand::environ () const

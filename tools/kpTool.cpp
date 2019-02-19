@@ -84,8 +84,9 @@ kpTool::kpTool(const QString &text, const QString &description,
 kpTool::~kpTool ()
 {
     // before destructing, stop using the tool
-    if (d->began)
+    if (d->began) {
         endInternal ();
+    }
 
     delete d->action;
 
@@ -134,11 +135,11 @@ static bool KeyIsText (int key)
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
                                            const QList<QKeySequence> &shortcut)
 {
-    foreach(const QKeySequence &seq, shortcut)
+    for(const auto &seq : shortcut)
     {
-        if (seq.count () == 1 && ::KeyIsText (seq [0]))
-            return i18nc ("<Tool Name> (<Single Accel Key>)",
-                          "%1 (%2)", text, seq.toString ().toUpper ());
+        if (seq.count () == 1 && ::KeyIsText (seq [0])) {
+            return i18nc ("<Tool Name> (<Single Accel Key>)", "%1 (%2)", text, seq.toString ().toUpper ());
+        }
     }
 
     return text;

@@ -77,8 +77,9 @@ kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
     createAngleGroupBox ();
 
 
-    if (s_lastWidth > 0 && s_lastHeight > 0)
+    if (s_lastWidth > 0 && s_lastHeight > 0) {
         resize (s_lastWidth, s_lastHeight);
+    }
 
 
     slotAngleCustomRadioButtonToggled (m_angleCustomRadioButton->isChecked ());
@@ -95,14 +96,14 @@ kpTransformRotateDialog::~kpTransformRotateDialog ()
 // private
 void kpTransformRotateDialog::createDirectionGroupBox ()
 {
-    QGroupBox *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
+    auto *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
     addCustomWidget (directionGroupBox);
 
 
-    QLabel *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
+    auto *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
     antiClockwisePixmapLabel->setPixmap (UserIcon ("image_rotate_anticlockwise"));
 
-    QLabel *clockwisePixmapLabel = new QLabel (directionGroupBox);
+    auto *clockwisePixmapLabel = new QLabel (directionGroupBox);
     clockwisePixmapLabel->setPixmap (UserIcon ("image_rotate_clockwise"));
 
 
@@ -114,7 +115,7 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
     m_clockwiseRadioButton->setChecked (s_lastIsClockwise);
 
 
-    QGridLayout *directionLayout = new QGridLayout (directionGroupBox );
+    auto *directionLayout = new QGridLayout (directionGroupBox );
     directionLayout->addWidget (antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
     directionLayout->addWidget (clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
     directionLayout->addWidget (m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
@@ -131,7 +132,7 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
 // private
 void kpTransformRotateDialog::createAngleGroupBox ()
 {
-    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
+    auto *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
 
 
@@ -144,13 +145,13 @@ void kpTransformRotateDialog::createAngleGroupBox ()
     m_angleCustomInput->setMinimum(-359);
     m_angleCustomInput->setMaximum(+359);
     m_angleCustomInput->setValue(s_lastAngleCustom);
-    QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+    auto *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
     m_angleCustomRadioButton->setChecked (true);
 
 
-    QGridLayout *angleLayout = new QGridLayout (angleGroupBox );
+    auto *angleLayout = new QGridLayout (angleGroupBox );
 
     angleLayout->addWidget (m_angle90RadioButton, 0, 0, 1, 3);
     angleLayout->addWidget (m_angle180RadioButton, 1, 0, 1, 3);
@@ -194,25 +195,32 @@ int kpTransformRotateDialog::angle () const
     int retAngle;
 
 
-    if (m_angle90RadioButton->isChecked ())
+    if (m_angle90RadioButton->isChecked ()) {
         retAngle = 90;
-    else if (m_angle180RadioButton->isChecked ())
+    }
+    else if (m_angle180RadioButton->isChecked ()) {
         retAngle = 180;
-    else if (m_angle270RadioButton->isChecked ())
+    }
+    else if (m_angle270RadioButton->isChecked ()) {
         retAngle = 270;
-    else // if (m_angleCustomRadioButton->isChecked ())
+    }
+    else { // if (m_angleCustomRadioButton->isChecked ())
         retAngle = m_angleCustomInput->value ();
+    }
 
 
-    if (m_antiClockwiseRadioButton->isChecked ())
+    if (m_antiClockwiseRadioButton->isChecked ()) {
         retAngle *= -1;
+    }
 
 
-    if (retAngle < 0)
+    if (retAngle < 0) {
         retAngle += ((0 - retAngle) / 360 + 1) * 360;
+    }
 
-    if (retAngle >= 360)
+    if (retAngle >= 360) {
         retAngle -= ((retAngle - 360) / 360 + 1) * 360;
+    }
 
 
     return retAngle;
@@ -242,8 +250,9 @@ void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 {
     m_angleCustomInput->setEnabled (isChecked);
 
-    if (isChecked)
+    if (isChecked) {
         m_angleCustomInput->setFocus();
+    }
 }
 
 // private slot virtual [base kpTransformPreviewDialog]

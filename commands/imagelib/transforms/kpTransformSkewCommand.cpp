@@ -74,10 +74,7 @@ QString kpTransformSkewCommand::name () const
 {
     QString opName = i18n ("Skew");
 
-    if (m_actOnSelection)
-        return i18n ("Selection: %1", opName);
-    else
-        return opName;
+    return (m_actOnSelection) ? i18n ("Selection: %1", opName) : opName;
 }
 
 
@@ -150,8 +147,7 @@ void kpTransformSkewCommand::execute ()
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newImage.width ()
                        << " h=" << newImage.height ()
-                       << " (victim of rounding error and/or skewed-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be))"
-                       << endl;
+                       << " (victim of rounding error and/or skewed-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be))";
         #endif
             doc->setSelection (
                 kpRectangularImageSelection (

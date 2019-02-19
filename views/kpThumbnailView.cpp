@@ -48,9 +48,7 @@ kpThumbnailView::kpThumbnailView (kpDocument *document,
 {
 }
 
-kpThumbnailView::~kpThumbnailView ()
-{
-}
+kpThumbnailView::~kpThumbnailView () = default;
 
 
 // protected

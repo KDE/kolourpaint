@@ -181,7 +181,7 @@ void kpMainWindow::slotCut ()
 
 static QMimeData *NewTextMimeData (const QString &text)
 {
-    QMimeData *md = new QMimeData ();
+    auto *md = new QMimeData ();
     md->setText (text);
     return md;
 }
@@ -203,7 +203,7 @@ void kpMainWindow::slotCopy ()
 
     if (dynamic_cast <kpTextSelection *> (sel))
     {
-        kpTextSelection *textSel = static_cast <kpTextSelection *> (sel);
+        auto *textSel = dynamic_cast <kpTextSelection *> (sel);
         if (!textSel->text ().isEmpty ())
         {
             QApplication::clipboard ()->setMimeData (
@@ -234,8 +234,7 @@ void kpMainWindow::slotCopy ()
     }
     else if (dynamic_cast <kpAbstractImageSelection *> (sel))
     {
-        kpAbstractImageSelection *imageSel =
-            static_cast <kpAbstractImageSelection *> (sel);
+        auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (sel);
 
         // Transparency doesn't get sent across the aether so nuke it now
         // so that transparency mask doesn't get needlessly recalculated
@@ -244,10 +243,12 @@ void kpMainWindow::slotCopy ()
 
         kpImage rawImage;
 
-        if (imageSel->hasContent ())
+        if (imageSel->hasContent ()) {
             rawImage = imageSel->baseImage ();
-        else
+        }
+        else {
             rawImage = d->document->getSelectedBaseImage ();
+        }
 
         imageSel->setBaseImage ( rawImage );
 
@@ -255,8 +256,9 @@ void kpMainWindow::slotCopy ()
             new kpSelectionDrag (*imageSel),
             QClipboard::Clipboard);
     }
-    else
+    else {
         Q_ASSERT (!"Unknown selection type");
+    }
 
     delete sel;
 }
@@ -284,8 +286,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::calcUsefulPasteRect("
                << imageWidth << "," << imageHeight
-               << ")"
-               << endl;
+               << ")";
     Q_ASSERT (d->document);
 
     // TODO: 1st choice is to paste sel near but not overlapping last deselect point
@@ -302,12 +303,11 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
             imageWidth <= docTopLeft.x () ||
             imageHeight <= docTopLeft.y ())
         {
-            return QRect (docTopLeft.x (), docTopLeft.y (),
-                          imageWidth, imageHeight);
+            return  {docTopLeft.x (), docTopLeft.y (),  imageWidth, imageHeight};
         }
     }
 
-    return QRect (0, 0, imageWidth, imageHeight);
+    return  {0, 0, imageWidth, imageHeight};
 }
 
 //---------------------------------------------------------------------
@@ -315,8 +315,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 // private
 void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
 {
-    qCDebug(kpLogMainWindow) << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
-               << endl;
+    qCDebug(kpLogMainWindow) << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")";
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
@@ -328,7 +327,7 @@ void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
 
     if (!d->document)
     {
-        kpDocument *newDoc = new kpDocument (
+        auto *newDoc = new kpDocument (
             sel.width (), sel.height (), documentEnvironment ());
 
         // will also create viewManager
@@ -339,16 +338,17 @@ void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
     // Paste as new selection
     //
 
-    const kpAbstractImageSelection *imageSel =
-        dynamic_cast <const kpAbstractImageSelection *> (&sel);
+    const auto *imageSel = dynamic_cast <const kpAbstractImageSelection *> (&sel);
+
     if (imageSel && imageSel->hasContent () && imageSel->transparency ().isTransparent ())
     {
         d->colorToolBar->flashColorSimilarityToolBarItem ();
     }
 
     kpAbstractSelection *selInUsefulPos = sel.clone ();
-    if (!forceTopLeft)
+    if (!forceTopLeft) {
         selInUsefulPos->moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
+    }
     // TODO: Should use kpCommandHistory::addCreateSelectionCommand(),
     //       as well, to really support pasting selection borders.
     addDeselectFirstCommand (new kpToolSelectionCreateCommand (
@@ -362,8 +362,7 @@ void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
 
     qCDebug(kpLogMainWindow) << "sel.size=" << QSize (sel.width (), sel.height ())
                << " document.size="
-               << QSize (d->document->width (), d->document->height ())
-               << endl;
+               << QSize (d->document->width (), d->document->height ());
 
     // If the selection is bigger than the document, automatically
     // resize the document (with the option of Undo'ing) to fit
@@ -394,10 +393,11 @@ void kpMainWindow::pasteText (const QString &text,
     qCDebug(kpLogMainWindow) << "kpMainWindow::pasteText(" << text
                << ",forceNewTextSelection=" << forceNewTextSelection
                << ",newTextSelectionTopLeft=" << newTextSelectionTopLeft
-               << ")" << endl;
+               << ")";
 
-    if ( text.isEmpty() )
+    if ( text.isEmpty() ) {
         return;
+    }
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
@@ -473,8 +473,9 @@ void kpMainWindow::pasteText (const QString &text,
         const QFontMetrics fontMetrics = ts.fontMetrics ();
 
         int height = textLines.size () * fontMetrics.height ();
-        if (textLines.size () >= 1)
+        if (textLines.size () >= 1) {
             height += (textLines.size () - 1) * fontMetrics.leading ();
+        }
 
         int width = 0;
         for (QList <QString>::const_iterator it = textLines.constBegin ();
@@ -482,8 +483,9 @@ void kpMainWindow::pasteText (const QString &text,
              ++it)
         {
             const int w = fontMetrics.width (*it);
-            if (w > width)
+            if (w > width) {
                 width = w;
+            }
         }
 
         // limit the size to avoid memory overflow
@@ -520,7 +522,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
                << ",point=" << point
                << ",allowNewTextSelectionPointShift="
                << allowNewTextSelectionPointShift
-               << ")" << endl;
+               << ")";
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
@@ -616,7 +618,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     // Requirement 2. transparent pixels in the image must remain as transparent.
     //
 
-    kpMainWindow *win = new kpMainWindow (nullptr/*no document*/);
+    auto *win = new kpMainWindow (nullptr/*no document*/);
     win->show ();
 
     // Make "Edit / Paste in New Window" always paste white pixels as white.
@@ -681,16 +683,18 @@ void kpMainWindow::slotSelectAll ()
 
     toolEndShape ();
 
-    if (d->document->selection ())
+    if (d->document->selection ()) {
         slotDeselect ();
+    }
 
     // just the border - don't actually pull image from doc yet
     d->document->setSelection (
         kpRectangularImageSelection (d->document->rect (),
             imageSelectionTransparency ()));
 
-    if (tool ())
+    if (tool ()) {
         tool ()->somethingBelowTheCursorChanged ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -700,8 +704,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
 {
     qCDebug(kpLogMainWindow) << "kpMainWindow::addDeselectFirstCommand("
                << cmd
-               << ")"
-               << endl;
+               << ")";
 
 
     kpAbstractSelection *sel = d->document->selection ();
@@ -716,11 +719,13 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
         {
             qCDebug(kpLogMainWindow) << "\tjust a fresh border - was nop - delete";
             d->document->selectionDelete ();
-            if (tool ())
+            if (tool ()) {
                 tool ()->somethingBelowTheCursorChanged ();
+            }
 
-            if (cmd)
+            if (cmd) {
                 d->commandHistory->addCommand (cmd);
+            }
         }
         else
         {
@@ -740,14 +745,16 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
                 macroCmd->addCommand (cmd);
                 d->commandHistory->addCommand (macroCmd);
             }
-            else
+            else {
                 d->commandHistory->addCommand (deselectCommand);
+            }
         }
     }
     else
     {
-        if (cmd)
+        if (cmd) {
             d->commandHistory->addCommand (cmd);
+        }
     }
 }
 
@@ -774,8 +781,9 @@ void kpMainWindow::slotCopyToFile ()
     toolEndShape ();
 
 
-    if (!d->document->selection ())
+    if (!d->document->selection ()) {
         return;
+    }
 
     kpImage imageToSave;
 
@@ -790,15 +798,17 @@ void kpMainWindow::slotCopyToFile ()
             // image.
             imageToSave = d->document->getSelectedBaseImage ();
         }
-        else
+        else {
             imageToSave = imageSel->transparentImage ();
+        }
     }
     else if (d->document->textSelection ())
     {
         imageToSave = d->document->textSelection ()->approximateImage ();
     }
-    else
+    else {
         Q_ASSERT (!"Unknown selection type");
+    }
 
 
     kpDocumentSaveOptions chosenSaveOptions;
@@ -815,8 +825,9 @@ void kpMainWindow::slotCopyToFile ()
                                     &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
-    if (chosenURL.isEmpty ())
+    if (chosenURL.isEmpty ()) {
         return;
+    }
 
 
     if (!kpDocument::savePixmapToFile (imageToSave,
@@ -852,8 +863,9 @@ void kpMainWindow::slotPasteFromFile ()
     QList<QUrl> urls = askForOpenURLs(i18nc ("@title:window", "Paste From File"),
                                      false/*only 1 URL*/);
 
-    if (urls.count () != 1)
+    if (urls.count () != 1) {
         return;
+    }
 
     QUrl url = urls.first ();
 
@@ -861,8 +873,9 @@ void kpMainWindow::slotPasteFromFile ()
         false/*show error message if doesn't exist*/,
         this);
 
-    if (image.isNull ())
+    if (image.isNull ()) {
         return;
+    }
 
     addRecentURL (url);
 

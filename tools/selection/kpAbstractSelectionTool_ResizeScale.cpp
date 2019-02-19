@@ -57,8 +57,9 @@
 int kpAbstractSelectionTool::onSelectionResizeHandle () const
 {
     kpView *v = viewManager ()->viewUnderCursor ();
-    if (!v)
+    if (!v) {
         return 0;
+    }
 
     return v->mouseOnSelectionResizeHandle (currentViewPoint ());
 }
@@ -108,7 +109,7 @@ void kpAbstractSelectionTool::setCursorResizeScale ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
     qCDebug(kpLogTools) << "\tonSelectionResizeHandle="
-                << onSelectionResizeHandle () << endl;
+                << onSelectionResizeHandle ();
 #endif
     Qt::CursorShape shape = Qt::ArrowCursor;
 
@@ -215,10 +216,12 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
     // If left, positive X drags decrease width.
     // If right, positive X drags increase width.
     int userXSign = 0;
-    if (d->resizeScaleType & kpView::Left)
+    if (d->resizeScaleType & kpView::Left) {
         userXSign = -1;
-    else if (d->resizeScaleType & kpView::Right)
+    }
+    else if (d->resizeScaleType & kpView::Right) {
         userXSign = +1;
+    }
 
     // Calcluate new width.
     *newWidth = originalSelection.width () +
@@ -237,10 +240,12 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
     // If top, positive Y drags decrease height.
     // If bottom, positive Y drags increase height.
     int userYSign = 0;
-    if (d->resizeScaleType & kpView::Top)
+    if (d->resizeScaleType & kpView::Top) {
         userYSign = -1;
-    else if (d->resizeScaleType & kpView::Bottom)
+    }
+    else if (d->resizeScaleType & kpView::Bottom) {
         userYSign = +1;
+    }
 
     // Calcluate new height.
     *newHeight = originalSelection.height () +
@@ -284,8 +289,7 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
     qCDebug(kpLogTools) << "\t\tnewX=" << *newX
                 << " newY=" << *newY
                 << " newWidth=" << *newWidth
-                << " newHeight=" << *newHeight
-                << endl;
+                << " newHeight=" << *newHeight;
 #endif
 }
 
@@ -370,8 +374,9 @@ void kpAbstractSelectionTool::cancelResizeScale ()
 #endif
 
     // NOP drag?
-    if (!d->currentResizeScaleCommand)
+    if (!d->currentResizeScaleCommand) {
         return;
+    }
 
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "\t\tundo currentResizeScaleCommand";
@@ -388,8 +393,9 @@ void kpAbstractSelectionTool::cancelResizeScale ()
 void kpAbstractSelectionTool::endDrawResizeScale ()
 {
     // NOP drag?
-    if (!d->currentResizeScaleCommand)
+    if (!d->currentResizeScaleCommand) {
         return;
+    }
 
     d->currentResizeScaleCommand->finalize ();
 

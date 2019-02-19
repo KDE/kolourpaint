@@ -59,12 +59,10 @@ kpDefaultColorCollection::kpDefaultColorCollection ()
         kpColor::Tan
     };
 
-    for (int i = 0; i < static_cast<int> (sizeof (colors) / sizeof (colors [0])); i++)
+    for (const auto & color : colors)
     {
-        addColor (colors [i].toQColor ());
+        addColor (color.toQColor ());
     }
 }
 
-kpDefaultColorCollection::~kpDefaultColorCollection ()
-{
-}
+kpDefaultColorCollection::~kpDefaultColorCollection () = default;

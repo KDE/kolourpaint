@@ -71,10 +71,7 @@ QString kpTransformRotateCommand::name () const
 {
     QString opName = i18n ("Rotate");
 
-    if (m_actOnSelection)
-        return i18n ("Selection: %1", opName);
-    else
-        return opName;
+    return (m_actOnSelection) ? i18n ("Selection: %1", opName) : opName;
 }
 
 
@@ -96,18 +93,19 @@ void kpTransformRotateCommand::execute ()
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
-    if (!m_losslessRotation)
+    if (!m_losslessRotation) {
         m_oldImage = doc->image (m_actOnSelection);
+    }
 
 
     kpImage newImage = kpPixmapFX::rotate (doc->image (m_actOnSelection),
                                             m_angle,
                                             m_backgroundColor);
 
-    if (!m_actOnSelection)
+    if (!m_actOnSelection) {
         doc->setImage (newImage);
-    else
-    {
+    }
+    else {
         kpAbstractImageSelection *sel = doc->imageSelection ();
         Q_ASSERT (sel);
 
@@ -163,8 +161,7 @@ void kpTransformRotateCommand::execute ()
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newImage.width ()
                        << " h=" << newImage.height ()
-                       << " (victim of rounding error and/or rotated-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be)"
-                       << endl;
+                       << " (victim of rounding error and/or rotated-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be)";
         #endif
             doc->setSelection (
                 kpRectangularImageSelection (
@@ -206,10 +203,10 @@ void kpTransformRotateCommand::unexecute ()
     }
 
 
-    if (!m_actOnSelection)
+    if (!m_actOnSelection) {
         doc->setImage (oldImage);
-    else
-    {
+    }
+    else {
         m_oldSelectionPtr->setBaseImage (oldImage);
         doc->setSelection (*m_oldSelectionPtr);
         delete m_oldSelectionPtr; m_oldSelectionPtr = nullptr;

@@ -138,8 +138,7 @@ void SetDocumentToSelectionImageCommand::execute ()
         newDocImage.fill(m_backgroundColor.toQRgb());
 
         qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
-                   << " pm=" << m_fromSelectionPtr->hasContent ()
-                   << endl;
+                   << " pm=" << m_fromSelectionPtr->hasContent ();
         QImage setTransparentImage;
 
         if (m_fromSelectionPtr->hasContent ())
@@ -147,15 +146,13 @@ void SetDocumentToSelectionImageCommand::execute ()
             setTransparentImage = m_fromSelectionPtr->transparentImage ();
 
             qCDebug(kpLogImagelib) << "\thave pixmap; rect="
-                       << setTransparentImage.rect ()
-                       << endl;
+                       << setTransparentImage.rect ();
         }
         else
         {
             setTransparentImage = m_imageIfFromSelectionDoesntHaveOne;
             qCDebug(kpLogImagelib) << "\tno pixmap in sel - get it; rect="
-                       << setTransparentImage.rect ()
-                       << endl;
+                       << setTransparentImage.rect ();
         }
 
         kpPixmapFX::paintPixmapAt (&newDocImage,
@@ -185,8 +182,7 @@ void SetDocumentToSelectionImageCommand::unexecute ()
         m_oldImage = kpImage ();
 
         qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
-                   << " pm=" << m_fromSelectionPtr->hasContent ()
-                   << endl;
+                   << " pm=" << m_fromSelectionPtr->hasContent ();
         document ()->setSelection (*m_fromSelectionPtr);
 
         environ ()->somethingBelowTheCursorChanged ();
@@ -201,20 +197,21 @@ void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
         const QString &commandName, kpCommand *resizeDocCommand)
 {
     // Save starting selection, minus the border.
-    kpAbstractImageSelection *borderImageSel =
-        dynamic_cast <kpAbstractImageSelection *> (
+    auto *borderImageSel = dynamic_cast <kpAbstractImageSelection *> (
             mainWindow->document ()->selection ()->clone ());
+
     Q_ASSERT (borderImageSel);
 
-    if ( !borderImageSel )  // make coverity happy
-      return;
+    if ( !borderImageSel ) {  // make coverity happy
+        return;
+    }
 
     // (only interested in border)
     borderImageSel->deleteContent ();
     borderImageSel->moveTo (QPoint (0, 0));
 
-    kpCommandEnvironment *environ = mainWindow->commandEnvironment ();
-    kpMacroCommand *macroCmd = new kpMacroCommand (commandName, environ);
+    auto *environ = mainWindow->commandEnvironment ();
+    auto *macroCmd = new kpMacroCommand (commandName, environ);
 
     // (must resize doc _before_ SetDocumentToSelectionImageCommand in case
     //  doc needs to gets bigger - else selection image may not fit)

@@ -57,10 +57,7 @@ QString kpEffectClearCommand::name () const
 {
     QString opName = i18n ("Clear");
 
-    if (m_actOnSelection)
-        return i18n ("Selection: %1", opName);
-    else
-        return opName;
+    return (m_actOnSelection) ? i18n ("Selection: %1", opName) : opName;
 }
 
 
@@ -92,8 +89,9 @@ void kpEffectClearCommand::execute ()
         Q_ASSERT (sel);
         sel->fill (m_newColor);
     }
-    else
+    else {
         doc->fill (m_newColor);
+    }
 }
 
 // public virtual [base kpCommand]

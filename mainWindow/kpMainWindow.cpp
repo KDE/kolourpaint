@@ -118,8 +118,7 @@ void kpMainWindow::readGeneralSettings ()
     {
         d->configOpenImagesInSameWindow = false;
         qCDebug(kpLogMainWindow) << "\tconfigOpenImagesInSameWindow: first time"
-                  << " - writing default: " << d->configOpenImagesInSameWindow
-                  << endl;
+                  << " - writing default: " << d->configOpenImagesInSameWindow;
         // TODO: More hidden options have to write themselves out on startup,
         //       not on use, to be discoverable (e.g. printing centered on page).
         cfg.writeEntry (kpSettingOpenImagesInSameWindow,
@@ -155,8 +154,7 @@ void kpMainWindow::readThumbnailSettings ()
     qCDebug(kpLogMainWindow) << "\t\tThumbnail Settings: shown=" << d->configThumbnailShown
                << " geometry=" << d->configThumbnailGeometry
                << " zoomed=" << d->configZoomedThumbnail
-               << " showRectangle=" << d->configThumbnailShowRectangle
-               << endl;
+               << " showRectangle=" << d->configThumbnailShowRectangle;
 }
 
 //---------------------------------------------------------------------
@@ -167,7 +165,7 @@ void kpMainWindow::finalizeGUI(KXMLGUIClient *client)
   {
     const QList<QMenu *> menuToHide = findChildren<QMenu *>("toolToolBarHiddenMenu");
     // should only contain one but...
-    foreach (QMenu *menu, menuToHide)
+    for (auto *menu : menuToHide)
     {
         menu->menuAction()->setVisible(false);
     }
@@ -382,8 +380,9 @@ kpMainWindow::~kpMainWindow ()
     // Get the kpTool to finish up.  This makes sure that the kpTool destructor
     // will not need to access any other class (that might be deleted before
     // the destructor is called by the QObject child-deletion mechanism).
-    if (tool ())
+    if (tool ()) {
         tool ()->endInternal ();
+    }
 
     // Delete document & views.
     // Note: This will disconnects signals from the current kpTool, so kpTool
@@ -410,8 +409,9 @@ kpDocument *kpMainWindow::document () const
 // public
 kpDocumentEnvironment *kpMainWindow::documentEnvironment ()
 {
-    if (!d->documentEnvironment)
+    if (!d->documentEnvironment) {
         d->documentEnvironment = new kpDocumentEnvironment (this);
+    }
 
     return d->documentEnvironment;
 }
@@ -460,8 +460,9 @@ kpCommandHistory *kpMainWindow::commandHistory () const
 
 kpCommandEnvironment *kpMainWindow::commandEnvironment ()
 {
-    if (!d->commandEnvironment)
+    if (!d->commandEnvironment) {
         d->commandEnvironment = new kpCommandEnvironment (this);
+    }
 
     return d->commandEnvironment;
 }
@@ -574,7 +575,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     if (d->document)
     {
         qCDebug(kpLogMainWindow) << "\treparenting doc that may have been created into a"
-                  << " different mainWindiow" << endl;
+                  << " different mainWindiow";
         d->document->setEnviron (documentEnvironment ());
 
         d->viewManager = new kpViewManager (this);
@@ -688,8 +689,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     slotEnableReload ();
     slotEnableSettingsShowPath ();
 
-    if (d->commandHistory)
+    if (d->commandHistory) {
         d->commandHistory->clear ();
+    }
 
     qCDebug(kpLogMainWindow) << "\tdocument and views ready to go!";
 }
@@ -732,7 +734,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         //         However, you would need to prefix all possible error/warning
         //         dialogs that might be called, with Qt::arrowCursor e.g. in
         //         kpDocument  and probably a lot more places.
-        foreach (const QUrl &u, urls)
+        for (const auto &u : urls)
             open (u);
     }
     else if (e->mimeData ()->hasText ())
@@ -763,8 +765,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
                             << kpWidgetMapper::toGlobal (d->scrollView,
                                     QRect (0, 0,
                                             d->scrollView->viewport()->width (),
-                                            d->scrollView->viewport()->height ()))
-                            << endl;
+                                            d->scrollView->viewport()->height ()));
                 }
                 if (d->thumbnailView &&
                     kpWidgetMapper::toGlobal (d->thumbnailView, d->thumbnailView->rect ())
@@ -861,8 +862,9 @@ void kpMainWindow::slotUpdateCaption ()
 // private slot
 void kpMainWindow::slotDocumentRestored ()
 {
-    if (d->document)
+    if (d->document) {
         d->document->setModified (false);
+    }
     slotUpdateCaption ();
 }
 

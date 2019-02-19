@@ -98,8 +98,9 @@ bool kpToolEnvironment::selectPreviousTool () const
     kpToolToolBar *tb = toolToolBar ();
 
     // (don't end up with no tool selected)
-    if (!tb->previousTool ())
+    if (!tb->previousTool ()) {
         return false;
+    }
 
     // endInternal() will be called by kpMainWindow (thanks to this line)
     // so we won't have the view anymore

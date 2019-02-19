@@ -62,8 +62,7 @@ kpCommandSize::SizeType kpCommandSize::PixmapSize (int width, int height, int de
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
-               << " ret=" << ret
-               << endl;
+               << " ret=" << ret;
     return ret;
 }
 
@@ -92,8 +91,7 @@ kpCommandSize::SizeType kpCommandSize::QImageSize (int width, int height, int de
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
-               << " ret=" << ret
-               << endl;
+               << " ret=" << ret;
 
     return ret;
 }
@@ -130,8 +128,7 @@ kpCommandSize::SizeType kpCommandSize::StringSize (const QString &string)
 {
     qCDebug(kpLogCommands) << "kpCommandSize::StringSize(" << string << ")"
                << " len=" << string.length ()
-               << " sizeof(QChar)=" << sizeof (QChar)
-               << endl;
+               << " sizeof(QChar)=" << sizeof (QChar);
     return static_cast<SizeType> (static_cast<unsigned int> (string.length ()) * sizeof (QChar));
 }
 
@@ -141,8 +138,7 @@ kpCommandSize::SizeType kpCommandSize::PolygonSize (const QPolygon &points)
 {
     qCDebug(kpLogCommands) << "kpCommandSize::PolygonSize() points.size="
                << points.size ()
-               << " sizeof(QPoint)=" << sizeof (QPoint)
-               << endl;
+               << " sizeof(QPoint)=" << sizeof (QPoint);
 
     return static_cast<SizeType> (static_cast<unsigned int> (points.size ()) * sizeof (QPoint));
 }

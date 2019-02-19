@@ -59,14 +59,12 @@ static int BrushSizes [][3] =
 
 static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
 {
-    kpToolWidgetBrush::DrawPackage *pack =
-        static_cast <kpToolWidgetBrush::DrawPackage *> (userData);
+    auto *pack = static_cast <kpToolWidgetBrush::DrawPackage *> (userData);
 
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
     qCDebug(kpLogWidgets) << "kptoolwidgetbrush.cpp:Draw(destImage,topLeft="
               << topLeft << " pack: row=" << pack->row << " col=" << pack->col
-              << " color=" << (int *) pack->color.toQRgb ()
-              << endl;
+              << " color=" << (int *) pack->color.toQRgb ();
 #endif
     const int size = ::BrushSizes [pack->row][pack->col];
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
@@ -189,9 +187,7 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
 
 //---------------------------------------------------------------------
 
-kpToolWidgetBrush::~kpToolWidgetBrush ()
-{
-}
+kpToolWidgetBrush::~kpToolWidgetBrush () = default;
 
 //---------------------------------------------------------------------
 
@@ -200,8 +196,9 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
 {
     int s = ::BrushSizes [shape][whichSize];
 
-    if (s == 1)
+    if (s == 1) {
         return i18n ("1x1");
+    }
 
     QString shapeName;
 
@@ -224,8 +221,9 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
         break;
     }
 
-    if (shapeName.isEmpty ())
-        return QString();
+    if (shapeName.isEmpty ()) {
+        return {};
+    }
 
     return i18n ("%1x%2 %3", s, s, shapeName);
 }
@@ -289,8 +287,9 @@ kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
 bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
-    if (ret)
+    if (ret) {
         emit brushChanged ();
+    }
     return ret;
 }
 

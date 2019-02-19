@@ -116,8 +116,9 @@ QBitmap kpRectangularImageSelection::shapeBitmap (bool nullForRectangular) const
 {
     Q_ASSERT (boundingRect ().isValid ());
 
-    if (nullForRectangular)
-        return QBitmap ();
+    if (nullForRectangular) {
+        return {};
+    }
 
     QBitmap maskBitmap (width (), height ());
     maskBitmap.fill (Qt::color1/*opaque*/);

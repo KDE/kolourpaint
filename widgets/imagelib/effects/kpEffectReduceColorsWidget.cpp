@@ -51,9 +51,8 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
                                                         QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
-    QVBoxLayout *lay = new QVBoxLayout (this);
+    auto *lay = new QVBoxLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
-
 
     m_blackAndWhiteRadioButton =
         new QRadioButton (i18n ("&Monochrome"), this);
@@ -69,7 +68,7 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
 
 
     // LOCOMPAT: don't think this is needed
-    QButtonGroup *buttonGroup = new QButtonGroup (this);
+    auto *buttonGroup = new QButtonGroup (this);
     buttonGroup->addButton (m_blackAndWhiteRadioButton);
     buttonGroup->addButton (m_blackAndWhiteDitheredRadioButton);
     buttonGroup->addButton (m_8BitRadioButton);
@@ -113,19 +112,19 @@ int kpEffectReduceColorsWidget::depth () const
     {
         return 1;
     }
-    else if (m_8BitRadioButton->isChecked () ||
+
+    if (m_8BitRadioButton->isChecked () ||
              m_8BitDitheredRadioButton->isChecked ())
     {
         return 8;
     }
-    else if (m_24BitRadioButton->isChecked ())
+
+    if (m_24BitRadioButton->isChecked ())
     {
         return 32;
     }
-    else
-    {
-        return 0;
-    }
+
+    return 0;
 }
 
 //---------------------------------------------------------------------

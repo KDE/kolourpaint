@@ -48,7 +48,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::keyPressEvent(e->text='"
-              << e->text () << "')" << endl;
+              << e->text () << "')";
 #endif
 
     e->ignore ();
@@ -58,8 +58,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
          e->key () == Qt::Key_Escape)
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
-        qCDebug(kpLogTools) << "\tescape pressed with sel when not begun draw - deselecting"
-                  << endl;
+        qCDebug(kpLogTools) << "\tescape pressed with sel when not begun draw - deselecting";
     #endif
 
         pushOntoDocument ();
@@ -70,8 +69,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
     #if DEBUG_KP_TOOL_SELECTION && 0
         qCDebug(kpLogTools) << "\tkey processing did not accept (text was '"
                    << e->text ()
-                   << "') - passing on event to kpTool"
-                   << endl;
+                   << "') - passing on event to kpTool";
     #endif
 
       if ( document()->selection() && !hasBegunDraw() &&

@@ -53,17 +53,19 @@ static QColor Color (int redOrGreenOrBlue,
                           similarityDirection *
                               0.5 * colorSimilarity * kpColorSimilarityHolder::ColorCubeDiagonalDistance);
 
-    if (brightness < 0)
+    if (brightness < 0) {
         brightness = 0;
-    else if (brightness > 255)
+    }
+    else if (brightness > 255) {
         brightness = 255;
+    }
 
     switch (redOrGreenOrBlue)
     {
       default:
-      case 0: return QColor (brightness, highlight, highlight);
-      case 1: return QColor (highlight, brightness, highlight);
-      case 2: return QColor (highlight, highlight, brightness);
+      case 0: return  {brightness, highlight, highlight};
+      case 1: return  {highlight, brightness, highlight};
+      case 2: return  {highlight, highlight, brightness};
     }
 }
 
@@ -71,7 +73,7 @@ static QColor Color (int redOrGreenOrBlue,
 
 static QPointF PointBetween(const QPointF &p, const QPointF &q)
 {
-    return QPointF((p.x() + q.x()) / 2.0, (p.y() + q.y()) / 2.0);
+    return {(p.x() + q.x()) / 2.0, (p.y() + q.y()) / 2.0};
 }
 
 //---------------------------------------------------------------------
@@ -142,7 +144,7 @@ static void DrawFace (QPaintDevice *target,
 
     qCDebug(kpLogWidgets) << "\tmaxColorSimilarity=" << kpColorSimilarityHolder::MaxColorSimilarity
                << " colorCubeDiagDist=" << kpColorSimilarityHolder::ColorCubeDiagonalDistance
-               << endl
+               << "\n"
                << "\tbaseBrightness=" << baseBrightness
                << " color[0]=" << ((colors [0].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
                << " color[1]=" << ((colors [1].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8));

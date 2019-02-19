@@ -55,8 +55,9 @@
 
 static QImage BlurQImage(const QImage &qimage, int strength)
 {
-    if (strength == 0)
+    if (strength == 0) {
         return qimage;
+    }
 
     // The numbers that follow were picked by experimentation to try to get
     // an effect linearly proportional to <strength> and at the same time,
@@ -72,8 +73,7 @@ static QImage BlurQImage(const QImage &qimage, int strength)
         (kpEffectBlurSharpen::MaxStrength - 1);
 
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
-               << " radius=" << radius
-               << endl;
+               << " radius=" << radius;
 
     QImage img(qimage);
     return Blitz::blur(img, qRound(radius));
@@ -84,8 +84,9 @@ static QImage BlurQImage(const QImage &qimage, int strength)
 static QImage SharpenQImage (const QImage &qimage_, int strength)
 {
     QImage qimage = qimage_;
-    if (strength == 0)
+    if (strength == 0) {
         return qimage;
+    }
 
 
     // The numbers that follow were picked by experimentation to try to get
@@ -119,8 +120,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
                << " radius=" << radius
                << " sigma=" << sigma
-               << " repeat=" << repeat
-               << endl;
+               << " repeat=" << repeat;
 
 
     for (int i = 0; i < repeat; i++)
@@ -129,7 +129,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
         qimage = Blitz::gaussianSharpen (qimage, static_cast<float> (radius),
                                          static_cast<float> (sigma));
         qCDebug(kpLogImagelib) << "\titeration #" + QString::number (i)
-                  << ": " + QString::number (timer.elapsed ()) << "ms" << endl;
+                  << ": " + QString::number (timer.elapsed ()) << "ms";
     }
 
 
@@ -145,19 +145,22 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect ()
               << ",type=" << int (type)
               << ",strength=" << strength
-              << ")" << endl;
+              << ")";
 
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 
-    if (type == Blur)
+    if (type == Blur) {
         return ::BlurQImage (image, strength);
-    else if (type == Sharpen)
+    }
+
+    if (type == Sharpen) {
         return ::SharpenQImage (image, strength);
-    else if (type == MakeConfidential)
-    {
+    }
+
+    if (type == MakeConfidential) {
         QImage img(image);
         return Blitz::blur(img, qMin(20, img.width() / 2));
     }
-    else
-      return kpImage();
+
+    return kpImage();
 }

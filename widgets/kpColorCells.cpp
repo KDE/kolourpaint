@@ -55,8 +55,9 @@ const int TableDefaultHeight = 52;
 
 static int TableNumColumns (const kpColorCollection &colorCol)
 {
-    if (colorCol.count () == 0)
+    if (colorCol.count () == 0) {
         return 0;
+    }
 
     return ::TableDefaultNumColumns;
 }
@@ -64,8 +65,9 @@ static int TableNumColumns (const kpColorCollection &colorCol)
 static int TableNumRows (const kpColorCollection &colorCol)
 {
     const int cols = ::TableNumColumns (colorCol);
-    if (cols == 0)
+    if (cols == 0) {
         return 0;
+    }
 
     return (colorCol.count () + (cols - 1)) / cols;
 }
@@ -80,10 +82,11 @@ static int TableCellWidth (const kpColorCollection &colorCol)
 
 static int TableCellHeight (const kpColorCollection &colorCol)
 {
-    if (::TableNumRows (colorCol) <= 2)
+    if (::TableNumRows (colorCol) <= 2) {
         return ::TableDefaultHeight / 2;
-    else
-        return ::TableDefaultHeight / 3;
+    }
+
+    return ::TableDefaultHeight / 3;
 }
 
 
@@ -94,7 +97,7 @@ static int TableCellHeight (const kpColorCollection &colorCol)
 
 struct kpColorCellsPrivate
 {
-    Qt::Orientation orientation;
+    Qt::Orientation orientation{};
 
     // REFACTOR: This is data duplication with kpColorCellsBase::color[].
     //           We've probably forgotten to synchronize them in some points.
@@ -117,9 +120,9 @@ struct kpColorCellsPrivate
     kpColorCollection colorCol;
 
     QUrl url;
-    bool isModified;
+    bool isModified{};
 
-    bool blockColorChangedSig;
+    bool blockColorChangedSig{};
 };
 
 //---------------------------------------------------------------------
@@ -255,7 +258,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
     else
     {
         c = ::TableNumRows (d->colorCol);
-        r = ::TableNumColumns (d->colorCol);;
+        r = ::TableNumColumns (d->colorCol);
     }
 
     qCDebug(kpLogWidgets) << "kpColorCells::makeCellsMatchColorCollection():"
@@ -282,10 +285,12 @@ void kpColorCells::makeCellsMatchColorCollection ()
     //       cells don't have exactly the sizes requested here.  e.g. the
     //       top row of cells is 1 pixel shorter than the bottom row.  There
     //       are probably other glitches.
-    for (int y = 0; y < r; y++)
+    for (int y = 0; y < r; y++) {
         setRowHeight (y, CellHeight);
-    for (int x = 0; x < c; x++)
+    }
+    for (int x = 0; x < c; x++) {
         setColumnWidth (x, CellWidth);
+    }
 
 
     const bool oldBlockColorChangedSig = d->blockColorChangedSig;
@@ -311,7 +316,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
             pos = y * c + x;
         }
         qCDebug(kpLogWidgets) << "\tSetting cell " << i << ": y=" << y << " x=" << x
-                  << " pos=" << pos << endl;
+                  << " pos=" << pos;
         qCDebug(kpLogWidgets) << "\t\tcolor=" << (int *) d->colorCol.color (i).rgba()
                   << "isValid=" << d->colorCol.color (i).isValid ();
 
@@ -336,8 +341,9 @@ void kpColorCells::setModified (bool yes)
 {
     qCDebug(kpLogWidgets) << "kpColorCells::setModified(" << yes << ")";
 
-    if (yes == d->isModified)
+    if (yes == d->isModified) {
         return;
+    }
 
     d->isModified = yes;
 
@@ -379,8 +385,9 @@ const kpColorCollection *kpColorCells::colorCollection () const
 
 void kpColorCells::ensureHaveAtLeastOneRow ()
 {
-    if (d->colorCol.count () == 0)
+    if (d->colorCol.count () == 0) {
         d->colorCol.resize (::TableDefaultNumColumns);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -517,8 +524,7 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
 {
     qCDebug(kpLogWidgets) << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << button
-               << " rgb=" << (int *) color.rgba()
-               << endl;
+               << " rgb=" << (int *) color.rgba();
 
     if (button == Qt::LeftButton)
     {
@@ -563,12 +569,14 @@ void kpColorCells::slotColorChanged (int cell, const QColor &color)
     qCDebug(kpLogWidgets) << "cell=" << cell << "color=" << (const int *) color.rgba()
               << "d->colorCol.count()=" << d->colorCol.count ();
 
-    if (d->blockColorChangedSig)
+    if (d->blockColorChangedSig) {
         return;
+    }
 
     // Cater for adding new colors to the end.
-    if (cell >= d->colorCol.count ())
+    if (cell >= d->colorCol.count ()) {
         d->colorCol.resize (cell + 1);
+    }
 
     // TODO: We lose color names on a color swap (during drag-and-drop).
     const int ret = d->colorCol.changeColor (cell, color,

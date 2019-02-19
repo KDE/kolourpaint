@@ -58,12 +58,14 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
         KConfigGroup cfgGroupSaver (KSharedConfig::openConfig (), kpSettingsGroupFlattenEffect);
 
         s_lastColor1 = cfgGroupSaver.readEntry (kpSettingFlattenEffectColor1, QColor ());
-        if (!s_lastColor1.isValid ())
+        if (!s_lastColor1.isValid ()) {
             s_lastColor1 = Qt::red;
+        }
 
         s_lastColor2 = cfgGroupSaver.readEntry (kpSettingFlattenEffectColor2, QColor ());
-        if (!s_lastColor2.isValid ())
+        if (!s_lastColor2.isValid ()) {
             s_lastColor2 = Qt::blue;
+        }
     }
 
 
@@ -76,13 +78,11 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
     m_color1Button->setEnabled (false);
     m_color2Button->setEnabled (false);
 
-
-    QVBoxLayout *lay = new QVBoxLayout (this);
+    auto *lay = new QVBoxLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
     lay->addWidget (m_enableCheckBox);
     lay->addWidget (m_color1Button);
     lay->addWidget (m_color2Button);
-
 
     connect (m_enableCheckBox, &QCheckBox::toggled,
              this, &kpEffectFlattenWidget::slotEnableChanged);
@@ -144,8 +144,9 @@ kpImage kpEffectFlattenWidget::applyEffect (const kpImage &image)
     qCDebug(kpLogWidgets) << "kpEffectFlattenWidget::applyEffect() nop="
                << isNoOp ();
 
-    if (isNoOp ())
+    if (isNoOp ()) {
         return image;
+    }
 
     return kpEffectFlatten::applyEffect (image, color1 (), color2 ());
 }

@@ -51,8 +51,7 @@ void kpToolText::inputMethodEvent (QInputMethodEvent *e)
     qCDebug(kpLogTools) << "kpToolText::inputMethodEvent() preeditString='" << e->preeditString ()
                << "commitString = " << e->commitString ()
                << " replacementStart=" << e->replacementStart ()
-               << " replacementLength=" << e->replacementLength ()
-               << endl;
+               << " replacementLength=" << e->replacementLength ();
 #endif
     kpTextSelection *textSel = document ()->textSelection ();
     if (hasBegunDraw() || !textSel)
@@ -85,8 +84,9 @@ void kpToolText::inputMethodEvent (QInputMethodEvent *e)
     if (!commitString.isEmpty ())
     {
         // commit string
-        if (!d->insertCommand)
+        if (!d->insertCommand) {
             addNewInsertCommand (&d->insertCommand);
+        }
 
         d->insertCommand->addText (commitString);
     }

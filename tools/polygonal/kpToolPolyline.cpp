@@ -77,10 +77,12 @@ void kpToolPolyline::drawShape(kpImage *image,
 
   painter.setPen(QPen(fcolor.toQColor(), penWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
-  if ( kpPixmapFX::Only1PixelInPointArray(points) )
+  if ( kpPixmapFX::Only1PixelInPointArray(points) ) {
     painter.drawPoint(points[0]);
-  else
+  }
+  else {
     painter.drawPolyline(points);
+  }
 }
 
 //--------------------------------------------------------------------------------
@@ -90,15 +92,16 @@ void kpToolPolyline::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYLINE
     qCDebug(kpLogTools) << "kpToolPolyline::endDraw()  points="
-        << points ()->toList () << endl;
+        << points ()->toList ();
 #endif
 
     // A click of the other mouse button (to finish shape, instead of adding
     // another control point) would have caused endShape() to have been
     // called in kpToolPolygonalBase::beginDraw().  The points list would now
     // be empty.  We are being called by kpTool::mouseReleaseEvent().
-    if (points ()->count () == 0)
+    if (points ()->count () == 0) {
         return;
+    }
 
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {

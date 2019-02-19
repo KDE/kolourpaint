@@ -327,7 +327,7 @@ QSize kpIntNumInput::minimumSizeHint() const
         w = qMax(w, priv->labelSize.width() + 4);
     }
 
-    return QSize(w, h);
+    return {w, h};
 }
 
 void kpIntNumInput::doLayout()
@@ -536,7 +536,7 @@ QSize kpDoubleNumInput::minimumSizeHint() const
         w = qMax(w, priv->labelSize.width() + 4);
     }
 
-    return QSize(w, h);
+    return {w, h};
 }
 
 void kpDoubleNumInput::resizeEvent(QResizeEvent *e)

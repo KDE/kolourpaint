@@ -95,8 +95,9 @@ QPoint kpToolSelectionResizeScaleCommand::topLeft () const
 // public
 void kpToolSelectionResizeScaleCommand::moveTo (const QPoint &point)
 {
-    if (point == m_newTopLeft)
+    if (point == m_newTopLeft) {
         return;
+    }
 
     m_newTopLeft = point;
     selection ()->moveTo (m_newTopLeft);
@@ -119,8 +120,9 @@ int kpToolSelectionResizeScaleCommand::height () const
 void kpToolSelectionResizeScaleCommand::resize (int width, int height,
                                                 bool delayed)
 {
-    if (width == m_newWidth && height == m_newHeight)
+    if (width == m_newWidth && height == m_newHeight) {
         return;
+    }
 
     m_newWidth = width;
     m_newHeight = height;
@@ -159,7 +161,7 @@ void kpToolSelectionResizeScaleCommand::killSmoothScaleTimer ()
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 {
     qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
-               << delayed << ")" << endl;
+               << delayed << ")";
 
     killSmoothScaleTimer ();
 
@@ -168,16 +170,14 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
     if (textSelection ())
     {
         Q_ASSERT (dynamic_cast <kpTextSelection *> (m_originalSelectionPtr));
-        kpTextSelection *orgTextSel =
-            static_cast <kpTextSelection *> (m_originalSelectionPtr);
+        auto *orgTextSel = dynamic_cast <kpTextSelection *> (m_originalSelectionPtr);
 
         newSelPtr = orgTextSel->resized (m_newWidth, m_newHeight);
     }
     else
     {
         Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_originalSelectionPtr));
-        kpAbstractImageSelection *imageSel =
-            static_cast <kpAbstractImageSelection *> (m_originalSelectionPtr);
+        auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (m_originalSelectionPtr);
 
         newSelPtr = new kpRectangularImageSelection (
             QRect (imageSel->x (),
@@ -210,8 +210,7 @@ void kpToolSelectionResizeScaleCommand::finalize ()
 {
     qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::finalize()"
                << " smoothScaleTimer->isActive="
-               << m_smoothScaleTimer->isActive ()
-               << endl;
+               << m_smoothScaleTimer->isActive ();
 
     // Make sure the selection contains the final image and the timer won't
     // fire afterwards.

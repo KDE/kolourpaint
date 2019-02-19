@@ -36,9 +36,7 @@ kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,
 {
 }
 
-kpEffectWidgetBase::~kpEffectWidgetBase ()
-{
-}
+kpEffectWidgetBase::~kpEffectWidgetBase () = default;
 
 
 // public

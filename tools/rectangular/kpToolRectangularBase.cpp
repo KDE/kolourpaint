@@ -56,10 +56,10 @@
 
 struct kpToolRectangularBasePrivate
 {
-    kpToolRectangularBase::DrawShapeFunc drawShapeFunc;
+    kpToolRectangularBase::DrawShapeFunc drawShapeFunc{};
 
-    kpToolWidgetLineWidth *toolWidgetLineWidth;
-    kpToolWidgetFillStyle *toolWidgetFillStyle;
+    kpToolWidgetLineWidth *toolWidgetLineWidth{};
+    kpToolWidgetFillStyle *toolWidgetFillStyle{};
 
     QRect toolRectangleRect;
 };
@@ -96,8 +96,9 @@ kpToolRectangularBase::~kpToolRectangularBase ()
 // private slot virtual
 void kpToolRectangularBase::slotLineWidthChanged ()
 {
-    if (hasBegunDraw ())
+    if (hasBegunDraw ()) {
         updateShape ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -105,8 +106,9 @@ void kpToolRectangularBase::slotLineWidthChanged ()
 // private slot virtual
 void kpToolRectangularBase::slotFillStyleChanged ()
 {
-    if (hasBegunDraw ())
+    if (hasBegunDraw ()) {
         updateShape ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -197,17 +199,21 @@ void kpToolRectangularBase::applyModifiers ()
         {
             if (rect.width () < rect.height ())
             {
-                if (startPoint ().y () == rect.y ())
+                if (startPoint ().y () == rect.y ()) {
                     rect.setHeight (rect.width ());
-                else
+                }
+                else {
                     rect.setY (rect.bottom () - rect.width () + 1);
+                }
             }
             else
             {
-                if (startPoint ().x () == rect.x ())
+                if (startPoint ().x () == rect.x ()) {
                     rect.setWidth (rect.height ());
-                else
+                }
+                else {
                     rect.setX (rect.right () - rect.height () + 1);
+                }
             }
         }
         // have to maintain the center

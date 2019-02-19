@@ -39,8 +39,9 @@
 static QImage EmbossQImage (const QImage &qimage_, int strength)
 {
     QImage qimage = qimage_;
-    if (strength == 0)
+    if (strength == 0) {
         return qimage;
+    }
 
 
     // The numbers that follow were picked by experimentation to try to get
@@ -49,11 +50,11 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
     //
     // I still have no idea what "radius" and "sigma" mean.
 
-    const double radius = 0;
+    const auto radius = 0.0;
 
-    const double sigma = 1;
+    const auto sigma = 1.0;
 
-    const int repeat = 1;
+    const auto repeat = 1;
 
 
     for (int i = 0; i < repeat; i++)

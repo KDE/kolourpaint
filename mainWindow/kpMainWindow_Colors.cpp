@@ -70,8 +70,9 @@ void kpMainWindow::setupColorsMenuActions ()
              static_cast<void (KSelectAction::*)(QAction*)>(&KSelectAction::triggered),
              this, &kpMainWindow::slotColorsKDE);
 
-    foreach (const QString &colName, ::KDEColorCollectionNames ())
+    for (const auto &colName : ::KDEColorCollectionNames ()) {
         d->actionColorsKDE->addAction (colName);
+    }
 
     d->actionColorsOpen = ac->addAction ("colors_open");
     d->actionColorsOpen->setText (i18nc ("@item:inmenu colors", "&Open..."));
@@ -184,8 +185,9 @@ bool kpMainWindow::queryCloseColors ()
 
     toolEndShape ();
 
-    if (!colorCells ()->isModified ())
+    if (!colorCells ()->isModified ()) {
         return true;  // ok to close
+    }
 
     int result = KMessageBox::Cancel;
 
@@ -250,8 +252,9 @@ void kpMainWindow::slotColorsDefault ()
     // Call just in case.
     toolEndShape ();
 
-    if (!queryCloseColors ())
+    if (!queryCloseColors ()) {
         return;
+    }
 
     openDefaultColors ();
 
@@ -272,11 +275,9 @@ bool kpMainWindow::openKDEColors (const QString &name)
         colorCells ()->setColorCollection (colorCol);
         return true;
     }
-    else
-    {
-        qCDebug(kpLogMainWindow) << "failed to open";
-        return false;
-    }
+
+    qCDebug(kpLogMainWindow) << "failed to open";
+    return false;
 }
 
 //---------------------------------------------------------------------
@@ -294,19 +295,18 @@ void kpMainWindow::slotColorsKDE ()
         deselectActionColorsKDE ();
         return;
     }
-    else
-    {
-        // queryCloseColors() calls slotColorSave(), which can call
-        // slotColorSaveAs(), which can call deselectActionColorsKDE().
-        d->actionColorsKDE->setCurrentItem (curItem);
-    }
+
+    // queryCloseColors() calls slotColorSave(), which can call
+    // slotColorSaveAs(), which can call deselectActionColorsKDE().
+    d->actionColorsKDE->setCurrentItem (curItem);
 
     const QStringList colNames = ::KDEColorCollectionNames ();
     const int selected = d->actionColorsKDE->currentItem ();
     Q_ASSERT (selected >= 0 && selected < colNames.size ());
 
-    if (!openKDEColors (colNames [selected]))
+    if (!openKDEColors (colNames [selected])) {
         deselectActionColorsKDE ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -314,10 +314,7 @@ void kpMainWindow::slotColorsKDE ()
 // private
 bool kpMainWindow::openColors (const QUrl &url)
 {
-    if (!colorCells ()->openColorCollection (url))
-        return false;
-
-    return true;
+    return colorCells ()->openColorCollection (url);
 }
 
 //---------------------------------------------------------------------
@@ -334,12 +331,14 @@ void kpMainWindow::slotColorsOpen ()
 
     if (fd.exec ())
     {
-        if (!queryCloseColors ())
+        if (!queryCloseColors ()) {
             return;
+        }
 
         QList<QUrl> selected = fd.selectedUrls();
-        if ( selected.count() && openColors(selected[0]) )
+        if ( selected.count() && openColors(selected[0]) ) {
           deselectActionColorsKDE();
+        }
     }
 }
 
@@ -390,8 +389,9 @@ void kpMainWindow::slotColorsReload ()
 
         qCDebug(kpLogMainWindow) << "result=" << result
                   << "vs KMessageBox::Continue" << KMessageBox::Continue;
-        if (result != KMessageBox::Continue)
+        if (result != KMessageBox::Continue) {
             return;
+        }
     }
 
 
@@ -402,10 +402,12 @@ void kpMainWindow::slotColorsReload ()
     else
     {
         const QString name = colorCells ()->colorCollection ()->name ();
-        if (!name.isEmpty ())
+        if (!name.isEmpty ()) {
             openKDEColors (name);
-        else
+        }
+        else {
             openDefaultColors ();
+        }
     }
 }
 
@@ -442,16 +444,17 @@ bool kpMainWindow::slotColorsSaveAs ()
     if (fd.exec ())
     {
         QList<QUrl> selected = fd.selectedUrls();
-        if ( !selected.count() || !colorCells ()->saveColorCollectionAs(selected[0]) )
+        if ( !selected.count() || !colorCells ()->saveColorCollectionAs(selected[0]) ) {
           return false;
+        }
 
         // We're definitely using our own color collection now.
         deselectActionColorsKDE ();
 
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 //---------------------------------------------------------------------

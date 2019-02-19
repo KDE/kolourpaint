@@ -97,15 +97,19 @@ QString kpTransformResizeScaleCommand::name () const
     {
         if (m_actOnTextSelection)
         {
-            if (m_type == Resize)
+            if (m_type == Resize) {
                 return i18n ("Text: Resize Box");
+            }
         }
         else
         {
-            if (m_type == Scale)
+            if (m_type == Scale) {
                 return i18n ("Selection: Scale");
-            else if (m_type == SmoothScale)
+            }
+
+            if (m_type == SmoothScale) {
                 return i18n ("Selection: Smooth Scale");
+            }
         }
     }
     else
@@ -163,7 +167,7 @@ void kpTransformResizeScaleCommand::setNewHeight (int height)
 // public
 QSize kpTransformResizeScaleCommand::newSize () const
 {
-    return QSize (newWidth (), newHeight ());
+    return  {newWidth (), newHeight ()};
 }
 
 // public virtual
@@ -189,8 +193,7 @@ bool kpTransformResizeScaleCommand::scaleSelectionWithImage () const
 void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument"
-               << endl;
+    qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument";
 #endif
 
     Q_ASSERT (m_oldSelectionPtr);
@@ -218,10 +221,9 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
         -currentPoints.boundingRect ().x () + newX,
         -currentPoints.boundingRect ().y () + newY);
 
-    kpAbstractImageSelection *imageSel =
-        dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
-    kpTextSelection *textSel =
-        dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
+    auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
+    auto *textSel = dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
+
     if (imageSel)
     {
         document ()->setSelection (
@@ -235,8 +237,9 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
                 textSel->textLines (),
                 textSel->textStyle ()));
     }
-    else
+    else {
         Q_ASSERT (!"Unknown selection type");
+    }
 
 
     environ ()->somethingBelowTheCursorChanged ();
@@ -251,8 +254,7 @@ void kpTransformResizeScaleCommand::execute ()
                << " oldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
                << " newWidth=" << m_newWidth
-               << " newHeight=" << m_newHeight
-               << endl;
+               << " newHeight=" << m_newHeight;
 
     if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
         return;
@@ -261,8 +263,9 @@ void kpTransformResizeScaleCommand::execute ()
     {
         if (m_actOnSelection)
         {
-            if (!m_actOnTextSelection)
+            if (!m_actOnTextSelection) {
                 Q_ASSERT (!"kpTransformResizeScaleCommand::execute() resizing sel doesn't make sense");
+            }
 
             QApplication::setOverrideCursor (Qt::WaitCursor);
 
@@ -310,8 +313,9 @@ void kpTransformResizeScaleCommand::execute ()
 
         kpImage oldImage = document ()->image (m_actOnSelection);
 
-        if (!m_isLosslessScale)
+        if (!m_isLosslessScale) {
             m_oldImage = oldImage;
+        }
 
         kpImage newImage = kpPixmapFX::scale (oldImage, m_newWidth, m_newHeight,
                                                m_type == SmoothScale);
@@ -326,12 +330,14 @@ void kpTransformResizeScaleCommand::execute ()
 
         if (m_actOnSelection)
         {
-            if (m_actOnTextSelection)
+            if (m_actOnTextSelection) {
                 Q_ASSERT (!"kpTransformResizeScaleCommand::execute() scaling text sel doesn't make sense");
+            }
 
             Q_ASSERT (m_oldSelectionPtr);
-            if ( !m_oldSelectionPtr )  // make coverity happy
-              return;
+            if ( !m_oldSelectionPtr ) {  // make coverity happy
+                return;
+            }
 
             QRect newRect = QRect (m_oldSelectionPtr->x (), m_oldSelectionPtr->y (),
                                    newImage.width (), newImage.height ());
@@ -341,7 +347,7 @@ void kpTransformResizeScaleCommand::execute ()
             Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
             document ()->setSelection (
                 kpRectangularImageSelection (newRect, newImage,
-                    static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr)
+                    dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr)
                         ->transparency ()));
 
             environ ()->somethingBelowTheCursorChanged ();
@@ -365,10 +371,11 @@ void kpTransformResizeScaleCommand::execute ()
 void kpTransformResizeScaleCommand::unexecute ()
 {
     qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::unexecute() type="
-               << m_type << endl;
+               << m_type;
 
-    if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
+    if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight) {
         return;
+    }
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -377,8 +384,9 @@ void kpTransformResizeScaleCommand::unexecute ()
     {
         if (m_actOnSelection)
         {
-            if (!m_actOnTextSelection)
+            if (!m_actOnTextSelection) {
                 Q_ASSERT (!"kpTransformResizeScaleCommand::unexecute() resizing sel doesn't make sense");
+            }
 
             QApplication::setOverrideCursor (Qt::WaitCursor);
 
@@ -431,21 +439,22 @@ void kpTransformResizeScaleCommand::unexecute ()
 
         kpImage oldImage;
 
-        if (!m_isLosslessScale)
+        if (!m_isLosslessScale) {
             oldImage = m_oldImage;
-        else
+        } else {
             oldImage = kpPixmapFX::scale (doc->image (m_actOnSelection),
                                           m_oldWidth, m_oldHeight);
+        }
 
 
         if (m_actOnSelection)
         {
-            if (m_actOnTextSelection)
+            if (m_actOnTextSelection) {
                 Q_ASSERT (!"kpTransformResizeScaleCommand::unexecute() scaling text sel doesn't make sense");
+            }
 
             Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
-            kpAbstractImageSelection *oldImageSel =
-                static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
+            auto *oldImageSel = dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
 
             kpAbstractImageSelection *oldSelection = oldImageSel->clone ();
             oldSelection->setBaseImage (oldImage);

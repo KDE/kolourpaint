@@ -138,7 +138,7 @@ QPolygon kpEllipticalImageSelection::calculatePoints () const
     const QList <QPolygonF> polygons = path.toSubpathPolygons ();
     Q_ASSERT (polygons.size () == 1);
 
-    const QPolygonF firstPolygonF = polygons.first ();
+    const QPolygonF& firstPolygonF = polygons.first ();
     return firstPolygonF.toPolygon ();
 }
 
@@ -158,8 +158,9 @@ QRegion kpEllipticalImageSelection::shapeRegion () const
 // public virtual [kpAbstractSelection]
 bool kpEllipticalImageSelection::contains (const QPoint &point) const
 {
-    if (!boundingRect ().contains (point))
+    if (!boundingRect ().contains (point)) {
         return false;
+    }
 
     return shapeRegion ().contains (point);
 }
@@ -171,8 +172,9 @@ bool kpEllipticalImageSelection::contains (const QPoint &point) const
 void kpEllipticalImageSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const
 {
-    if ( !boundingRect().isValid() )
+    if ( !boundingRect().isValid() ) {
       return;
+    }
 
     paintPolygonalBorder (calculatePoints (),
         destPixmap, docRect,

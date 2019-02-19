@@ -52,9 +52,7 @@ kpToolImageSelectionTransparencyCommand::kpToolImageSelectionTransparencyCommand
 {
 }
 
-kpToolImageSelectionTransparencyCommand::~kpToolImageSelectionTransparencyCommand ()
-{
-}
+kpToolImageSelectionTransparencyCommand::~kpToolImageSelectionTransparencyCommand () = default;
 
 
 // public virtual [base kpCommand]
@@ -73,8 +71,9 @@ void kpToolImageSelectionTransparencyCommand::execute ()
         
     environ ()->setImageSelectionTransparency (m_st, true/*force colour change*/);
 
-    if (imageSelection ())
+    if (imageSelection ()) {
         imageSelection ()->setTransparency (m_st);
+    }
 }
 
 // public virtual [base kpCommand]
@@ -86,7 +85,8 @@ void kpToolImageSelectionTransparencyCommand::unexecute ()
         
     environ ()->setImageSelectionTransparency (m_oldST, true/*force colour change*/);
 
-    if (imageSelection ())
+    if (imageSelection ()) {
         imageSelection ()->setTransparency (m_oldST);
+    }
 }
 

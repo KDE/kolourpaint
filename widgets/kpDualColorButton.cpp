@@ -90,17 +90,20 @@ void kpDualColorButton::setColor (int which, const kpColor &color)
 {
     Q_ASSERT (which == 0 || which == 1);
 
-    if (m_color [which] == color)
+    if (m_color [which] == color) {
         return;
+    }
 
     m_oldColor [which] = m_color [which];
     m_color [which] = color;
     update ();
 
-    if (which == 0)
+    if (which == 0) {
         emit foregroundColorChanged (color);
-    else
+    }
+    else {
         emit backgroundColorChanged (color);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -140,7 +143,7 @@ kpColor kpDualColorButton::oldBackgroundColor () const
 // public virtual [base QWidget]
 QSize kpDualColorButton::sizeHint () const
 {
-    return QSize (52, 52);
+    return  {52, 52};
 }
 
 //---------------------------------------------------------------------
@@ -151,10 +154,8 @@ QRect kpDualColorButton::swapPixmapRect () const
 {
     QPixmap swapPixmap = UserIcon ("colorbutton_swap_16x16");
 
-    return QRect (contentsRect ().width () - swapPixmap.width (),
-                  0,
-                  swapPixmap.width (),
-                  swapPixmap.height ());
+    return  {contentsRect ().width () - swapPixmap.width (), 0,
+                swapPixmap.width (), swapPixmap.height ()};
 }
 
 //---------------------------------------------------------------------
@@ -163,10 +164,8 @@ QRect kpDualColorButton::swapPixmapRect () const
 QRect kpDualColorButton::foregroundBackgroundRect () const
 {
     QRect cr (contentsRect ());
-    return QRect (cr.width () / 8,
-                  cr.height () / 8,
-                  cr.width () * 6 / 8,
-                  cr.height () * 6 / 8);
+    return  {cr.width () / 8, cr.height () / 8,
+                cr.width () * 6 / 8, cr.height () * 6 / 8};
 }
 
 //---------------------------------------------------------------------
@@ -175,10 +174,8 @@ QRect kpDualColorButton::foregroundBackgroundRect () const
 QRect kpDualColorButton::foregroundRect () const
 {
     QRect fbr (foregroundBackgroundRect ());
-    return QRect (fbr.x (),
-                  fbr.y (),
-                  fbr.width () * 3 / 4,
-                  fbr.height () * 3 / 4);
+    return  {fbr.x (), fbr.y (),
+                fbr.width () * 3 / 4, fbr.height () * 3 / 4};
 }
 
 //---------------------------------------------------------------------
@@ -187,10 +184,8 @@ QRect kpDualColorButton::foregroundRect () const
 QRect kpDualColorButton::backgroundRect () const
 {
     QRect fbr (foregroundBackgroundRect ());
-    return QRect (fbr.x () + fbr.width () / 4,
-                  fbr.y () + fbr.height () / 4,
-                  fbr.width () * 3 / 4,
-                  fbr.height () * 3 / 4);
+    return  {fbr.x () + fbr.width () / 4, fbr.y () + fbr.height () / 4,
+                fbr.width () * 3 / 4, fbr.height () * 3 / 4};
 }
 
 //---------------------------------------------------------------------
@@ -200,8 +195,7 @@ QRect kpDualColorButton::backgroundRect () const
 void kpDualColorButton::dragEnterEvent (QDragEnterEvent *e)
 {
     qCDebug(kpLogWidgets) << "kpDualColorButton::dragEnterEvent() canDecode="
-              << KColorMimeData::canDecode (e->mimeData ())
-              << endl;
+              << KColorMimeData::canDecode (e->mimeData ());
     e->accept ();
 }
 
@@ -211,8 +205,7 @@ void kpDualColorButton::dragEnterEvent (QDragEnterEvent *e)
 void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
     qCDebug(kpLogWidgets) << "kpDualColorButton::dragMoveEvent() canDecode="
-              << KColorMimeData::canDecode (e->mimeData ())
-              << endl;
+              << KColorMimeData::canDecode (e->mimeData ());
     e->setAccepted (
         (foregroundRect ().contains (e->pos ()) ||
             backgroundRect ().contains (e->pos ())) &&
@@ -227,14 +220,16 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
     QColor col = KColorMimeData::fromMimeData (e->mimeData ());
     qCDebug(kpLogWidgets) << "kpDualColorButton::dropEvent() col="
               << (int *) col.rgba()
-              << " (with alpha=" << (int *) col.rgba () << ")" << endl;
+              << " (with alpha=" << (int *) col.rgba () << ")";
 
     if (col.isValid ())
     {
-        if (foregroundRect ().contains (e->pos ()))
+        if (foregroundRect ().contains (e->pos ())) {
             setForegroundColor (kpColor (col.rgba()));
-        else if (backgroundRect ().contains (e->pos ()))
+        }
+        else if (backgroundRect ().contains (e->pos ())) {
             setBackgroundColor (kpColor (col.rgba()));
+        }
     }
 }
 
@@ -248,8 +243,9 @@ void kpDualColorButton::mousePressEvent (QMouseEvent *e)
 
     m_dragStartPoint = KP_INVALID_POINT;
 
-    if (e->button () == Qt::LeftButton)
+    if (e->button () == Qt::LeftButton) {
         m_dragStartPoint = e->pos ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -260,8 +256,9 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
               << " buttons=" << e->buttons ()
               << " dragStartPoint=" << m_dragStartPoint;
 
-    if (m_dragStartPoint == KP_INVALID_POINT)
+    if (m_dragStartPoint == KP_INVALID_POINT) {
         return;
+    }
 
     if (!(e->buttons () & Qt::LeftButton))
     {
@@ -279,13 +276,11 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
 
         kpColor color;
 
-        if (foregroundRect ().contains (m_dragStartPoint))
+        if (foregroundRect ().contains (m_dragStartPoint)) {
             color = foregroundColor ();
-        else if (backgroundRect ().contains (m_dragStartPoint))
+        }
+        else if (backgroundRect ().contains (m_dragStartPoint)) {
             color = backgroundColor ();
-        else
-        {
-            // "color" is left as invalid.
         }
 
         qCDebug(kpLogWidgets) << "\tcolor.isValid=" << color.isValid ()
@@ -293,8 +288,9 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
 
         if (color.isValid ())
         {
-            if (!color.isTransparent ())
+            if (!color.isTransparent ()) {
                 KColorMimeData::createDrag (color.toQColor (), this)->exec ();
+            }
         }
 
         m_dragStartPoint = KP_INVALID_POINT;
@@ -334,18 +330,21 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 {
     int whichColor = -1;
 
-    if (foregroundRect ().contains (e->pos ()))
+    if (foregroundRect ().contains (e->pos ())) {
         whichColor = 0;
-    else if (backgroundRect ().contains (e->pos ()))
+    }
+    else if (backgroundRect ().contains (e->pos ())) {
         whichColor = 1;
+    }
 
     if (whichColor == 0 || whichColor == 1)
     {
         QColorDialog dialog(this);
         dialog.setCurrentColor(color(whichColor).toQColor());
         dialog.setOptions(QColorDialog::ShowAlphaChannel);
-        if ( dialog.exec() == QDialog::Accepted )
+        if ( dialog.exec() == QDialog::Accepted ) {
           setColor(whichColor, kpColor(dialog.currentColor().rgba()));
+        }
     }
 }
 
@@ -402,16 +401,20 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     if (isEnabled ())
     {
         qCDebug(kpLogWidgets) << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ();
-        if (m_color [1].isTransparent ())  // only if fully transparent
+        if (m_color [1].isTransparent ()) {  // only if fully transparent
             painter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
-        else
+        }
+        else {
             painter.fillRect (bgRectInside, m_color [1].toQColor ());
+        }
     }
-    else
+    else {
         painter.fillRect (bgRectInside, palette().color (QPalette::Button));
+    }
     qDrawShadePanel (&painter, bgRect, palette(),
                      false/*not sunken*/, 2/*lineWidth*/,
                      nullptr/*never fill*/);
+
 
 
     // Draw foreground colour patch.
@@ -422,13 +425,16 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     if (isEnabled ())
     {
         qCDebug(kpLogWidgets) << "\tforegroundColor=" << (int *) m_color [0].toQRgb ();
-        if (m_color [0].isTransparent ())  // only if fully transparent
+        if (m_color [0].isTransparent ()) {  // only if fully transparent
             painter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
-        else
+        }
+        else {
             painter.fillRect (fgRectInside, m_color [0].toQColor ());
+        }
     }
-    else
+    else {
         painter.fillRect (fgRectInside, palette ().color (QPalette::Button));
+    }
 
     qDrawShadePanel (&painter, fgRect, palette (),
                      false/*not sunken*/, 2/*lineWidth*/,

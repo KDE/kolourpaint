@@ -38,7 +38,7 @@
 //---------------------------------------------------------------------
 
 kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
-        int row, int col, QString newText,
+        int row, int col, const QString& newText,
         kpCommandEnvironment *environ)
     : kpNamedCommand (name, environ),
       m_row (row), m_col (col)
@@ -52,8 +52,9 @@ kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
 // public
 void kpToolTextInsertCommand::addText (const QString &moreText)
 {
-    if (moreText.isEmpty ())
+    if (moreText.isEmpty ()) {
         return;
+    }
 
     QList <QString> textLines = textSelection ()->textLines ();
     const QString leftHalf = textLines [m_row].left (m_col);

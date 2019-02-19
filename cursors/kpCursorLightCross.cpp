@@ -72,11 +72,13 @@ static void setPixel (unsigned char *colorBitmap,
         break;
     }
 
-    if (colorValue)
+    if (colorValue) {
         colorBitmap [y * (width / 8) + (x / 8)] |= (1 << (x % 8));
+    }
 
-    if (maskValue)
+    if (maskValue) {
         maskBitmap [y * (width / 8) + (x / 8)] |= (1 << (x % 8));
+    }
 }
 
 
@@ -86,8 +88,8 @@ const QCursor *kpCursorLightCrossCreate ()
 
     const int side = 24;
     const int byteSize = (side * side) / 8;
-    unsigned char *colorBitmap = new unsigned char [byteSize];
-    unsigned char *maskBitmap = new unsigned char [byteSize];
+    auto *colorBitmap = new unsigned char [byteSize];
+    auto *maskBitmap = new unsigned char [byteSize];
 
     memset (colorBitmap, 0, byteSize);
     memset (maskBitmap, 0, byteSize);

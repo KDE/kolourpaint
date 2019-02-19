@@ -44,9 +44,7 @@ kpEffectEmbossCommand::kpEffectEmbossCommand (int strength,
 {
 }
 
-kpEffectEmbossCommand::~kpEffectEmbossCommand ()
-{
-}
+kpEffectEmbossCommand::~kpEffectEmbossCommand () = default;
 
 
 // protected virtual [base kpEffectCommandBase]

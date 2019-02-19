@@ -56,7 +56,7 @@ static void DrawZoomRect (kpImage *destImage,
         const QPoint &topLeft,
         void *userData)
 {
-    DrawZoomRectPackage *pack = static_cast <DrawZoomRectPackage *> (userData);
+    auto *pack = static_cast <DrawZoomRectPackage *> (userData);
 
     kpPixmapFX::drawStippleRect(destImage,
         topLeft.x (), topLeft.y (), pack->normalizedRect.width (), pack->normalizedRect.height (),
@@ -67,7 +67,7 @@ static void DrawZoomRect (kpImage *destImage,
 
 struct kpToolZoomPrivate
 {
-    bool dragHasBegun, dragCompleted;
+    bool dragHasBegun{}, dragCompleted{};
     DrawZoomRectPackage drawPackage;
 };
 
@@ -163,16 +163,18 @@ void kpToolZoom::draw (const QPoint &thisPoint, const QPoint &, const QRect &nor
 
     if (!d->dragHasBegun)
     {
-        if (thisPoint == startPoint ())
+        if (thisPoint == startPoint ()) {
             return;
+        }
 
         // Left mouse drags select an area to zoom into.
         // However, it wouldn't make sense to select an area to "zoom out of"
         // (using the right mouse button).  Therefore, make RMB drags do the
         // same as RMB clicks i.e. a simple zoom out, with no "area" to worry
         // about.
-        if (mouseButton () == 1/*RMB*/)
+        if (mouseButton () == 1/*RMB*/) {
             return;
+        }
 
         d->dragHasBegun = true;
     }
@@ -222,12 +224,14 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
     // Click?
     if (!d->dragHasBegun)
     {
-        if (mouseButton () == 0/*LMB*/)
+        if (mouseButton () == 0/*LMB*/) {
             environ ()->zoomIn (true/*center under cursor*/);
-        else
+        }
+        else {
             environ ()->zoomOut (false/*don't center under cursor - as is
                                         confusing behaviour when zooming
                                         out*/);
+        }
     }
     // Drag?
     else if (normalizedRect.isValid())

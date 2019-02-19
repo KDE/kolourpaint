@@ -89,8 +89,9 @@ void kpToolSelectionDestroyCommand::execute ()
         m_oldDocImage = doc->getImageAt (doc->selection ()->boundingRect ());
         doc->selectionPushOntoDocument ();
     }
-    else
+    else {
         doc->selectionDelete ();
+    }
 
     environ ()->somethingBelowTheCursorChanged ();
 }
@@ -127,28 +128,31 @@ void kpToolSelectionDestroyCommand::unexecute ()
     }
 
     qCDebug(kpLogCommands) << "\tsetting selection to: rect=" << m_oldSelectionPtr->boundingRect ()
-               << " hasContent=" << m_oldSelectionPtr->hasContent ()
-               << endl;
-    kpAbstractImageSelection *imageSel =
-        dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
-    kpTextSelection *textSel =
-        dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
+               << " hasContent=" << m_oldSelectionPtr->hasContent ();
+    auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
+    auto *textSel = dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
+
     if (imageSel)
     {
-        if (imageSel->transparency () != environ ()->imageSelectionTransparency ())
+        if (imageSel->transparency () != environ ()->imageSelectionTransparency ()) {
             environ ()->setImageSelectionTransparency (imageSel->transparency ());
-        if (dynamic_cast <kpTextSelection *> (doc->selection()))
+        }
+        if (dynamic_cast <kpTextSelection *> (doc->selection())) {
             doc->selectionPushOntoDocument();
+        }
     }
     else if (textSel)
     {
-        if (textSel->textStyle () != environ ()->textStyle ())
+        if (textSel->textStyle () != environ ()->textStyle ()) {
             environ ()->setTextStyle (textSel->textStyle ());
-        if (dynamic_cast <kpAbstractImageSelection *> (doc->selection()))
+        }
+        if (dynamic_cast <kpAbstractImageSelection *> (doc->selection())) {
             doc->selectionPushOntoDocument();
+        }
     }
-    else
+    else {
         Q_ASSERT (!"Unknown selection type");
+    }
 
     viewManager ()->setTextCursorPosition (m_textRow, m_textCol);
     doc->setSelection (*m_oldSelectionPtr);

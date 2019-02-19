@@ -61,8 +61,9 @@ kpAbstractSelection::kpAbstractSelection (const QRect &rect)
 // protected
 kpAbstractSelection &kpAbstractSelection::operator= (const kpAbstractSelection &rhs)
 {
-    if (this == &rhs)
+    if (this == &rhs) {
         return *this;
+    }
 
     d->rect = rhs.d->rect;
 
@@ -95,7 +96,7 @@ QDataStream &operator<< (QDataStream &stream, const kpAbstractSelection &selecti
 {
 #if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::operator<<(sel: rect=" <<
-                 selection.boundingRect () << endl;
+                 selection.boundingRect ();
 #endif
     stream << selection.serialID ();
     selection.writeToStream (stream);
@@ -113,7 +114,7 @@ kpCommandSize::SizeType kpAbstractSelection::size () const
 // public
 QSize kpAbstractSelection::minimumSize () const
 {
-    return QSize (minimumWidth (), minimumHeight ());
+    return  {minimumWidth (), minimumHeight ()};
 }
 
 
@@ -162,20 +163,24 @@ QPolygon kpAbstractSelection::CalculatePointsForRectangle (const QRect &rect)
     // OPT: not space optimal - current code adds duplicate corner points.
 
     // top
-    for (int x = 0; x < rect.width (); x++)
+    for (int x = 0; x < rect.width (); x++) {
         points.append (QPoint (rect.x () + x, rect.top ()));
+    }
 
     // right
-    for (int y = 0; y < rect.height (); y++)
+    for (int y = 0; y < rect.height (); y++) {
         points.append (QPoint (rect.right (), rect.y () + y));
+    }
 
     // bottom
-    for (int x = rect.width () - 1; x >= 0; x--)
+    for (int x = rect.width () - 1; x >= 0; x--) {
         points.append (QPoint (rect.x () + x, rect.bottom ()));
+    }
 
     // left
-    for (int y = rect.height () - 1; y >= 0; y--)
+    for (int y = rect.height () - 1; y >= 0; y--) {
         points.append (QPoint (rect.left (), rect.y () + y));
+    }
 
     return points;
 }
@@ -195,8 +200,9 @@ void kpAbstractSelection::moveBy (int dx, int dy)
     qCDebug(kpLogLayers) << "kpAbstractSelection::moveBy(" << dx << "," << dy << ")";
 #endif
 
-    if (dx == 0 && dy == 0)
+    if (dx == 0 && dy == 0) {
         return;
+    }
 
     QRect oldRect = boundingRect ();
 
@@ -229,8 +235,9 @@ void kpAbstractSelection::moveTo (const QPoint &topLeftPoint)
 #if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\toldBoundingRect=" << oldBoundingRect;
 #endif
-    if (topLeftPoint == oldBoundingRect.topLeft ())
+    if (topLeftPoint == oldBoundingRect.topLeft ()) {
         return;
+    }
 
     QPoint delta (topLeftPoint - oldBoundingRect.topLeft ());
     moveBy (delta.x (), delta.y ());
@@ -247,7 +254,7 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
 
 #if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::paintRectangularBorder() boundingRect="
-              << boundingRect () << endl;
+              << boundingRect ();
 #endif
 
 #if DEBUG_KP_SELECTION && 1
@@ -255,8 +262,7 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
     qCDebug(kpLogLayers) << "\t\tx=" << boundingRect ().x () - docRect.x ()
               << " y=" << boundingRect ().y () - docRect.y ()
               << " w=" << boundingRect ().width ()
-              << " h=" << boundingRect ().height ()
-              << endl;
+              << " h=" << boundingRect ().height ();
 #endif
     kpPixmapFX::drawStippleRect(destPixmap,
         boundingRect ().x () - docRect.x (),
@@ -277,7 +283,7 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
 {
 #if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::paintPolygonalBorder() boundingRect="
-              << boundingRect () << endl;
+              << boundingRect ();
 #endif
 
     QPolygon pointsTranslated = points;

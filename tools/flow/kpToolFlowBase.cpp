@@ -58,8 +58,8 @@
 
 struct kpToolFlowBasePrivate
 {
-    kpToolWidgetBrush *toolWidgetBrush;
-    kpToolWidgetEraserSize *toolWidgetEraserSize;
+    kpToolWidgetBrush *toolWidgetBrush{};
+    kpToolWidgetEraserSize *toolWidgetEraserSize{};
 
 
     //
@@ -67,7 +67,7 @@ struct kpToolFlowBasePrivate
     // (must be zero if unused)
     //
 
-        kpTempImage::UserFunctionType brushDrawFunc, cursorDrawFunc;
+        kpTempImage::UserFunctionType brushDrawFunc{}, cursorDrawFunc{};
 
         // Can't use union since package types contain fields requiring
         // constructors.
@@ -76,15 +76,15 @@ struct kpToolFlowBasePrivate
 
         // Each element points to one of the above (both elements from the same
         // array).
-        void *drawPackageForMouseButton [2];
+        void *drawPackageForMouseButton [2]{};
 
-        int brushWidth, brushHeight;
-        int cursorWidth, cursorHeight;
+        int brushWidth{}, brushHeight{};
+        int cursorWidth{}, cursorHeight{};
 
-        bool brushIsDiagonalLine;
+        bool brushIsDiagonalLine{};
 
 
-    kpToolFlowCommand *currentCommand;
+    kpToolFlowCommand *currentCommand{};
 };
 
 //---------------------------------------------------------------------
@@ -191,11 +191,13 @@ void kpToolFlowBase::end ()
     kpViewManager *vm = viewManager ();
     Q_ASSERT (vm);
 
-    if (vm->tempImage () && vm->tempImage ()->isBrush ())
+    if (vm->tempImage () && vm->tempImage ()->isBrush ()) {
         vm->invalidateTempImage ();
+    }
 
-    if (haveAnyBrushes ())
+    if (haveAnyBrushes ()) {
         vm->unsetCursor ();
+    }
 
     clearBrushCursorData ();
 }
@@ -250,8 +252,9 @@ QRect kpToolFlowBase::drawPoint (const QPoint &point)
 // virtual
 void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect)
 {
-    if (!/*virtual*/drawShouldProceed (thisPoint, lastPoint, normalizedRect))
+    if (!/*virtual*/drawShouldProceed (thisPoint, lastPoint, normalizedRect)) {
         return;
+    }
 
     // sync: remember to restoreFastUpdates() in all exit paths
     viewManager ()->setFastUpdates ();
@@ -327,11 +330,11 @@ kpColor kpToolFlowBase::color (int which)
     qCDebug(kpLogTools) << "kpToolFlowBase::color (" << which << ")";
 
     // Pen & Brush
-    if (!colorsAreSwapped ())
+    if (!colorsAreSwapped ()) {
         return kpTool::color (which);
+    }
     // only the (Color) Eraser uses the opposite color
-    else
-        return kpTool::color (which ? 0 : 1);  // don't trust !0 == 1
+    return kpTool::color (which ? 0 : 1);  // don't trust !0 == 1
 }
 
 //---------------------------------------------------------------------
@@ -455,10 +458,9 @@ QRect kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
      *        |
      *      Center
      */
-    return QRect (mousePoint.x () - brushWidth / 2,
-        mousePoint.y () - brushHeight / 2,
-        brushWidth,
-        brushHeight);
+    return  {mousePoint.x () - brushWidth / 2,
+                mousePoint.y () - brushHeight / 2,
+                brushWidth, brushHeight};
 }
 
 //---------------------------------------------------------------------

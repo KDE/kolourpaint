@@ -55,8 +55,9 @@ kpAbstractSelectionContentCommand *kpAbstractImageSelectionTool::newGiveContentC
     kpAbstractImageSelection *imageSel = document ()->imageSelection ();
     Q_ASSERT (imageSel && !imageSel->hasContent ());
 
-    if (imageSel->transparency ().isTransparent ())
+    if (imageSel->transparency ().isTransparent ()) {
         environ ()->flashColorSimilarityToolBarItem ();
+    }
 
     return new kpToolSelectionPullFromDocumentCommand (
             *imageSel,

@@ -42,12 +42,12 @@
 kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
-    QGridLayout *lay = new QGridLayout (this);
+    auto *lay = new QGridLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
 
-    QLabel *hueLabel = new QLabel (i18n ("&Hue:"), this);
-    QLabel *saturationLabel = new QLabel (i18n ("&Saturation:"), this);
-    QLabel *valueLabel = new QLabel (i18nc ("The V of HSV", "&Value:"), this);
+    auto *hueLabel = new QLabel (i18n ("&Hue:"), this);
+    auto *saturationLabel = new QLabel (i18n ("&Saturation:"), this);
+    auto *valueLabel = new QLabel (i18nc ("The V of HSV", "&Value:"), this);
 
     m_hueInput = new kpDoubleNumInput (this);
     m_hueInput->setRange (-180, 180, 15/*step*/);
@@ -84,26 +84,21 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
              this, &kpEffectHSVWidget::settingsChangedDelayed);
 }
 
-kpEffectHSVWidget::~kpEffectHSVWidget ()
-{
-}
+kpEffectHSVWidget::~kpEffectHSVWidget () = default;
 
 
 // public virtual [base kpEffectWidgetBase]
 QString kpEffectHSVWidget::caption () const
 {
     // TODO: Why doesn't this have a caption?  Ditto for the other effects.
-    return QString();
+    return {};
 }
 
 
 // public virtual [base kpEffectWidgetBase]
 bool kpEffectHSVWidget::isNoOp () const
 {
-    if (m_hueInput->value () == 0 && m_saturationInput->value () == 0 && m_valueInput->value () == 0)
-        return true;
-    else
-        return false;
+    return m_hueInput->value () == 0 && m_saturationInput->value () == 0 && m_valueInput->value () == 0;
 }
 
 // public virtual [base kpEffectWidgetBase]

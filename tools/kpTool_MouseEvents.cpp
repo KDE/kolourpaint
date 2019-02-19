@@ -120,8 +120,9 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     kpView *view = viewUnderCursor ();
     Q_ASSERT (view);
 
-    if (view)
+    if (view) {
         qCDebug(kpLogTools) << "\tview=" << view->objectName ();
+    }
 
     // let user know what mouse button is being used for entire draw
     d->mouseButton = mouseButton (e->buttons ());
@@ -199,8 +200,9 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
         drawInternal ();
 
-        if (dragScrolled)
+        if (dragScrolled) {
             viewManager ()->restoreFastUpdates ();
+        }
 
         d->lastPoint = d->currentPoint;
     }
@@ -228,7 +230,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << " modifiers=" << (int *) (int) e->modifiers ()
-               << " beganDraw=" << d->beganDraw << endl;
+               << " beganDraw=" << d->beganDraw;
 
     // Have _not_ already cancelShape()'ed by pressing other mouse button?
     // (e.g. you can cancel a line dragged out with the LMB, by pressing
@@ -258,8 +260,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
 {
     qCDebug(kpLogTools) << "kpTool::wheelEvent() modifiers=" << (int *) (int) e->modifiers ()
                << " hasBegunDraw=" << hasBegunDraw ()
-               << " delta=" << e->delta ()
-               << endl;
+               << " delta=" << e->delta ();
 
     e->ignore ();
 

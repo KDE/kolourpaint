@@ -124,8 +124,9 @@ typedef struct
 
 bool equalize(QImage &img)
 {
-    if(img.isNull())
+    if(img.isNull()) {
         return(false);
+    }
 
     HistogramListItem *histogram;
     IntegerPixel *map;
@@ -182,15 +183,18 @@ bool equalize(QImage &img)
     high = map[255];
     memset(equalize_map, 0, 256*sizeof(CharPixel));
     for(i=0; i < 256; ++i){
-        if(high.red != low.red)
+        if(high.red != low.red) {
             equalize_map[i].red = static_cast<unsigned char>
-                ((255*(map[i].red-low.red))/(high.red-low.red));
-        if(high.green != low.green)
+                    ((255*(map[i].red-low.red))/(high.red-low.red));
+        }
+        if(high.green != low.green) {
             equalize_map[i].green = static_cast<unsigned char>
-                ((255*(map[i].green-low.green))/(high.green-low.green));
-        if(high.blue != low.blue)
+                    ((255*(map[i].green-low.green))/(high.green-low.green));
+        }
+        if(high.blue != low.blue) {
             equalize_map[i].blue = static_cast<unsigned char>
-                ((255*(map[i].blue-low.blue))/(high.blue-low.blue));
+                    ((255*(map[i].blue-low.blue))/(high.blue-low.blue));
+        }
     }
 
     // stretch the histogram and write
@@ -241,14 +245,16 @@ QImage Blitz::blur(QImage &img, int radius)
     int a, r, g, b;
     int *as, *rs, *gs, *bs;
 
-    if(radius < 1 || img.isNull() || img.width() < (radius << 1))
+    if(radius < 1 || img.isNull() || img.width() < (radius << 1)) {
         return(img);
+    }
 
     w = img.width();
     h = img.height();
 
-    if(img.depth() < 8)
+    if(img.depth() < 8) {
         img = img.convertToFormat(QImage::Format_Indexed8);
+    }
     QImage buffer(w, h, img.hasAlphaChannel() ?
                   QImage::Format_ARGB32 : QImage::Format_RGB32);
 
@@ -258,8 +264,9 @@ QImage Blitz::blur(QImage &img, int radius)
     bs = new int[w];
 
     QVector<QRgb> colorTable;
-    if(img.format() == QImage::Format_Indexed8)
+    if(img.format() == QImage::Format_Indexed8) {
         colorTable = img.colorTable();
+    }
 
     for(y = 0; y < h; y++){
         my = y - radius;
@@ -268,8 +275,9 @@ QImage Blitz::blur(QImage &img, int radius)
             mh += my;
             my = 0;
         }
-        if((my + mh) > h)
+        if((my + mh) > h) {
             mh = h - my;
+        }
 
         p1 = (QRgb *)buffer.scanLine(y);
         memset(as, 0, static_cast<unsigned int> (w) * sizeof(int));
@@ -324,8 +332,9 @@ QImage Blitz::blur(QImage &img, int radius)
                 mw += mx;
                 mx = 0;
                 }
-            if((mx + mw) > w)
+            if((mx + mw) > w) {
                 mw = w - mx;
+            }
             mt = mw * mh;
             for(xx = mx; xx < (mw + mx); xx++){
                 a += as[xx];
@@ -363,14 +372,16 @@ int defaultConvolveMatrixSize(float radius, float sigma, bool quality)
         return(5);
     }
 
-    if(radius > 0.0f)
+    if(radius > 0.0f) {
         return(static_cast<int>(2.0f * std::ceil(radius) + 1.0f));
+    }
 
     matrix_size = 5;
     do{
         normalize = 0.0;
-        for(i=(-matrix_size/2); i <= (matrix_size/2); ++i)
+        for(i=(-matrix_size/2); i <= (matrix_size/2); ++i) {
             normalize += std::exp(-(static_cast<float> (i*i))/sigma2) / sigmaSQ2PI;
+        }
         i = matrix_size/2;
         value = std::exp(-(static_cast<float> (i*i))/sigma2) / sigmaSQ2PI / normalize;
         matrix_size += 2;
@@ -401,8 +412,9 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
         return(img);
     }
 
-    if(img.format() == QImage::Format_ARGB32_Premultiplied)
+    if(img.format() == QImage::Format_ARGB32_Premultiplied) {
         img = img.convertToFormat(QImage::Format_ARGB32);
+    }
     else if(img.depth() < 32){ 
         img = img.convertToFormat(img.hasAlphaChannel() ?
                                   QImage::Format_ARGB32 :
@@ -415,10 +427,12 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
 
     // create normalized matrix
     normalize = 0.0;
-    for(i=0; i < matrix_size*matrix_size; ++i)
+    for(i=0; i < matrix_size*matrix_size; ++i) {
         normalize += matrix[i];
-    if(std::abs(normalize) <=  static_cast<float> (M_EPSILON))
+    }
+    if(std::abs(normalize) <=  static_cast<float> (M_EPSILON)) {
         normalize = 1.0f;
+    }
     normalize = 1.0f/normalize;
     for(i=0; i < matrix_size*matrix_size; ++i){
         normalize_matrix[i] = normalize*matrix[i];
@@ -573,8 +587,9 @@ QImage Blitz::emboss(QImage &img, float radius, float sigma)
         for(x=(-half); x <= half; ++x, ++i){
             alpha = std::exp(-(static_cast<float> (x*x+y*y))/sigma2);
             matrix[i]=((x < 0) || (y < 0) ? -8.0f : 8.0f)*alpha/sigmaPI2;
-            if(x == j)
+            if(x == j) {
                 matrix[i]=0.0;
+            }
         }
     }
     QImage result(convolve(img, matrix_size, matrix));
@@ -587,8 +602,9 @@ QImage Blitz::emboss(QImage &img, float radius, float sigma)
 
 QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
 {
-    if(img.isNull())
+    if(img.isNull()) {
         return(img);
+    }
 
     if(img.depth() == 1) {
         img.setColor(0, ca.rgb());
@@ -666,8 +682,9 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
         }
     }
 
-    if(img.format() == QImage::Format_Indexed8)
+    if(img.format() == QImage::Format_Indexed8) {
         img.setColorTable(cTable);
+    }
     return(img);
 }
 

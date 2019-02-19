@@ -61,19 +61,18 @@ bool kpToolText::viewEvent (QEvent *e)
 #if DEBUG_KP_TOOL_TEXT && 0
     qCDebug(kpLogTools) << "kpToolText::viewEvent() type=" << e->type ()
               << " isShortcutOverrideEvent=" << isShortcutOverrideEvent
-              << " haveTextSel=" << haveTextSelection
-              << endl;
+              << " haveTextSel=" << haveTextSelection;
 #endif
 
-    if (!isShortcutOverrideEvent || !haveTextSelection)
+    if (!isShortcutOverrideEvent || !haveTextSelection) {
         return kpAbstractSelectionTool::viewEvent (e);
+    }
 
-    QKeyEvent *ke = static_cast <QKeyEvent *> (e);
+    auto *ke = dynamic_cast <QKeyEvent *> (e);
 #if DEBUG_KP_TOOL_TEXT
     qCDebug(kpLogTools) << "kpToolText::viewEvent() key=" << ke->key ()
               << " modifiers=" << ke->modifiers ()
-              << " QChar.isPrint()=" << QChar (ke->key ()).isPrint ()
-              << endl;
+              << " QChar.isPrint()=" << QChar (ke->key ()).isPrint ();
 #endif
 
     // Can't be shortcut?
@@ -202,8 +201,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #if DEBUG_KP_TOOL_TEXT
         qCDebug(kpLogTools) << "\tkey processing did not accept (text was '"
                    << e->text ()
-                   << "') - passing on event to kpAbstractSelectionTool"
-                   << endl;
+                   << "') - passing on event to kpAbstractSelectionTool";
     #endif
         //if (hasBegunShape ())
         //    endShape (currentPoint (), normalizedRect ());

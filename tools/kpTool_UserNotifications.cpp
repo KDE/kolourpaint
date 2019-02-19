@@ -38,10 +38,11 @@
 // public static
 QString kpTool::cancelUserMessage (int mouseButton)
 {
-    if (mouseButton == 0)
+    if (mouseButton == 0) {
         return i18n ("Right click to cancel.");
-    else
-        return i18n ("Left click to cancel.");
+    }
+
+    return i18n ("Left click to cancel.");
 }
 
 //---------------------------------------------------------------------
@@ -67,10 +68,12 @@ void kpTool::setUserMessage (const QString &userMessage)
 {
     d->userMessage = userMessage;
 
-    if (d->userMessage.isEmpty ())
+    if (d->userMessage.isEmpty ()) {
         d->userMessage = text ();
-    else
+    }
+    else {
         d->userMessage.prepend (i18n ("%1: ", text ()));
+    }
 
     emit userMessageChanged (d->userMessage);
 }

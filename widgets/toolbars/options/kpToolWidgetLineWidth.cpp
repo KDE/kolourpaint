@@ -68,9 +68,7 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &na
     finishConstruction (0, 0);
 }
 
-kpToolWidgetLineWidth::~kpToolWidgetLineWidth ()
-{
-}
+kpToolWidgetLineWidth::~kpToolWidgetLineWidth () = default;
 
 int kpToolWidgetLineWidth::lineWidth () const
 {
@@ -81,8 +79,9 @@ int kpToolWidgetLineWidth::lineWidth () const
 bool kpToolWidgetLineWidth::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
-    if (ret)
+    if (ret) {
         emit lineWidthChanged (lineWidth ());
+    }
     return ret;
 }
 

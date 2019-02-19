@@ -61,8 +61,7 @@ void kpPixmapFX::setPixmapAt(QImage *destPtr, const QRect &destRect,
                << destRect
                << ",src.rect="
                << src.rect ()
-               << ")"
-               << endl;
+               << ")";
 
     Q_ASSERT (destPtr);
 
@@ -122,8 +121,9 @@ void kpPixmapFX::paintPixmapAt (QImage *destPtr, int destX, int destY,
 // public static
 kpColor kpPixmapFX::getColorAtPixel (const QImage &img, const QPoint &at)
 {
-    if (!img.valid (at.x (), at.y ()))
+    if (!img.valid (at.x (), at.y ())) {
         return kpColor::Invalid;
+    }
 
     QRgb rgba = img.pixel(at);
     return kpColor (rgba);

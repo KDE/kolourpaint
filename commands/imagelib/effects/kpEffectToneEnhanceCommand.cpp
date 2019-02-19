@@ -43,9 +43,7 @@ kpEffectToneEnhanceCommand::kpEffectToneEnhanceCommand (double granularity, doub
 {
 }
 
-kpEffectToneEnhanceCommand::~kpEffectToneEnhanceCommand ()
-{
-}
+kpEffectToneEnhanceCommand::~kpEffectToneEnhanceCommand () = default;
 
 
 // protected virtual [base kpEffectCommandBase]

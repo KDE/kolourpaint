@@ -99,7 +99,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
 
     QWidget *baseWidget = new QWidget (this);
 
-    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    auto *dialogLayout = new QVBoxLayout (this);
     dialogLayout->addWidget (baseWidget);
     dialogLayout->addWidget (buttons);
 
@@ -107,7 +107,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
     QGroupBox *operationGroupBox = createOperationGroupBox(baseWidget);
     QGroupBox *dimensionsGroupBox = createDimensionsGroupBox(baseWidget);
 
-    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
+    auto *baseLayout = new QVBoxLayout (baseWidget);
     baseLayout->setContentsMargins(0, 0, 0, 0);
     baseLayout->addWidget(actOnBox);
     baseLayout->addWidget(operationGroupBox);
@@ -160,7 +160,7 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
     QWidget *actOnBox = new QWidget (baseWidget);
 
 
-    QLabel *actOnLabel = new QLabel (i18n ("Ac&t on:"), actOnBox);
+    auto *actOnLabel = new QLabel (i18n ("Ac&t on:"), actOnBox);
     m_actOnCombo = new QComboBox (actOnBox);
 
 
@@ -171,8 +171,9 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
     {
         QString selName = i18n ("Selection");
 
-        if (textSelection ())
+        if (textSelection ()) {
             selName = i18n ("Text Box");
+        }
 
         m_actOnCombo->insertItem (Selection, selName);
         m_actOnCombo->setCurrentIndex (Selection);
@@ -183,12 +184,10 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
         m_actOnCombo->setEnabled (false);
     }
 
-
-    QHBoxLayout *lay = new QHBoxLayout (actOnBox);
+    auto *lay = new QHBoxLayout (actOnBox);
     lay->setContentsMargins(0, 0, 0, 0);
     lay->addWidget (actOnLabel);
     lay->addWidget (m_actOnCombo, 1);
-
 
     connect (m_actOnCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
              this, &kpTransformResizeScaleDialog::slotActOnChanged);
@@ -252,13 +251,13 @@ QGroupBox *kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseW
                        QLatin1String ("smooth_scale"),
                        i18n ("S&mooth Scale"));
 
-    QButtonGroup *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
+    auto *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
     resizeScaleButtonGroup->addButton (m_resizeButton);
     resizeScaleButtonGroup->addButton (m_scaleButton);
     resizeScaleButtonGroup->addButton (m_smoothScaleButton);
 
 
-    QGridLayout *operationLayout = new QGridLayout (operationGroupBox );
+    auto *operationLayout = new QGridLayout (operationGroupBox );
     operationLayout->addWidget (m_resizeButton, 0, 0, Qt::AlignCenter);
     operationLayout->addWidget (m_scaleButton, 0, 1, Qt::AlignCenter);
     operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
@@ -280,28 +279,28 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
 {
     QGroupBox *dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), baseWidget);
 
-    QLabel *widthLabel = new QLabel (i18n ("Width:"), dimensionsGroupBox);
+    auto *widthLabel = new QLabel (i18n ("Width:"), dimensionsGroupBox);
     widthLabel->setAlignment (widthLabel->alignment () | Qt::AlignHCenter);
-    QLabel *heightLabel = new QLabel (i18n ("Height:"), dimensionsGroupBox);
+    auto *heightLabel = new QLabel (i18n ("Height:"), dimensionsGroupBox);
     heightLabel->setAlignment (heightLabel->alignment () | Qt::AlignHCenter);
 
-    QLabel *originalLabel = new QLabel (i18n ("Original:"), dimensionsGroupBox);
+    auto *originalLabel = new QLabel (i18n ("Original:"), dimensionsGroupBox);
     m_originalWidthInput = new QSpinBox;
     m_originalWidthInput->setRange(1, INT_MAX);
     m_originalWidthInput->setValue(document()->width(static_cast<bool> (selection())));
-    QLabel *xLabel0 = new QLabel (i18n ("x"), dimensionsGroupBox);
+    auto *xLabel0 = new QLabel (i18n ("x"), dimensionsGroupBox);
     m_originalHeightInput = new QSpinBox;
     m_originalHeightInput->setRange(1, INT_MAX);
     m_originalHeightInput->setValue(document()->height(static_cast<bool> (selection())));
 
-    QLabel *newLabel = new QLabel (i18n ("&New:"), dimensionsGroupBox);
+    auto *newLabel = new QLabel (i18n ("&New:"), dimensionsGroupBox);
     m_newWidthInput = new QSpinBox;
     m_newWidthInput->setRange(1, INT_MAX);
-    QLabel *xLabel1 = new QLabel (i18n ("x"), dimensionsGroupBox);
+    auto *xLabel1 = new QLabel (i18n ("x"), dimensionsGroupBox);
     m_newHeightInput = new QSpinBox;
     m_newHeightInput->setRange(1, INT_MAX);
 
-    QLabel *percentLabel = new QLabel (i18n ("&Percent:"), dimensionsGroupBox);
+    auto *percentLabel = new QLabel (i18n ("&Percent:"), dimensionsGroupBox);
     m_percentWidthInput = new QDoubleSpinBox;
     m_percentWidthInput->setRange(0.01, 1000000);
     m_percentWidthInput->setValue(100);
@@ -309,7 +308,7 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     m_percentWidthInput->setDecimals(2);
     m_percentWidthInput->setSuffix(i18n("%"));
 
-    QLabel *xLabel2 = new QLabel (i18n ("x"), dimensionsGroupBox);
+    auto *xLabel2 = new QLabel (i18n ("x"), dimensionsGroupBox);
 
     m_percentHeightInput = new QDoubleSpinBox;
     m_percentHeightInput->setRange(0.01, 1000000);
@@ -331,7 +330,7 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     percentLabel->setBuddy (m_percentWidthInput);
 
 
-    QGridLayout *dimensionsLayout = new QGridLayout (dimensionsGroupBox);
+    auto *dimensionsLayout = new QGridLayout (dimensionsGroupBox);
     dimensionsLayout->setColumnStretch (1/*column*/, 1);
     dimensionsLayout->setColumnStretch (3/*column*/, 1);
 
@@ -466,20 +465,25 @@ void kpTransformResizeScaleDialog::slotActOnChanged ()
         }
         else
         {
-            if (m_lastType == kpTransformResizeScaleCommand::Scale)
+            if (m_lastType == kpTransformResizeScaleCommand::Scale) {
                 m_scaleButton->setChecked (true);
-            else
+            }
+            else {
                 m_smoothScaleButton->setChecked (true);
+            }
         }
     }
     else
     {
-        if (m_lastType == kpTransformResizeScaleCommand::Resize)
+        if (m_lastType == kpTransformResizeScaleCommand::Resize) {
             m_resizeButton->setChecked (true);
-        else if (m_lastType == kpTransformResizeScaleCommand::Scale)
+        }
+        else if (m_lastType == kpTransformResizeScaleCommand::Scale) {
             m_scaleButton->setChecked (true);
-        else
+        }
+        else {
             m_smoothScaleButton->setChecked (true);
+        }
     }
 
 
@@ -553,7 +557,7 @@ void kpTransformResizeScaleDialog::slotHeightChanged (int height)
 void kpTransformResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 {
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotPercentWidthChanged("
-               << percentWidth << ")" << endl;
+               << percentWidth << ")";
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_newWidthInput,
                                        qRound (percentWidth * originalWidth () / 100.0));
@@ -569,7 +573,7 @@ void kpTransformResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 void kpTransformResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 {
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotPercentHeightChanged("
-               << percentHeight << ")" << endl;
+               << percentHeight << ")";
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_newHeightInput,
                                        qRound (percentHeight * originalHeight () / 100.0));
@@ -585,12 +589,14 @@ void kpTransformResizeScaleDialog::slotPercentHeightChanged (double percentHeigh
 void kpTransformResizeScaleDialog::setKeepAspectRatio (bool on)
 {
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::setKeepAspectRatio("
-               << on << ")" << endl;
-    if (on != m_keepAspectRatioCheckBox->isChecked ())
+               << on << ")";
+    if (on != m_keepAspectRatioCheckBox->isChecked ()) {
         m_keepAspectRatioCheckBox->setChecked (on);
+    }
 
-    if (on)
+    if (on) {
         widthFitHeightToAspectRatio ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -644,12 +650,15 @@ bool kpTransformResizeScaleDialog::actOnSelection () const
 
 kpTransformResizeScaleCommand::Type kpTransformResizeScaleDialog::type () const
 {
-    if (m_resizeButton->isChecked ())
+    if (m_resizeButton->isChecked ()) {
         return kpTransformResizeScaleCommand::Resize;
-    else if (m_scaleButton->isChecked ())
+    }
+
+    if (m_scaleButton->isChecked ()) {
         return kpTransformResizeScaleCommand::Scale;
-    else
-        return kpTransformResizeScaleCommand::SmoothScale;
+    }
+
+    return kpTransformResizeScaleCommand::SmoothScale;
 }
 
 //---------------------------------------------------------------------

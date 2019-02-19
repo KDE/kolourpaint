@@ -52,9 +52,9 @@
 void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const kpPreeditText &preeditText) const
 {
     int i = 0;
-    QString preeditString = preeditText.preeditString ();
+    const QString& preeditString = preeditText.preeditString ();
     QString str;
-    foreach (const QInputMethodEvent::Attribute &attr, preeditText.textFormatList ())
+    for (const auto &attr : preeditText.textFormatList ())
     {
         int start = attr.start;
         int length = attr.length;
@@ -65,7 +65,9 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
             length = length - i + start;
             start = i;
         }
-        if (length <= 0) continue;
+        if (length <= 0) {
+            continue;
+        }
 
         if (i < start)
         {
@@ -118,15 +120,15 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
     qCDebug(kpLogLayers) << "kpTextSelection::paint() textStyle: fcol="
             << (int *) d->textStyle.foregroundColor ().toQRgb ()
             << " bcol="
-            << (int *) d->textStyle.backgroundColor ().toQRgb ()
-            << endl;
+            << (int *) d->textStyle.backgroundColor ().toQRgb ();
 #endif
 
     // Drawing text is slow so if the text box will be rendered completely
     // outside of <destRect>, don't bother rendering it at all.
     const QRect modifyingRect = docRect.intersected (boundingRect ());
-    if (modifyingRect.isEmpty ())
+    if (modifyingRect.isEmpty ()) {
         return;
+    }
 
 
     // Is the text box completely invisible?
@@ -154,17 +156,18 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
                << " leading=" << fontMetrics.leading ()
                << " ascent=" << fontMetrics.ascent ()
                << " descent=" << fontMetrics.descent ()
-               << " lineSpacing=" << fontMetrics.lineSpacing ()
-               << endl;
+               << " lineSpacing=" << fontMetrics.lineSpacing ();
 #endif
 
     QPainter painter(&floatImage);
 
     // Fill in the background using the transparent/opaque tool setting
-    if ( theTextStyle.isBackgroundTransparent() )
+    if ( theTextStyle.isBackgroundTransparent() ) {
       painter.fillRect(theWholeAreaRect, Qt::transparent);
-    else
+    }
+    else {
       painter.fillRect(theWholeAreaRect, theTextStyle.backgroundColor().toQColor());
+    }
 
     painter.setClipRect(theWholeAreaRect);
     painter.setPen(theTextStyle.foregroundColor().toQColor());
@@ -178,14 +181,15 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
       painter.setCompositionMode(QPainter::CompositionMode_Clear);
 
       int baseLine = theTextAreaRect.y () + fontMetrics.ascent ();
-      foreach (const QString &str, theTextLines)
+      for (const auto &str : theTextLines)
       {
           painter.drawText (theTextAreaRect.x (), baseLine, str);
           baseLine += fontMetrics.lineSpacing ();
 
           // if the next textline would already be below the visible text area, stop drawing
-          if ( (baseLine - fontMetrics.ascent()) > (theTextAreaRect.y() + theTextAreaRect.height()) )
+          if ( (baseLine - fontMetrics.ascent()) > (theTextAreaRect.y() + theTextAreaRect.height()) ) {
             break;
+          }
       }
       // the next text drawing will now blend the text foreground color with
       // what is really below the text background
@@ -212,7 +216,7 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
         int i = 0;
         int row = thePreeditText.position().y();
         int col = thePreeditText.position().x();
-        foreach (const QString &str, theTextLines)
+        for (const auto &str : theTextLines)
         {
             if (row == i && !thePreeditText.isEmpty())
             {
@@ -233,8 +237,9 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
             i++;
 
             // if the next textline would already be below the visible text area, stop drawing
-            if ( (baseLine - fontMetrics.ascent()) > (theTextAreaRect.y() + theTextAreaRect.height()) )
+            if ( (baseLine - fontMetrics.ascent()) > (theTextAreaRect.y() + theTextAreaRect.height()) ) {
               break;
+            }
         }
     }
 

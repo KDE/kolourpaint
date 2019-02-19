@@ -39,13 +39,13 @@
 
 struct kpToolPolygonalCommandPrivate
 {
-    kpToolPolygonalBase::DrawShapeFunc drawShapeFunc;
+    kpToolPolygonalBase::DrawShapeFunc drawShapeFunc{};
 
     QPolygon points;
     QRect boundingRect;
 
     kpColor fcolor;
-    int penWidth;
+    int penWidth{};
     kpColor bcolor;
 
     kpImage oldImage;

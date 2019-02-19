@@ -186,8 +186,9 @@ void kpGrip::cancel ()
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     qCDebug(kpLogMisc) << "kpGrip::cancel()";
 #endif
-    if (m_currentPoint == KP_INVALID_POINT)
+    if (m_currentPoint == KP_INVALID_POINT) {
         return;
+    }
 
     m_startPoint = KP_INVALID_POINT;
     m_currentPoint = KP_INVALID_POINT;
@@ -230,8 +231,9 @@ void kpGrip::mousePressEvent (QMouseEvent *e)
     }
     else
     {
-        if (m_startPoint != KP_INVALID_POINT)
+        if (m_startPoint != KP_INVALID_POINT) {
             cancel ();
+        }
     }
 }
 
@@ -240,15 +242,16 @@ void kpGrip::mousePressEvent (QMouseEvent *e)
 // public
 QPoint kpGrip::viewDeltaPoint () const
 {
-    if (m_startPoint == KP_INVALID_POINT)
+    if (m_startPoint == KP_INVALID_POINT) {
         return KP_INVALID_POINT;
+    }
 
     const QPoint point = mapFromGlobal (QCursor::pos ());
 
     // TODO: this is getting out of sync with m_currentPoint
 
-    return QPoint (((m_type & kpGrip::Right) ? point.x () - m_startPoint.x () : 0),
-                   ((m_type & kpGrip::Bottom) ? point.y () - m_startPoint.y () : 0));
+    return  {(m_type & kpGrip::Right) ? point.x () - m_startPoint.x () : 0,
+                (m_type & kpGrip::Bottom) ? point.y () - m_startPoint.y () : 0};
 
 }
 
@@ -257,8 +260,9 @@ QPoint kpGrip::viewDeltaPoint () const
 // public
 void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
 {
-    if (m_startPoint == KP_INVALID_POINT)
+    if (m_startPoint == KP_INVALID_POINT) {
         return;
+    }
 
     m_currentPoint = point;
 
@@ -274,14 +278,14 @@ void kpGrip::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     qCDebug(kpLogMisc) << "kpGrip::mouseMoveEvent() m_startPoint=" << m_startPoint
-               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
-               << endl;
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ();
 #endif
 
     if (m_startPoint == KP_INVALID_POINT)
     {
-        if ((e->buttons () & Qt::MouseButtonMask) == 0)
+        if ((e->buttons () & Qt::MouseButtonMask) == 0) {
             setUserMessage (haventBegunDrawUserMessage ());
+        }
         return;
     }
 
@@ -295,8 +299,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     qCDebug(kpLogMisc) << "kpGrip::mouseReleaseEvent() m_startPoint=" << m_startPoint
-               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
-               << endl;
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ();
 #endif
 
     if (m_startPoint != KP_INVALID_POINT)
@@ -332,7 +335,7 @@ void kpGrip::enterEvent (QEvent * /*e*/)
     qCDebug(kpLogMisc) << "kpGrip::enterEvent()"
                << " m_startPoint=" << m_startPoint
                << " shouldReleaseMouseButtons="
-               << m_shouldReleaseMouseButtons << endl;
+               << m_shouldReleaseMouseButtons;
 #endif
 
     if (m_startPoint == KP_INVALID_POINT &&
@@ -354,7 +357,7 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
     qCDebug(kpLogMisc) << "kpGrip::leaveEvent()"
                << " m_startPoint=" << m_startPoint
                << " shouldReleaseMouseButtons="
-               << m_shouldReleaseMouseButtons << endl;
+               << m_shouldReleaseMouseButtons;
 #endif
     if (m_startPoint == KP_INVALID_POINT &&
         !m_shouldReleaseMouseButtons)
@@ -479,16 +482,18 @@ void kpViewScrollableContainer::clearStatusMessage ()
 // protected
 QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const
 {
-    if (!m_view)
-        return QSize ();
+    if (!m_view) {
+        return {};
+    }
 
-    if (!docResizingGrip ())
-        return QSize ();
+    if (!docResizingGrip ()) {
+        return {};
+    }
 
     const int docX = static_cast<int> (m_view->transformViewToDocX (m_view->width () + viewDX));
     const int docY = static_cast<int> (m_view->transformViewToDocY (m_view->height () + viewDY));
 
-    return QSize (qMax (1, docX), qMax (1, docY));
+    return  {qMax (1, docX), qMax (1, docY)};
 }
 
 //---------------------------------------------------------------------
@@ -496,14 +501,18 @@ QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const
 // protected
 void kpViewScrollableContainer::calculateDocResizingGrip ()
 {
-    if (m_bottomRightGrip->isDrawing ())
+    if (m_bottomRightGrip->isDrawing ()) {
         m_docResizingGrip = m_bottomRightGrip;
-    else if (m_bottomGrip->isDrawing ())
+    }
+    else if (m_bottomGrip->isDrawing ()) {
         m_docResizingGrip = m_bottomGrip;
-    else if (m_rightGrip->isDrawing ())
+    }
+    else if (m_rightGrip->isDrawing ()) {
         m_docResizingGrip = m_rightGrip;
-    else
+    }
+    else {
         m_docResizingGrip = nullptr;
+    }
 }
 
 //---------------------------------------------------------------------
@@ -519,16 +528,19 @@ kpGrip *kpViewScrollableContainer::docResizingGrip () const
 // protected
 int kpViewScrollableContainer::bottomResizeLineWidth () const
 {
-    if (!docResizingGrip ())
+    if (!docResizingGrip ()) {
         return -1;
+    }
 
-    if (!m_view)
+    if (!m_view) {
         return -1;
+    }
 
-    if (docResizingGrip ()->type () & kpGrip::Bottom)
+    if (docResizingGrip ()->type () & kpGrip::Bottom) {
         return qMax (m_view->zoomLevelY () / 100, 1);
-    else
-        return 1;
+    }
+
+    return 1;
 }
 
 //---------------------------------------------------------------------
@@ -536,16 +548,19 @@ int kpViewScrollableContainer::bottomResizeLineWidth () const
 // protected
 int kpViewScrollableContainer::rightResizeLineWidth () const
 {
-    if (!docResizingGrip ())
+    if (!docResizingGrip ()) {
         return -1;
+    }
 
-    if (!m_view)
+    if (!m_view) {
         return -1;
+    }
 
-    if (docResizingGrip ()->type () & kpGrip::Right)
+    if (docResizingGrip ()->type () & kpGrip::Right) {
         return qMax (m_view->zoomLevelX () / 100, 1);
-    else
-        return 1;
+    }
+
+    return 1;
 }
 
 //---------------------------------------------------------------------
@@ -553,8 +568,9 @@ int kpViewScrollableContainer::rightResizeLineWidth () const
 // protected
 QRect kpViewScrollableContainer::bottomResizeLineRect () const
 {
-    if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0)
-        return QRect ();
+    if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0) {
+        return  {};
+    }
 
     QRect visibleArea = QRect(QPoint(horizontalScrollBar()->value(),verticalScrollBar()->value()), viewport()->size());
 
@@ -569,8 +585,9 @@ QRect kpViewScrollableContainer::bottomResizeLineRect () const
 // protected
 QRect kpViewScrollableContainer::rightResizeLineRect () const
 {
-    if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0)
-        return QRect ();
+    if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0) {
+        return  {};
+    }
 
     QRect visibleArea = QRect(QPoint(horizontalScrollBar()->value(),verticalScrollBar()->value()), viewport()->size());
 
@@ -585,8 +602,9 @@ QRect kpViewScrollableContainer::rightResizeLineRect () const
 // protected
 QRect kpViewScrollableContainer::bottomRightResizeLineRect () const
 {
-    if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0)
-        return QRect ();
+    if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0) {
+        return  {};
+    }
 
     QRect visibleArea = QRect(QPoint(horizontalScrollBar()->value(),verticalScrollBar()->value()), viewport()->size());
 
@@ -601,8 +619,9 @@ QRect kpViewScrollableContainer::bottomRightResizeLineRect () const
 // private
 QRect kpViewScrollableContainer::mapViewToViewport (const QRect &viewRect)
 {
-    if (!viewRect.isValid ())
-        return QRect ();
+    if (!viewRect.isValid ()) {
+        return {};
+    }
 
     QRect ret = viewRect;
     ret.translate (-horizontalScrollBar()->value() - viewport()->x(), -verticalScrollBar()->value() - viewport()->y());
@@ -668,8 +687,7 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
                << " oldViewX=" << m_resizeRoundedLastViewX
                << " oldViewY=" << m_resizeRoundedLastViewY
                << " viewDX=" << viewDX
-               << " viewDY=" << viewDY
-               << endl;
+               << " viewDY=" << viewDY;
 #endif
 
 
@@ -701,8 +719,9 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
 // protected slot
 void kpViewScrollableContainer::slotGripBeganDraw ()
 {
-    if (!m_view)
+    if (!m_view) {
         return;
+    }
 
     m_overlay->resize(viewport()->size());  // make it cover whole viewport
     m_overlay->move(viewport()->pos());
@@ -732,12 +751,12 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
     qCDebug(kpLogMisc) << "kpViewScrollableContainer::slotGripContinuedDraw("
                << viewDX << "," << viewDY << ") size="
                << newDocSize (viewDX, viewDY)
-               << " dueToDragScroll=" << dueToDragScroll
-               << endl;
+               << " dueToDragScroll=" << dueToDragScroll;
 #endif
 
-    if (!m_view)
+    if (!m_view) {
         return;
+    }
 
     if (!dueToDragScroll &&
         beginDragScroll(m_view->zoomLevelX ()))
@@ -747,8 +766,7 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
         viewDY = newViewDeltaPoint.y ();
     #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
         qCDebug(kpLogMisc) << "\tdrag scrolled - new view delta point="
-                   << newViewDeltaPoint
-                   << endl;
+                   << newViewDeltaPoint;
     #endif
     }
 
@@ -787,12 +805,12 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     qCDebug(kpLogMisc) << "kpViewScrollableContainer::slotGripEndedDraw("
                << viewDX << "," << viewDY << ") size="
-               << newDocSize (viewDX, viewDY)
-               << endl;
+               << newDocSize (viewDX, viewDY);
 #endif
 
-    if (!m_view)
+    if (!m_view) {
         return;
+    }
 
     const QSize newSize = newDocSize (viewDX, viewDY);
 
@@ -815,8 +833,9 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
 // protected slot
 void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &string)
 {
-    if (string == m_gripStatusMessage)
+    if (string == m_gripStatusMessage) {
         return;
+    }
 
     m_gripStatusMessage = string;
     emit statusMessageChanged (string);
@@ -832,8 +851,7 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
     qCDebug(kpLogMisc) << "\tQCursor::pos=" << QCursor::pos ()
                << " global visibleRect="
                << kpWidgetMapper::toGlobal (this,
-                      QRect(0, 0, viewport->width(), viewport->height()))
-               << endl;
+                      QRect(0, 0, viewport->width(), viewport->height()));
 #endif
 
     // HACK: After dragging to a new size, handles move so that they are now
@@ -925,8 +943,9 @@ kpView *kpViewScrollableContainer::view () const
 // public
 void kpViewScrollableContainer::setView (kpView *view)
 {
-    if (m_view == view)
+    if (m_view == view) {
         return;
+    }
 
     if (m_view)
     {
@@ -990,8 +1009,9 @@ void kpViewScrollableContainer::slotViewDestroyed ()
 // public slot
 bool kpViewScrollableContainer::beginDragScroll(int zoomLevel, bool *didSomething)
 {
-    if (didSomething)
+    if (didSomething) {
         *didSomething = false;
+    }
 
     m_zoomLevel = zoomLevel;
 
@@ -1018,11 +1038,13 @@ bool kpViewScrollableContainer::beginDragScroll(int zoomLevel, bool *didSomethin
         stopDragScroll = false;
     }
 
-    if (stopDragScroll)
+    if (stopDragScroll) {
         m_dragScrollTimer->stop ();
+    }
 
-    if (didSomething)
+    if (didSomething) {
         *didSomething = scrolled;
+    }
 
     return scrolled;
 }
@@ -1046,24 +1068,27 @@ bool kpViewScrollableContainer::endDragScroll ()
         m_dragScrollTimer->stop ();
         return true;
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 //---------------------------------------------------------------------
 
 static int distanceFromRectToMultiplier (int dist)
 {
-    if (dist < 0)
+    if (dist < 0) {
         return 0;
-    else if (dist < DragDistanceFromRectMaxFor1stMultiplier)
+    }
+
+    if (dist < DragDistanceFromRectMaxFor1stMultiplier) {
         return 1;
-    else if (dist < DragDistanceFromRectMaxFor2ndMultiplier)
+    }
+
+    if (dist < DragDistanceFromRectMaxFor2ndMultiplier) {
         return 2;
-    else
-        return 4;
+    }
+
+    return 4;
 }
 
 //---------------------------------------------------------------------
@@ -1073,8 +1098,9 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 {
     bool scrolled = false;
 
-    if (didSomething)
+    if (didSomething) {
         *didSomething = false;
+    }
 
 
     const QRect rect = noDragScrollRect ();
@@ -1135,8 +1161,9 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     m_dragScrollTimer->start (DragScrollInterval);
     m_scrollTimerRunOnce = true;
 
-    if (didSomething)
+    if (didSomething) {
         *didSomething = scrolled;
+    }
 
     return scrolled;
 }
@@ -1149,20 +1176,22 @@ void kpViewScrollableContainer::wheelEvent (QWheelEvent *e)
 {
     e->ignore ();
 
-    if (m_view)
+    if (m_view) {
         m_view->wheelEvent (e);
+    }
 
-    if ( !e->isAccepted() )
+    if ( !e->isAccepted() ) {
         QScrollArea::wheelEvent(e);
+    }
 }
 
 //---------------------------------------------------------------------------------
 
 QRect kpViewScrollableContainer::noDragScrollRect () const
 {
-    return QRect (DragScrollLeftTopMargin, DragScrollLeftTopMargin,
-                  width () - DragScrollLeftTopMargin - DragScrollRightBottomMargin,
-                  height () - DragScrollLeftTopMargin - DragScrollRightBottomMargin);
+    return  {DragScrollLeftTopMargin, DragScrollLeftTopMargin,
+                width () - DragScrollLeftTopMargin - DragScrollRightBottomMargin,
+                height () - DragScrollLeftTopMargin - DragScrollRightBottomMargin};
 }
 
 //---------------------------------------------------------------------

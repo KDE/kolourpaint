@@ -53,8 +53,7 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
 {
 #if DEBUG_KP_SELECTION_DRAG && 1
     qCDebug(kpLogLayers) << "kpSelectionDrag() w=" << sel.width ()
-               << " h=" << sel.height ()
-               << endl;
+               << " h=" << sel.height ();
 #endif
 
     Q_ASSERT (sel.hasContent ());
@@ -72,17 +71,16 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
     const QImage image = sel.baseImage ();
 #if DEBUG_KP_SELECTION_DRAG && 1
     qCDebug(kpLogLayers) << "\timage: w=" << image.width ()
-               << " h=" << image.height ()
-               << endl;
+               << " h=" << image.height ();
 #endif
     if (image.isNull ())
     {
         // TODO: proper error handling.
-        qCCritical(kpLogLayers) << "kpSelectionDrag::setSelection() could not convert to image"
-                   << endl;
+        qCCritical(kpLogLayers) << "kpSelectionDrag::setSelection() could not convert to image";
     }
-    else
+    else {
         setImageData (image);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -123,44 +121,45 @@ kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
 
         return kpSelectionFactory::FromStream (stream);
     }
-    else
+
+
+#if DEBUG_KP_SELECTION_DRAG
+    qCDebug(kpLogLayers) << "\tmimeSource doesn't provide selection - try image";
+#endif
+
+    QImage image = qvariant_cast <QImage> (mimeData->imageData ());
+    if (!image.isNull ())
     {
-    #if DEBUG_KP_SELECTION_DRAG
-        qCDebug(kpLogLayers) << "\tmimeSource doesn't provide selection - try image";
-    #endif
+#if DEBUG_KP_SELECTION_DRAG
+        qCDebug(kpLogLayers) << "\tok w=" << image.width () << " h=" << image.height ();
+#endif
 
-        QImage image = qvariant_cast <QImage> (mimeData->imageData ());
-        if (!image.isNull ())
+        return new kpRectangularImageSelection (
+                    QRect (0, 0, image.width (), image.height ()), image);
+    }
+
+    if ( mimeData->hasUrls() )  // no image, check for path to local image file
+    {
+        QList<QUrl> urls = mimeData->urls();
+
+        if ( urls.count() && urls[0].isLocalFile() )
         {
-        #if DEBUG_KP_SELECTION_DRAG
-            qCDebug(kpLogLayers) << "\tok w=" << image.width () << " h=" << image.height ();
-        #endif
-
-            return new kpRectangularImageSelection (
-                QRect (0, 0, image.width (), image.height ()), image);
-        }
-        else if ( mimeData->hasUrls() )  // no image, check for path to local image file
-        {
-          QList<QUrl> urls = mimeData->urls();
-
-          if ( urls.count() && urls[0].isLocalFile() )
-          {
             image.load(urls[0].toLocalFile());
 
             if ( !image.isNull() )
             {
-              return new kpRectangularImageSelection(
-                  QRect(0, 0, image.width(), image.height()), image);
+                return new kpRectangularImageSelection(
+                            QRect(0, 0, image.width(), image.height()), image);
             }
-          }
         }
+    }
 
       #if DEBUG_KP_SELECTION_DRAG
         qCDebug(kpLogLayers) << "kpSelectionDrag::decode(kpAbstractSelection) mimeSource had no sel "
-                      "and could not decode to image" << endl;
+                      "and could not decode to image";
       #endif
       return nullptr;
-    }
+
 }
 
 //---------------------------------------------------------------------

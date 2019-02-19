@@ -55,8 +55,7 @@ bool kpToolText::shouldChangeTextStyle () const
     {
     #if DEBUG_KP_TOOL_TEXT
         qCDebug(kpLogTools) << "\trecursion - abort setting text style: "
-                   << environ ()->settingTextStyle ()
-                   << endl;
+                   << environ ()->settingTextStyle ();
     #endif
         return false;
     }
@@ -81,8 +80,9 @@ void kpToolText::changeTextStyle (const QString &name,
     qCDebug(kpLogTools) << "kpToolText::changeTextStyle(" << name << ")";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     commandHistory ()->addCommand (
         new kpToolTextChangeStyleCommand (
@@ -100,8 +100,9 @@ void kpToolText::slotIsOpaqueChanged (bool isOpaque)
     qCDebug(kpLogTools) << "kpToolText::slotIsOpaqueChanged()";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -123,8 +124,9 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
     qCDebug(kpLogTools) << "kpToolText::slotColorsSwapped()";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -144,8 +146,9 @@ void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
     qCDebug(kpLogTools) << "kpToolText::slotForegroundColorChanged()";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -164,8 +167,9 @@ void kpToolText::slotBackgroundColorChanged (const kpColor & /*color*/)
     qCDebug(kpLogTools) << "kpToolText::slotBackgroundColorChanged()";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -193,14 +197,14 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
     qCDebug(kpLogTools) << "kpToolText::slotFontFamilyChanged() new="
                << fontFamily
                << " old="
-               << oldFontFamily
-               << endl;
+               << oldFontFamily;
 #else
     (void) fontFamily;
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -220,14 +224,14 @@ void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
     qCDebug(kpLogTools) << "kpToolText::slotFontSizeChanged() new="
                << fontSize
                << " old="
-               << oldFontSize
-               << endl;
+               << oldFontSize;
 #else
     (void) fontSize;
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -248,8 +252,9 @@ void kpToolText::slotBoldChanged (bool isBold)
     qCDebug(kpLogTools) << "kpToolText::slotBoldChanged(" << isBold << ")";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -269,8 +274,9 @@ void kpToolText::slotItalicChanged (bool isItalic)
     qCDebug(kpLogTools) << "kpToolText::slotItalicChanged(" << isItalic << ")";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -290,8 +296,9 @@ void kpToolText::slotUnderlineChanged (bool isUnderline)
     qCDebug(kpLogTools) << "kpToolText::slotUnderlineChanged(" << isUnderline << ")";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 
@@ -311,8 +318,9 @@ void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
     qCDebug(kpLogTools) << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")";
 #endif
 
-    if (!shouldChangeTextStyle ())
+    if (!shouldChangeTextStyle ()) {
         return;
+    }
 
     kpTextStyle newTextStyle = environ ()->textStyle ();
 

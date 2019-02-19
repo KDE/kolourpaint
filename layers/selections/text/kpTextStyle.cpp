@@ -56,9 +56,7 @@ kpTextStyle::kpTextStyle (const QString &fontFamily,
 {
 }
 
-kpTextStyle::~kpTextStyle ()
-{
-}
+kpTextStyle::~kpTextStyle () = default;
 
 
 // friend

@@ -61,23 +61,26 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
     {
         if ((e->modifiers () & Qt::ControlModifier) == 0)
         {
-            if (!d->backspaceCommand)
+            if (!d->backspaceCommand) {
                 addNewBackspaceCommand (&d->backspaceCommand);
+            }
     
             d->backspaceCommand->addBackspace ();
         }
         else
         {
-            if (!d->backspaceWordCommand)
+            if (!d->backspaceWordCommand) {
                 addNewBackspaceCommand (&d->backspaceWordCommand);
+            }
     
             const int numMoves = MoveCursorToWordStart (textLines,
                 &cursorRow, &cursorCol);
     
             viewManager ()->setQueueUpdates ();
             {
-                for (int i = 0; i < numMoves; i++)
+                for (int i = 0; i < numMoves; i++) {
                     d->backspaceWordCommand->addBackspace ();
+                }
             }
             viewManager ()->restoreQueueUpdates ();
     
@@ -103,15 +106,17 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
     {
         if ((e->modifiers () & Qt::ControlModifier) == 0)
         {
-            if (!d->deleteCommand)
+            if (!d->deleteCommand) {
                 addNewDeleteCommand (&d->deleteCommand);
+            }
     
             d->deleteCommand->addDelete ();
         }
         else
         {
-            if (!d->deleteWordCommand)
+            if (!d->deleteWordCommand) {
                 addNewDeleteCommand (&d->deleteWordCommand);
+            }
     
             // We don't want to know the cursor pos of the next word start
             // as delete should keep cursor in same pos.
@@ -122,8 +127,9 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
     
             viewManager ()->setQueueUpdates ();
             {
-                for (int i = 0; i < numMoves; i++)
+                for (int i = 0; i < numMoves; i++) {
                     d->deleteWordCommand->addDelete ();
+                }
             }
             viewManager ()->restoreQueueUpdates ();
     
@@ -148,8 +154,9 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
 
     // It's OK for <textLines> to be empty.
     
-    if (!d->enterCommand)
+    if (!d->enterCommand) {
         addNewEnterCommand (&d->enterCommand);
+    }
 
     d->enterCommand->addEnter ();
 
@@ -168,8 +175,9 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
     QString usableText;
     for (int i = 0; i < e->text ().length (); i++)
     {
-        if (e->text ().at (i).isPrint ())
+        if (e->text ().at (i).isPrint ()) {
             usableText += e->text ().at (i);
+        }
     }
 #if DEBUG_KP_TOOL_TEXT
     qCDebug(kpLogTools) << "\tusableText=" << usableText;
@@ -184,8 +192,9 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
 
     // --- It's OK for <textLines> to be empty. ---
 
-    if (!d->insertCommand)
+    if (!d->insertCommand) {
         addNewInsertCommand (&d->insertCommand);
+    }
 
     d->insertCommand->addText (usableText);
 

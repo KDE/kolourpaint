@@ -44,16 +44,14 @@ kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent )
 {
 }
 
-kpResizeSignallingLabel::~kpResizeSignallingLabel ()
-{
-}
+kpResizeSignallingLabel::~kpResizeSignallingLabel () = default;
 
 
 // protected virtual [base QLabel]
 void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
 {
     qCDebug(kpLogMisc) << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
-               << " oldSize=" << e->oldSize () << endl;
+               << " oldSize=" << e->oldSize ();
     QLabel::resizeEvent (e);
 
     emit resized ();

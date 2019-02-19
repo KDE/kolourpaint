@@ -58,7 +58,7 @@ void kpColorSimilarityFrame::setColorSimilarity (double similarity)
 // protected virtual [base QWidget]
 QSize kpColorSimilarityFrame::sizeHint () const
 {
-    return QSize (52, 52);
+    return  {52, 52};
 }
 
 //---------------------------------------------------------------------

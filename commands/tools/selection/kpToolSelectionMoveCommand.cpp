@@ -54,9 +54,7 @@ kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,
     m_startPoint = m_endPoint = doc->selection ()->topLeft ();
 }
 
-kpToolSelectionMoveCommand::~kpToolSelectionMoveCommand ()
-{
-}
+kpToolSelectionMoveCommand::~kpToolSelectionMoveCommand () = default;
 
 
 // public
@@ -98,7 +96,7 @@ void kpToolSelectionMoveCommand::execute ()
 
     vm->setQueueUpdates ();
     {
-        foreach (const QPoint &p, m_copyOntoDocumentPoints)
+        for (const auto &p : m_copyOntoDocumentPoints)
         {
             sel->moveTo (p);
             doc->selectionCopyOntoDocument ();
@@ -128,8 +126,9 @@ void kpToolSelectionMoveCommand::unexecute ()
 
     vm->setQueueUpdates ();
 
-    if (!m_oldDocumentImage.isNull ())
+    if (!m_oldDocumentImage.isNull ()) {
         doc->setImageAt (m_oldDocumentImage, m_documentBoundingRect.topLeft ());
+    }
     qCDebug(kpLogCommands) << "\tmove to startPoint=" << m_startPoint;
     sel->moveTo (m_startPoint);
 
@@ -142,8 +141,7 @@ void kpToolSelectionMoveCommand::unexecute ()
 void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
 {
     qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::moveTo" << point
-               << " moveLater=" << moveLater
-               <<endl;
+               << " moveLater=" << moveLater;
 
     if (!moveLater)
     {
@@ -154,8 +152,9 @@ void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
         // Must have content before it can be moved.
         Q_ASSERT (sel && sel->hasContent ());
 
-        if (point == sel->topLeft ())
+        if (point == sel->topLeft ()) {
             return;
+        }
 
         sel->moveTo (point);
     }
@@ -182,8 +181,9 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
     // to be consistent with the requirement on other selection operations.
     Q_ASSERT (sel && sel->hasContent ());
 
-    if (m_oldDocumentImage.isNull ())
+    if (m_oldDocumentImage.isNull ()) {
         m_oldDocumentImage = doc->image ();
+    }
 
     QRect selBoundingRect = sel->boundingRect ();
     m_documentBoundingRect = m_documentBoundingRect.united (selBoundingRect);

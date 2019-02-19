@@ -76,13 +76,12 @@ kpTextSelection *kpDocument::textSelection () const
 void kpDocument::setSelection (const kpAbstractSelection &selection)
 {
     qCDebug(kpLogDocument) << "kpDocument::setSelection() sel boundingRect="
-               << selection.boundingRect ()
-               << endl;
+               << selection.boundingRect ();
 
     d->environ->setQueueViewUpdates ();
     {
         const bool hadSelection = static_cast<bool> (m_selection);
-        kpAbstractSelection *oldSelection = m_selection;
+        auto *oldSelection = m_selection;
 
 
         // (must be called before giving the document a new selection, to
@@ -118,30 +117,35 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         //
 
         qCDebug(kpLogDocument) << "\tcheck sel " << (int *) m_selection
-                   << " boundingRect=" << m_selection->boundingRect ()
-                   << endl;
+                   << " boundingRect=" << m_selection->boundingRect ();
         if (oldSelection)
         {
-            if (oldSelection->hasContent ())
+            if (oldSelection->hasContent ()) {
                 slotContentsChanged (oldSelection->boundingRect ());
-            else
+            }
+            else {
                 emit contentsChanged (oldSelection->boundingRect ());
+            }
 
             delete oldSelection;
             oldSelection = nullptr;
         }
 
-        if (m_selection->hasContent ())
+        if (m_selection->hasContent ()) {
             slotContentsChanged (m_selection->boundingRect ());
-        else
+        }
+        else {
             emit contentsChanged (m_selection->boundingRect ());
+        }
 
 
-        if (!hadSelection)
+        if (!hadSelection) {
             emit selectionEnabled (true);
+        }
 
-        if (isTextChanged)
+        if (isTextChanged) {
             emit selectionIsTextChanged (textSelection ());
+        }
     }
     d->environ->restoreQueueViewUpdates ();
 
@@ -153,16 +157,17 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
 // public
 kpImage kpDocument::getSelectedBaseImage () const
 {
-    kpAbstractImageSelection *imageSel = imageSelection ();
+    auto *imageSel = imageSelection ();
     Q_ASSERT (imageSel);
 
     // Easy if we already have it :)
-    const kpImage image = imageSel->baseImage ();
-    if (!image.isNull ())
+    const auto image = imageSel->baseImage ();
+    if (!image.isNull ()) {
         return image;
+    }
 
 
-    const QRect boundingRect = imageSel->boundingRect ();
+    const auto boundingRect = imageSel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
     // OPT: This is very slow.  Image / More Effects ... calls us twice
@@ -175,20 +180,20 @@ kpImage kpDocument::getSelectedBaseImage () const
 // public
 void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
 {
-    kpAbstractImageSelection *imageSel = imageSelection ();
+    auto *imageSel = imageSelection ();
     Q_ASSERT (imageSel);
 
     // Should not already have an image or we would not be pulling.
     Q_ASSERT (!imageSel->hasContent ());
 
-    const QRect boundingRect = imageSel->boundingRect ();
+    const auto boundingRect = imageSel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
     //
     // Get selection image from document
     //
 
-    kpImage selectedImage = getSelectedBaseImage ();
+    auto selectedImage = getSelectedBaseImage ();
 
     d->environ->setQueueViewUpdates ();
 
@@ -236,13 +241,14 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
 // public
 void kpDocument::selectionDelete ()
 {
-    if ( !m_selection )
-      return;
+    if ( !m_selection ) {
+        return;
+    }
 
-    const QRect boundingRect = m_selection->boundingRect ();
+    const auto boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
-    const bool selectionHadContent = m_selection->hasContent ();
+    const auto selectionHadContent = m_selection->hasContent ();
 
     delete m_selection;
     m_selection = nullptr;
@@ -251,10 +257,12 @@ void kpDocument::selectionDelete ()
     // HACK to prevent document from being modified when
     //      user cancels dragging out a new selection
     // REFACTOR: Extract this out into a method.
-    if (selectionHadContent)
+    if (selectionHadContent) {
         slotContentsChanged (boundingRect);
-    else
+    }
+    else {
         emit contentsChanged (boundingRect);
+    }
 
     emit selectionEnabled (false);
 }
@@ -265,18 +273,21 @@ void kpDocument::selectionDelete ()
 void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
 {
     // Empty selection, just doing nothing
-    if ( !m_selection || !m_selection->hasContent() )
-      return;
+    if ( !m_selection || !m_selection->hasContent() ) {
+        return;
+    }
 
     const QRect boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
     if (imageSelection ())
     {
-        if (applySelTransparency)
+        if (applySelTransparency) {
             imageSelection ()->paint (m_image, rect ());
-        else
+        }
+        else {
             imageSelection ()->paintWithBaseImage (m_image, rect ());
+        }
     }
     else
     {
@@ -310,18 +321,16 @@ kpImage kpDocument::imageWithSelection () const
     if (m_selection)
     {
         qCDebug(kpLogDocument) << "\tselection @ " << m_selection->boundingRect ();
-        kpImage output = *m_image;
+        auto output = *m_image;
 
         // (this is a NOP for image selections without content)
         m_selection->paint (&output, rect ());
 
         return output;
     }
-    else
-    {
-        qCDebug(kpLogDocument) << "\tno selection";
-        return *m_image;
-    }
+
+    qCDebug(kpLogDocument) << "\tno selection";
+    return *m_image;
 }
 
 //---------------------------------------------------------------------

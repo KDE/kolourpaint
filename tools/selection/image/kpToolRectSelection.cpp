@@ -45,9 +45,7 @@ kpToolRectSelection::kpToolRectSelection (kpToolSelectionEnvironment *environ,
 {
 }
 
-kpToolRectSelection::~kpToolRectSelection ()
-{
-}
+kpToolRectSelection::~kpToolRectSelection () = default;
 
 
 // protected virtual [base kpAbstractSelectionTool]

@@ -52,9 +52,7 @@ kpTransformFlipCommand::kpTransformFlipCommand (bool actOnSelection,
 
 //---------------------------------------------------------------------
 
-kpTransformFlipCommand::~kpTransformFlipCommand ()
-{
-}
+kpTransformFlipCommand::~kpTransformFlipCommand () = default;
 
 //---------------------------------------------------------------------
 // public virtual [base kpCommand]
@@ -75,16 +73,17 @@ QString kpTransformFlipCommand::name () const
         opName = i18n ("Flip vertically");
     else
     {
-        qCCritical(kpLogCommands) << "kpTransformFlipCommand::name() not asked to flip" << endl;
+        qCCritical(kpLogCommands) << "kpTransformFlipCommand::name() not asked to flip";
         return QString();
     }
 #endif
 
 
-    if (m_actOnSelection)
+    if (m_actOnSelection) {
         return i18n ("Selection: %1", opName);
-    else
-        return opName;
+    }
+
+    return opName;
 }
 
 //---------------------------------------------------------------------

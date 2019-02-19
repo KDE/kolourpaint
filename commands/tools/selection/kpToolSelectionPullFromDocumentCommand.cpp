@@ -47,13 +47,10 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
       m_backgroundColor (backgroundColor)
 {
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
-               << environ
-               << endl;
+               << environ;
 }
 
-kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand ()
-{
-}
+kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand () = default;
 
 
 // public virtual [base kpCommand]
@@ -95,8 +92,9 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
         //    b) image selection with no content, at an arbitrary location
         Q_ASSERT (!imageSelection () || !imageSelection ()->hasContent ());
 
-        const kpAbstractImageSelection *originalImageSel =
-            static_cast <const kpAbstractImageSelection *> (originalSelection ());
+        const auto *originalImageSel = dynamic_cast <const kpAbstractImageSelection *>
+                (originalSelection ());
+
         if (originalImageSel->transparency () !=
             environ ()->imageSelectionTransparency ())
         {

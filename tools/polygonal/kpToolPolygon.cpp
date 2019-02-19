@@ -56,18 +56,22 @@ static void DrawPolygonShape (kpImage *image,
     return;
   }
 
-  if ( bcolor.isValid() )
+  if ( bcolor.isValid() ) {
     painter.setBrush(QBrush(bcolor.toQColor()));
-  else
+  }
+  else {
     painter.setBrush(Qt::NoBrush);
+  }
 
   painter.drawPolygon(points, Qt::OddEvenFill);
 
-  if ( isFinal )
+  if ( isFinal ) {
     return;
+  }
 
-  if ( points.count() <= 2 )
+  if ( points.count() <= 2 ) {
     return;
+  }
 
   painter.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
   painter.setPen(QPen(Qt::white));
@@ -149,14 +153,15 @@ kpColor kpToolPolygon::drawingBackgroundColor () const
 void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 {
     qCDebug(kpLogTools) << "kpToolPolygon::endDraw()  points="
-        << points ()->toList () << endl;
+        << points ()->toList ();
 
     // A click of the other mouse button (to finish shape, instead of adding
     // another control point) would have caused endShape() to have been
     // called in kpToolPolygonalBase::beginDraw().  The points list would now
     // be empty.  We are being called by kpTool::mouseReleaseEvent().
-    if (points ()->count () == 0)
+    if (points ()->count () == 0) {
         return;
+    }
 
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {

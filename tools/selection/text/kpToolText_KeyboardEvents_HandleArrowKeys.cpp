@@ -57,8 +57,9 @@ void kpToolText::handleUpKeyPress (QKeyEvent *e,
     qCDebug(kpLogTools) << "\tup pressed";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     if (!textLines.isEmpty () && cursorRow > 0)
     {
@@ -78,8 +79,9 @@ void kpToolText::handleDownKeyPress (QKeyEvent *e,
     qCDebug(kpLogTools) << "\tdown pressed";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     if (!textLines.isEmpty () && cursorRow < textLines.size () - 1)
     {
@@ -99,8 +101,9 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
     qCDebug(kpLogTools) << "\tleft pressed";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     if (!textLines.isEmpty ())
     {
@@ -135,8 +138,9 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
     qCDebug(kpLogTools) << "\tright pressed";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     if (!textLines.isEmpty ())
     {
@@ -172,13 +176,15 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
     qCDebug(kpLogTools) << "\thome pressed";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     if (!textLines.isEmpty ())
     {
-        if (e->modifiers () & Qt::ControlModifier)
+        if (e->modifiers () & Qt::ControlModifier) {
             cursorRow = 0;
+        }
     
         cursorCol = 0;
     
@@ -196,13 +202,15 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
     qCDebug(kpLogTools) << "\tend pressed";
 #endif
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShape (currentPoint (), normalizedRect ());
+    }
 
     if (!textLines.isEmpty ())
     {
-        if (e->modifiers () & Qt::ControlModifier)
+        if (e->modifiers () & Qt::ControlModifier) {
             cursorRow = textLines.size () - 1;
+        }
     
         cursorCol = textLines [cursorRow].length ();
     

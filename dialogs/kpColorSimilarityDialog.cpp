@@ -45,26 +45,26 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     : QDialog (parent)
 {
     setWindowTitle (i18nc ("@title:window", "Color Similarity"));
-    QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+    auto *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
                                                       QDialogButtonBox::Cancel, this);
     connect (buttons, &QDialogButtonBox::accepted, this, &kpColorSimilarityDialog::accept);
     connect (buttons, &QDialogButtonBox::rejected, this, &kpColorSimilarityDialog::reject);
 
-    QWidget *baseWidget = new QWidget (this);
+    auto *baseWidget = new QWidget (this);
 
-    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    auto *dialogLayout = new QVBoxLayout (this);
     dialogLayout->addWidget (baseWidget);
     dialogLayout->addWidget (buttons);
 
-    QGroupBox *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
+    auto *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
 
     m_colorSimilarityFrame = new kpColorSimilarityFrame(cubeGroupBox);
     m_colorSimilarityFrame->setMinimumSize (240, 180);
 
-    QPushButton *updatePushButton = new QPushButton (i18n ("&Update"), cubeGroupBox);
+    auto *updatePushButton = new QPushButton (i18n ("&Update"), cubeGroupBox);
 
 
-    QVBoxLayout *cubeLayout = new QVBoxLayout (cubeGroupBox);
+    auto *cubeLayout = new QVBoxLayout (cubeGroupBox);
     cubeLayout->addWidget (m_colorSimilarityFrame, 1/*stretch*/);
     cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 
@@ -73,7 +73,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
              this, &kpColorSimilarityDialog::slotColorSimilarityValueChanged);
 
 
-    QGroupBox *inputGroupBox = new QGroupBox (i18n ("&RGB Color Cube Distance"),
+    auto *inputGroupBox = new QGroupBox (i18n ("&RGB Color Cube Distance"),
         baseWidget);
 
     m_colorSimilarityInput = new kpIntNumInput (inputGroupBox);
@@ -93,7 +93,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
              this, &kpColorSimilarityDialog::slotWhatIsLabelClicked);
 
 
-    QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox);
+    auto *inputLayout = new QVBoxLayout (inputGroupBox);
 
     inputLayout->addWidget (m_colorSimilarityInput);
     inputLayout->addWidget (m_whatIsLabel);
@@ -105,15 +105,13 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
              this, &kpColorSimilarityDialog::slotColorSimilarityValueChanged);
 
 
-    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
+    auto *baseLayout = new QVBoxLayout (baseWidget);
     baseLayout->setContentsMargins(0, 0, 0, 0);
     baseLayout->addWidget (cubeGroupBox, 1/*stretch*/);
     baseLayout->addWidget (inputGroupBox);
 }
 
-kpColorSimilarityDialog::~kpColorSimilarityDialog ()
-{
-}
+kpColorSimilarityDialog::~kpColorSimilarityDialog () = default;
 
 
 // public

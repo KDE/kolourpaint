@@ -150,11 +150,11 @@ void kpMainWindow::slotTextFontFamilyChanged ()
                << "fontFamily="
                << d->actionTextFontFamily->font ()
                << "action.currentItem="
-               << d->actionTextFontFamily->currentItem ()
-               << endl;
+               << d->actionTextFontFamily->currentItem ();
 
-    if (!d->isFullyConstructed)
+    if (!d->isFullyConstructed) {
         return;
+    }
 
     if (d->toolText && d->toolText->hasBegun ())
     {
@@ -165,8 +165,9 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
-    if (d->mainView)
+    if (d->mainView) {
         d->mainView->setFocus ();
+    }
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingFontFamily, d->actionTextFontFamily->font ());
@@ -181,11 +182,11 @@ void kpMainWindow::slotTextFontSizeChanged ()
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontSizeChanged() alive="
                << d->isFullyConstructed
                << " fontSize="
-               << d->actionTextFontSize->fontSize ()
-               << endl;
+               << d->actionTextFontSize->fontSize ();
 
-    if (!d->isFullyConstructed)
+    if (!d->isFullyConstructed) {
         return;
+    }
 
     if (d->toolText && d->toolText->hasBegun ())
     {
@@ -196,8 +197,9 @@ void kpMainWindow::slotTextFontSizeChanged ()
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
-    if (d->mainView)
+    if (d->mainView) {
         d->mainView->setFocus ();
+    }
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingFontSize, d->actionTextFontSize->fontSize ());
@@ -212,11 +214,11 @@ void kpMainWindow::slotTextBoldChanged ()
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontBoldChanged() alive="
                << d->isFullyConstructed
                << " bold="
-               << d->actionTextBold->isChecked ()
-               << endl;
+               << d->actionTextBold->isChecked ();
 
-    if (!d->isFullyConstructed)
+    if (!d->isFullyConstructed) {
         return;
+    }
 
     if (d->toolText && d->toolText->hasBegun ())
     {
@@ -235,11 +237,11 @@ void kpMainWindow::slotTextItalicChanged ()
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontItalicChanged() alive="
                << d->isFullyConstructed
                << " bold="
-               << d->actionTextItalic->isChecked ()
-               << endl;
+               << d->actionTextItalic->isChecked ();
 
-    if (!d->isFullyConstructed)
+    if (!d->isFullyConstructed) {
         return;
+    }
 
     if (d->toolText && d->toolText->hasBegun ())
     {
@@ -258,11 +260,11 @@ void kpMainWindow::slotTextUnderlineChanged ()
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontUnderlineChanged() alive="
                << d->isFullyConstructed
                << " underline="
-               << d->actionTextUnderline->isChecked ()
-               << endl;
+               << d->actionTextUnderline->isChecked ();
 
-    if (!d->isFullyConstructed)
+    if (!d->isFullyConstructed) {
         return;
+    }
 
     if (d->toolText && d->toolText->hasBegun ())
     {
@@ -281,11 +283,11 @@ void kpMainWindow::slotTextStrikeThruChanged ()
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextStrikeThruChanged() alive="
                << d->isFullyConstructed
                << " strikeThru="
-               << d->actionTextStrikeThru->isChecked ()
-               << endl;
+               << d->actionTextStrikeThru->isChecked ();
 
-    if (!d->isFullyConstructed)
+    if (!d->isFullyConstructed) {
         return;
+    }
 
     if (d->toolText && d->toolText->hasBegun ())
     {

@@ -68,7 +68,7 @@ bool SaneDialog::setup()
        // either no scanner was found or then cancel was pressed.
         return false;
     }
-    if (m_ksanew->openDevice(m_openDev) == false) {
+    if (!m_ksanew->openDevice(m_openDev)) {
         // could not open the scanner
         KMessageBox::sorry(nullptr, i18n("Opening the selected scanner failed."));
         m_openDev = QString();
@@ -82,8 +82,9 @@ bool SaneDialog::setup()
     if (configPtr->hasGroup(groupName)) {
         KConfigGroup group(configPtr, groupName);
         QStringList keys = group.keyList();
-        for (int i = 0; i < keys.count(); i++)
+        for (int i = 0; i < keys.count(); i++) {
             m_ksanew->setOptVal(keys[i], group.readEntry(keys[i]));
+        }
     }
 
    return true;
@@ -100,8 +101,9 @@ SaneDialog::~SaneDialog()
         QMap<QString, QString> opts;
         m_ksanew->getOptVals(opts);
         QMap<QString, QString>::const_iterator i = opts.constBegin();
-        for (; i != opts.constEnd(); ++i)
+        for (; i != opts.constEnd(); ++i) {
             group.writeEntry(i.key(), i.value(), KConfigGroup::Persistent);
+        }
     }
 }
 

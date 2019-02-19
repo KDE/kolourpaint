@@ -73,8 +73,7 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
                << "overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
                << ") url=" << m_url
-               << " savedAtLeastOnceBefore=" << savedAtLeastOnceBefore ()
-               << endl;
+               << " savedAtLeastOnceBefore=" << savedAtLeastOnceBefore ();
 
     // TODO: check feels weak
     if (m_url.isEmpty () || m_saveOptions->mimeType ().isEmpty ())
@@ -168,25 +167,27 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
                                      QWidget *parent,
                                      bool *userCancelled)
 {
-    if (userCancelled)
+    if (userCancelled) {
         *userCancelled = false;
+    }
 
     QStringList types = KImageIO::typeForMime (saveOptions.mimeType ());
     qCDebug(kpLogDocument) << "\ttypes=" << types;
-    if (types.isEmpty ())
+    if (types.isEmpty ()) {
         return false;
-
+    }
     // It's safe to arbitrarily choose the 0th type as any type in the list
     // should invoke the same KImageIO image loader.
     const QString type = types [0];
 
     qCDebug(kpLogDocument) << "\tmimeType=" << saveOptions.mimeType ()
-               << " type=" << type << endl;
+               << " type=" << type;
 
     if (lossyPrompt && !lossyPromptContinue (image, saveOptions, parent))
     {
-        if (userCancelled)
+        if (userCancelled) {
             *userCancelled = true;
+        }
 
         qCDebug(kpLogDocument) << "\treturning false because of lossyPrompt";
         return false;
@@ -251,8 +252,9 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
 
     int quality = -1;  // default
 
-    if (useSaveOptionsQuality)
+    if (useSaveOptionsQuality) {
         quality = saveOptions.quality ();
+    }
 
     qCDebug(kpLogDocument) << "\tsaving";
     if (!imageToSave.save (device, type.toLatin1 (), quality))
@@ -300,7 +302,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
                << url
                << ",overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
-               << ")" << endl;
+               << ")";
     saveOptions.printDebug (QLatin1String ("\tsaveOptions"));
     metaInfo.printDebug (QLatin1String ("\tmetaInfo"));
 
@@ -457,10 +459,8 @@ bool kpDocument::saveAs (const QUrl &url,
         emit documentSaved ();
         return true;
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 //---------------------------------------------------------------------

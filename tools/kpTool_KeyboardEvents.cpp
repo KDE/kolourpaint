@@ -105,10 +105,12 @@ void kpTool::arrowKeyPressDirection (const QKeyEvent *e, int *dx, int *dy)
     case Qt::Key_PageDown:  dxLocal = +1;   dyLocal = +1;   break;
     }
 
-    if (dx)
+    if (dx) {
         *dx = dxLocal;
-    if (dy)
+    }
+    if (dy) {
         *dy = dyLocal;
+    }
 }
 
 //---------------------------------------------------------------------
@@ -118,13 +120,15 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
     int dx, dy;
 
     arrowKeyPressDirection (e, &dx, &dy);
-    if (dx == 0 && dy == 0)
+    if (dx == 0 && dy == 0) {
         return;
+    }
 
 
     kpView * const view = viewUnderCursor ();
-    if (!view)
+    if (!view) {
         return;
+    }
 
 
     const QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
@@ -177,18 +181,21 @@ bool kpTool::isDrawKey (int key)
 
 void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
 {
-    if (e->isAutoRepeat ())
+    if (e->isAutoRepeat ()) {
         return;
+    }
 
-    if (!isDrawKey (e->key ()))
+    if (!isDrawKey (e->key ())) {
         return;
+    }
 
     qCDebug(kpLogTools) << "kpTool::seeIfAndHandleBeginDrawKeyPress() accept";
 
     // TODO: wrong for dragging lines outside of view (for e.g.)
     kpView * const view = viewUnderCursor ();
-    if (!view)
+    if (!view) {
         return;
+    }
 
 
     // TODO: what about the modifiers?
@@ -208,17 +215,20 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
                << " isDrawKey=" << isDrawKey (e->key ())
                << " view=" << viewUnderCursor ();
 
-    if (e->isAutoRepeat ())
+    if (e->isAutoRepeat ()) {
         return;
+    }
 
-    if (!isDrawKey (e->key ()))
+    if (!isDrawKey (e->key ())) {
         return;
+    }
 
     qCDebug(kpLogTools) << "kpTool::seeIfAndHandleEndDrawKeyPress() accept";
 
     kpView * const view = viewUnderCursor ();
-    if (!view)
+    if (!view) {
         return;
+    }
 
 
     // TODO: what about the modifiers?
@@ -238,22 +248,24 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 {
     qCDebug(kpLogTools) << "kpTool::keyPressEvent() key=" << (int *) e->key ()
               << " stateAfter: modifiers=" << (int *) (int) e->modifiers ()
-              << " isAutoRep=" << e->isAutoRepeat ()
-              << endl;
+              << " isAutoRep=" << e->isAutoRepeat ();
 
     e->ignore ();
 
     seeIfAndHandleModifierKey (e);
-    if (e->isAccepted ())
+    if (e->isAccepted ()) {
         return;
+    }
 
     seeIfAndHandleArrowKeyPress (e);
-    if (e->isAccepted ())
+    if (e->isAccepted ()) {
         return;
+    }
 
     seeIfAndHandleBeginDrawKeyPress (e);
-    if (e->isAccepted ())
+    if (e->isAccepted ()) {
         return;
+    }
 
     switch (e->key ())
     {
@@ -278,18 +290,19 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 {
     qCDebug(kpLogTools) << "kpTool::keyReleaseEvent() key=" << (int *) e->key ()
               << " stateAfter: modifiers=" << (int *) (int) e->modifiers ()
-              << " isAutoRep=" << e->isAutoRepeat ()
-              << endl;
+              << " isAutoRep=" << e->isAutoRepeat ();
 
     e->ignore ();
 
     seeIfAndHandleModifierKey (e);
-    if (e->isAccepted ())
+    if (e->isAccepted ()) {
         return;
+    }
 
     seeIfAndHandleEndDrawKeyPress (e);
-    if (e->isAccepted ())
+    if (e->isAccepted ()) {
         return;
+    }
 }
 
 //---------------------------------------------------------------------
@@ -329,8 +342,9 @@ void kpTool::notifyModifierStateChanged ()
 {
     if (careAboutModifierState ())
     {
-        if (d->beganDraw)
+        if (d->beganDraw) {
             draw (d->currentPoint, d->lastPoint, normalizedRect ());
+        }
         else
         {
             d->currentPoint = calculateCurrentPoint ();
@@ -344,8 +358,9 @@ void kpTool::notifyModifierStateChanged ()
 
 void kpTool::setShiftPressed (bool pressed)
 {
-    if (pressed == d->shiftPressed)
+    if (pressed == d->shiftPressed) {
         return;
+    }
 
     d->shiftPressed = pressed;
 
@@ -356,8 +371,9 @@ void kpTool::setShiftPressed (bool pressed)
 
 void kpTool::setControlPressed (bool pressed)
 {
-    if (pressed == d->controlPressed)
+    if (pressed == d->controlPressed) {
         return;
+    }
 
     d->controlPressed = pressed;
 
@@ -368,8 +384,9 @@ void kpTool::setControlPressed (bool pressed)
 
 void kpTool::setAltPressed (bool pressed)
 {
-    if (pressed == d->altPressed)
+    if (pressed == d->altPressed) {
         return;
+    }
 
     d->altPressed = pressed;
 

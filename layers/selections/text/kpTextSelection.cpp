@@ -167,8 +167,8 @@ int kpTextSelection::MinimumHeightForTextStyle (const kpTextStyle &)
 // public static
 QSize kpTextSelection::MinimumSizeForTextStyle (const kpTextStyle &textStyle)
 {
-    return QSize (kpTextSelection::MinimumWidthForTextStyle (textStyle),
-                  kpTextSelection::MinimumHeightForTextStyle (textStyle));
+    return  {kpTextSelection::MinimumWidthForTextStyle (textStyle),
+                kpTextSelection::MinimumHeightForTextStyle (textStyle)};
 }
 
 
@@ -213,8 +213,8 @@ int kpTextSelection::PreferredMinimumHeightForTextStyle (const kpTextStyle &text
 // public static
 QSize kpTextSelection::PreferredMinimumSizeForTextStyle (const kpTextStyle &textStyle)
 {
-    return QSize (kpTextSelection::PreferredMinimumWidthForTextStyle (textStyle),
-                  kpTextSelection::PreferredMinimumHeightForTextStyle (textStyle));
+    return  {kpTextSelection::PreferredMinimumWidthForTextStyle (textStyle),
+                kpTextSelection::PreferredMinimumHeightForTextStyle (textStyle)};
 }
 
 
@@ -227,10 +227,10 @@ int kpTextSelection::TextBorderSize ()
 // public
 QRect kpTextSelection::textAreaRect () const
 {
-    return QRect (x () + kpTextSelection::TextBorderSize (),
-                  y () + kpTextSelection::TextBorderSize (),
-                  width () - kpTextSelection::TextBorderSize () * 2,
-                  height () - kpTextSelection::TextBorderSize () * 2);
+    return  {x () + kpTextSelection::TextBorderSize (),
+                y () + kpTextSelection::TextBorderSize (),
+                width () - kpTextSelection::TextBorderSize () * 2,
+                height () - kpTextSelection::TextBorderSize () * 2};
 }
 
 
@@ -270,8 +270,9 @@ bool kpTextSelection::hasContent () const
 // public virtual [kpAbstractSelection]
 void kpTextSelection::deleteContent ()
 {
-    if (!hasContent ())
+    if (!hasContent ()) {
         return;
+    }
 
     setTextLines (QList <QString> ());
 }
@@ -295,8 +296,9 @@ void kpTextSelection::setTextLines (const QList <QString> &textLines_)
 // public static
 QString kpTextSelection::TextForTextLines (const QList <QString> &textLines)
 {
-    if (textLines.isEmpty ())
-        return QString ();
+    if (textLines.isEmpty ()) {
+        return {};
+    }
 
     QString bigString = textLines [0];
 

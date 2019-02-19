@@ -56,9 +56,7 @@ kpToolColorEraser::kpToolColorEraser (kpToolEnvironment *environ, QObject *paren
 
 //--------------------------------------------------------------------------------
 
-kpToolColorEraser::~kpToolColorEraser ()
-{
-}
+kpToolColorEraser::~kpToolColorEraser () = default;
 
 //--------------------------------------------------------------------------------
 // public virtual [base kpTool]
@@ -66,8 +64,9 @@ kpToolColorEraser::~kpToolColorEraser ()
 void kpToolColorEraser::globalDraw ()
 {
     qCDebug(kpLogTools) << "kpToolColorEraser::globalDraw()";
-    if (!drawShouldProceed (QPoint ()/*unused*/, QPoint ()/*unused*/, QRect ()/*unused*/))
+    if (!drawShouldProceed (QPoint ()/*unused*/, QPoint ()/*unused*/, QRect ()/*unused*/)) {
         return;
+    }
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
@@ -118,13 +117,8 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
     const QPoint & /*lastPoint*/,
     const QRect & /*normalizedRect*/)
 {
-    if (foregroundColor () == backgroundColor () &&
-        processedColorSimilarity () == 0)
-    {
-        return false;
-    }
-
-    return true;
+    return !(foregroundColor () == backgroundColor () &&
+        processedColorSimilarity () == 0);
 }
 
 //--------------------------------------------------------------------------------
@@ -132,7 +126,7 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
 QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
     qCDebug(kpLogTools) << "kpToolColorEraser::drawLine(thisPoint=" << thisPoint
-        << ",lastPoint=" << lastPoint << ")" << endl;
+        << ",lastPoint=" << lastPoint << ")";
 
     environ ()->flashColorSimilarityToolBarItem ();
 
@@ -152,7 +146,7 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         return dirtyRect;
     }
 
-    return QRect ();
+    return  {};
 }
 
 //--------------------------------------------------------------------------------

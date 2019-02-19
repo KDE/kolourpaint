@@ -44,7 +44,7 @@ static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* p
     int r = qRed(c);
     int g = qGreen(c);
     int b = qBlue(c);
-    int min;
+    int min{};
     if(b >= g && b >= r)
     {
         // Blue
@@ -84,8 +84,9 @@ static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* p
         if(r != min)
         {
             *pHue = static_cast<float> (g - b) / ((r - min) * 6);
-            if(*pHue < 0)
+            if(*pHue < 0) {
                 (*pHue) += 1.0f;
+            }
             *pSaturation = 1.0f - static_cast<float> (min) / static_cast<float> (r);
         }
         else

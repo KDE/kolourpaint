@@ -184,8 +184,9 @@ void kpTool::endInternal ()
     if (d->began)
     {
         // before we can stop using the tool, we must stop the current drawing operation (if any)
-        if (hasBegunShape ())
+        if (hasBegunShape ()) {
             endShapeInternal (d->currentPoint, normalizedRect ());
+        }
 
         // call user virtual func
         end ();
@@ -261,8 +262,7 @@ void kpTool::beginDraw ()
 void kpTool::hover (const QPoint &point)
 {
     qCDebug(kpLogTools) << "kpTool::hover" << point
-               << " base implementation"
-               << endl;
+               << " base implementation";
 
     setUserShapePoints (point);
 }
@@ -312,8 +312,9 @@ void kpTool::cancelShapeInternal ()
 
         emit cancelledShape (viewUnderCursor () ? d->currentPoint : KP_INVALID_POINT);
 
-        if (viewUnderCursor ())
+        if (viewUnderCursor ()) {
             hover (d->currentPoint);
+        }
         else
         {
             d->currentPoint = KP_INVALID_POINT;
@@ -349,10 +350,13 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
 {
     qCDebug(kpLogTools) << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape;
 
-    if (wantEndShape && !hasBegunShape ())
+    if (wantEndShape && !hasBegunShape ()) {
         return;
-    else if (!wantEndShape && !hasBegunDraw ())
+    }
+
+    if (!wantEndShape && !hasBegunDraw ()) {
         return;
+    }
 
     d->beganDraw = false;
 
@@ -369,8 +373,9 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     d->viewUnderStartPoint = nullptr;
 
     emit endedDraw (d->currentPoint);
-    if (viewUnderCursor ())
+    if (viewUnderCursor ()) {
         hover (d->currentPoint);
+    }
     else
     {
         d->currentPoint = KP_INVALID_POINT;

@@ -77,8 +77,9 @@ void kpViewManager::setTextCursorEnabled (bool yes)
 {
     qCDebug(kpLogViews) << "kpViewManager::setTextCursorEnabled(" << yes << ")";
 
-    if (yes == textCursorEnabled ())
+    if (yes == textCursorEnabled ()) {
         return;
+    }
 
     delete d->textCursorBlinkTimer;
     d->textCursorBlinkTimer = nullptr;
@@ -115,8 +116,9 @@ bool kpViewManager::textCursorBlinkState () const
 // public
 void kpViewManager::setTextCursorBlinkState (bool on)
 {
-    if (on == d->textCursorBlinkState)
+    if (on == d->textCursorBlinkState) {
         return;
+    }
 
     d->textCursorBlinkState = on;
 
@@ -139,8 +141,9 @@ int kpViewManager::textCursorCol () const
 // public
 void kpViewManager::setTextCursorPosition (int row, int col)
 {
-    if (row == d->textCursorRow && col == d->textCursorCol)
+    if (row == d->textCursorRow && col == d->textCursorCol) {
         return;
+    }
 
     setFastUpdates ();
     setQueueUpdates ();
@@ -165,15 +168,17 @@ void kpViewManager::setTextCursorPosition (int row, int col)
 QRect kpViewManager::textCursorRect () const
 {
     kpTextSelection *textSel = document ()->textSelection ();
-    if (!textSel)
-        return QRect ();
+    if (!textSel) {
+        return {};
+    }
 
     QPoint topLeft = textSel->pointForTextRowCol (d->textCursorRow, d->textCursorCol);
     if (topLeft == KP_INVALID_POINT)
     {
         // Text cursor row/col hasn't been specified yet?
-        if (textSel->hasContent ())
-            return QRect ();
+        if (textSel->hasContent ()) {
+            return {};
+        }
 
         // Empty text box should still display a cursor so that the user
         // knows where typed text will go.
@@ -182,8 +187,8 @@ QRect kpViewManager::textCursorRect () const
 
     Q_ASSERT (topLeft != KP_INVALID_POINT);
 
-    return QRect (topLeft.x (), topLeft.y (),
-        1, textSel->textStyle ().fontMetrics ().height ());
+    return  {topLeft.x (), topLeft.y (),
+                1, textSel->textStyle ().fontMetrics ().height ()};
 }
 
 
@@ -193,8 +198,9 @@ void kpViewManager::updateTextCursor ()
     qCDebug(kpLogViews) << "kpViewManager::updateTextCursor()";
 
     const QRect r = textCursorRect ();
-    if (!r.isValid ())
+    if (!r.isValid ()) {
         return;
+    }
 
     setFastUpdates ();
     {
@@ -208,7 +214,7 @@ void kpViewManager::updateTextCursor ()
 void kpViewManager::slotTextCursorBlink ()
 {
     qCDebug(kpLogViews) << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
-               << d->textCursorBlinkState << endl;
+               << d->textCursorBlinkState;
 
     if (d->textCursorBlinkTimer)
     {

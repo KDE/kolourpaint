@@ -51,8 +51,7 @@ static const int NumEraserSizes =
 
 static void DrawImage (kpImage *destImage, const QPoint &topLeft, void *userData)
 {
-    kpToolWidgetEraserSize::DrawPackage *pack =
-        static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
+    auto *pack = static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
 
     const int size = ::EraserSizes [pack->selected];
 
@@ -66,15 +65,15 @@ static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userDat
     ::DrawImage (destImage, topLeft, userData);
 
 
-    kpToolWidgetEraserSize::DrawPackage *pack =
-        static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
+    auto *pack = static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
 
     const int size = ::EraserSizes [pack->selected];
     
     // Would 1-pixel border on all sides completely cover the color of the
     // eraser?
-    if (size <= 2)
+    if (size <= 2) {
         return;
+    }
 
     // Draw 1-pixel border on all sides.
     QPainter painter(destImage);
@@ -88,8 +87,9 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
 {
     for (int i = 0; i < ::NumEraserSizes; i++)
     {
-        if (i == 3 || i == 5)
+        if (i == 3 || i == 5) {
             startNewOptionRow ();
+        }
 
         const int s = ::EraserSizes [i];
 
@@ -119,9 +119,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
 
 //---------------------------------------------------------------------
 
-kpToolWidgetEraserSize::~kpToolWidgetEraserSize ()
-{
-}
+kpToolWidgetEraserSize::~kpToolWidgetEraserSize () = default;
 
 //---------------------------------------------------------------------
 
@@ -176,8 +174,9 @@ kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionData (
 bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
-    if (ret)
+    if (ret) {
         emit eraserSizeChanged (eraserSize ());
+    }
     return ret;
 }
 

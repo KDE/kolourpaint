@@ -69,8 +69,9 @@ void kpTool::focusOutEvent (QFocusEvent *)
 {
     qCDebug(kpLogTools) << "kpTool::focusOutEvent() beganDraw=" << d->beganDraw;
 
-    if (d->beganDraw)
+    if (d->beganDraw) {
         endDrawInternal (d->currentPoint, normalizedRect ());
+    }
 }
 
 //---------------------------------------------------------------------
@@ -108,8 +109,9 @@ void kpTool::slotColorsSwappedInternal (const kpColor &newForegroundColor,
         slotColorsSwapped (newForegroundColor, newBackgroundColor);
         d->ignoreColorSignals = 2;
     }
-    else
+    else {
         d->ignoreColorSignals = 0;
+    }
 }
 
 //---------------------------------------------------------------------

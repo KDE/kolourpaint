@@ -62,13 +62,14 @@ bool kpAbstractImageSelectionTool::shouldChangeImageSelectionTransparency () con
     {
     #if DEBUG_KP_TOOL_SELECTION
         qCDebug(kpLogTools) << "\trecursion - abort setting selection transparency: "
-                   << environ ()->settingImageSelectionTransparency () << endl;
+                   << environ ()->settingImageSelectionTransparency ();
     #endif
         return false;
     }
 
-    if (!document ()->imageSelection ())
+    if (!document ()->imageSelection ()) {
         return false;
+    }
 
     // TODO: Can probably return false if the selection transparency mode
     //       is Opaque, since neither background color nor color similarity
@@ -89,13 +90,15 @@ void kpAbstractImageSelectionTool::changeImageSelectionTransparency (
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
-    if (hasBegunShape ())
+    if (hasBegunShape ()) {
         endShapeInternal ();
+    }
 
     kpAbstractImageSelection *imageSel = document ()->imageSelection ();
 
-    if (imageSel->hasContent () && newTrans.isTransparent ())
+    if (imageSel->hasContent () && newTrans.isTransparent ()) {
         environ ()->flashColorSimilarityToolBarItem ();
+    }
 
     imageSel->setTransparency (newTrans);
 
@@ -145,8 +148,9 @@ void kpAbstractImageSelectionTool::slotIsOpaqueChanged (bool /*isOpaque*/)
     qCDebug(kpLogTools) << "kpAbstractImageSelectionTool::slotIsOpaqueChanged()";
 #endif
 
-    if (!shouldChangeImageSelectionTransparency ())
+    if (!shouldChangeImageSelectionTransparency ()) {
         return;
+    }
 
     kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
 
@@ -167,8 +171,9 @@ void kpAbstractImageSelectionTool::slotBackgroundColorChanged (const kpColor &)
     qCDebug(kpLogTools) << "kpAbstractImageSelectionTool::slotBackgroundColorChanged()";
 #endif
 
-    if (!shouldChangeImageSelectionTransparency ())
+    if (!shouldChangeImageSelectionTransparency ()) {
         return;
+    }
 
     kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
 
@@ -187,8 +192,9 @@ void kpAbstractImageSelectionTool::slotColorSimilarityChanged (double, int)
     qCDebug(kpLogTools) << "kpAbstractImageSelectionTool::slotColorSimilarityChanged()";
 #endif
 
-    if (!shouldChangeImageSelectionTransparency ())
+    if (!shouldChangeImageSelectionTransparency ()) {
         return;
+    }
 
     kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
 

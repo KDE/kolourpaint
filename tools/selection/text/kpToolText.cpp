@@ -72,7 +72,7 @@ kpAbstractSelectionContentCommand *kpToolText::newGiveContentCommand () const
 #if DEBUG_KP_TOOL_TEXT
     qCDebug(kpLogTools) << "kpToolText::newGiveContentCommand()"
               << " textSel=" << textSel
-              << "; hasContent=" << textSel->hasContent () << endl;
+              << "; hasContent=" << textSel->hasContent ();
 #endif
     Q_ASSERT (textSel && !textSel->hasContent ());
     
@@ -174,16 +174,18 @@ void kpToolText::cancelShape ()
     qCDebug(kpLogTools) << "kpToolText::cancelShape()";
 #endif
 
-    if (drawType () != None)
+    if (drawType () != None) {
         kpAbstractSelectionTool::cancelShape ();
+    }
     else if (hasBegunText ())
     {
         endTypingCommands ();
 
         commandHistory ()->undo ();
     }
-    else
+    else {
         kpAbstractSelectionTool::cancelShape ();
+    }
 }
 
 
@@ -194,12 +196,15 @@ void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
     qCDebug(kpLogTools) << "kpToolText::endShape()";
 #endif
 
-    if (drawType () != None)
+    if (drawType () != None) {
         kpAbstractSelectionTool::endDraw (thisPoint, normalizedRect);
-    else if (hasBegunText ())
+    }
+    else if (hasBegunText ()) {
         endTypingCommands ();
-    else
+    }
+    else {
         kpAbstractSelectionTool::endDraw (thisPoint, normalizedRect);
+    }
 }
 
 
@@ -207,10 +212,11 @@ void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 QVariant kpToolText::operation (DrawType drawType, Operation op,
         const QVariant &data1, const QVariant &data2)
 {
-    if (drawType == SelectText)
+    if (drawType == SelectText) {
         return selectTextOperation (op, data1, data2);
-    else
-        return kpAbstractSelectionTool::operation (drawType, op, data1, data2);
+    }
+
+    return kpAbstractSelectionTool::operation (drawType, op, data1, data2);
 }
 
 

@@ -55,21 +55,25 @@ void kpToolRectangle::drawRect(kpImage *image,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor)
 {
-  if ( (width == 0) || (height == 0) )
+  if ( (width == 0) || (height == 0) ) {
     return;
+  }
 
   QPainter painter(image);
   painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
 
-  if ( ((2 * penWidth) > width) || ((2 * penWidth) > height) )
+  if ( ((2 * penWidth) > width) || ((2 * penWidth) > height) ) {
     penWidth = qMin(width, height) / 2;
+  }
 
   painter.setPen(QPen(fcolor.toQColor(), penWidth, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
 
-  if ( bcolor.isValid() )
+  if ( bcolor.isValid() ) {
     painter.setBrush(QBrush(bcolor.toQColor()));
-  else
+  }
+  else {
     painter.setBrush(Qt::NoBrush);
+  }
 
   int offset = painter.testRenderHint(QPainter::Antialiasing) ? 1 : 0;
 

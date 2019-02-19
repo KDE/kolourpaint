@@ -48,22 +48,20 @@ kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
                                             QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
-    QVBoxLayout *topLevelLay = new QVBoxLayout (this);
+    auto *topLevelLay = new QVBoxLayout (this);
     topLevelLay->setContentsMargins(0, 0, 0, 0);
 
-
-    QWidget *centerWidget = new QWidget (this);
+    auto *centerWidget = new QWidget (this);
     topLevelLay->addWidget (centerWidget, 0/*stretch*/, Qt::AlignCenter);
 
-
-    QVBoxLayout *centerWidgetLay = new QVBoxLayout (centerWidget );
+    auto *centerWidgetLay = new QVBoxLayout (centerWidget );
     centerWidgetLay->setContentsMargins(0, 0, 0, 0);
 
     m_redCheckBox = new QCheckBox (i18n ("&Red"), centerWidget);
     m_greenCheckBox = new QCheckBox (i18n ("&Green"), centerWidget);
     m_blueCheckBox = new QCheckBox (i18n ("&Blue"), centerWidget);
 
-    QWidget *spaceWidget = new QWidget (centerWidget);
+    auto *spaceWidget = new QWidget (centerWidget);
     spaceWidget->setFixedSize (1, fontMetrics ().height () / 4);
 
     m_allCheckBox = new QCheckBox (i18n ("&All"), centerWidget);
@@ -99,9 +97,7 @@ kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
              this, &kpEffectInvertWidget::slotAllCheckBoxToggled);
 }
 
-kpEffectInvertWidget::~kpEffectInvertWidget ()
-{
-}
+kpEffectInvertWidget::~kpEffectInvertWidget () = default;
 
 
 // public
@@ -115,14 +111,17 @@ int kpEffectInvertWidget::channels () const
     int channels = 0;
 
 
-    if (m_redCheckBox->isChecked ())
+    if (m_redCheckBox->isChecked ()) {
         channels |= kpEffectInvert::Red;
+    }
 
-    if (m_greenCheckBox->isChecked ())
+    if (m_greenCheckBox->isChecked ()) {
         channels |= kpEffectInvert::Green;
+    }
 
-    if (m_blueCheckBox->isChecked ())
+    if (m_blueCheckBox->isChecked ()) {
         channels |= kpEffectInvert::Blue;
+    }
 
 
     qCDebug(kpLogWidgets) << "\treturning channels=" << (int *) channels;
@@ -167,8 +166,9 @@ kpEffectCommandBase *kpEffectInvertWidget::createCommand (
 // protected slots
 void kpEffectInvertWidget::slotRGBCheckBoxToggled ()
 {
-    if (m_inSignalHandler)
+    if (m_inSignalHandler) {
         return;
+    }
 
     m_inSignalHandler = true;
 
@@ -186,8 +186,9 @@ void kpEffectInvertWidget::slotRGBCheckBoxToggled ()
 // protected slot
 void kpEffectInvertWidget::slotAllCheckBoxToggled ()
 {
-    if (m_inSignalHandler)
+    if (m_inSignalHandler) {
         return;
+    }
 
     m_inSignalHandler = true;
 

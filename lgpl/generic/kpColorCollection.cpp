@@ -88,7 +88,7 @@ kpColorCollection::installedCollections()
 
   QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericConfigLocation, "colors",
                                                 QStandardPaths::LocateDirectory);
-  foreach (const QString &path, paths) {
+  for (const auto &path : paths) {
     paletteList.append(QDir(path).entryList(QStringList(), QDir::Files));
   }
 
@@ -255,7 +255,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
 
    str << "KDE RGB Palette\n";
    str << description << "\n";
-   foreach (const ColorNode &node, d->colorList)
+   for (const auto &node : d->colorList)
    {
        // Added for KolourPaint.
        if(!node.color.isValid ())
@@ -302,7 +302,7 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
                 atomicFileWriter.cancelWriting ();
 
                 qCDebug(kpLogMisc) << "\treturning false because could not open QSaveFile"
-                          << " error=" << atomicFileWriter.error () << endl;
+                          << " error=" << atomicFileWriter.error ();
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }

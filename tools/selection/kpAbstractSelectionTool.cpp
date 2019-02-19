@@ -142,7 +142,7 @@ kpToolSelectionEnvironment *kpAbstractSelectionTool::environ () const
 {
     kpToolEnvironment *e = kpTool::environ ();
     Q_ASSERT (dynamic_cast <kpToolSelectionEnvironment *> (e));
-    return static_cast <kpToolSelectionEnvironment *> (e);
+    return dynamic_cast <kpToolSelectionEnvironment *> (e);
 }
 
 //---------------------------------------------------------------------
@@ -160,7 +160,7 @@ void kpAbstractSelectionTool::pushOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::pushOntoDocument() selection="
-              << document ()->selection () << endl;
+              << document ()->selection ();
 #endif
     Q_ASSERT (document ()->selection ());
     environ ()->deselectSelection ();
@@ -174,11 +174,13 @@ void kpAbstractSelectionTool::giveContentIfNeeded ()
     kpAbstractSelection *sel = document ()->selection ();
     Q_ASSERT (sel);
 
-    if (sel->hasContent ())
+    if (sel->hasContent ()) {
         return;
+    }
 
-    if (d->currentSelContentCommand)
+    if (d->currentSelContentCommand) {
         return;
+    }
 
     d->currentSelContentCommand = /*virtual*/newGiveContentCommand ();
     d->currentSelContentCommand->execute ();
@@ -252,12 +254,12 @@ QString kpAbstractSelectionTool::haventBegunDrawUserMessage ()
 #if DEBUG_KP_TOOL_SELECTION && 0
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::haventBegunDrawUserMessage()"
                   " cancelledShapeButStillHoldingButtons="
-               << d->cancelledShapeButStillHoldingButtons
-               << endl;
+               << d->cancelledShapeButStillHoldingButtons;
 #endif
 
-    if (d->cancelledShapeButStillHoldingButtons)
+    if (d->cancelledShapeButStillHoldingButtons) {
         return i18n ("Let go of all the mouse buttons.");
+    }
 
     return operation (calculateDrawType (), HaventBegunDrawUserMessage).toString ();
 }
@@ -313,8 +315,9 @@ void kpAbstractSelectionTool::end ()
     qCDebug(kpLogTools) << "kpAbstractSelectionTool<" << objectName () << ">::end()";
 #endif
 
-    if (document ()->selection ())
+    if (document ()->selection ()) {
         pushOntoDocument ();
+    }
 
 
     endCreate ();
@@ -353,8 +356,9 @@ void kpAbstractSelectionTool::reselect ()
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::reselect()";
 #endif
 
-    if (document ()->selection ())
+    if (document ()->selection ()) {
         pushOntoDocument ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -374,18 +378,22 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawTypeInsi
 kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawType () const
 {
     kpAbstractSelection *sel = document ()->selection ();
-    if (!sel)
+    if (!sel) {
         return Create;
+    }
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "\thas sel region rect=" << sel->boundingRect ();
 #endif
 
-    if (onSelectionResizeHandle () && !controlOrShiftPressed ())
+    if (onSelectionResizeHandle () && !controlOrShiftPressed ()) {
         return ResizeScale;
-    else if (sel->contains (currentPoint ()))
+    }
+
+    if (sel->contains (currentPoint ())) {
         return /*virtual*/calculateDrawTypeInsideSelection ();
-    else
-        return Create;
+    }
+
+    return Create;
 }
 
 //---------------------------------------------------------------------
@@ -397,8 +405,7 @@ void kpAbstractSelectionTool::beginDraw ()
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::beginDraw() startPoint ()="
                << startPoint ()
                << " QCursor::pos() view startPoint="
-               << viewUnderStartPoint ()->mapFromGlobal (QCursor::pos ())
-               << endl;
+               << viewUnderStartPoint ()->mapFromGlobal (QCursor::pos ());
 #endif
 
     // endDraw() and cancelShape() should have taken care of these.
@@ -449,8 +456,9 @@ void kpAbstractSelectionTool::hover (const QPoint &point)
     }
 
     QString mess = haventBegunDrawUserMessage ();
-    if (mess != userMessage ())
+    if (mess != userMessage ()) {
         setUserMessage (mess);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -463,7 +471,7 @@ void kpAbstractSelectionTool::draw (const QPoint &thisPoint, const QPoint & /*la
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::draw (" << thisPoint
                << ",startPoint=" << startPoint ()
-               << ",normalizedRect=" << normalizedRect << ")" << endl;
+               << ",normalizedRect=" << normalizedRect << ")";
 #else
     Q_UNUSED (thisPoint);
     Q_UNUSED (normalizedRect);
@@ -486,7 +494,7 @@ void kpAbstractSelectionTool::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "kpAbstractSelectionTool::cancelShape() mouseButton="
-              << mouseButton () << endl;
+              << mouseButton ();
 #endif
 
     const DrawType oldDrawType = d->drawType;
@@ -591,8 +599,9 @@ void kpAbstractSelectionTool::endDraw (const QPoint & /*thisPoint*/,
     ::AssertAllTimersInactive (d);
 
 
-    if (mouseButton () == 1/*right*/)
+    if (mouseButton () == 1/*right*/) {
         popupRMBMenu ();
+    }
 
 
     // WARNING: Do not place any code after the popupRMBMenu() call

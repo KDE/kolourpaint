@@ -45,9 +45,7 @@ kpToolTextChangeStyleCommand::kpToolTextChangeStyleCommand (const QString &name,
 {
 }
 
-kpToolTextChangeStyleCommand::~kpToolTextChangeStyleCommand ()
-{
-}
+kpToolTextChangeStyleCommand::~kpToolTextChangeStyleCommand () = default;
 
 
 // public virtual [base kpCommand]
@@ -66,13 +64,13 @@ void kpToolTextChangeStyleCommand::execute ()
                << " isBold=" << m_newTextStyle.isBold ()
                << " isItalic=" << m_newTextStyle.isItalic ()
                << " isUnderline=" << m_newTextStyle.isUnderline ()
-               << " isStrikeThru=" << m_newTextStyle.isStrikeThru ()
-               << endl;
+               << " isStrikeThru=" << m_newTextStyle.isStrikeThru ();
 
     environ ()->setTextStyle (m_newTextStyle);
 
-    if (textSelection ())
+    if (textSelection ()) {
         textSelection ()->setTextStyle (m_newTextStyle);
+    }
 }
 
 // public virtual [base kpCommand]
@@ -84,8 +82,7 @@ void kpToolTextChangeStyleCommand::unexecute ()
                << " isBold=" << m_newTextStyle.isBold ()
                << " isItalic=" << m_newTextStyle.isItalic ()
                << " isUnderline=" << m_newTextStyle.isUnderline ()
-               << " isStrikeThru=" << m_newTextStyle.isStrikeThru ()
-               << endl;
+               << " isStrikeThru=" << m_newTextStyle.isStrikeThru ();
 
     environ ()->setTextStyle (m_oldTextStyle);
 

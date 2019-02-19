@@ -119,15 +119,15 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 
     setWindowTitle (i18nc ("@title:window", "Document Properties"));
-    QDialogButtonBox * buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+    auto * buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
                                                        QDialogButtonBox::Cancel, this);
 
     connect (buttons, &QDialogButtonBox::accepted, this, &kpDocumentMetaInfoDialog::accept);
     connect (buttons, &QDialogButtonBox::rejected, this, &kpDocumentMetaInfoDialog::reject);
 
-    QWidget *baseWidget = new QWidget (this);
+    auto *baseWidget = new QWidget (this);
 
-    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    auto *dialogLayout = new QVBoxLayout (this);
     dialogLayout->addWidget (baseWidget);
     dialogLayout->addWidget (buttons);
 
@@ -138,7 +138,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
     Q_ASSERT (::DpiInputMin < ::DpiInputMax);
 
-    QGroupBox *dpiGroupBox = new QGroupBox(i18n("Dots &Per Inch (DPI)"), baseWidget);
+    auto *dpiGroupBox = new QGroupBox(i18n("Dots &Per Inch (DPI)"), baseWidget);
 
     d->horizDpiInput = new QDoubleSpinBox(dpiGroupBox);
     d->horizDpiInput->setRange(::DpiInputMin, ::DpiInputMax);
@@ -147,7 +147,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     d->horizDpiInput->setDecimals(::DpiPrecision);
     d->horizDpiInput->setSpecialValueText(i18n("Unspecified"));
 
-    QLabel *dpiXLabel = new QLabel (
+    auto *dpiXLabel = new QLabel (
         i18nc ("Horizontal DPI 'x' Vertical DPI", " x "), dpiGroupBox);
     dpiXLabel->setAlignment (Qt::AlignCenter);
 
@@ -159,7 +159,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     d->vertDpiInput->setSpecialValueText(i18n("Unspecified"));
 
 
-    QGridLayout *dpiLay = new QGridLayout(dpiGroupBox);
+    auto *dpiLay = new QGridLayout(dpiGroupBox);
 
     dpiLay->addWidget(new QLabel(i18n("Horizontal:")), 0, 0, Qt::AlignHCenter);
     dpiLay->addWidget(d->horizDpiInput, 1, 0);
@@ -202,7 +202,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // Offset Group Box
     //
 
-    QGroupBox *offsetGroupBox = new QGroupBox(i18n ("O&ffset"), baseWidget);
+    auto *offsetGroupBox = new QGroupBox(i18n ("O&ffset"), baseWidget);
 
     d->horizOffsetInput = new QSpinBox;
     d->horizOffsetInput->setRange(kpDocumentMetaInfo::MinOffset, kpDocumentMetaInfo::MaxOffset);
@@ -210,7 +210,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     d->vertOffsetInput = new QSpinBox;
     d->vertOffsetInput->setRange(kpDocumentMetaInfo::MinOffset, kpDocumentMetaInfo::MaxOffset);
 
-    QGridLayout *offsetLay = new QGridLayout(offsetGroupBox);
+    auto *offsetLay = new QGridLayout(offsetGroupBox);
 
     offsetLay->addWidget(new QLabel(i18n("Horizontal:")), 0, 0, Qt::AlignHCenter);
     offsetLay->addWidget(d->horizOffsetInput, 1, 0);
@@ -238,7 +238,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     //
 
 
-    QGroupBox *fieldsGroupBox = new QGroupBox (i18n ("&Text Fields"),
+    auto *fieldsGroupBox = new QGroupBox (i18n ("&Text Fields"),
         baseWidget);
 
     d->fieldsTableWidget = new QTableWidget (fieldsGroupBox);
@@ -265,13 +265,13 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     connect (d->fieldsResetButton, &QPushButton::clicked,
              this, &kpDocumentMetaInfoDialog::setUIToOriginalMetaInfo);
 
-    QHBoxLayout *fieldsButtonsLayout = new QHBoxLayout ();
+    auto *fieldsButtonsLayout = new QHBoxLayout ();
     fieldsButtonsLayout->addWidget (d->fieldsAddRowButton);
     fieldsButtonsLayout->addWidget (d->fieldsDeleteRowButton);
     fieldsButtonsLayout->addStretch ();
     fieldsButtonsLayout->addWidget (d->fieldsResetButton);
 
-    QVBoxLayout *fieldsLayout = new QVBoxLayout (fieldsGroupBox);
+    auto *fieldsLayout = new QVBoxLayout (fieldsGroupBox);
 
     fieldsLayout->addWidget (d->fieldsTableWidget);
     fieldsLayout->addLayout (fieldsButtonsLayout);
@@ -296,9 +296,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     //
     // Global Layout
     //
-
-
-    QGridLayout *baseLayout = new QGridLayout (baseWidget);
+    auto *baseLayout = new QGridLayout (baseWidget);
     baseLayout->setContentsMargins(0, 0, 0, 0);
 
     // Col 0
@@ -318,8 +316,9 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     setUIToOriginalMetaInfo ();
 
 
-    if (::LastWidth > 0 && ::LastHeight > 0)
+    if (::LastWidth > 0 && ::LastHeight > 0) {
         resize (::LastWidth, ::LastHeight);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -374,7 +373,7 @@ void kpDocumentMetaInfoDialog::setUIToOriginalMetaInfo ()
         d->fieldsTableWidget->setHorizontalHeaderLabels (fieldsHeader);
 
         int row = 0;
-        foreach (const QString &key, d->originalMetaInfoPtr->textKeys ())
+        for (const auto &key : d->originalMetaInfoPtr->textKeys ())
         {
             d->fieldsTableWidget->setItem (row, 0/*1st col*/,
                 new QTableWidgetItem (key));
@@ -425,15 +424,19 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
     kpDocumentMetaInfo ret;
 
 
-    if (d->horizDpiInput->value () < ::DpiLegalMin)
+    if (d->horizDpiInput->value () < ::DpiLegalMin) {
         ret.setDotsPerMeterX (0/*unspecified*/);
-    else
+    }
+    else {
         ret.setDotsPerMeterX (qRound (d->horizDpiInput->value () * KP_INCHES_PER_METER));
+    }
 
-    if (d->vertDpiInput->value () < ::DpiLegalMin)
+    if (d->vertDpiInput->value () < ::DpiLegalMin) {
         ret.setDotsPerMeterY (0/*unspecified*/);
-    else
+    }
+    else {
         ret.setDotsPerMeterY (qRound (d->vertDpiInput->value () * KP_INCHES_PER_METER));
+    }
 
 
     ret.setOffset (QPoint (d->horizOffsetInput->value (),
@@ -455,21 +458,21 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
                 continue;
             }
             // Value without a key?
-            else
+
+
+            if (errorMessage)
             {
-                if (errorMessage)
-                {
-                    *errorMessage =
+                *errorMessage =
                         ki18n ("The text value \"%1\" on line %2 requires a key.")
-                            .subs (value).subs (r + 1/*count from 1*/).toString ();
+                        .subs (value).subs (r + 1/*count from 1*/).toString ();
 
-                    // Print only 1 error message per method invocation.
-                    errorMessage = nullptr;
-                }
-
-                // Ignore.
-                continue;
+                // Print only 1 error message per method invocation.
+                errorMessage = nullptr;
             }
+
+            // Ignore.
+            continue;
+
         }
 
         // Duplicate key?
@@ -480,8 +483,9 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
                 int q;
                 for (q = 0; q < r; q++)
                 {
-                    if (d->fieldsTableWidget->item (q, 0)->text () == key)
+                    if (d->fieldsTableWidget->item (q, 0)->text () == key) {
                         break;
+                    }
                 }
                 Q_ASSERT (q != r);
 
@@ -514,8 +518,9 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
 void kpDocumentMetaInfoDialog::fieldsUpdateVerticalHeader ()
 {
     QStringList vertLabels;
-    for (int r = 1; r <= d->fieldsTableWidget->rowCount (); r++)
+    for (int r = 1; r <= d->fieldsTableWidget->rowCount (); r++) {
         vertLabels << QString::number (r);
+    }
 
     d->fieldsTableWidget->setVerticalHeaderLabels (vertLabels);
 }
@@ -562,7 +567,7 @@ void kpDocumentMetaInfoDialog::fieldsDeleteRow (int r)
 {
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::fieldsDeleteRow("
               << "row=" << r << ")"
-              << " currentRow=" << d->fieldsTableWidget->currentRow () << endl;
+              << " currentRow=" << d->fieldsTableWidget->currentRow ();
 
     Q_ASSERT (isFieldsRowDeleteable (r));
 
@@ -633,8 +638,7 @@ void kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged (int row, int col,
 void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
 {
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsItemChanged("
-              << "item=" << it << ") rows=" << d->fieldsTableWidget->rowCount ()
-              << endl;
+              << "item=" << it << ") rows=" << d->fieldsTableWidget->rowCount ();
 
     const int r = d->fieldsTableWidget->row (it);
     qCDebug(kpLogDialogs) << "\tr=" << r;
@@ -668,8 +672,7 @@ void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
 
 void kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked ()
 {
-    qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked()"
-              << endl;
+    qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked()";
 
     const int r = d->fieldsTableWidget->currentRow ();
     qCDebug(kpLogDialogs) << "\tr=" << r;
@@ -687,8 +690,7 @@ void kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked ()
 // private slot
 void kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked ()
 {
-    qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked()"
-              << endl;
+    qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked()";
 
     const int r = d->fieldsTableWidget->currentRow ();
     qCDebug(kpLogDialogs) << "\tr=" << r;

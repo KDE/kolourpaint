@@ -42,8 +42,9 @@ kpToolAction::kpToolAction(const QString &text,
   ac->setDefaultShortcuts(this, shortcut);
 
 
-  if ( receiver && slot )
+  if ( receiver && slot ) {
       connect (this, SIGNAL(triggered(bool)), receiver, slot);
+  }
 
   updateToolTip();
   connect (this, &kpToolAction::changed, this, &kpToolAction::updateToolTip);
@@ -59,8 +60,9 @@ void kpToolAction::updateToolTip()
   const QString newToolTip =
       kpTool::toolTipForTextAndShortcut(text(), shortcuts()).remove(QLatin1Char('&'));
 
-  if ( newToolTip == toolTip() )
+  if ( newToolTip == toolTip() ) {
     return;
+  }
 
   setToolTip(newToolTip);
 }

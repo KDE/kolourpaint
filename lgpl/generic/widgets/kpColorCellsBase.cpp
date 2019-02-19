@@ -452,8 +452,7 @@ void kpColorCellsBase::dragEnterEvent( QDragEnterEvent *event)
 {
      qCDebug(kpLogMisc) << "kpColorCellsBase::dragEnterEvent() acceptDrags="
                << d->acceptDrags
-               << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
-               << endl;
+               << " canDecode=" << KColorMimeData::canDecode(event->mimeData());
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
      if (event->isAccepted ())
          ::SetDropAction (this, event);
@@ -464,8 +463,7 @@ void kpColorCellsBase::dragMoveEvent (QDragMoveEvent *event)
 {
      qCDebug(kpLogMisc) << "kpColorCellsBase::dragMoveEvent() acceptDrags="
                << d->acceptDrags
-               << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
-               << endl;
+               << " canDecode=" << KColorMimeData::canDecode(event->mimeData());
      // TODO: Disallow drag that isn't onto a cell.
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
      if (event->isAccepted ())

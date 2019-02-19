@@ -45,13 +45,12 @@ kpToolTextEnterCommand::kpToolTextEnterCommand (const QString &name,
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    if (action == AddEnterNow)
+    if (action == AddEnterNow) {
         addEnter ();
+    }
 }
 
-kpToolTextEnterCommand::~kpToolTextEnterCommand ()
-{
-}
+kpToolTextEnterCommand::~kpToolTextEnterCommand () = default;
 
 
 // public
@@ -89,8 +88,9 @@ void kpToolTextEnterCommand::execute ()
     int oldNumEnters = m_numEnters;
     m_numEnters = 0;
 
-    for (int i = 0; i < oldNumEnters; i++)
+    for (int i = 0; i < oldNumEnters; i++) {
         addEnter ();
+    }
 }
 
 // public virtual [base kpCommand]
@@ -104,8 +104,9 @@ void kpToolTextEnterCommand::unexecute ()
     {
         Q_ASSERT (m_col == 0);
 
-        if (m_row <= 0)
+        if (m_row <= 0) {
             break;
+        }
 
         int newRow = m_row - 1;
         int newCol = textLines [newRow].length ();

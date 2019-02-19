@@ -47,12 +47,12 @@
 
 struct kpToolRectangularCommandPrivate
 {
-    kpToolRectangularBase::DrawShapeFunc drawShapeFunc;
+    kpToolRectangularBase::DrawShapeFunc drawShapeFunc{};
 
     QRect rect;
 
     kpColor fcolor;
-    int penWidth;
+    int penWidth{};
     kpColor bcolor;
 
     kpImage oldImage;

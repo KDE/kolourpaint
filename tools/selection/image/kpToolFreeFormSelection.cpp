@@ -52,9 +52,7 @@ kpToolFreeFormSelection::kpToolFreeFormSelection (kpToolSelectionEnvironment *en
 
 //---------------------------------------------------------------------
 
-kpToolFreeFormSelection::~kpToolFreeFormSelection ()
-{
-}
+kpToolFreeFormSelection::~kpToolFreeFormSelection () = default;
 
 //---------------------------------------------------------------------
 
@@ -68,7 +66,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     qCDebug(kpLogTools) << "kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar("
                << "dragAccepted=" << dragAccepted
                << ",accidentalDragAdjustedPoint=" << accidentalDragAdjustedPoint
-               << ")" << endl;
+               << ")";
 #endif
 
     // Prevent unintentional creation of 1-pixel selections.
@@ -103,8 +101,9 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     // Not first point in drag.
     else
     {
-      if ( !oldPointsSel )  // assert above says we never reach this, but let's make coverity happy
-        return false;
+        if ( !oldPointsSel ) {  // assert above says we never reach this, but let's make coverity happy
+            return false;
+        }
 
       // Get existing points in selection.
       points = oldPointsSel->cardinallyAdjacentPoints ();
@@ -129,8 +128,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
 
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
     qCDebug(kpLogTools) << "\t\tfreeform; #points="
-              << document ()->selection ()->calculatePoints ().count ()
-              << endl;
+              << document ()->selection ()->calculatePoints ().count ();
 #endif
 
     setUserShapePoints (accidentalDragAdjustedPoint);

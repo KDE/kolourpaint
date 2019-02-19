@@ -68,8 +68,9 @@ bool kpToolText::CursorIsAtStart (const QList <QString> &,
 bool kpToolText::CursorIsAtEnd (const QList <QString> &textLines,
     int cursorRow, int cursorCol)
 {
-    if (textLines.isEmpty ())
+    if (textLines.isEmpty ()) {
         return (cursorRow == 0 && cursorCol == 0);
+    }
         
     return (cursorRow == textLines.size () - 1 &&
             cursorCol == textLines [cursorRow].length ());
@@ -80,8 +81,9 @@ bool kpToolText::CursorIsAtEnd (const QList <QString> &textLines,
 void kpToolText::MoveCursorLeft (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
-    if (textLines.isEmpty ())
+    if (textLines.isEmpty ()) {
         return;
+    }
         
     (*cursorCol)--;
 
@@ -93,8 +95,9 @@ void kpToolText::MoveCursorLeft (const QList <QString> &textLines,
             *cursorRow = 0;
             *cursorCol = 0;
         }
-        else
+        else {
             *cursorCol = textLines [*cursorRow].length ();
+        }
     }
 }
 
@@ -102,8 +105,9 @@ void kpToolText::MoveCursorLeft (const QList <QString> &textLines,
 void kpToolText::MoveCursorRight (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
-    if (textLines.isEmpty ())
+    if (textLines.isEmpty ()) {
         return;
+    }
         
     (*cursorCol)++;
 
@@ -115,8 +119,9 @@ void kpToolText::MoveCursorRight (const QList <QString> &textLines,
             *cursorRow = textLines.size () - 1;
             *cursorCol = textLines [*cursorRow].length ();
         }
-        else
+        else {
             *cursorCol = 0;
+        }
     }
 }
 
@@ -127,8 +132,9 @@ void kpToolText::MoveCursorRight (const QList <QString> &textLines,
 int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
-    if (textLines.isEmpty ())
+    if (textLines.isEmpty ()) {
         return 0;
+    }
 
     int numMoves = 0;
 
@@ -142,8 +148,9 @@ int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
 
     // (these comments will exclude the row=0,col=0 boundary case)
 
-    if (IS_ON_ANCHOR ())
+    if (IS_ON_ANCHOR ()) {
         MOVE_CURSOR_LEFT ();
+    }
 
     // --- now we're not on an anchor point (start of word) ---
 
@@ -173,8 +180,9 @@ int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
 int kpToolText::MoveCursorToNextWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
-    if (textLines.isEmpty ())
+    if (textLines.isEmpty ()) {
         return 0;
+    }
         
     int numMoves = 0;
 

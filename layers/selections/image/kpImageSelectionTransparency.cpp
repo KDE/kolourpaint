@@ -101,9 +101,7 @@ bool kpImageSelectionTransparency::operator!= (const kpImageSelectionTransparenc
 
 //---------------------------------------------------------------------
 
-kpImageSelectionTransparency::~kpImageSelectionTransparency ()
-{
-}
+kpImageSelectionTransparency::~kpImageSelectionTransparency () = default;
 
 //---------------------------------------------------------------------
 
@@ -147,7 +145,7 @@ kpColor kpImageSelectionTransparency::transparentColor () const
     {
         // There are legitimate uses for this so no qCCritical(kpLogLayers)
         qCDebug(kpLogLayers) << "kpImageSelectionTransparency::transparentColor() "
-                      "getting transparent color even though opaque" << endl;
+                      "getting transparent color even though opaque";
     }
 
     return m_transparentColor;
@@ -170,7 +168,7 @@ double kpImageSelectionTransparency::colorSimilarity () const
     if (m_colorSimilarity < 0 ||
         m_colorSimilarity > kpColorSimilarityHolder::MaxColorSimilarity)
     {
-        qCCritical(kpLogLayers) << "kpImageSelectionTransparency::colorSimilarity() invalid colorSimilarity" << endl;
+        qCCritical(kpLogLayers) << "kpImageSelectionTransparency::colorSimilarity() invalid colorSimilarity";
         return 0;
     }
 

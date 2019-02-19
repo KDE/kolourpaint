@@ -171,8 +171,9 @@ void kpAbstractSelectionTool::slotRMBMoveUpdateGUI ()
     /*virtual*/setSelectionBorderForBeginDrawMove ();
 
     kpAbstractSelection * const sel = document ()->selection ();
-    if (sel)
+    if (sel) {
         setUserShapePoints (sel->topLeft ());
+    }
 }
 
 //---------------------------------------------------------------------
@@ -195,22 +196,25 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
     qCDebug(kpLogTools) << "\t\tstartPoint=" << startPoint ()
                 << " thisPoint=" << thisPoint
                 << " startDragFromSel=" << d->startMoveDragFromSelectionTopLeft
-                << " targetSelRect=" << targetSelRect
-                << endl;
+                << " targetSelRect=" << targetSelRect;
 #endif
 
     // Try to make sure selection still intersects document so that it's
     // reachable.
 
-    if (targetSelRect.right () < 0)
+    if (targetSelRect.right () < 0) {
         targetSelRect.translate (-targetSelRect.right (), 0);
-    else if (targetSelRect.left () >= document ()->width ())
+    }
+    else if (targetSelRect.left () >= document ()->width ()) {
         targetSelRect.translate (document ()->width () - targetSelRect.left () - 1, 0);
+    }
 
-    if (targetSelRect.bottom () < 0)
+    if (targetSelRect.bottom () < 0) {
         targetSelRect.translate (0, -targetSelRect.bottom ());
-    else if (targetSelRect.top () >= document ()->height ())
+    }
+    else if (targetSelRect.top () >= document ()->height ()) {
         targetSelRect.translate (0, document ()->height () - targetSelRect.top () - 1);
+    }
 
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogTools) << "\t\t\tafter ensure sel rect clickable=" << targetSelRect;
@@ -258,16 +262,19 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
     //viewManager ()->setQueueUpdates ();
     //viewManager ()->setFastUpdates ();
 
-    if (shiftPressed ())
+    if (shiftPressed ()) {
         d->currentMoveCommandIsSmear = true;
+    }
 
-    if (!d->dragAccepted && (controlPressed () || shiftPressed ()))
+    if (!d->dragAccepted && (controlPressed () || shiftPressed ())) {
         d->currentMoveCommand->copyOntoDocument ();
+    }
 
     d->currentMoveCommand->moveTo (targetSelRect.topLeft ());
 
-    if (shiftPressed ())
+    if (shiftPressed ()) {
         d->currentMoveCommand->copyOntoDocument ();
+    }
 
     //viewManager ()->restoreFastUpdates ();
     //viewManager ()->restoreQueueUpdates ();
@@ -296,8 +303,9 @@ void kpAbstractSelectionTool::cancelMove ()
     d->RMBMoveUpdateGUITimer->stop ();
 
     // NOP drag?
-    if (!d->currentMoveCommand)
+    if (!d->currentMoveCommand) {
         return;
+    }
 
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "\t\tundo currentMoveCommand";
@@ -324,8 +332,9 @@ void kpAbstractSelectionTool::endDrawMove ()
     d->RMBMoveUpdateGUITimer->stop ();
 
     // NOP drag?
-    if (!d->currentMoveCommand)
+    if (!d->currentMoveCommand) {
         return;
+    }
 
     d->currentMoveCommand->finalize ();
 

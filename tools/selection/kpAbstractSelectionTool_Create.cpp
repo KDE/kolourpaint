@@ -140,8 +140,9 @@ void kpAbstractSelectionTool::setSelectionBorderForBeginDrawCreate ()
 // private
 void kpAbstractSelectionTool::beginDrawCreate ()
 {
-    if (document ()->selection ())
+    if (document ()->selection ()) {
         pushOntoDocument ();
+    }
 
     /*virtual*/setSelectionBorderForBeginDrawCreate ();
 
@@ -157,13 +158,11 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
         const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    qCDebug(kpLogTools) << "\tnot moving - resizing rect to" << normalizedRect
-                << endl;
+    qCDebug(kpLogTools) << "\tnot moving - resizing rect to" << normalizedRect;
     qCDebug(kpLogTools) << "\t\tcreateNOPTimer->isActive()="
                 << d->createNOPTimer->isActive ()
                 << " viewManhattanLength from startPoint="
-                << viewUnderStartPoint ()->transformDocToViewX ((thisPoint - startPoint ()).manhattanLength ())
-                << endl;
+                << viewUnderStartPoint ()->transformDocToViewX ((thisPoint - startPoint ()).manhattanLength ());
 #endif
 
     QPoint accidentalDragAdjustedPoint = thisPoint;
@@ -197,8 +196,9 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
         d->dragAccepted,
         accidentalDragAdjustedPoint,
         normalizedRect);
-    if (oldDrawAcceptedAsDrag)
+    if (oldDrawAcceptedAsDrag) {
         Q_ASSERT (d->dragAccepted);
+    }
     if (d->dragAccepted)
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
@@ -209,8 +209,9 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
     }
 
     // Did we just create a selection?
-    if (!hadSelection && document ()->selection ())
+    if (!hadSelection && document ()->selection ()) {
         viewManager ()->setSelectionBorderVisible (true);
+    }
 }
 
 // private slot
@@ -221,8 +222,7 @@ void kpAbstractSelectionTool::delayedDrawCreate ()
                << hasBegunDraw ()
                << " currentPoint=" << currentPoint ()
                << " lastPoint=" << lastPoint ()
-               << " startPoint=" << startPoint ()
-               << endl;
+               << " startPoint=" << startPoint ();
 #endif
 
     // (just in case not called from single shot)
@@ -245,8 +245,9 @@ void kpAbstractSelectionTool::cancelCreate ()
     d->createNOPTimer->stop ();
 
     // TODO: should we give the user back the selection s/he had before (if any)?
-    if (document ()->selection ())
+    if (document ()->selection ()) {
         document ()->selectionDelete ();
+    }
 }
 
 // private

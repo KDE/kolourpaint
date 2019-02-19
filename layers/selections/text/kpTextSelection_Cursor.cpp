@@ -46,15 +46,17 @@
 // public
 int kpTextSelection::closestTextRowForPoint (const QPoint &point) const
 {
-    if (!pointIsInTextArea (point))
+    if (!pointIsInTextArea (point)) {
         return -1;
+    }
 
     const QFontMetrics fontMetrics (d->textStyle.fontMetrics ());
 
     int row = (point.y () - textAreaRect ().y ()) /
                fontMetrics.lineSpacing ();
-    if (row >= static_cast<int> (d->textLines.size ()))
+    if (row >= static_cast<int> (d->textLines.size ())) {
         row = d->textLines.size () - 1;
+    }
 
     return row;
 }
@@ -63,8 +65,9 @@ int kpTextSelection::closestTextRowForPoint (const QPoint &point) const
 int kpTextSelection::closestTextColForPoint (const QPoint &point) const
 {
     int row = closestTextRowForPoint (point);
-    if (row < 0 || row >= static_cast<int> (d->textLines.size ()))
+    if (row < 0 || row >= static_cast<int> (d->textLines.size ())) {
         return -1;
+    }
 
     const int localX = point.x () - textAreaRect ().x ();
 
@@ -78,8 +81,9 @@ int kpTextSelection::closestTextColForPoint (const QPoint &point) const
     {
         // OPT: fontMetrics::charWidth() might be faster
         const int nextCharLocalLeft = fontMetrics.width (d->textLines [row], col + 1);
-        if (localX <= (charLocalLeft + nextCharLocalLeft) / 2)
+        if (localX <= (charLocalLeft + nextCharLocalLeft) / 2) {
             return col;
+        }
 
         charLocalLeft = nextCharLocalLeft;
     }
@@ -103,8 +107,7 @@ QPoint kpTextSelection::pointForTextRowCol (int row, int col) const
                << col << ") out of range"
                << " textLines='"
                << text ()
-               << "'"
-               << endl;
+               << "'";
 #endif
         return KP_INVALID_POINT;
     }

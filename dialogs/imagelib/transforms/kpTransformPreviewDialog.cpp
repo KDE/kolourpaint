@@ -78,7 +78,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
     QWidget *baseWidget = new QWidget (this);
     m_mainWidget = baseWidget;
 
-    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    auto *dialogLayout = new QVBoxLayout (this);
     dialogLayout->addWidget (baseWidget);
     dialogLayout->addWidget (buttons);
 
@@ -94,11 +94,13 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
     }
 
 
-    if (features & Dimensions)
+    if (features & Dimensions) {
         createDimensionsGroupBox ();
+    }
 
-    if (features & Preview)
+    if (features & Preview) {
         createPreviewGroupBox ();
+    }
 
 
     m_gridLayout = new QGridLayout (baseWidget );
@@ -125,13 +127,11 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
         }
 
         m_gridLayout->setRowStretch (m_gridNumRows, 1);
-        m_gridNumRows++;;
+        m_gridNumRows++;
     }
 }
 
-kpTransformPreviewDialog::~kpTransformPreviewDialog ()
-{
-}
+kpTransformPreviewDialog::~kpTransformPreviewDialog () = default;
 
 
 // private
@@ -139,7 +139,7 @@ void kpTransformPreviewDialog::createDimensionsGroupBox ()
 {
     m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), mainWidget ());
 
-    QLabel *originalLabel = new QLabel (i18n ("Original:"), m_dimensionsGroupBox);
+    auto *originalLabel = new QLabel (i18n ("Original:"), m_dimensionsGroupBox);
     QString originalDimensions;
     if (document ())
     {
@@ -150,16 +150,17 @@ void kpTransformPreviewDialog::createDimensionsGroupBox ()
          // Stop the Dimensions Group Box from resizing so often
          const QString minimumLengthString ("100000 x 100000");
          const int padLength = minimumLengthString.length ();
-         for (int i = originalDimensions.length (); i < padLength; i++)
+         for (int i = originalDimensions.length (); i < padLength; i++) {
              originalDimensions += ' ';
+         }
     }
-    QLabel *originalDimensionsLabel = new QLabel (originalDimensions, m_dimensionsGroupBox);
+    auto *originalDimensionsLabel = new QLabel (originalDimensions, m_dimensionsGroupBox);
 
-    QLabel *afterTransformLabel = new QLabel (m_afterActionText, m_dimensionsGroupBox);
+    auto *afterTransformLabel = new QLabel (m_afterActionText, m_dimensionsGroupBox);
     m_afterTransformDimensionsLabel = new QLabel (m_dimensionsGroupBox);
 
 
-    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
+    auto *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
     dimensionsLayout->addWidget (originalLabel, 0, 0, Qt::AlignBottom);
     dimensionsLayout->addWidget (originalDimensionsLabel, 0, 1, Qt::AlignBottom);
     dimensionsLayout->addWidget (afterTransformLabel, 1, 0, Qt::AlignTop);
@@ -182,7 +183,7 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
              this, &kpTransformPreviewDialog::slotUpdateWithWaitCursor);
 
 
-    QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox);
+    auto *previewLayout = new QVBoxLayout (m_previewGroupBox);
     previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
     previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 }
@@ -219,20 +220,23 @@ void kpTransformPreviewDialog::setUpdatesEnabled (bool enable)
 {
     QDialog::setUpdatesEnabled (enable);
 
-    if (enable)
+    if (enable) {
         slotUpdateWithWaitCursor ();
+    }
 }
 
 
 // private
 void kpTransformPreviewDialog::updateDimensions ()
 {
-    if (!m_dimensionsGroupBox)
+    if (!m_dimensionsGroupBox) {
         return;
+    }
 
     kpDocument *doc = document ();
-    if (!doc)
+    if (!doc) {
         return;
+    }
 
     if (!updatesEnabled ())
     {
@@ -281,8 +285,9 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
                << " previewPixmapLabel.size="
                << m_previewPixmapLabel->size ();
 
-    if (!m_previewGroupBox)
+    if (!m_previewGroupBox) {
         return;
+    }
 
 
     kpDocument *doc = document ();
@@ -305,8 +310,9 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
         if (m_actOnSelection)
         {
             kpAbstractImageSelection *sel = doc->imageSelection ()->clone ();
-            if (!sel->hasContent ())
+            if (!sel->hasContent ()) {
                 sel->setBaseImage (doc->getSelectedBaseImage ());
+            }
 
             image = sel->transparentImage ();
             delete sel;
@@ -335,13 +341,15 @@ void kpTransformPreviewDialog::updatePreview ()
 {
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::updatePreview()";
 
-    if (!m_previewGroupBox)
+    if (!m_previewGroupBox) {
         return;
+    }
 
 
     kpDocument *doc = document ();
-    if (!doc)
+    if (!doc) {
         return;
+    }
 
 
     if (!updatesEnabled ())

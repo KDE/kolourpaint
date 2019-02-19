@@ -50,7 +50,7 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
   : m_rgba(0), m_colorCacheIsValid(false)
 {
     qCDebug(kpLogImagelib) << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue
-              << ",isTrans=" << isTransparent << ")" << endl;
+              << ",isTrans=" << isTransparent << ")";
     if (red < 0 || red > 255 ||
         green < 0 || green > 255 ||
         blue < 0 || blue > 255)
@@ -59,7 +59,7 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
                    << ",g=" << green
                    << ",b=" << blue
                    << ",t=" << isTransparent
-                   << ") passed out of range values" << endl;
+                   << ") passed out of range values";
         m_rgbaIsValid = false;
         return;
     }
@@ -121,8 +121,9 @@ kpColor &kpColor::operator= (const kpColor &rhs)
     // (as soon as you add a ptr, you won't be complaining to me that this
     //  method was unnecessary :))
 
-    if (this == &rhs)
+    if (this == &rhs) {
         return *this;
+    }
 
     m_rgbaIsValid = rhs.m_rgbaIsValid;
     m_rgba = rhs.m_rgba;
@@ -167,32 +168,37 @@ int kpColor::processSimilarity (double colorSimilarity)
 bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
 {
     // Are we the same?
-    if (this == &rhs)
+    if (this == &rhs) {
         return true;
+    }
 
 
     // Do we dither in terms of validity?
-    if (isValid () != rhs.isValid ())
+    if (isValid () != rhs.isValid ()) {
         return false;
+    }
 
     // Are both of us invalid?
-    if (!isValid ())
+    if (!isValid ()) {
         return true;
+    }
 
     // --- both are now valid ---
 
-    if (m_rgba == rhs.m_rgba)
+    if (m_rgba == rhs.m_rgba) {
         return true;
-
-    if (processedSimilarity == kpColor::Exact)
-        return false;
-    else
-    {
-        return (square (qRed (m_rgba) - qRed (rhs.m_rgba)) +
-                square (qGreen (m_rgba) - qGreen (rhs.m_rgba)) +
-                square (qBlue (m_rgba) - qBlue (rhs.m_rgba))
-                <= processedSimilarity);
     }
+
+    if (processedSimilarity == kpColor::Exact) {
+        return false;
+    }
+
+
+    return (square (qRed (m_rgba) - qRed (rhs.m_rgba)) +
+            square (qGreen (m_rgba) - qGreen (rhs.m_rgba)) +
+            square (qBlue (m_rgba) - qBlue (rhs.m_rgba))
+            <= processedSimilarity);
+
 }
 
 //---------------------------------------------------------------------
@@ -210,7 +216,7 @@ int kpColor::red () const
 {
     if (!m_rgbaIsValid)
     {
-        qCCritical(kpLogImagelib) << "kpColor::red() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::red() called with invalid kpColor";
         return 0;
     }
 
@@ -224,7 +230,7 @@ int kpColor::green () const
 {
     if (!m_rgbaIsValid)
     {
-        qCCritical(kpLogImagelib) << "kpColor::green() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::green() called with invalid kpColor";
         return 0;
     }
 
@@ -238,7 +244,7 @@ int kpColor::blue () const
 {
     if (!m_rgbaIsValid)
     {
-        qCCritical(kpLogImagelib) << "kpColor::blue() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::blue() called with invalid kpColor";
         return 0;
     }
 
@@ -252,7 +258,7 @@ int kpColor::alpha () const
 {
     if (!m_rgbaIsValid)
     {
-        qCCritical(kpLogImagelib) << "kpColor::alpha() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::alpha() called with invalid kpColor";
         return 0;
     }
 
@@ -274,7 +280,7 @@ QRgb kpColor::toQRgb () const
 {
     if (!m_rgbaIsValid)
     {
-        qCCritical(kpLogImagelib) << "kpColor::toQRgb() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::toQRgb() called with invalid kpColor";
         return 0;
     }
 
@@ -288,12 +294,13 @@ QColor kpColor::toQColor () const
 {
     if (!m_rgbaIsValid)
     {
-        qCCritical(kpLogImagelib) << "kpColor::toQColor() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::toQColor() called with invalid kpColor";
         return Qt::black;
     }
 
-    if (m_colorCacheIsValid)
+    if (m_colorCacheIsValid) {
         return m_colorCache;
+    }
 
     m_colorCache = QColor(qRed(m_rgba), qGreen(m_rgba), qBlue(m_rgba), qAlpha(m_rgba));
     m_colorCacheIsValid = true;

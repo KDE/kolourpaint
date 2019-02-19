@@ -133,8 +133,9 @@ int kpFreeFormImageSelection::serialID () const
 // public virtual [base kpAbstractImageSelection]
 bool kpFreeFormImageSelection::readFromStream (QDataStream &stream)
 {
-    if (!kpAbstractImageSelection::readFromStream (stream))
+    if (!kpAbstractImageSelection::readFromStream (stream)) {
         return false;
+    }
 
     stream >> d->orgPoints;
     recalculateCardinallyAdjacentPoints ();
@@ -175,16 +176,16 @@ QPolygon kpFreeFormImageSelection::originalPoints () const
 
 static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 {
-    qCDebug(kpLogLayers) << "kpFreeFormImageSelection.cpp:RecalculateCardinallyAdjacentPoints()"
-              << endl;
+    qCDebug(kpLogLayers) << "kpFreeFormImageSelection.cpp:RecalculateCardinallyAdjacentPoints()";
     qCDebug(kpLogLayers) << "\tpoints=" << points;
 
     // Filter out duplicates.
     QPolygon noDups;
-    foreach (const QPoint &p, points)
+    for (const auto &p : points)
     {
-        if (!noDups.isEmpty () && p == noDups.last ())
+        if (!noDups.isEmpty () && p == noDups.last ()) {
             continue;
+        }
 
         noDups.append (p);
     }
@@ -192,7 +193,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 
     // Interpolate to ensure cardinal adjacency.
     QPolygon cardPoints;
-    foreach (const QPoint &p, noDups)
+    for (const auto &p : noDups)
     {
         if (!cardPoints.isEmpty () &&
             !kpPainter::pointsAreCardinallyAdjacent (p, cardPoints.last ()))
@@ -215,8 +216,9 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
                 cardPoints.append (interpPoints [i]);
             }
         }
-        else
+        else {
             cardPoints.append (p);
+        }
     }
     qCDebug(kpLogLayers) << "\tcardinally adjacent=" << cardPoints;
 
@@ -230,8 +232,9 @@ void kpFreeFormImageSelection::recalculateCardinallyAdjacentPoints ()
 
 
     QPolygon pointsLoop = d->cardPointsCache;
-    if (!pointsLoop.isEmpty ())
+    if (!pointsLoop.isEmpty ()) {
         pointsLoop.append (pointsLoop.first ());
+    }
 
     // OPT: We know this method only needs to act on the last 2 points of
     //      "pointLoop", since the previous points are definitely cardinally
@@ -295,8 +298,9 @@ QRegion kpFreeFormImageSelection::shapeRegion () const
 // public virtual [kpAbstractSelection]
 bool kpFreeFormImageSelection::contains (const QPoint &point) const
 {
-    if (!boundingRect ().contains (point))
+    if (!boundingRect ().contains (point)) {
         return false;
+    }
 
     // We can't use the baseImage() (when non-null) and get the transparency of
     // the pixel at <point>, instead of this region test, as the pixel may be
@@ -371,12 +375,14 @@ void kpFreeFormImageSelection::flip (bool horiz, bool vert)
 void kpFreeFormImageSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const
 {
-    if (selectionFinished)
+    if (selectionFinished) {
         paintPolygonalBorder (cardinallyAdjacentPointsLoop (),
             destPixmap, docRect, selectionFinished);
-    else
+    }
+    else {
         paintPolygonalBorder (cardinallyAdjacentPoints (),
             destPixmap, docRect, selectionFinished);
+    }
 }
 
 

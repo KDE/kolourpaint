@@ -55,21 +55,20 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
                                               QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
-    QGridLayout *lay = new QGridLayout (this);
+    auto *lay = new QGridLayout (this);
     lay->setContentsMargins(0, 0, 0, 0);
 
-
-    QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
+    auto *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
     m_brightnessInput = new kpIntNumInput (0/*value*/, this);
     m_brightnessInput->setRange (-50, 50);
-    QPushButton *brightnessResetPushButton = new QPushButton (i18n ("Re&set"), this);
+    auto *brightnessResetPushButton = new QPushButton (i18n ("Re&set"), this);
 
-    QLabel *contrastLabel = new QLabel (i18n ("Co&ntrast:"), this);
+    auto *contrastLabel = new QLabel (i18n ("Co&ntrast:"), this);
     m_contrastInput = new kpIntNumInput (0/*value*/, this);
     m_contrastInput->setRange (-50, 50);
-     QPushButton *contrastResetPushButton = new QPushButton (i18n ("&Reset"), this);
+     auto *contrastResetPushButton = new QPushButton (i18n ("&Reset"), this);
 
-    QLabel *gammaLabel = new QLabel (i18n ("&Gamma:"), this);
+    auto *gammaLabel = new QLabel (i18n ("&Gamma:"), this);
     m_gammaInput = new kpIntNumInput (0/*value*/, this);
     m_gammaInput->setRange (-50, 50);
     // TODO: This is what should be shown in the m_gammaInput spinbox
@@ -78,14 +77,14 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     //       whole layout moves when we drag the gamma slider.
     m_gammaLabel->setMinimumWidth (m_gammaLabel->fontMetrics ().width (QLatin1String (" 10.00 ")));
     m_gammaLabel->setAlignment (m_gammaLabel->alignment () | Qt::AlignRight);
-    QPushButton *gammaResetPushButton = new QPushButton (i18n ("Rese&t"), this);
+    auto *gammaResetPushButton = new QPushButton (i18n ("Rese&t"), this);
 
 
-    QWidget *spaceWidget = new QLabel (this);
+    auto *spaceWidget = new QLabel (this);
     spaceWidget->setFixedSize (1, fontMetrics ().height () / 4);
 
 
-    QLabel *channelLabel = new QLabel (i18n ("C&hannels:"), this);
+    auto *channelLabel = new QLabel (i18n ("C&hannels:"), this);
     m_channelsComboBox = new QComboBox (this);
     m_channelsComboBox->addItem (i18n ("All"));
     m_channelsComboBox->addItem (i18n ("Red"));
@@ -93,7 +92,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     m_channelsComboBox->addItem (i18n ("Blue"));
 
 
-    QPushButton *resetPushButton = new QPushButton (i18n ("Reset &All Values"), this);
+    auto *resetPushButton = new QPushButton (i18n ("Reset &All Values"), this);
 
 
     brightnessLabel->setBuddy (m_brightnessInput);
@@ -154,9 +153,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     recalculateGammaLabel ();
 }
 
-kpEffectBalanceWidget::~kpEffectBalanceWidget ()
-{
-}
+kpEffectBalanceWidget::~kpEffectBalanceWidget () = default;
 
 
 // public virtual [base kpEffectWidgetBase]
@@ -246,14 +243,19 @@ void kpEffectBalanceWidget::recalculateGammaLabel ()
 // protected slot
 void kpEffectBalanceWidget::resetBrightness ()
 {
-    if (brightness () == 0)
+    if (brightness () == 0) {
         return;
+    }
 
     bool sb = signalsBlocked ();
 
-    if (!sb) blockSignals (true);
+    if (!sb) {
+        blockSignals (true);
+    }
     m_brightnessInput->setValue (0);
-    if (!sb) blockSignals (false);
+    if (!sb) {
+        blockSignals (false);
+    }
 
     // Immediate update (if signals aren't blocked)
     emit settingsChanged ();
@@ -262,14 +264,19 @@ void kpEffectBalanceWidget::resetBrightness ()
 // protected slot
 void kpEffectBalanceWidget::resetContrast ()
 {
-    if (contrast () == 0)
+    if (contrast () == 0) {
         return;
+    }
 
     bool sb = signalsBlocked ();
 
-    if (!sb) blockSignals (true);
+    if (!sb) {
+        blockSignals (true);
+    }
     m_contrastInput->setValue (0);
-    if (!sb) blockSignals (false);
+    if (!sb) {
+        blockSignals (false);
+    }
 
     // Immediate update (if signals aren't blocked)
     emit settingsChanged ();
@@ -278,15 +285,20 @@ void kpEffectBalanceWidget::resetContrast ()
 // protected slot
 void kpEffectBalanceWidget::resetGamma ()
 {
-    if (gamma () == 0)
+    if (gamma () == 0) {
         return;
+    }
 
     bool sb = signalsBlocked ();
 
-    if (!sb) blockSignals (true);
+    if (!sb) {
+        blockSignals (true);
+    }
     m_gammaInput->setValue (0);
     recalculateGammaLabel ();
-    if (!sb) blockSignals (false);
+    if (!sb) {
+        blockSignals (false);
+    }
 
     // Immediate update (if signals aren't blocked)
     emit settingsChanged ();
@@ -296,8 +308,9 @@ void kpEffectBalanceWidget::resetGamma ()
 // protected slot
 void kpEffectBalanceWidget::resetAll ()
 {
-    if (isNoOp ())
+    if (isNoOp ()) {
         return;
+    }
 
     // Prevent multiple settingsChanged() which would normally result in
     // redundant, expensive preview repaints

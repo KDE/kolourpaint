@@ -83,10 +83,12 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     setUpdatesEnabled (false);
 
 
-    if (actOnSelection)
+    if (actOnSelection) {
         setWindowTitle (i18nc ("@title:window", "More Image Effects (Selection)"));
-    else
+    }
+    else {
         setWindowTitle (i18nc ("@title:window", "More Image Effects"));
+    }
 
 
     m_delayedUpdateTimer->setSingleShot (true);
@@ -95,7 +97,8 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
     QWidget *effectContainer = new QWidget (mainWidget ());
-    QHBoxLayout *containerLayout = new QHBoxLayout (effectContainer);
+
+    auto *containerLayout = new QHBoxLayout (effectContainer);
     containerLayout->setContentsMargins(0, 0, 0, 0);
 
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
@@ -152,8 +155,9 @@ kpEffectsDialog::~kpEffectsDialog ()
 // public virtual [base kpTransformPreviewDialog]
 bool kpEffectsDialog::isNoOp () const
 {
-    if (!m_effectWidget)
+    if (!m_effectWidget) {
         return true;
+    }
 
     return m_effectWidget->isNoOp ();
 }
@@ -161,8 +165,9 @@ bool kpEffectsDialog::isNoOp () const
 // public
 kpEffectCommandBase *kpEffectsDialog::createCommand () const
 {
-    if (!m_effectWidget)
+    if (!m_effectWidget) {
         return nullptr;
+    }
 
     return m_effectWidget->createCommand (m_environ->commandEnvironment ());
 }
@@ -172,11 +177,11 @@ kpEffectCommandBase *kpEffectsDialog::createCommand () const
 QSize kpEffectsDialog::newDimensions () const
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return QSize ();
+    if (!doc) {
+        return  {};
+    }
 
-    return QSize (doc->width (m_actOnSelection),
-                  doc->height (m_actOnSelection));
+    return  {doc->width (m_actOnSelection), doc->height (m_actOnSelection)};
 }
 
 // protected virtual [base kpTransformPreviewDialog]
@@ -185,10 +190,12 @@ QImage kpEffectsDialog::transformPixmap (const QImage &pixmap,
 {
     QImage pixmapWithEffect;
 
-    if (m_effectWidget && !m_effectWidget->isNoOp ())
+    if (m_effectWidget && !m_effectWidget->isNoOp ()) {
         pixmapWithEffect = m_effectWidget->applyEffect (pixmap);
-    else
+    }
+    else {
         pixmapWithEffect = pixmap;
+    }
 
     return kpPixmapFX::scale (pixmapWithEffect, targetWidth, targetHeight);
 }
@@ -213,8 +220,9 @@ void kpEffectsDialog::selectEffect (int which)
         return;
     }
 
-    if (which != m_effectsComboBox->currentIndex ())
+    if (which != m_effectsComboBox->currentIndex ()) {
         m_effectsComboBox->setCurrentIndex (which);
+    }
 
 
     delete m_effectWidget;

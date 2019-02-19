@@ -39,38 +39,42 @@ namespace kpWidgetMapper
 
 QPoint fromGlobal (const QWidget *widget, const QPoint &point)
 {
-    if (!widget)
+    if (!widget) {
         return point;
+    }
 
     return widget->mapFromGlobal (point);
 }
 
 QRect fromGlobal (const QWidget *widget, const QRect &rect)
 {
-    if (!widget || !rect.isValid ())
+    if (!widget || !rect.isValid ()) {
         return rect;
+    }
 
-    QPoint topLeft = fromGlobal (widget, rect.topLeft ());
-    return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+    auto topLeft = fromGlobal (widget, rect.topLeft ());
+    return  {topLeft.x (), topLeft.y (), rect.width (), rect.height ()};
 }
 
 
 QPoint toGlobal (const QWidget *widget, const QPoint &point)
 {
-    if (!widget)
+    if (!widget) {
         return point;
+    }
 
     return widget->mapToGlobal (point);
 }
 
 QRect toGlobal (const QWidget *widget, const QRect &rect)
 {
-    if (!widget || !rect.isValid ())
+    if (!widget || !rect.isValid ()) {
         return rect;
+    }
 
-    QPoint topLeft = toGlobal (widget, rect.topLeft ());
-    return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+    auto topLeft = toGlobal (widget, rect.topLeft ());
+    return  {topLeft.x (), topLeft.y (), rect.width (), rect.height ()};
 }
 
 
-}  // namespace kpWidgetMapper {
+}  // namespace kpWidgetMapper

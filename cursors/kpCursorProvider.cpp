@@ -40,8 +40,9 @@ static const QCursor *TheLightCursor = nullptr;
 QCursor kpCursorProvider::lightCross ()
 {
     // TODO: don't leak (although it's cleaned up on exit by OS anyway)
-    if (!::TheLightCursor)
+    if (!::TheLightCursor) {
         ::TheLightCursor = kpCursorLightCrossCreate ();
+    }
 
     return *::TheLightCursor;
 }

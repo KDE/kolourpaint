@@ -74,11 +74,13 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
                 << " to " << depth
                 << " (dither=" << dither << ")";
 
-    if (image.isNull ())
+    if (image.isNull ()) {
         return image;
+    }
 
-    if (depth == image.depth ())
+    if (depth == image.depth ()) {
         return image;
+    }
 
 
     for (int y = 0; y < image.height (); y++)
@@ -111,8 +113,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         monoImage.setColorCount (2);
         qCDebug(kpLogImagelib) << "\t\tinitialising output image w=" << monoImage.width ()
                    << ",h=" << monoImage.height ()
-                   << ",d=" << monoImage.depth ()
-                   << endl;
+                   << ",d=" << monoImage.depth ();
         for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
@@ -120,17 +121,18 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
                 // (this can be transparent)
                 QRgb imagePixel = image.pixel (x, y);
 
-                if (color0Valid && imagePixel == color0)
+                if (color0Valid && imagePixel == color0) {
                     monoImage.setPixel (x, y, 0);
-                else if (color1Valid && imagePixel == color1)
+                }
+                else if (color1Valid && imagePixel == color1) {
                     monoImage.setPixel (x, y, 1);
-                else if (!color0Valid)
-                {
+                }
+                else if (!color0Valid) {
                     color0 = imagePixel;
                     color0Valid = true;
                     monoImage.setPixel (x, y, 0);
                     qCDebug(kpLogImagelib) << "\t\t\tcolor0=" << (int *) color0
-                               << " at x=" << x << ",y=" << y << endl;
+                               << " at x=" << x << ",y=" << y;
                 }
                 else if (!color1Valid)
                 {
@@ -138,13 +140,13 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
                     color1Valid = true;
                     monoImage.setPixel (x, y, 1);
                     qCDebug(kpLogImagelib) << "\t\t\tcolor1=" << (int *) color1
-                               << " at x=" << x << ",y=" << y << endl;
+                               << " at x=" << x << ",y=" << y;
                 }
                 else
                 {
                     qCDebug(kpLogImagelib) << "\t\t\timagePixel=" << (int *) imagePixel
                                << " at x=" << x << ",y=" << y
-                               << " moreThan2Colors - abort hack" << endl;
+                               << " moreThan2Colors - abort hack";
                     moreThan2Colors = true;
 
                     // Dijkstra, this is clearer than double break'ing or
@@ -189,12 +191,14 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
 // public static
 void kpEffectReduceColors::applyEffect (QImage *destPtr, int depth, bool dither)
 {
-    if (!destPtr)
+    if (!destPtr) {
         return;
+    }
 
     // You can't "reduce" to 32-bit since it's the highest depth.
-    if (depth != 1 && depth != 8)
+    if (depth != 1 && depth != 8) {
         return;
+    }
 
     *destPtr = convertImageDepth(*destPtr, depth, dither);
 

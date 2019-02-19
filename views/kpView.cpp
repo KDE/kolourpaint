@@ -165,13 +165,13 @@ kpViewScrollableContainer *kpView::scrollableContainer () const
 
 
 // public
-int kpView::zoomLevelX (void) const
+int kpView::zoomLevelX () const
 {
     return d->hzoom;
 }
 
 // public
-int kpView::zoomLevelY (void) const
+int kpView::zoomLevelY () const
 {
     return d->vzoom;
 }
@@ -182,14 +182,16 @@ void kpView::setZoomLevel (int hzoom, int vzoom)
     hzoom = qBound (MinZoomLevel, hzoom, MaxZoomLevel);
     vzoom = qBound (MinZoomLevel, vzoom, MaxZoomLevel);
 
-    if (hzoom == d->hzoom && vzoom == d->vzoom)
+    if (hzoom == d->hzoom && vzoom == d->vzoom) {
         return;
+    }
 
     d->hzoom = hzoom;
     d->vzoom = vzoom;
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->updateView (this);
+    }
 
     emit zoomLevelChanged (hzoom, vzoom);
 }
@@ -214,8 +216,9 @@ void kpView::setOrigin (const QPoint &origin)
 
     d->origin = origin;
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->updateView (this);
+    }
 
     emit originChanged (origin);
 }
@@ -239,16 +242,19 @@ bool kpView::isGridShown () const
 // public
 void kpView::showGrid (bool yes)
 {
-    if (d->showGrid == yes)
+    if (d->showGrid == yes) {
         return;
+    }
 
-    if (yes && !canShowGrid ())
+    if (yes && !canShowGrid ()) {
         return;
+    }
 
     d->showGrid = yes;
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->updateView (this);
+    }
 }
 
 
@@ -261,8 +267,9 @@ bool kpView::isBuddyViewScrollableContainerRectangleShown () const
 // public
 void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
 {
-    if (yes == d->isBuddyViewScrollableContainerRectangleShown)
+    if (yes == d->isBuddyViewScrollableContainerRectangleShown) {
         return;
+    }
 
     d->isBuddyViewScrollableContainerRectangleShown = yes;
 
@@ -347,8 +354,9 @@ QRect kpView::buddyViewScrollableContainerRectangle () const
 // protected slot
 void kpView::updateBuddyViewScrollableContainerRectangle ()
 {
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->setQueueUpdates ();
+    }
 
     {
         if (d->buddyViewScrollableContainerRectangle.isValid ())
@@ -407,8 +415,9 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
         }
     }
 
-    if (viewManager ())
+    if (viewManager ()) {
         viewManager ()->restoreQueueUpdates ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -432,8 +441,8 @@ double kpView::transformViewToDocY (double viewY) const
 // public
 QPoint kpView::transformViewToDoc (const QPoint &viewPoint) const
 {
-    return QPoint (static_cast<int> (transformViewToDocX (viewPoint.x ())),
-                   static_cast<int> (transformViewToDocY (viewPoint.y ())));
+    return  {static_cast<int> (transformViewToDocX (viewPoint.x ())),
+                   static_cast<int> (transformViewToDocY (viewPoint.y ()))};
 }
 
 //---------------------------------------------------------------------
@@ -443,22 +452,19 @@ QRect kpView::transformViewToDoc (const QRect &viewRect) const
 {
     if (zoomLevelX () == 100 && zoomLevelY () == 100)
     {
-        return QRect (viewRect.x () - origin ().x (),
-                      viewRect.y () - origin ().y (),
-                      viewRect.width (),
-                      viewRect.height ());
+        return  {viewRect.x () - origin ().x (), viewRect.y () - origin ().y (),
+                    viewRect.width (), viewRect.height ()};
     }
-    else
-    {
-        const QPoint docTopLeft = transformViewToDoc (viewRect.topLeft ());
 
-        // (don't call transformViewToDoc[XY]() - need to round up dimensions)
-        const int docWidth = qRound (double (viewRect.width ()) * 100.0 / double (zoomLevelX ()));
-        const int docHeight = qRound (double (viewRect.height ()) * 100.0 / double (zoomLevelY ()));
+    const QPoint docTopLeft = transformViewToDoc (viewRect.topLeft ());
 
-        // (like QWMatrix::Areas)
-        return QRect (docTopLeft.x (), docTopLeft.y (), docWidth, docHeight);
-    }
+    // (don't call transformViewToDoc[XY]() - need to round up dimensions)
+    const auto docWidth = qRound (double (viewRect.width ()) * 100.0 / double (zoomLevelX ()));
+    const auto docHeight = qRound (double (viewRect.height ()) * 100.0 / double (zoomLevelY ()));
+
+    // (like QWMatrix::Areas)
+    return  {docTopLeft.x (), docTopLeft.y (), docWidth, docHeight};
+
 }
 
 //---------------------------------------------------------------------
@@ -478,8 +484,8 @@ double kpView::transformDocToViewY (double docY) const
 // public
 QPoint kpView::transformDocToView (const QPoint &docPoint) const
 {
-    return QPoint (static_cast<int> (transformDocToViewX (docPoint.x ())),
-                   static_cast<int> (transformDocToViewY (docPoint.y ())));
+    return  {static_cast<int> (transformDocToViewX (docPoint.x ())),
+                static_cast<int> (transformDocToViewY (docPoint.y ()))};
 }
 
 // public
@@ -487,22 +493,18 @@ QRect kpView::transformDocToView (const QRect &docRect) const
 {
     if (zoomLevelX () == 100 && zoomLevelY () == 100)
     {
-        return QRect (docRect.x () + origin ().x (),
-                      docRect.y () + origin ().y (),
-                      docRect.width (),
-                      docRect.height ());
+        return  {docRect.x () + origin ().x (), docRect.y () + origin ().y (),
+                    docRect.width (), docRect.height ()};
     }
-    else
-    {
-        const QPoint viewTopLeft = transformDocToView (docRect.topLeft ());
 
-        // (don't call transformDocToView[XY]() - need to round up dimensions)
-        const int viewWidth = qRound (double (docRect.width ()) * double (zoomLevelX ()) / 100.0);
-        const int viewHeight = qRound (double (docRect.height ()) * double (zoomLevelY ()) / 100.0);
+    const QPoint viewTopLeft = transformDocToView (docRect.topLeft ());
 
-        // (like QWMatrix::Areas)
-        return QRect (viewTopLeft.x (), viewTopLeft.y (), viewWidth, viewHeight);
-    }
+    // (don't call transformDocToView[XY]() - need to round up dimensions)
+    const int viewWidth = qRound (double (docRect.width ()) * double (zoomLevelX ()) / 100.0);
+    const int viewHeight = qRound (double (docRect.height ()) * double (zoomLevelY ()) / 100.0);
+
+    // (like QWMatrix::Areas)
+    return QRect (viewTopLeft.x (), viewTopLeft.y (), viewWidth, viewHeight);
 }
 
 
@@ -510,8 +512,9 @@ QRect kpView::transformDocToView (const QRect &docRect) const
 QPoint kpView::transformViewToOtherView (const QPoint &viewPoint,
                                          const kpView *otherView)
 {
-    if (this == otherView)
+    if (this == otherView) {
         return viewPoint;
+    }
 
     const double docX = transformViewToDocX (viewPoint.x ());
     const double docY = transformViewToDocY (viewPoint.y ());
@@ -519,7 +522,7 @@ QPoint kpView::transformViewToOtherView (const QPoint &viewPoint,
     const double otherViewX = otherView->transformDocToViewX (docX);
     const double otherViewY = otherView->transformDocToViewY (docY);
 
-    return QPoint (static_cast<int> (otherViewX), static_cast<int> (otherViewY));
+    return  {static_cast<int> (otherViewX), static_cast<int> (otherViewY)};
 }
 
 
@@ -540,18 +543,20 @@ int kpView::zoomedDocHeight () const
 void kpView::setHasMouse (bool yes)
 {
     kpViewManager *vm = viewManager ();
-    if (!vm)
+    if (!vm) {
         return;
+    }
 
     qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::setHasMouse(" << yes
                << ") existing viewUnderCursor="
-               << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->objectName () : "(none)")
-               << endl;
-    if (yes && vm->viewUnderCursor () != this)
+               << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->objectName () : "(none)");
+    if (yes && vm->viewUnderCursor () != this) {
         vm->setViewUnderCursor (this);
-    else if (!yes && vm->viewUnderCursor () == this)
+    }
+    else if (!yes && vm->viewUnderCursor () == this) {
         vm->setViewUnderCursor (nullptr);
+    }
 }
 
 //---------------------------------------------------------------------
@@ -598,14 +603,17 @@ void kpView::updateQueuedArea ()
                << " fastUpdates=" << (vm && vm->fastUpdates ())
                << " area=" << d->queuedUpdateArea;
 
-    if (!vm)
+    if (!vm) {
         return;
+    }
 
-    if (vm->queueUpdates ())
+    if (vm->queueUpdates ()) {
         return;
+    }
 
-    if (!d->queuedUpdateArea.isEmpty ())
+    if (!d->queuedUpdateArea.isEmpty ()) {
         vm->updateView (this, d->queuedUpdateArea);
+    }
 
     invalidateQueuedArea ();
 }
@@ -615,14 +623,13 @@ void kpView::updateQueuedArea ()
 // public
 QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
 {
-    if (returnViewPoint != KP_INVALID_POINT)
+    if (returnViewPoint != KP_INVALID_POINT) {
         return returnViewPoint;
-    else
-    {
-        // TODO: I don't think this is right for the main view since that's
-        //       inside the scrollview (which can scroll).
-        return mapFromGlobal (QCursor::pos ());
     }
+
+    // TODO: I don't think this is right for the main view since that's
+    //       inside the scrollview (which can scroll).
+    return mapFromGlobal (QCursor::pos ());
 }
 
 //---------------------------------------------------------------------

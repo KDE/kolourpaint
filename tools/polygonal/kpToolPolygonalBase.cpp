@@ -141,7 +141,7 @@ void kpToolPolygonalBase::end ()
 void kpToolPolygonalBase::beginDraw ()
 {
     qCDebug(kpLogTools) << "kpToolPolygonalBase::beginDraw()  d->points=" << d->points.toList ()
-               << ", startPoint=" << startPoint () << endl;
+               << ", startPoint=" << startPoint ();
 
     bool endedShape = false;
 
@@ -197,8 +197,7 @@ void kpToolPolygonalBase::applyModifiers ()
                << " endPt=" << lineEndPoint
                << "   modifiers: shift=" << shiftPressed ()
                << "   alt=" << altPressed ()
-               << "   ctrl=" << controlPressed ()
-               << endl;
+               << "   ctrl=" << controlPressed ();
 
     // angles
     if (shiftPressed () || controlPressed ())
@@ -207,13 +206,13 @@ void kpToolPolygonalBase::applyModifiers ()
         int diffy = lineEndPoint.y () - lineStartPoint.y ();
 
         double ratio;
-        if (diffx == 0)
+        if (diffx == 0) {
             ratio = DBL_MAX;
-        else
+        }
+        else {
             ratio = fabs (double (diffy) / double (diffx));
-        qCDebug(kpLogTools) << "\tdiffx=" << diffx << " diffy=" << diffy
-                   << " ratio=" << ratio
-                   << endl;
+        }
+        qCDebug(kpLogTools) << "\tdiffx=" << diffx << " diffy=" << diffy << " ratio=" << ratio;
 
         // Shift        = 0, 45, 90
         // Ctrl         = 0, 30, 60, 90
@@ -221,12 +220,15 @@ void kpToolPolygonalBase::applyModifiers ()
         double angles [10];  // "ought to be enough for anybody"
         int numAngles = 0;
         angles [numAngles++] = 0;
-        if (controlPressed ())
+        if (controlPressed ()) {
             angles [numAngles++] = M_PI / 6;
-        if (shiftPressed ())
+        }
+        if (shiftPressed ()) {
             angles [numAngles++] = M_PI / 4;
-        if (controlPressed ())
+        }
+        if (controlPressed ()) {
             angles [numAngles++] = M_PI / 3;
+        }
         angles [numAngles++] = M_PI / 2;
         Q_ASSERT (numAngles <= int (sizeof (angles) / sizeof (angles [0])));
 
@@ -272,8 +274,7 @@ void kpToolPolygonalBase::applyModifiers ()
 
             qCDebug(kpLogTools) << "\t\tdiagonal line: dist=" << dist
                        << " angle=" << (angle * 180 / M_PI)
-                       << " endPoint=" << lineEndPoint
-                       << endl;
+                       << " endPoint=" << lineEndPoint;
         }
     }    // if (shiftPressed () || controlPressed ()) {
 
@@ -284,10 +285,12 @@ void kpToolPolygonalBase::applyModifiers ()
         //       = start - (end - start)
         //       = start - end + start
         //       = 2 * start - end
-        if (count == 2)
+        if (count == 2) {
             lineStartPoint += (lineStartPoint - lineEndPoint);
-        else
+        }
+        else {
             lineEndPoint += (lineEndPoint - lineStartPoint);
+        }
     }    // if (altPressed ()) {
 }
 
@@ -314,11 +317,12 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     // another control point) would have caused endShape() to have been
     // called in kpToolPolygonalBase::beginDraw().  The points list would now
     // be empty.  We are being called by kpTool::mouseReleaseEvent().
-    if (d->points.count () == 0)
+    if (d->points.count () == 0) {
         return;
+    }
 
     qCDebug(kpLogTools) << "kpToolPolygonalBase::draw()  d->points=" << d->points.toList ()
-               << ", endPoint=" << currentPoint () << endl;
+               << ", endPoint=" << currentPoint ();
 
     // Update points() so that last point reflects current mouse position.
     const int count = d->points.count ();
@@ -369,8 +373,9 @@ kpColor kpToolPolygonalBase::drawingBackgroundColor () const
 // protected slot
 void kpToolPolygonalBase::updateShape ()
 {
-    if (d->points.count () == 0)
+    if (d->points.count () == 0) {
         return;
+    }
 
     const QRect boundingRect = kpTool::neededRect (
             d->points.boundingRect (),
@@ -415,8 +420,9 @@ void kpToolPolygonalBase::cancelShape ()
 
 void kpToolPolygonalBase::releasedAllButtons ()
 {
-    if (!hasBegunShape ())
+    if (!hasBegunShape ()) {
         setUserMessage (/*virtual*/haventBegunShapeUserMessage ());
+    }
 
     // --- else case already handled by endDraw() ---
 }
@@ -427,8 +433,9 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
     qCDebug(kpLogTools) << "kpToolPolygonalBase::endShape()  d->points="
         << d->points.toList ();
 
-    if (!hasBegunShape ())
+    if (!hasBegunShape ()) {
         return;
+    }
 
     viewManager ()->invalidateTempImage ();
 

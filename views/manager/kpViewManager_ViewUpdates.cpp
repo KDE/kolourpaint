@@ -66,7 +66,7 @@ void kpViewManager::restoreQueueUpdates ()
 {
     d->queueUpdatesCounter--;
     qCDebug(kpLogViews) << "kpViewManager::restoreQueueUpdates() counter="
-               << d->queueUpdatesCounter << endl;
+               << d->queueUpdatesCounter;
     Q_ASSERT (d->queueUpdatesCounter >= 0);
 
     if (d->queueUpdatesCounter == 0)
@@ -116,13 +116,16 @@ void kpViewManager::updateView (kpView *v, const QRect &viewRect)
 {
     if (!queueUpdates ())
     {
-        if (fastUpdates ())
+        if (fastUpdates ()) {
             v->repaint (viewRect);
-        else
+        }
+        else {
             v->update (viewRect);
+        }
     }
-    else
+    else {
         v->addToQueuedArea (viewRect);
+    }
 }
 
 // public slot
@@ -136,21 +139,25 @@ void kpViewManager::updateView (kpView *v, const QRegion &viewRegion)
 {
     if (!queueUpdates ())
     {
-        if (fastUpdates ())
+        if (fastUpdates ()) {
             v->repaint (viewRegion);
-        else
+        }
+        else {
             v->update (viewRegion.boundingRect ());
+        }
     }
-    else
+    else {
         v->addToQueuedArea (viewRegion);
+    }
 }
 
 
 // public slot
 void kpViewManager::updateViewRectangleEdges (kpView *v, const QRect &viewRect)
 {
-    if (viewRect.height () <= 0 || viewRect.width () <= 0)
+    if (viewRect.height () <= 0 || viewRect.width () <= 0) {
         return;
+    }
 
     // Top line
     updateView (v, QRect (viewRect.x (), viewRect.y (),

@@ -47,9 +47,7 @@ kpToolEllipticalSelection::kpToolEllipticalSelection (kpToolSelectionEnvironment
 {
 }
 
-kpToolEllipticalSelection::~kpToolEllipticalSelection ()
-{
-}
+kpToolEllipticalSelection::~kpToolEllipticalSelection () = default;
 
 
 // protected virtual [base kpAbstractSelectionTool]

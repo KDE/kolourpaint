@@ -68,8 +68,9 @@ void kpDocument::getDataFromImage(const QImage &image,
   metaInfo.setOffset(image.offset());
 
   QStringList keys = image.textKeys();
-  for (int i = 0; i < keys.count(); i++)
-    metaInfo.setText(keys[i], image.text(keys[i]));
+  for (int i = 0; i < keys.count(); i++) {
+      metaInfo.setText(keys[i], image.text(keys[i]));
+  }
 }
 
 //---------------------------------------------------------------------
@@ -82,11 +83,13 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
 {
     qCDebug(kpLogDocument) << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")";
 
-    if (saveOptions)
+    if (saveOptions) {
         *saveOptions = kpDocumentSaveOptions ();
+    }
 
-    if (metaInfo)
+    if (metaInfo) {
         *metaInfo = kpDocumentMetaInfo ();
+    }
 
     QString tempFile;
     if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
@@ -108,8 +111,9 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     QMimeDatabase db;
     QMimeType mimeType = db.mimeTypeForFile(tempFile);
 
-    if (saveOptions)
+    if (saveOptions) {
         saveOptions->setMimeType(mimeType.name());
+    }
 
     qCDebug(kpLogDocument) << "\ttempFile=" << tempFile;
     qCDebug(kpLogDocument) << "\tmimetype=" << mimeType.name();
@@ -133,16 +137,17 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     }
 
     qCDebug(kpLogDocument) << "\tpixmap: depth=" << image.depth ()
-                << " hasAlphaChannel=" << image.hasAlphaChannel ()
-                << endl;
+                << " hasAlphaChannel=" << image.hasAlphaChannel ();
 
-    if ( saveOptions  && metaInfo )
-      getDataFromImage(image, *saveOptions, *metaInfo);
+    if ( saveOptions && metaInfo ) {
+        getDataFromImage(image, *saveOptions, *metaInfo);
+    }
 
     // make sure we always have Format_ARGB32_Premultiplied as this is the fastest to draw on
     // and Qt can not draw onto Format_Indexed8 (Qt-4.7)
-    if ( image.format() != QImage::Format_ARGB32_Premultiplied )
+    if ( image.format() != QImage::Format_ARGB32_Premultiplied ) {
       image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
 
     return image;
 }
@@ -220,10 +225,9 @@ bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
 
         return true;
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
+
 }
 
 //---------------------------------------------------------------------

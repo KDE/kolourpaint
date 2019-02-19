@@ -81,8 +81,9 @@ kpTempImage::kpTempImage (const kpTempImage &rhs)
 
 kpTempImage &kpTempImage::operator= (const kpTempImage &rhs)
 {
-    if (this == &rhs)
+    if (this == &rhs) {
         return *this;
+    }
 
     m_isBrush = rhs.m_isBrush;
     m_renderMode = rhs.m_renderMode;
@@ -157,8 +158,7 @@ bool kpTempImage::isVisible (const kpViewManager *vm) const
 // public
 QRect kpTempImage::rect () const
 {
-    return QRect (m_topLeft.x (), m_topLeft.y (),
-                  m_width, m_height);
+    return  {m_topLeft.x (), m_topLeft.y (), m_width, m_height};
 }
 
 //---------------------------------------------------------------------

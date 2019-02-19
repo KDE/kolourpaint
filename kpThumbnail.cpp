@@ -87,8 +87,9 @@ void kpThumbnail::setView (kpThumbnailView *view)
     qCDebug(kpLogMisc) << "kpThumbnail::setView(" << view << ")";
 #endif
 
-    if (d->view == view)
+    if (d->view == view) {
         return;
+    }
 
 
     if (d->view)
@@ -146,7 +147,7 @@ void kpThumbnail::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL
     qCDebug(kpLogMisc) << "kpThumbnail::resizeEvent(" << width ()
-               << "," << height () << ")" << endl;
+               << "," << height () << ")";
 #endif
 
     QWidget::resizeEvent (e);
@@ -157,16 +158,18 @@ void kpThumbnail::resizeEvent (QResizeEvent *e)
     {
         d->mainWindow->notifyThumbnailGeometryChanged ();
 
-        if (d->mainWindow->tool ())
+        if (d->mainWindow->tool ()) {
             d->mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        }
     }
 }
 
 // protected virtual [base QWidget]
 void kpThumbnail::moveEvent (QMoveEvent * /*e*/)
 {
-    if (d->mainWindow)
+    if (d->mainWindow) {
         d->mainWindow->notifyThumbnailGeometryChanged ();
+    }
 }
 
 // protected virtual [base QWidget]

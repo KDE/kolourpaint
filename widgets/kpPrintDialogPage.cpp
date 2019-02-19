@@ -60,7 +60,7 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
     d->printTopLeftRadio = new QRadioButton (i18n ("Top-&left of the page"),
         this);
 
-    QVBoxLayout *lay = new QVBoxLayout (this);
+    auto *lay = new QVBoxLayout (this);
     lay->addWidget (d->printCenteredRadio);
     lay->addWidget (d->printTopLeftRadio);
     lay->addStretch ();
@@ -77,7 +77,7 @@ kpPrintDialogPage::~kpPrintDialogPage ()
 bool kpPrintDialogPage::printImageCenteredOnPage ()
 {
     qCDebug(kpLogWidgets) << "kpPrintDialogPage::printImageCenteredOnPage()"
-              << " returning " << d->printCenteredRadio->isChecked() << endl;
+              << " returning " << d->printCenteredRadio->isChecked();
     return d->printCenteredRadio->isChecked ();
 }
 
@@ -85,10 +85,12 @@ bool kpPrintDialogPage::printImageCenteredOnPage ()
 void kpPrintDialogPage::setPrintImageCenteredOnPage (bool printCentered)
 {
     qCDebug(kpLogWidgets) << "kpPrintDialogPage::setOptions(" << printCentered << ")";
-    if (printCentered)
+    if (printCentered) {
         d->printCenteredRadio->setChecked (true);
-    else
+    }
+    else {
         d->printTopLeftRadio->setChecked (true);
+    }
 }
 
 
