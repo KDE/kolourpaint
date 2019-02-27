@@ -299,7 +299,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 
     QGridLayout *baseLayout = new QGridLayout (baseWidget);
-    baseLayout->setMargin (0);
+    baseLayout->setContentsMargins(0, 0, 0, 0);
 
     // Col 0
     baseLayout->addWidget (dpiGroupBox, 0, 0);

@@ -185,7 +185,7 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
 
 
     QHBoxLayout *lay = new QHBoxLayout (actOnBox);
-    lay->setMargin (0);
+    lay->setContentsMargins(0, 0, 0, 0);
     lay->addWidget (actOnLabel);
     lay->addWidget (m_actOnCombo, 1);
 

@@ -43,7 +43,7 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setMargin (0);
+    lay->setContentsMargins(0, 0, 0, 0);
 
     QLabel *hueLabel = new QLabel (i18n ("&Hue:"), this);
     QLabel *saturationLabel = new QLabel (i18n ("&Saturation:"), this);

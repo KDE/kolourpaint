@@ -96,7 +96,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
     QWidget *effectContainer = new QWidget (mainWidget ());
     QHBoxLayout *containerLayout = new QHBoxLayout (effectContainer);
-    containerLayout->setMargin (0);
+    containerLayout->setContentsMargins(0, 0, 0, 0);
 
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 

@@ -46,7 +46,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setMargin (0);
+    lay->setContentsMargins(0, 0, 0, 0);
 
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);

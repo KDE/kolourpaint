@@ -102,7 +102,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
 
 
     m_gridLayout = new QGridLayout (baseWidget );
-    m_gridLayout->setMargin (0);
+    m_gridLayout->setContentsMargins(0, 0, 0, 0);
     m_gridNumRows = reserveTopRow ? 1 : 0;
     if (m_dimensionsGroupBox || m_previewGroupBox)
     {

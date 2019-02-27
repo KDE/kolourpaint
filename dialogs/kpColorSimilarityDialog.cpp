@@ -106,7 +106,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
-    baseLayout->setMargin (0);
+    baseLayout->setContentsMargins(0, 0, 0, 0);
     baseLayout->addWidget (cubeGroupBox, 1/*stretch*/);
     baseLayout->addWidget (inputGroupBox);
 }
