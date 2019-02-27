@@ -44,7 +44,7 @@
 #include <QSaveFile>
 #include <QSize>
 #include <QTemporaryFile>
-#include <QMatrix>
+#include <QTransform>
 #include <QMimeDatabase>
 
 #include "kpLogCategories.h"

@@ -102,8 +102,8 @@ kpColorCellsBase::kpColorCellsBase( QWidget *parent, int rows, int cols )
 
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-    viewport()->setBackgroundRole( QPalette::Background );
-    setBackgroundRole( QPalette::Background );
+    viewport()->setBackgroundRole( QPalette::Window );
+    setBackgroundRole( QPalette::Window );
 }
 
 kpColorCellsBase::~kpColorCellsBase()

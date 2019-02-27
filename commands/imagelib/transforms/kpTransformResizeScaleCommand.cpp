@@ -47,7 +47,7 @@
 #include <QPolygon>
 #include <QRect>
 #include <QSize>
-#include <QMatrix>
+#include <QTransform>
 
 #include "kpLogCategories.h"
 
@@ -210,7 +210,7 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 
     // TODO: refactor into kpPixmapFX
     // TODO: Can we get to size 0x0 accidently?
-    QMatrix scaleMatrix;
+    QTransform scaleMatrix;
     scaleMatrix.scale (horizScale, vertScale);
     currentPoints = scaleMatrix.map (currentPoints);
 

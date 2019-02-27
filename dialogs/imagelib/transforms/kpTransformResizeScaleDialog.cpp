@@ -108,7 +108,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
     QGroupBox *dimensionsGroupBox = createDimensionsGroupBox(baseWidget);
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
-    baseLayout->setMargin(0);
+    baseLayout->setContentsMargins(0, 0, 0, 0);
     baseLayout->addWidget(actOnBox);
     baseLayout->addWidget(operationGroupBox);
     baseLayout->addWidget(dimensionsGroupBox);

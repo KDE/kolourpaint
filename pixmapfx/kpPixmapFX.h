@@ -43,7 +43,7 @@
 
 class QColor;
 class QImage;
-class QMatrix;
+class QTransform;
 class QPen;
 class QImage;
 class QPoint;
@@ -158,8 +158,8 @@ public:
     // Using <targetWidth> & <targetHeight> to generate preview pixmaps is
     // significantly more efficient than skewing and then scaling yourself.
     //
-    static QMatrix skewMatrix (int width, int height, double hangle, double vangle);
-    static QMatrix skewMatrix (const QImage &pixmap, double hangle, double vangle);
+    static QTransform skewMatrix (int width, int height, double hangle, double vangle);
+    static QTransform skewMatrix (const QImage &pixmap, double hangle, double vangle);
 
     static void skew (QImage *destPixmapPtr, double hangle, double vangle,
                       const kpColor &backgroundColor,
@@ -179,8 +179,8 @@ public:
     // Using <targetWidth> & <targetHeight> to generate preview pixmaps is
     // significantly more efficient than rotating and then scaling yourself.
     //
-    static QMatrix rotateMatrix (int width, int height, double angle);
-    static QMatrix rotateMatrix (const QImage &pixmap, double angle);
+    static QTransform rotateMatrix (int width, int height, double angle);
+    static QTransform rotateMatrix (const QImage &pixmap, double angle);
 
     static bool isLosslessRotation (double angle);
 

@@ -42,7 +42,7 @@
 
 #include <QApplication>
 #include <QPolygon>
-#include <QMatrix>
+#include <QTransform>
 
 #include <KLocalizedString>
 
@@ -139,7 +139,7 @@ void kpTransformRotateCommand::execute ()
         QPolygon currentPoints = sel->calculatePoints ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
-        QMatrix rotateMatrix = kpPixmapFX::rotateMatrix (doc->image (m_actOnSelection), m_angle);
+        QTransform rotateMatrix = kpPixmapFX::rotateMatrix (doc->image (m_actOnSelection), m_angle);
         currentPoints = rotateMatrix.map (currentPoints);
         currentPoints.translate (-currentPoints.boundingRect ().x () + newTopLeft.x (),
                                  -currentPoints.boundingRect ().y () + newTopLeft.y ());

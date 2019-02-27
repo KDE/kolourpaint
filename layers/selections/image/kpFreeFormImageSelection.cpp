@@ -327,7 +327,7 @@ static void FlipPoints (QPolygon *points,
 {
     points->translate (-oldRect.x (), -oldRect.y ());
 
-    const QMatrix matrix (horiz ? -1 : +1,  // m11
+    const QTransform matrix (horiz ? -1 : +1,  // m11
                           0,  // m12
                           0,  // m21
                           vert  ? -1 : +1,  // m22

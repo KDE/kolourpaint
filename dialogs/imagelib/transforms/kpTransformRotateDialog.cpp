@@ -49,7 +49,7 @@
 #include <QPolygon>
 #include <QPushButton>
 #include <QRadioButton>
-#include <QMatrix>
+#include <QTransform>
 
 
 // private static
@@ -222,7 +222,7 @@ int kpTransformRotateDialog::angle () const
 // private virtual [base kpTransformPreviewDialog]
 QSize kpTransformRotateDialog::newDimensions () const
 {
-    QMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
+    QTransform matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
     QRect rect = matrix.mapRect (QRect (0, 0, m_oldWidth, m_oldHeight));
     return rect.size ();
 }

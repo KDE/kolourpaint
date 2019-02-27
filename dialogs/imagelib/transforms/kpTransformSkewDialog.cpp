@@ -37,7 +37,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
-#include <QMatrix>
+#include <QTransform>
 #include <QImage>
 #include <QSpinBox>
 
@@ -158,7 +158,7 @@ QSize kpTransformSkewDialog::newDimensions () const
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    QMatrix skewMatrix = kpPixmapFX::skewMatrix (doc->image (),
+    QTransform skewMatrix = kpPixmapFX::skewMatrix (doc->image (),
                                                   horizontalAngleForPixmapFX (),
                                                   verticalAngleForPixmapFX ());
     QRect skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));

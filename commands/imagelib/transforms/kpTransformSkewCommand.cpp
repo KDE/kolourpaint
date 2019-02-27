@@ -42,7 +42,7 @@
 #include "kpLogCategories.h"
 
 #include <QApplication>
-#include <QMatrix>
+#include <QTransform>
 #include <QPolygon>
 
 // TODO: nasty, should avoid using GUI class in this command class
@@ -123,7 +123,7 @@ void kpTransformSkewCommand::execute ()
         QPolygon currentPoints = sel->calculatePoints ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
-        QMatrix skewMatrix = kpPixmapFX::skewMatrix (
+        QTransform skewMatrix = kpPixmapFX::skewMatrix (
             doc->image (m_actOnSelection),
             kpTransformSkewDialog::horizontalAngleForPixmapFX (m_hangle),
             kpTransformSkewDialog::verticalAngleForPixmapFX (m_vangle));

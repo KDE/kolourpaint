@@ -61,7 +61,7 @@
 #include <QPainter>
 #include <QRect>
 #include <QSize>
-#include <QMatrix>
+#include <QTransform>
 
 //---------------------------------------------------------------------
 
