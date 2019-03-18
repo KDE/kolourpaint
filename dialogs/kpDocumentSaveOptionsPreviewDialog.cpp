@@ -118,11 +118,13 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QImage &pix
                             qMax (1,
                                   static_cast<int> (static_cast<kpCommandSize::SizeType> (fileSize * 100 / pixmapSize))) :
                             0;
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"
                << " pixmapSize=" << pixmapSize
                << " fileSize=" << fileSize
                << " raw fileSize/pixmapSize%="
                << (pixmapSize ? (kpCommandSize::SizeType) fileSize * 100 / pixmapSize : 0);
+#endif
 
     m_fileSizeLabel->setText (i18np ("1 byte (approx. %2%)", "%1 bytes (approx. %2%)",
                                      m_fileSize, percent));
@@ -131,9 +133,11 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QImage &pix
 // public slot
 void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 {
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::updatePreviewPixmap()"
                << " filePixmapLabel.size=" << m_filePixmapLabel->size ()
                << " filePixmap.size=" << m_filePixmap->size ();
+#endif
 
     if (m_filePixmap)
     {
@@ -145,10 +149,11 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
         double keepsAspect = kpTransformPreviewDialog::aspectScale (
             maxNewWidth, maxNewHeight,
             m_filePixmap->width (), m_filePixmap->height ());
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
         qCDebug(kpLogDialogs) << "\tmaxNewWidth=" << maxNewWidth
                    << " maxNewHeight=" << maxNewHeight
                    << " keepsAspect=" << keepsAspect;
-
+    #endif
 
         const int newWidth = kpTransformPreviewDialog::scaleDimension (
             m_filePixmap->width (),
@@ -160,9 +165,10 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
             keepsAspect,
             1,
             maxNewHeight);
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
         qCDebug(kpLogDialogs) << "\tnewWidth=" << newWidth
                    << " newHeight=" << newHeight;
-
+    #endif
 
         QImage transformedPixmap =
             kpPixmapFX::scale (*m_filePixmap,
@@ -190,24 +196,36 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 // protected virtual [base QWidget]
 void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
 {
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::closeEvent()";
+#endif
+
     QWidget::closeEvent (e);
+
     emit finished ();
 }
 
 // protected virtual [base QWidget]
 void kpDocumentSaveOptionsPreviewDialog::moveEvent (QMoveEvent *e)
 {
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::moveEvent()";
+#endif
+
     QWidget::moveEvent (e);
+
     emit moved ();
 }
 
 // protected virtual [base QWidget]
 void kpDocumentSaveOptionsPreviewDialog::resizeEvent (QResizeEvent *e)
 {
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     qCDebug(kpLogDialogs) << "kpDocumentSaveOptionsPreviewDialog::resizeEvent()";
+#endif
+
     QWidget::resizeEvent (e);
+
     emit resized ();
 }
 

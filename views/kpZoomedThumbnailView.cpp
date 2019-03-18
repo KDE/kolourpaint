@@ -25,12 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#define DEBUG_KP_ZOOMED_THUMBNAIL_VIEW 0
+
+
 #include "views/kpZoomedThumbnailView.h"
 
 #include "kpLogCategories.h"
 #include "document/kpDocument.h"
 #include "views/manager/kpViewManager.h"
-#include "kpLogCategories.h"
 
 #include <KLocalizedString>
 
@@ -66,12 +69,23 @@ QString kpZoomedThumbnailView::caption () const
 // public slot virtual [base kpView]
 void kpZoomedThumbnailView::adjustToEnvironment ()
 {
+#if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
+    qCDebug(kpLogViews) << "kpZoomedThumbnailView(" << name ()
+               << ")::adjustToEnvironment()"
+               << " width=" << width ()
+               << " height=" << height ()
+               << endl;
+#endif
+
     if (!document ()) {
         return;
     }
 
+#if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
     qCDebug(kpLogViews) << "\tdoc: width=" << document ()->width ()
-               << " height=" << document ()->height ();
+               << " height=" << document ()->height ()
+               << endl;
+#endif
 
     if (document ()->width () <= 0 || document ()->height () <= 0)
     {
@@ -93,10 +107,14 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
         hzoom = vzoom;
     }
 
+#if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
     qCDebug(kpLogViews) << "\tproposed zoom=" << hzoom;
+#endif
     if (hzoom > 100 || vzoom > 100)
     {
+    #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
         qCDebug(kpLogViews) << "\twon't magnify - setting zoom to 100%";
+    #endif
         hzoom = 100;
         vzoom = 100;
     }

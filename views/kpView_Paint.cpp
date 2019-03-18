@@ -53,7 +53,9 @@
 // protected
 QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 {
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "kpView::paintEventGetDocRect(" << viewRect << ")";
+#endif
 
     QRect docRect;
 
@@ -78,7 +80,9 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
         docRect.setBottomRight (docRect.bottomRight () + QPoint (2, 2));
     }
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tdocRect=" << docRect;
+#endif
     kpDocument *doc = document ();
     if (doc)
     {
@@ -99,10 +103,13 @@ void kpView::drawTransparentBackground (QPainter *painter,
                                         const QRect &viewRect,
                                         bool isPreview)
 {
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "kpView::drawTransparentBackground() patternOrigin="
               << patternOrigin
               << " viewRect=" << viewRect
-              << " isPreview=" << isPreview;
+              << " isPreview=" << isPreview
+               << endl;
+#endif
 
     const int cellSize = !isPreview ? 16 : 10;
 
@@ -118,7 +125,9 @@ void kpView::drawTransparentBackground (QPainter *painter,
         startx -= ((startx - patternOrigin.x ()) % cellSize);
     }
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tstartXY=" << QPoint (startx, starty);
+#endif
 
     painter->save ();
 
@@ -158,9 +167,11 @@ void kpView::drawTransparentBackground (QPainter *painter,
 // protected
 void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
 {
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::paintEventDrawCheckerBoard(viewRect=" << viewRect
                << ") origin=" << origin ();
+#endif
 
     kpDocument *doc = document ();
     if (!doc) {
@@ -171,16 +182,21 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
 
     if (scrollableContainer ())
     {
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\tscrollableContainer: contents[XY]="
                    << QPoint (scrollableContainer ()->horizontalScrollBar()->value (),
-                              scrollableContainer ()->verticalScrollBar()->value ());
+                              scrollableContainer ()->verticalScrollBar()->value ())
+                   << endl;
+    #endif
         // Make checkerboard appear static relative to the scroll view.
         // This makes it more obvious that any visible bits of the
         // checkboard represent transparent pixels and not gray and white
         // squares.
         patternOrigin = QPoint (scrollableContainer ()->horizontalScrollBar()->value(),
                                 scrollableContainer ()->verticalScrollBar()->value());
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\t\tpatternOrigin=" << patternOrigin;
+    #endif
     }
 
     // TODO: this static business doesn't work yet
@@ -194,19 +210,25 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
 // protected
 void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
 {
+#if DEBUG_KP_VIEW_RENDERER && 1 || 0
     qCDebug(kpLogViews) << "kpView::paintEventDrawSelection() docRect=" << docRect;
+#endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 0
         qCDebug(kpLogViews) << "\tno doc - abort";
+    #endif
         return;
     }
 
     kpAbstractSelection *sel = doc->selection ();
     if (!sel)
     {
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 0
         qCDebug(kpLogViews) << "\tno sel - abort";
+    #endif
         return;
     }
 
@@ -214,7 +236,9 @@ void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
     //
     // Draw selection pixmap (if there is one)
     //
+#if DEBUG_KP_VIEW_RENDERER && 1 || 0
     qCDebug(kpLogViews) << "\tdraw sel pixmap @ " << sel->topLeft ();
+#endif
     sel->paint (destPixmap, docRect);
 
 
@@ -223,8 +247,10 @@ void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
     //
 
     kpViewManager *vm = viewManager ();
+#if DEBUG_KP_VIEW_RENDERER && 1 || 0
     qCDebug(kpLogViews) << "\tsel border visible="
                << vm->selectionBorderVisible ();
+#endif
     if (vm->selectionBorderVisible ())
     {
         sel->paintBorder (destPixmap, docRect, vm->selectionBorderFinished ());
@@ -267,33 +293,46 @@ void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
 // protected
 void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
 {
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "kpView::paintEventDrawSelectionResizeHandles("
                << clipRect << ")";
+#endif
 
     if (!selectionLargeEnoughToHaveResizeHandles ())
     {
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\tsel not large enough to have resize handles";
+    #endif
         return;
     }
 
     kpViewManager *vm = viewManager ();
     if (!vm || !vm->selectionBorderVisible () || !vm->selectionBorderFinished ())
     {
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\tsel border not visible or not finished";
+    #endif
+
         return;
     }
 
     const QRect selViewRect = selectionViewRect ();
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tselViewRect=" << selViewRect;
+#endif
     if (!selViewRect.intersects (clipRect))
     {
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\tdoesn't intersect viewRect";
+    #endif
         return;
     }
 
     QRegion selResizeHandlesRegion = selectionResizeHandlesViewRegion (true/*for renderer*/);
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tsel resize handles view region="
-               << selResizeHandlesRegion;
+               << selResizeHandlesRegion << endl;
+#endif
 
     QPainter painter(this);
     painter.setPen(Qt::black);
@@ -315,10 +354,13 @@ void kpView::paintEventDrawTempImage (QImage *destPixmap, const QRect &docRect)
     }
 
     const kpTempImage *tpi = vm->tempImage ();
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "kpView::paintEventDrawTempImage() tempImage="
                << tpi
                << " isVisible="
-               << (tpi ? tpi->isVisible (vm) : false);
+               << (tpi ? tpi->isVisible (vm) : false)
+               << endl;
+#endif
 
     if (!tpi || !tpi->isVisible (vm)) {
         return;
@@ -391,9 +433,11 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 // QPaintEvent::region().
 void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
 {
+#if DEBUG_KP_VIEW_RENDERER
     QTime timer;
     timer.start ();
     qCDebug(kpLogViews) << "\tviewRect=" << viewRect;
+#endif
 
     kpViewManager *vm = viewManager ();
     const kpDocument *doc = document ();
@@ -407,7 +451,9 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
 
     QRect docRect = paintEventGetDocRect (viewRect);
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tdocRect=" << docRect;
+#endif
 
     QPainter painter (this);
     //painter.setCompositionMode(QPainter::CompositionMode_Source);
@@ -420,8 +466,10 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     {
         docPixmap = doc->getImageAt (docRect);
 
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\tdocPixmap.hasAlphaChannel()="
                   << docPixmap.hasAlphaChannel ();
+    #endif
 
         tempImageWillBeRendered =
             (!doc->selection () &&
@@ -429,12 +477,15 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
              vm->tempImage ()->isVisible (vm) &&
              docRect.intersects (vm->tempImage ()->rect ()));
 
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\ttempImageWillBeRendered=" << tempImageWillBeRendered
                    << " (sel=" << doc->selection ()
                    << " tempImage=" << vm->tempImage ()
                    << " tempImage.isVisible=" << (vm->tempImage () ? vm->tempImage ()->isVisible (vm) : false)
                    << " docRect.intersects(tempImage.rect)=" << (vm->tempImage () ? docRect.intersects (vm->tempImage ()->rect ()) : false)
-                   << ")";
+                   << ")"
+                   << endl;
+    #endif
     }
 
 
@@ -463,20 +514,28 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
             paintEventDrawTempImage (&docPixmap, docRect);
         }
 
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\torigin=" << origin ();
+    #endif
         // Blit scaled version of docPixmap + tempImage.
+    #if DEBUG_KP_VIEW_RENDERER && 1
         QTime scaleTimer; scaleTimer.start ();
+    #endif
         // This is the only troublesome part of the method that draws unclipped.
         painter.translate (origin ().x (), origin ().y ());
         painter.scale (double (zoomLevelX ()) / 100.0,
                        double (zoomLevelY ()) / 100.0);
         painter.drawImage (docRect, docPixmap);
         //painter.resetMatrix ();  // back to 1-1 scaling
+    #if DEBUG_KP_VIEW_RENDERER && 1
         qCDebug(kpLogViews) << "\tscale time=" << scaleTimer.elapsed ();
+    #endif
 
     }  // if (!docRect.isEmpty ()) {
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tdrawDocRect done in: " << timer.restart () << "ms";
+#endif
 }
 
 //---------------------------------------------------------------------
@@ -488,16 +547,21 @@ void kpView::paintEvent (QPaintEvent *e)
     // WARNING: document(), viewManager() and friends might be 0 in this method.
     // TODO: I'm not 100% convinced that we always check if their friends are 0.
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     QTime timer;
     timer.start ();
+#endif
 
     kpViewManager *vm = viewManager ();
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::paintEvent() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
                << " viewRect=" << e->rect ()
-               << " topLeft=" << QPoint (x (), y ());
+               << " topLeft=" << QPoint (x (), y ())
+               << endl;
+#endif
 
     if (!vm) {
         return;
@@ -522,7 +586,9 @@ void kpView::paintEvent (QPaintEvent *e)
     // part of the view (which could be quite small inside a scrollview).
     const auto& viewRegion = e->region ();
     QVector <QRect> rects = viewRegion.rects ();
+#if DEBUG_KP_VIEW_RENDERER
     qCDebug(kpLogViews) << "\t#rects = " << rects.count ();
+#endif
 
     // Draw all of the requested regions of the document _before_ drawing
     // the grid lines, buddy rectangle and selection resize handles.
@@ -570,5 +636,9 @@ void kpView::paintEvent (QPaintEvent *e)
         paintEventDrawSelectionResizeHandles (e->rect ());
     }
 
+#if DEBUG_KP_VIEW_RENDERER && 1
     qCDebug(kpLogViews) << "\tall done in: " << timer.restart () << "ms";
+#endif
 }
+
+//---------------------------------------------------------------------

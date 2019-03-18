@@ -103,7 +103,9 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 // private
 void kpMainWindow::actionShowGridUpdate ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::actionShowGridUpdate()";
+#endif
     const bool enable = (viewMenuDocumentActionsEnabled () &&
                          d->mainView && d->mainView->canShowGrid ());
 
@@ -116,7 +118,9 @@ void kpMainWindow::actionShowGridUpdate ()
 // private slot
 void kpMainWindow::slotShowGridToggled ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotActionShowGridToggled()";
+#endif
 
     updateMainViewGrid ();
 
@@ -131,7 +135,9 @@ void kpMainWindow::slotShowGridToggled ()
 // private
 void kpMainWindow::updateMainViewGrid ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::updateMainViewGrid ()";
+#endif
 
     if (d->mainView) {
         d->mainView->showGrid (d->actionShowGrid->isChecked ());

@@ -25,6 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#define DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM 0
+
+
 #include "kpColorSimilarityToolBarItem.h"
 
 #include <QTimer>
@@ -38,7 +42,6 @@
 #include "dialogs/kpColorSimilarityDialog.h"
 #include "kpColorSimilarityCubeRenderer.h"
 #include "kpDefs.h"
-#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
@@ -83,9 +86,11 @@ int kpColorSimilarityToolBarItem::processedColorSimilarity () const
 void kpColorSimilarityToolBarItem::setColorSimilarityInternal (double similarity,
         bool writeConfig)
 {
+#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::setColorSimilarityInternal("
               << "similarity=" << similarity << ",writeConfig=" << writeConfig
               << ")";
+#endif
 
     m_oldColorSimilarity = colorSimilarity ();
 
@@ -140,8 +145,10 @@ void kpColorSimilarityToolBarItem::openDialog ()
 // private slot:
 void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
 {
+#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::slotFlashTimerTimeout()"
-              << " highlight=" << m_flashHighlight;
+              << " highlight=" << m_flashHighlight << endl;
+#endif
     int newHigh = m_flashHighlight - 20;
     if (newHigh < 0) {
         newHigh = 0;
@@ -161,14 +168,18 @@ void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
 // public
 void kpColorSimilarityToolBarItem::flash ()
 {
+#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::flash()";
+#endif
     if (isSuppressingFlash ()) {
         return;
     }
 
     if (m_flashHighlight == 255)
     {
+    #if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
         qCDebug(kpLogWidgets) << "\tNOP";
+    #endif
     }
     else
     {
@@ -210,7 +221,9 @@ void kpColorSimilarityToolBarItem::unsupressFlash ()
 // private
 void kpColorSimilarityToolBarItem::updateToolTip ()
 {
+#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::updateToolTip()";
+#endif
 
     if (colorSimilarity () > 0)
     {
@@ -239,8 +252,10 @@ void kpColorSimilarityToolBarItem::updateToolTip ()
 void kpColorSimilarityToolBarItem::updateIcon ()
 {
     const int side = width () * 6 / 8;
+#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::updateIcon() width=" << width ()
               << " side=" << side;
+#endif
 
     QPixmap icon(side, side);
     icon.fill(Qt::transparent);
@@ -258,9 +273,14 @@ void kpColorSimilarityToolBarItem::updateIcon ()
 // private virtual [base QWidget]
 void kpColorSimilarityToolBarItem::resizeEvent (QResizeEvent *e)
 {
+#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
     qCDebug(kpLogWidgets) << "kpColorSimilarityToolBarItem::resizeEvent() size=" << size ()
               << " oldSize=" << e->oldSize ();
+#endif
     QToolButton::resizeEvent (e);
 
     updateIcon ();
 }
+
+//---------------------------------------------------------------------
+

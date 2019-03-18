@@ -32,14 +32,16 @@
 // 2. Non-view events
 //
 
+
+#define DEBUG_KP_TOOL 0
+
+
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
 
 #include "kpLogCategories.h"
 
 #include "imagelib/kpColor.h"
-
-#include <QEvent>
 
 //---------------------------------------------------------------------
 
@@ -49,9 +51,13 @@
 
 bool kpTool::viewEvent (QEvent *e)
 {
+#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool<" << objectName ()
               << "," << this << ">::viewEvent(type=" << e->type ()
-              << ") returning false";
+              << ") returning false" << endl;
+#else
+    (void) e;
+#endif
 
     // Don't handle.
     return false;
@@ -67,7 +73,9 @@ void kpTool::focusInEvent (QFocusEvent *)
 
 void kpTool::focusOutEvent (QFocusEvent *)
 {
+#if DEBUG_KP_TOOL && 0
     qCDebug(kpLogTools) << "kpTool::focusOutEvent() beganDraw=" << d->beganDraw;
+#endif
 
     if (d->beganDraw) {
         endDrawInternal (d->currentPoint, normalizedRect ());
@@ -78,14 +86,18 @@ void kpTool::focusOutEvent (QFocusEvent *)
 
 void kpTool::enterEvent (QEvent *)
 {
+#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "kpTool::enterEvent() beganDraw=" << d->beganDraw;
+#endif
 }
 
 //---------------------------------------------------------------------
 
 void kpTool::leaveEvent (QEvent *)
 {
+#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "kpTool::leaveEvent() beganDraw=" << d->beganDraw;
+#endif
 
     // if we haven't started drawing (e.g. dragging a rectangle)...
     if (!d->beganDraw)
@@ -120,7 +132,9 @@ void kpTool::slotForegroundColorChangedInternal (const kpColor &color)
 {
     if (d->ignoreColorSignals > 0)
     {
+    #if DEBUG_KP_TOOL && 1
         qCDebug(kpLogTools) << "kpTool::slotForegroundColorChangedInternal() ignoreColorSignals=" << d->ignoreColorSignals;
+    #endif
         d->ignoreColorSignals--;
         return;
     }
@@ -134,7 +148,9 @@ void kpTool::slotBackgroundColorChangedInternal (const kpColor &color)
 {
     if (d->ignoreColorSignals > 0)
     {
+    #if DEBUG_KP_TOOL && 1
         qCDebug(kpLogTools) << "kpTool::slotBackgroundColorChangedInternal() ignoreColorSignals=" << d->ignoreColorSignals;
+    #endif
         d->ignoreColorSignals--;
         return;
     }

@@ -53,7 +53,9 @@
 
 static int ZoomLevelFromString (const QString &stringIn)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow_View.cpp:ZoomLevelFromString(" << stringIn << ")";
+#endif
 
     // Remove any non-digits kdelibs sometimes adds behind our back :( e.g.:
     //
@@ -61,12 +63,16 @@ static int ZoomLevelFromString (const QString &stringIn)
     // 2. ',' is automatically added to change "1000%" to "1,000%"
     QString string = stringIn;
     string.remove (QRegExp ("[^0-9]"));
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\twithout non-digits='" << string << "'";
+#endif
 
     // Convert zoom level to number.
     bool ok = false;
     int zoomLevel = string.toInt (&ok);
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tzoomLevel=" << zoomLevel;
+#endif
 
     if (!ok || zoomLevel < kpView::MinZoomLevel || zoomLevel > kpView::MaxZoomLevel) {
         return 0;  // error
@@ -174,7 +180,9 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     // We're called quite early in the init process and/or when there might
     // not be a document or a view so we have a lot of "if (ptr)" guards.
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomToPre(" << zoomLevel << ")";
+#endif
 
     zoomLevel = qBound (kpView::MinZoomLevel, zoomLevel, kpView::MaxZoomLevel);
 
@@ -194,14 +202,18 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     // OPT: We get called twice on startup.  sendZoomListToActionZoom() is very slow.
     sendZoomListToActionZoom ();
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tsetCurrentItem(" << index << ")";
+#endif
     d->actionZoom->setCurrentItem (index);
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tcurrentItem="
               << d->actionZoom->currentItem ()
               << " action="
               << d->actionZoom->action (d->actionZoom->currentItem ())
               << " checkedAction"
               << d->actionZoom->selectableActionGroup ()->checkedAction ();
+#endif
 
 
     if (viewMenuDocumentActionsEnabled ())
@@ -229,7 +241,9 @@ void kpMainWindow::zoomToPre (int zoomLevel)
 // private
 void kpMainWindow::zoomToPost ()
 {
+#if DEBUG_KP_MAIN_WINDOW && 1
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomToPost()";
+#endif
 
     if (d->mainView)
     {
@@ -263,7 +277,9 @@ void kpMainWindow::zoomToPost ()
 
     setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
 
+#if DEBUG_KP_MAIN_WINDOW && 1
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomToPost() done";
+#endif
 }
 
 //---------------------------------------------------------------------
@@ -276,6 +292,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
     if (d->scrollView && d->mainView)
     {
+    #if DEBUG_KP_MAIN_WINDOW && 1
         qCDebug(kpLogMainWindow) << "\tscrollView   contentsX=" << d->scrollView->horizontalScrollBar()->value ()
                    << " contentsY=" << d->scrollView->verticalScrollBar()->value ()
                    << " contentsWidth=" << d->scrollView->widget()->width ()
@@ -285,6 +302,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                    << " oldZoomX=" << d->mainView->zoomLevelX ()
                    << " oldZoomY=" << d->mainView->zoomLevelY ()
                    << " newZoom=" << zoomLevel;
+    #endif
 
         // TODO: when changing from no scrollbars to scrollbars, Qt lies about
         //       visibleWidth() & visibleHeight() (doesn't take into account the
@@ -337,10 +355,12 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         // Do the zoom.
         d->mainView->setZoomLevel (zoomLevel, zoomLevel);
 
+    #if DEBUG_KP_MAIN_WINDOW && 1
         qCDebug(kpLogMainWindow) << "\tvisibleWidth=" << d->scrollView->viewport()->width ()
                     << " visibleHeight=" << d->scrollView->viewport()->height ();
         qCDebug(kpLogMainWindow) << "\tnewCenterX=" << newCenterX
                     << " newCenterY=" << newCenterY;
+    #endif
 
         d->scrollView->horizontalScrollBar()->setValue(newCenterX - (d->scrollView->viewport()->width() / 2));
         d->scrollView->verticalScrollBar()->setValue(newCenterY - (d->scrollView->viewport()->height() / 2));
@@ -354,22 +374,28 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
             kpView *const vuc = d->viewManager->viewUnderCursor ();
 
+        #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
                        << vuc->objectName ();
+        #endif
 
             const auto viewX = vuc->transformDocToViewX (targetDocX);
             const auto viewY = vuc->transformDocToViewY (targetDocY);
             // Rounding error from zooming in and out :(
             // TODO: do everything in terms of tool doc points in type "double".
             const QPoint viewPoint (static_cast<int> (viewX), static_cast<int> (viewY));
+        #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
                        << " viewUnderCursor: (" << viewX << "," << viewY << ")";
+        #endif
 
             if (vuc->visibleRegion ().contains (viewPoint))
             {
                 const QPoint globalPoint =
                     kpWidgetMapper::toGlobal (vuc, viewPoint);
+            #if DEBUG_KP_MAIN_WINDOW
                 qCDebug(kpLogMainWindow) << "\t\tglobalPoint=" << globalPoint;
+            #endif
 
                 // TODO: Determine some sane cursor flashing indication -
                 //       cursor movement is convenient but not conventional.
@@ -395,16 +421,20 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             // on top of.
             else
             {
+            #if DEBUG_KP_MAIN_WINDOW
                 qCDebug(kpLogMainWindow) << "\t\twon't move cursor - would get outside view";
+            #endif
 
                 // TODO: Sane cursor flashing indication that indicates
                 //       that the normal cursor movement didn't happen.
             }
         }
 
+    #if DEBUG_KP_MAIN_WINDOW && 1
         qCDebug(kpLogMainWindow) << "\t\tcheck (contentsX=" << d->scrollView->horizontalScrollBar()->value ()
                     << ",contentsY=" << d->scrollView->verticalScrollBar()->value ()
                     << ")";
+    #endif
     }
 
 
@@ -418,12 +448,14 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
         bool accountForGrips,
         bool careAboutWidth, bool careAboutHeight)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomToRect(normalizedDocRect="
               << normalizedDocRect
               << ",accountForGrips=" << accountForGrips
               << ",careAboutWidth=" << careAboutWidth
               << ",careAboutHeight=" << careAboutHeight
               << ")";
+#endif
     // You can't care about nothing.
     Q_ASSERT (careAboutWidth || careAboutHeight);
 
@@ -432,9 +464,11 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
       (d->scrollView->maximumViewportSize().width() - d->scrollView->verticalScrollBar()->sizeHint().width(),
        d->scrollView->maximumViewportSize().height() - d->scrollView->horizontalScrollBar()->sizeHint().height());
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "size=" << d->scrollView->maximumViewportSize()
               << "scrollbar w=" << d->scrollView->verticalScrollBar()->sizeHint().width()
               << "usableSize=" << usableScrollArea;
+#endif
     // Handle rounding error, mis-estimating the scroll view size and
     // cosmic rays.  We do this because we really don't want unnecessary
     // scrollbars.  This seems to need to be at least 2 for slotFitToWidth()
@@ -472,9 +506,12 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
     // content.
     const int zoomLevel = qMin (zoomX, zoomY);
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tzoomX=" << zoomX
         << " zoomY=" << zoomY
         << " -> zoomLevel=" << zoomLevel;
+        << " -> zoomLevel=" << zoomLevel << endl;
+#endif
 
     zoomToPre (zoomLevel);
     {
@@ -554,9 +591,11 @@ void kpMainWindow::slotFitToHeight ()
 // public
 void kpMainWindow::zoomIn (bool centerUnderCursor)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomIn(centerUnderCursor="
               << centerUnderCursor << ") currentItem="
               << d->actionZoom->currentItem ();
+#endif
     const int targetItem = d->actionZoom->currentItem () + 1;
 
     if (targetItem >= static_cast<int> (d->zoomList.count ())) {
@@ -565,7 +604,9 @@ void kpMainWindow::zoomIn (bool centerUnderCursor)
 
     d->actionZoom->setCurrentItem (targetItem);
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tnew currentItem=" << d->actionZoom->currentItem ();
+#endif
 
     zoomAccordingToZoomAction (centerUnderCursor);
 }
@@ -575,9 +616,11 @@ void kpMainWindow::zoomIn (bool centerUnderCursor)
 // public
 void kpMainWindow::zoomOut (bool centerUnderCursor)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomOut(centerUnderCursor="
               << centerUnderCursor << ") currentItem="
               << d->actionZoom->currentItem ();
+#endif
     const int targetItem = d->actionZoom->currentItem () - 1;
 
     if (targetItem < 0) {
@@ -586,7 +629,9 @@ void kpMainWindow::zoomOut (bool centerUnderCursor)
 
     d->actionZoom->setCurrentItem (targetItem);
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tnew currentItem=" << d->actionZoom->currentItem ();
+#endif
 
     zoomAccordingToZoomAction (centerUnderCursor);
 }
@@ -596,7 +641,9 @@ void kpMainWindow::zoomOut (bool centerUnderCursor)
 // public slot
 void kpMainWindow::slotZoomIn ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotZoomIn ()";
+#endif
 
     zoomIn (false/*don't center under cursor*/);
 }
@@ -606,7 +653,9 @@ void kpMainWindow::slotZoomIn ()
 // public slot
 void kpMainWindow::slotZoomOut ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotZoomOut ()";
+#endif
 
     zoomOut (false/*don't center under cursor*/);
 }
@@ -616,10 +665,12 @@ void kpMainWindow::slotZoomOut ()
 // public
 void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::zoomAccordingToZoomAction(centerUnderCursor="
               << centerUnderCursor
               << ") currentItem=" << d->actionZoom->currentItem ()
               << " currentText=" << d->actionZoom->currentText ();
+#endif
 
     // This might be a new zoom level the user has typed in.
     zoomTo (::ZoomLevelFromString (d->actionZoom->currentText ()),
@@ -631,8 +682,10 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 // private slot
 void kpMainWindow::slotZoom ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotZoom () index=" << d->actionZoom->currentItem ()
                << " text='" << d->actionZoom->currentText () << "'";
+#endif
 
     zoomAccordingToZoomAction (false/*don't center under cursor*/);
 }

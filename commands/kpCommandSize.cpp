@@ -31,12 +31,11 @@
 
 #include "commands/kpCommandSize.h"
 #include "layers/selections/kpAbstractSelection.h"
-#include "kpLogCategories.h"
 
 #include <QImage>
 #include <QPolygon>
 #include <QString>
-#include <QDebug>
+
 
 // public static
 kpCommandSize::SizeType kpCommandSize::PixmapSize (const QImage &image)
@@ -58,11 +57,13 @@ kpCommandSize::SizeType kpCommandSize::PixmapSize (int width, int height, int de
     kpCommandSize::SizeType ret =
             static_cast<kpCommandSize::SizeType> (width) * height * roundedDepth / 8;
 
+#if DEBUG_KP_COMMAND_SIZE && 0
     qCDebug(kpLogCommands) << "kpCommandSize::PixmapSize() w=" << width
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
                << " ret=" << ret;
+#endif
     return ret;
 }
 
@@ -87,11 +88,13 @@ kpCommandSize::SizeType kpCommandSize::QImageSize (int width, int height, int de
     kpCommandSize::SizeType ret =
         static_cast<kpCommandSize::SizeType> (width) * height * roundedDepth / 8;
 
+#if DEBUG_KP_COMMAND_SIZE && 0
     qCDebug(kpLogCommands) << "kpCommandSize::QImageSize() w=" << width
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
                << " ret=" << ret;
+#endif
 
     return ret;
 }
@@ -126,9 +129,11 @@ kpCommandSize::SizeType kpCommandSize::SelectionSize (const kpAbstractSelection 
 // public static
 kpCommandSize::SizeType kpCommandSize::StringSize (const QString &string)
 {
+#if DEBUG_KP_COMMAND_SIZE && 1
     qCDebug(kpLogCommands) << "kpCommandSize::StringSize(" << string << ")"
                << " len=" << string.length ()
                << " sizeof(QChar)=" << sizeof (QChar);
+#endif
     return static_cast<SizeType> (static_cast<unsigned int> (string.length ()) * sizeof (QChar));
 }
 
@@ -136,9 +141,11 @@ kpCommandSize::SizeType kpCommandSize::StringSize (const QString &string)
 // public static
 kpCommandSize::SizeType kpCommandSize::PolygonSize (const QPolygon &points)
 {
+#if DEBUG_KP_COMMAND_SIZE && 1
     qCDebug(kpLogCommands) << "kpCommandSize::PolygonSize() points.size="
                << points.size ()
                << " sizeof(QPoint)=" << sizeof (QPoint);
+#endif
 
     return static_cast<SizeType> (static_cast<unsigned int> (points.size ()) * sizeof (QPoint));
 }

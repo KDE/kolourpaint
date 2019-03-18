@@ -103,9 +103,10 @@ void kpMainWindow::readAndApplyTextSettings ()
 
     const QString font (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
     d->actionTextFontFamily->setFont (font);
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "asked setFont to set to=" << font
               << "- got back=" << d->actionTextFontFamily->font ();
-
+#endif
     d->actionTextFontSize->setFontSize (cfg.readEntry (kpSettingFontSize, 14));
     d->actionTextBold->setChecked (cfg.readEntry (kpSettingBold, false));
     d->actionTextItalic->setChecked (cfg.readEntry (kpSettingItalic, false));
@@ -120,7 +121,9 @@ void kpMainWindow::readAndApplyTextSettings ()
 // public
 void kpMainWindow::enableTextToolBarActions (bool enable)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::enableTextToolBarActions(" << enable << ")";
+#endif
 
     d->actionTextFontFamily->setEnabled (enable);
     d->actionTextFontSize->setEnabled (enable);
@@ -145,12 +148,14 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
 // private slot
 void kpMainWindow::slotTextFontFamilyChanged ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontFamilyChanged() alive="
                << d->isFullyConstructed
                << "fontFamily="
                << d->actionTextFontFamily->font ()
                << "action.currentItem="
                << d->actionTextFontFamily->currentItem ();
+#endif
 
     if (!d->isFullyConstructed) {
         return;
@@ -179,10 +184,12 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 // private slot
 void kpMainWindow::slotTextFontSizeChanged ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontSizeChanged() alive="
                << d->isFullyConstructed
                << " fontSize="
                << d->actionTextFontSize->fontSize ();
+#endif
 
     if (!d->isFullyConstructed) {
         return;
@@ -211,10 +218,12 @@ void kpMainWindow::slotTextFontSizeChanged ()
 // private slot
 void kpMainWindow::slotTextBoldChanged ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontBoldChanged() alive="
                << d->isFullyConstructed
                << " bold="
                << d->actionTextBold->isChecked ();
+#endif
 
     if (!d->isFullyConstructed) {
         return;
@@ -234,10 +243,12 @@ void kpMainWindow::slotTextBoldChanged ()
 // private slot
 void kpMainWindow::slotTextItalicChanged ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontItalicChanged() alive="
                << d->isFullyConstructed
                << " bold="
                << d->actionTextItalic->isChecked ();
+#endif
 
     if (!d->isFullyConstructed) {
         return;
@@ -257,10 +268,12 @@ void kpMainWindow::slotTextItalicChanged ()
 // private slot
 void kpMainWindow::slotTextUnderlineChanged ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontUnderlineChanged() alive="
                << d->isFullyConstructed
                << " underline="
                << d->actionTextUnderline->isChecked ();
+#endif
 
     if (!d->isFullyConstructed) {
         return;
@@ -280,10 +293,12 @@ void kpMainWindow::slotTextUnderlineChanged ()
 // private slot
 void kpMainWindow::slotTextStrikeThruChanged ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextStrikeThruChanged() alive="
                << d->isFullyConstructed
                << " strikeThru="
                << d->actionTextStrikeThru->isChecked ();
+#endif
 
     if (!d->isFullyConstructed) {
         return;
@@ -340,7 +355,9 @@ kpTextStyle kpMainWindow::textStyle () const
 // public
 void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::setTextStyle()";
+#endif
 
     d->settingTextStyle++;
 
