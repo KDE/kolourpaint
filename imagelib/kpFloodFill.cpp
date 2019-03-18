@@ -166,7 +166,9 @@ void kpFloodFill::prepareColorToChange ()
         return;
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     qCDebug(kpLogImagelib) << "kpFloodFill::prepareColorToChange()";
+#endif
 
     d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
 }
@@ -264,8 +266,10 @@ int kpFloodFill::findMaxX (int y, int x) const
 // private
 void kpFloodFill::addLine (int y, int x1, int x2)
 {
+#if DEBUG_KP_FLOOD_FILL && 0
     qCDebug(kpLogImagelib) << "kpFillCommand::fillAddLine ("
-              << y << "," << x1 << "," << x2 << ")";
+              << y << "," << x1 << "," << x2 << ")" << endl;
+#endif
 
     d->fillLines.append (kpFillLine (y, x1, x2));
     d->fillLinesCache [y].append (
@@ -310,13 +314,18 @@ void kpFloodFill::prepare ()
         return;
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     qCDebug(kpLogImagelib) << "kpFloodFill::prepare()";
+#endif
 
     prepareColorToChange ();
 
     d->boundingRect = QRect ();
 
+
+#if DEBUG_KP_FLOOD_FILL && 1
     qCDebug(kpLogImagelib) << "\tperforming NOP check";
+#endif
 
     // get the color we need to replace
     if (d->processedColorSimilarity == 0 && d->color == d->colorToChange)
@@ -327,14 +336,18 @@ void kpFloodFill::prepare ()
         return;
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     qCDebug(kpLogImagelib) << "\tcreating fillLinesCache";
+#endif
 
     // ready cache
     for (int i = 0; i < d->imagePtr->height (); i++) {
          d->fillLinesCache.append (QLinkedList <kpFillLine> ());
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     qCDebug(kpLogImagelib) << "\tcreating fill lines";
+#endif
 
     // draw initial line
     addLine (d->y, findMinX (d->y, d->x), findMaxX (d->y, d->x));
@@ -343,9 +356,12 @@ void kpFloodFill::prepare ()
          it != d->fillLines.end ();
          ++it)
     {
+    #if DEBUG_KP_FLOOD_FILL && 0
         qCDebug(kpLogImagelib) << "Expanding from y=" << (*it).m_y
                    << " x1=" << (*it).m_x1
-                   << " x2=" << (*it).m_x2;
+                   << " x2=" << (*it).m_x2
+                   << endl;
+    #endif
 
         //
         // Make more lines above and below current line.
@@ -360,7 +376,9 @@ void kpFloodFill::prepare ()
         findAndAddLines (*it, +1);
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     qCDebug(kpLogImagelib) << "\tfinalising memory usage";
+#endif
 
     // finalize memory usage
     d->fillLinesCache.clear ();

@@ -35,7 +35,6 @@
 #include "mainWindow/kpMainWindow.h"
 #include "tools/kpTool.h"
 #include "commands/tools/selection/kpToolSelectionCreateCommand.h"
-#include "kpLogCategories.h"
 
 
 kpCommandHistory::kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow)
@@ -94,10 +93,14 @@ void kpCommandHistory::addCreateSelectionCommand (kpToolSelectionCreateCommand *
 // public slot virtual [base KCommandHistory]
 void kpCommandHistory::undo ()
 {
+#if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpCommandHistory::undo() CALLED!";
+#endif
     if (m_mainWindow && m_mainWindow->toolHasBegunShape ())
     {
+    #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\thas begun shape - cancel draw";
+    #endif
         m_mainWindow->tool ()->cancelShapeInternal ();
     }
     else {

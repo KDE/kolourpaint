@@ -25,6 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#define DEBUG_KP_DOCUMENT_ENVIRONMENT 0
+
+
 #include "environments/document/kpDocumentEnvironment.h"
 
 #include "kpLogCategories.h"
@@ -38,7 +42,9 @@
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "layers/selections/text/kpTextSelection.h"
 #include "layers/selections/text/kpTextStyle.h"
-#include "tools/kpTool.h"
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
+    #include "tools/kpTool.h"
+#endif
 #include "views/manager/kpViewManager.h"
 
 
@@ -88,6 +94,7 @@ void kpDocumentEnvironment::restoreQueueViewUpdates () const
 void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &selection,
         bool *isTextChanged) const
 {
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
     qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool("
               << &selection << ")"
               << " mainwindow.tool="
@@ -97,7 +104,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
               << document ()->selection ()
               << " new selection is text="
               << dynamic_cast <const kpTextSelection *> (&selection);
-
+#endif
 
     *isTextChanged = (mainWindow ()->toolIsTextTool () !=
                      (dynamic_cast <const kpTextSelection *> (&selection) != nullptr));
@@ -124,22 +131,30 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         // (all selection tool's ::end() functions nuke the current selection)
         if (dynamic_cast <const kpRectangularImageSelection *> (&selection))
         {
+        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to rect selection tool";
+        #endif
             mainWindow ()->slotToolRectSelection ();
         }
         else if (dynamic_cast <const kpEllipticalImageSelection *> (&selection))
         {
+        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to elliptical selection tool";
+        #endif
             mainWindow ()->slotToolEllipticalSelection ();
         }
         else if (dynamic_cast <const kpFreeFormImageSelection *> (&selection))
         {
+        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to free form selection tool";
+        #endif
             mainWindow ()->slotToolFreeFormSelection ();
         }
         else if (dynamic_cast <const kpTextSelection *> (&selection))
         {
+        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to text selection tool";
+        #endif
             mainWindow ()->slotToolText ();
         }
         else {
@@ -147,7 +162,9 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         }
     }
 
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
     qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished";
+#endif
 }
 
 //---------------------------------------------------------------------

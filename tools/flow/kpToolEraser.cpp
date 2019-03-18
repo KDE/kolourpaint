@@ -33,7 +33,6 @@
 #include "commands/kpCommandHistory.h"
 #include "commands/imagelib/effects/kpEffectClearCommand.h"
 #include "environments/tools/kpToolEnvironment.h"
-#include "kpLogCategories.h"
 
 #include <KLocalizedString>
 
@@ -52,7 +51,9 @@ kpToolEraser::kpToolEraser (kpToolEnvironment *environ, QObject *parent)
 // public virtual [base kpTool]
 void kpToolEraser::globalDraw ()
 {
+#if DEBUG_KP_TOOL_ERASER
     qCDebug(kpLogTools) << "kpToolEraser::globalDraw()";
+#endif
 
     commandHistory ()->addCommand (
         new kpEffectClearCommand (

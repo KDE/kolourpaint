@@ -100,7 +100,9 @@ kpMainWindow::kpMainWindow (kpDocument *newDoc)
 // private
 void kpMainWindow::readGeneralSettings ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tkpMainWindow(" << objectName () << ")::readGeneralSettings()";
+#endif
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
@@ -117,8 +119,10 @@ void kpMainWindow::readGeneralSettings ()
     else
     {
         d->configOpenImagesInSameWindow = false;
+#if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tconfigOpenImagesInSameWindow: first time"
                   << " - writing default: " << d->configOpenImagesInSameWindow;
+#endif
         // TODO: More hidden options have to write themselves out on startup,
         //       not on use, to be discoverable (e.g. printing centered on page).
         cfg.writeEntry (kpSettingOpenImagesInSameWindow,
@@ -129,12 +133,14 @@ void kpMainWindow::readGeneralSettings ()
     d->configPrintImageCenteredOnPage = cfg.readEntry (kpSettingPrintImageCenteredOnPage, true);
 
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\t\tGeneral Settings: firstTime=" << d->configFirstTime
                << " showGrid=" << d->configShowGrid
                << " showPath=" << d->configShowPath
                << " moreEffectsDialogLastEffect=" << d->moreEffectsDialogLastEffect
                << " openImagesInSameWindow=" << d->configOpenImagesInSameWindow
                << " printImageCenteredOnPage=" << d->configPrintImageCenteredOnPage;
+#endif
 }
 
 //---------------------------------------------------------------------
@@ -142,7 +148,9 @@ void kpMainWindow::readGeneralSettings ()
 // private
 void kpMainWindow::readThumbnailSettings ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tkpMainWindow(" << objectName () << ")::readThumbnailSettings()";
+#endif
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
@@ -151,10 +159,12 @@ void kpMainWindow::readThumbnailSettings ()
     d->configZoomedThumbnail = cfg.readEntry (kpSettingThumbnailZoomed, true);
     d->configThumbnailShowRectangle = cfg.readEntry (kpSettingThumbnailShowRectangle, true);
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\t\tThumbnail Settings: shown=" << d->configThumbnailShown
                << " geometry=" << d->configThumbnailGeometry
                << " zoomed=" << d->configZoomedThumbnail
                << " showRectangle=" << d->configThumbnailShowRectangle;
+#endif
 }
 
 //---------------------------------------------------------------------
@@ -177,8 +187,10 @@ void kpMainWindow::finalizeGUI(KXMLGUIClient *client)
 // private
 void kpMainWindow::init ()
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow(" << objectName () << ")::init()";
     QTime totalTime; totalTime.start ();
+#endif
 
     d = new kpMainWindowPrivate;
 
@@ -265,7 +277,9 @@ void kpMainWindow::init ()
     }
 
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tall done in " << totalTime.elapsed () << "msec";
+#endif
 }
 
 //---------------------------------------------------------------------
@@ -273,12 +287,16 @@ void kpMainWindow::init ()
 // private virtual [base KMainWindow]
 void kpMainWindow::readProperties (const KConfigGroup &configGroup)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow<" << this << ">::readProperties()";
+#endif
 
     // No document at all?
     if (!configGroup.hasKey (kpSessionSettingDocumentUrl))
     {
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tno url - no document";
+    #endif
         setDocument (nullptr);
     }
     // Have a document.
@@ -286,7 +304,9 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
     {
         const QUrl url = QUrl (configGroup.readEntry (kpSessionSettingDocumentUrl,
                                                 QString ()));
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\turl=" << url;
+    #endif
 
         const QSize notFromURLDocSize =
             configGroup.readEntry (kpSessionSettingNotFromUrlDocumentSize,
@@ -303,7 +323,9 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
         // Not from URL?
         else
         {
+        #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\tnot from url; doc size=" << notFromURLDocSize;
+        #endif
             // Either we have an empty URL or we have a "kolourpaint doesnotexist.png"
             // URL.  Regarding the latter case, if a file now actually exists at that
             // URL, we do open it - ignoring notFromURLDocSize - to avoid putting
@@ -323,12 +345,16 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
 //          in this function!"
 void kpMainWindow::saveProperties (KConfigGroup &configGroup)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow<" << this << ">::saveProperties()";
+#endif
 
     // No document at all?
     if (!d->document)
     {
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tno url - no document";
+    #endif
     }
     // Have a document.
     else
@@ -341,7 +367,9 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
         //       ii) URL (from "kolourpaint doesnotexist.png")
 
         const QUrl url = d->document->url ();
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\turl=" << url;
+    #endif
         configGroup.writeEntry (kpSessionSettingDocumentUrl, url.url ());
 
         // Not from URL e.g. "kolourpaint doesnotexist.png"?
@@ -364,7 +392,9 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
             // Similarly for height() and constructorHeight().
             const QSize docSize (d->document->constructorWidth (),
                                  d->document->constructorHeight ());
+        #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\tnot from url; doc size=" << docSize;
+        #endif
             configGroup.writeEntry (kpSessionSettingNotFromUrlDocumentSize, docSize);
         }
     }
@@ -506,7 +536,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // is it a close operation?
     if (!newDoc)
     {
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tdisabling actions";
+    #endif
 
         // sync with the bit marked "sync" below
 
@@ -546,8 +578,10 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
     delete d->viewManager; d->viewManager = nullptr;
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tdestroying document";
     qCDebug(kpLogMainWindow) << "\t\td->document=" << d->document;
+#endif
     // destroy current document
     delete d->document;
     d->document = newDoc;
@@ -574,8 +608,10 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // not a close operation?
     if (d->document)
     {
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\treparenting doc that may have been created into a"
                   << " different mainWindiow";
+    #endif
         d->document->setEnviron (documentEnvironment ());
 
         d->viewManager = new kpViewManager (this);
@@ -590,7 +626,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         d->scrollView->setView (d->mainView);
         d->mainView->show ();
 
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\thooking up document signals";
+    #endif
 
         // Copy/Cut/Deselect/Delete
         connect (d->document, &kpDocument::selectionEnabled,
@@ -665,7 +703,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                  static_cast<void (kpDocument::*)(int, int)>(&kpDocument::sizeChanged),
                  d->viewManager, &kpViewManager::adjustViewsToEnvironment);
 
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tenabling actions";
+    #endif
 
         // sync with the bit marked "sync" above
 
@@ -681,7 +721,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         enableDocumentActions (true);
     }
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tupdating mainWindow elements";
+#endif
 
     slotImageMenuUpdateDueToSelection ();
     recalculateStatusBar ();
@@ -693,7 +735,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         d->commandHistory->clear ();
     }
 
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tdocument and views ready to go!";
+#endif
 }
 
 //---------------------------------------------------------------------
@@ -713,7 +757,9 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 // private virtual [base QWidget]
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
+#if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::dropEvent" << e->pos ();
+#endif
 
     QList<QUrl> urls;
 
@@ -743,18 +789,23 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 
         QPoint selTopLeft = KP_INVALID_POINT;
         const QPoint globalPos = QWidget::mapToGlobal (e->pos ());
+    #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tpos toGlobal=" << globalPos;
+    #endif
 
         kpView *view = nullptr;
 
         if (d->viewManager)
         {
             view = d->viewManager->viewUnderCursor ();
+        #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\t\tviewUnderCursor=" << view;
+        #endif
             if (!view)
             {
                 // HACK: see kpViewManager::setViewUnderCursor() to see why
                 //       it's not reliable
+            #if DEBUG_KP_MAIN_WINDOW
                 qCDebug(kpLogMainWindow) << "\t\tattempting to discover view";
 
                 if (d->mainView && d->scrollView)
@@ -767,6 +818,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
                                             d->scrollView->viewport()->width (),
                                             d->scrollView->viewport()->height ()));
                 }
+            #endif
                 if (d->thumbnailView &&
                     kpWidgetMapper::toGlobal (d->thumbnailView, d->thumbnailView->rect ())
                         .contains (globalPos))

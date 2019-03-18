@@ -72,7 +72,9 @@ kpCommandSize::SizeType kpToolSelectionDestroyCommand::size () const
 // public virtual [base kpCommand]
 void kpToolSelectionDestroyCommand::execute ()
 {
+#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "kpToolSelectionDestroyCommand::execute () CALLED";
+#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -101,7 +103,9 @@ void kpToolSelectionDestroyCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolSelectionDestroyCommand::unexecute ()
 {
+#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "kpToolSelectionDestroyCommand::unexecute () CALLED";
+#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -110,7 +114,9 @@ void kpToolSelectionDestroyCommand::unexecute ()
     {
         // not error because it's possible that the user dragged out a new
         // region (without pulling image), and then CTRL+Z
+    #if DEBUG_KP_TOOL_SELECTION
         qCDebug(kpLogCommands) << "kpToolSelectionDestroyCommand::unexecute() already has sel region";
+    #endif
 
         if (doc->selection ()->hasContent ())
         {
@@ -123,15 +129,20 @@ void kpToolSelectionDestroyCommand::unexecute ()
 
     if (m_pushOntoDocument)
     {
+    #if DEBUG_KP_TOOL_SELECTION
         qCDebug(kpLogCommands) << "\tunpush oldDocImage onto doc first";
+    #endif
         doc->setImageAt (m_oldDocImage, m_oldSelectionPtr->topLeft ());
     }
 
+#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "\tsetting selection to: rect=" << m_oldSelectionPtr->boundingRect ()
                << " hasContent=" << m_oldSelectionPtr->hasContent ();
-    auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
-    auto *textSel = dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
-
+#endif
+    kpAbstractImageSelection *imageSel =
+        dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
+    kpTextSelection *textSel =
+        dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
     if (imageSel)
     {
         if (imageSel->transparency () != environ ()->imageSelectionTransparency ()) {

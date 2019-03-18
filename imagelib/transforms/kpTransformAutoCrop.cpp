@@ -41,6 +41,9 @@
 //       to get vastly differently colors in both sides yet they will be
 //       considered similar).
 
+#define DEBUG_KP_TOOL_AUTO_CROP 0
+
+
 #include "kpTransformAutoCrop.h"
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
@@ -197,7 +200,9 @@ bool kpTransformAutoCropBorder::isSingleColor () const
 // public
 bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 {
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
     qCDebug(kpLogImagelib) << "kpTransformAutoCropBorder::calculate() CALLED!";
+#endif
     int maxX = m_imagePtr->width () - 1;
     int maxY = m_imagePtr->height () - 1;
 
@@ -412,16 +417,20 @@ void kpTransformAutoCropCommand::getUndoImage (const kpTransformAutoCropBorder &
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
     qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::getUndoImage()";
     qCDebug(kpLogImagelib) << "\timage=" << image
                << " border: rect=" << border.rect ()
                << " isSingleColor=" << border.isSingleColor ();
+#endif
 
     if (image && border.exists () && !border.isSingleColor ())
     {
         if (*image)
         {
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
             qCDebug(kpLogImagelib) << "\talready have *image - delete it";
+        #endif
             delete *image;
         }
 
@@ -444,7 +453,9 @@ void kpTransformAutoCropCommand::getUndoImages ()
 // private
 void kpTransformAutoCropCommand::deleteUndoImages ()
 {
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
     qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::deleteUndoImages()";
+#endif
 
     delete d->leftImage; d->leftImage = nullptr;
     delete d->rightImage; d->rightImage = nullptr;
@@ -499,7 +510,9 @@ void kpTransformAutoCropCommand::execute ()
 // public virtual [base kpCommand]
 void kpTransformAutoCropCommand::unexecute ()
 {
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
     qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::unexecute()";
+#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -624,7 +637,9 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
 
 bool kpTransformAutoCrop (kpMainWindow *mainWindow)
 {
+#if DEBUG_KP_TOOL_AUTO_CROP
     qCDebug(kpLogImagelib) << "kpTransformAutoCrop() CALLED!";
+#endif
 
     Q_ASSERT (mainWindow);
     kpDocument *doc = mainWindow->document ();
@@ -678,6 +693,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
         return false;
     }
 
+#if DEBUG_KP_TOOL_AUTO_CROP
     qCDebug(kpLogImagelib) << "\tnumRegions=" << numRegions;
     qCDebug(kpLogImagelib) << "\t\tleft=" << leftBorder.rect ()
                << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : nullptr)
@@ -691,7 +707,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
     qCDebug(kpLogImagelib) << "\t\tbot=" << botBorder.rect ()
                << " refCol=" << (botBorder.exists () ? (int *) botBorder.referenceColor ().toQRgb () : nullptr)
                << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : nullptr);
-
+#endif
 
     // In case e.g. the user pastes a solid, coloured-in rectangle,
     // we favor killing the bottom and right regions
@@ -708,7 +724,9 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
         if ((numRegions == 2 && !leftCol.isSimilarTo (rightCol, processedColorSimilarity)) ||
             leftBorder.right () >= rightBorder.left () - 1)  // kissing or overlapping
         {
+        #if DEBUG_KP_TOOL_AUTO_CROP
             qCDebug(kpLogImagelib) << "\tignoring left border";
+        #endif
             leftBorder.invalidate ();
         }
     }
@@ -721,7 +739,9 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
         if ((numRegions == 2 && !topCol.isSimilarTo (botCol, processedColorSimilarity)) ||
             topBorder.bottom () >= botBorder.top () - 1)  // kissing or overlapping
         {
+        #if DEBUG_KP_TOOL_AUTO_CROP
             qCDebug(kpLogImagelib) << "\tignoring top border";
+        #endif
             topBorder.invalidate ();
         }
     }

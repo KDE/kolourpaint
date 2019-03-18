@@ -35,7 +35,6 @@
 #include <climits>
 
 #include <QtAlgorithms>
-#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
@@ -63,18 +62,26 @@ kpMacroCommand::~kpMacroCommand ()
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpMacroCommand::size () const
 {
+#if DEBUG_KP_COMMAND_HISTORY && 0
     qCDebug(kpLogCommands) << "kpMacroCommand::size()";
+#endif
     SizeType s = 0;
 
+#if DEBUG_KP_COMMAND_HISTORY && 0
     qCDebug(kpLogCommands) << "\tcalculating:";
-    for (auto *cmd : m_commandList)
+#endif
+    foreach (kpCommand *cmd, m_commandList)
     {
+    #if DEBUG_KP_COMMAND_HISTORY && 0
         qCDebug(kpLogCommands) << "\t\tcurrentSize=" << s << " + "
                    << cmd->name () << ".size=" << cmd->size ();
+    #endif
         s += cmd->size ();
     }
 
+#if DEBUG_KP_COMMAND_HISTORY && 0
     qCDebug(kpLogCommands) << "\treturning " << s;
+#endif
     return s;
 }
 
@@ -83,7 +90,9 @@ kpCommandSize::SizeType kpMacroCommand::size () const
 // public virtual [base kpCommand]
 void kpMacroCommand::execute ()
 {
+#if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpMacroCommand::execute()";
+#endif
 
     viewManager()->setQueueUpdates();
 
@@ -91,7 +100,9 @@ void kpMacroCommand::execute ()
          it != m_commandList.end ();
          ++it)
     {
+    #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\texecuting " << (*it)->name ();
+    #endif
         (*it)->execute ();
     }
 
@@ -103,7 +114,9 @@ void kpMacroCommand::execute ()
 // public virtual [base kpCommand]
 void kpMacroCommand::unexecute ()
 {
+#if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpMacroCommand::unexecute()";
+#endif
 
     viewManager()->setQueueUpdates();
 
@@ -112,7 +125,9 @@ void kpMacroCommand::unexecute ()
 
     while (it != m_commandList.end ())
     {
+    #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\tunexecuting " << (*it)->name ();
+    #endif
         (*it)->unexecute ();
 
         it--;

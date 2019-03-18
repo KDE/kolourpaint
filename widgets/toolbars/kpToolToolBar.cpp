@@ -198,8 +198,11 @@ kpTool *kpToolToolBar::tool () const
 // public
 void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
 {
+#if DEBUG_KP_TOOL_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpToolToolBar::selectTool (tool=" << tool
-               << ") currentTool=" << m_currentTool;
+               << ") currentTool=" << m_currentTool
+               << endl;
+#endif
 
     if (!reselectIfSameTool && tool == m_currentTool) {
         return;
@@ -287,7 +290,9 @@ void kpToolToolBar::slotToolButtonClicked ()
 {
     QAbstractButton *b = m_buttonGroup->checkedButton();
 
+#if DEBUG_KP_TOOL_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpToolToolBar::slotToolButtonClicked() button=" << b;
+#endif
 
     kpTool *tool = nullptr;
     for (const auto *button : m_toolButtons)
@@ -299,8 +304,11 @@ void kpToolToolBar::slotToolButtonClicked ()
       }
     }
 
+#if DEBUG_KP_TOOL_TOOL_BAR
     qCDebug(kpLogWidgets) << "\ttool=" << tool
-               << " currentTool=" << m_currentTool;
+               << " currentTool=" << m_currentTool
+               << endl;
+#endif
 
     if (tool == m_currentTool)
     {
@@ -341,8 +349,11 @@ void kpToolToolBar::slotToolActionActivated ()
 {
     const auto *tool = dynamic_cast<const kpTool *>(sender());
 
+#if DEBUG_KP_TOOL_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpToolToolBar::slotToolActionActivated() tool="
-               << (tool ? tool->objectName () : "null");
+               << (tool ? tool->objectName () : "null")
+               << endl;
+#endif
 
     selectTool (tool, true/*reselect if same tool*/);
 }
@@ -352,9 +363,11 @@ void kpToolToolBar::slotToolActionActivated ()
 // public
 void kpToolToolBar::adjustToOrientation(Qt::Orientation o)
 {
+#if DEBUG_KP_TOOL_TOOL_BAR
     qCDebug(kpLogWidgets) << "kpToolToolBar::adjustToOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
-               << ") called!";
+               << ") called!" << endl;
+#endif
 
     delete m_baseLayout;
     if (o == Qt::Vertical)

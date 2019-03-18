@@ -358,7 +358,9 @@ kpDocumentSaveOptions kpDocumentSaveOptions::defaultDocumentSaveOptions (const K
     saveOptions.setDither (defaultDither (config));
     saveOptions.setQuality (defaultQuality (config));
 
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS
     saveOptions.printDebug ("kpDocumentSaveOptions::defaultDocumentSaveOptions()");
+#endif
 
     return saveOptions;
 }
@@ -372,9 +374,11 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
 {
     bool savedSomething = false;
 
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS
     qCDebug(kpLogDocument) << "kpDocumentSaveOptions::saveDefaultDifferences()";
     oldDocInfo.printDebug ("\told");
     newDocInfo.printDebug ("\tnew");
+#endif
 
     if (newDocInfo.mimeType () != oldDocInfo.mimeType ())
     {

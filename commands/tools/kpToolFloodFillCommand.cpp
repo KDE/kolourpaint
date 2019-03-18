@@ -98,8 +98,10 @@ void kpToolFloodFillCommand::setFillEntireImage (bool yes)
 // protected virtual [base kpCommand]
 void kpToolFloodFillCommand::execute ()
 {
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
     qCDebug(kpLogCommands) << "kpToolFloodFillCommand::execute() fillEntireImage="
               << d->fillEntireImage;
+#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -125,7 +127,9 @@ void kpToolFloodFillCommand::execute ()
         }
         else
         {
+        #if DEBUG_KP_TOOL_FLOOD_FILL && 1
             qCDebug(kpLogCommands) << "\tinvalid boundingRect - must be NOP case";
+        #endif
         }
     }
 }
@@ -135,8 +139,10 @@ void kpToolFloodFillCommand::execute ()
 // protected virtual [base kpCommand]
 void kpToolFloodFillCommand::unexecute ()
 {
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
     qCDebug(kpLogCommands) << "kpToolFloodFillCommand::unexecute() fillEntireImage="
               << d->fillEntireImage;
+#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);

@@ -125,7 +125,9 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   QString tempPaletteFilePath;
   if (url.isEmpty () || !KIO::NetAccess::download (url, tempPaletteFilePath, parent))
   {
+  #if DEBUG_KP_COLOR_COLLECTION
      qCDebug(kpLogMisc) << "\tcould not download";
+  #endif
      ::CouldNotOpenDialog (url, parent);
      return false;
   }
@@ -136,7 +138,9 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   if (!paletteFile.exists() ||
       !paletteFile.open(QIODevice::ReadOnly))
   {
+  #if DEBUG_KP_COLOR_COLLECTION
      qCDebug(kpLogMisc) << "\tcould not open qfile";
+  #endif
      KIO::NetAccess::removeTempFile (tempPaletteFilePath);
      ::CouldNotOpenDialog (url, parent);
      return false;
@@ -206,11 +210,15 @@ static void CouldNotOpenKDEDialog (const QString &name, QWidget *parent)
 bool
 kpColorCollection::openKDE(const QString &name, QWidget *parent)
 {
+#if DEBUG_KP_COLOR_COLLECTION
   qCDebug(kpLogMisc) << "name=" << name;
+#endif
 
   if (name.isEmpty())
   {
+  #if DEBUG_KP_COLOR_COLLECTION
     qCDebug(kpLogMisc) << "name.isEmpty";
+  #endif
     ::CouldNotOpenKDEDialog (name, parent);
     return false;
   }
@@ -219,7 +227,9 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
                                             "colors/" + name);
   if (filename.isEmpty())
   {
+  #if DEBUG_KP_COLOR_COLLECTION
     qCDebug(kpLogMisc) << "could not find file";
+  #endif
     ::CouldNotOpenKDEDialog (name, parent);
     return false;
   }
@@ -227,12 +237,16 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   // (this will pop up an error dialog on failure)
   if (!open (QUrl::fromLocalFile (filename), parent))
   {
+  #if DEBUG_KP_COLOR_COLLECTION
     qCDebug(kpLogMisc) << "could not open";
+  #endif
     return false;
   }
 
   d->name = name;
+#if DEBUG_KP_COLOR_COLLECTION
   qCDebug(kpLogMisc) << "opened";
+#endif
   return true;
 }
 
@@ -301,8 +315,10 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
                 // opened.
                 atomicFileWriter.cancelWriting ();
 
+            #if DEBUG_KP_COLOR_COLLECTION
                 qCDebug(kpLogMisc) << "\treturning false because could not open QSaveFile"
                           << " error=" << atomicFileWriter.error ();
+            #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
@@ -316,7 +332,9 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
             {
                 atomicFileWriter.cancelWriting ();
 
+            #if DEBUG_KP_COLOR_COLLECTION
                 qCDebug(kpLogMisc) << "\tcould not close QSaveFile";
+            #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
@@ -330,7 +348,9 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
         QTemporaryFile tempFile;
         if (!tempFile.open ())
         {
+        #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogMisc) << "\treturning false because could not open tempFile";
+        #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
         }
@@ -341,13 +361,17 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
         // Collect name of temporary file now, as QTemporaryFile::fileName()
         // stops working after close() is called.
         const QString tempFileName = tempFile.fileName ();
+    #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogMisc) << "\ttempFileName='" << tempFileName << "'";
+    #endif
         Q_ASSERT (!tempFileName.isEmpty ());
 
         tempFile.close ();
         if (tempFile.error () != QFile::NoError)
         {
+        #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogMisc) << "\treturning false because could not close";
+        #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
         }
@@ -358,7 +382,9 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
         //       At least, fish:// (ssh) is definitely not atomic.
         if (!KIO::NetAccess::upload (tempFileName, url, parent))
         {
+        #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogMisc) << "\treturning false because could not upload";
+        #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
         }

@@ -109,12 +109,15 @@ static void DrawFace (QPaintDevice *target,
         const QPointF &bl, const QPointF &br,
         int highlight)
 {
+#if DEBUG_KP_COLOR_SIMILARITY_CUBE
     qCDebug(kpLogWidgets) << "kpColorSimilarityCubeRenderer.cpp:DrawFace(RorGorB=" << redOrGreenOrBlue
                << ",tl=" << tl
                << ",tr=" << tr
                << ",bl=" << bl
                << ",br=" << br
-               << ")";
+               << ")"
+               << endl;
+#endif
 
     //  tl --- tm --- tr
     //  |      |       |
@@ -142,12 +145,16 @@ static void DrawFace (QPaintDevice *target,
         ::Color (redOrGreenOrBlue, baseBrightness, colorSimilarity, +1, highlight)
     };
 
+#if DEBUG_KP_COLOR_SIMILARITY_CUBE
     qCDebug(kpLogWidgets) << "\tmaxColorSimilarity=" << kpColorSimilarityHolder::MaxColorSimilarity
                << " colorCubeDiagDist=" << kpColorSimilarityHolder::ColorCubeDiagonalDistance
                << "\n"
                << "\tbaseBrightness=" << baseBrightness
                << " color[0]=" << ((colors [0].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
-               << " color[1]=" << ((colors [1].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8));
+               << " color[1]=" << ((colors [1].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
+               << endl;
+#endif
+
 
     ::DrawQuadrant(target, colors [0], tm, tl, ml, mm);
     ::DrawQuadrant(target, colors [1], tm, tr, mr, mm);

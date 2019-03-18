@@ -565,9 +565,11 @@ bool kpDocumentMetaInfoDialog::isFieldsRowDeleteable (int row) const
 // private
 void kpDocumentMetaInfoDialog::fieldsDeleteRow (int r)
 {
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::fieldsDeleteRow("
               << "row=" << r << ")"
               << " currentRow=" << d->fieldsTableWidget->currentRow ();
+#endif
 
     Q_ASSERT (isFieldsRowDeleteable (r));
 
@@ -575,15 +577,21 @@ void kpDocumentMetaInfoDialog::fieldsDeleteRow (int r)
     {
         // Assertion follows from previous assertion.
         const int newRow = r + 1;
+    #if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
         qCDebug(kpLogDialogs) << "\tnewRow=" << newRow;
+    #endif
         Q_ASSERT (newRow < d->fieldsTableWidget->rowCount ());
 
         int newCol = d->fieldsTableWidget->currentColumn ();
+    #if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
         qCDebug(kpLogDialogs) << "\tnewCol=" << newCol;
+    #endif
         if (newCol != 0 && newCol != 1)
         {
             newCol = 0;
+        #if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
             qCDebug(kpLogDialogs) << "\t\tcorrecting to " << newCol;
+        #endif
         }
 
         // WARNING: You must call this _before_ deleting the row.  Else, you'll
@@ -611,10 +619,14 @@ void kpDocumentMetaInfoDialog::fieldsDeleteRow (int r)
 // private
 void kpDocumentMetaInfoDialog::enableFieldsDeleteRowButtonIfShould ()
 {
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::enableFieldsDeleteRowButtonIfShould()";
+#endif
 
     const int r = d->fieldsTableWidget->currentRow ();
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "\tr=" << r;
+#endif
 
     d->fieldsDeleteRowButton->setEnabled (isFieldsRowDeleteable (r));
 }
@@ -624,10 +636,17 @@ void kpDocumentMetaInfoDialog::enableFieldsDeleteRowButtonIfShould ()
 void kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged (int row, int col,
         int oldRow, int oldCol)
 {
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged("
               << "row=" << row << ",col=" << col
               << ",oldRow=" << oldRow << ",oldCol=" << oldCol
-              << ")";
+              << ")" << endl;
+#endif
+
+    (void) row;
+    (void) col;
+    (void) oldRow;
+    (void) oldCol;
 
     enableFieldsDeleteRowButtonIfShould ();
 }
@@ -637,18 +656,26 @@ void kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged (int row, int col,
 
 void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
 {
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsItemChanged("
               << "item=" << it << ") rows=" << d->fieldsTableWidget->rowCount ();
+#endif
 
     const int r = d->fieldsTableWidget->row (it);
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "\tr=" << r;
+#endif
     Q_ASSERT (r >= 0 && r < d->fieldsTableWidget->rowCount ());
 
     const QString key = d->fieldsTableWidget->item (r, 0)->text ();
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << " key='" << key << "'";
+#endif
 
     const QString value = d->fieldsTableWidget->item (r, 1)->text ();
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << " value='" << value << "'";
+#endif
 
     // At the last row?
     if (r == d->fieldsTableWidget->rowCount () - 1)
@@ -672,10 +699,14 @@ void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
 
 void kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked ()
 {
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked()";
+#endif
 
     const int r = d->fieldsTableWidget->currentRow ();
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "\tr=" << r;
+#endif
 
     // (if no row is selected, r = -1)
     fieldsAddEmptyRow (r + 1);
@@ -690,10 +721,14 @@ void kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked ()
 // private slot
 void kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked ()
 {
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked()";
+#endif
 
     const int r = d->fieldsTableWidget->currentRow ();
+#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
     qCDebug(kpLogDialogs) << "\tr=" << r;
+#endif
 
     Q_ASSERT (isFieldsRowDeleteable (r));
     fieldsDeleteRow (r);
@@ -714,3 +749,5 @@ void kpDocumentMetaInfoDialog::accept ()
 
     QDialog::accept ();
 }
+
+

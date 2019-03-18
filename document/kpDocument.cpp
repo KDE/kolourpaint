@@ -280,7 +280,7 @@ int kpDocument::constructorHeight () const
 //---------------------------------------------------------------------
 
 int kpDocument::height (bool ofSelection) const
-{   
+{
     return (ofSelection && m_selection) ? m_selection->height() : m_image->height();
 }
 
@@ -301,7 +301,7 @@ void kpDocument::setHeight (int h, const kpColor &backgroundColor)
 //---------------------------------------------------------------------
 
 QRect kpDocument::rect (bool ofSelection) const
-{   
+{
     return (ofSelection && m_selection) ? m_selection->boundingRect() : m_image->rect();
 }
 
@@ -318,11 +318,13 @@ kpImage kpDocument::getImageAt (const QRect &rect) const
 // public
 void kpDocument::setImageAt (const kpImage &image, const QPoint &at)
 {
+#if DEBUG_KP_DOCUMENT && 0
     qCDebug(kpLogDocument) << "kpDocument::setImageAt (image (w="
                << image.width ()
                << ",h=" << image.height ()
                << "), x=" << at.x ()
                << ",y=" << at.y ();
+#endif
 
     kpPixmapFX::setPixmapAt (m_image, at, image);
     slotContentsChanged (QRect (at.x (), at.y (), image.width (), image.height ()));
@@ -398,7 +400,9 @@ void kpDocument::setImage (bool ofSelection, const kpImage &image)
 
 void kpDocument::fill (const kpColor &color)
 {
+#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::fill ()";
+#endif
 
     m_image->fill(color.toQRgb());
     slotContentsChanged (m_image->rect ());
@@ -408,13 +412,17 @@ void kpDocument::fill (const kpColor &color)
 
 void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 {
+#if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::resize (" << w << "," << h << ")";
+#endif
 
     m_oldWidth = width ();
     m_oldHeight = height ();
 
+#if DEBUG_KP_DOCUMENT && 1
     qCDebug(kpLogDocument) << "\toldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight;
+#endif
 
     if (w == m_oldWidth && h == m_oldHeight) {
         return;

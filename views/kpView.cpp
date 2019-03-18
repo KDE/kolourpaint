@@ -206,11 +206,15 @@ QPoint kpView::origin () const
 // public virtual
 void kpView::setOrigin (const QPoint &origin)
 {
+#if DEBUG_KP_VIEW
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::setOrigin" << origin;
+#endif
 
     if (origin == d->origin)
     {
+    #if DEBUG_KP_VIEW
         qCDebug(kpLogViews) << "\tNOP";
+    #endif
         return;
     }
 
@@ -547,10 +551,12 @@ void kpView::setHasMouse (bool yes)
         return;
     }
 
+#if DEBUG_KP_VIEW && 0
     qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::setHasMouse(" << yes
                << ") existing viewUnderCursor="
                << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->objectName () : "(none)");
+#endif
     if (yes && vm->viewUnderCursor () != this) {
         vm->setViewUnderCursor (this);
     }
@@ -564,9 +570,12 @@ void kpView::setHasMouse (bool yes)
 // public
 void kpView::addToQueuedArea (const QRegion &region)
 {
+#if DEBUG_KP_VIEW && 0
     qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::addToQueuedArea() already=" << d->queuedUpdateArea
-               << " - plus - " << region;
+               << " - plus - " << region
+               << endl;
+#endif
     d->queuedUpdateArea += region;
 }
 
@@ -575,9 +584,12 @@ void kpView::addToQueuedArea (const QRegion &region)
 // public
 void kpView::addToQueuedArea (const QRect &rect)
 {
+#if DEBUG_KP_VIEW && 0
     qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::addToQueuedArea() already=" << d->queuedUpdateArea
-               << " - plus - " << rect;
+               << " - plus - " << rect
+               << endl;
+#endif
     d->queuedUpdateArea += rect;
 }
 
@@ -586,7 +598,9 @@ void kpView::addToQueuedArea (const QRect &rect)
 // public
 void kpView::invalidateQueuedArea ()
 {
+#if DEBUG_KP_VIEW && 0
     qCDebug(kpLogViews) << "kpView::invalidateQueuedArea()";
+#endif
 
     d->queuedUpdateArea = QRegion ();
 }
@@ -597,11 +611,14 @@ void kpView::invalidateQueuedArea ()
 void kpView::updateQueuedArea ()
 {
     kpViewManager *vm = viewManager ();
+#if DEBUG_KP_VIEW && 0
     qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::updateQueuedArea() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
-               << " area=" << d->queuedUpdateArea;
+               << " area=" << d->queuedUpdateArea
+               << endl;
+#endif
 
     if (!vm) {
         return;
@@ -637,7 +654,9 @@ QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
 // public virtual
 QVariant kpView::inputMethodQuery (Qt::InputMethodQuery query) const
 {
+#if DEBUG_KP_VIEW && 1
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::inputMethodQuery()";
+#endif
     QVariant ret;
     switch (query)
     {

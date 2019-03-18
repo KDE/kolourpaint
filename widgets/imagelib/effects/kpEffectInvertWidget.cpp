@@ -103,10 +103,13 @@ kpEffectInvertWidget::~kpEffectInvertWidget () = default;
 // public
 int kpEffectInvertWidget::channels () const
 {
+#if DEBUG_KP_EFFECT_INVERT
     qCDebug(kpLogWidgets) << "kpEffectInvertWidget::channels()"
                << " isChecked: r=" << m_redCheckBox->isChecked ()
                << " g=" << m_greenCheckBox->isChecked ()
-               << " b=" << m_blueCheckBox->isChecked ();
+               << " b=" << m_blueCheckBox->isChecked ()
+               << endl;
+#endif
 
     int channels = 0;
 
@@ -124,7 +127,9 @@ int kpEffectInvertWidget::channels () const
     }
 
 
+#if DEBUG_KP_EFFECT_INVERT
     qCDebug(kpLogWidgets) << "\treturning channels=" << (int *) channels;
+#endif
     return channels;
 }
 

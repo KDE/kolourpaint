@@ -25,6 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#define DEBUG_KP_TOOL_POLYGON 0
+
+
 #include "kpToolPolygon.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "environments/tools/kpToolEnvironment.h"
@@ -35,7 +39,6 @@
 
 #include <QPainter>
 #include <QPen>
-#include "kpLogCategories.h"
 
 //--------------------------------------------------------------------------------
 
@@ -152,8 +155,10 @@ kpColor kpToolPolygon::drawingBackgroundColor () const
 //       inheritance and readability.
 void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 {
+#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "kpToolPolygon::endDraw()  points="
         << points ()->toList ();
+#endif
 
     // A click of the other mouse button (to finish shape, instead of adding
     // another control point) would have caused endShape() to have been
@@ -165,7 +170,9 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {
+    #if DEBUG_KP_TOOL_POLYGON
         qCDebug(kpLogTools) << "\tending shape";
+    #endif
         endShape ();
         return;
     }
