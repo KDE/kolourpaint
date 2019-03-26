@@ -1,6 +1,6 @@
 project(kolourpaint)
 
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10.0 FATAL_ERROR)
 set(QT_MIN_VERSION "5.5.0")
 
 find_package(ECM 1.3.0 REQUIRED NO_MODULE)
@@ -34,6 +34,8 @@ find_package(KF5 REQUIRED COMPONENTS
 
     KDELibs4Support
 )
+
+find_package(OpenMP)
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
@@ -339,6 +341,7 @@ target_link_libraries(kolourpaint
     Qt5::PrintSupport
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
+    OpenMP::OpenMP_CXX
 )
 
 if(KSANE_FOUND)
@@ -346,6 +349,7 @@ if(KSANE_FOUND)
         ${KSANE_LIBRARY}
     )
 endif(KSANE_FOUND)
+
 
 install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 

@@ -66,6 +66,7 @@ ImageMagick Studio.
 
 #include <QColor>
 #include <cmath>
+#include <omp.h>
 
 #define M_SQ2PI 2.50662827463100024161235523934010416269302368164062
 #define M_EPSILON 1.0e-6
@@ -240,121 +241,149 @@ bool equalize(QImage &img)
 
 QImage Blitz::blur(QImage &img, int radius)
 {
-    QRgb *p1, *p2;
-    int x, y, w, h, mx, my, mw, mh, mt, xx, yy;
-    int a, r, g, b;
-    int *as, *rs, *gs, *bs;
-
-    if(radius < 1 || img.isNull() || img.width() < (radius << 1)) {
-        return(img);
+    if (img.isNull()) {
+        return (img);
     }
 
-    w = img.width();
-    h = img.height();
-
-    if(img.depth() < 8) {
+    if (img.depth() < 8) {
         img = img.convertToFormat(QImage::Format_Indexed8);
     }
-    QImage buffer(w, h, img.hasAlphaChannel() ?
-                  QImage::Format_ARGB32 : QImage::Format_RGB32);
-
-    as = new int[w];
-    rs = new int[w];
-    gs = new int[w];
-    bs = new int[w];
 
     QVector<QRgb> colorTable;
-    if(img.format() == QImage::Format_Indexed8) {
+    if (img.format() == QImage::Format_Indexed8) {
         colorTable = img.colorTable();
     }
 
-    for(y = 0; y < h; y++){
-        my = y - radius;
-        mh = (radius << 1) + 1;
-        if(my < 0){
+    auto width = img.width();
+    auto height = img.height();
+
+    QImage buffer(width, height, img.hasAlphaChannel() ? QImage::Format_ARGB32 : QImage::Format_RGB32);
+
+    const auto img_format = img.format();
+
+    int *as = new int[width];
+    int *rs = new int[width];
+    int *gs = new int[width];
+    int *bs = new int[width];
+
+    QRgb *p1 , *p2;
+
+    for (auto y = 0; y < height; ++y) {
+        auto my = y - radius;
+        auto mh = (radius << 1) + 1;
+
+        if (my < 0) {
             mh += my;
             my = 0;
         }
-        if((my + mh) > h) {
-            mh = h - my;
+
+        if ((my + mh) > height) {
+            mh = height - my;
         }
 
-        p1 = (QRgb *)buffer.scanLine(y);
-        memset(as, 0, static_cast<unsigned int> (w) * sizeof(int));
-        memset(rs, 0, static_cast<unsigned int> (w) * sizeof(int));
-        memset(gs, 0, static_cast<unsigned int> (w) * sizeof(int));
-        memset(bs, 0, static_cast<unsigned int> (w) * sizeof(int));
+        p1 = (QRgb*)buffer.scanLine(y);
 
-        if(img.format() == QImage::Format_ARGB32_Premultiplied){
+        memset(as, 0, static_cast<unsigned int>(width) * sizeof(int));
+        memset(rs, 0, static_cast<unsigned int>(width) * sizeof(int));
+        memset(gs, 0, static_cast<unsigned int>(width) * sizeof(int));
+        memset(bs, 0, static_cast<unsigned int>(width) * sizeof(int));
+
+
+        switch (img_format) {
+        case QImage::Format_ARGB32_Premultiplied: {
             QRgb pixel;
-            for(yy = 0; yy < mh; yy++){
-                p2 = (QRgb *)img.scanLine(yy + my);
-                for(x = 0; x < w; x++, p2++){
+            for (auto i = 0; i < mh; i++) {
+                p2 = (QRgb *)img.scanLine(i + my);
+#pragma omp for
+                for (auto j = 0; j < width; ++j) {
+                    p2++;
                     pixel = convertFromPremult(*p2);
-                    as[x] += qAlpha(pixel);
-                    rs[x] += qRed(pixel);
-                    gs[x] += qGreen(pixel);
-                    bs[x] += qBlue(pixel);
+                    as[j] += qAlpha(pixel);
+                    rs[j] += qRed(pixel) * qRed(pixel);
+                    gs[j] += qGreen(pixel) * qGreen(pixel);
+                    bs[j] += qBlue(pixel) * qBlue(pixel);
                 }
             }
+            break;
         }
-        else if(img.format() == QImage::Format_Indexed8){
+
+        case QImage::Format_Indexed8: {
             QRgb pixel;
             unsigned char *ptr;
-            for(yy = 0; yy < mh; yy++){
-                ptr = img.scanLine(yy + my);
-                for(x = 0; x < w; x++, ptr++){
+            for (auto i = 0; i < mh; ++i) {
+                ptr = img.scanLine(i + my);
+#pragma omp for
+                for (auto j = 0; j < width; ++j) {
+                    ptr++;
                     pixel = colorTable[*ptr];
-                    as[x] += qAlpha(pixel);
-                    rs[x] += qRed(pixel);
-                    gs[x] += qGreen(pixel);
-                    bs[x] += qBlue(pixel);
+                    as[j] += qAlpha(pixel);
+                    rs[j] += qRed(pixel) * qRed(pixel);
+                    gs[j] += qGreen(pixel) * qGreen(pixel);
+                    bs[j] += qBlue(pixel) * qBlue(pixel);
                 }
             }
-        }
-        else{
-            for(yy = 0; yy < mh; yy++){
-                p2 = (QRgb *)img.scanLine(yy + my);
-                for(x = 0; x < w; x++, p2++){
-                    as[x] += qAlpha(*p2);
-                    rs[x] += qRed(*p2);
-                    gs[x] += qGreen(*p2);
-                    bs[x] += qBlue(*p2);
-                }
-            }
+            break;
         }
 
-        for(x = 0; x < w; x++){
-            a = r = g = b = 0;
-            mx = x - radius;
-            mw = (radius << 1) + 1;
-            if(mx < 0){
+        default: {
+            for (auto i = 0; i < mh; ++i) {
+                p2 = (QRgb *)img.scanLine(i + my);
+#pragma omp for
+                for (auto j = 0; j < width; j++) {
+                    p2++;
+                    as[j] += qAlpha(*p2);
+                    rs[j] += qRed(*p2);
+                    gs[j] += qGreen(*p2);
+                    bs[j] += qBlue(*p2);
+                }
+            }
+            break;
+        }
+        }
+
+#pragma omp for
+        for (auto i = 0; i < width; ++i) {
+            auto a{0};
+            auto r{0};
+            auto g{0};
+            auto b{0};
+
+            auto mx = i - radius;
+            auto mw = (radius << 1) + 1;
+
+            if (mx < 0) {
                 mw += mx;
                 mx = 0;
-                }
-            if((mx + mw) > w) {
-                mw = w - mx;
             }
-            mt = mw * mh;
-            for(xx = mx; xx < (mw + mx); xx++){
-                a += as[xx];
-                r += rs[xx];
-                g += gs[xx];
-                b += bs[xx];
+
+            if ((mx + mw) > width) {
+                mw = width - mx;
             }
+
+            for (auto j = mx; j < (mw + mx); ++j) {
+                a += as[j];
+                r += rs[j];
+                g += gs[j];
+                b += bs[j];
+            }
+
+            auto mt = mw * mh;
+
             a = a / mt;
             r = r / mt;
             g = g / mt;
             b = b / mt;
-            *p1++ = qRgba(r, g, b, a);
+
+            *p1++ = qRgba(std::sqrt(r), std::sqrt(g), std::sqrt(b), a);
         }
     }
+
     delete[] as;
     delete[] rs;
     delete[] gs;
     delete[] bs;
 
-    return(buffer);
+    return (buffer);
 }
 
 //--------------------------------------------------------------------------------
