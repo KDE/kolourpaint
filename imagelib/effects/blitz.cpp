@@ -66,7 +66,6 @@ ImageMagick Studio.
 
 #include <QColor>
 #include <cmath>
-#include <omp.h>
 
 #define M_SQ2PI 2.50662827463100024161235523934010416269302368164062
 #define M_EPSILON 1.0e-6
@@ -294,7 +293,6 @@ QImage Blitz::blur(QImage &img, int radius)
             QRgb pixel;
             for (auto i = 0; i < mh; i++) {
                 p2 = (QRgb *)img.scanLine(i + my);
-#pragma omp for
                 for (auto j = 0; j < width; ++j) {
                     p2++;
                     pixel = convertFromPremult(*p2);
@@ -312,7 +310,6 @@ QImage Blitz::blur(QImage &img, int radius)
             unsigned char *ptr;
             for (auto i = 0; i < mh; ++i) {
                 ptr = img.scanLine(i + my);
-#pragma omp for
                 for (auto j = 0; j < width; ++j) {
                     ptr++;
                     pixel = colorTable[*ptr];
@@ -328,7 +325,6 @@ QImage Blitz::blur(QImage &img, int radius)
         default: {
             for (auto i = 0; i < mh; ++i) {
                 p2 = (QRgb *)img.scanLine(i + my);
-#pragma omp for
                 for (auto j = 0; j < width; j++) {
                     p2++;
                     as[j] += qAlpha(*p2);
@@ -341,7 +337,6 @@ QImage Blitz::blur(QImage &img, int radius)
         }
         }
 
-#pragma omp for
         for (auto i = 0; i < width; ++i) {
             auto a{0};
             auto r{0};

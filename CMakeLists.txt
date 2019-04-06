@@ -35,8 +35,6 @@ find_package(KF5 REQUIRED COMPONENTS
     KDELibs4Support
 )
 
-find_package(OpenMP)
-
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
 find_package(KF5Sane)
@@ -341,7 +339,6 @@ target_link_libraries(kolourpaint
     Qt5::PrintSupport
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
-    OpenMP::OpenMP_CXX
 )
 
 if(KSANE_FOUND)
