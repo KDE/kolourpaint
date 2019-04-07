@@ -32,7 +32,6 @@
 #include "kpEffectInvert.h"
 
 #include <QImage>
-#include <QImage>
 
 #include "kpLogCategories.h"
 
@@ -42,6 +41,12 @@
 // public static
 void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
 {
+    if (channels == kpEffectInvert::RGB)
+    {
+        destImagePtr->invertPixels ();
+        return;
+    }
+
     QRgb mask = qRgba ((channels & Red) ? 0xFF : 0,
                        (channels & Green) ? 0xFF : 0,
                        (channels & Blue) ? 0xFF : 0,
