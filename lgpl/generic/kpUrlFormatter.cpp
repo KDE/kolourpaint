@@ -37,9 +37,11 @@
 QString kpUrlFormatter::PrettyUrl (const QUrl &url)
 {
     if (url.isEmpty ())
+    {
         return i18n ("Untitled");
-    else
-        return url.url (QUrl::PreferLocalFile);
+    }
+
+    return url.url (QUrl::PreferLocalFile);
 }
 
 //---------------------------------------------------------------------
@@ -48,11 +50,16 @@ QString kpUrlFormatter::PrettyUrl (const QUrl &url)
 QString kpUrlFormatter::PrettyFilename (const QUrl &url)
 {
     if (url.isEmpty ())
+    {
         return i18n ("Untitled");
-    else if (url.fileName ().isEmpty ())
+    }
+
+    if (url.fileName ().isEmpty ())
+    {
         return kpUrlFormatter::PrettyUrl (url);  // better than the name ""
-    else
-        return url.fileName ();
+    }
+
+    return url.fileName ();
 }
 
 //---------------------------------------------------------------------
