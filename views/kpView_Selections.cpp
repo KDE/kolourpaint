@@ -161,7 +161,7 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 {
     const int atomicLength = selectionResizeHandleAtomicSize ();
     if (atomicLength <= 0) {
-        return QRegion ();
+        return {};
     }
 
 

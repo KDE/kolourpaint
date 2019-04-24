@@ -90,7 +90,7 @@ kpEffectToneEnhanceWidget::~kpEffectToneEnhanceWidget () = default;
 QString kpEffectToneEnhanceWidget::caption () const
 {
     // TODO: Why doesn't this have a caption?  Ditto for the other effects.
-    return QString();
+    return {};
 }
 
 

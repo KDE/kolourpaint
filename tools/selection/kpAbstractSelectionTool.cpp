@@ -618,7 +618,7 @@ QVariant kpAbstractSelectionTool::operation (DrawType drawType, Operation op,
     {
     case None:
         // NOP.
-        return QVariant ();
+        return {};
 
     case Create:
         return operationCreate (op, data1, data2);
@@ -631,7 +631,7 @@ QVariant kpAbstractSelectionTool::operation (DrawType drawType, Operation op,
 
     default:
         Q_ASSERT (!"Unhandled draw type");
-        return QVariant ();
+        return {};
     }
 }
 

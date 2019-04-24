@@ -125,7 +125,7 @@ QString kpTransformResizeScaleCommand::name () const
         }
     }
 
-    return QString ();
+    return {};
 }
 
 // public virtual [base kpCommand]

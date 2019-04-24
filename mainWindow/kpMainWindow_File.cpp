@@ -474,7 +474,7 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
     return fd.selectedUrls();
   }
 
-  return QList<QUrl>();
+  return {};
 }
 
 //---------------------------------------------------------------------
@@ -831,7 +831,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (mimeTypes.isEmpty ())
     {
         qCCritical(kpLogMainWindow) << "No output mimetypes!";
-        return QUrl ();
+        return {};
     }
 
 #define MIME_TYPE_IS_VALID() (!fdSaveOptions.mimeTypeIsInvalid () &&                 \
@@ -958,7 +958,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         return fd.selectedUrl ();
     }
 
-    return QUrl ();
+    return {};
 #undef SETUP_READ_CFG
 }
 

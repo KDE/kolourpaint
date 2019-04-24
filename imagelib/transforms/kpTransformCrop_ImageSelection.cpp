@@ -54,7 +54,7 @@ public:
     ~SetDocumentToSelectionImageCommand () override;
 
     /* (uninteresting child of macro cmd) */
-    QString name () const override { return QString(); }
+    QString name () const override { return {}; }
 
     kpCommandSize::SizeType size () const override
     {

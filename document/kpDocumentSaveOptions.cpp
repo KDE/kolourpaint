@@ -166,7 +166,7 @@ void kpDocumentSaveOptions::setMimeType (const QString &mimeType)
 // public static
 QString kpDocumentSaveOptions::invalidMimeType ()
 {
-    return QString();
+    return {};
 }
 
 //---------------------------------------------------------------------

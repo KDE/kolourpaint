@@ -135,7 +135,7 @@ void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int max)
 {
     if (sizes.count () == 0) {
-        return QList <int> ();
+        return {};
     }
 
     if (sizes.count () == 1)

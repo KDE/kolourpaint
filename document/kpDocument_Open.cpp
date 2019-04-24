@@ -107,7 +107,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
                                       kpUrlFormatter::PrettyFilename (url)));
         }
 
-        return QImage ();
+        return {};
     }
 
     QMimeDatabase db;
@@ -137,7 +137,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
                             i18n ("Could not open \"%1\" - unsupported image format.\n"
                                   "The file may be corrupt.",
                                   kpUrlFormatter::PrettyFilename (url)));
-        return QImage ();
+        return {};
     }
 
 #if DEBUG_KP_DOCUMENT

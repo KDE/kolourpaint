@@ -67,7 +67,7 @@ kpEffectEmbossWidget::~kpEffectEmbossWidget () = default;
 // public virtual [base kpEffectWidgetBase]
 QString kpEffectEmbossWidget::caption () const
 {
-    return QString();
+    return {};
 }
 
 

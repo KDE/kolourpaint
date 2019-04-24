@@ -133,5 +133,5 @@ QVariant kpToolText::selectTextOperation (Operation op,
     }
 
 
-    return QVariant ();
+    return {};
 }

@@ -55,7 +55,7 @@ QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
     switch (type) {
     case kpEffectBlurSharpen::Blur: return i18n ("Soften");
     case kpEffectBlurSharpen::Sharpen: return i18n ("Sharpen");
-    default: return QString();
+    default: return {};
     }
 }
 

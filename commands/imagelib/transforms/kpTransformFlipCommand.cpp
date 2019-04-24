@@ -74,7 +74,7 @@ QString kpTransformFlipCommand::name () const
     else
     {
         qCCritical(kpLogCommands) << "kpTransformFlipCommand::name() not asked to flip";
-        return QString();
+        return {};
     }
 #endif
 

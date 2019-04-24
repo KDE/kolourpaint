@@ -61,7 +61,7 @@ QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
         }
         return i18n ("Reduce to 256 Color");
 
-    default: return QString();
+    default: return {};
     }
 }
 

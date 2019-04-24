@@ -401,7 +401,7 @@ QVariant kpAbstractSelectionTool::operationMove (Operation op,
         break;
     }
 
-    return QVariant ();
+    return {};
 }
 
 //---------------------------------------------------------------------

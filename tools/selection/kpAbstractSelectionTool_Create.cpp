@@ -296,5 +296,5 @@ QVariant kpAbstractSelectionTool::operationCreate (Operation op,
     }
 
 
-    return QVariant ();
+    return {};
 }

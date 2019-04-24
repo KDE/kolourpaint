@@ -42,7 +42,7 @@ kpEffectWidgetBase::~kpEffectWidgetBase () = default;
 // public
 QString kpEffectWidgetBase::caption () const
 {
-    return QString();
+    return {};
 }
 
 

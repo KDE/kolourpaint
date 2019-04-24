@@ -444,7 +444,7 @@ QVariant kpAbstractSelectionTool::operationResizeScale (Operation op,
     }
 
 
-    return QVariant ();
+    return {};
 }
 
 //---------------------------------------------------------------------

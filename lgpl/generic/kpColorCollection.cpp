@@ -474,7 +474,7 @@ QColor
 kpColorCollection::color(int index) const
 {
     if ((index < 0) || (index >= count()))
-	return QColor();
+    return {};
 
     return d->colorList[index].color;
 }
@@ -494,7 +494,7 @@ QString
 kpColorCollection::name(int index) const
 {
   if ((index < 0) || (index >= count()))
-	return QString();
+      return {};
 
   return d->colorList[index].name;
 }
