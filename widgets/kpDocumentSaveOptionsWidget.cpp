@@ -492,7 +492,7 @@ void kpDocumentSaveOptionsWidget::setMode (Mode mode)
     //       we change the height of "this", causing the text on the labels
     //       to move but the first instance of the text doesn't get erased.
     //       Qt bug.
-    QTimer::singleShot (0, this, SLOT (repaintLabels()));
+    QTimer::singleShot (0, this, &kpDocumentSaveOptionsWidget::repaintLabels);
 }
 
 // protected slot
@@ -527,7 +527,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     if (yes)
     {
         m_previewDialog = new kpDocumentSaveOptionsPreviewDialog( m_visualParent );
-        m_previewDialog->setObjectName( QLatin1String( "previewSaveDialog" ) );
+        m_previewDialog->setObjectName( QStringLiteral( "previewSaveDialog" ) );
         updatePreview ();
 
         connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::finished,

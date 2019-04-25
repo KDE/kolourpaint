@@ -238,17 +238,17 @@ QGroupBox *kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseW
 
     m_resizeButton = new QToolButton (operationGroupBox);
     toolButtonSetLook (m_resizeButton,
-                       QLatin1String ("resize"),
+                       QStringLiteral ("resize"),
                        i18n ("&Resize"));
 
     m_scaleButton = new QToolButton (operationGroupBox);
     toolButtonSetLook (m_scaleButton,
-                       QLatin1String ("scale"),
+                       QStringLiteral ("scale"),
                        i18n ("&Scale"));
 
     m_smoothScaleButton = new QToolButton (operationGroupBox);
     toolButtonSetLook (m_smoothScaleButton,
-                       QLatin1String ("smooth_scale"),
+                       QStringLiteral ("smooth_scale"),
                        i18n ("S&mooth Scale"));
 
     auto *resizeScaleButtonGroup = new QButtonGroup (baseWidget);

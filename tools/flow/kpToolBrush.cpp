@@ -35,7 +35,7 @@ kpToolBrush::kpToolBrush (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowPixmapBase (i18n ("Brush"),
         i18n ("Draw using brushes of different shapes and sizes"),
         Qt::Key_B,
-        environ, parent, "tool_brush")
+        environ, parent, QStringLiteral("tool_brush"))
 {
 }
 

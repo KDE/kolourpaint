@@ -78,9 +78,9 @@ kpNumInput::kpNumInput(QWidget *parent)
 {
     setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     setFocusPolicy(Qt::StrongFocus);
-    KConfigDialogManager::changedMap()->insert("kpIntNumInput", SIGNAL(valueChanged(int)));
-    KConfigDialogManager::changedMap()->insert("QSpinBox", SIGNAL(valueChanged(int)));
-    KConfigDialogManager::changedMap()->insert("kpDoubleSpinBox", SIGNAL(valueChanged(double)));
+    KConfigDialogManager::changedMap()->insert(QStringLiteral("kpIntNumInput"), SIGNAL(valueChanged(int)));
+    KConfigDialogManager::changedMap()->insert(QStringLiteral("QSpinBox"), SIGNAL(valueChanged(int)));
+    KConfigDialogManager::changedMap()->insert(QStringLiteral("kpDoubleSpinBox"), SIGNAL(valueChanged(double)));
 }
 
 kpNumInput::~kpNumInput()
@@ -109,7 +109,7 @@ void kpNumInput::setLabel(const QString &label, Qt::Alignment a)
             d->label = new QLabel(this);
         }
         d->label->setText(label);
-        d->label->setObjectName("kpNumInput::QLabel");
+        d->label->setObjectName(QStringLiteral("kpNumInput::QLabel"));
         d->label->setAlignment(a);
         // if no vertical alignment set, use Top alignment
         if (!(a & (Qt::AlignTop | Qt::AlignBottom | Qt::AlignVCenter))) {
@@ -195,7 +195,7 @@ void kpIntNumInput::initWidget(int val)
     d->intSpinBox->setRange(INT_MIN, INT_MAX);
     d->intSpinBox->setSingleStep(1);
     d->intSpinBox->setValue(val);
-    d->intSpinBox->setObjectName("kpIntNumInput::QSpinBox");
+    d->intSpinBox->setObjectName(QStringLiteral("kpIntNumInput::QSpinBox"));
 
     connect(d->intSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &kpIntNumInput::spinValueChanged);
 
@@ -465,7 +465,7 @@ void kpDoubleNumInput::initWidget(double value, double lower, double upper,
     d->spin->setValue(value);
     d->spin->setDecimals(precision);
 
-    d->spin->setObjectName("kpDoubleNumInput::QDoubleSpinBox");
+    d->spin->setObjectName(QStringLiteral("kpDoubleNumInput::QDoubleSpinBox"));
     setFocusProxy(d->spin);
     connect(d->spin, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
             this, &kpDoubleNumInput::valueChanged);

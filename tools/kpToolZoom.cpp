@@ -74,11 +74,11 @@ struct kpToolZoomPrivate
 kpToolZoom::kpToolZoom (kpToolEnvironment *environ, QWidget *parent)
     : kpTool (i18n ("Zoom"), i18n ("Zooms in and out of the image"),
               Qt::Key_Z,
-              environ, parent, "tool_zoom"),
+              environ, parent, QStringLiteral("tool_zoom")),
       d (new kpToolZoomPrivate ())
 {
   // different from objectName()
-  action()->setIcon(KDE::icon("zoom-original"));
+  action()->setIcon(KDE::icon(QStringLiteral("zoom-original")));
 }
 
 //---------------------------------------------------------------------

@@ -57,12 +57,12 @@ void kpMainWindow::setupColorsMenuActions ()
     KActionCollection *ac = actionCollection ();
 
 
-    d->actionColorsDefault = ac->addAction ("colors_default");
+    d->actionColorsDefault = ac->addAction (QStringLiteral("colors_default"));
     d->actionColorsDefault->setText (i18n ("Use KolourPaint Defaults"));
     connect (d->actionColorsDefault, &QAction::triggered,
              this, &kpMainWindow::slotColorsDefault);
 
-    d->actionColorsKDE = ac->add <KSelectAction> ("colors_kde");
+    d->actionColorsKDE = ac->add <KSelectAction> (QStringLiteral("colors_kde"));
     d->actionColorsKDE->setText (i18nc ("@item:inmenu colors", "Use KDE's"));
     // TODO: Will this slot be called spuriously if there are no colors
     //       installed?
@@ -74,31 +74,31 @@ void kpMainWindow::setupColorsMenuActions ()
         d->actionColorsKDE->addAction (colName);
     }
 
-    d->actionColorsOpen = ac->addAction ("colors_open");
+    d->actionColorsOpen = ac->addAction (QStringLiteral("colors_open"));
     d->actionColorsOpen->setText (i18nc ("@item:inmenu colors", "&Open..."));
     connect (d->actionColorsOpen, &QAction::triggered, this, &kpMainWindow::slotColorsOpen);
 
-    d->actionColorsReload = ac->addAction ("colors_reload");
+    d->actionColorsReload = ac->addAction (QStringLiteral("colors_reload"));
     d->actionColorsReload->setText (i18nc ("@item:inmenu colors", "Reloa&d"));
     connect (d->actionColorsReload, &QAction::triggered,
              this, &kpMainWindow::slotColorsReload);
 
-    d->actionColorsSave = ac->addAction ("colors_save");
+    d->actionColorsSave = ac->addAction (QStringLiteral("colors_save"));
     d->actionColorsSave->setText (i18nc ("@item:inmenu colors", "&Save"));
     connect (d->actionColorsSave, &QAction::triggered,
              this, &kpMainWindow::slotColorsSave);
 
-    d->actionColorsSaveAs = ac->addAction ("colors_save_as");
+    d->actionColorsSaveAs = ac->addAction (QStringLiteral("colors_save_as"));
     d->actionColorsSaveAs->setText (i18nc ("@item:inmenu colors", "Save &As..."));
     connect (d->actionColorsSaveAs, &QAction::triggered,
              this, &kpMainWindow::slotColorsSaveAs);
 
-    d->actionColorsAppendRow = ac->addAction ("colors_append_row");
+    d->actionColorsAppendRow = ac->addAction (QStringLiteral("colors_append_row"));
     d->actionColorsAppendRow->setText (i18nc ("@item:inmenu colors", "Add Row"));
     connect (d->actionColorsAppendRow, &QAction::triggered,
              this, &kpMainWindow::slotColorsAppendRow);
 
-    d->actionColorsDeleteRow = ac->addAction ("colors_delete_row");
+    d->actionColorsDeleteRow = ac->addAction (QStringLiteral("colors_delete_row"));
     d->actionColorsDeleteRow->setText (i18nc ("@item:inmenu colors", "Delete Last Row"));
     connect (d->actionColorsDeleteRow, &QAction::triggered,
              this, &kpMainWindow::slotColorsDeleteRow);
@@ -115,7 +115,7 @@ void kpMainWindow::createColorBox ()
     d->colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
 
     // (needed for QMainWindow::saveState())
-    d->colorToolBar->setObjectName ( QLatin1String("Color Box" ));
+    d->colorToolBar->setObjectName ( QStringLiteral("Color Box" ));
 
     connect (colorCells (), &kpColorCells::rowCountChanged,
              this, &kpMainWindow::slotUpdateColorsDeleteRowActionEnabled);

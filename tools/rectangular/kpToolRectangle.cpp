@@ -44,7 +44,7 @@ kpToolRectangle::kpToolRectangle (kpToolEnvironment *environ, QObject *parent)
         i18n ("Draws rectangles and squares"),
         &kpToolRectangle::drawRect,
         Qt::Key_R,
-        environ, parent, "tool_rectangle")
+        environ, parent, QStringLiteral("tool_rectangle"))
 {
 }
 

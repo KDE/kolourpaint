@@ -106,7 +106,7 @@ void kpMainWindow::setupViewMenuZoomActions ()
     d->actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut()), ac);
 
 
-    d->actionZoom = ac->add <KSelectAction> ("view_zoom_to");
+    d->actionZoom = ac->add <KSelectAction> (QStringLiteral("view_zoom_to"));
     d->actionZoom->setText (i18n ("&Zoom"));
     connect (d->actionZoom,
              static_cast<void (KSelectAction::*)(QAction*)>(&KSelectAction::triggered),

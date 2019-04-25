@@ -173,7 +173,7 @@ void kpMainWindow::finalizeGUI(KXMLGUIClient *client)
 {
   if ( client == this )
   {
-    const QList<QMenu *> menuToHide = findChildren<QMenu *>("toolToolBarHiddenMenu");
+    const QList<QMenu *> menuToHide = findChildren<QMenu *>(QStringLiteral("toolToolBarHiddenMenu"));
     // should only contain one but...
     for (auto *menu : menuToHide)
     {
@@ -235,7 +235,7 @@ void kpMainWindow::init ()
     addDockWidget(Qt::BottomDockWidgetArea, d->colorToolBar, Qt::Horizontal);
 
     d->scrollView = new kpViewScrollableContainer (this);
-    d->scrollView->setObjectName ( QLatin1String("scrollView" ));
+    d->scrollView->setObjectName ( QStringLiteral("scrollView" ));
 
     connect (d->scrollView, &kpViewScrollableContainer::beganDocResize,
              this, &kpMainWindow::slotBeganDocResize);
@@ -620,7 +620,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                                        nullptr/*buddyView*/,
                                        d->scrollView,
                                        d->scrollView->viewport ());
-        d->mainView->setObjectName ( QLatin1String("mainView" ));
+        d->mainView->setObjectName ( QStringLiteral("mainView" ));
 
         d->viewManager->registerView (d->mainView);
         d->scrollView->setView (d->mainView);

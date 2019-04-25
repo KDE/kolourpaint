@@ -148,7 +148,7 @@ void kpTransformPreviewDialog::createDimensionsGroupBox ()
                                     m_oldHeight);
 
          // Stop the Dimensions Group Box from resizing so often
-         const QString minimumLengthString ("100000 x 100000");
+         const QString minimumLengthString (QStringLiteral("100000 x 100000"));
          const int padLength = minimumLengthString.length ();
          for (int i = originalDimensions.length (); i < padLength; i++) {
              originalDimensions += ' ';

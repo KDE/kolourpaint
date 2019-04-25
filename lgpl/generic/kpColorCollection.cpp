@@ -86,7 +86,7 @@ kpColorCollection::installedCollections()
 {
   QStringList paletteList;
 
-  QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericConfigLocation, "colors",
+  QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericConfigLocation, QStringLiteral("colors"),
                                                 QStandardPaths::LocateDirectory);
   for (const auto &path : paths) {
     paletteList.append(QDir(path).entryList(QStringList(), QDir::Files));
@@ -149,7 +149,7 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   // Read first line
   // Expected "GIMP Palette"
   QString line = QString::fromLocal8Bit(paletteFile.readLine());
-  if (line.indexOf(" Palette") == -1)
+  if (line.indexOf(QLatin1String(" Palette")) == -1)
   {
      KIO::NetAccess::removeTempFile (tempPaletteFilePath);
      KMessageBox::sorry (parent,
@@ -265,7 +265,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    QTextStream str (device);
 
    QString description = d->desc.trimmed();
-   description = '#'+description.split( '\n', QString::KeepEmptyParts).join("\n#");
+   description = '#'+description.split( '\n', QString::KeepEmptyParts).join(QStringLiteral("\n#"));
 
    str << "KDE RGB Palette\n";
    str << description << "\n";

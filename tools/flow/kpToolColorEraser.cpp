@@ -50,7 +50,7 @@ kpToolColorEraser::kpToolColorEraser (kpToolEnvironment *environ, QObject *paren
         i18n ("Replaces pixels of the foreground color with the background color"),
         Qt::Key_O,
         environ, parent,
-        "tool_color_eraser")
+        QStringLiteral("tool_color_eraser"))
 {
 }
 

@@ -238,10 +238,10 @@ static double TrueMatrixFixInts (double x)
 
 static QTransform TrueMatrix (const QTransform &matrix, int srcPixmapWidth, int srcPixmapHeight)
 {
-    ::MatrixDebug ("TrueMatrix(): org", matrix);
+    ::MatrixDebug (QStringLiteral("TrueMatrix(): org"), matrix);
 
     const QTransform truMat = QPixmap::trueMatrix (matrix, srcPixmapWidth, srcPixmapHeight);
-    ::MatrixDebug ("TrueMatrix(): passed through QPixmap::trueMatrix()", truMat);
+    ::MatrixDebug (QStringLiteral("TrueMatrix(): passed through QPixmap::trueMatrix()"), truMat);
 
     const QTransform retMat (
         ::TrueMatrixFixInts (truMat.m11 ()),
@@ -250,7 +250,7 @@ static QTransform TrueMatrix (const QTransform &matrix, int srcPixmapWidth, int 
         ::TrueMatrixFixInts (truMat.m22 ()),
         ::TrueMatrixFixInts (truMat.dx ()),
         ::TrueMatrixFixInts (truMat.dy ()));
-    ::MatrixDebug ("TrueMatrix(): fixed ints", retMat);
+    ::MatrixDebug (QStringLiteral("TrueMatrix(): fixed ints"), retMat);
 
     return retMat;
 }
@@ -366,7 +366,7 @@ static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatr
     }
 
 
-    ::MatrixDebug ("TransformPixmap(): before trueMatrix", transformMatrix,
+    ::MatrixDebug (QStringLiteral("TransformPixmap(): before trueMatrix"), transformMatrix,
                    pm.width (), pm.height ());
 #if DEBUG_KP_PIXMAP_FX && 1
     QMatrix oldMatrix = transformMatrix;
@@ -397,7 +397,7 @@ static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatr
 #if DEBUG_KP_PIXMAP_FX && 1
     qCDebug(kpLogPixmapfx) << "trueMatrix changed matrix?" << (oldMatrix == transformMatrix);
 #endif
-    ::MatrixDebug ("TransformPixmap(): after trueMatrix", transformMatrix,
+    ::MatrixDebug (QStringLiteral("TransformPixmap(): after trueMatrix"), transformMatrix,
                    pm.width (), pm.height ());
 
 

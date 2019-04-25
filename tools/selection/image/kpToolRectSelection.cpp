@@ -41,7 +41,7 @@ kpToolRectSelection::kpToolRectSelection (kpToolSelectionEnvironment *environ,
                        i18n ("Makes a rectangular selection"),
                        Qt::Key_S,
                        environ, parent,
-                       "tool_rect_selection")
+                       QStringLiteral("tool_rect_selection"))
 {
 }
 

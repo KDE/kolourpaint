@@ -42,7 +42,7 @@ kpToolEraser::kpToolEraser (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowPixmapBase (i18n ("Eraser"),
         i18n ("Lets you rub out mistakes"),
         Qt::Key_A,
-        environ, parent, "tool_eraser")
+        environ, parent, QStringLiteral("tool_eraser"))
 {
 }
 

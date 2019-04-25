@@ -41,7 +41,7 @@ class kpDocumentSaveOptions
 public:
     kpDocumentSaveOptions ();
     kpDocumentSaveOptions (const kpDocumentSaveOptions &rhs);
-    kpDocumentSaveOptions (QString mimeType, int colorDepth, bool dither, int quality);
+    kpDocumentSaveOptions (const QString &mimeType, int colorDepth, bool dither, int quality);
     virtual ~kpDocumentSaveOptions ();
 
     bool operator== (const kpDocumentSaveOptions &rhs) const;

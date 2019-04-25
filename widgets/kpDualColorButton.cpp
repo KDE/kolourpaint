@@ -152,7 +152,7 @@ QSize kpDualColorButton::sizeHint () const
 // protected
 QRect kpDualColorButton::swapPixmapRect () const
 {
-    QPixmap swapPixmap = UserIcon ("colorbutton_swap_16x16");
+    QPixmap swapPixmap = UserIcon (QStringLiteral("colorbutton_swap_16x16"));
 
     return  {contentsRect ().width () - swapPixmap.width (), 0,
                 swapPixmap.width (), swapPixmap.height ()};
@@ -399,7 +399,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
 
     // Draw "Swap Colours" button (top-right).
-    QPixmap swapPixmap = UserIcon ("colorbutton_swap_16x16");
+    QPixmap swapPixmap = UserIcon (QStringLiteral("colorbutton_swap_16x16"));
     if (!isEnabled ())
     {
         // Don't let the fill() touch the mask.
@@ -425,7 +425,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                    << endl;
     #endif
         if (m_color [1].isTransparent ()) { // only if fully transparent
-            painter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
+            painter.drawPixmap (bgRectInside, UserIcon (QStringLiteral("color_transparent_26x26")));
         }
         else {
             painter.fillRect (bgRectInside, m_color [1].toQColor ());
@@ -452,7 +452,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                    << endl;
     #endif
         if (m_color [0].isTransparent ()) { // only if fully transparent
-            painter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
+            painter.drawPixmap (fgRectInside, UserIcon (QStringLiteral("color_transparent_26x26")));
         }
         else {
             painter.fillRect (fgRectInside, m_color [0].toQColor ());

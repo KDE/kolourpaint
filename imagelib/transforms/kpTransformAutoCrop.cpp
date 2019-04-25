@@ -623,7 +623,7 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
             i18n ("KolourPaint cannot remove the selection's internal border as it"
                   " could not be located."),
             i18nc ("@title:window", "Cannot Remove Internal Border"),
-            "NothingToAutoCrop");
+            QStringLiteral("NothingToAutoCrop"));
     }
     else
     {
@@ -631,7 +631,7 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
             i18n ("KolourPaint cannot automatically crop the image as its"
                   " border could not be located."),
             i18nc ("@title:window", "Cannot Autocrop"),
-            "NothingToAutoCrop");
+            QStringLiteral("NothingToAutoCrop"));
     }
 }
 

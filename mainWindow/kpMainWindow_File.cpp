@@ -104,12 +104,12 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionSave = KStandardAction::save (this, SLOT (slotSave()), ac);
     d->actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs()), ac);
 
-    d->actionExport = ac->addAction("file_export");
+    d->actionExport = ac->addAction(QStringLiteral("file_export"));
     d->actionExport->setText (i18n ("E&xport..."));
-    d->actionExport->setIcon(KDE::icon("document-export"));
+    d->actionExport->setIcon(KDE::icon(QStringLiteral("document-export")));
     connect (d->actionExport, &QAction::triggered, this, &kpMainWindow::slotExport);
 
-    d->actionScan = ac->addAction("file_scan");
+    d->actionScan = ac->addAction(QStringLiteral("file_scan"));
     d->actionScan->setText(i18n ("Scan..."));
     d->actionScan->setIcon(SmallIcon("scanner"));
 #if HAVE_KSANE
@@ -118,19 +118,19 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionScan->setEnabled(false);
 #endif // HAVE_KSANE
 
-    d->actionScreenshot = ac->addAction("file_screenshot");
+    d->actionScreenshot = ac->addAction(QStringLiteral("file_screenshot"));
     d->actionScreenshot->setText(i18n("Acquire Screenshot"));
     connect (d->actionScreenshot, &QAction::triggered, this, &kpMainWindow::slotScreenshot);
 
-    d->actionProperties = ac->addAction ("file_properties");
+    d->actionProperties = ac->addAction (QStringLiteral("file_properties"));
     d->actionProperties->setText (i18n ("Properties"));
-    d->actionProperties->setIcon(KDE::icon("document-properties"));
+    d->actionProperties->setIcon(KDE::icon(QStringLiteral("document-properties")));
     connect (d->actionProperties, &QAction::triggered, this, &kpMainWindow::slotProperties);
 
     //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert()), ac);
-    d->actionReload = ac->addAction ("file_revert");
+    d->actionReload = ac->addAction (QStringLiteral("file_revert"));
     d->actionReload->setText (i18n ("Reloa&d"));
-    d->actionReload->setIcon(KDE::icon("view-refresh"));
+    d->actionReload->setIcon(KDE::icon(QStringLiteral("view-refresh")));
     connect (d->actionReload, &QAction::triggered, this, &kpMainWindow::slotReload);
     ac->setDefaultShortcuts (d->actionReload, KStandardShortcut::reload ());
     slotEnableReload ();
@@ -455,7 +455,7 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
       // but to avoid that the "All Supported Files" entry shows ALL glob patterns,
       // I must add the pattern here a second time so that QFileDialog::HideNameFilterDetails
       // can hide the first pattern and I still see the second one
-      filterList << mime.comment() + QString(" (%1)(%2)").arg(glob).arg(glob);
+      filterList << mime.comment() + QStringLiteral(" (%1)(%2)").arg(glob).arg(glob);
     }
   }
 
@@ -691,7 +691,7 @@ void kpMainWindow::slotScreenshot()
   }
 
   // at least 1 seconds to make sure the window is hidden and the hide effect already stopped
-  QTimer::singleShot((seconds->value() + 1) * 1000, this, SLOT(slotMakeScreenshot()));
+  QTimer::singleShot((seconds->value() + 1) * 1000, this, &kpMainWindow::slotMakeScreenshot);
 
   delete dialog;
 }
@@ -854,11 +854,11 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             qCDebug(kpLogMainWindow) << "\tmimeType=" << fdSaveOptions.mimeType ()
                        << " not valid, get hardcoded";
         #endif
-            if (mimeTypes.contains ("image/png")) {
-                fdSaveOptions.setMimeType ("image/png");
+            if (mimeTypes.contains (QStringLiteral("image/png"))) {
+                fdSaveOptions.setMimeType (QStringLiteral("image/png"));
             }
-            else if (mimeTypes.contains ("image/bmp")) {
-                fdSaveOptions.setMimeType ("image/bmp");
+            else if (mimeTypes.contains (QStringLiteral("image/bmp"))) {
+                fdSaveOptions.setMimeType (QStringLiteral("image/bmp"));
             }
             else {
                 fdSaveOptions.setMimeType (mimeTypes.first ());

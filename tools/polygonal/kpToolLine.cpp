@@ -43,7 +43,7 @@ kpToolLine::kpToolLine (kpToolEnvironment *environ, QObject *parent)
         &kpToolPolyline::drawShape,
         Qt::Key_L,
         environ, parent,
-        "tool_line")
+        QStringLiteral("tool_line"))
 {
 }
 

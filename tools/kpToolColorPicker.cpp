@@ -44,7 +44,7 @@
 kpToolColorPicker::kpToolColorPicker (kpToolEnvironment *environ, QObject *parent)
     : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),
               Qt::Key_C,
-              environ, parent, "tool_color_picker")
+              environ, parent, QStringLiteral("tool_color_picker"))
 {
 }
 

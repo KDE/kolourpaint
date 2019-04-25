@@ -61,7 +61,7 @@ void kpMainWindow::setupViewMenuActions ()
     setupViewMenuZoomActions ();
 
 
-    d->actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
+    d->actionShowGrid = ac->add <KToggleAction> (QStringLiteral("view_show_grid"));
     d->actionShowGrid->setText (i18n ("Show &Grid"));
     ac->setDefaultShortcut (d->actionShowGrid, Qt::CTRL + Qt::Key_G);
     //d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));

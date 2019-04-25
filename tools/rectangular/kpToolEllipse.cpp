@@ -43,7 +43,7 @@ kpToolEllipse::kpToolEllipse (kpToolEnvironment *environ, QObject *parent)
         i18n ("Draws ellipses and circles"),
         &kpToolEllipse::drawEllipse,
         Qt::Key_E,
-        environ, parent, "tool_ellipse")
+        environ, parent, QStringLiteral("tool_ellipse"))
 {
 }
 

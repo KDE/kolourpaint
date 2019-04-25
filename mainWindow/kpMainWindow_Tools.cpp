@@ -131,25 +131,25 @@ void kpMainWindow::setupToolActions ()
 
     KActionCollection *ac = actionCollection ();
 
-    d->actionPrevToolOptionGroup1 = ac->addAction ("prev_tool_option_group_1");
+    d->actionPrevToolOptionGroup1 = ac->addAction (QStringLiteral("prev_tool_option_group_1"));
     d->actionPrevToolOptionGroup1->setText (i18n ("Previous Tool Option (Group #1)"));
     ac->setDefaultShortcuts (d->actionPrevToolOptionGroup1, kpTool::shortcutForKey (Qt::Key_1));
     connect (d->actionPrevToolOptionGroup1, &QAction::triggered,
              this, &kpMainWindow::slotActionPrevToolOptionGroup1);
 
-    d->actionNextToolOptionGroup1 = ac->addAction ("next_tool_option_group_1");
+    d->actionNextToolOptionGroup1 = ac->addAction (QStringLiteral("next_tool_option_group_1"));
     d->actionNextToolOptionGroup1->setText (i18n ("Next Tool Option (Group #1)"));
     ac->setDefaultShortcuts (d->actionNextToolOptionGroup1, kpTool::shortcutForKey (Qt::Key_2));
     connect (d->actionNextToolOptionGroup1, &QAction::triggered,
              this, &kpMainWindow::slotActionNextToolOptionGroup1);
 
-    d->actionPrevToolOptionGroup2 = ac->addAction ("prev_tool_option_group_2");
+    d->actionPrevToolOptionGroup2 = ac->addAction (QStringLiteral("prev_tool_option_group_2"));
     d->actionPrevToolOptionGroup2->setText (i18n ("Previous Tool Option (Group #2)"));
     ac->setDefaultShortcuts (d->actionPrevToolOptionGroup2, kpTool::shortcutForKey (Qt::Key_3));
     connect (d->actionPrevToolOptionGroup2, &QAction::triggered,
              this, &kpMainWindow::slotActionPrevToolOptionGroup2);
 
-    d->actionNextToolOptionGroup2 = ac->addAction ("next_tool_option_group_2");
+    d->actionNextToolOptionGroup2 = ac->addAction (QStringLiteral("next_tool_option_group_2"));
     d->actionNextToolOptionGroup2->setText (i18n ("Next Tool Option (Group #2)"));
     ac->setDefaultShortcuts (d->actionNextToolOptionGroup2, kpTool::shortcutForKey (Qt::Key_4));
     connect (d->actionNextToolOptionGroup2, &QAction::triggered,
@@ -161,12 +161,12 @@ void kpMainWindow::setupToolActions ()
     // kpImageWindow_Image.cpp since they're really setting tool options.
     //
 
-    d->actionDrawOpaque = ac->add <KToggleAction> ("image_draw_opaque");
+    d->actionDrawOpaque = ac->add <KToggleAction> (QStringLiteral("image_draw_opaque"));
     d->actionDrawOpaque->setText (i18n ("&Draw Opaque"));
     connect (d->actionDrawOpaque, &QAction::triggered,
              this, &kpMainWindow::slotActionDrawOpaqueToggled);
 
-    d->actionDrawColorSimilarity = ac->addAction ("image_draw_color_similarity");
+    d->actionDrawColorSimilarity = ac->addAction (QStringLiteral("image_draw_color_similarity"));
     d->actionDrawColorSimilarity->setText (i18n ("Draw With Color Similarity..."));
     connect (d->actionDrawColorSimilarity, &QAction::triggered,
              this, &kpMainWindow::slotActionDrawColorSimilarity);
@@ -177,7 +177,7 @@ void kpMainWindow::setupToolActions ()
 // private
 void kpMainWindow::createToolBox ()
 {
-    d->toolToolBar = new kpToolToolBar(QLatin1String("Tool Box"), 2/*columns/rows*/, this);
+    d->toolToolBar = new kpToolToolBar(QStringLiteral("Tool Box"), 2/*columns/rows*/, this);
     d->toolToolBar->setWindowTitle(i18n("Tool Box"));
 
     connect (d->toolToolBar, &kpToolToolBar::sigToolSelected,

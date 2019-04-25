@@ -43,7 +43,7 @@ kpToolEllipticalSelection::kpToolEllipticalSelection (kpToolSelectionEnvironment
                        i18n ("Makes an elliptical or circular selection"),
                        Qt::Key_I,
                        environ, parent,
-                       "tool_elliptical_selection")
+                       QStringLiteral("tool_elliptical_selection"))
 {
 }
 

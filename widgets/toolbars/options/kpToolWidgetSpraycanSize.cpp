@@ -55,7 +55,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
     for (int i = 0; i < int (sizeof (spraycanSizes) / sizeof (spraycanSizes [0])); i++)
     {
         int s = spraycanSizes [i];
-        QString iconName = QString ("tool_spraycan_%1x%2").arg (s).arg(s);
+        QString iconName = QStringLiteral ("tool_spraycan_%1x%2").arg (s).arg(s);
         
     #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
         qCDebug(kpLogWidgets) << "\ticonName=" << iconName;

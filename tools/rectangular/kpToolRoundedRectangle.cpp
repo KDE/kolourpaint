@@ -43,7 +43,7 @@ kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ, QObj
         i18n ("Draws rectangles and squares with rounded corners"),
         &kpToolRoundedRectangle::drawRoundedRect,
         Qt::Key_U,
-        environ, parent, "tool_rounded_rectangle")
+        environ, parent, QStringLiteral("tool_rounded_rectangle"))
 {
 }
 

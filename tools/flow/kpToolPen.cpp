@@ -45,7 +45,7 @@
 kpToolPen::kpToolPen (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
         Qt::Key_P,
-        environ, parent, "tool_pen")
+        environ, parent, QStringLiteral("tool_pen"))
 {
 }
 

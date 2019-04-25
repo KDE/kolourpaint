@@ -54,7 +54,7 @@ struct kpToolFloodFillPrivate
 kpToolFloodFill::kpToolFloodFill (kpToolEnvironment *environ, QObject *parent)
     : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
               Qt::Key_F,
-              environ, parent, "tool_flood_fill"),
+              environ, parent, QStringLiteral("tool_flood_fill")),
       d (new kpToolFloodFillPrivate ())
 {
     d->currentCommand = nullptr;

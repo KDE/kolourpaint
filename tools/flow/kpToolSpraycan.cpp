@@ -55,7 +55,7 @@
 kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Spraycan"), i18n ("Sprays graffiti"),
         Qt::Key_Y,
-        environ, parent, "tool_spraycan"),
+        environ, parent, QStringLiteral("tool_spraycan")),
     m_toolWidgetSpraycanSize(nullptr)
 {
     m_timer = new QTimer (this);

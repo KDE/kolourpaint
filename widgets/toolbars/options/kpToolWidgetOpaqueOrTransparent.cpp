@@ -40,9 +40,9 @@
 kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    addOption (UserIcon ("option_opaque"), i18n ("Opaque")/*tooltip*/);
+    addOption (UserIcon (QStringLiteral("option_opaque")), i18n ("Opaque")/*tooltip*/);
     startNewOptionRow ();
-    addOption (UserIcon ("option_transparent"), i18n ("Transparent")/*tooltip*/);
+    addOption (UserIcon (QStringLiteral("option_transparent")), i18n ("Transparent")/*tooltip*/);
 
     finishConstruction (0, 0);
 }

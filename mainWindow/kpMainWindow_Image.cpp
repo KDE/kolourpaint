@@ -114,79 +114,79 @@ void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    d->actionResizeScale = ac->addAction ("image_resize_scale");
+    d->actionResizeScale = ac->addAction (QStringLiteral("image_resize_scale"));
     d->actionResizeScale->setText (i18n ("R&esize / Scale..."));
     connect (d->actionResizeScale, &QAction::triggered, this, &kpMainWindow::slotResizeScale);
 
     ac->setDefaultShortcut (d->actionResizeScale, Qt::CTRL + Qt::Key_E);
 
-    d->actionCrop = ac->addAction ("image_crop");
+    d->actionCrop = ac->addAction (QStringLiteral("image_crop"));
     d->actionCrop->setText (i18n ("Se&t as Image (Crop)"));
     connect (d->actionCrop, &QAction::triggered, this, &kpMainWindow::slotCrop);
     ac->setDefaultShortcut (d->actionCrop, Qt::CTRL + Qt::Key_T);
 
-    d->actionAutoCrop = ac->addAction ("image_auto_crop");
+    d->actionAutoCrop = ac->addAction (QStringLiteral("image_auto_crop"));
     d->actionAutoCrop->setText (autoCropText ());
     connect (d->actionAutoCrop, &QAction::triggered, this, &kpMainWindow::slotAutoCrop);
     ac->setDefaultShortcut (d->actionAutoCrop, Qt::CTRL + Qt::Key_U);
 
-    d->actionFlip = ac->addAction ("image_flip");
+    d->actionFlip = ac->addAction (QStringLiteral("image_flip"));
     d->actionFlip->setText (i18n ("&Flip (upside down)"));
     connect (d->actionFlip, &QAction::triggered, this, &kpMainWindow::slotFlip);
     ac->setDefaultShortcut (d->actionFlip, Qt::CTRL + Qt::Key_F);
 
-    d->actionMirror = ac->addAction ("image_mirror");
+    d->actionMirror = ac->addAction (QStringLiteral("image_mirror"));
     d->actionMirror->setText (i18n ("Mirror (horizontally)"));
     connect (d->actionMirror, &QAction::triggered, this, &kpMainWindow::slotMirror);
     //ac->setDefaultShortcut (d->actionMirror, Qt::CTRL + Qt::Key_M);
 
-    d->actionRotate = ac->addAction ("image_rotate");
+    d->actionRotate = ac->addAction (QStringLiteral("image_rotate"));
     d->actionRotate->setText (i18n ("&Rotate..."));
-    d->actionRotate->setIcon(KDE::icon("transform-rotate"));
+    d->actionRotate->setIcon(KDE::icon(QStringLiteral("transform-rotate")));
     connect (d->actionRotate, &QAction::triggered, this, &kpMainWindow::slotRotate);
     ac->setDefaultShortcut (d->actionRotate, Qt::CTRL + Qt::Key_R);
 
-    d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
+    d->actionRotateLeft = ac->addAction (QStringLiteral("image_rotate_270deg"));
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
-    d->actionRotateLeft->setIcon(KDE::icon("object-rotate-left"));
+    d->actionRotateLeft->setIcon(KDE::icon(QStringLiteral("object-rotate-left")));
     connect (d->actionRotateLeft, &QAction::triggered, this, &kpMainWindow::slotRotate270);
     ac->setDefaultShortcut (d->actionRotateLeft, Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
-    d->actionRotateRight = ac->addAction ("image_rotate_90deg");
+    d->actionRotateRight = ac->addAction (QStringLiteral("image_rotate_90deg"));
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
-    d->actionRotateRight->setIcon(KDE::icon("object-rotate-right"));
+    d->actionRotateRight->setIcon(KDE::icon(QStringLiteral("object-rotate-right")));
     connect (d->actionRotateRight, &QAction::triggered, this, &kpMainWindow::slotRotate90);
     ac->setDefaultShortcut (d->actionRotateRight, Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
-    d->actionSkew = ac->addAction ("image_skew");
+    d->actionSkew = ac->addAction (QStringLiteral("image_skew"));
     d->actionSkew->setText (i18n ("S&kew..."));
     connect (d->actionSkew, &QAction::triggered, this, &kpMainWindow::slotSkew);
     ac->setDefaultShortcut (d->actionSkew, Qt::CTRL + Qt::Key_K);
 
-    d->actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
+    d->actionConvertToBlackAndWhite = ac->addAction (QStringLiteral("image_convert_to_black_and_white"));
     d->actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
     connect (d->actionConvertToBlackAndWhite, &QAction::triggered,
              this, &kpMainWindow::slotConvertToBlackAndWhite);
 
-    d->actionConvertToGrayscale = ac->addAction ("image_convert_to_grayscale");
+    d->actionConvertToGrayscale = ac->addAction (QStringLiteral("image_convert_to_grayscale"));
     d->actionConvertToGrayscale->setText (i18n ("Reduce to &Grayscale"));
     connect (d->actionConvertToGrayscale, &QAction::triggered, this, &kpMainWindow::slotConvertToGrayscale);
 
-    d->actionInvertColors = ac->addAction ("image_invert_colors");
+    d->actionInvertColors = ac->addAction (QStringLiteral("image_invert_colors"));
     d->actionInvertColors->setText (i18n ("&Invert Colors"));
     connect (d->actionInvertColors, &QAction::triggered, this, &kpMainWindow::slotInvertColors);
     ac->setDefaultShortcut (d->actionInvertColors, Qt::CTRL + Qt::Key_I);
 
-    d->actionClear = ac->addAction ("image_clear");
+    d->actionClear = ac->addAction (QStringLiteral("image_clear"));
     d->actionClear->setText (i18n ("C&lear"));
     connect (d->actionClear, &QAction::triggered, this, &kpMainWindow::slotClear);
     ac->setDefaultShortcut (d->actionClear, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
-    d->actionBlur = ac->addAction("image_make_confidential");
+    d->actionBlur = ac->addAction(QStringLiteral("image_make_confidential"));
     d->actionBlur->setText(i18n("Make Confidential"));
     connect(d->actionBlur, &QAction::triggered, this, &kpMainWindow::slotMakeConfidential);
 
-    d->actionMoreEffects = ac->addAction ("image_more_effects");
+    d->actionMoreEffects = ac->addAction (QStringLiteral("image_more_effects"));
     d->actionMoreEffects->setText (i18n ("&More Effects..."));
     connect (d->actionMoreEffects, &QAction::triggered, this, &kpMainWindow::slotMoreEffects);
     ac->setDefaultShortcut (d->actionMoreEffects, Qt::CTRL + Qt::Key_M);

@@ -390,9 +390,9 @@ kpViewScrollableContainer::kpViewScrollableContainer(QWidget *parent)
     m_rightGrip = new kpGrip(kpGrip::Right, widget());
     m_bottomRightGrip = new kpGrip(kpGrip::BottomRight, widget());
 
-    m_bottomGrip->setObjectName(QLatin1String("Bottom Grip"));
-    m_rightGrip->setObjectName(QLatin1String("Right Grip"));
-    m_bottomRightGrip->setObjectName(QLatin1String("BottomRight Grip"));
+    m_bottomGrip->setObjectName(QStringLiteral("Bottom Grip"));
+    m_rightGrip->setObjectName(QStringLiteral("Right Grip"));
+    m_bottomRightGrip->setObjectName(QStringLiteral("BottomRight Grip"));
 
     m_bottomGrip->hide ();
     connectGripSignals (m_bottomGrip);

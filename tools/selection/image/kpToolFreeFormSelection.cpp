@@ -46,7 +46,7 @@ kpToolFreeFormSelection::kpToolFreeFormSelection (kpToolSelectionEnvironment *en
                        i18n ("Makes a free-form selection"),
                        Qt::Key_M,
                        environ, parent,
-                       "tool_free_form_selection")
+                       QStringLiteral("tool_free_form_selection"))
 {
 }
 

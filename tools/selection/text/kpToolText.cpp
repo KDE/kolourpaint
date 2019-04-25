@@ -54,7 +54,7 @@
 kpToolText::kpToolText (kpToolSelectionEnvironment *environ, QObject *parent)
     : kpAbstractSelectionTool (i18n ("Text"), i18n ("Writes text"),
                        Qt::Key_T,
-                       environ, parent, "tool_text"),
+                       environ, parent, QStringLiteral("tool_text")),
       d (new kpToolTextPrivate ())
 {
 }

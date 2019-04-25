@@ -53,38 +53,38 @@ void kpMainWindow::setupTextToolBarActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    d->actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
+    d->actionTextFontFamily = ac->add<KFontAction> (QStringLiteral("text_font_family"));
     d->actionTextFontFamily->setText (i18n ("Font Family"));
     connect (d->actionTextFontFamily,
              static_cast<void (KFontAction::*)(const QString&)>(&KFontAction::triggered),
              this, &kpMainWindow::slotTextFontFamilyChanged);
 
-    d->actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
+    d->actionTextFontSize = ac->add<KFontSizeAction> (QStringLiteral("text_font_size"));
     d->actionTextFontSize->setText (i18n ("Font Size"));
     connect (d->actionTextFontSize,
              static_cast<void (KFontSizeAction::*)(int)>(&KFontSizeAction::triggered),
              this, &kpMainWindow::slotTextFontSizeChanged);
 
-    d->actionTextBold = ac->add<KToggleAction> ("text_bold");
-    d->actionTextBold->setIcon(KDE::icon("format-text-bold"));
+    d->actionTextBold = ac->add<KToggleAction> (QStringLiteral("text_bold"));
+    d->actionTextBold->setIcon(KDE::icon(QStringLiteral("format-text-bold")));
     d->actionTextBold->setText (i18n ("Bold"));
     connect (d->actionTextBold, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextBoldChanged);
 
-    d->actionTextItalic = ac->add<KToggleAction> ("text_italic");
-    d->actionTextItalic->setIcon (KDE::icon("format-text-italic"));
+    d->actionTextItalic = ac->add<KToggleAction> (QStringLiteral("text_italic"));
+    d->actionTextItalic->setIcon (KDE::icon(QStringLiteral("format-text-italic")));
     d->actionTextItalic->setText (i18n ("Italic"));
     connect (d->actionTextItalic, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextItalicChanged);
 
-    d->actionTextUnderline = ac->add<KToggleAction> ("text_underline");
-    d->actionTextUnderline->setIcon (KDE::icon("format-text-underline"));
+    d->actionTextUnderline = ac->add<KToggleAction> (QStringLiteral("text_underline"));
+    d->actionTextUnderline->setIcon (KDE::icon(QStringLiteral("format-text-underline")));
     d->actionTextUnderline->setText (i18n ("Underline"));
     connect (d->actionTextUnderline, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextUnderlineChanged);
 
-    d->actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
-    d->actionTextStrikeThru->setIcon(KDE::icon("format-text-strikethrough"));
+    d->actionTextStrikeThru = ac->add<KToggleAction> (QStringLiteral("text_strike_thru"));
+    d->actionTextStrikeThru->setIcon(KDE::icon(QStringLiteral("format-text-strikethrough")));
     d->actionTextStrikeThru->setText (i18n ("Strike Through"));
     connect (d->actionTextStrikeThru, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextStrikeThruChanged);
@@ -101,7 +101,7 @@ void kpMainWindow::readAndApplyTextSettings ()
 {
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
 
-    const QString font (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
+    const QString font (cfg.readEntry (kpSettingFontFamily, QStringLiteral ("Times")));
     d->actionTextFontFamily->setFont (font);
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "asked setFont to set to=" << font
@@ -319,7 +319,7 @@ void kpMainWindow::slotTextStrikeThruChanged ()
 // public
 KToolBar *kpMainWindow::textToolBar ()
 {
-    return toolBar ("textToolBar");
+    return toolBar (QStringLiteral("textToolBar"));
 }
 
 bool kpMainWindow::isTextStyleBackgroundOpaque () const

@@ -95,7 +95,7 @@ kpToolPolygon::kpToolPolygon (kpToolEnvironment *environ, QObject *parent)
         &::DrawPolygonShape,
         Qt::Key_G,
         environ, parent,
-        "tool_polygon"),
+        QStringLiteral("tool_polygon")),
       d (new kpToolPolygonPrivate ())
 {
 }

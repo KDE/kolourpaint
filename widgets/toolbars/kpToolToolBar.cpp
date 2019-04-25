@@ -87,17 +87,17 @@ kpToolToolBar::kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *p
     m_baseWidget = new QWidget(this);
 
     m_toolWidgets.append (m_toolWidgetBrush =
-        new kpToolWidgetBrush (m_baseWidget, "Tool Widget Brush"));
+        new kpToolWidgetBrush (m_baseWidget, QStringLiteral("Tool Widget Brush")));
     m_toolWidgets.append (m_toolWidgetEraserSize =
-        new kpToolWidgetEraserSize (m_baseWidget, "Tool Widget Eraser Size"));
+        new kpToolWidgetEraserSize (m_baseWidget, QStringLiteral("Tool Widget Eraser Size")));
     m_toolWidgets.append (m_toolWidgetFillStyle =
-        new kpToolWidgetFillStyle (m_baseWidget, "Tool Widget Fill Style"));
+        new kpToolWidgetFillStyle (m_baseWidget, QStringLiteral("Tool Widget Fill Style")));
     m_toolWidgets.append (m_toolWidgetLineWidth =
-        new kpToolWidgetLineWidth (m_baseWidget, "Tool Widget Line Width"));
+        new kpToolWidgetLineWidth (m_baseWidget, QStringLiteral("Tool Widget Line Width")));
     m_toolWidgets.append (m_toolWidgetOpaqueOrTransparent =
-        new kpToolWidgetOpaqueOrTransparent (m_baseWidget, "Tool Widget Opaque/Transparent"));
+        new kpToolWidgetOpaqueOrTransparent (m_baseWidget, QStringLiteral("Tool Widget Opaque/Transparent")));
     m_toolWidgets.append (m_toolWidgetSpraycanSize =
-        new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size"));
+        new kpToolWidgetSpraycanSize (m_baseWidget, QStringLiteral("Tool Widget Spraycan Size")));
 
     for (auto *w : m_toolWidgets)
     {

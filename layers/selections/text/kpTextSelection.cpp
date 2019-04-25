@@ -190,7 +190,7 @@ int kpTextSelection::PreferredMinimumWidthForTextStyle (const kpTextStyle &textS
 {
     const int about15CharsWidth =
         textStyle.fontMetrics ().width (
-            QLatin1String ("1234567890abcde"));
+            QStringLiteral ("1234567890abcde"));
 
     const int preferredMinWidth =
         qMax (150,

@@ -59,7 +59,7 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     KActionCollection *ac = actionCollection ();
 
 
-    d->actionShowThumbnail = ac->add <KToggleAction> ("view_show_thumbnail");
+    d->actionShowThumbnail = ac->add <KToggleAction> (QStringLiteral("view_show_thumbnail"));
     d->actionShowThumbnail->setText (i18n ("Show T&humbnail"));
     // TODO: This doesn't work when the thumbnail has focus.
     //       Testcase: Press CTRL+H twice on a fresh KolourPaint.
@@ -70,7 +70,7 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
              this, &kpMainWindow::slotShowThumbnailToggled);
 
     // Please do not use setCheckedState() here - it wouldn't make sense
-    d->actionZoomedThumbnail = ac->add <KToggleAction> ("view_zoomed_thumbnail");
+    d->actionZoomedThumbnail = ac->add <KToggleAction> (QStringLiteral("view_zoomed_thumbnail"));
     d->actionZoomedThumbnail->setText (i18n ("Zoo&med Thumbnail Mode"));
     connect (d->actionZoomedThumbnail, &KToggleAction::triggered,
              this, &kpMainWindow::slotZoomedThumbnailToggled);
@@ -80,7 +80,7 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     // Also, don't use "Show Thumbnail Rectangle" because if entire doc
     // can be seen in scrollView, checking option won't "Show" anything
     // since rect _surrounds_ entire doc (hence, won't be rendered).
-    d->actionShowThumbnailRectangle = ac->add <KToggleAction> ("view_show_thumbnail_rectangle");
+    d->actionShowThumbnailRectangle = ac->add <KToggleAction> (QStringLiteral("view_show_thumbnail_rectangle"));
     d->actionShowThumbnailRectangle->setText (i18n ("Enable Thumbnail &Rectangle"));
     connect (d->actionShowThumbnailRectangle, &KToggleAction::triggered,
              this, &kpMainWindow::slotThumbnailShowRectangleToggled);
@@ -311,7 +311,7 @@ void kpMainWindow::createThumbnailView ()
             d->mainView,
             nullptr/*scrollableContainer*/,
             d->thumbnail);
-        d->thumbnailView->setObjectName ( QLatin1String("thumbnailView" ));
+        d->thumbnailView->setObjectName ( QStringLiteral("thumbnailView" ));
     }
     else
     {
@@ -320,7 +320,7 @@ void kpMainWindow::createThumbnailView ()
             d->mainView,
             nullptr/*scrollableContainer*/,
             d->thumbnail);
-        d->thumbnailView->setObjectName ( QLatin1String("thumbnailView" ));
+        d->thumbnailView->setObjectName ( QStringLiteral("thumbnailView" ));
     }
 
     d->thumbnailView->showBuddyViewScrollableContainerRectangle (

@@ -105,7 +105,7 @@ kpToolCurve::kpToolCurve (kpToolEnvironment *environ, QObject *parent)
         &::DrawCurveShape,
         Qt::Key_V,
         environ, parent,
-        "tool_curve")
+        QStringLiteral("tool_curve"))
 {
 }
 
