@@ -100,38 +100,36 @@ static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* p
 
 static unsigned int HSVToColor(int alpha, float hue, float saturation, float value)
 {
-    //Q_ASSERT (hue >= 0 && hue <= 1 && saturation >= 0 && saturation <= 1 && value >= 0 && value <= 1);
-
     hue *= 5.999999f;
     int h = static_cast<int> (hue);
     float f = hue - h;
-    float p = value * (1.0f - saturation);
-    float q = value * (1.0f - ((h & 1) == 0 ? 1.0f - f : f) * saturation);
+    float p = value * (1.0 - saturation);
+    float q = value * (1.0 - ((h & 1) == 0 ? 1.0 - f : f) * saturation);
     switch(h)
     {
-        case 0: return qRgba(static_cast<int> (value * 255.999999f),
-                             static_cast<int> (q * 255.999999f),
-                             static_cast<int> (p * 255.999999f), alpha);
+        case 0: return qRgba(static_cast<int> (value * 255.999999),
+                             static_cast<int> (q * 255.999999),
+                             static_cast<int> (p * 255.999999), alpha);
 
-        case 1: return qRgba(static_cast<int> (q * 255.999999f),
-                             static_cast<int> (value * 255.999999f),
-                             static_cast<int> (p * 255.999999f), alpha);
+        case 1: return qRgba(static_cast<int> (q * 255.999999),
+                             static_cast<int> (value * 255.999999),
+                             static_cast<int> (p * 255.999999), alpha);
 
-        case 2: return qRgba(static_cast<int> (p * 255.999999f),
-                             static_cast<int> (value * 255.999999f),
-                             static_cast<int> (q * 255.999999f), alpha);
+        case 2: return qRgba(static_cast<int> (p * 255.999999),
+                             static_cast<int> (value * 255.999999),
+                             static_cast<int> (q * 255.999999), alpha);
 
-        case 3: return qRgba(static_cast<int> (p * 255.999999f),
-                             static_cast<int> (q * 255.999999f),
-                             static_cast<int> (value * 255.999999f), alpha);
+        case 3: return qRgba(static_cast<int> (p * 255.999999),
+                             static_cast<int> (q * 255.999999),
+                             static_cast<int> (value * 255.999999), alpha);
 
-        case 4: return qRgba(static_cast<int> (q * 255.999999f),
-                             static_cast<int> (p * 255.999999f),
-                             static_cast<int> (value * 255.999999f), alpha);
+        case 4: return qRgba(static_cast<int> (q * 255.999999),
+                             static_cast<int> (p * 255.999999),
+                             static_cast<int> (value * 255.999999), alpha);
 
-        case 5: return qRgba(static_cast<int> (value * 255.999999f),
-                             static_cast<int> (p * 255.999999f),
-                             static_cast<int> (q * 255.999999f), alpha);
+        case 5: return qRgba(static_cast<int> (value * 255.999999),
+                             static_cast<int> (p * 255.999999),
+                             static_cast<int> (q * 255.999999), alpha);
     }
     return qRgba(0, 0, 0, alpha);
 }
@@ -146,9 +144,9 @@ static QRgb AdjustHSVInternal (QRgb pix, double hueDiv360, double saturation, do
     h += static_cast<float> (hueDiv360);
     h -= std::floor(h);
 
-    s = qMax(0.0f, qMin(1.0f, s + static_cast<float> (saturation)));
+    s = qMax(0.0f, qMin(static_cast<float>(1), s + static_cast<float> (saturation)));
 
-    v = qMax(0.0f, qMin(1.0f, v + static_cast<float> (value)));
+    v = qMax(0.0f, qMin(static_cast<float>(1), v + static_cast<float> (value)));
 
     return ::HSVToColor(alpha, h, s, v);
 }
