@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
 <!--
 SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper shell script (in standalone
