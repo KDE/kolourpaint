@@ -36,7 +36,6 @@
 class QCursor;
 class QRegion;
 class QRect;
-class QTimer;
 
 class kpDocument;
 class kpView;

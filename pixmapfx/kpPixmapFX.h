@@ -51,7 +51,6 @@ class QPolygon;
 class QRect;
 
 
-class kpAbstractSelection;
 
 
 //

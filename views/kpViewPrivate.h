@@ -38,7 +38,6 @@
 
 class kpDocument;
 class kpToolToolBar;
-class kpViewmanager;
 class kpView;
 class kpViewScrollableContainer;
 

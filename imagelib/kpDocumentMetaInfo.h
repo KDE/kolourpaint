@@ -39,7 +39,6 @@
 
 
 class QPoint;
-class QStringList;
 
 
 class kpDocumentMetaInfo

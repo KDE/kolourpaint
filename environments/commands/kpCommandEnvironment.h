@@ -36,7 +36,6 @@
 class kpMainWindow;
 class kpImageSelectionTransparency;
 class kpTextStyle;
-class kpViewManager;
 
 
 // Facade for kpCommand clients.

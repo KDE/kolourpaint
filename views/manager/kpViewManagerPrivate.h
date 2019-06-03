@@ -35,7 +35,6 @@
 
 
 class kpMainWindow;
-class kpTempPixmap;
 class QTimer;
 class kpView;
 

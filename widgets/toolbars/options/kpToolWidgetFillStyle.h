@@ -33,7 +33,6 @@
 #include "kpToolWidgetBase.h"
 
 
-class QBrush;
 class QPixmap;
 
 class kpColor;

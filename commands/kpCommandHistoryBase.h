@@ -42,14 +42,7 @@ class QAction;
 class KActionCollection;
 class KToolBarPopupAction;
 
-class kpAbstractImageSelection;
-class kpAbstractSelection;
 class kpCommand;
-class kpCommandEnvironment;
-class kpDocument;
-class kpMainWindow;
-class kpTextSelection;
-class kpViewManager;
 
 
 // Clone of KCommandHistory with features required by KolourPaint but which

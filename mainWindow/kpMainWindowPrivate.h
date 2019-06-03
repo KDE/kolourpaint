@@ -43,12 +43,25 @@ class QLabel;
 class KSelectAction;
 class KToggleAction;
 class KSqueezedTextLabel;
-
+class KRecentFilesAction;
+class KFontAction;
+class KFontSizeAction;
+class KToggleFullScreenAction;
 class kpCommandEnvironment;
 class kpDocumentEnvironment;
 class kpToolSelectionEnvironment;
 class kpTransformDialogEnvironment;
-
+class kpViewScrollableContainer;
+class kpZoomedView;
+class kpThumbnail;
+class kpThumbnailView;
+class kpDocument;
+class kpViewManager;
+class kpColorToolBar;
+class kpToolToolBar;
+class kpCommandHistory;
+class kpTool;
+class kpToolText;
 class SaneDialog;
 
 

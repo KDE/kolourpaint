@@ -35,7 +35,6 @@
 #include "lgpl/generic/widgets/kpColorCellsBase.h"
 
 
-class QDropEvent;
 
 class kpColorCollection;
 

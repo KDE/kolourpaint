@@ -35,8 +35,6 @@
 #include <QToolButton>
 
 
-class QKeyEvent;
-class QMouseEvent;
 class QTimer;
 
 

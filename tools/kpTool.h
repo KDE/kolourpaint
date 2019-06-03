@@ -44,7 +44,6 @@
 
 
 class QFocusEvent;
-class QIcon;
 class QInputMethodEvent;
 class QKeyEvent;
 class QMouseEvent;

@@ -34,7 +34,6 @@
 
 
 class kpAbstractSelection;
-class kpCommandHistory;
 
 
 class kpToolSelectionCreateCommand : public kpNamedCommand

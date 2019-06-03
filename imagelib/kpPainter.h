@@ -34,7 +34,6 @@
 #include "kpImage.h"
 
 
-class QPolygon;
 
 
 //

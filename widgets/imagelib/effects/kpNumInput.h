@@ -27,10 +27,8 @@
 
 class QSlider;
 class QSpinBox;
-class QValidator;
 
 class kpNumInputPrivate;
-class KLocalizedString;
 
 /**
  * You need to inherit from this class if you want to implement K*NumInput

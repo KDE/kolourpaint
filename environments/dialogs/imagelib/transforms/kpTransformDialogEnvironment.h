@@ -33,7 +33,6 @@
 #include "environments/kpEnvironmentBase.h"
 
 
-class kpCommandEnvironment;
 
 
 // Facade for kpTransformDialog* clients.

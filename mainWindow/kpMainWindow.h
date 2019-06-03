@@ -48,18 +48,10 @@ class QMoveEvent;
 class QPoint;
 class QRect;
 class QSize;
-class QStringList;
 
 class KConfigGroup;
-class KFontAction;
-class KFontSizeAction;
-class KSelectAction;
-class KToggleAction;
 class KToolBar;
 class QPrinter;
-class KRecentFilesAction;
-class KScanDialog;
-class KToggleFullScreenAction;
 
 class kpColor;
 class kpColorCells;
@@ -72,20 +64,15 @@ class kpDocumentEnvironment;
 class kpDocumentMetaInfo;
 class kpDocumentSaveOptions;
 class kpViewManager;
-class kpViewScrollableContainer;
 class kpImageSelectionTransparency;
-class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
-class kpThumbnailView;
 class kpTool;
 class kpToolEnvironment;
 class kpToolSelectionEnvironment;
-class kpToolText;
 class kpToolToolBar;
 class kpTransformDialogEnvironment;
-class kpZoomedView;
-
+class kpAbstractSelection;
 
 class kpMainWindow : public KXmlGuiWindow
 {

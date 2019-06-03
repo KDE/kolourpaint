@@ -41,7 +41,6 @@
 
 class QImage;
 class QIODevice;
-class QPixmap;
 class QPoint;
 class QRect;
 class QSize;

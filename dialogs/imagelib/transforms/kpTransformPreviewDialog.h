@@ -38,7 +38,6 @@ class QLabel;
 class QGridLayout;
 class QGroupBox;
 
-class kpColor;
 class kpDocument;
 class kpResizeSignallingLabel;
 class kpTransformDialogEnvironment;

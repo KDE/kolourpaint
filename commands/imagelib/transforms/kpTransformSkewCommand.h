@@ -35,7 +35,6 @@
 #include "commands/kpCommand.h"
 
 
-class kpAbstractSelection;
 
 
 class kpTransformSkewCommand : public kpCommand

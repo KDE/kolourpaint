@@ -40,7 +40,6 @@ class kpAbstractImageSelection;
 class kpAbstractSelection;
 class kpCommandEnvironment;
 class kpDocument;
-class kpMainWindow;
 class kpTextSelection;
 class kpViewManager;
 

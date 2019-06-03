@@ -32,7 +32,7 @@
 
 #include "kpCommandHistoryBase.h"
 
-
+class kpMainWindow;
 class kpToolSelectionCreateCommand;
 
 

@@ -33,7 +33,6 @@
 #include "environments/kpEnvironmentBase.h"
 
 
-class QRect;
 class QWidget;
 
 class kpAbstractSelection;

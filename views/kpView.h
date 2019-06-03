@@ -42,7 +42,6 @@ class QFocusEvent;
 class QKeyEvent;
 class QMouseEvent;
 class QPaintEvent;
-class QPixmap;
 class QResizeEvent;
 
 class kpAbstractSelection;

@@ -42,7 +42,6 @@
 class QPolygon;
 class QString;
 
-class kpView;
 
 class kpToolWidgetFillStyle;
 
