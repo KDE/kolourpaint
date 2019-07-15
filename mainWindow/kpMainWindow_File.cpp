@@ -55,7 +55,7 @@
 #include <kactioncollection.h>
 #include <KSharedConfig>
 #include <kconfiggroup.h>
-#include <KPluralHandlingSpinBox>
+#include <QSpinBox>
 #include <KJobWidgets>
 #include <KIO/StatJob>
 #include <kmessagebox.h>
@@ -664,9 +664,9 @@ void kpMainWindow::slotScreenshot()
   connect (buttons, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
   auto *label = new QLabel(i18n("Snapshot Delay"));
-  auto *seconds = new KPluralHandlingSpinBox;
+  auto *seconds = new QSpinBox;
   seconds->setRange(0, 99);
-  seconds->setSuffix(ki18np(" second", " seconds"));
+  seconds->setSuffix(i18n(" second(s)"));
   seconds->setSpecialValueText(i18n("No delay"));
 
   auto *hideWindow = new QCheckBox(i18n("Hide Main Window"));
