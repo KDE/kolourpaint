@@ -48,7 +48,8 @@
 
 
 #include "kpLogCategories.h"
-#include <kio/netaccess.h> // kdelibs4support
+#include <KJobWidgets>
+#include <KIO/StatJob>
 #include <KLocalizedString>
 
 #include <QColor>
@@ -156,9 +157,16 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
         return true;
     }
 
-    return (!m_url.isEmpty () &&
-            KIO::NetAccess::exists (m_url, KIO::NetAccess::SourceSide/*open*/,
-                d->environ->dialogParent ()));
+    if (m_url.isEmpty()) {
+        return false;
+    }
+
+    // 0 == only check if the file exists, don't bother with file metadata
+    KIO::StatJob *statJob = KIO::stat(m_url, KIO::StatJob::SourceSide, 0);
+    KJobWidgets::setWindow(statJob, d->environ->dialogParent());
+    const bool exists = statJob->exec();
+
+    return exists;
 }
 
 //---------------------------------------------------------------------
