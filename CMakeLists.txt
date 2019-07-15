@@ -294,7 +294,7 @@ set(kolourpaint_app_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpColorCells.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpColorPalette.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpDefaultColorCollection.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpDocumentSaveOptionsWidget.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpDocumentSaveDialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpDualColorButton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpPrintDialogPage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpTransparentColorCell.cpp

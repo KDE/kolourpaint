@@ -48,20 +48,20 @@ class QPushButton;
 class kpDocumentSaveOptionsPreviewDialog;
 
 
-class kpDocumentSaveOptionsWidget : public QWidget
+class kpDocumentSaveDialog : public QWidget
 {
 Q_OBJECT
 
 public:
-    kpDocumentSaveOptionsWidget (const QImage &docPixmap,
+    kpDocumentSaveDialog (const QImage &docPixmap,
                                  const kpDocumentSaveOptions &saveOptions,
                                  const kpDocumentMetaInfo &metaInfo,
                                  QWidget *parent);
-    kpDocumentSaveOptionsWidget (QWidget *parent);
+    kpDocumentSaveDialog (QWidget *parent);
 private:
     void init ();
 public:
-    ~kpDocumentSaveOptionsWidget () override;
+    ~kpDocumentSaveDialog () override;
 
 
     // <visualParent> is usually the filedialog

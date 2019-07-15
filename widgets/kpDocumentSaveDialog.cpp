@@ -28,7 +28,7 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
-#include "widgets/kpDocumentSaveOptionsWidget.h"
+#include "widgets/kpDocumentSaveDialog.h"
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
@@ -56,7 +56,7 @@
 #include <QTimer>
 
 
-kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
+kpDocumentSaveDialog::kpDocumentSaveDialog (
         const QImage &docPixmap,
         const kpDocumentSaveOptions &saveOptions,
         const kpDocumentMetaInfo &metaInfo,
@@ -70,7 +70,7 @@ kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
     setDocumentMetaInfo (metaInfo);
 }
 
-kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
+kpDocumentSaveDialog::kpDocumentSaveDialog (
         QWidget *parent)
     : QWidget (parent),
       m_visualParent (parent)
@@ -79,7 +79,7 @@ kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
 }
 
 // private
-void kpDocumentSaveOptionsWidget::init ()
+void kpDocumentSaveDialog::init ()
 {
     m_documentPixmap = nullptr;
     m_previewDialog = nullptr;
@@ -124,18 +124,18 @@ void kpDocumentSaveOptionsWidget::init ()
 
     connect (m_colorDepthCombo,
              static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
-             this, &kpDocumentSaveOptionsWidget::slotColorDepthSelected);
+             this, &kpDocumentSaveDialog::slotColorDepthSelected);
 
     connect (m_colorDepthCombo,
              static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
-             this, &kpDocumentSaveOptionsWidget::updatePreview);
+             this, &kpDocumentSaveDialog::updatePreview);
 
     connect (m_qualityInput,
              static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-             this, &kpDocumentSaveOptionsWidget::updatePreviewDelayed);
+             this, &kpDocumentSaveDialog::updatePreviewDelayed);
 
     connect (m_previewButton, &QPushButton::toggled,
-             this, &kpDocumentSaveOptionsWidget::showPreview);
+             this, &kpDocumentSaveDialog::showPreview);
 
 
     m_updatePreviewDelay = 200/*ms*/;
@@ -143,22 +143,22 @@ void kpDocumentSaveOptionsWidget::init ()
     m_updatePreviewTimer = new QTimer (this);
     m_updatePreviewTimer->setSingleShot (true);
     connect (m_updatePreviewTimer, &QTimer::timeout,
-             this, &kpDocumentSaveOptionsWidget::updatePreview);
+             this, &kpDocumentSaveDialog::updatePreview);
 
     m_updatePreviewDialogLastRelativeGeometryTimer = new QTimer (this);
     connect (m_updatePreviewDialogLastRelativeGeometryTimer,
              &QTimer::timeout,
-             this, &kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry);
+             this, &kpDocumentSaveDialog::updatePreviewDialogLastRelativeGeometry);
 
     setMode (None);
 
     slotColorDepthSelected ();
 }
 
-kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
+kpDocumentSaveDialog::~kpDocumentSaveDialog ()
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::<dtor>()";
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::<dtor>()";
 #endif
     hidePreview ();
 
@@ -167,10 +167,10 @@ kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 
 
 // public
-void kpDocumentSaveOptionsWidget::setVisualParent (QWidget *visualParent)
+void kpDocumentSaveDialog::setVisualParent (QWidget *visualParent)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setVisualParent("
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::setVisualParent("
                << visualParent << ")" << endl;
 #endif
 
@@ -179,29 +179,29 @@ void kpDocumentSaveOptionsWidget::setVisualParent (QWidget *visualParent)
 
 
 // protected
-bool kpDocumentSaveOptionsWidget::mimeTypeHasConfigurableColorDepth () const
+bool kpDocumentSaveDialog::mimeTypeHasConfigurableColorDepth () const
 {
     return kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (mimeType ());
 }
 
 // protected
-bool kpDocumentSaveOptionsWidget::mimeTypeHasConfigurableQuality () const
+bool kpDocumentSaveDialog::mimeTypeHasConfigurableQuality () const
 {
     return kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (mimeType ());
 }
 
 
 // public
-QString kpDocumentSaveOptionsWidget::mimeType () const
+QString kpDocumentSaveDialog::mimeType () const
 {
     return m_baseDocumentSaveOptions.mimeType ();
 }
 
 // public slots
-void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
+void kpDocumentSaveDialog::setMimeType (const QString &string)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setMimeType(" << string
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::setMimeType(" << string
                << ") maxColorDepth="
                << kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string)
                << endl;
@@ -279,7 +279,7 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
 
 
 // public
-int kpDocumentSaveOptionsWidget::colorDepth () const
+int kpDocumentSaveDialog::colorDepth () const
 {
     if (mode () & ColorDepth)
     {
@@ -309,7 +309,7 @@ int kpDocumentSaveOptionsWidget::colorDepth () const
 }
 
 // public
-bool kpDocumentSaveOptionsWidget::dither () const
+bool kpDocumentSaveDialog::dither () const
 {
     if (mode () & ColorDepth)
     {
@@ -321,7 +321,7 @@ bool kpDocumentSaveOptionsWidget::dither () const
 }
 
 // protected static
-int kpDocumentSaveOptionsWidget::colorDepthComboItemFromColorDepthAndDither (
+int kpDocumentSaveDialog::colorDepthComboItemFromColorDepthAndDither (
     int depth, bool dither)
 {
     switch (depth) {
@@ -346,10 +346,10 @@ int kpDocumentSaveOptionsWidget::colorDepthComboItemFromColorDepthAndDither (
 }
 
 // public slots
-void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDither)
+void kpDocumentSaveDialog::setColorDepthDither (int newDepth, bool newDither)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setColorDepthDither("
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::setColorDepthDither("
                << "depth=" << newDepth
                << ",dither=" << newDither
                << ")" << endl;
@@ -375,7 +375,7 @@ void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDit
 
 
 // protected slot
-void kpDocumentSaveOptionsWidget::slotColorDepthSelected ()
+void kpDocumentSaveDialog::slotColorDepthSelected ()
 {
     if (mode () & ColorDepth)
     {
@@ -390,7 +390,7 @@ void kpDocumentSaveOptionsWidget::slotColorDepthSelected ()
     }
 
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::slotColorDepthSelected()"
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::slotColorDepthSelected()"
                << " mode&ColorDepth=" << (mode () & ColorDepth)
                << " colorDepthComboLastSelectedItem="
                << m_colorDepthComboLastSelectedItem
@@ -400,7 +400,7 @@ void kpDocumentSaveOptionsWidget::slotColorDepthSelected ()
 
 
 // public
-int kpDocumentSaveOptionsWidget::quality () const
+int kpDocumentSaveDialog::quality () const
 {
     if (mode () & Quality)
     {
@@ -411,10 +411,10 @@ int kpDocumentSaveOptionsWidget::quality () const
 }
 
 // public
-void kpDocumentSaveOptionsWidget::setQuality (int newQuality)
+void kpDocumentSaveDialog::setQuality (int newQuality)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setQuality("
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::setQuality("
                << newQuality << ")" << endl;
 #endif
 
@@ -426,13 +426,13 @@ void kpDocumentSaveOptionsWidget::setQuality (int newQuality)
 
 
 // public
-kpDocumentSaveOptions kpDocumentSaveOptionsWidget::documentSaveOptions () const
+kpDocumentSaveOptions kpDocumentSaveDialog::documentSaveOptions () const
 {
     return kpDocumentSaveOptions (mimeType (), colorDepth (), dither (), quality ());
 }
 
 // public
-void kpDocumentSaveOptionsWidget::setDocumentSaveOptions (
+void kpDocumentSaveDialog::setDocumentSaveOptions (
     const kpDocumentSaveOptions &saveOptions)
 {
     setMimeType (saveOptions.mimeType ());
@@ -442,7 +442,7 @@ void kpDocumentSaveOptionsWidget::setDocumentSaveOptions (
 
 
 // public
-void kpDocumentSaveOptionsWidget::setDocumentPixmap (const QImage &documentPixmap)
+void kpDocumentSaveDialog::setDocumentPixmap (const QImage &documentPixmap)
 {
     delete m_documentPixmap;
     m_documentPixmap = new QImage (documentPixmap);
@@ -451,7 +451,7 @@ void kpDocumentSaveOptionsWidget::setDocumentPixmap (const QImage &documentPixma
 }
 
 // public
-void kpDocumentSaveOptionsWidget::setDocumentMetaInfo (
+void kpDocumentSaveDialog::setDocumentMetaInfo (
     const kpDocumentMetaInfo &metaInfo)
 {
     m_documentMetaInfo = metaInfo;
@@ -461,13 +461,13 @@ void kpDocumentSaveOptionsWidget::setDocumentMetaInfo (
 
 
 // public
-kpDocumentSaveOptionsWidget::Mode kpDocumentSaveOptionsWidget::mode () const
+kpDocumentSaveDialog::Mode kpDocumentSaveDialog::mode () const
 {
     return m_mode;
 }
 
 // public
-void kpDocumentSaveOptionsWidget::setMode (Mode mode)
+void kpDocumentSaveDialog::setMode (Mode mode)
 {
     m_mode = mode;
 
@@ -492,11 +492,11 @@ void kpDocumentSaveOptionsWidget::setMode (Mode mode)
     //       we change the height of "this", causing the text on the labels
     //       to move but the first instance of the text doesn't get erased.
     //       Qt bug.
-    QTimer::singleShot (0, this, &kpDocumentSaveOptionsWidget::repaintLabels);
+    QTimer::singleShot (0, this, &kpDocumentSaveDialog::repaintLabels);
 }
 
 // protected slot
-void kpDocumentSaveOptionsWidget::repaintLabels ()
+void kpDocumentSaveDialog::repaintLabels ()
 {
     if (mode () != Quality) {
         m_colorDepthLabel->repaint ();
@@ -508,10 +508,10 @@ void kpDocumentSaveOptionsWidget::repaintLabels ()
 
 
 // protected slot
-void kpDocumentSaveOptionsWidget::showPreview (bool yes)
+void kpDocumentSaveDialog::showPreview (bool yes)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::showPreview(" << yes << ")"
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::showPreview(" << yes << ")"
                << " m_previewDialog=" << bool (m_previewDialog)
                << endl;
 #endif
@@ -531,7 +531,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         updatePreview ();
 
         connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::finished,
-                 this, &kpDocumentSaveOptionsWidget::hidePreview);
+                 this, &kpDocumentSaveDialog::hidePreview);
 
 
         KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
@@ -624,10 +624,10 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         updatePreviewDialogLastRelativeGeometry ();
 
         connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::moved,
-                 this, &kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry);
+                 this, &kpDocumentSaveDialog::updatePreviewDialogLastRelativeGeometry);
 
         connect (m_previewDialog, &kpDocumentSaveOptionsPreviewDialog::resized,
-                 this, &kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry);
+                 this, &kpDocumentSaveDialog::updatePreviewDialogLastRelativeGeometry);
 
         m_updatePreviewDialogLastRelativeGeometryTimer->start (200/*ms*/);
     }
@@ -657,7 +657,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 }
 
 // protected slot
-void kpDocumentSaveOptionsWidget::hidePreview ()
+void kpDocumentSaveDialog::hidePreview ()
 {
     if (m_previewButton->isChecked ()) {
         m_previewButton->toggle ();
@@ -666,14 +666,14 @@ void kpDocumentSaveOptionsWidget::hidePreview ()
 
 
 // protected slot
-void kpDocumentSaveOptionsWidget::updatePreviewDelayed ()
+void kpDocumentSaveDialog::updatePreviewDelayed ()
 {
     // (single shot)
     m_updatePreviewTimer->start (m_updatePreviewDelay);
 }
 
 // protected slot
-void kpDocumentSaveOptionsWidget::updatePreview ()
+void kpDocumentSaveDialog::updatePreview ()
 {
     if (!m_previewDialog || !m_documentPixmap) {
         return;
@@ -724,10 +724,10 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
 }
 
 // protected slot
-void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
+void kpDocumentSaveDialog::updatePreviewDialogLastRelativeGeometry ()
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::"
+    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::"
                << "updatePreviewDialogLastRelativeGeometry()"
                << endl;
 #endif

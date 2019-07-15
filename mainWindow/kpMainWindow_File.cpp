@@ -74,7 +74,7 @@
 #include "document/kpDocument.h"
 #include "commands/imagelib/kpDocumentMetaInfoCommand.h"
 #include "dialogs/imagelib/kpDocumentMetaInfoDialog.h"
-#include "widgets/kpDocumentSaveOptionsWidget.h"
+#include "widgets/kpDocumentSaveDialog.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "widgets/kpPrintDialogPage.h"
 #include "views/kpView.h"
@@ -887,7 +887,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 #endif
 
     auto *saveOptionsWidget =
-        new kpDocumentSaveOptionsWidget (imageToBeSaved,
+        new kpDocumentSaveDialog (imageToBeSaved,
             fdSaveOptions,
             docMetaInfo,
             this);
@@ -903,7 +903,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     }
 
     connect (&fd, &KFileDialog::filterChanged,
-             saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
+             saveOptionsWidget, &kpDocumentSaveDialog::setMimeType);
 
     if ( fd.exec() == QDialog::Accepted )
     {
