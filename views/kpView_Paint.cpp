@@ -338,7 +338,7 @@ void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
     painter.setPen(Qt::black);
     painter.setBrush(Qt::cyan);
 
-    for (const auto &r : selResizeHandlesRegion.rects()) {
+    for (const QRect &r : selResizeHandlesRegion) {
       painter.drawRect(r);
     }
 }
@@ -585,9 +585,8 @@ void kpView::paintEvent (QPaintEvent *e)
     // It seems that e->region() is already clipped by Qt to the visible
     // part of the view (which could be quite small inside a scrollview).
     const auto& viewRegion = e->region ();
-    QVector <QRect> rects = viewRegion.rects ();
 #if DEBUG_KP_VIEW_RENDERER
-    qCDebug(kpLogViews) << "\t#rects = " << rects.count ();
+    qCDebug(kpLogViews) << "\t#viewRegion rects = " << viewRegion.rectCount ();
 #endif
 
     // Draw all of the requested regions of the document _before_ drawing
@@ -602,7 +601,7 @@ void kpView::paintEvent (QPaintEvent *e)
     // parts of nearby grid lines (which were drawn in a previous iteration)
     // with document pixels.  Those grid line parts are probably not going to
     // be redrawn, so will appear to be missing.
-    for (const auto &r : rects)
+    for (const QRect &r : viewRegion)
     {
         paintEventDrawDoc_Unclipped (r);
     }
@@ -614,7 +613,7 @@ void kpView::paintEvent (QPaintEvent *e)
     if ( isGridShown() )
     {
       QPainter painter(this);
-      for (const auto &r : rects)
+      for (const QRect &r : viewRegion)
         paintEventDrawGridLines(&painter, r);
     }
 
