@@ -50,7 +50,10 @@
 #include <QImageReader>
 
 #include "kpLogCategories.h"
-#include <kio/netaccess.h> // kdelibs4support
+#include <QBuffer>
+#include <KIO/StoredTransferJob>
+#include <KIO/StatJob>
+#include <KJobWidgets>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 
@@ -93,8 +96,19 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         *metaInfo = kpDocumentMetaInfo ();
     }
 
-    QString tempFile;
-    if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
+    if (!url.isValid() || (url.isLocalFile() && !QFile::exists(url.toLocalFile()))) {
+        if (!suppressDoesntExistDialog) {
+            KMessageBox::sorry (parent,
+                i18n ("\"%1\" is not valid valid file path.",
+                kpUrlFormatter::PrettyFilename (url)));
+        }
+        return {};
+    }
+
+    KIO::StoredTransferJob *downloadJob = KIO::storedGet(url);
+    KJobWidgets::setWindow(downloadJob, parent);
+
+    if (!downloadJob->exec())
     {
         if (!suppressDoesntExistDialog)
         {
@@ -110,8 +124,11 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         return {};
     }
 
+    QBuffer downloadBuffer;
+    downloadBuffer.setData(downloadJob->data());
+
     QMimeDatabase db;
-    QMimeType mimeType = db.mimeTypeForFile(tempFile);
+    QMimeType mimeType = db.mimeTypeForData(downloadBuffer.data());
 
     if (saveOptions) {
         saveOptions->setMimeType(mimeType.name());
@@ -123,20 +140,27 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     qCDebug(kpLogDocument) << "\tsrc=" << url.path ();
 #endif
 
-    QImageReader reader(tempFile);
+    downloadBuffer.open(QIODevice::ReadOnly);
+
+    QImageReader reader(&downloadBuffer);
     reader.setAutoTransform(true);
     reader.setDecideFormatFromContent(true);
 
     QImage image = reader.read();
 
-    KIO::NetAccess::removeTempFile(tempFile);
-
     if (image.isNull ())
     {
-        KMessageBox::sorry (parent,
-                            i18n ("Could not open \"%1\" - unsupported image format.\n"
-                                  "The file may be corrupt.",
-                                  kpUrlFormatter::PrettyFilename (url)));
+        if (reader.error() == QImageReader::UnsupportedFormatError) {
+            KMessageBox::sorry (parent,
+                                i18n ("Could not open \"%1\" - unsupported image format.\n"
+                                      "The file may be corrupt.",
+                                      kpUrlFormatter::PrettyFilename (url)));
+        } else {
+            KMessageBox::sorry (parent,
+                                i18n ("Could not open \"%1\".\n"
+                                      "The file may be corrupt.",
+                                      kpUrlFormatter::PrettyFilename (url)));
+        }
         return {};
     }
 
@@ -222,9 +246,17 @@ bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
 
     if (newDocSameNameIfNotExist)
     {
-        if (!url.isEmpty () &&
-            // not just a permission error?
-            !KIO::NetAccess::exists (url, KIO::NetAccess::SourceSide/*open*/, d->environ->dialogParent ()))
+        if (url.isEmpty()) {
+            openNew (QUrl ());
+            return true;
+        }
+
+        // 0 == only check if the file exists, don't bother with file metadata
+        KIO::StatJob *statJob = KIO::stat(url, KIO::StatJob::SourceSide, 0);
+        KJobWidgets::setWindow(statJob, d->environ->dialogParent());
+        const bool exists = statJob->exec();
+
+        if (exists)
         {
             openNew (url);
         }
