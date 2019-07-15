@@ -46,14 +46,16 @@
 #include <QTemporaryFile>
 #include <QTransform>
 #include <QMimeDatabase>
+#include <QImageWriter>
 
 #include "kpLogCategories.h"
-#include <kimageio.h> // kdelibs4support
 #include <KIO/StatJob>
 #include <KIO/FileCopyJob>
 #include <KJobWidgets>
 #include <KLocalizedString>
 #include <kmessagebox.h>
+#include <KService>
+#include <KServiceTypeTrader>
 
 #include "imagelib/kpColor.h"
 #include "widgets/toolbars/kpColorToolBar.h"
@@ -177,16 +179,40 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
         *userCancelled = false;
     }
 
-    QStringList types = KImageIO::typeForMime (saveOptions.mimeType ());
+    if (saveOptions.mimeType().isEmpty()) {
+        return false;
+    }
+
+    QList<QByteArray> types;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
+    types = QImageWriter::imageFormatsForMimeType(saveOptions.mimeType().toLocal8Bit());
+#else
+    QStringList typesStrings;
+    const KService::List services = KServiceTypeTrader::self()->query("QImageIOPlugins");
+    for (const KService::Ptr &service : services) {
+        if (saveOptions.mimeType() != service->property("X-KDE-MimeType").toString()) {
+            continue;
+        }
+        typesStrings = service->property("X-KDE-ImageFormat").toStringList();
+        if (!typesStrings.isEmpty()) {
+            break;
+        }
+    }
+    for (const QString &type : typesStrings) {
+        types.append(type.toLatin1());
+    }
+#endif
+
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\ttypes=" << types;
 #endif
+
     if (types.isEmpty ()) {
         return false;
     }
     // It's safe to arbitrarily choose the 0th type as any type in the list
     // should invoke the same KImageIO image loader.
-    const QString type = types [0];
+    const QByteArray type = types [0];
 
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tmimeType=" << saveOptions.mimeType ()
@@ -273,7 +299,7 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tsaving";
 #endif
-    if (!imageToSave.save (device, type.toLatin1 (), quality))
+    if (!imageToSave.save (device, type, quality))
     {
     #if DEBUG_KP_DOCUMENT
         qCDebug(kpLogDocument) << "\tQImage::save() returned false";
