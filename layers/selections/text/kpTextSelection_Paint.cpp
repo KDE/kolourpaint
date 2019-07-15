@@ -73,12 +73,24 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
         {
             str = preeditString.mid (i, start - i);
             painter.drawText (x, y, str);
-            x += painter.fontMetrics ().width (str);
+            x += painter.fontMetrics().
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                    horizontalAdvance
+#else
+                    width
+#endif
+                    (str);
         }
 
         painter.save();
         str = preeditString.mid (start, length);
-        int width = painter.fontMetrics().width (str);
+        int width = painter.fontMetrics().
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                    horizontalAdvance
+#else
+                    width
+#endif
+                (str);
         if (format.background ().color () != Qt::black)
         {
             painter.save ();
@@ -107,7 +119,13 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
     {
         str = preeditString.mid (i);
         painter.drawText (x, y, str);
-        x += painter.fontMetrics ().width (str);
+        x += painter.fontMetrics ().
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                    horizontalAdvance
+#else
+                    width
+#endif
+                (str);
     }
 }
 
@@ -224,7 +242,13 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
                 QString right = str.mid(col);
                 int x = theTextAreaRect.x();
                 painter.drawText(x, baseLine, left);
-                x += fontMetrics.width(left);
+                x += fontMetrics.
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                    horizontalAdvance
+#else
+                    width
+#endif
+                        (left);
                 drawPreeditString(painter, x, baseLine, thePreeditText);
 
                 painter.drawText(x, baseLine, right);

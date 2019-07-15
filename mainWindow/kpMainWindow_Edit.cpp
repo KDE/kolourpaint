@@ -500,7 +500,13 @@ void kpMainWindow::pasteText (const QString &text,
              it != textLines.constEnd ();
              ++it)
         {
-            const int w = fontMetrics.width (*it);
+            const int w = fontMetrics.
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                    horizontalAdvance
+#else
+                    width
+#endif
+                    (*it);
             if (w > width) {
                 width = w;
             }

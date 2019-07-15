@@ -56,7 +56,13 @@ void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
     QLabel *label = new QLabel (sb);
     label->setAlignment (Qt::AlignCenter);
     label->setFixedHeight (label->fontMetrics ().height () + 2);
-    int maxWidth = label->fontMetrics ().width (QLatin1Char ('8')) * maxTextLen;
+    int maxWidth = label->fontMetrics ().
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                    horizontalAdvance
+#else
+                    width
+#endif
+            (QLatin1Char ('8')) * maxTextLen;
     // add some margins
     maxWidth += label->fontMetrics ().height ();
     label->setFixedWidth (maxWidth);

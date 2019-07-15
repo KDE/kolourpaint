@@ -75,7 +75,15 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     m_gammaLabel = new QLabel (this);
     // TODO: This doesn't seem to be wide enough with some fonts so the
     //       whole layout moves when we drag the gamma slider.
-    m_gammaLabel->setMinimumWidth (m_gammaLabel->fontMetrics ().width (QStringLiteral (" 10.00 ")));
+
+    m_gammaLabel->setMinimumWidth (m_gammaLabel->fontMetrics ().
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
+                            horizontalAdvance
+#else
+                            width
+#endif
+                            (QStringLiteral (" 10.00 ")));
+
     m_gammaLabel->setAlignment (m_gammaLabel->alignment () | Qt::AlignRight);
     auto *gammaResetPushButton = new QPushButton (i18n ("Rese&t"), this);
 
