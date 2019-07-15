@@ -31,8 +31,6 @@ find_package(KF5 REQUIRED COMPONENTS
     XmlGui
     IconThemes
     TextWidgets
-
-    KDELibs4Support
 )
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
@@ -335,6 +333,7 @@ target_link_libraries(kolourpaint
     KF5::XmlGui
     KF5::IconThemes
     KF5::TextWidgets
+    KF5::KIOFileWidgets
     Qt5::PrintSupport
     Qt5::Widgets
     ${KSANE_LIBRARIES}

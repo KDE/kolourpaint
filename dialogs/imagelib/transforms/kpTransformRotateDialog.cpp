@@ -37,10 +37,10 @@
 #include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include <QButtonGroup>
+#include <QIcon>
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
@@ -96,15 +96,15 @@ kpTransformRotateDialog::~kpTransformRotateDialog ()
 // private
 void kpTransformRotateDialog::createDirectionGroupBox ()
 {
-    auto *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
+    QGroupBox *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
     addCustomWidget (directionGroupBox);
 
 
-    auto *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
-    antiClockwisePixmapLabel->setPixmap (UserIcon (QStringLiteral("image_rotate_anticlockwise")));
+    QLabel *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
+    antiClockwisePixmapLabel->setPixmap (QIcon::fromTheme("image-rotate-left-symbolic").pixmap(48, 48));
 
-    auto *clockwisePixmapLabel = new QLabel (directionGroupBox);
-    clockwisePixmapLabel->setPixmap (UserIcon (QStringLiteral("image_rotate_clockwise")));
+    QLabel *clockwisePixmapLabel = new QLabel (directionGroupBox);
+    clockwisePixmapLabel->setPixmap (QIcon::fromTheme("image-rotate-right-symbolic").pixmap(48, 48));
 
 
     m_antiClockwiseRadioButton = new QRadioButton (i18n ("Cou&nterclockwise"), directionGroupBox);

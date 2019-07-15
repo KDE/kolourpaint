@@ -56,7 +56,6 @@
 #include <KSharedConfig>
 #include <kconfiggroup.h>
 #include <KPluralHandlingSpinBox>
-#include <kfiledialog.h> // kdelibs4support
 #include <kiconloader.h>
 #include <KJobWidgets>
 #include <KIO/StatJob>
@@ -66,7 +65,6 @@
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
 #include <KLocalizedString>
-#include <kdeprintdialog.h> // kdelibs4support
 
 #include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"
@@ -1332,11 +1330,8 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         auto *optionsPage = new kpPrintDialogPage (this);
         optionsPage->setPrintImageCenteredOnPage (d->configPrintImageCenteredOnPage);
 
-        QPrintDialog *printDialog =
-            KdePrint::createPrintDialog (
-                printer,
-                QList <QWidget *> () << optionsPage,
-                this);
+        QPrintDialog *printDialog = new QPrintDialog(printer, this);
+        printDialog->setOptionTabs({optionsPage});
         printDialog->setWindowTitle (i18nc ("@title:window", "Print Image"));
 
         // Display dialog.

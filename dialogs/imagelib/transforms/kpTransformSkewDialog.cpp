@@ -42,7 +42,7 @@
 #include <QSpinBox>
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
+#include <QIcon>
 #include <KLocalizedString>
 
 #include "kpDefs.h"
@@ -98,39 +98,39 @@ kpTransformSkewDialog::~kpTransformSkewDialog ()
 // private
 void kpTransformSkewDialog::createAngleGroupBox ()
 {
-    auto *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
+    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
 
 
-    auto *horizontalSkewPixmapLabel = new QLabel (angleGroupBox);
-    horizontalSkewPixmapLabel->setPixmap (UserIcon (QStringLiteral("image_skew_horizontal")));
+    QLabel *horizontalSkewPixmapLabel = new QLabel (angleGroupBox);
+    horizontalSkewPixmapLabel->setPixmap (QIcon::fromTheme("transform-skew-horizontal").pixmap(48, 48));
 
-    auto *horizontalSkewLabel = new QLabel (i18n ("&Horizontal:"), angleGroupBox);
+    QLabel *horizontalSkewLabel = new QLabel (i18n ("&Horizontal:"), angleGroupBox);
     m_horizontalSkewInput = new QSpinBox;
     m_horizontalSkewInput->setValue(s_lastHorizontalAngle);
     m_horizontalSkewInput->setMinimum(-89);
     m_horizontalSkewInput->setMaximum(+89);
 
-    auto *horizontalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+    QLabel *horizontalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
-    auto *verticalSkewPixmapLabel = new QLabel (angleGroupBox);
-    verticalSkewPixmapLabel->setPixmap (UserIcon (QStringLiteral("image_skew_vertical")));
+    QLabel *verticalSkewPixmapLabel = new QLabel (angleGroupBox);
+    verticalSkewPixmapLabel->setPixmap (QIcon::fromTheme("transform-skew-vertical").pixmap(48, 48));
 
-    auto *verticalSkewLabel = new QLabel (i18n ("&Vertical:"), angleGroupBox);
+    QLabel *verticalSkewLabel = new QLabel (i18n ("&Vertical:"), angleGroupBox);
     m_verticalSkewInput = new QSpinBox;
     m_verticalSkewInput->setValue(s_lastVerticalAngle);
     m_verticalSkewInput->setMinimum(-89);
     m_verticalSkewInput->setMaximum(+89);
 
-    auto *verticalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+    QLabel *verticalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
     horizontalSkewLabel->setBuddy (m_horizontalSkewInput);
     verticalSkewLabel->setBuddy (m_verticalSkewInput);
 
 
-    auto *angleLayout = new QGridLayout (angleGroupBox);
+    QGridLayout *angleLayout = new QGridLayout (angleGroupBox);
 
     angleLayout->addWidget (horizontalSkewPixmapLabel, 0, 0);
     angleLayout->addWidget (horizontalSkewLabel, 0, 1);
@@ -159,10 +159,10 @@ QSize kpTransformSkewDialog::newDimensions () const
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    auto skewMatrix = kpPixmapFX::skewMatrix (doc->image (),
+    const QTransform skewMatrix = kpPixmapFX::skewMatrix (doc->image (),
                                                   horizontalAngleForPixmapFX (),
                                                   verticalAngleForPixmapFX ());
-    auto skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));
+    const QRect skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));
 
     return  {skewRect.width (), skewRect.height ()};
 }
