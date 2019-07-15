@@ -58,7 +58,8 @@
 #include <KPluralHandlingSpinBox>
 #include <kfiledialog.h> // kdelibs4support
 #include <kiconloader.h>
-#include <kio/netaccess.h> // kdelibs4support
+#include <KJobWidgets>
+#include <KIO/StatJob>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kstandardshortcut.h>
@@ -1111,9 +1112,18 @@ bool kpMainWindow::slotReload ()
 
     kpDocument *doc = nullptr;
 
+    bool comesFromUrlOrExists = false;
+    if (d->document->isFromURL (false/*don't bother checking exists*/)) {
+        comesFromUrlOrExists = true;
+    } else if (!oldURL.isEmpty()) {
+        // 0 == only check if the file exists, don't bother with file metadata
+        KIO::StatJob *statJob = KIO::stat(oldURL, KIO::StatJob::SourceSide, 0);
+        KJobWidgets::setWindow(statJob, this);
+        comesFromUrlOrExists = statJob->exec();
+    }
+
     // If it's _supposed to_ come from a URL or it exists
-    if (d->document->isFromURL (false/*don't bother checking exists*/) ||
-        (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, KIO::NetAccess::SourceSide/*open*/, this)))
+    if (comesFromUrlOrExists)
     {
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "kpMainWindow::slotReload() reloading from disk!";
