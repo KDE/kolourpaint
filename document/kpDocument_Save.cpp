@@ -49,7 +49,9 @@
 
 #include "kpLogCategories.h"
 #include <kimageio.h> // kdelibs4support
-#include <kio/netaccess.h> // kdelibs4support
+#include <KIO/StatJob>
+#include <KIO/FileCopyJob>
+#include <KJobWidgets>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 
@@ -318,6 +320,8 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
     // TODO: Use KIO::NetAccess:mostLocalURL() for accessing home:/ (and other
     //       such local URLs) for efficiency and because only local writes
     //       are atomic.
+    //  -> But we use QSaveFile for atomicness, and that doesn't seem to be able
+    //     to warn about file already existing, so we can't get 100% atomic
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::savePixmapToFile ("
                << url
@@ -328,23 +332,28 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
     metaInfo.printDebug (QLatin1String ("\tmetaInfo"));
 #endif
 
-    if (overwritePrompt &&
-        KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
-    {
-        int result = KMessageBox::warningContinueCancel (parent,
-            i18n ("A document called \"%1\" already exists.\n"
-                  "Do you want to overwrite it?",
-                  kpUrlFormatter::PrettyFilename (url)),
-            QString(),
-            KStandardGuiItem::overwrite ());
+    if (overwritePrompt) {
+        // 0 == only check if the file exists, don't bother with file metadata
+        KIO::StatJob *statJob = KIO::stat(url, KIO::StatJob::SourceSide, 0);
+        KJobWidgets::setWindow(statJob, parent);
+        const bool exists = statJob->exec();
 
-        if (result != KMessageBox::Continue)
-        {
-        #if DEBUG_KP_DOCUMENT
-            qCDebug(kpLogDocument) << "\tuser doesn't want to overwrite";
-        #endif
+        if (exists) {
+            int result = KMessageBox::warningContinueCancel (parent,
+                i18n ("A document called \"%1\" already exists.\n"
+                "Do you want to overwrite it?",
+                kpUrlFormatter::PrettyFilename (url)),
+                QString(),
+                KStandardGuiItem::overwrite ());
 
-            return false;
+            if (result != KMessageBox::Continue)
+            {
+#if DEBUG_KP_DOCUMENT
+                qCDebug(kpLogDocument) << "\tuser doesn't want to overwrite";
+#endif
+
+                return false;
+            }
         }
     }
 
@@ -463,7 +472,9 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
         // TODO: No one seems to know how to do this atomically
         //       [http://lists.kde.org/?l=kde-core-devel&m=117845162728484&w=2].
         //       At least, fish:// (ssh) is definitely not atomic.
-        if (!KIO::NetAccess::upload (tempFileName, url, parent))
+        KIO::FileCopyJob *uploadJob = KIO::file_copy(QUrl::fromLocalFile(tempFileName), url, -1, KIO::Overwrite);
+        KJobWidgets::setWindow(uploadJob, parent);
+        if (!uploadJob->exec())
         {
         #if DEBUG_KP_DOCUMENT
             qCDebug(kpLogDocument) << "\treturning false because could not upload";
