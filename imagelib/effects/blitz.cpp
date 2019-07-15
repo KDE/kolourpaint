@@ -498,11 +498,11 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                     s = scanblock[matrix_y];
                     matrix_x = -edge;
                     while(x+matrix_x < 0){
-                        CONVOLVE_ACC(*m, *s);
+                        CONVOLVE_ACC(*m, *s)
                         ++matrix_x; ++m;
                     }
                     while(matrix_x <= edge){
-                        CONVOLVE_ACC(*m, *s);
+                        CONVOLVE_ACC(*m, *s)
                         ++matrix_x; ++m; ++s;
                     }
                 }
@@ -520,7 +520,7 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                 for(matrix_y = 0; matrix_y < matrix_size; ++matrix_y){
                     s = scanblock[matrix_y] + (x-edge);
                     for(matrix_x = -edge; matrix_x <= edge; ++matrix_x, ++m, ++s){
-                        CONVOLVE_ACC(*m, *s);
+                        CONVOLVE_ACC(*m, *s)
                     }
                 }
                 r = r < 0.0f ? 0.0f : r > 255.0f ? 255.0f : r + 0.5f;
@@ -539,14 +539,14 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
                     s += x-edge;
                     matrix_x = -edge;
                     while(x+matrix_x < w){
-                        CONVOLVE_ACC(*m, *s);
+                        CONVOLVE_ACC(*m, *s)
                         ++matrix_x;
                         ++m;
                         ++s;
                     }
                     --s;
                     while(matrix_x <= edge){
-                        CONVOLVE_ACC(*m, *s);
+                        CONVOLVE_ACC(*m, *s)
                         ++matrix_x;
                         ++m;
                     }
