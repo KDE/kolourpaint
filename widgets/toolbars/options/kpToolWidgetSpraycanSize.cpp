@@ -34,13 +34,13 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include <QBitmap>
 #include <QImage>
 #include <QPainter>
 #include <QPixmap>
+#include <QStandardPaths>
 
 
 static int spraycanSizes [] = {9, 17, 29};
@@ -65,7 +65,8 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         pixmap.fill (Qt::white);
         
         QPainter painter (&pixmap);
-        painter.drawPixmap (0, 0, UserIcon (iconName));
+        QPixmap icon(QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics/" + iconName + ".png"));
+        painter.drawPixmap (0, 0, icon);
         painter.end ();
 
         QImage image = pixmap.toImage();

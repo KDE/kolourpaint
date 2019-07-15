@@ -50,8 +50,6 @@
 #include <KSharedConfig>
 #include <kconfiggroup.h>
 #include "kpLogCategories.h"
-#include <kiconeffect.h>
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include "layers/selections/kpAbstractSelection.h"
@@ -201,7 +199,7 @@ static void toolButtonSetLook (QToolButton *button,
                                const QString &iconName,
                                const QString &name)
 {
-    QPixmap icon = UserIcon (iconName);
+    QPixmap icon = QPixmap(QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics/" + iconName + ".png"));
     button->setIconSize (QSize (icon.width (), icon.height ()));
     button->setIcon (icon);
 

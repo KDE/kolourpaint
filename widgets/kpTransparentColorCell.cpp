@@ -33,7 +33,7 @@
 
 #include "imagelib/kpColor.h"
 
-#include <KIconLoader>
+#include <QStandardPaths>
 #include <KLocalizedString>
 
 #include <QContextMenuEvent>
@@ -49,7 +49,7 @@ kpTransparentColorCell::kpTransparentColorCell (QWidget *parent)
                    QSizePolicy::Fixed/*vertical*/);
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
-    m_pixmap = UserIcon (QStringLiteral("color_transparent_26x26"));
+    m_pixmap = QPixmap(QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics/color_transparent_26x26.png"));
 
     this->setToolTip( i18n ("Transparent"));
 }

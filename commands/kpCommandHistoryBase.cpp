@@ -42,7 +42,6 @@
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
 #include <kactioncollection.h>
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include "kpCommand.h"
@@ -76,12 +75,12 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
     : d (new kpCommandHistoryBasePrivate ())
 {
-    m_actionUndo = new KToolBarPopupAction(KDE::icon(QStringLiteral("edit-undo")), undoActionText (), this);
+    m_actionUndo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-undo")), undoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
     ac->setDefaultShortcuts (m_actionUndo, KStandardShortcut::shortcut (KStandardShortcut::Undo));
     connect (m_actionUndo, &KToolBarPopupAction::triggered, this, &kpCommandHistoryBase::undo);
 
-    m_actionRedo = new KToolBarPopupAction(KDE::icon(QStringLiteral("edit-redo")), redoActionText (), this);
+    m_actionRedo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-redo")), redoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
     ac->setDefaultShortcuts (m_actionRedo, KStandardShortcut::shortcut (KStandardShortcut::Redo));
     connect (m_actionRedo, &KToolBarPopupAction::triggered, this, &kpCommandHistoryBase::redo );

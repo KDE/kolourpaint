@@ -35,7 +35,6 @@
 
 #include <KColorMimeData>
 #include "kpLogCategories.h"
-#include <KIconLoader>
 
 #include <QApplication>
 #include <QBitmap>
@@ -43,6 +42,7 @@
 #include <QDrag>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QStandardPaths>
 #include <qdrawutil.h>
 
 //---------------------------------------------------------------------
@@ -152,7 +152,7 @@ QSize kpDualColorButton::sizeHint () const
 // protected
 QRect kpDualColorButton::swapPixmapRect () const
 {
-    QPixmap swapPixmap = UserIcon (QStringLiteral("colorbutton_swap_16x16"));
+    QPixmap swapPixmap = QPixmap(QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics/colorbutton_swap_16x16.png"));
 
     return  {contentsRect ().width () - swapPixmap.width (), 0,
                 swapPixmap.width (), swapPixmap.height ()};
@@ -397,9 +397,12 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
     painter.translate (contentsRect ().x (), contentsRect ().y ());
 
+    QString picturesPath = QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics");
 
     // Draw "Swap Colours" button (top-right).
-    QPixmap swapPixmap = UserIcon (QStringLiteral("colorbutton_swap_16x16"));
+    QPixmap swapPixmap(QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("pics/colorbutton_swap_16x16.png")));
+    QPixmap transparentBackground(QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("pics/color_transparent_26x26.png")));
+
     if (!isEnabled ())
     {
         // Don't let the fill() touch the mask.
@@ -425,7 +428,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                    << endl;
     #endif
         if (m_color [1].isTransparent ()) { // only if fully transparent
-            painter.drawPixmap (bgRectInside, UserIcon (QStringLiteral("color_transparent_26x26")));
+            painter.drawPixmap (bgRectInside, transparentBackground);
         }
         else {
             painter.fillRect (bgRectInside, m_color [1].toQColor ());
@@ -452,7 +455,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                    << endl;
     #endif
         if (m_color [0].isTransparent ()) { // only if fully transparent
-            painter.drawPixmap (fgRectInside, UserIcon (QStringLiteral("color_transparent_26x26")));
+            painter.drawPixmap (fgRectInside, transparentBackground);
         }
         else {
             painter.fillRect (fgRectInside, m_color [0].toQColor ());

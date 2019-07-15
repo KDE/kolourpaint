@@ -31,8 +31,9 @@
 #include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
+
+#include <QStandardPaths>
 
 
 //---------------------------------------------------------------------
@@ -40,9 +41,11 @@
 kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    addOption (UserIcon (QStringLiteral("option_opaque")), i18n ("Opaque")/*tooltip*/);
+    QPixmap icon = QPixmap(QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics/option_opaque.png"));
+    addOption (icon, i18n ("Opaque")/*tooltip*/);
     startNewOptionRow ();
-    addOption (UserIcon (QStringLiteral("option_transparent")), i18n ("Transparent")/*tooltip*/);
+    icon = QPixmap(QStandardPaths::locate(QStandardPaths::AppDataLocation, "pics/option_transparent.png"));
+    addOption (icon, i18n ("Transparent")/*tooltip*/);
 
     finishConstruction (0, 0);
 }
