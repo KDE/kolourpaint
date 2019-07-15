@@ -41,8 +41,10 @@
 #include "kpLogCategories.h"
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <KFileWidget>
 
 #include <QApplication>
+#include <QDialogButtonBox>
 #include <QBoxLayout>
 #include <QBuffer>
 #include <QComboBox>
@@ -57,14 +59,14 @@
 
 
 kpDocumentSaveDialog::kpDocumentSaveDialog (
+        const QString &url,
         const QImage &docPixmap,
         const kpDocumentSaveOptions &saveOptions,
         const kpDocumentMetaInfo &metaInfo,
         QWidget *parent)
-    : QWidget (parent),
-      m_visualParent (parent)
+    : QDialog (parent)
 {
-    init ();
+    init (QUrl(url));
     setDocumentSaveOptions (saveOptions);
     setDocumentPixmap (docPixmap);
     setDocumentMetaInfo (metaInfo);
@@ -72,18 +74,40 @@ kpDocumentSaveDialog::kpDocumentSaveDialog (
 
 kpDocumentSaveDialog::kpDocumentSaveDialog (
         QWidget *parent)
-    : QWidget (parent),
-      m_visualParent (parent)
+    : QDialog (parent)
 {
-    init ();
+    init (QUrl());
 }
 
 // private
-void kpDocumentSaveDialog::init ()
+void kpDocumentSaveDialog::init (const QUrl &startUrl)
 {
+    setLayout(new QVBoxLayout);
+
+    m_fileWidget = new KFileWidget(startUrl);
+    m_fileWidget->setOperationMode( KFileWidget::Saving );
+    m_fileWidget->setMode( KFile::Files | KFile::Directory );
+
+    connect(m_fileWidget, &KFileWidget::accepted, [&]() {
+        m_fileWidget->accept();
+
+        // We have to do this manually for some reason
+        accept();
+    });
+    connect (m_fileWidget, &KFileWidget::filterChanged, this, &kpDocumentSaveDialog::setMimeType);
+
+    layout()->addWidget(m_fileWidget);
+
+    // Normal file dialog buttons
+    QDialogButtonBox *buttonBox = new QDialogButtonBox;
+    buttonBox->addButton(m_fileWidget->okButton(), QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(m_fileWidget->cancelButton(), QDialogButtonBox::RejectRole);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(buttonBox, &QDialogButtonBox::accepted, m_fileWidget, &KFileWidget::slotOk);
+    layout()->addWidget(buttonBox);
+
     m_documentPixmap = nullptr;
     m_previewDialog = nullptr;
-    m_visualParent = nullptr;
 
 
     m_colorDepthLabel = new QLabel (i18n ("Convert &to:"), this);
@@ -107,20 +131,29 @@ void kpDocumentSaveDialog::init ()
 
     m_qualityLabel->setBuddy (m_qualityInput);
 
+    QWidget *optionsWidget = new QWidget(this);
+    QHBoxLayout *optionsLayout = new QHBoxLayout;
+    optionsLayout->addSpacerItem(new QSpacerItem(0, 30));
+    optionsWidget->setLayout(optionsLayout);
+    optionsLayout->setContentsMargins(0, 0, 0, 0);
 
-    auto *lay = new QHBoxLayout (this);
-    lay->setContentsMargins(0, 0, 0, 0);
+    optionsLayout->addWidget (m_colorDepthLabel, 0/*stretch*/, Qt::AlignLeft);
+    optionsLayout->addWidget (m_colorDepthCombo, 0/*stretch*/);
 
-    lay->addWidget (m_colorDepthLabel, 0/*stretch*/, Qt::AlignLeft);
-    lay->addWidget (m_colorDepthCombo, 0/*stretch*/);
+    optionsLayout->addWidget (m_colorDepthSpaceWidget, 1/*stretch*/);
 
-    lay->addWidget (m_colorDepthSpaceWidget, 1/*stretch*/);
+    optionsLayout->addWidget (m_qualityLabel, 0/*stretch*/, Qt::AlignLeft);
+    optionsLayout->addWidget (m_qualityInput, 2/*stretch*/);
 
-    lay->addWidget (m_qualityLabel, 0/*stretch*/, Qt::AlignLeft);
-    lay->addWidget (m_qualityInput, 2/*stretch*/);
+    optionsLayout->addWidget (m_previewButton, 0/*stretch*/, Qt::AlignRight);
 
-    lay->addWidget (m_previewButton, 0/*stretch*/, Qt::AlignRight);
+    // I don't like the default position it gets, so just do it old style
+//    buttonBox->addButton(m_previewButton, QDialogButtonBox::ApplyRole);
 
+
+    m_fileWidget->setCustomWidget(QString(), optionsWidget);
+    // To make the "automatically select extension" checkbox appear below the file type selection
+//    m_fileWidget->setCustomWidget(optionsWidget);
 
     connect (m_colorDepthCombo,
              static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
@@ -165,18 +198,19 @@ kpDocumentSaveDialog::~kpDocumentSaveDialog ()
     delete m_documentPixmap;
 }
 
-
-// public
-void kpDocumentSaveDialog::setVisualParent (QWidget *visualParent)
+void kpDocumentSaveDialog::setLocalOnly(bool localOnly)
 {
-#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    qCDebug(kpLogWidgets) << "kpDocumentSaveDialog::setVisualParent("
-               << visualParent << ")" << endl;
-#endif
-
-    m_visualParent = visualParent;
+    if (localOnly) {
+        m_fileWidget->setMode (KFile::File | KFile::LocalOnly);
+    } else {
+        m_fileWidget->setMode (KFile::File);
+    }
 }
 
+const QUrl kpDocumentSaveDialog::selectedUrl() const
+{
+    return m_fileWidget->selectedUrl();
+}
 
 // protected
 bool kpDocumentSaveDialog::mimeTypeHasConfigurableColorDepth () const
@@ -206,6 +240,8 @@ void kpDocumentSaveDialog::setMimeType (const QString &string)
                << kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string)
                << endl;
 #endif
+
+    m_fileWidget->setMimeFilter(kpDocumentSaveOptions::availableMimeTypes(), string);
 
     const int newMimeTypeMaxDepth =
         kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string);
@@ -520,13 +556,9 @@ void kpDocumentSaveDialog::showPreview (bool yes)
         return;
     }
 
-    if (!m_visualParent) {
-        return;
-    }
-
     if (yes)
     {
-        m_previewDialog = new kpDocumentSaveOptionsPreviewDialog( m_visualParent );
+        m_previewDialog = new kpDocumentSaveOptionsPreviewDialog( this );
         m_previewDialog->setObjectName( QStringLiteral( "previewSaveDialog" ) );
         updatePreview ();
 
@@ -568,13 +600,13 @@ void kpDocumentSaveDialog::showPreview (bool yes)
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
         qCDebug(kpLogWidgets) << "\tpreviewDialogLastRelativeGeometry="
                    << m_previewDialogLastRelativeGeometry
-                   << " visualParent->rect()=" << m_visualParent->rect ()
+                   << " this->rect()=" << this->rect ()
                    << endl;
     #endif
 
         QRect relativeGeometry;
         if (!m_previewDialogLastRelativeGeometry.isEmpty () &&
-            m_visualParent->rect ().intersects (m_previewDialogLastRelativeGeometry))
+            this->rect ().intersects (m_previewDialogLastRelativeGeometry))
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
             qCDebug(kpLogWidgets) << "\tok";
@@ -589,7 +621,7 @@ void kpDocumentSaveDialog::showPreview (bool yes)
             const int margin = 20;
 
             relativeGeometry =
-                QRect (m_visualParent->width () -
+                QRect (this->width () -
                            m_previewDialog->preferredMinimumSize ().width () -
                                margin,
                        margin * 2,  // Avoid folder combo
@@ -599,7 +631,7 @@ void kpDocumentSaveDialog::showPreview (bool yes)
 
 
         const QRect globalGeometry =
-            kpWidgetMapper::toGlobal (m_visualParent,
+            kpWidgetMapper::toGlobal (this,
                                       relativeGeometry);
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
         qCDebug(kpLogWidgets) << "\trelativeGeometry=" << relativeGeometry
@@ -644,7 +676,7 @@ void kpDocumentSaveDialog::showPreview (bool yes)
         qCDebug(kpLogWidgets) << "\tsaving preview geometry "
                    << m_previewDialogLastRelativeGeometry
                    << " (Qt would have us believe "
-                   << kpWidgetMapper::fromGlobal (m_visualParent,
+                   << kpWidgetMapper::fromGlobal (this,
                           QRect (m_previewDialog->x (), m_previewDialog->y (),
                                  m_previewDialog->width (), m_previewDialog->height ()))
                    << ")"
@@ -735,7 +767,7 @@ void kpDocumentSaveDialog::updatePreviewDialogLastRelativeGeometry ()
     if (m_previewDialog && m_previewDialog->isVisible ())
     {
         m_previewDialogLastRelativeGeometry =
-            kpWidgetMapper::fromGlobal (m_visualParent,
+            kpWidgetMapper::fromGlobal (this,
                 QRect (m_previewDialog->x (), m_previewDialog->y (),
                        m_previewDialog->width (), m_previewDialog->height ()));
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET

@@ -32,11 +32,12 @@
 
 #include <QRect>
 #include <QSize>
-#include <QWidget>
+#include <QDialog>
 
 #include "imagelib/kpDocumentMetaInfo.h"
 #include "document/kpDocumentSaveOptions.h"
 
+class KFileWidget;
 
 class QComboBox;
 class QImage;
@@ -45,28 +46,28 @@ class QTimer;
 class QSpinBox;
 class QPushButton;
 
+
 class kpDocumentSaveOptionsPreviewDialog;
 
 
-class kpDocumentSaveDialog : public QWidget
+class kpDocumentSaveDialog : public QDialog
 {
 Q_OBJECT
 
 public:
-    kpDocumentSaveDialog (const QImage &docPixmap,
+    kpDocumentSaveDialog (const QString &url, const QImage &docPixmap,
                                  const kpDocumentSaveOptions &saveOptions,
                                  const kpDocumentMetaInfo &metaInfo,
                                  QWidget *parent);
     kpDocumentSaveDialog (QWidget *parent);
 private:
-    void init ();
+    void init (const QUrl &startUrl);
 public:
     ~kpDocumentSaveDialog () override;
 
+    void setLocalOnly(bool localOnly);
 
-    // <visualParent> is usually the filedialog
-    void setVisualParent (QWidget *visualParent);
-
+    const QUrl selectedUrl() const;
 
 protected:
     bool mimeTypeHasConfigurableColorDepth () const;
@@ -128,6 +129,7 @@ protected slots:
 
 protected:
     QWidget *m_visualParent;
+    KFileWidget *m_fileWidget;
 
     Mode m_mode;
 

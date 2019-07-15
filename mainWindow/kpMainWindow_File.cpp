@@ -819,10 +819,8 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
     kpDocumentSaveOptions fdSaveOptions = startSaveOptions;
 
-    QStringList mimeTypes;
-    for (const auto &type : QImageWriter::supportedMimeTypes()) {
-      mimeTypes << QString::fromLatin1(type);
-    }
+    const QStringList mimeTypes = kpDocumentSaveOptions::availableMimeTypes();
+
 #if DEBUG_KP_MAIN_WINDOW
     QStringList sortedMimeTypes = mimeTypes;
     sortedMimeTypes.sort ();
@@ -886,28 +884,19 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     fdSaveOptions.printDebug ("\tcorrected saveOptions passed to fileDialog");
 #endif
 
-    auto *saveOptionsWidget =
-        new kpDocumentSaveDialog (imageToBeSaved,
+    kpDocumentSaveDialog saveOptionsWidget (
+            startURL,
+            imageToBeSaved,
             fdSaveOptions,
             docMetaInfo,
             this);
+    saveOptionsWidget.setWindowTitle(caption);
+    saveOptionsWidget.setLocalOnly(localOnly);
 
-    KFileDialog fd (QUrl (startURL), QString(), this,
-                    saveOptionsWidget);
-    saveOptionsWidget->setVisualParent (&fd);
-    fd.setWindowTitle (caption);
-    fd.setOperationMode (KFileDialog::Saving);
-    fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
-    if (localOnly) {
-        fd.setMode (KFile::File | KFile::LocalOnly);
-    }
 
-    connect (&fd, &KFileDialog::filterChanged,
-             saveOptionsWidget, &kpDocumentSaveDialog::setMimeType);
-
-    if ( fd.exec() == QDialog::Accepted )
+    if ( saveOptionsWidget.exec() == QDialog::Accepted )
     {
-        kpDocumentSaveOptions newSaveOptions = saveOptionsWidget->documentSaveOptions ();
+        kpDocumentSaveOptions newSaveOptions = saveOptionsWidget.documentSaveOptions ();
     #if DEBUG_KP_MAIN_WINDOW
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
@@ -926,7 +915,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
 
         bool shouldAllowOverwritePrompt =
-                (fd.selectedUrl () != QUrl (startURL) ||
+                (saveOptionsWidget.selectedUrl () != QUrl (startURL) ||
                  newSaveOptions.mimeType () != startSaveOptions.mimeType ());
         if (allowOverwritePrompt)
         {
@@ -956,7 +945,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tselectedUrl=" << fd.selectedUrl ();
     #endif
-        return fd.selectedUrl ();
+        return saveOptionsWidget.selectedUrl ();
     }
 
     return {};

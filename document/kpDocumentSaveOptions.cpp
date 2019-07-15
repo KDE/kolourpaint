@@ -40,6 +40,7 @@
 #include <QBitmap>
 #include <QImage>
 #include <QString>
+#include <QImageWriter>
 
 //---------------------------------------------------------------------
 
@@ -269,6 +270,15 @@ bool kpDocumentSaveOptions::qualityIsInvalid (int quality)
 bool kpDocumentSaveOptions::qualityIsInvalid () const
 {
     return qualityIsInvalid (quality ());
+}
+
+QStringList kpDocumentSaveOptions::availableMimeTypes()
+{
+    QStringList mimeTypes;
+    for (const auto &type : QImageWriter::supportedMimeTypes()) {
+      mimeTypes << QString::fromLatin1(type);
+    }
+    return mimeTypes;
 }
 
 

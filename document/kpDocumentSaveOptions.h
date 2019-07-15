@@ -32,6 +32,7 @@
 
 class QImage;
 class QString;
+class QStringList;
 
 class KConfigGroup;
 
@@ -51,7 +52,6 @@ public:
 
 
     void printDebug (const QString &prefix) const;
-
 
     QString mimeType () const;
     void setMimeType (const QString &mimeType);
@@ -82,6 +82,8 @@ public:
     static bool qualityIsInvalid (int quality);
     bool qualityIsInvalid () const;
 
+
+    static QStringList availableMimeTypes();
 
     // (All assume that <config>'s group has been set)
     // (None of them call KConfigBase::reparseConfig() nor KConfigBase::sync())
