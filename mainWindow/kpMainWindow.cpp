@@ -52,6 +52,8 @@
 #include <kconfiggroup.h>
 #include <KLocalizedString>
 
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QEvent>
 #include <QMenu>
 #include <QTimer>

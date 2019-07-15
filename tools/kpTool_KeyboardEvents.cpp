@@ -42,6 +42,7 @@
 #include <QApplication>
 #include <QCursor>
 #include <QEvent>
+#include <QKeyEvent>
 
 #include <kactioncollection.h>
 #include "kpLogCategories.h"

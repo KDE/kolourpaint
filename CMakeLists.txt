@@ -332,11 +332,11 @@ ecm_add_app_icon(kolourpaint_SRCS ICONS
 add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
-    KF5::KDELibs4Support
     KF5::XmlGui
     KF5::IconThemes
     KF5::TextWidgets
     Qt5::PrintSupport
+    Qt5::Widgets
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )
