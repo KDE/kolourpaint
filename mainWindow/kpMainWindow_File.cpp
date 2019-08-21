@@ -193,7 +193,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
     //       To avoid the crash, make a copy of it before calling
     //       loadEntries() and use this copy, instead of the to-be-dangling
     //       ref.
-    const QUrl& url = url_;
+    const QUrl url = url_; // DO NOT MAKE IT A REFERENCE, THE CALL BELOW TO loadEntries DESTROYS url_
 
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::addRecentURL(" << url << ")";
