@@ -854,10 +854,10 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             qCDebug(kpLogMainWindow) << "\tmimeType=" << fdSaveOptions.mimeType ()
                        << " not valid, get hardcoded";
         #endif
-            if (mimeTypes.contains (QStringLiteral("image/png"))) {
+            if (mimeTypes.contains(QLatin1String("image/png"))) {
                 fdSaveOptions.setMimeType (QStringLiteral("image/png"));
             }
-            else if (mimeTypes.contains (QStringLiteral("image/bmp"))) {
+            else if (mimeTypes.contains(QLatin1String("image/bmp"))) {
                 fdSaveOptions.setMimeType (QStringLiteral("image/bmp"));
             }
             else {
