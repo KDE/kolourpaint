@@ -31,8 +31,7 @@ find_package(KF5 REQUIRED COMPONENTS
     XmlGui
     IconThemes
     TextWidgets
-
-    KDELibs4Support
+    KDELibs4Support #kio::netaccess
 )
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
@@ -332,7 +331,6 @@ ecm_add_app_icon(kolourpaint_SRCS ICONS
 add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
-    KF5::KDELibs4Support
     KF5::XmlGui
     KF5::IconThemes
     KF5::TextWidgets
