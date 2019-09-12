@@ -1,9 +1,10 @@
 project(kolourpaint)
 
 cmake_minimum_required(VERSION 3.10.0 FATAL_ERROR)
-set(QT_MIN_VERSION "5.5.0")
+set(QT_MIN_VERSION "5.11.0")
+set(KF5_MIN_VERSION "5.58.0")
 
-find_package(ECM 1.3.0 REQUIRED NO_MODULE)
+find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 add_definitions(-DTRANSLATION_DOMAIN="kolourpaint")
@@ -22,7 +23,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     PrintSupport
 )
 
-find_package(KF5 REQUIRED COMPONENTS
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     DocTools
     I18n
     GuiAddons

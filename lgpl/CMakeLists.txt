@@ -17,7 +17,7 @@ add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 set(kolourpaint_lgpl_version 5)
 
 target_link_libraries(kolourpaint_lgpl
-    KF5::KDELibs4Support
+    KF5::KDELibs4Support # kio::network
     KF5::I18n
     KF5::GuiAddons
     KF5::WidgetsAddons
