@@ -38,7 +38,6 @@
 #include <QFile>
 #include <QImage>
 #include <QList>
-#include <QImage>
 #include <QPainter>
 #include <QRect>
 #include <QSaveFile>
