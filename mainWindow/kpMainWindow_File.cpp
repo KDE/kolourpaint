@@ -106,12 +106,12 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionExport = ac->addAction(QStringLiteral("file_export"));
     d->actionExport->setText (i18n ("E&xport..."));
-    d->actionExport->setIcon(KDE::icon(QStringLiteral("document-export")));
+    d->actionExport->setIcon(QIcon::fromTheme(QStringLiteral("document-export")));
     connect (d->actionExport, &QAction::triggered, this, &kpMainWindow::slotExport);
 
     d->actionScan = ac->addAction(QStringLiteral("file_scan"));
     d->actionScan->setText(i18n ("Scan..."));
-    d->actionScan->setIcon(SmallIcon("scanner"));
+    d->actionScan->setIcon(QIcon::fromTheme("scanner"));
 #if HAVE_KSANE
     connect (d->actionScan, &QAction::triggered, this, &kpMainWindow::slotScan);
 #else
@@ -124,13 +124,13 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionProperties = ac->addAction (QStringLiteral("file_properties"));
     d->actionProperties->setText (i18n ("Properties"));
-    d->actionProperties->setIcon(KDE::icon(QStringLiteral("document-properties")));
+    d->actionProperties->setIcon(QIcon::fromTheme(QStringLiteral("document-properties")));
     connect (d->actionProperties, &QAction::triggered, this, &kpMainWindow::slotProperties);
 
     //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert()), ac);
     d->actionReload = ac->addAction (QStringLiteral("file_revert"));
     d->actionReload->setText (i18n ("Reloa&d"));
-    d->actionReload->setIcon(KDE::icon(QStringLiteral("view-refresh")));
+    d->actionReload->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
     connect (d->actionReload, &QAction::triggered, this, &kpMainWindow::slotReload);
     ac->setDefaultShortcuts (d->actionReload, KStandardShortcut::reload ());
     slotEnableReload ();

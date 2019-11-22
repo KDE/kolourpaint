@@ -66,25 +66,25 @@ void kpMainWindow::setupTextToolBarActions ()
              this, &kpMainWindow::slotTextFontSizeChanged);
 
     d->actionTextBold = ac->add<KToggleAction> (QStringLiteral("text_bold"));
-    d->actionTextBold->setIcon(KDE::icon(QStringLiteral("format-text-bold")));
+    d->actionTextBold->setIcon(QIcon::fromTheme(QStringLiteral("format-text-bold")));
     d->actionTextBold->setText (i18n ("Bold"));
     connect (d->actionTextBold, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextBoldChanged);
 
     d->actionTextItalic = ac->add<KToggleAction> (QStringLiteral("text_italic"));
-    d->actionTextItalic->setIcon (KDE::icon(QStringLiteral("format-text-italic")));
+    d->actionTextItalic->setIcon (QIcon::fromTheme(QStringLiteral("format-text-italic")));
     d->actionTextItalic->setText (i18n ("Italic"));
     connect (d->actionTextItalic, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextItalicChanged);
 
     d->actionTextUnderline = ac->add<KToggleAction> (QStringLiteral("text_underline"));
-    d->actionTextUnderline->setIcon (KDE::icon(QStringLiteral("format-text-underline")));
+    d->actionTextUnderline->setIcon (QIcon::fromTheme(QStringLiteral("format-text-underline")));
     d->actionTextUnderline->setText (i18n ("Underline"));
     connect (d->actionTextUnderline, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextUnderlineChanged);
 
     d->actionTextStrikeThru = ac->add<KToggleAction> (QStringLiteral("text_strike_thru"));
-    d->actionTextStrikeThru->setIcon(KDE::icon(QStringLiteral("format-text-strikethrough")));
+    d->actionTextStrikeThru->setIcon(QIcon::fromTheme(QStringLiteral("format-text-strikethrough")));
     d->actionTextStrikeThru->setText (i18n ("Strike Through"));
     connect (d->actionTextStrikeThru, &KToggleAction::triggered,
              this, &kpMainWindow::slotTextStrikeThruChanged);

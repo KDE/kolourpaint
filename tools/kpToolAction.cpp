@@ -37,7 +37,7 @@ kpToolAction::kpToolAction(const QString &text,
                             const QString &pic, const QList<QKeySequence> &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
-    : KToggleAction(KDE::icon(pic), text, ac)
+    : KToggleAction(QIcon::fromTheme(pic), text, ac)
 {
   ac->setDefaultShortcuts(this, shortcut);
 

@@ -142,19 +142,19 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionRotate = ac->addAction (QStringLiteral("image_rotate"));
     d->actionRotate->setText (i18n ("&Rotate..."));
-    d->actionRotate->setIcon(KDE::icon(QStringLiteral("transform-rotate")));
+    d->actionRotate->setIcon(QIcon::fromTheme(QStringLiteral("transform-rotate")));
     connect (d->actionRotate, &QAction::triggered, this, &kpMainWindow::slotRotate);
     ac->setDefaultShortcut (d->actionRotate, Qt::CTRL + Qt::Key_R);
 
     d->actionRotateLeft = ac->addAction (QStringLiteral("image_rotate_270deg"));
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
-    d->actionRotateLeft->setIcon(KDE::icon(QStringLiteral("object-rotate-left")));
+    d->actionRotateLeft->setIcon(QIcon::fromTheme(QStringLiteral("object-rotate-left")));
     connect (d->actionRotateLeft, &QAction::triggered, this, &kpMainWindow::slotRotate270);
     ac->setDefaultShortcut (d->actionRotateLeft, Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
     d->actionRotateRight = ac->addAction (QStringLiteral("image_rotate_90deg"));
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
-    d->actionRotateRight->setIcon(KDE::icon(QStringLiteral("object-rotate-right")));
+    d->actionRotateRight->setIcon(QIcon::fromTheme(QStringLiteral("object-rotate-right")));
     connect (d->actionRotateRight, &QAction::triggered, this, &kpMainWindow::slotRotate90);
     ac->setDefaultShortcut (d->actionRotateRight, Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
