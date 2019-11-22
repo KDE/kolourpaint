@@ -42,7 +42,6 @@
 
 #include <QWidget>
 
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 //---------------------------------------------------------------------

@@ -29,7 +29,6 @@
 #include <kactioncollection.h>
 #include "tools/kpTool.h"
 
-#include <kiconloader.h>
 
 //---------------------------------------------------------------------
 

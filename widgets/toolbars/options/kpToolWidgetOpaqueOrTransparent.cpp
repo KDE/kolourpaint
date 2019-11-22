@@ -31,7 +31,6 @@
 #include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 

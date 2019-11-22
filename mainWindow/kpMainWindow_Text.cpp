@@ -36,7 +36,6 @@
 #include <kfontsizeaction.h>
 #include <KToolBar>
 #include <ktoggleaction.h>
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include "widgets/toolbars/kpColorToolBar.h"

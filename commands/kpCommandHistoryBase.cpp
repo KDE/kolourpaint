@@ -42,7 +42,6 @@
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
 #include <kactioncollection.h>
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include "kpCommand.h"

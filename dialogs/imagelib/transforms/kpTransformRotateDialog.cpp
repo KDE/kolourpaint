@@ -37,7 +37,6 @@
 #include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include <QButtonGroup>

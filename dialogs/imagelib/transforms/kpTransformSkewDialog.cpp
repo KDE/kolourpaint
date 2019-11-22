@@ -42,7 +42,6 @@
 #include <QSpinBox>
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include "kpDefs.h"

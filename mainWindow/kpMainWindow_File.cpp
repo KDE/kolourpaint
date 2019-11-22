@@ -57,7 +57,6 @@
 #include <kconfiggroup.h>
 #include <KPluralHandlingSpinBox>
 #include <kfiledialog.h> // kdelibs4support
-#include <kiconloader.h>
 #include <kio/netaccess.h> // kdelibs4support
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
