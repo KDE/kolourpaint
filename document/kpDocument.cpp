@@ -145,19 +145,19 @@ void kpDocument::setURL (const QUrl &url, bool isFromExistingURL)
 //---------------------------------------------------------------------
 
 // public
-bool kpDocument::isFromExistingURL (bool checkURLStillExists) const
+bool kpDocument::isFromExistingURL () const
 {
-    if (!m_isFromExistingURL) {
-        return false;
-    }
+    return m_isFromExistingURL;
+}
 
-    if (!checkURLStillExists) {
-        return true;
-    }
+//---------------------------------------------------------------------
 
-    return (!m_url.isEmpty () &&
-            KIO::NetAccess::exists (m_url, KIO::NetAccess::SourceSide/*open*/,
-                d->environ->dialogParent ()));
+// public
+bool kpDocument::urlExists (const QUrl &url) const
+{
+    return (!url.isEmpty () &&
+            KIO::NetAccess::exists (url, KIO::NetAccess::SourceSide/*open*/,
+                                    d->environ->dialogParent ()));
 }
 
 //---------------------------------------------------------------------

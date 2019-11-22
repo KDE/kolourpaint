@@ -222,9 +222,7 @@ bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
 
     if (newDocSameNameIfNotExist)
     {
-        if (!url.isEmpty () &&
-            // not just a permission error?
-            !KIO::NetAccess::exists (url, KIO::NetAccess::SourceSide/*open*/, d->environ->dialogParent ()))
+        if (urlExists (url)) // not just a permission error?
         {
             openNew (url);
         }

@@ -139,7 +139,10 @@ public:
     //
     // e.g. If the user types "kolourpaint doesnotexist.png" to start
     //      KolourPaint, this method will return false.
-    bool isFromExistingURL (bool checkURLStillExists = true) const;
+    bool isFromExistingURL () const;
+
+    // Checks whether @p url still exists
+    bool urlExists (const QUrl &url) const;
 
     // (will convert: empty Url --> "Untitled")
     QString prettyUrl () const;

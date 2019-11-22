@@ -57,7 +57,6 @@
 #include <kconfiggroup.h>
 #include <KPluralHandlingSpinBox>
 #include <kfiledialog.h> // kdelibs4support
-#include <kio/netaccess.h> // kdelibs4support
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kstandardshortcut.h>
@@ -421,7 +420,7 @@ bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
                                        newDocSameNameIfNotExist);
     if (newDoc)
     {
-        if (newDoc->isFromExistingURL (false/*don't bother checking exists*/))
+        if (newDoc->isFromExistingURL ())
             addRecentURL (url);
         return true;
     }
@@ -1081,7 +1080,7 @@ bool kpMainWindow::slotReload ()
     {
         int result = KMessageBox::Cancel;
 
-        if (d->document->isFromExistingURL (false/*don't bother checking exists*/) && !oldURL.isEmpty ())
+        if (d->document->isFromExistingURL () && !oldURL.isEmpty ())
         {
             result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
@@ -1110,9 +1109,9 @@ bool kpMainWindow::slotReload ()
 
     kpDocument *doc = nullptr;
 
-    // If it's _supposed to_ come from a URL or it exists
-    if (d->document->isFromExistingURL (false/*don't bother checking exists*/) ||
-        (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, KIO::NetAccess::SourceSide/*open*/, this)))
+    // If it's _supposed to_ come from an existing URL or it actually exists
+    if (d->document->isFromExistingURL () ||
+        d->document->urlExists (oldURL))
     {
     #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "kpMainWindow::slotReload() reloading from disk!";
@@ -1412,7 +1411,7 @@ void kpMainWindow::slotMail ()
     toolEndShape ();
 
     if (d->document->url ().isEmpty ()/*no name*/ ||
-        !d->document->isFromExistingURL () ||
+        !(d->document->isFromExistingURL () && d->document->urlExists (d->document->url ())) ||
         d->document->isModified ()/*needs to be saved*/)
     {
         int result = KMessageBox::questionYesNo (this,
