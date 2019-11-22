@@ -48,10 +48,12 @@
 #include <QImage>
 #include <QMimeDatabase>
 #include <QImageReader>
+#include <QBuffer>
 
+#include <KJobWidgets>
 #include "kpLogCategories.h"
-#include <kio/netaccess.h> // kdelibs4support
 #include <KLocalizedString>
+#include <KIO/StoredTransferJob>
 #include <kmessagebox.h>
 
 //---------------------------------------------------------------------
@@ -93,8 +95,14 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         *metaInfo = kpDocumentMetaInfo ();
     }
 
-    QString tempFile;
-    if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
+    if (url.isEmpty ()) {
+        return {};
+    }
+
+    KIO::StoredTransferJob *job = KIO::storedGet (url);
+    KJobWidgets::setWindow(job, parent);
+
+    if (!job->exec())
     {
         if (!suppressDoesntExistDialog)
         {
@@ -109,27 +117,27 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
 
         return {};
     }
+    QByteArray data = job->data();
 
     QMimeDatabase db;
-    QMimeType mimeType = db.mimeTypeForFile(tempFile);
+    QMimeType mimeType = db.mimeTypeForFileNameAndData(url.fileName(), data);
 
     if (saveOptions) {
         saveOptions->setMimeType(mimeType.name());
     }
 
 #if DEBUG_KP_DOCUMENT
-    qCDebug(kpLogDocument) << "\ttempFile=" << tempFile;
     qCDebug(kpLogDocument) << "\tmimetype=" << mimeType.name();
     qCDebug(kpLogDocument) << "\tsrc=" << url.path ();
 #endif
 
-    QImageReader reader(tempFile);
+    QBuffer buffer(&data);
+    buffer.open(QIODevice::ReadOnly);
+    QImageReader reader(&buffer);
     reader.setAutoTransform(true);
     reader.setDecideFormatFromContent(true);
 
     QImage image = reader.read();
-
-    KIO::NetAccess::removeTempFile(tempFile);
 
     if (image.isNull ())
     {
