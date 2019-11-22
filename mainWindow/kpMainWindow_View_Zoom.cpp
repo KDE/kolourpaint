@@ -510,7 +510,6 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
     qCDebug(kpLogMainWindow) << "\tzoomX=" << zoomX
         << " zoomY=" << zoomY
         << " -> zoomLevel=" << zoomLevel;
-        << " -> zoomLevel=" << zoomLevel << endl;
 #endif
 
     zoomToPre (zoomLevel);
