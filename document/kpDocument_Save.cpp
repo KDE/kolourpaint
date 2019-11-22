@@ -48,7 +48,8 @@
 
 #include "kpLogCategories.h"
 #include <kimageio.h> // kdelibs4support
-#include <kio/netaccess.h> // kdelibs4support
+#include <KJobWidgets>
+#include <KIO/FileCopyJob>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 
@@ -327,23 +328,28 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
     metaInfo.printDebug (QLatin1String ("\tmetaInfo"));
 #endif
 
-    if (overwritePrompt &&
-        KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
+    if (overwritePrompt)
     {
-        int result = KMessageBox::warningContinueCancel (parent,
+        // A probably better solution would be to do file_copy without Overwrite,
+        // and on "already exists" error, prompt and redo file_copy with Overwrite.
+        KIO::StatJob *job = KIO::stat (url, KIO::StatJob::DestinationSide/*write*/, 0);
+        KJobWidgets::setWindow (job, parent);
+        if (job->exec ()) {
+            int result = KMessageBox::warningContinueCancel (parent,
             i18n ("A document called \"%1\" already exists.\n"
                   "Do you want to overwrite it?",
                   kpUrlFormatter::PrettyFilename (url)),
             QString(),
             KStandardGuiItem::overwrite ());
 
-        if (result != KMessageBox::Continue)
-        {
+            if (result != KMessageBox::Continue)
+            {
         #if DEBUG_KP_DOCUMENT
-            qCDebug(kpLogDocument) << "\tuser doesn't want to overwrite";
+                qCDebug(kpLogDocument) << "\tuser doesn't want to overwrite";
         #endif
 
-            return false;
+                return false;
+            }
         }
     }
 
@@ -459,10 +465,13 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
         }
 
         // Copy local temporary file to overwrite remote.
-        // TODO: No one seems to know how to do this atomically
-        //       [http://lists.kde.org/?l=kde-core-devel&m=117845162728484&w=2].
-        //       At least, fish:// (ssh) is definitely not atomic.
-        if (!KIO::NetAccess::upload (tempFileName, url, parent))
+        // It's the kioslave's job to make this atomic (write to .part, then rename .part file)
+        KIO::FileCopyJob *job = KIO::file_copy (QUrl::fromLocalFile (tempFileName),
+                                                url,
+                                                -1,
+                                                KIO::Overwrite);
+        KJobWidgets::setWindow (job, parent);
+        if (!job->exec ())
         {
         #if DEBUG_KP_DOCUMENT
             qCDebug(kpLogDocument) << "\treturning false because could not upload";
