@@ -68,7 +68,7 @@ kpDocument::kpDocument (int w, int h,
         kpDocumentEnvironment *environ)
     : QObject (),
       m_constructorWidth (w), m_constructorHeight (h),
-      m_isFromURL (false),
+      m_isFromExistingURL (false),
       m_savedAtLeastOnceBefore (false),
       m_saveOptions (new kpDocumentSaveOptions ()),
       m_metaInfo (new kpDocumentMetaInfo ()),
@@ -136,18 +136,18 @@ QUrl kpDocument::url () const
 //---------------------------------------------------------------------
 
 // public
-void kpDocument::setURL (const QUrl &url, bool isFromURL)
+void kpDocument::setURL (const QUrl &url, bool isFromExistingURL)
 {
     m_url = url;
-    m_isFromURL = isFromURL;
+    m_isFromExistingURL = isFromExistingURL;
 }
 
 //---------------------------------------------------------------------
 
 // public
-bool kpDocument::isFromURL (bool checkURLStillExists) const
+bool kpDocument::isFromExistingURL (bool checkURLStillExists) const
 {
-    if (!m_isFromURL) {
+    if (!m_isFromExistingURL) {
         return false;
     }
 

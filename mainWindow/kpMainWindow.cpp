@@ -362,8 +362,8 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
     {
         // Save URL in all cases:
         //
-        //    a) d->document->isFromURL()
-        //    b) !d->document->isFromURL() [save size in this case]
+        //    a) d->document->isFromExistingURL()
+        //    b) !d->document->isFromExistingURL() [save size in this case]
         //       i) No URL
         //       ii) URL (from "kolourpaint doesnotexist.png")
 
@@ -377,11 +377,11 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
         //
         // Note that "kolourpaint doesexist.png" is considered to be from
         // a URL even if it was deleted in the background (hence the
-        // "false" arg to isFromURL()).  This is because the user expects
+        // "false" arg to isFromExistingURL()).  This is because the user expects
         // it to be from a URL, so when we session restore, we pop up a
         // "cannot find file" dialog, instead of silently creating a new,
         // blank document.
-        if (!d->document->isFromURL (false/*don't bother checking exists*/))
+        if (!d->document->isFromExistingURL (false/*don't bother checking exists*/))
         {
             // If we don't have a URL either:
             //

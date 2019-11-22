@@ -422,7 +422,7 @@ bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
                                        newDocSameNameIfNotExist);
     if (newDoc)
     {
-        if (newDoc->isFromURL (false/*don't bother checking exists*/))
+        if (newDoc->isFromExistingURL (false/*don't bother checking exists*/))
             addRecentURL (url);
         return true;
     }
@@ -1082,7 +1082,7 @@ bool kpMainWindow::slotReload ()
     {
         int result = KMessageBox::Cancel;
 
-        if (d->document->isFromURL (false/*don't bother checking exists*/) && !oldURL.isEmpty ())
+        if (d->document->isFromExistingURL (false/*don't bother checking exists*/) && !oldURL.isEmpty ())
         {
             result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
@@ -1112,7 +1112,7 @@ bool kpMainWindow::slotReload ()
     kpDocument *doc = nullptr;
 
     // If it's _supposed to_ come from a URL or it exists
-    if (d->document->isFromURL (false/*don't bother checking exists*/) ||
+    if (d->document->isFromExistingURL (false/*don't bother checking exists*/) ||
         (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, KIO::NetAccess::SourceSide/*open*/, this)))
     {
     #if DEBUG_KP_MAIN_WINDOW
@@ -1413,7 +1413,7 @@ void kpMainWindow::slotMail ()
     toolEndShape ();
 
     if (d->document->url ().isEmpty ()/*no name*/ ||
-        !d->document->isFromURL () ||
+        !d->document->isFromExistingURL () ||
         d->document->isModified ()/*needs to be saved*/)
     {
         int result = KMessageBox::questionYesNo (this,

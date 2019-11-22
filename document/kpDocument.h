@@ -125,7 +125,7 @@ public:
     bool savedAtLeastOnceBefore () const;
 
     QUrl url () const;
-    void setURL (const QUrl &url, bool isFromURL);
+    void setURL (const QUrl &url, bool isFromExistingURL);
 
     // Returns whether the document's image was successfully opened from
     // or saved to the URL returned by url().  This is not true for a
@@ -139,7 +139,7 @@ public:
     //
     // e.g. If the user types "kolourpaint doesnotexist.png" to start
     //      KolourPaint, this method will return false.
-    bool isFromURL (bool checkURLStillExists = true) const;
+    bool isFromExistingURL (bool checkURLStillExists = true) const;
 
     // (will convert: empty Url --> "Untitled")
     QString prettyUrl () const;
@@ -337,7 +337,7 @@ private:
     kpImage *m_image;
 
     QUrl m_url;
-    bool m_isFromURL;
+    bool m_isFromExistingURL;
     bool m_savedAtLeastOnceBefore;
 
     kpDocumentSaveOptions *m_saveOptions;
