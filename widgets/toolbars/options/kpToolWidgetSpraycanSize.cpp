@@ -34,7 +34,6 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 #include "kpLogCategories.h"
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 #include <QBitmap>
@@ -55,7 +54,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
     for (int i = 0; i < int (sizeof (spraycanSizes) / sizeof (spraycanSizes [0])); i++)
     {
         int s = spraycanSizes [i];
-        QString iconName = QStringLiteral ("tool_spraycan_%1x%2").arg (s).arg(s);
+        const QString iconName = QStringLiteral (":/icons/tool_spraycan_%1x%2").arg (s).arg(s);
         
     #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
         qCDebug(kpLogWidgets) << "\ticonName=" << iconName;
@@ -65,7 +64,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         pixmap.fill (Qt::white);
         
         QPainter painter (&pixmap);
-        painter.drawPixmap (0, 0, UserIcon (iconName));
+        painter.drawPixmap (0, 0, QPixmap (iconName));
         painter.end ();
 
         QImage image = pixmap.toImage();
