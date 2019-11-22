@@ -103,7 +103,7 @@ void kpTransformSkewDialog::createAngleGroupBox ()
 
 
     auto *horizontalSkewPixmapLabel = new QLabel (angleGroupBox);
-    horizontalSkewPixmapLabel->setPixmap (UserIcon (QStringLiteral("image_skew_horizontal")));
+    horizontalSkewPixmapLabel->setPixmap (QStringLiteral(":/icons/image_skew_horizontal"));
 
     auto *horizontalSkewLabel = new QLabel (i18n ("&Horizontal:"), angleGroupBox);
     m_horizontalSkewInput = new QSpinBox;
@@ -115,7 +115,7 @@ void kpTransformSkewDialog::createAngleGroupBox ()
 
 
     auto *verticalSkewPixmapLabel = new QLabel (angleGroupBox);
-    verticalSkewPixmapLabel->setPixmap (UserIcon (QStringLiteral("image_skew_vertical")));
+    verticalSkewPixmapLabel->setPixmap (QStringLiteral(":/icons/image_skew_vertical"));
 
     auto *verticalSkewLabel = new QLabel (i18n ("&Vertical:"), angleGroupBox);
     m_verticalSkewInput = new QSpinBox;

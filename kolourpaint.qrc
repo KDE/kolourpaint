@@ -1,0 +1,19 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/icons">
+      <file alias="colorbutton_swap_16x16.png">pics/custom/colorbutton_swap_16x16.png</file>
+      <file alias="color_transparent_26x26.png">pics/custom/color_transparent_26x26.png</file>
+      <file alias="image_rotate_anticlockwise.png">pics/custom/image_rotate_anticlockwise.png</file>
+      <file alias="image_rotate_clockwise.png">pics/custom/image_rotate_clockwise.png</file>
+      <file alias="image_skew_horizontal.png">pics/custom/image_skew_horizontal.png</file>
+      <file alias="image_skew_vertical.png">pics/custom/image_skew_vertical.png</file>
+      <file alias="option_opaque.png">pics/custom/option_opaque.png</file>
+      <file alias="option_transparent.png">pics/custom/option_transparent.png</file>
+      <file alias="resize.png">pics/custom/resize.png</file>
+      <file alias="scale.png">pics/custom/scale.png</file>
+      <file alias="smooth_scale.png">pics/custom/smooth_scale.png</file>
+      <file alias="tool_spraycan_17x17.png">pics/custom/tool_spraycan_17x17.png</file>
+      <file alias="tool_spraycan_29x29.png">pics/custom/tool_spraycan_29x29.png</file>
+      <file alias="tool_spraycan_9x9.png">pics/custom/tool_spraycan_9x9.png</file>
+    </qresource>
+</RCC>

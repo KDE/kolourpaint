@@ -320,6 +320,8 @@ set(kolourpaint_SRCS
 
 add_subdirectory(lgpl)
 
+qt5_add_resources(kolourpaint_SRCS kolourpaint.qrc)
+
 #
 # Executable
 #

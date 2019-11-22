@@ -201,9 +201,14 @@ static void toolButtonSetLook (QToolButton *button,
                                const QString &iconName,
                                const QString &name)
 {
-    QPixmap icon = UserIcon (iconName);
-    button->setIconSize (QSize (icon.width (), icon.height ()));
-    button->setIcon (icon);
+    QPixmap icon;
+    const QString qrcPath = QStringLiteral(":/icons/") + iconName;
+    if (!icon.load (qrcPath)) {
+        qWarning() << qrcPath << "not found";
+    } else {
+        button->setIconSize (QSize (icon.width (), icon.height ()));
+        button->setIcon (icon);
+    }
 
     button->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
     button->setText (name);
