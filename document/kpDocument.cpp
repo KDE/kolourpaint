@@ -48,8 +48,9 @@
 
 
 #include "kpLogCategories.h"
-#include <kio/netaccess.h> // kdelibs4support
+#include <KJobWidgets>
 #include <KLocalizedString>
+#include <KIO/StatJob>
 
 #include <QColor>
 #include <QBitmap>
@@ -155,9 +156,12 @@ bool kpDocument::isFromExistingURL () const
 // public
 bool kpDocument::urlExists (const QUrl &url) const
 {
-    return (!url.isEmpty () &&
-            KIO::NetAccess::exists (url, KIO::NetAccess::SourceSide/*open*/,
-                                    d->environ->dialogParent ()));
+    if (url.isEmpty()) {
+        return false;
+    }
+    KIO::StatJob *job = KIO::stat (url, KIO::StatJob::SourceSide, 0);
+    KJobWidgets::setWindow (job, d->environ->dialogParent ());
+    return job->exec();
 }
 
 //---------------------------------------------------------------------
