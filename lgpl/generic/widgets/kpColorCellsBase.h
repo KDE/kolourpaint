@@ -37,6 +37,9 @@
 #include <kolourpaint_lgpl_export.h>
 
 #include <QTableWidget>
+#include <QLoggingCategory>
+
+Q_DECLARE_LOGGING_CATEGORY(kpLogColorCollection)
 
 /**
 * A table of editable color cells.
