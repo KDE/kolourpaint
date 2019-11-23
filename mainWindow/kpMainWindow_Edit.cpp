@@ -854,7 +854,7 @@ void kpMainWindow::slotCopyToFile ()
 
 
     kpDocumentSaveOptions chosenSaveOptions;
-    bool allowOverwritePrompt, allowLossyPrompt;
+    bool allowLossyPrompt;
     QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Copy to File"),
                                     d->lastCopyToURL.url (),
                                     imageToSave,
@@ -864,7 +864,6 @@ void kpMainWindow::slotCopyToFile ()
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
                                     d->copyToFirstTime,
-                                    &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
     if (chosenURL.isEmpty ()) {
@@ -875,7 +874,6 @@ void kpMainWindow::slotCopyToFile ()
     if (!kpDocument::savePixmapToFile (imageToSave,
                                        chosenURL,
                                        chosenSaveOptions, kpDocumentMetaInfo (),
-                                       allowOverwritePrompt,
                                        allowLossyPrompt,
                                        this))
     {

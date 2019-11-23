@@ -56,7 +56,6 @@
 #include <KSharedConfig>
 #include <kconfiggroup.h>
 #include <KPluralHandlingSpinBox>
-#include <kfiledialog.h> // kdelibs4support
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kstandardshortcut.h>
@@ -746,8 +745,7 @@ bool kpMainWindow::save (bool localOnly)
         return saveAs (localOnly);
     }
 
-    if (d->document->save (false/*no overwrite prompt*/,
-                           !d->document->savedAtLeastOnceBefore ()/*lossy prompt*/))
+    if (d->document->save (!d->document->savedAtLeastOnceBefore ()/*lossy prompt*/))
     {
         addRecentURL (d->document->url ());
         return true;
@@ -778,7 +776,6 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   bool localOnly,
                                   kpDocumentSaveOptions *chosenSaveOptions,
                                   bool isSavingForFirstTime,
-                                  bool *allowOverwritePrompt,
                                   bool *allowLossyPrompt)
 {
 #if DEBUG_KP_MAIN_WINDOW
@@ -803,10 +800,6 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
     if (chosenSaveOptions) {
         *chosenSaveOptions = kpDocumentSaveOptions ();
-    }
-
-    if (allowOverwritePrompt) {
-        *allowOverwritePrompt = true;  // play it safe for now
     }
 
     if (allowLossyPrompt) {
@@ -889,18 +882,27 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    KFileDialog fd (QUrl (startURL), QString(), this,
-                    saveOptionsWidget);
-    saveOptionsWidget->setVisualParent (&fd);
+    QFileDialog fd(this);
+    fd.setAcceptMode (QFileDialog::AcceptSave);
+    fd.setOption (QFileDialog::DontUseNativeDialog);
+    fd.setDirectoryUrl (QUrl (startURL));
     fd.setWindowTitle (caption);
-    fd.setOperationMode (KFileDialog::Saving);
-    fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
+    fd.setMimeTypeFilters (mimeTypes);
+    fd.selectMimeTypeFilter (fdSaveOptions.mimeType ());
     if (localOnly) {
-        fd.setMode (KFile::File | KFile::LocalOnly);
+        fd.setSupportedSchemes ({QStringLiteral("file")});
     }
 
-    connect (&fd, &KFileDialog::filterChanged,
-             saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
+    // insert the checkbox below the filter box
+    if (QGridLayout* gl = qobject_cast<QGridLayout*>(fd.layout ())) {
+        gl->addWidget (saveOptionsWidget, gl->rowCount (), 0, 1, gl->columnCount ());
+    }
+    saveOptionsWidget->setVisualParent (&fd);
+
+    connect (&fd, &QFileDialog::filterSelected,
+             this, [saveOptionsWidget, &fd]() {
+        saveOptionsWidget->setMimeType(fd.selectedMimeTypeFilter());
+    });
 
     if ( fd.exec() == QDialog::Accepted )
     {
@@ -921,17 +923,11 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             *chosenSaveOptions = newSaveOptions;
         }
 
-
-        bool shouldAllowOverwritePrompt =
-                (fd.selectedUrl () != QUrl (startURL) ||
-                 newSaveOptions.mimeType () != startSaveOptions.mimeType ());
-        if (allowOverwritePrompt)
-        {
-            *allowOverwritePrompt = shouldAllowOverwritePrompt;
-        #if DEBUG_KP_MAIN_WINDOW
-            qCDebug(kpLogMainWindow) << "\tallowOverwritePrompt=" << *allowOverwritePrompt;
-        #endif
+        const QList<QUrl> selectedUrls = fd.selectedUrls ();
+        if (selectedUrls.isEmpty()) { // shouldn't happen
+            return {};
         }
+        const QUrl selectedUrl = selectedUrls.at(0);
 
         if (allowLossyPrompt)
         {
@@ -940,7 +936,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             //        need to continually warn due to quality change)
             *allowLossyPrompt =
                 (isSavingForFirstTime ||
-                 shouldAllowOverwritePrompt ||
+                 selectedUrl != QUrl (startURL) ||
                  newSaveOptions.mimeType () != startSaveOptions.mimeType () ||
                  newSaveOptions.colorDepth () != startSaveOptions.colorDepth () ||
                  newSaveOptions.dither () != startSaveOptions.dither ());
@@ -951,9 +947,9 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
 
     #if DEBUG_KP_MAIN_WINDOW
-        qCDebug(kpLogMainWindow) << "\tselectedUrl=" << fd.selectedUrl ();
+        qCDebug(kpLogMainWindow) << "\tselectedUrl=" << selectedUrl;
     #endif
-        return fd.selectedUrl ();
+        return selectedUrl;
     }
 
     return {};
@@ -966,7 +962,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 bool kpMainWindow::saveAs (bool localOnly)
 {
     kpDocumentSaveOptions chosenSaveOptions;
-    bool allowOverwritePrompt, allowLossyPrompt;
+    bool allowLossyPrompt;
     QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Save Image As"),
                                     d->document->url ().url (),
                                     d->document->imageWithSelection (),
@@ -976,7 +972,6 @@ bool kpMainWindow::saveAs (bool localOnly)
                                     localOnly,
                                     &chosenSaveOptions,
                                     !d->document->savedAtLeastOnceBefore (),
-                                    &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
 
@@ -986,7 +981,6 @@ bool kpMainWindow::saveAs (bool localOnly)
 
 
     if (!d->document->saveAs (chosenURL, chosenSaveOptions,
-                             allowOverwritePrompt,
                              allowLossyPrompt))
     {
         return false;
@@ -1016,7 +1010,7 @@ bool kpMainWindow::slotExport ()
     toolEndShape ();
 
     kpDocumentSaveOptions chosenSaveOptions;
-    bool allowOverwritePrompt, allowLossyPrompt;
+    bool allowLossyPrompt;
     QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Export"),
                                     d->lastExportURL.url (),
                                     d->document->imageWithSelection (),
@@ -1026,7 +1020,6 @@ bool kpMainWindow::slotExport ()
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
                                     d->exportFirstTime,
-                                    &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
 
@@ -1037,7 +1030,6 @@ bool kpMainWindow::slotExport ()
     if (!kpDocument::savePixmapToFile (d->document->imageWithSelection (),
                                        chosenURL,
                                        chosenSaveOptions, *d->document->metaInfo (),
-                                       allowOverwritePrompt,
                                        allowLossyPrompt,
                                        this))
     {

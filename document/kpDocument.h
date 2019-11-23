@@ -111,13 +111,11 @@ public:
                                   const QUrl &url,
                                   const kpDocumentSaveOptions &saveOptions,
                                   const kpDocumentMetaInfo &metaInfo,
-                                  bool overwritePrompt,
                                   bool lossyPrompt,
                                   QWidget *parent);
-    bool save (bool overwritePrompt = false, bool lossyPrompt = false);
+    bool save (bool lossyPrompt = false);
     bool saveAs (const QUrl &url,
                  const kpDocumentSaveOptions &saveOptions,
-                 bool overwritePrompt = true,
                  bool lossyPrompt = true);
 
 

@@ -157,6 +157,7 @@ QString kpDocumentSaveOptions::mimeType () const
 // public
 void kpDocumentSaveOptions::setMimeType (const QString &mimeType)
 {
+    Q_ASSERT(mimeType.isEmpty () || mimeType.contains ('/'));
     d->m_mimeType = mimeType;
 }
 

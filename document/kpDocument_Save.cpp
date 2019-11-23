@@ -66,11 +66,10 @@
 #include "views/manager/kpViewManager.h"
 
 
-bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
+bool kpDocument::save (bool lossyPrompt)
 {
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::save("
-               << "overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
                << ") url=" << m_url
                << " savedAtLeastOnceBefore=" << savedAtLeastOnceBefore ();
@@ -92,7 +91,6 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
     }
 
     return saveAs (m_url, *m_saveOptions,
-                   overwritePrompt,
                    lossyPrompt);
 }
 
@@ -303,7 +301,6 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
                                    const QUrl &url,
                                    const kpDocumentSaveOptions &saveOptions,
                                    const kpDocumentMetaInfo &metaInfo,
-                                   bool overwritePrompt,
                                    bool lossyPrompt,
                                    QWidget *parent)
 {
@@ -313,38 +310,11 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "kpDocument::savePixmapToFile ("
                << url
-               << ",overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
                << ")";
     saveOptions.printDebug (QLatin1String ("\tsaveOptions"));
     metaInfo.printDebug (QLatin1String ("\tmetaInfo"));
 #endif
-
-    if (overwritePrompt)
-    {
-        // A probably better solution would be to do file_copy without Overwrite,
-        // and on "already exists" error, prompt and redo file_copy with Overwrite.
-        KIO::StatJob *job = KIO::stat (url, KIO::StatJob::DestinationSide/*write*/, 0);
-        KJobWidgets::setWindow (job, parent);
-        if (job->exec ()) {
-            int result = KMessageBox::warningContinueCancel (parent,
-            i18n ("A document called \"%1\" already exists.\n"
-                  "Do you want to overwrite it?",
-                  kpUrlFormatter::PrettyFilename (url)),
-            QString(),
-            KStandardGuiItem::overwrite ());
-
-            if (result != KMessageBox::Continue)
-            {
-        #if DEBUG_KP_DOCUMENT
-                qCDebug(kpLogDocument) << "\tuser doesn't want to overwrite";
-        #endif
-
-                return false;
-            }
-        }
-    }
-
 
     if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
     {
@@ -482,7 +452,6 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
 
 bool kpDocument::saveAs (const QUrl &url,
                          const kpDocumentSaveOptions &saveOptions,
-                         bool overwritePrompt,
                          bool lossyPrompt)
 {
 #if DEBUG_KP_DOCUMENT
@@ -493,7 +462,6 @@ bool kpDocument::saveAs (const QUrl &url,
     if (kpDocument::savePixmapToFile (imageWithSelection (),
                                       url,
                                       saveOptions, *metaInfo (),
-                                      overwritePrompt,
                                       lossyPrompt,
                                       d->environ->dialogParent ()))
     {

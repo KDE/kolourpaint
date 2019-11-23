@@ -354,7 +354,6 @@ private:
                         bool localOnly,
                         kpDocumentSaveOptions *chosenSaveOptions,
                         bool isSavingForFirstTime,
-                        bool *allowOverwritePrompt,
                         bool *allowLossyPrompt);
 
 private slots:
