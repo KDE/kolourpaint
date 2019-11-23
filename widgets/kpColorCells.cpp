@@ -447,7 +447,7 @@ bool kpColorCells::openColorCollection (const QUrl &url)
 bool kpColorCells::saveColorCollectionAs (const QUrl &url)
 {
     // (this will pop up an error dialog on failure)
-    if (d->colorCol.saveAs (url, true/*show overwrite prompt*/, this))
+    if (d->colorCol.saveAs (url, this))
     {
         d->url = url;
         setModified (false);
@@ -464,7 +464,7 @@ bool kpColorCells::saveColorCollectionAs (const QUrl &url)
 bool kpColorCells::saveColorCollection ()
 {
     // (this will pop up an error dialog on failure)
-    if (d->colorCol.saveAs (d->url, false/*no overwrite prompt*/, this))
+    if (d->colorCol.saveAs (d->url, this))
     {
         setModified (false);
         return true;

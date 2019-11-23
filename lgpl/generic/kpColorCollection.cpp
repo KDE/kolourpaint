@@ -30,7 +30,8 @@
 
 #include "kpUrlFormatter.h"
 
-#include <kio/netaccess.h> // kdelibs4support
+#include <KJobWidgets>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include "kpLogCategories.h"
@@ -124,36 +125,30 @@ static void CouldNotOpenDialog (const QUrl &url, QWidget *parent)
 bool
 kpColorCollection::open(const QUrl &url, QWidget *parent)
 {
-  QString tempPaletteFilePath;
-  if (url.isEmpty () || !KIO::NetAccess::download (url, tempPaletteFilePath, parent))
-  {
-  #if DEBUG_KP_COLOR_COLLECTION
-     qCDebug(kpLogColorCollection) << "\tcould not download";
-  #endif
-     ::CouldNotOpenDialog (url, parent);
-     return false;
-  }
+    if (url.isEmpty()) {
+        return false;
+    }
 
-  // sync: remember to "KIO::NetAccess::removeTempFile (tempPaletteFilePath)" in all exit paths
+    KIO::StoredTransferJob *job = KIO::storedGet (url);
+    KJobWidgets::setWindow (job, parent);
 
-  QFile paletteFile(tempPaletteFilePath);
-  if (!paletteFile.exists() ||
-      !paletteFile.open(QIODevice::ReadOnly))
-  {
-  #if DEBUG_KP_COLOR_COLLECTION
-     qCDebug(kpLogColorCollection) << "\tcould not open qfile";
-  #endif
-     KIO::NetAccess::removeTempFile (tempPaletteFilePath);
-     ::CouldNotOpenDialog (url, parent);
-     return false;
-  }
+    if (!job->exec ())
+    {
+#if DEBUG_KP_COLOR_COLLECTION
+        qCDebug(kpLogColorCollection) << "\tcould not download";
+#endif
+        ::CouldNotOpenDialog (url, parent);
+        return false;
+    }
+
+  const QByteArray &data = job->data();
+  QTextStream stream(data);
 
   // Read first line
   // Expected "GIMP Palette"
-  QString line = QString::fromLocal8Bit(paletteFile.readLine());
+  QString line = stream.readLine();
   if (line.indexOf(QLatin1String(" Palette")) == -1)
   {
-     KIO::NetAccess::removeTempFile (tempPaletteFilePath);
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\" - unsupported format.\n"
               "The file may be corrupt.",
@@ -164,9 +159,9 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   QList <ColorNode> newColorList;
   QString newDesc;
 
-  while( !paletteFile.atEnd() )
+  while( !stream.atEnd() )
   {
-     line = QString::fromLocal8Bit(paletteFile.readLine());
+     line = stream.readLine();
      if (line[0] == '#')
      {
         // This is a comment line
@@ -199,7 +194,6 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   d->name.clear ();
   d->desc = newDesc;
 
-  KIO::NetAccess::removeTempFile (tempPaletteFilePath);
   return true;
 }
 
@@ -286,22 +280,8 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
 }
 
 bool
-kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
-        QWidget *parent) const
+kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
 {
-   if (showOverwritePrompt &&
-       KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
-   {
-       int result = KMessageBox::warningContinueCancel (parent,
-          i18n ("A color palette called \"%1\" already exists.\n"
-                "Do you want to overwrite it?",
-                kpUrlFormatter::PrettyFilename (url)),
-          QString (),
-          KStandardGuiItem::overwrite ());
-       if (result != KMessageBox::Continue)
-          return false;
-   }
-
    if (url.isLocalFile ())
    {
        const QString filename = url.toLocalFile ();
@@ -379,10 +359,12 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
         }
 
         // Copy local temporary file to overwrite remote.
-        // TODO: No one seems to know how to do this atomically
-        //       [http://lists.kde.org/?l=kde-core-devel&m=117845162728484&w=2].
-        //       At least, fish:// (ssh) is definitely not atomic.
-        if (!KIO::NetAccess::upload (tempFileName, url, parent))
+        KIO::FileCopyJob *job = KIO::file_copy (QUrl::fromLocalFile (tempFileName),
+                                                url,
+                                                -1,
+                                                KIO::Overwrite);
+        KJobWidgets::setWindow (job, parent);
+        if (!job->exec ())
         {
         #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogColorCollection) << "\treturning false because could not upload";
@@ -402,7 +384,7 @@ kpColorCollection::saveKDE(QWidget *parent) const
    const QString name = d->name;
    QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)
                                                        + "colors/" + name;
-   const bool ret = saveAs (QUrl::fromLocalFile (filename), false/*no overwite prompt*/, parent);
+   const bool ret = saveAs (QUrl::fromLocalFile (filename), parent);
    // (d->name is wiped by saveAs()).
    d->name = name;
    return ret;

@@ -452,6 +452,7 @@ bool kpMainWindow::slotColorsSaveAs ()
     fd.setDirectoryUrl(colorCells ()->url());
     fd.setWindowTitle(i18n("Save Color Palette As"));
     fd.setAcceptMode(QFileDialog::AcceptSave);
+    // Note that QFileDialog takes care of asking the user to confirm overwriting.
 
     if (fd.exec ())
     {

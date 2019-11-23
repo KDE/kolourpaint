@@ -112,7 +112,7 @@ public:
    // name() is set to an empty string.
    //
    // Added for KolourPaint.
-   bool saveAs(const QUrl &url, bool showOverwritePrompt, QWidget *parent) const;
+   bool saveAs(const QUrl &url, QWidget *parent) const;
 
    /**
     * Save the collection to the KDE-local store
