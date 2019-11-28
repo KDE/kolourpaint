@@ -62,7 +62,6 @@
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
 #include <KLocalizedString>
-#include <kdeprintdialog.h> // kdelibs4support
 
 #include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"
@@ -1323,15 +1322,12 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         auto *optionsPage = new kpPrintDialogPage (this);
         optionsPage->setPrintImageCenteredOnPage (d->configPrintImageCenteredOnPage);
 
-        QPrintDialog *printDialog =
-            KdePrint::createPrintDialog (
-                printer,
-                QList <QWidget *> () << optionsPage,
-                this);
-        printDialog->setWindowTitle (i18nc ("@title:window", "Print Image"));
+        QPrintDialog printDialog (printer, this);
+        printDialog.setOptionTabs ({optionsPage});
+        printDialog.setWindowTitle (i18nc ("@title:window", "Print Image"));
 
         // Display dialog.
-        const bool wantToPrint = printDialog->exec ();
+        const bool wantToPrint = printDialog.exec ();
 
         if (optionsPage->printImageCenteredOnPage () !=
             d->configPrintImageCenteredOnPage)
@@ -1344,8 +1340,6 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
                            d->configPrintImageCenteredOnPage);
             cfg.sync ();
         }
-
-        delete printDialog;
 
         if (!wantToPrint) {
             return;

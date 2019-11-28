@@ -39,7 +39,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     XmlGui
     IconThemes
     TextWidgets
-    KDELibs4Support #kio::netaccess
+    JobWidgets
 )
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)

@@ -32,6 +32,7 @@
 
 #include <KJobWidgets>
 #include <KIO/StoredTransferJob>
+#include <KIO/FileCopyJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include "kpLogCategories.h"
