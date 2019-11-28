@@ -47,7 +47,6 @@
 #include <QMimeDatabase>
 
 #include "kpLogCategories.h"
-#include <kimageio.h> // kdelibs4support
 #include <KJobWidgets>
 #include <KIO/FileCopyJob>
 #include <KLocalizedString>
@@ -175,21 +174,14 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
         *userCancelled = false;
     }
 
-    QStringList types = KImageIO::typeForMime (saveOptions.mimeType ());
-#if DEBUG_KP_DOCUMENT
-    qCDebug(kpLogDocument) << "\ttypes=" << types;
-#endif
-    if (types.isEmpty ()) {
-        return false;
-    }
-    // It's safe to arbitrarily choose the 0th type as any type in the list
-    // should invoke the same KImageIO image loader.
-    const QString type = types [0];
-
+    QString type = QMimeDatabase().mimeTypeForName (saveOptions.mimeType ()).preferredSuffix ();
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tmimeType=" << saveOptions.mimeType ()
                << " type=" << type;
 #endif
+    if (type.isEmpty ()) {
+        return false;
+    }
 
     if (lossyPrompt && !lossyPromptContinue (image, saveOptions, parent))
     {
