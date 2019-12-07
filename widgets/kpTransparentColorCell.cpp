@@ -69,7 +69,7 @@ QSize kpTransparentColorCell::sizeHint () const
 void kpTransparentColorCell::mousePressEvent (QMouseEvent * /*e*/)
 {
     // Eat press so that we own the mouseReleaseEvent().
-    // [http://blogs.qtdeveloper.net/archives/2006/05/27/mouse-event-propagation/]
+    // [https://www.qt.io/blog/2006/05/27/mouse-event-propagation]
     //
     // However, contrary to that blog, it doesn't seem to be needed?
 }

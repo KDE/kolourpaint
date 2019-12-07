@@ -44,7 +44,7 @@
 //---------------------------------------------------------------------
 
 //
-// For info on "radius" and "sigma", see http://redskiesatnight.com/Articles/IMsharpen/
+// For info on "radius" and "sigma", see https://redskiesatnight.com/2005/04/06/sharpening-using-image-magick/
 //
 // Daniel Duley says:
 //
