@@ -165,7 +165,7 @@ void kpMainWindow::slotUpdateColorsDeleteRowActionEnabled ()
 //    opening fails.
 //
 // TODO: Maybe we could put the 3 actions (for different ways of opening
-//       colors) in an exclusive group -- this might elminate the need for
+//       colors) in an exclusive group -- this might eliminate the need for
 //       this hack.
 //
 // private

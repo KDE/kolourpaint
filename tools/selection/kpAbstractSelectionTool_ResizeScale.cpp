@@ -223,7 +223,7 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
         userXSign = +1;
     }
 
-    // Calcluate new width.
+    // Calculate new width.
     *newWidth = originalSelection.width () +
         userXSign * (currentPoint ().x () - startPoint ().x ());
 
@@ -247,7 +247,7 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
         userYSign = +1;
     }
 
-    // Calcluate new height.
+    // Calculate new height.
     *newHeight = originalSelection.height () +
         userYSign * (currentPoint ().y () - startPoint ().y ());
 

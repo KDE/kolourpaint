@@ -58,7 +58,7 @@ class kpToolSelectionEnvironment;
 //      draw types.
 //
 // "Drags" that consist of a single click generally have no effect in
-// order to prevent accidently creating a 1x1 selection, doing a NOP move
+// order to prevent accidentally creating a 1x1 selection, doing a NOP move
 // or doing a NOP resize/scale.  However, doing a bigger drag and then
 // dragging the mouse back to create a 1x1 selection or the NOP
 // effects are allowed and are recorded in the command history.
@@ -187,7 +187,7 @@ protected:
 // 4. Process user input, mutate the selection directly and update the
 //    command with the user's input.
 //
-// 5. When the drawing operatinon is complete, call addNeedingContentCommand()
+// 5. When the drawing operation is complete, call addNeedingContentCommand()
 //    with the command created in Step 3.
 //
 protected:

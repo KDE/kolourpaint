@@ -95,7 +95,7 @@ bool kpToolText::viewEvent (QEvent *e)
     }
     else
     {
-        // Strickly speaking, we should grab stuff like the arrow keys
+        // Strictly speaking, we should grab stuff like the arrow keys
         // and enter.  In any case, should be done down in kpTool (as that
         // uses arrow keys too).
     }

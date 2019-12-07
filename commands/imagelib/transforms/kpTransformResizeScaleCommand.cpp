@@ -212,7 +212,7 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
                              -currentPoints.boundingRect ().y ());
 
     // TODO: refactor into kpPixmapFX
-    // TODO: Can we get to size 0x0 accidently?
+    // TODO: Can we get to size 0x0 accidentally?
     QTransform scaleMatrix;
     scaleMatrix.scale (horizScale, vertScale);
     currentPoints = scaleMatrix.map (currentPoints);

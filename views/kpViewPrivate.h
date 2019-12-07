@@ -54,7 +54,7 @@ struct kpViewPrivate
     // Before the delayed deletion is executed, those objects are deleted
     // and then our paintEvent() is called.  paintEvent() must therefore
     // have some way of realising that those objects have been deleted so
-    // we use guardded pointers.
+    // we use guarded pointers.
     //
     // For more details, see SVN commit:
     //     "r385274 | dang | 2005-02-02 22:08:27 +1100 (Wed, 02 Feb 2005) | 21 lines".

@@ -48,7 +48,7 @@ struct kpAbstractSelectionToolPrivate
     kpAbstractSelectionContentCommand *currentSelContentCommand;
 
     // Whether the drag has been substantial enough to be considered as a
-    // non-NOP drag.  The "substantial enough" critera is draw-type
+    // non-NOP drag.  The "substantial enough" criteria is draw-type
     // dependent and is usually based on how far the mouse has been
     // dragged.  See kpAbstractSelectionTool's API Doc for details.
     bool dragAccepted;
