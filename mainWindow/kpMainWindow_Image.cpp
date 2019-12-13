@@ -64,7 +64,6 @@
 #include <KSharedConfig>
 #include <kconfiggroup.h>
 #include <KLocalizedString>
-#include <KIconLoader>
 
 #include <QAction>
 #include <QMenuBar>

@@ -37,7 +37,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     WidgetsAddons
     KIO
     XmlGui
-    IconThemes
     TextWidgets
     JobWidgets
 )
@@ -337,7 +336,6 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
     KF5::XmlGui
-    KF5::IconThemes
     KF5::TextWidgets
     Qt5::PrintSupport
     ${KSANE_LIBRARIES}

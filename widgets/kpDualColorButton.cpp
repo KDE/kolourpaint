@@ -35,7 +35,6 @@
 
 #include <KColorMimeData>
 #include "kpLogCategories.h"
-#include <KIconLoader>
 
 #include <QApplication>
 #include <QBitmap>

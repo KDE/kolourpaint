@@ -33,7 +33,6 @@
 
 #include "imagelib/kpColor.h"
 
-#include <KIconLoader>
 #include <KLocalizedString>
 
 #include <QContextMenuEvent>

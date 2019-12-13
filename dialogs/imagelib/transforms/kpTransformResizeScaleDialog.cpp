@@ -50,7 +50,6 @@
 #include <KSharedConfig>
 #include <kconfiggroup.h>
 #include "kpLogCategories.h"
-#include <kiconeffect.h>
 #include <KLocalizedString>
 
 #include "layers/selections/kpAbstractSelection.h"
