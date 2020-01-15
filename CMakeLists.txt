@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.10.0 FATAL_ERROR)
 project(kolourpaint VERSION ${RELEASE_SERVICE_VERSION})
 
 set(QT_MIN_VERSION "5.11.0")
-set(KF5_MIN_VERSION "5.58.0")
+set(KF5_MIN_VERSION "5.67.0")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -336,6 +336,7 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
     KF5::XmlGui
+    KF5::KIOFileWidgets
     KF5::TextWidgets
     Qt5::PrintSupport
     ${KSANE_LIBRARIES}

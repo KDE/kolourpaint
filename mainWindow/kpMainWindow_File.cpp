@@ -55,6 +55,7 @@
 #include <kactioncollection.h>
 #include <KSharedConfig>
 #include <kconfiggroup.h>
+#include <KFileCustomDialog>
 #include <KPluralHandlingSpinBox>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
@@ -881,27 +882,21 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    QFileDialog fd(this);
-    fd.setAcceptMode (QFileDialog::AcceptSave);
-    fd.setOption (QFileDialog::DontUseNativeDialog);
-    fd.setDirectoryUrl (QUrl (startURL));
+    KFileCustomDialog fd (QUrl (startURL), this);
+    fd.setOperationMode (KFileWidget::Saving);
     fd.setWindowTitle (caption);
-    fd.setMimeTypeFilters (mimeTypes);
-    fd.selectMimeTypeFilter (fdSaveOptions.mimeType ());
+    fd.setCustomWidget (saveOptionsWidget);
+    KFileWidget *fw = fd.fileWidget();
+    fw->setConfirmOverwrite (true);
+    fw->setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly) {
-        fd.setSupportedSchemes ({QStringLiteral("file")});
+        fw->setMode (KFile::File | KFile::LocalOnly);
     }
 
-    // insert the checkbox below the filter box
-    if (QGridLayout* gl = qobject_cast<QGridLayout*>(fd.layout ())) {
-        gl->addWidget (saveOptionsWidget, gl->rowCount (), 0, 1, gl->columnCount ());
-    }
     saveOptionsWidget->setVisualParent (&fd);
 
-    connect (&fd, &QFileDialog::filterSelected,
-             this, [saveOptionsWidget, &fd]() {
-        saveOptionsWidget->setMimeType(fd.selectedMimeTypeFilter());
-    });
+    connect (fw, &KFileWidget::filterChanged,
+             saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
 
     if ( fd.exec() == QDialog::Accepted )
     {
@@ -922,7 +917,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             *chosenSaveOptions = newSaveOptions;
         }
 
-        const QList<QUrl> selectedUrls = fd.selectedUrls ();
+        const QList<QUrl> selectedUrls = fw->selectedUrls ();
         if (selectedUrls.isEmpty()) { // shouldn't happen
             return {};
         }
