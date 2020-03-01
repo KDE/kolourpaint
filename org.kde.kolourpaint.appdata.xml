@@ -368,6 +368,7 @@
     </screenshot>
   </screenshots>
   <project_group>KDE</project_group>
+  <content_rating type="oars-1.1" />
   <provides>
     <binary>kolourpaint</binary>
   </provides>
