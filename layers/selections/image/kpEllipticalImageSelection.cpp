@@ -33,6 +33,7 @@
 
 #include <QPainter>
 #include <QRegion>
+#include <QPainterPath>
 
 
 struct kpEllipticalImageSelectionPrivate
