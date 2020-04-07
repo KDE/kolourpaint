@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 0
+#define DEBUG_KP_TOOL_SELECTION 1
 
 
 #include "kpToolTextGiveContentCommand.h"
@@ -46,7 +46,7 @@ kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::<ctor>() environ="
-               << environ
+               << environ;
 #endif
 }
 

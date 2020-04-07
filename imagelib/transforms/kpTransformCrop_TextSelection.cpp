@@ -25,11 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_CROP 0
+#define DEBUG_KP_TOOL_CROP 1
 
 
 #include "kpTransformCrop.h"
 #include "kpTransformCropPrivate.h"
+#include "kpLogCategories.h"
 
 #include "commands/imagelib/effects/kpEffectClearCommand.h"
 #include "commands/kpMacroCommand.h"

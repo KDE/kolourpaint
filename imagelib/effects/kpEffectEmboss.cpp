@@ -25,7 +25,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_EMBOSS 0
+#define DEBUG_KP_EFFECT_EMBOSS 1
 
 
 #include "kpEffectEmboss.h"

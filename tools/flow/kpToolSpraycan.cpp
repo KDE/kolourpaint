@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SPRAYCAN 0
+#define DEBUG_KP_TOOL_SPRAYCAN 1
 
 #include "kpToolSpraycan.h"
 

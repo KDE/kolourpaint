@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PAINTER 0
+#define DEBUG_KP_PAINTER 1
 
 
 #include "kpPainter.h"

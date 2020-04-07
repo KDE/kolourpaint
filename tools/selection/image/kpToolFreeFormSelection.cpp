@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_FREE_FROM_SELECTION 0
+#define DEBUG_KP_TOOL_FREE_FROM_SELECTION 1
 
 
 #include "kpToolFreeFormSelection.h"

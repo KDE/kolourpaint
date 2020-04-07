@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT 0
+#define DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT 1
 
 
 #include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"

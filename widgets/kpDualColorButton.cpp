@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DUAL_COLOR_BUTTON 0
+#define DEBUG_KP_DUAL_COLOR_BUTTON 1
 
 
 #include "kpDualColorButton.h"
@@ -262,7 +262,7 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
 #if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::mouseMoveEvent() pos=" << e->pos ()
               << " buttons=" << e->buttons ()
-              << " dragStartPoint=" << m_dragStartPoint << endl;
+              << " dragStartPoint=" << m_dragStartPoint;
 #endif
 
     if (m_dragStartPoint == KP_INVALID_POINT) {
@@ -296,8 +296,7 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
 
     #if DEBUG_KP_DUAL_COLOR_BUTTON
         qCDebug(kpLogWidgets) << "\tcolor.isValid=" << color.isValid ()
-                  << " rgb=" << (color.isValid () ? (int *) color.toQRgb () : 0)
-                  << endl;
+                  << " rgb=" << (color.isValid () ? (int *) color.toQRgb () : 0);
     #endif
 
         if (color.isValid ())
@@ -371,8 +370,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
     qCDebug(kpLogWidgets) << "kpDualColorButton::draw() rect=" << rect ()
-               << " contentsRect=" << contentsRect ()
-               << endl;
+               << " contentsRect=" << contentsRect ();
 #endif
 
     // Draw frame first.
@@ -420,8 +418,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     if (isEnabled ())
     {
     #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
-        qCDebug(kpLogWidgets) << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ()
-                   << endl;
+        qCDebug(kpLogWidgets) << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ();
     #endif
         if (m_color [1].isTransparent ()) { // only if fully transparent
             painter.drawPixmap (bgRectInside, QStringLiteral(":/icons/color_transparent_26x26"));
@@ -447,8 +444,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     if (isEnabled ())
     {
     #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
-        qCDebug(kpLogWidgets) << "\tforegroundColor=" << (int *) m_color [0].toQRgb ()
-                   << endl;
+        qCDebug(kpLogWidgets) << "\tforegroundColor=" << (int *) m_color [0].toQRgb ();
     #endif
         if (m_color [0].isTransparent ()) { // only if fully transparent
             painter.drawPixmap (fgRectInside, QStringLiteral(":/icons/color_transparent_26x26"));

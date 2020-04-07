@@ -21,7 +21,7 @@
 */
 //-----------------------------------------------------------------------------
 
-#define DEBUG_KP_COLOR_CELLS_BASE 0
+#define DEBUG_KP_COLOR_CELLS_BASE 1
 
 #include "kpColorCellsBase.h"
 

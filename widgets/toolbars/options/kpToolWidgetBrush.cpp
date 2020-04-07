@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_BRUSH 0
+#define DEBUG_KP_TOOL_WIDGET_BRUSH 1
 
 
 #include "widgets/toolbars/options/kpToolWidgetBrush.h"

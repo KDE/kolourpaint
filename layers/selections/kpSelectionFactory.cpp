@@ -26,10 +26,11 @@
 */
 
 
-#define DEBUG_KP_SELECTION 0
+#define DEBUG_KP_SELECTION 1
 
 
 #include "kpSelectionFactory.h"
+#include "kpLogCategories.h"
 
 #include <QDataStream>
 

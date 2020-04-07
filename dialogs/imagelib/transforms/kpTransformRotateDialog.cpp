@@ -24,7 +24,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_ROTATE 0
+#define DEBUG_KP_TOOL_ROTATE 1
 
 
 #include "kpTransformRotateDialog.h"

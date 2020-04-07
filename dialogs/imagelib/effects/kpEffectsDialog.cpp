@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECTS_DIALOG 0
+#define DEBUG_KP_EFFECTS_DIALOG 1
 
 
 #include "kpEffectsDialog.h"

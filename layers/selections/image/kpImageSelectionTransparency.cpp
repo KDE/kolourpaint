@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_SELECTION_TRANSPARENCY 0
+#define DEBUG_KP_SELECTION_TRANSPARENCY 1
 
 
 #include "layers/selections/image/kpImageSelectionTransparency.h"

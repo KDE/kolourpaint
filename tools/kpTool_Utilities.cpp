@@ -30,7 +30,7 @@
 //
 
 
-#define DEBUG_KP_TOOL 0
+#define DEBUG_KP_TOOL 1
 
 
 #include "tools/kpTool.h"
@@ -255,7 +255,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
                << " old: w=" << oldWidth << " h=" << oldWidth
                << " new: w=" << newWidth << " h=" << newHeight
                << " pixmapSize="
-               << kpPixmapFX::pixmapSize (newWidth,
+               << kpCommandSize::PixmapSize (newWidth,
                                           newHeight,
                                           QPixmap::defaultDepth ())
                << " vs BigImageSize=" << KP_BIG_IMAGE_SIZE

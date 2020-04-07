@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_CROP 0
+#define DEBUG_KP_TOOL_CROP 1
 
 
 #include "kpTransformCrop.h"

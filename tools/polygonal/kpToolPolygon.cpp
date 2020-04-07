@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYGON 0
+#define DEBUG_KP_TOOL_POLYGON 1
 
 
 #include "kpToolPolygon.h"
@@ -34,6 +34,7 @@
 #include "environments/tools/kpToolEnvironment.h"
 #include "imagelib/kpColor.h"
 #include "pixmapfx/kpPixmapFX.h"
+#include "kpLogCategories.h"
 
 #include <KLocalizedString>
 

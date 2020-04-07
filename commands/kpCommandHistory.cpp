@@ -26,10 +26,11 @@
 */
 
 
-#define DEBUG_KP_COMMAND_HISTORY 0
+#define DEBUG_KP_COMMAND_HISTORY 1
 
 
 #include "kpCommandHistory.h"
+#include "kpLogCategories.h"
 
 #include "layers/selections/kpAbstractSelection.h"
 #include "mainWindow/kpMainWindow.h"

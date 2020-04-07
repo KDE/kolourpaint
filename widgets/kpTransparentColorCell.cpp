@@ -26,12 +26,13 @@
 */
 
 
-#define DEBUG_KP_TRANSPARENT_COLOR_CELL 0
+#define DEBUG_KP_TRANSPARENT_COLOR_CELL 1
 
 
 #include "kpTransparentColorCell.h"
 
 #include "imagelib/kpColor.h"
+#include "kpLogCategories.h"
 
 #include <KLocalizedString>
 

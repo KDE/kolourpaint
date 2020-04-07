@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_RECT_SELECTION 0
+#define DEBUG_KP_TOOL_RECT_SELECTION 1
 
 #include "kpToolRectSelection.h"
 #include "kpLogCategories.h"

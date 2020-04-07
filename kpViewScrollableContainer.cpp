@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 0
+#define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 1
 
 #include "kpViewScrollableContainer.h"
 
@@ -851,7 +851,7 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
     qCDebug(kpLogMisc) << "\tQCursor::pos=" << QCursor::pos ()
                << " global visibleRect="
                << kpWidgetMapper::toGlobal (this,
-                      QRect(0, 0, viewport->width(), viewport->height()));
+                      QRect(0, 0, viewport()->width(), viewport()->height()));
 #endif
 
     // HACK: After dragging to a new size, handles move so that they are now

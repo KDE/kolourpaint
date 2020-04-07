@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 // KDE color collection
 
-#define DEBUG_KP_COLOR_COLLECTION 0
+#define DEBUG_KP_COLOR_COLLECTION 1
 
 #include "kpColorCollection.h"
 
@@ -57,7 +57,7 @@ struct ColorNode
 
 //---------------------------------------------------------------------
 
-Q_LOGGING_CATEGORY(kpLogColorCollection,           "kp.colorCollection")
+Q_LOGGING_CATEGORY(kpLogColorCollection,           "kp.colorCollection", QtWarningMsg)
 
 //BEGIN kpColorCollectionPrivate
 class kpColorCollectionPrivate

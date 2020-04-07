@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 0
+#define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 1
 
 
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"

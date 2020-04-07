@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 0
+#define DEBUG_KP_PIXMAP_FX 1
 
 
 #include "kpPixmapFX.h"
@@ -369,7 +369,7 @@ static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatr
     ::MatrixDebug (QStringLiteral("TransformPixmap(): before trueMatrix"), transformMatrix,
                    pm.width (), pm.height ());
 #if DEBUG_KP_PIXMAP_FX && 1
-    QMatrix oldMatrix = transformMatrix;
+    QTransform oldMatrix = transformMatrix;
 #endif
 
     // Translate the matrix to account for Qt rounding errors,

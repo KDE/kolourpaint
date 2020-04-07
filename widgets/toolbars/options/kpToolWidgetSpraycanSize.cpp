@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 0
+#define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 1
 
 
 #include "kpToolWidgetSpraycanSize.h"

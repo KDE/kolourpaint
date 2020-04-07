@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_TOOL_BAR 0
+#define DEBUG_KP_TOOL_TOOL_BAR 1
 
 
 #include "widgets/toolbars/kpToolToolBar.h"

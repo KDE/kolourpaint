@@ -26,11 +26,13 @@
 */
 
 
-#define DEBUG_KP_COMMAND_SIZE 0
+#define DEBUG_KP_COMMAND_SIZE 1
 
 
 #include "commands/kpCommandSize.h"
 #include "layers/selections/kpAbstractSelection.h"
+
+#include "kpLogCategories.h"
 
 #include <QImage>
 #include <QPolygon>

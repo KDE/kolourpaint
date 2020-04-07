@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_THUMBNAIL_VIEW 0
+#define DEBUG_KP_THUMBNAIL_VIEW 1
 
 
 #include "views/kpThumbnailView.h"
@@ -58,8 +58,7 @@ void kpThumbnailView::setMaskToCoverDocument ()
     qCDebug(kpLogViews) << "kpThumbnailView::setMaskToCoverDocument()"
                << " origin=" << origin ()
                << " zoomedDoc: width=" << zoomedDocWidth ()
-               << " height=" << zoomedDocHeight ()
-               << endl;
+               << " height=" << zoomedDocHeight ();
 #endif
 
     setMask (QRegion (QRect (origin ().x (), origin ().y (),
@@ -71,8 +70,7 @@ void kpThumbnailView::setMaskToCoverDocument ()
 void kpThumbnailView::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
-    qCDebug(kpLogViews) << "kpThumbnailView(" << name () << ")::resizeEvent()"
-               << endl;
+    qCDebug(kpLogViews) << "kpThumbnailView(" << caption () << ")::resizeEvent()";
 #endif
 
     // For QResizeEvent's, Qt already throws an entire widget repaint into

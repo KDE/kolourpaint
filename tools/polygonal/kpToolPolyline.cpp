@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYLINE 0
+#define DEBUG_KP_TOOL_POLYLINE 1
 
 
 #include "kpToolPolyline.h"

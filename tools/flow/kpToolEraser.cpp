@@ -26,9 +26,10 @@
 */
 
 
-#define DEBUG_KP_TOOL_ERASER 0
+#define DEBUG_KP_TOOL_ERASER 1
 
 #include "kpToolEraser.h"
+#include "kpLogCategories.h"
 
 #include "commands/kpCommandHistory.h"
 #include "commands/imagelib/effects/kpEffectClearCommand.h"

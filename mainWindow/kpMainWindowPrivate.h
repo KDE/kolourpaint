@@ -30,7 +30,7 @@
 #define kpMainWindowPrivate_H
 
 
-#define DEBUG_KP_MAIN_WINDOW 0
+#define DEBUG_KP_MAIN_WINDOW 1
 
 
 #include "document/kpDocumentSaveOptions.h"

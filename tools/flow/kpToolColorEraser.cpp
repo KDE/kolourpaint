@@ -25,7 +25,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_COLOR_ERASER 0
+#define DEBUG_KP_TOOL_COLOR_ERASER 1
 
 #include "kpToolColorEraser.h"
 

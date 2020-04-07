@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COMMAND_HISTORY 0
+#define DEBUG_KP_COMMAND_HISTORY 1
 
 
 #include "kpCommandHistoryBase.h"
@@ -263,7 +263,7 @@ void kpCommandHistoryBase::addCommand (kpCommand *command, bool execute)
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::addCommand("
                << command
-               << ",execute=" << execute << ")"
+               << ",execute=" << execute << ")";
 #endif
 
     if (execute) {
@@ -575,7 +575,7 @@ void kpCommandHistoryBase::trimCommandLists ()
     trimCommandList (&m_redoCommandList);
 
 #if DEBUG_KP_COMMAND_HISTORY
-    qCDebug(kpLogCommands) << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
+    qCDebug(kpLogCommands) << "\tdocumentRestoredPosition=" << m_documentRestoredPosition;
 #endif
     if (m_documentRestoredPosition != INT_MAX)
     {

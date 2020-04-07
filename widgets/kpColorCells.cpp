@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COLOR_CELLS 0
+#define DEBUG_KP_COLOR_CELLS 1
 
 
 #include "widgets/kpColorCells.h"

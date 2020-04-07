@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_VIEW_MANAGER 0
+#define DEBUG_KP_VIEW_MANAGER 1
 
 
 #include "views/manager/kpViewManager.h"
@@ -252,8 +252,7 @@ void kpViewManager::adjustViewsToEnvironment ()
         kpView *view = *it;
 
     #if DEBUG_KP_VIEW_MANAGER && 1
-        qCDebug(kpLogViews) << "\tview: " << view->name ()
-                   << endl;
+        qCDebug(kpLogViews) << "\tview: " << view->objectName ();
     #endif
         view->adjustToEnvironment ();
     }

@@ -26,8 +26,8 @@
 */
 
 
-#define DEBUG_KP_TOOL_SKEW 0
-#define DEBUG_KP_TOOL_SKEW_DIALOG 0
+#define DEBUG_KP_TOOL_SKEW 1
+#define DEBUG_KP_TOOL_SKEW_DIALOG 1
 
 
 #include "kpTransformSkewCommand.h"

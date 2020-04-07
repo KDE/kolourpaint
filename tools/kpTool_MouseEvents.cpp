@@ -29,7 +29,7 @@
 // Tool reaction to view mouse input.
 //
 
-#define DEBUG_KP_TOOL 0
+#define DEBUG_KP_TOOL 1
 
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"

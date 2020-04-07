@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COLOR_PALETTE 0
+#define DEBUG_KP_COLOR_PALETTE 1
 
 
 #include "kpColorPalette.h"

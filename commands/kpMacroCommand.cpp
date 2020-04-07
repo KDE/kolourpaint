@@ -26,11 +26,13 @@
 */
 
 
-#define DEBUG_KP_COMMAND_HISTORY 0
+#define DEBUG_KP_COMMAND_HISTORY 1
 
 
 #include "commands/kpMacroCommand.h"
 #include "views/manager/kpViewManager.h"
+
+#include "kpLogCategories.h"
 
 #include <climits>
 

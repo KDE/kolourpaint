@@ -28,7 +28,7 @@
 */
 
 
-#define DEBUG_KP_VIEW 0
+#define DEBUG_KP_VIEW 1
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 

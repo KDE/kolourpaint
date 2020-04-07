@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_ZOOMED_THUMBNAIL_VIEW 0
+#define DEBUG_KP_ZOOMED_THUMBNAIL_VIEW 1
 
 
 #include "views/kpZoomedThumbnailView.h"
@@ -70,11 +70,10 @@ QString kpZoomedThumbnailView::caption () const
 void kpZoomedThumbnailView::adjustToEnvironment ()
 {
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
-    qCDebug(kpLogViews) << "kpZoomedThumbnailView(" << name ()
+    qCDebug(kpLogViews) << "kpZoomedThumbnailView(" << caption ()
                << ")::adjustToEnvironment()"
                << " width=" << width ()
-               << " height=" << height ()
-               << endl;
+               << " height=" << height ();
 #endif
 
     if (!document ()) {

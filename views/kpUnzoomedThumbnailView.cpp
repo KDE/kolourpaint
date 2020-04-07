@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW 0
+#define DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW 1
 
 
 #include "views/kpUnzoomedThumbnailView.h"
@@ -101,7 +101,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         buddyViewScrollableContainer ()->verticalScrollBar()->value();
 
 #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-    qCDebug(kpLogViews) << "kpUnzoomedThumbnailView(" << name ()
+    qCDebug(kpLogViews) << "kpUnzoomedThumbnailView(" << caption ()
                << ")::adjustToEnvironment("
                << scrollViewContentsX
                << ","

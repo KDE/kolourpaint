@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_FLOW_BASE 0
+#define DEBUG_KP_TOOL_FLOW_BASE 1
 
 #include "kpToolFlowBase.h"
 

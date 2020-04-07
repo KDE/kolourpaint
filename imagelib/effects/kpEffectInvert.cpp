@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_INVERT 0
+#define DEBUG_KP_EFFECT_INVERT 1
 
 
 #include "kpEffectInvert.h"

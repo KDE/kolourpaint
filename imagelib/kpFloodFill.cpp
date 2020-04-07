@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_FLOOD_FILL 0
+#define DEBUG_KP_FLOOD_FILL 1
 
 
 #include "kpFloodFill.h"

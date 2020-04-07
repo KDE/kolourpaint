@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_VIEW_MANAGER 0
+#define DEBUG_KP_VIEW_MANAGER 1
 
 
 #include "views/manager/kpViewManager.h"

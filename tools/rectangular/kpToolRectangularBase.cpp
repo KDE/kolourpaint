@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_RECTANGULAR_BASE 0
+#define DEBUG_KP_TOOL_RECTANGULAR_BASE 1
 
 
 #include "tools/rectangular/kpToolRectangularBase.h"

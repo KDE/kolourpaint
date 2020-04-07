@@ -26,8 +26,8 @@
 */
 
 
-#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 0
-#define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
+#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 1
+#define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 1
 
 
 #include "kpTransformResizeScaleCommand.h"

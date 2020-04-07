@@ -26,12 +26,13 @@
 */
 
 
-#define DEBUG_KP_RESIZE_SIGNALLING_LABEL 0
+#define DEBUG_KP_RESIZE_SIGNALLING_LABEL 1
 
 
 #include "generic/widgets/kpResizeSignallingLabel.h"
 
 #include <QEvent>
+#include <QResizeEvent>
 
 #include "kpLogCategories.h"
 

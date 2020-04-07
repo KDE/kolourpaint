@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_FILL_STYLE 0
+#define DEBUG_KP_TOOL_WIDGET_FILL_STYLE 1
 
 
 #include "kpToolWidgetFillStyle.h"

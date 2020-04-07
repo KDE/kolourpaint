@@ -25,7 +25,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_LINE 0
+#define DEBUG_KP_TOOL_LINE 1
 
 
 #include "kpToolLine.h"

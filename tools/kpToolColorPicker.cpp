@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_COLOR_PICKER 0
+#define DEBUG_KP_TOOL_COLOR_PICKER 1
 
 
 #include "kpToolColorPicker.h"

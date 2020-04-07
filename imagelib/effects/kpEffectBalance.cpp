@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BALANCE 0
+#define DEBUG_KP_EFFECT_BALANCE 1
 
 
 #include "kpEffectBalance.h"

@@ -27,7 +27,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_REDUCE_COLORS 0
+#define DEBUG_KP_EFFECT_REDUCE_COLORS 1
 
 
 #include "imagelib/effects/kpEffectReduceColors.h"

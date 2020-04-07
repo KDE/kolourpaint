@@ -26,13 +26,14 @@
 */
 
 
-#define DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM 0
+#define DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM 1
 
 
 #include "kpColorSimilarityToolBarItem.h"
 
 #include <QTimer>
 #include <QPixmap>
+#include <QResizeEvent>
 
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -42,6 +43,7 @@
 #include "dialogs/kpColorSimilarityDialog.h"
 #include "kpColorSimilarityCubeRenderer.h"
 #include "kpDefs.h"
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 

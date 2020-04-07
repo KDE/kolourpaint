@@ -30,7 +30,7 @@
 //
 
 
-#define DEBUG_KP_TOOL 0
+#define DEBUG_KP_TOOL 1
 
 
 // TODO: reduce number of includes

@@ -26,11 +26,12 @@
 */
 
 
-#define DEBUG_KP_TOOL_CROP 0
+#define DEBUG_KP_TOOL_CROP 1
 
 
 #include "kpTransformCrop.h"
 #include "kpTransformCropPrivate.h"
+#include "kpLogCategories.h"
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "environments/commands/kpCommandEnvironment.h"

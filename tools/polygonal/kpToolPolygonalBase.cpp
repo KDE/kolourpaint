@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYGON 0
+#define DEBUG_KP_TOOL_POLYGON 1
 
 
 #include "kpToolPolygonalBase.h"

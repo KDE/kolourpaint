@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
+#define DEBUG_KP_EFFECT_BLUR_SHARPEN 1
 
 
 #include "kpEffectBlurSharpenWidget.h"

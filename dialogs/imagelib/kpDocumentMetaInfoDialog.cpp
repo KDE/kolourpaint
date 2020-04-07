@@ -25,7 +25,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT_META_INFO_DIALOG 0
+#define DEBUG_KP_DOCUMENT_META_INFO_DIALOG 1
 
 
 #include "kpDocumentMetaInfoDialog.h"

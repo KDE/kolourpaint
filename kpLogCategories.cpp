@@ -25,17 +25,18 @@
 */
 
 #include "kpLogCategories.h"
+#include <QtGlobal>
 
-Q_LOGGING_CATEGORY(kpLogMisc,           "kp.misc")
-Q_LOGGING_CATEGORY(kpLogDialogs,        "kp.dialogs")
-Q_LOGGING_CATEGORY(kpLogCommands,       "kp.commands")
-Q_LOGGING_CATEGORY(kpLogDocument,       "kp.document")
-Q_LOGGING_CATEGORY(kpLogTools,          "kp.tools")
-Q_LOGGING_CATEGORY(kpLogViews,          "kp.views")
-Q_LOGGING_CATEGORY(kpLogEnvironments,   "kp.environments")
-Q_LOGGING_CATEGORY(kpLogPixmapfx,       "kp.pixmapfx")
-Q_LOGGING_CATEGORY(kpLogWidgets,        "kp.widgets")
-Q_LOGGING_CATEGORY(kpLogMainWindow,     "kp.mainwindow")
-Q_LOGGING_CATEGORY(kpLogLayers,         "kp.layers")
-Q_LOGGING_CATEGORY(kpLogImagelib,       "kp.imagelib")
+Q_LOGGING_CATEGORY(kpLogMisc,         "kp.misc",         QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogDialogs,      "kp.dialogs",      QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogCommands,     "kp.commands",     QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogDocument,     "kp.document",     QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogTools,        "kp.tools",        QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogViews,        "kp.views",        QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogEnvironments, "kp.environments", QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogPixmapfx,     "kp.pixmapfx",     QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogWidgets,      "kp.widgets",      QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogMainWindow,   "kp.mainwindow",   QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogLayers,       "kp.layers",       QtWarningMsg)
+Q_LOGGING_CATEGORY(kpLogImagelib,     "kp.imagelib",     QtWarningMsg)
 
