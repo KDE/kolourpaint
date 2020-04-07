@@ -26,7 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 1
 
 
 #include "kpToolSelectionPullFromDocumentCommand.h"
@@ -46,10 +45,8 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
     : kpAbstractSelectionContentCommand (originalSelBorder, name, environ),
       m_backgroundColor (backgroundColor)
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
                << environ;
-#endif
 }
 
 kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand () = default;
@@ -58,9 +55,7 @@ kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand 
 // public virtual [base kpCommand]
 void kpToolSelectionPullFromDocumentCommand::execute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::execute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -120,9 +115,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolSelectionPullFromDocumentCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::unexecute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);

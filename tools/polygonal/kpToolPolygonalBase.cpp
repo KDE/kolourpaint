@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYGON 1
-
 
 #include "kpToolPolygonalBase.h"
 
@@ -108,9 +106,7 @@ void kpToolPolygonalBase::begin ()
     kpToolToolBar *tb = toolToolBar ();
     Q_ASSERT (tb);
 
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "kpToolPolygonalBase::begin() tb=" << tb;
-#endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
     connect (d->toolWidgetLineWidth, &kpToolWidgetLineWidth::lineWidthChanged,
@@ -142,10 +138,8 @@ void kpToolPolygonalBase::end ()
 
 void kpToolPolygonalBase::beginDraw ()
 {
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "kpToolPolygonalBase::beginDraw()  d->points=" << d->points.toList ()
                << ", startPoint=" << startPoint ();
-#endif
 
     bool endedShape = false;
 
@@ -178,9 +172,7 @@ void kpToolPolygonalBase::beginDraw ()
         }
     }
 
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "\tafterwards, d->points=" << d->points.toList ();
-#endif
 
     if (!endedShape)
     {
@@ -198,14 +190,12 @@ void kpToolPolygonalBase::applyModifiers ()
     QPoint &lineStartPoint = d->points [count - 2];
     QPoint &lineEndPoint = d->points [count - 1];
 
-#if DEBUG_KP_TOOL_POLYGON && 1
     qCDebug(kpLogTools) << "kpToolPolygonalBase::applyModifiers() #pts=" << count
                << "   line: startPt=" << lineStartPoint
                << " endPt=" << lineEndPoint
                << "   modifiers: shift=" << shiftPressed ()
                << "   alt=" << altPressed ()
                << "   ctrl=" << controlPressed ();
-#endif
 
     // angles
     if (shiftPressed () || controlPressed ())
@@ -220,10 +210,9 @@ void kpToolPolygonalBase::applyModifiers ()
         else {
             ratio = fabs (double (diffy) / double (diffx));
         }
-    #if DEBUG_KP_TOOL_POLYGON && 1
+
         qCDebug(kpLogTools) << "\tdiffx=" << diffx << " diffy=" << diffy
                    << " ratio=" << ratio;
-    #endif
 
         // Shift        = 0, 45, 90
         // Ctrl         = 0, 30, 60, 90
@@ -283,11 +272,9 @@ void kpToolPolygonalBase::applyModifiers ()
             lineEndPoint = QPoint (lineStartPoint.x () + newdx,
                                          lineStartPoint.y () + newdy);
 
-        #if DEBUG_KP_TOOL_POLYGON && 1
             qCDebug(kpLogTools) << "\t\tdiagonal line: dist=" << dist
                        << " angle=" << (angle * 180 / M_PI)
                        << " endPoint=" << lineEndPoint;
-        #endif
         }
     }    // if (shiftPressed () || controlPressed ()) {
 
@@ -334,18 +321,14 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
         return;
     }
 
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "kpToolPolygonalBase::draw()  d->points=" << d->points.toList ()
                << ", endPoint=" << currentPoint ();
-#endif
 
     // Update points() so that last point reflects current mouse position.
     const int count = d->points.count ();
     d->points [count - 1] = currentPoint ();
 
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "\tafterwards, d->points=" << d->points.toList ();
-#endif
 
     // Are we drawing a line?
     if (/*virtual*/drawingALine ())
@@ -398,13 +381,11 @@ void kpToolPolygonalBase::updateShape ()
             d->points.boundingRect (),
             d->toolWidgetLineWidth->lineWidth ());
 
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "kpToolPolygonalBase::updateShape() boundingRect="
                << boundingRect
                << " lineWidth="
                << d->toolWidgetLineWidth->lineWidth ()
                << endl;
-#endif
 
     kpImage image = document ()->getImageAt (boundingRect);
 
@@ -450,10 +431,8 @@ void kpToolPolygonalBase::releasedAllButtons ()
 // public virtual [base kpTool]
 void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
 {
-#if DEBUG_KP_TOOL_POLYGON
     qCDebug(kpLogTools) << "kpToolPolygonalBase::endShape()  d->points="
         << d->points.toList () << endl;
-#endif
 
     if (!hasBegunShape ()) {
         return;

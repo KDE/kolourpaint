@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 1
-
 
 #include "kpToolImageSelectionTransparencyCommand.h"
 
@@ -65,9 +63,7 @@ kpCommandSize::SizeType kpToolImageSelectionTransparencyCommand::size () const
 // public virtual [base kpCommand]
 void kpToolImageSelectionTransparencyCommand::execute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolImageSelectionTransparencyCommand::execute()";
-#endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
         
@@ -81,9 +77,7 @@ void kpToolImageSelectionTransparencyCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolImageSelectionTransparencyCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolImageSelectionTransparencyCommand::unexecute()";
-#endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
         

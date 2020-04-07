@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BALANCE 1
-
 
 #include "kpEffectBalance.h"
 
@@ -40,9 +38,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 
-#if DEBUG_KP_EFFECT_BALANCE
-    #include <qdatetime.h>
-#endif
+#include <QElapsedTimer>
 
 
 static inline int between0And255 (int val)
@@ -113,20 +109,16 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         int channels,
         int brightness, int contrast, int gamma)
 {
-#if DEBUG_KP_EFFECT_BALANCE
     qCDebug(kpLogImagelib) << "kpEffectBalance::applyEffect("
                << "channels=" << channels
                << ",brightness=" << brightness
                << ",contrast=" << contrast
                << ",gamma=" << gamma
                << ")";
-    QTime timer; timer.start ();
-#endif
+    QElapsedTimer timer; timer.start ();
 
     QImage qimage = image;
-#if DEBUG_KP_EFFECT_BALANCE
     qCDebug(kpLogImagelib) << "\tconvertToImage=" << timer.restart ();
-#endif
 
 
     quint8 transformRed [256],
@@ -159,9 +151,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         }
     }
 
-#if DEBUG_KP_EFFECT_BALANCE
     qCDebug(kpLogImagelib) << "\tbuild lookup=" << timer.restart ();
-#endif
 
 
     if (qimage.depth () > 8)

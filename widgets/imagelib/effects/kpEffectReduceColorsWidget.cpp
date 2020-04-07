@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_REDUCE_COLORS 1
-
 
 #include "kpEffectReduceColorsWidget.h"
 

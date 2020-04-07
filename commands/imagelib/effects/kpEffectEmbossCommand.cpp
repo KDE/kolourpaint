@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_EMBOSS 1
-
 
 #include "kpEffectEmbossCommand.h"
 #include "imagelib/effects/kpEffectEmboss.h"

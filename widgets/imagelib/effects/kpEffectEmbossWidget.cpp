@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_EMBOSS 1
-
 
 #include "kpEffectEmbossWidget.h"
 

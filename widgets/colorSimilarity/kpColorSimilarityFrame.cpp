@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_COLOR_SIMILARITY_CUBE 1
-
 
 #include "kpColorSimilarityFrame.h"
 

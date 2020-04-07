@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_COLOR 1
-
 
 #include "kpColor.h"
 
@@ -49,10 +47,8 @@ kpColor::kpColor()
 kpColor::kpColor (int red, int green, int blue, bool isTransparent)
   : m_rgba(0), m_colorCacheIsValid(false)
 {
-#if DEBUG_KP_COLOR
     qCDebug(kpLogImagelib) << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue
               << ",isTrans=" << isTransparent << ")";
-#endif
     if (red < 0 || red > 255 ||
         green < 0 || green > 255 ||
         blue < 0 || blue > 255)
@@ -75,9 +71,7 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
 kpColor::kpColor (const QRgb &rgba)
     : m_colorCacheIsValid (false)
 {
-#if DEBUG_KP_COLOR
     qCDebug(kpLogImagelib) << "kpColor::<ctor>(rgba=" << (int *) rgba << ")";
-#endif
     m_rgba = rgba;
     m_rgbaIsValid = true;
 }
@@ -90,9 +84,7 @@ kpColor::kpColor (const kpColor &rhs)
        m_colorCacheIsValid (rhs.m_colorCacheIsValid),
        m_colorCache (rhs.m_colorCache)
 {
-#if DEBUG_KP_COLOR
     qCDebug(kpLogImagelib) << "kpColor::<copy_ctor>()";
-#endif
 }
 
 //---------------------------------------------------------------------

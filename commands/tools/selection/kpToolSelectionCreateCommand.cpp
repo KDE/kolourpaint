@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 1
-
 
 #include "commands/tools/selection/kpToolSelectionCreateCommand.h"
 
@@ -94,19 +92,16 @@ void kpToolSelectionCreateCommand::setFromSelection (const kpAbstractSelection &
 // public virtual [base kpCommand]
 void kpToolSelectionCreateCommand::execute ()
 {
-#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "kpToolSelectionCreateCommand::execute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
     if (m_fromSelection)
     {
-    #if DEBUG_KP_TOOL_SELECTION
         qCDebug(kpLogCommands) << "\tusing fromSelection";
-        qCDebug(kpLogCommands) << "\t\thave sel=" << doc->selection () << endl;
-    #endif
+        qCDebug(kpLogCommands) << "\t\thave sel=" << doc->selection ();
+
         kpAbstractImageSelection *imageSel =
             dynamic_cast <kpAbstractImageSelection *> (m_fromSelection);
         kpTextSelection *textSel =

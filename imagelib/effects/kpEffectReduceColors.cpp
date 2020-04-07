@@ -27,8 +27,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_REDUCE_COLORS 1
-
 
 #include "imagelib/effects/kpEffectReduceColors.h"
 
@@ -68,14 +66,12 @@ static QImage::Format DepthToFormat (int depth)
 // public static
 QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, bool dither)
 {
-#if DEBUG_KP_EFFECT_REDUCE_COLORS
     qCDebug(kpLogImagelib) << "kpeffectreducecolors.cpp:ConvertImageDepth() changing image (w=" << image.width ()
                << ",h=" << image.height ()
                << ") depth from " << image.depth ()
                 << " to " << depth
                 << " (dither=" << dither << ")"
                 << endl;
-#endif
 
     if (image.isNull ()) {
         return image;
@@ -86,7 +82,6 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
     }
 
 
-#if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
     for (int y = 0; y < image.height (); y++)
     {
         for (int x = 0; x < image.width (); x++)
@@ -95,7 +90,6 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         }
         fprintf (stderr, "\n");
     }
-#endif
 
 
     // Hack around Qt's braindead QImage::convertToFormat(QImage::Format_MonoLSB, ...)
@@ -108,9 +102,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
     // not necessarily black & white).
     if (depth == 1 && !dither)
     {
-    #if DEBUG_KP_EFFECT_REDUCE_COLORS
         qCDebug(kpLogImagelib) << "\tinvoking convert-to-depth 1 hack";
-    #endif
         QRgb color0 = 0, color1 = 0;
         bool color0Valid = false, color1Valid = false;
 
@@ -118,11 +110,9 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
 
         QImage monoImage (image.width (), image.height (), QImage::Format_MonoLSB);
         monoImage.setColorCount (2);
-    #if DEBUG_KP_EFFECT_REDUCE_COLORS
         qCDebug(kpLogImagelib) << "\t\tinitialising output image w=" << monoImage.width ()
                    << ",h=" << monoImage.height ()
                    << ",d=" << monoImage.depth ();
-    #endif
         for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
@@ -140,28 +130,22 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
                     color0 = imagePixel;
                     color0Valid = true;
                     monoImage.setPixel (x, y, 0);
-                #if DEBUG_KP_EFFECT_REDUCE_COLORS
                     qCDebug(kpLogImagelib) << "\t\t\tcolor0=" << (int *) color0
                                << " at x=" << x << ",y=" << y;
-                #endif
                 }
                 else if (!color1Valid)
                 {
                     color1 = imagePixel;
                     color1Valid = true;
                     monoImage.setPixel (x, y, 1);
-                #if DEBUG_KP_EFFECT_REDUCE_COLORS
                     qCDebug(kpLogImagelib) << "\t\t\tcolor1=" << (int *) color1
                                << " at x=" << x << ",y=" << y;
-                #endif
                 }
                 else
                 {
-                #if DEBUG_KP_EFFECT_REDUCE_COLORS
                     qCDebug(kpLogImagelib) << "\t\t\timagePixel=" << (int *) imagePixel
                                << " at x=" << x << ",y=" << y
                                << " moreThan2Colors - abort hack";
-                #endif
                     moreThan2Colors = true;
 
                     // Dijkstra, this is clearer than double break'ing or
@@ -185,22 +169,20 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         (dither ? Qt::DiffuseDither : Qt::ThresholdDither) |
         Qt::ThresholdAlphaDither |
         (dither ? Qt::PreferDither : Qt::AvoidDither));
-#if DEBUG_KP_EFFECT_REDUCE_COLORS
     qCDebug(kpLogImagelib) << "\tformat: before=" << image.format ()
               << "after=" << retImage.format ();
-#endif
 
-#if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
     qCDebug(kpLogImagelib) << "After colour reduction:";
-    for (int y = 0; y < image.height (); y++)
-    {
-        for (int x = 0; x < image.width (); x++)
+    if (kpLogImagelib().isDebugEnabled()) {
+        for (int y = 0; y < image.height (); y++)
         {
-            fprintf (stderr, " %08X", image.pixel (x, y));
+            for (int x = 0; x < image.width (); x++)
+            {
+                fprintf (stderr, " %08X", image.pixel (x, y));
+            }
+            fprintf (stderr, "\n");
         }
-        fprintf (stderr, "\n");
     }
-#endif
 
     return retImage;
 }

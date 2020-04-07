@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_SELECTION 1
-
 
 #include "layers/selections/kpAbstractSelection.h"
 
@@ -94,10 +92,8 @@ void kpAbstractSelection::writeToStream (QDataStream &stream) const
 // friend
 QDataStream &operator<< (QDataStream &stream, const kpAbstractSelection &selection)
 {
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::operator<<(sel: rect=" <<
                  selection.boundingRect ();
-#endif
     stream << selection.serialID ();
     selection.writeToStream (stream);
     return stream;
@@ -196,9 +192,7 @@ bool kpAbstractSelection::contains (int x, int y) const
 // public virtual
 void kpAbstractSelection::moveBy (int dx, int dy)
 {
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::moveBy(" << dx << "," << dy << ")";
-#endif
 
     if (dx == 0 && dy == 0) {
         return;
@@ -206,14 +200,10 @@ void kpAbstractSelection::moveBy (int dx, int dy)
 
     QRect oldRect = boundingRect ();
 
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\toldRect=" << oldRect;
-#endif
 
     d->rect.translate (dx, dy);
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\tnewRect=" << d->rect;
-#endif
 
     emit changed (oldRect);
     emit changed (boundingRect ());
@@ -228,13 +218,9 @@ void kpAbstractSelection::moveTo (int dx, int dy)
 // public
 void kpAbstractSelection::moveTo (const QPoint &topLeftPoint)
 {
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::moveTo(" << topLeftPoint << ")";
-#endif
     QRect oldBoundingRect = boundingRect ();
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\toldBoundingRect=" << oldBoundingRect;
-#endif
     if (topLeftPoint == oldBoundingRect.topLeft ()) {
         return;
     }
@@ -252,18 +238,14 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
 {
     (void) selectionFinished;
 
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::paintRectangularBorder() boundingRect="
               << boundingRect ();
-#endif
-
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\tselection border = rectangle";
     qCDebug(kpLogLayers) << "\t\tx=" << boundingRect ().x () - docRect.x ()
               << " y=" << boundingRect ().y () - docRect.y ()
               << " w=" << boundingRect ().width ()
               << " h=" << boundingRect ().height ();
-#endif
+
     kpPixmapFX::drawStippleRect(destPixmap,
         boundingRect ().x () - docRect.x (),
         boundingRect ().y () - docRect.y (),
@@ -281,10 +263,8 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
         const QRect &docRect,
         bool selectionFinished) const
 {
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpAbstractSelection::paintPolygonalBorder() boundingRect="
               << boundingRect ();
-#endif
 
     QPolygon pointsTranslated = points;
     pointsTranslated.translate (-docRect.x (), -docRect.y ());

@@ -26,7 +26,6 @@
 */
 
 
-#define DEBUG_KP_SELECTION 1
 
 
 #include "kpSelectionFactory.h"
@@ -45,15 +44,11 @@
 //       clipboard data [Bug #28].
 kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream)
 {
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "kpSelectionFactory::FromStream()";
-#endif
     int serialID;
     stream >> serialID;
 
-#if DEBUG_KP_SELECTION && 1
     qCDebug(kpLogLayers) << "\tserialID=" << serialID;
-#endif
 
     // Only image selections are marshalled.
     //

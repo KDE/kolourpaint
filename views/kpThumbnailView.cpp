@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_THUMBNAIL_VIEW 1
-
 
 #include "views/kpThumbnailView.h"
 
@@ -54,12 +52,10 @@ kpThumbnailView::~kpThumbnailView () = default;
 // protected
 void kpThumbnailView::setMaskToCoverDocument ()
 {
-#if DEBUG_KP_THUMBNAIL_VIEW
     qCDebug(kpLogViews) << "kpThumbnailView::setMaskToCoverDocument()"
                << " origin=" << origin ()
                << " zoomedDoc: width=" << zoomedDocWidth ()
                << " height=" << zoomedDocHeight ();
-#endif
 
     setMask (QRegion (QRect (origin ().x (), origin ().y (),
                       zoomedDocWidth (), zoomedDocHeight ())));
@@ -69,9 +65,7 @@ void kpThumbnailView::setMaskToCoverDocument ()
 // protected virtual [base kpView]
 void kpThumbnailView::resizeEvent (QResizeEvent *e)
 {
-#if DEBUG_KP_THUMBNAIL_VIEW
     qCDebug(kpLogViews) << "kpThumbnailView(" << caption () << ")::resizeEvent()";
-#endif
 
     // For QResizeEvent's, Qt already throws an entire widget repaint into
     // the event loop.  So eat useless update() calls that can only slow

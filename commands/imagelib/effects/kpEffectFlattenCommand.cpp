@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_FLATTEN 1
-
 
 #include "kpEffectFlattenCommand.h"
 #include "imagelib/effects/kpEffectFlatten.h"

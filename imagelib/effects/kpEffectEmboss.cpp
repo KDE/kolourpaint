@@ -25,7 +25,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_EMBOSS 1
 
 
 #include "kpEffectEmboss.h"
@@ -70,10 +69,8 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
 // public static
 kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
 {
-#if DEBUG_KP_EFFECT_EMBOSS
     qCDebug(kpLogImagelib) << "kpEffectEmboss::applyEffect(strength=" << strength << ")"
                << endl;
-#endif
 
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 

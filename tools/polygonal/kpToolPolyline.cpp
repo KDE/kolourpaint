@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYLINE 1
-
 
 #include "kpToolPolyline.h"
 #include "kpLogCategories.h"
@@ -90,10 +88,8 @@ void kpToolPolyline::drawShape(kpImage *image,
 // public virtual [base kpTool]
 void kpToolPolyline::endDraw (const QPoint &, const QRect &)
 {
-#if DEBUG_KP_TOOL_POLYLINE
     qCDebug(kpLogTools) << "kpToolPolyline::endDraw()  points="
         << points ()->toList ();
-#endif
 
     // A click of the other mouse button (to finish shape, instead of adding
     // another control point) would have caused endShape() to have been
@@ -105,9 +101,8 @@ void kpToolPolyline::endDraw (const QPoint &, const QRect &)
 
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {
-    #if DEBUG_KP_TOOL_POLYLINE
         qCDebug(kpLogTools) << "\tending shape";
-    #endif
+
         endShape ();
         return;
     }

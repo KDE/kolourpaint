@@ -26,7 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYGON 1
 
 
 #include "kpToolPolygonalCommand.h"

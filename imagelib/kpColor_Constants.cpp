@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_COLOR 1
-
 
 #include "kpColor.h"
 

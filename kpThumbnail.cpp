@@ -26,7 +26,6 @@
 */
 
 
-#define DEBUG_KP_THUMBNAIL 1
 
 
 #include "kpThumbnail.h"
@@ -83,9 +82,7 @@ kpThumbnailView *kpThumbnail::view () const
 // public
 void kpThumbnail::setView (kpThumbnailView *view)
 {
-#if DEBUG_KP_THUMBNAIL
     qCDebug(kpLogMisc) << "kpThumbnail::setView(" << view << ")";
-#endif
 
     if (d->view == view) {
         return;
@@ -133,9 +130,7 @@ void kpThumbnail::updateCaption ()
 // protected slot
 void kpThumbnail::slotViewDestroyed ()
 {
-#if DEBUG_KP_THUMBNAIL
     qCDebug(kpLogMisc) << "kpThumbnail::slotViewDestroyed()";
-#endif
 
     d->view = nullptr;
     updateCaption ();
@@ -145,10 +140,8 @@ void kpThumbnail::slotViewDestroyed ()
 // protected virtual [base QWidget]
 void kpThumbnail::resizeEvent (QResizeEvent *e)
 {
-#if DEBUG_KP_THUMBNAIL
     qCDebug(kpLogMisc) << "kpThumbnail::resizeEvent(" << width ()
                << "," << height () << ")";
-#endif
 
     QWidget::resizeEvent (e);
 

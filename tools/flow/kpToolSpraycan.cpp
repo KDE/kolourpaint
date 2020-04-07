@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SPRAYCAN 1
-
 #include "kpToolSpraycan.h"
 
 #include "kpDefs.h"
@@ -102,9 +100,7 @@ void kpToolSpraycan::end ()
 // public virtual [base kpToolFlowBase]
 void kpToolSpraycan::beginDraw ()
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::beginDraw()";
-#endif
 
     kpToolFlowBase::beginDraw ();
 
@@ -119,18 +115,14 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
          const QPoint &lastPoint,
          double probability)
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint
                << ",lastPoint=" << lastPoint
                << ")";
-#endif
 
     QList <QPoint> docPoints = kpPainter::interpolatePoints (lastPoint, thisPoint,
         false/*no need for cardinally adjacency points*/,
         probability);
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "\tdocPoints=" << docPoints;
-#endif
 
 
     // By chance no points to draw?
@@ -172,10 +164,8 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 // public virtual [base kpToolFlowBase]
 QRect kpToolSpraycan::drawPoint (const QPoint &point)
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::drawPoint" << point
                << " lastPoint=" << lastPoint ();
-#endif
 
     // If this is the first in the flow or if the user is moving the spray,
     // make the spray line continuous.
@@ -192,9 +182,7 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
 // public virtual [base kpToolFlowBase]
 QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint << ",lastPoint=" << lastPoint;
-#endif
 
     // Draw only every so often in response to movement.
     return drawLineWithProbability (thisPoint, lastPoint,
@@ -204,9 +192,7 @@ QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint
 // protected slot
 void kpToolSpraycan::timeoutDraw ()
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::timeoutDraw()";
-#endif
 
     // Draw at this single point without delay.
     const QRect drawnRect = drawLineWithProbability (currentPoint (), currentPoint (),
@@ -221,9 +207,7 @@ void kpToolSpraycan::timeoutDraw ()
 // public virtual [base kpToolFlowBase]
 void kpToolSpraycan::cancelShape ()
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::cancelShape()";
-#endif
 
     m_timer->stop ();
     kpToolFlowBase::cancelShape ();
@@ -233,10 +217,8 @@ void kpToolSpraycan::cancelShape ()
 void kpToolSpraycan::endDraw (const QPoint &thisPoint,
     const QRect &normalizedRect)
 {
-#if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint
                << ")";
-#endif
 
     m_timer->stop ();
     kpToolFlowBase::endDraw (thisPoint, normalizedRect);

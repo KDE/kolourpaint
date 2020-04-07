@@ -30,8 +30,6 @@
 //
 
 
-#define DEBUG_KP_TOOL 1
-
 
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
@@ -141,9 +139,7 @@ kpView *kpTool::viewUnderCursor () const
 
 void kpTool::beginInternal ()
 {
-#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool::beginInternal()";
-#endif
 
     if (!d->began)
     {
@@ -212,9 +208,7 @@ void kpTool::endInternal ()
 // virtual
 void kpTool::begin ()
 {
-#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool::begin() base implementation";
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -222,9 +216,7 @@ void kpTool::begin ()
 // virtual
 void kpTool::end ()
 {
-#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool::end() base implementation";
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -267,10 +259,8 @@ void kpTool::beginDraw ()
 // virtual
 void kpTool::hover (const QPoint &point)
 {
-#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool::hover" << point
                << " base implementation";
-#endif
 
     setUserShapePoints (point);
 }
@@ -287,9 +277,7 @@ void kpTool::globalDraw ()
 // virtual
 void kpTool::reselect ()
 {
-#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool::reselect() base implementation";
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -358,9 +346,7 @@ void kpTool::releasedAllButtons ()
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
                               bool wantEndShape)
 {
-#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape;
-#endif
 
     if (wantEndShape && !hasBegunShape ()) {
         return;
@@ -374,16 +360,12 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
 
     if (wantEndShape)
     {
-    #if DEBUG_KP_TOOL && 0
         qCDebug(kpLogTools) << "\tcalling endShape()";
-    #endif
         endShape (thisPoint, normalizedRect);
     }
     else
     {
-    #if DEBUG_KP_TOOL && 0
         qCDebug(kpLogTools) << "\tcalling endDraw()";
-    #endif
         endDraw (thisPoint, normalizedRect);
     }
     d->viewUnderStartPoint = nullptr;

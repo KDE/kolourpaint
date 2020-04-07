@@ -25,9 +25,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SKEW 1
-#define DEBUG_KP_TOOL_SKEW_DIALOG 1
-
 
 #include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 

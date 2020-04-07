@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_FLATTEN 1
-
 
 #include "kpEffectFlattenWidget.h"
 
@@ -141,10 +139,8 @@ bool kpEffectFlattenWidget::isNoOp () const
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectFlattenWidget::applyEffect (const kpImage &image)
 {
-#if DEBUG_KP_EFFECT_FLATTEN
     qCDebug(kpLogWidgets) << "kpEffectFlattenWidget::applyEffect() nop="
                << isNoOp () << endl;
-#endif
 
     if (isNoOp ()) {
         return image;
@@ -167,11 +163,9 @@ kpEffectCommandBase *kpEffectFlattenWidget::createCommand (
 // protected slot:
 void kpEffectFlattenWidget::slotEnableChanged (bool enable)
 {
-#if DEBUG_KP_EFFECT_FLATTEN
     qCDebug(kpLogWidgets) << "kpEffectFlattenWidget::slotEnableChanged(" << enable
                << ") enableButton=" << m_enableCheckBox->isChecked ()
                << endl;
-#endif
 
     m_color1Button->setEnabled (enable);
     m_color2Button->setEnabled (enable);

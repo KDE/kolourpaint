@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_INVERT 1
-
 
 #include "kpEffectInvert.h"
 
@@ -51,10 +49,8 @@ void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
                        (channels & Green) ? 0xFF : 0,
                        (channels & Blue) ? 0xFF : 0,
                        0/*don't invert alpha*/);
-#if DEBUG_KP_EFFECT_INVERT
     qCDebug(kpLogImagelib) << "kpEffectInvert::applyEffect(channels=" << channels
                << ") mask=" << (int *) mask;
-#endif
 
     if (destImagePtr->depth () > 8)
     {

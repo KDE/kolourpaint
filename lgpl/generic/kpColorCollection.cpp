@@ -24,8 +24,6 @@
 //-----------------------------------------------------------------------------
 // KDE color collection
 
-#define DEBUG_KP_COLOR_COLLECTION 1
-
 #include "kpColorCollection.h"
 
 #include "kpUrlFormatter.h"
@@ -135,9 +133,7 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
 
     if (!job->exec ())
     {
-#if DEBUG_KP_COLOR_COLLECTION
         qCDebug(kpLogColorCollection) << "\tcould not download";
-#endif
         ::CouldNotOpenDialog (url, parent);
         return false;
     }
@@ -207,15 +203,11 @@ static void CouldNotOpenKDEDialog (const QString &name, QWidget *parent)
 bool
 kpColorCollection::openKDE(const QString &name, QWidget *parent)
 {
-#if DEBUG_KP_COLOR_COLLECTION
   qCDebug(kpLogColorCollection) << "name=" << name;
-#endif
 
   if (name.isEmpty())
   {
-  #if DEBUG_KP_COLOR_COLLECTION
     qCDebug(kpLogColorCollection) << "name.isEmpty";
-  #endif
     ::CouldNotOpenKDEDialog (name, parent);
     return false;
   }
@@ -224,9 +216,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
                                             "colors/" + name);
   if (filename.isEmpty())
   {
-  #if DEBUG_KP_COLOR_COLLECTION
     qCDebug(kpLogColorCollection) << "could not find file";
-  #endif
     ::CouldNotOpenKDEDialog (name, parent);
     return false;
   }
@@ -234,16 +224,12 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   // (this will pop up an error dialog on failure)
   if (!open (QUrl::fromLocalFile (filename), parent))
   {
-  #if DEBUG_KP_COLOR_COLLECTION
     qCDebug(kpLogColorCollection) << "could not open";
-  #endif
     return false;
   }
 
   d->name = name;
-#if DEBUG_KP_COLOR_COLLECTION
   qCDebug(kpLogColorCollection) << "opened";
-#endif
   return true;
 }
 
@@ -298,10 +284,8 @@ kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
                 // opened.
                 atomicFileWriter.cancelWriting ();
 
-            #if DEBUG_KP_COLOR_COLLECTION
                 qCDebug(kpLogColorCollection) << "\treturning false because could not open QSaveFile"
                           << " error=" << atomicFileWriter.error ();
-            #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
@@ -315,9 +299,7 @@ kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
             {
                 atomicFileWriter.cancelWriting ();
 
-            #if DEBUG_KP_COLOR_COLLECTION
                 qCDebug(kpLogColorCollection) << "\tcould not close QSaveFile";
-            #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
@@ -331,9 +313,7 @@ kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
         QTemporaryFile tempFile;
         if (!tempFile.open ())
         {
-        #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogColorCollection) << "\treturning false because could not open tempFile";
-        #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
         }
@@ -344,17 +324,13 @@ kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
         // Collect name of temporary file now, as QTemporaryFile::fileName()
         // stops working after close() is called.
         const QString tempFileName = tempFile.fileName ();
-    #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogColorCollection) << "\ttempFileName='" << tempFileName << "'";
-    #endif
         Q_ASSERT (!tempFileName.isEmpty ());
 
         tempFile.close ();
         if (tempFile.error () != QFile::NoError)
         {
-        #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogColorCollection) << "\treturning false because could not close";
-        #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
         }
@@ -367,9 +343,7 @@ kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
         KJobWidgets::setWindow (job, parent);
         if (!job->exec ())
         {
-        #if DEBUG_KP_COLOR_COLLECTION
             qCDebug(kpLogColorCollection) << "\treturning false because could not upload";
-        #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
         }

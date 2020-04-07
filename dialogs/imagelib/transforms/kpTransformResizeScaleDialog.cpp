@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 1
-
 
 #include "kpTransformResizeScaleDialog.h"
 
@@ -453,9 +451,7 @@ bool kpTransformResizeScaleDialog::smoothScaleEnabled () const
 
 void kpTransformResizeScaleDialog::slotActOnChanged ()
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotActOnChanged()";
-#endif
 
     m_resizeButton->setEnabled (resizeEnabled ());
     m_scaleButton->setEnabled (scaleEnabled ());
@@ -529,10 +525,8 @@ void kpTransformResizeScaleDialog::slotTypeChanged ()
 // public slot
 void kpTransformResizeScaleDialog::slotWidthChanged (int width)
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotWidthChanged("
-               << width << ")" << endl;
-#endif
+               << width << ")";
     const double newPercentWidth = double (width) * 100 / double (originalWidth ());
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentWidthInput,newPercentWidth);
@@ -547,10 +541,8 @@ void kpTransformResizeScaleDialog::slotWidthChanged (int width)
 
 void kpTransformResizeScaleDialog::slotHeightChanged (int height)
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotHeightChanged("
-               << height << ")" << endl;
-#endif
+               << height << ")";
     const double newPercentHeight = double (height) * 100 / double (originalHeight ());
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentHeightInput,newPercentHeight);
@@ -565,10 +557,8 @@ void kpTransformResizeScaleDialog::slotHeightChanged (int height)
 
 void kpTransformResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotPercentWidthChanged("
                << percentWidth << ")";
-#endif
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_newWidthInput,
                                        qRound (percentWidth * originalWidth () / 100.0));
@@ -583,10 +573,8 @@ void kpTransformResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 
 void kpTransformResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::slotPercentHeightChanged("
                << percentHeight << ")";
-#endif
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_newHeightInput,
                                        qRound (percentHeight * originalHeight () / 100.0));
@@ -601,10 +589,8 @@ void kpTransformResizeScaleDialog::slotPercentHeightChanged (double percentHeigh
 
 void kpTransformResizeScaleDialog::setKeepAspectRatio (bool on)
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
     qCDebug(kpLogDialogs) << "kpTransformResizeScaleDialog::setKeepAspectRatio("
                << on << ")";
-#endif
 
     if (on != m_keepAspectRatioCheckBox->isChecked ()) {
         m_keepAspectRatioCheckBox->setChecked (on);

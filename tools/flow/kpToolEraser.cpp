@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_ERASER 1
-
 #include "kpToolEraser.h"
 #include "kpLogCategories.h"
 
@@ -52,9 +50,7 @@ kpToolEraser::kpToolEraser (kpToolEnvironment *environ, QObject *parent)
 // public virtual [base kpTool]
 void kpToolEraser::globalDraw ()
 {
-#if DEBUG_KP_TOOL_ERASER
     qCDebug(kpLogTools) << "kpToolEraser::globalDraw()";
-#endif
 
     commandHistory ()->addCommand (
         new kpEffectClearCommand (

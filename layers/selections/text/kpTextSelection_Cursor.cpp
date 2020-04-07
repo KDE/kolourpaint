@@ -27,8 +27,6 @@
 */
 
 
-#define DEBUG_KP_SELECTION 1
-
 
 #include "kpTextSelection.h"
 #include "kpTextSelectionPrivate.h"
@@ -101,14 +99,12 @@ QPoint kpTextSelection::pointForTextRowCol (int row, int col) const
         (preeditText.isEmpty () &&
             (row >= static_cast<int> (d->textLines.size ()) || col > static_cast<int> (d->textLines [row].length ()))))
     {
-#if DEBUG_KP_SELECTION && 1
-    qCDebug(kpLogLayers) << "kpTextSelection::pointForTextRowCol("
-               << row << ","
-               << col << ") out of range"
-               << " textLines='"
-               << text ()
-               << "'";
-#endif
+        qCDebug(kpLogLayers) << "kpTextSelection::pointForTextRowCol("
+            << row << ","
+            << col << ") out of range"
+            << " textLines='"
+            << text ()
+            << "'";
         return KP_INVALID_POINT;
     }
 

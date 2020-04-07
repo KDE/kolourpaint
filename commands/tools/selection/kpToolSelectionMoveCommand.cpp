@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 1
-
 
 #include "kpToolSelectionMoveCommand.h"
 
@@ -82,9 +80,7 @@ kpCommandSize::SizeType kpToolSelectionMoveCommand::size () const
 // public virtual [base kpCommand]
 void kpToolSelectionMoveCommand::execute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::execute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -114,9 +110,7 @@ void kpToolSelectionMoveCommand::execute ()
 // public virtual [base kpCommand]
 void kpToolSelectionMoveCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::unexecute()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -134,9 +128,8 @@ void kpToolSelectionMoveCommand::unexecute ()
         doc->setImageAt (m_oldDocumentImage, m_documentBoundingRect.topLeft ());
     }
 
-#if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "\tmove to startPoint=" << m_startPoint;
-#endif
+
     sel->moveTo (m_startPoint);
 
     environ ()->somethingBelowTheCursorChanged ();
@@ -147,10 +140,8 @@ void kpToolSelectionMoveCommand::unexecute ()
 // public
 void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
 {
-#if DEBUG_KP_TOOL_SELECTION && 0
     qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::moveTo" << point
                << " moveLater=" << moveLater;
-#endif
 
     if (!moveLater)
     {
@@ -180,9 +171,7 @@ void kpToolSelectionMoveCommand::moveTo (int x, int y, bool moveLater)
 // public
 void kpToolSelectionMoveCommand::copyOntoDocument ()
 {
-#if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::copyOntoDocument()";
-#endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);

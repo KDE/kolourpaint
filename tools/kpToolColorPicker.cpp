@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_COLOR_PICKER 1
-
 
 #include "kpToolColorPicker.h"
 #include "kpLogCategories.h"
@@ -54,9 +52,7 @@ kpToolColorPicker::~kpToolColorPicker () = default;
 // private
 kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 {
-#if DEBUG_KP_TOOL_COLOR_PICKER && 0
     qCDebug(kpLogTools) << "kpToolColorPicker::colorAtPixel" << p;
-#endif
 
     return kpPixmapFX::getColorAtPixel (document ()->image (), p);
 }

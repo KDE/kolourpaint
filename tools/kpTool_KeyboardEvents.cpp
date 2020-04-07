@@ -30,8 +30,6 @@
 //
 
 
-#define DEBUG_KP_TOOL 1
-
 
 // TODO: reduce number of includes
 #include "tools/kpTool.h"
@@ -66,7 +64,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
     {
     case 0:
     case Qt::Key_unknown:
-    #if DEBUG_KP_TOOL && 0
+    #if 0
         qCDebug(kpLogTools) << "kpTool::seeIfAndHandleModifierKey() picked up unknown key!";
     #endif
         // HACK: around Qt bug: if you hold a modifier before you start the
@@ -78,7 +76,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
     case Qt::Key_Alt:
     case Qt::Key_Shift:
     case Qt::Key_Control:
-    #if DEBUG_KP_TOOL && 0
+    #if 0
         qCDebug(kpLogTools) << "kpTool::setIfAndHandleModifierKey() accepting";
     #endif
         keyUpdateModifierState (e);
@@ -137,7 +135,7 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
 
 
     const QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "\toldPoint=" << oldPoint
                 << " dx=" << dx << " dy=" << dy << endl;
 #endif
@@ -150,7 +148,7 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
     int newViewY = oldPoint.y () + viewIncY;
 
 
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "\tnewPoint=" << QPoint (newViewX, newViewY);
 #endif
 
@@ -163,7 +161,7 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
         newViewX += viewIncX;
         newViewY += viewIncY;
 
-    #if DEBUG_KP_TOOL && 0
+    #if 0
         qCDebug(kpLogTools) << "\tneed adjust for doc - newPoint="
                     << QPoint (newViewX, newViewY) << endl;
     #endif
@@ -202,7 +200,7 @@ void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
         return;
     }
 
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::seeIfAndHandleBeginDrawKeyPress() accept";
 #endif
 
@@ -226,7 +224,7 @@ void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
 
 void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::setIfAndHandleEndDrawKeyPress() key=" << e->key ()
                << " isAutoRepeat=" << e->isAutoRepeat ()
                << " isDrawKey=" << isDrawKey (e->key ())
@@ -242,7 +240,7 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
         return;
     }
 
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::seeIfAndHandleEndDrawKeyPress() accept";
 #endif
 
@@ -268,7 +266,7 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
 
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::keyPressEvent() key=" << (int *) e->key ()
               << " stateAfter: modifiers=" << (int *) (int) e->modifiers ()
               << " isAutoRep=" << e->isAutoRepeat ();
@@ -314,7 +312,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 
 void kpTool::keyReleaseEvent (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::keyReleaseEvent() key=" << (int *) e->key ()
               << " stateAfter: modifiers=" << (int *) (int) e->modifiers ()
               << " isAutoRep=" << e->isAutoRepeat ();
@@ -338,7 +336,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 // private
 void kpTool::keyUpdateModifierState (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::keyUpdateModifierState() e->key=" << (int *) e->key ();
     qCDebug(kpLogTools) << "\tshift="
                << (e->modifiers () & Qt::ShiftModifier)
@@ -350,7 +348,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
 #endif
     if (e->key () & (Qt::Key_Alt | Qt::Key_Shift | Qt::Key_Control))
     {
-    #if DEBUG_KP_TOOL && 0
+    #if 0
         qCDebug(kpLogTools) << "\t\tmodifier changed - use e's claims";
     #endif
         setShiftPressed (e->modifiers () & Qt::ShiftModifier);
@@ -360,7 +358,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     // See seeIfAndHandleModifierKey() for why this code path exists.
     else
     {
-    #if DEBUG_KP_TOOL && 0
+    #if 0
         qCDebug(kpLogTools) << "\t\tmodifiers not changed - figure out the truth";
     #endif
         const Qt::KeyboardModifiers keyState = QApplication::keyboardModifiers ();

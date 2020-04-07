@@ -25,8 +25,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 1
-
 
 #include "kpEffectBlurSharpen.h"
 #include "blitz.h"
@@ -36,9 +34,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    #include <QTime>
-#endif
+#include <QElapsedTimer>
 
 
 //---------------------------------------------------------------------
@@ -78,10 +74,8 @@ static QImage BlurQImage(const QImage &qimage, int strength)
         (RadiusMax - RadiusMin) /
         (kpEffectBlurSharpen::MaxStrength - 1);
 
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
                << " radius=" << radius;
-#endif
 
     QImage img(qimage);
     return Blitz::blur(img, qRound(radius));
@@ -125,25 +119,22 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
         (kpEffectBlurSharpen::MaxStrength - 1));
 
 
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
                << " radius=" << radius
                << " sigma=" << sigma
                << " repeat=" << repeat;
-#endif
 
 
+    QElapsedTimer timer;
     for (int i = 0; i < repeat; i++)
     {
-    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-        QTime timer; timer.start ();
-    #endif
+        timer.restart();
+
         qimage = Blitz::gaussianSharpen (qimage, static_cast<float> (radius),
                                          static_cast<float> (sigma));
-    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
+
         qCDebug(kpLogImagelib) << "\titeration #" + QString::number (i)
                   << ": " + QString::number (timer.elapsed ()) << "ms";
-    #endif
     }
 
 
@@ -156,12 +147,10 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
 kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
         Type type, int strength)
 {
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect ()
               << ",type=" << int (type)
               << ",strength=" << strength
               << ")";
-#endif
 
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 

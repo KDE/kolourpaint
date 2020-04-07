@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_SELECTION_DRAG 1
-
 
 #include "kpSelectionDrag.h"
 
@@ -51,10 +49,8 @@ const char * const kpSelectionDrag::SelectionMimeType =
 
 kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
 {
-#if DEBUG_KP_SELECTION_DRAG && 1
     qCDebug(kpLogLayers) << "kpSelectionDrag() w=" << sel.width ()
                << " h=" << sel.height ();
-#endif
 
     Q_ASSERT (sel.hasContent ());
 
@@ -69,10 +65,10 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
     // Store as image (so that QMimeData::hasImage()) works).
     // OPT: an awful waste of memory storing image in both selection and QImage
     const QImage image = sel.baseImage ();
-#if DEBUG_KP_SELECTION_DRAG && 1
+
     qCDebug(kpLogLayers) << "\timage: w=" << image.width ()
                << " h=" << image.height ();
-#endif
+
     if (image.isNull ())
     {
         // TODO: proper error handling.

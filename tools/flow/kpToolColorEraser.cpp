@@ -25,8 +25,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_COLOR_ERASER 1
-
 #include "kpToolColorEraser.h"
 
 #include <QApplication>
@@ -63,9 +61,8 @@ kpToolColorEraser::~kpToolColorEraser () = default;
 
 void kpToolColorEraser::globalDraw ()
 {
-#if DEBUG_KP_TOOL_COLOR_ERASER
     qCDebug(kpLogTools) << "kpToolColorEraser::globalDraw()";
-#endif
+
     if (!drawShouldProceed (QPoint ()/*unused*/, QPoint ()/*unused*/, QRect ()/*unused*/)) {
         return;
     }
@@ -98,9 +95,8 @@ void kpToolColorEraser::globalDraw ()
     }
     else
     {
-    #if DEBUG_KP_TOOL_COLOR_ERASER
         qCDebug(kpLogTools) << "\tisNOP";
-    #endif
+
         delete cmd;
         cmd = nullptr;
     }
@@ -129,10 +125,8 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
 
 QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-#if DEBUG_KP_TOOL_COLOR_ERASER
     qCDebug(kpLogTools) << "kpToolColorEraser::drawLine(thisPoint=" << thisPoint
         << ",lastPoint=" << lastPoint << ")";
-#endif
 
     environ ()->flashColorSimilarityToolBarItem ();
 
@@ -144,9 +138,7 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         color (1 - mouseButton ())/*color to replace*/,
         processedColorSimilarity ());
 
-#if DEBUG_KP_TOOL_COLOR_ERASER
     qCDebug(kpLogTools) << "\tdirtyRect=" << dirtyRect;
-#endif
 
     if (!dirtyRect.isEmpty ())
     {

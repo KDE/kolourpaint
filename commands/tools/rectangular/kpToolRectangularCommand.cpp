@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_RECTANGULAR_COMMAND 1
-
 
 #include "kpToolRectangularCommand.h"
 

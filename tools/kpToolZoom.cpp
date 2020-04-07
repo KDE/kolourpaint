@@ -25,8 +25,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_ZOOM 1
-
 
 #include "kpToolZoom.h"
 
@@ -137,9 +135,7 @@ void kpToolZoom::end ()
 // public virtual [base kpTool]
 void kpToolZoom::globalDraw ()
 {
-#if DEBUG_KP_TOOL_ZOOM
     qCDebug(kpLogTools) << "CALL";
-#endif
     environ ()->fitToPage ();
 }
 
@@ -156,11 +152,9 @@ void kpToolZoom::beginDraw ()
 // public virtual [base kpTool]
 void kpToolZoom::draw (const QPoint &thisPoint, const QPoint &, const QRect &normalizedRect)
 {
-#if DEBUG_KP_TOOL_ZOOM
     qCDebug(kpLogTools) << "kpToomZoom::draw() currentPoint=" << currentPoint ()
               << " lastPoint=" << lastPoint ()
               << endl;
-#endif
 
     // TODO: Need accidental drag detection from selection tool (when dragging
     //       out new selection)
@@ -216,10 +210,8 @@ void kpToolZoom::releasedAllButtons ()
 // public virtual [base kpTool]
 void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
 {
-#if DEBUG_KP_TOOL_ZOOM
     qCDebug(kpLogTools) << "kpToolZoom::endDraw(rect=" << normalizedRect << ")"
-        << " dragHasBegun=" << d->dragHasBegun << endl;
-#endif
+        << " dragHasBegun=" << d->dragHasBegun;
 
     // TODO: This cursor doesn't stay on for long enough because zooming uses
     //       event loop tricks.

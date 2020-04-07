@@ -29,8 +29,6 @@
 */
 
 
-#define DEBUG_KP_SELECTION 1
-
 
 #include "kpTextSelection.h"
 #include "kpTextSelectionPrivate.h"
@@ -116,12 +114,10 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
 // public virtual [kpAbstractSelection]
 void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
 {
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpTextSelection::paint() textStyle: fcol="
             << (int *) d->textStyle.foregroundColor ().toQRgb ()
             << " bcol="
             << (int *) d->textStyle.backgroundColor ().toQRgb ();
-#endif
 
     // Drawing text is slow so if the text box will be rendered completely
     // outside of <destRect>, don't bother rendering it at all.
@@ -150,14 +146,12 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
 
     const QFontMetrics fontMetrics (theTextStyle.font ());
 
-#if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpTextSelection_Paint.cpp:DrawTextHelper";
     qCDebug(kpLogLayers) << "\theight=" << fontMetrics.height ()
                << " leading=" << fontMetrics.leading ()
                << " ascent=" << fontMetrics.ascent ()
                << " descent=" << fontMetrics.descent ()
                << " lineSpacing=" << fontMetrics.lineSpacing ();
-#endif
 
     QPainter painter(&floatImage);
 

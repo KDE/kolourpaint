@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_CROP 1
-
 
 #include "kpTransformCrop.h"
 #include "kpTransformCropPrivate.h"

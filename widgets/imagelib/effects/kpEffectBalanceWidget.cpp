@@ -25,8 +25,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BALANCE 1
-
 
 #include "kpEffectBalanceWidget.h"
 
@@ -45,10 +43,6 @@
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
-
-#if DEBUG_KP_EFFECT_BALANCE
-    #include <qdatetime.h>
-#endif
 
 
 kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,

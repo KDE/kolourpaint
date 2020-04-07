@@ -26,7 +26,6 @@
 */
 
 
-#define DEBUG_KP_SELECTION_TRANSPARENCY 1
 
 
 #include "layers/selections/image/kpImageSelectionTransparency.h"
@@ -68,36 +67,25 @@ kpImageSelectionTransparency::kpImageSelectionTransparency (bool isOpaque, const
 
 bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparency &rhs) const
 {
-#if DEBUG_KP_SELECTION_TRANSPARENCY && 0
     qCDebug(kpLogLayers) << "kpImageSelectionTransparency::operator==()";
-#endif
     
     if (m_isOpaque != rhs.m_isOpaque)
     {
-    #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
         qCDebug(kpLogLayers) << "\tdifferent opacity: lhs=" << m_isOpaque
-                   << " rhs=" << rhs.m_isOpaque
-                   << endl;
-    #endif
+                   << " rhs=" << rhs.m_isOpaque;
         return false;
     }
 
     if (m_isOpaque)
     {
-    #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
         qCDebug(kpLogLayers) << "\tboth opaque - eq";
-    #endif
         return true;
     }
 
-#if DEBUG_KP_SELECTION_TRANSPARENCY && 0
     qCDebug(kpLogLayers) << "\tcolours: lhs=" << (int *) m_transparentColor.toQRgb ()
-               << " rhs=" << (int *) rhs.m_transparentColor.toQRgb ()
-               << endl;
+               << " rhs=" << (int *) rhs.m_transparentColor.toQRgb ();
     qCDebug(kpLogLayers) << "\tcolour similarity: lhs=" << m_colorSimilarity
-               << " rhs=" << rhs.m_colorSimilarity
-               << endl;
-#endif
+               << " rhs=" << rhs.m_colorSimilarity;
     
     return (m_transparentColor == rhs.m_transparentColor &&
             m_colorSimilarity == rhs.m_colorSimilarity);

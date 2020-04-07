@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_ROTATE 1
 
 
 #include "kpTransformRotateCommand.h"
@@ -156,13 +155,11 @@ void kpTransformRotateCommand::execute ()
             // TODO: fix the latter "victim of" problem in kpAbstractImageSelection by
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
-        #if DEBUG_KP_TOOL_ROTATE
             qCDebug(kpLogCommands) << "kpTransformRotateCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newImage.width ()
                        << " h=" << newImage.height ()
                        << " (victim of rounding error and/or rotated-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be)";
-        #endif
             doc->setSelection (
                 kpRectangularImageSelection (
                     QRect (newTopLeft.x (), newTopLeft.y (),

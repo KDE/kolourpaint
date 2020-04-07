@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_COMMAND_HISTORY 1
-
 
 #include "kpCommand.h"
 

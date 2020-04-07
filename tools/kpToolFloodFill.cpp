@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_FLOOD_FILL 1
-
 
 #include "kpToolFloodFill.h"
 
@@ -88,9 +86,7 @@ void kpToolFloodFill::begin ()
 // public virtual [base kpTool]
 void kpToolFloodFill::beginDraw ()
 {
-#if DEBUG_KP_TOOL_FLOOD_FILL && 1
     qCDebug(kpLogTools) << "kpToolFloodFill::beginDraw()";
-#endif
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
     {
@@ -103,9 +99,7 @@ void kpToolFloodFill::beginDraw ()
             color (mouseButton ()), processedColorSimilarity (),
             environ ()->commandEnvironment ());
 
-    #if DEBUG_KP_TOOL_FLOOD_FILL && 1
         qCDebug(kpLogTools) << "\tperforming new-doc-corner-case check";
-    #endif
 
         if (document ()->url ().isEmpty () && !document ()->isModified ())
         {

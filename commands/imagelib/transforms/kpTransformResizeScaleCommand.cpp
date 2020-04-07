@@ -26,9 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 1
-#define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 1
-
 
 #include "kpTransformResizeScaleCommand.h"
 
@@ -192,9 +189,7 @@ bool kpTransformResizeScaleCommand::scaleSelectionWithImage () const
 // private
 void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
     qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument";
-#endif
 
     Q_ASSERT (m_oldSelectionPtr);
     Q_ASSERT (!m_oldSelectionPtr->hasContent ());
@@ -249,14 +244,12 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 // public virtual [base kpCommand]
 void kpTransformResizeScaleCommand::execute ()
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
     qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::execute() type="
                << (int) m_type
                << " oldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
                << " newWidth=" << m_newWidth
                << " newHeight=" << m_newHeight;
-#endif
 
     if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
         return;
@@ -372,10 +365,8 @@ void kpTransformResizeScaleCommand::execute ()
 // public virtual [base kpCommand]
 void kpTransformResizeScaleCommand::unexecute ()
 {
-#if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
     qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::unexecute() type="
                << m_type;
-#endif
 
     if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight) {
         return;

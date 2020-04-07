@@ -26,8 +26,6 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 1
-
 
 #include "kpEffectGrayscale.h"
 

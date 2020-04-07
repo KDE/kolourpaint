@@ -26,9 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_SKEW 1
-#define DEBUG_KP_TOOL_SKEW_DIALOG 1
-
 
 #include "kpTransformSkewCommand.h"
 
@@ -142,13 +139,11 @@ void kpTransformSkewCommand::execute ()
             // TODO: fix the latter "victim of" problem in kpAbstractImageSelection by
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
-        #if DEBUG_KP_TOOL_SKEW
             qCDebug(kpLogCommands) << "kpTransformSkewCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newImage.width ()
                        << " h=" << newImage.height ()
                        << " (victim of rounding error and/or skewed-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be))";
-        #endif
             doc->setSelection (
                 kpRectangularImageSelection (
                     QRect (currentPoints.boundingRect ().x (),

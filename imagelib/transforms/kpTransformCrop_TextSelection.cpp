@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_CROP 1
 
 
 #include "kpTransformCrop.h"
@@ -48,19 +47,17 @@ void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,
 
     macroCmd->addCommand (resizeDocCommand);
 
-#if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "\tisText";
     qCDebug(kpLogImagelib) << "\tclearing doc with trans cmd";
-#endif
+
     macroCmd->addCommand (
         new kpEffectClearCommand (
             false/*act on doc*/,
             kpColor::Transparent,
             environ));
 
-#if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "\tmoving sel to (0,0) cmd";
-#endif
+
     kpToolSelectionMoveCommand *moveCmd =
         new kpToolSelectionMoveCommand (
             QString()/*uninteresting child of macro cmd*/,

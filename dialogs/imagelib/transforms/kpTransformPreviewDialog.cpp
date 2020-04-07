@@ -26,9 +26,6 @@
 */
 
 
-#define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 1
-
-
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 #include <QApplication>
@@ -240,16 +237,12 @@ void kpTransformPreviewDialog::updateDimensions ()
 
     if (!updatesEnabled ())
     {
-    #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
         qCDebug(kpLogDialogs) << "updates not enabled - aborting";
-    #endif
         return;
     }
 
     QSize newDim = newDimensions ();
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::updateDimensions(): newDim=" << newDim;
-#endif
 
     QString newDimString = i18n ("%1 x %2",
                                  newDim.width (),
@@ -281,16 +274,13 @@ int kpTransformPreviewDialog::scaleDimension (int dimension, double scale, int m
 // private
 void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
 {
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::updateShrunkenDocumentPixmap()"
                << " shrunkenDocPixmap.size="
                << m_shrunkenDocumentPixmap.size ()
                << " previewPixmapLabelSizeWhenUpdatedPixmap="
                << m_previewPixmapLabelSizeWhenUpdatedPixmap
                << " previewPixmapLabel.size="
-               << m_previewPixmapLabel->size ()
-               << endl;
-#endif
+               << m_previewPixmapLabel->size ();
 
     if (!m_previewGroupBox) {
         return;
@@ -303,9 +293,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
     if (m_shrunkenDocumentPixmap.isNull () ||
         m_previewPixmapLabel->size () != m_previewPixmapLabelSizeWhenUpdatedPixmap)
     {
-    #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
         qCDebug(kpLogDialogs) << "\tupdating shrunkenDocPixmap";
-    #endif
 
         // TODO: Why the need to keep aspect ratio here?
         //       Isn't scaling the skewed result maintaining aspect enough?
@@ -348,9 +336,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
 // private
 void kpTransformPreviewDialog::updatePreview ()
 {
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::updatePreview()";
-#endif
 
     if (!m_previewGroupBox) {
         return;
@@ -365,9 +351,7 @@ void kpTransformPreviewDialog::updatePreview ()
 
     if (!updatesEnabled ())
     {
-    #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
         qCDebug(kpLogDialogs) << "updates not enabled - aborting";
-    #endif
         return;
     }
 
@@ -404,7 +388,6 @@ void kpTransformPreviewDialog::updatePreview ()
                                  (previewPixmap.height () - transformedShrunkenDocumentPixmap.height ()) / 2,
                                  transformedShrunkenDocumentPixmap);
 
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::updatePreview ():"
                << "   shrunkenDocumentPixmap: w="
                << m_shrunkenDocumentPixmap.width ()
@@ -421,22 +404,17 @@ void kpTransformPreviewDialog::updatePreview ()
                << "   previewPixmap: w="
                << previewPixmap.width ()
                << " h="
-               << previewPixmap.height ()
-               << endl;
-#endif
+               << previewPixmap.height ();
 
         m_previewPixmapLabel->setPixmap (QPixmap::fromImage(previewPixmap));
 
         // immediate update esp. for expensive previews
         m_previewPixmapLabel->repaint ();
 
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "\tafter QLabel::setPixmap() previewPixmapLabel: w="
                << m_previewPixmapLabel->width ()
                << " h="
-               << m_previewPixmapLabel->height ()
-               << endl;
-#endif
+               << m_previewPixmapLabel->height ();
     }
 }
 
@@ -444,9 +422,7 @@ void kpTransformPreviewDialog::updatePreview ()
 // protected slot virtual
 void kpTransformPreviewDialog::slotUpdate ()
 {
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::slotUpdate()";
-#endif
     updateDimensions ();
     updatePreview ();
 }
@@ -454,9 +430,7 @@ void kpTransformPreviewDialog::slotUpdate ()
 // protected slot virtual
 void kpTransformPreviewDialog::slotUpdateWithWaitCursor ()
 {
-#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     qCDebug(kpLogDialogs) << "kpTransformPreviewDialog::slotUpdateWithWaitCursor()";
-#endif
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 

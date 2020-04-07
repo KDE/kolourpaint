@@ -29,8 +29,6 @@
 // Tool reaction to view mouse input.
 //
 
-#define DEBUG_KP_TOOL 1
-
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
 
@@ -59,27 +57,21 @@
 //         is generated at _all_, until you move it back into the view.
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "kpTool::mousePressEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << " modifiers=" << (int *) (int) e->modifiers ()
                << " beganDraw=" << d->beganDraw << endl;
-#endif
 
     if (e->button () == Qt::MidButton)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
-    #if DEBUG_KP_TOOL && 1
         qCDebug(kpLogTools) << "\tMMB pasteText='" << text << "'";
-    #endif
         if (!text.isEmpty ())
         {
             if (hasBegunShape ())
             {
-            #if DEBUG_KP_TOOL && 1
                 qCDebug(kpLogTools) << "\t\thasBegunShape - end";
-            #endif
                 endShapeInternal (d->currentPoint, normalizedRect ());
             }
 
@@ -96,9 +88,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     }
 
     int mb = mouseButton (e->buttons ());
-#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "\tmb=" << mb << " d->beganDraw=" << d->beganDraw;
-#endif
 
     if (mb == -1 && !d->beganDraw)
     {
@@ -110,9 +100,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         if (mb == -1 || mb != d->mouseButton)
         {
-        #if DEBUG_KP_TOOL && 1
             qCDebug(kpLogTools) << "\tCancelling operation as " << mb << " == -1 or != " << d->mouseButton;
-        #endif
 
             kpView *view = viewUnderStartPoint ();
             Q_ASSERT (view);
@@ -130,11 +118,9 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     kpView *view = viewUnderCursor ();
     Q_ASSERT (view);
 
-#if DEBUG_KP_TOOL && 1
     if (view) {
         qCDebug(kpLogTools) << "\tview=" << view->objectName ();
     }
-#endif
 
     // let user know what mouse button is being used for entire draw
     d->mouseButton = mouseButton (e->buttons ());
@@ -146,9 +132,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     d->viewUnderStartPoint = view;
     d->lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "\tBeginning draw @ " << d->currentPoint;
-#endif
 
     beginDrawInternal ();
 
@@ -169,7 +153,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 //      selections' accidental drag detection feature cares?
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if 0
     qCDebug(kpLogTools) << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << " modifiers=" << (int *) (int) e->modifiers ();
@@ -195,7 +179,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         d->currentPoint = view->transformViewToDoc (e->pos ());
         d->currentViewPoint = e->pos ();
 
-    #if DEBUG_KP_TOOL && 0
+    #if 0
         qCDebug(kpLogTools) << "\tDraw!";
     #endif
 
@@ -244,13 +228,11 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << " modifiers=" << (int *) (int) e->modifiers ()
                << " beganDraw=" << d->beganDraw;
-#endif
 
     // Have _not_ already cancelShape()'ed by pressing other mouse button?
     // (e.g. you can cancel a line dragged out with the LMB, by pressing
@@ -278,29 +260,23 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
 void kpTool::wheelEvent (QWheelEvent *e)
 {
-#if DEBUG_KP_TOOL
     qCDebug(kpLogTools) << "kpTool::wheelEvent() modifiers=" << (int *) (int) e->modifiers ()
                << " hasBegunDraw=" << hasBegunDraw ()
                << " delta=" << e->delta ();
-#endif
 
     e->ignore ();
 
     // If CTRL not pressed, bye.
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
-    #if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\tno CTRL -> bye";
-    #endif
         return;
     }
 
     // If drawing, bye; don't care if a shape in progress though.
     if (hasBegunDraw ())
     {
-    #if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\thasBegunDraw() -> bye";
-    #endif
         return;
     }
 
@@ -310,18 +286,14 @@ void kpTool::wheelEvent (QWheelEvent *e)
     // Moved wheel away from user?
     if (e->delta () > 0)
     {
-    #if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\tzoom in";
-    #endif
         d->environ->zoomIn (true/*center under cursor*/);
         e->accept ();
     }
     // Moved wheel towards user?
     else if (e->delta () < 0)
     {
-    #if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\tzoom out";
-    #endif
     #if 1
         d->environ->zoomOut (true/*center under cursor - make zoom in/out
                                    stay under same doc pos*/);
