@@ -286,12 +286,12 @@ static void CouldNotCreateTemporaryFileDialog (QWidget *parent)
 
 //---------------------------------------------------------------------
 
-static void CouldNotSaveDialog (const QUrl &url, QWidget *parent)
+static void CouldNotSaveDialog (const QUrl &url, const QString &error, QWidget *parent)
 {
-    // TODO: use file.errorString()
     KMessageBox::error (parent,
-                        i18n ("Could not save as \"%1\".",
-                              kpUrlFormatter::PrettyFilename (url)));
+                        i18n ("Could not save as \"%1\": %2",
+                              kpUrlFormatter::PrettyFilename (url),
+                              error));
 }
 
 //---------------------------------------------------------------------
@@ -361,7 +361,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
                 qCDebug(kpLogDocument) << "\treturning false because could not save pixmap to device"
                           << endl;
             #endif
-                ::CouldNotSaveDialog (url, parent);
+                ::CouldNotSaveDialog (url, i18n("Error saving image"), parent);
                 return false;
             }
 
@@ -374,7 +374,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
             #if DEBUG_KP_DOCUMENT
                 qCDebug(kpLogDocument) << "\tcould not close QSaveFile";
             #endif
-                ::CouldNotSaveDialog (url, parent);
+                ::CouldNotSaveDialog (url, atomicFileWriter.errorString(), parent);
                 return false;
             }
         }  // sync QSaveFile.cancelWriting()
@@ -404,7 +404,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
             qCDebug(kpLogDocument) << "\treturning false because could not save pixmap to device"
                         << endl;
         #endif
-            ::CouldNotSaveDialog (url, parent);
+            ::CouldNotSaveDialog (url, i18n("Error saving image"), parent);
             return false;
         }
 
@@ -422,7 +422,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
         #if DEBUG_KP_DOCUMENT
             qCDebug(kpLogDocument) << "\treturning false because could not close";
         #endif
-            ::CouldNotSaveDialog (url, parent);
+            ::CouldNotSaveDialog (url, tempFile.errorString(), parent);
             return false;
         }
 
