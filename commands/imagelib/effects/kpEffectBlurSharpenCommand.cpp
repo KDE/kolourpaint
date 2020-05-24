@@ -26,9 +26,6 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
-
-
 #include "kpEffectBlurSharpenCommand.h"
 
 #include <KLocalizedString>
@@ -46,8 +43,7 @@ kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Typ
 {
 }
 
-kpEffectBlurSharpenCommand::~kpEffectBlurSharpenCommand () = default;
-
+//--------------------------------------------------------------------------------
 
 // public static
 QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
@@ -59,6 +55,7 @@ QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
     }
 }
 
+//--------------------------------------------------------------------------------
 
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectBlurSharpenCommand::applyEffect (const kpImage &image)
