@@ -11,8 +11,8 @@ For developer information, checkout branches/kolourpaint/control/.
 For general information, read this file (README):
 
 
-1. What is KolourPaint?
-=======================
+What is KolourPaint?
+====================
 
 KolourPaint is a free, easy-to-use paint program by KDE.
 
@@ -32,8 +32,8 @@ KolourPaint is opensource software written in C++ using the Qt and KDE
 libraries.
 
 
-2. Features
-===========
+Features
+========
 
 * Undo/Redo Support (10-500 levels of history depending on memory usage)
 
@@ -79,14 +79,14 @@ libraries.
   - Set as Wallpaper
 
 
-3. Updates & More Information
-=============================
+Updates & More Information
+==========================
 
 Visit: http://www.kolourpaint.org/
 
 
-4. Support
-==========
+Support
+=======
 
 Visit: http://www.kolourpaint.org/
 
@@ -95,8 +95,8 @@ don't be afraid to contact us.  We try to support all versions of
 KolourPaint and even issues with 3rd party binary packages.
 
 
-5. Feedback
-===========
+Feedback
+========
 
 Please send bug reports and feature requests to http://bugs.kde.org/.
 Don't hesitate to report bugs nor hesitate to send us your wishes -- it
