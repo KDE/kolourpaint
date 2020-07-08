@@ -52,16 +52,16 @@
 #include <QMimeDatabase>
 #include <QPrintPreviewDialog>
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include <KSharedConfig>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include <KFileCustomDialog>
 #include <KPluralHandlingSpinBox>
-#include <kmessagebox.h>
-#include <krecentfilesaction.h>
-#include <kstandardshortcut.h>
-#include <kstandardaction.h>
-#include <ktoolinvocation.h>
+#include <KMessageBox>
+#include <KRecentFilesAction>
+#include <KStandardShortcut>
+#include <KStandardAction>
+#include <KToolInvocation>
 #include <KLocalizedString>
 
 #include "kpLogCategories.h"

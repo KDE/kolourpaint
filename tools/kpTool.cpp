@@ -35,7 +35,7 @@
 
 #include <climits>
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 

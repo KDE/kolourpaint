@@ -31,10 +31,10 @@
 #include "kpLogCategories.h"
 
 #include <KSharedConfig>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include <KLocalizedString>
-#include <ktoggleaction.h>
-#include <kactioncollection.h>
+#include <KToggleAction>
+#include <KActionCollection>
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"

@@ -36,7 +36,7 @@
 #include <QLayout>
 #include <QPixmap>
 
-#include <kconfig.h>
+#include <KConfig>
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 

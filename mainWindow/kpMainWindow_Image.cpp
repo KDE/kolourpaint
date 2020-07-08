@@ -60,9 +60,9 @@
 #include "imagelib/effects/kpEffectBlurSharpen.h"
 #include "kpLogCategories.h"
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include <KSharedConfig>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include <KLocalizedString>
 
 #include <QAction>

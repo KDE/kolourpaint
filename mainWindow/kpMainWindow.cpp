@@ -49,7 +49,7 @@
 #include "views/kpZoomedView.h"
 
 #include <KSharedConfig>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include <KLocalizedString>
 
 #include <QEvent>

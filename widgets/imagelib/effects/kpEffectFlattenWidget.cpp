@@ -36,7 +36,7 @@
 #include "commands/imagelib/effects/kpEffectFlattenCommand.h"
 #include "kpLogCategories.h"
 
-#include <kcolorbutton.h>
+#include <KColorButton>
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KLocalizedString>

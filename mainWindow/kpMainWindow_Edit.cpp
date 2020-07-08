@@ -39,10 +39,10 @@
 #include <QScrollBar>
 
 #include "kpLogCategories.h"
-#include <kmessagebox.h>
-#include <kstandardaction.h>
-#include <kactioncollection.h>
-#include <kxmlguifactory.h>
+#include <KMessageBox>
+#include <KStandardAction>
+#include <KActionCollection>
+#include <KXMLGUIFactory>
 #include <KLocalizedString>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"

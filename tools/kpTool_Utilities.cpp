@@ -40,7 +40,7 @@
 #include <QPixmap>
 
 #include "kpLogCategories.h"
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 #include "commands/kpCommandSize.h"
 #include "kpDefs.h"

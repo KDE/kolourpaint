@@ -29,7 +29,7 @@
 #ifndef KP_TOOL_ACTION_H
 #define KP_TOOL_ACTION_H
 
-#include <ktoggleaction.h>
+#include <KToggleAction>
 
 class KActionCollection;
 

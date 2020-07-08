@@ -37,11 +37,11 @@
 #include <QMenu>
 
 #include <KSharedConfig>
-#include <kconfiggroup.h>
-#include <kstandardshortcut.h>
-#include <kstandardaction.h>
-#include <ktoolbarpopupaction.h>
-#include <kactioncollection.h>
+#include <KConfigGroup>
+#include <KStandardShortcut>
+#include <KStandardAction>
+#include <KToolBarPopupAction>
+#include <KActionCollection>
 #include <KLocalizedString>
 
 #include "kpCommand.h"

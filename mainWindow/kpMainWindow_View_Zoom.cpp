@@ -33,10 +33,10 @@
 
 #include <QScrollBar>
 
-#include <kselectaction.h>
-#include <kstandardaction.h>
-#include <ktoggleaction.h>
-#include <kactioncollection.h>
+#include <KSelectAction>
+#include <KStandardAction>
+#include <KToggleAction>
+#include <KActionCollection>
 #include <KLocalizedString>
 
 #include "kpDefs.h"

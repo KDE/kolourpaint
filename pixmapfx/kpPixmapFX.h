@@ -36,7 +36,7 @@
 #include <QRect>
 #include <QString>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 #include "imagelib/kpColor.h"
 

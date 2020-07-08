@@ -48,7 +48,7 @@
 #include <QDoubleSpinBox>
 
 #include <KSharedConfig>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 

@@ -50,7 +50,7 @@
 #include <KJobWidgets>
 #include <KIO/FileCopyJob>
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 #include "imagelib/kpColor.h"
 #include "widgets/toolbars/kpColorToolBar.h"

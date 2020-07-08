@@ -54,7 +54,7 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 #include <KIO/StoredTransferJob>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 //---------------------------------------------------------------------
 

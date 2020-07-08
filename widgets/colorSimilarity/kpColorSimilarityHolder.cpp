@@ -43,7 +43,7 @@
 
 #include "kpLogCategories.h"
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 // public static
 const double kpColorSimilarityHolder::ColorCubeDiagonalDistance =

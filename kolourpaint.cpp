@@ -26,7 +26,7 @@
 */
 
 
-#include <kaboutdata.h>
+#include <KAboutData>
 
 #include "kpVersion.h"
 #include "mainWindow/kpMainWindow.h"

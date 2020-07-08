@@ -33,9 +33,9 @@
 #include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include "kpLogCategories.h"
-#include <ksharedconfig.h>
+#include <KSharedConfig>
 
 #include <QBitmap>
 #include <QImage>

@@ -60,7 +60,7 @@
 #include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KLocalizedString>
 
 #include <QImage>

@@ -32,9 +32,9 @@
 #include <QActionGroup>
 #include <QList>
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include <KSharedConfig>
-#include <kconfiggroup.h>
+#include <KConfigGroup>
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 

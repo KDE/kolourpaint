@@ -33,9 +33,9 @@
 #include <QTimer>
 
 #include <KSharedConfig>
-#include <kconfiggroup.h>
-#include <ktoggleaction.h>
-#include <kactioncollection.h>
+#include <KConfigGroup>
+#include <KToggleAction>
+#include <KActionCollection>
 #include <KLocalizedString>
 
 #include "kpDefs.h"

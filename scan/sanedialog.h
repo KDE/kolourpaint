@@ -28,7 +28,7 @@
 
 #include <KSaneWidget>
 
-#include <kpagedialog.h>
+#include <KPageDialog>
 
 class SaneDialog : public KPageDialog
 {

@@ -42,7 +42,7 @@
 #include <QPolygon>
 
 #include "kpLogCategories.h"
-#include <krandom.h>
+#include <KRandom>
 
 //---------------------------------------------------------------------
 

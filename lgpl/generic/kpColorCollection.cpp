@@ -36,7 +36,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include "kpLogCategories.h"
-#include <kstringhandler.h>
+#include <KStringHandler>
 
 #include <QDir>
 #include <QFile>

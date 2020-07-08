@@ -31,8 +31,8 @@
 
 #include "kpEffectEmbossWidget.h"
 
-#include <qcheckbox.h>
-#include <qgridlayout.h>
+#include <QCheckBox>
+#include <QGridLayout>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

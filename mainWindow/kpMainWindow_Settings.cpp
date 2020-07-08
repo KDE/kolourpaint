@@ -30,12 +30,12 @@
 #include "kpMainWindowPrivate.h"
 #include "kpLogCategories.h"
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include <KSharedConfig>
-#include <kconfiggroup.h>
-#include <kshortcutsdialog.h>
-#include <kstandardaction.h>
-#include <ktogglefullscreenaction.h>
+#include <KConfigGroup>
+#include <KShortcutsDialog>
+#include <KStandardAction>
+#include <KToggleFullScreenAction>
 #include <KLocalizedString>
 
 #include "kpDefs.h"

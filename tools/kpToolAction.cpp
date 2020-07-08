@@ -26,7 +26,7 @@
 */
 
 #include "tools/kpToolAction.h"
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include "tools/kpTool.h"
 
 
