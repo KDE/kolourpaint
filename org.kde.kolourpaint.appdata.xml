@@ -320,7 +320,7 @@
       <li xml:lang="pt-BR">Rotação, monocromático e outros efeitos avançados</li>
       <li xml:lang="ru">Инструменты поворота, преобразования в чёрно-белое изображение и другие</li>
       <li xml:lang="sk">Otáčanie, monochromatické a iné pokročilé efekty</li>
-      <li xml:lang="sl">Vrtenje, monokromatsko in drugi napredni učinki</li>
+      <li xml:lang="sl">Vrtenje, monokromatski in drugi napredni učinki</li>
       <li xml:lang="sv">Rotation, svartvitt och andra avancerade effekter</li>
       <li xml:lang="tr">Döndürme, tek renkli resim ve diğer gelişmiş efektler</li>
       <li xml:lang="uk">Можливість обертання частин зображення, перетворення зображення на чорно-біле, різноманітні ефекти перетворення зображення.</li>
@@ -359,6 +359,7 @@
       <caption xml:lang="pt-BR">Pintando no KolourPaint</caption>
       <caption xml:lang="ru">Рисование в KolourPaint</caption>
       <caption xml:lang="sk">Kreslenie v KolourPaint</caption>
+      <caption xml:lang="sl">Slikanje v KolourPaint</caption>
       <caption xml:lang="sv">Rita med KolourPaint</caption>
       <caption xml:lang="uk">Малювання у KolourPaint</caption>
       <caption xml:lang="x-test">xxPainting in KolourPaintxx</caption>
