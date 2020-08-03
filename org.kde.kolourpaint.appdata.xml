@@ -45,6 +45,7 @@
   <summary xml:lang="ca">Programa de dibuix</summary>
   <summary xml:lang="ca-valencia">Programa de dibuix</summary>
   <summary xml:lang="cs">Program pro malování</summary>
+  <summary xml:lang="da">Tegneprogram</summary>
   <summary xml:lang="de">Mal- und Zeichenprogramm</summary>
   <summary xml:lang="el">Πρόγραμμα ζωγραφικής</summary>
   <summary xml:lang="en-GB">Paint Program</summary>
@@ -84,6 +85,7 @@
     <p xml:lang="bs">KolourPaint je jednostavan crtaći program za brzo staranje rasterskih slika. On je koristan kao sredstvo retuširanja i jednostavne zadatke za uređivanje slika.</p>
     <p xml:lang="ca">El KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
     <p xml:lang="ca-valencia">El KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
+    <p xml:lang="da">KolourPaint er et simpelt tegneprogram til hurtigt at skabe raster-billeder. Det er et nyttigt værktøj til at tegne skitser eller udføre simple billedredigeringsopgaver.</p>
     <p xml:lang="de">KolourPaint ist ein einfach zu benutzendes Mal- und Zeichenprogramm um schnell Rasterbilder zu erstellen. Es kann für die Korrektur und einfache Bildbearbeitungsaufgaben benutzt werden.</p>
     <p xml:lang="el">Το KolourPaint είναι λενα απλό πρόγραμμα ζωραφικής για τη γρήγορη δημιουργία εικόνων χρωματικής περίπλεξης. Χρησιμεύει ως διορθωτικό και για απλές εργασίες επεξεργασίας εικόνων.</p>
     <p xml:lang="en-GB">KolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks.</p>
@@ -119,6 +121,7 @@
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="da">Funktioner:</p>
     <p xml:lang="de">Leistungsmerkmale:</p>
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
@@ -155,6 +158,7 @@
       <li xml:lang="bs">Podrška za crtanje raznih oblika - linija, pravougaonika, zaobljenih pravougaonika, ovala i poligona</li>
       <li xml:lang="ca">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
       <li xml:lang="ca-valencia">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
+      <li xml:lang="da">Understøtter at tegne diverse former - linjer, firkanter, afrundede firkanter, ovaler og polygoner</li>
       <li xml:lang="de">Das Zeichnen verschiedener Objekte wie Linien, Rechtecke, abgerundete Rechtecke, Ellipsen und Polygone wird unterstützt.</li>
       <li xml:lang="el">Υποστήριξη για σχεδίαση διαφόρων σχημάτων - ευθείες, ορθογώνια παραλληλόγραμμα, στρογγυλεμένα ορθογώνια, ελλείψεις και πολύγωνα</li>
       <li xml:lang="en-GB">Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
@@ -190,6 +194,7 @@
       <li xml:lang="ca">Corbes, línies i text</li>
       <li xml:lang="ca-valencia">Corbes, línies i text</li>
       <li xml:lang="cs">Křivky, čáry a text</li>
+      <li xml:lang="da">Kurver, linjer og tekst</li>
       <li xml:lang="de">Kurven, Linien und Text</li>
       <li xml:lang="el">Καμπύλες, ευθείες και κείμενο</li>
       <li xml:lang="en-GB">Curves, lines and text</li>
@@ -226,6 +231,7 @@
       <li xml:lang="ca">Selector de color</li>
       <li xml:lang="ca-valencia">Selector de color</li>
       <li xml:lang="cs">Kapátko</li>
+      <li xml:lang="da">Farvevælger</li>
       <li xml:lang="de">Farbwähler</li>
       <li xml:lang="el">Επιλογέας χρωμάτων</li>
       <li xml:lang="en-GB">Colour picker</li>
@@ -262,6 +268,7 @@
       <li xml:lang="ca">Seleccions</li>
       <li xml:lang="ca-valencia">Seleccions</li>
       <li xml:lang="cs">Výběry</li>
+      <li xml:lang="da">Markeringer</li>
       <li xml:lang="de">Mehre Auswahlarten</li>
       <li xml:lang="el">Επιλογές</li>
       <li xml:lang="en-GB">Selections</li>
@@ -297,6 +304,7 @@
       <li xml:lang="bs">Rotacija, monohrom i drugi napredni efekti</li>
       <li xml:lang="ca">Gir, monocrom i altres efectes avançats.</li>
       <li xml:lang="ca-valencia">Gir, monocrom i altres efectes avançats.</li>
+      <li xml:lang="da">Rotation, monokrom og andre avancerede effekter</li>
       <li xml:lang="de">Drehung, Umwandlung in Schwarzweiß und weitere Effekte können angewendet werden</li>
       <li xml:lang="el">Περιστροφή, μονοχρωμία και άλλα προηγμένα εφέ</li>
       <li xml:lang="en-GB">Rotation, monochrome and other advanced effects</li>
@@ -339,6 +347,7 @@
       <caption xml:lang="ca">Pintant al KolourPaint</caption>
       <caption xml:lang="ca-valencia">Pintant al KolourPaint</caption>
       <caption xml:lang="cs">Malování v KolourPaint</caption>
+      <caption xml:lang="da">Tegner i Kolourpaint</caption>
       <caption xml:lang="de">Malen mit KolourPaint</caption>
       <caption xml:lang="el">Ζωγραφική στο KolourPaint</caption>
       <caption xml:lang="en-GB">Painting in KolourPaint</caption>
