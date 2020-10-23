@@ -34,7 +34,6 @@
 #include "document/kpDocument.h"
 #include "kpDefs.h"
 #include "imagelib/kpImage.h"
-#include "tools/polygonal/kpToolPolygonalBase.h"
 
 
 struct kpToolPolygonalCommandPrivate

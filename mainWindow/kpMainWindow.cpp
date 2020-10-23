@@ -35,7 +35,6 @@
 #include "widgets/kpColorCells.h"
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "commands/kpCommandHistory.h"
-#include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "environments/document/kpDocumentEnvironment.h"
 #include "layers/selections/kpSelectionDrag.h"

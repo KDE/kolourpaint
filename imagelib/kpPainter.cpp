@@ -31,7 +31,6 @@
 
 #include "kpPainter.h"
 
-#include "kpImage.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
 #include "tools/flow/kpToolFlowBase.h"

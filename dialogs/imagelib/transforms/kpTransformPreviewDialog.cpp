@@ -38,7 +38,6 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
-#include <QPixmap>
 #include <QPushButton>
 
 #include "kpLogCategories.h"

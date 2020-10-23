@@ -30,7 +30,6 @@
 
 #include <cmath>
 
-#include <QList>
 #include <QPoint>
 
 #include "kpLogCategories.h"

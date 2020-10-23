@@ -33,7 +33,6 @@
 
 #include "kpLogCategories.h"
 
-#include "imagelib/kpColor.h"
 #include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
 
 

@@ -43,7 +43,6 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
-#include <QImage>
 #include <QSpinBox>
 #include <QPolygon>
 #include <QPushButton>

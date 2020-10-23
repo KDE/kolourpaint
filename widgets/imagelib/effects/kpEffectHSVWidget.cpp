@@ -34,7 +34,6 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include "kpNumInput.h"
 #include "imagelib/effects/kpEffectHSV.h"
 #include "commands/imagelib/effects/kpEffectHSVCommand.h"
 

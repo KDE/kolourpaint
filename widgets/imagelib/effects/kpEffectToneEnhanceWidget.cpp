@@ -32,7 +32,6 @@
 #include "imagelib/effects/kpEffectToneEnhance.h"
 #include "commands/imagelib/effects/kpEffectToneEnhanceCommand.h"
 #include "pixmapfx/kpPixmapFX.h"
-#include "kpNumInput.h"
 
 #include <QGridLayout>
 #include <QLabel>

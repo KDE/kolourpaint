@@ -41,7 +41,6 @@
 #include "document/kpDocumentSaveOptions.h"
 #include "imagelib/kpDocumentMetaInfo.h"
 #include "imagelib/effects/kpEffectReduceColors.h"
-#include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "lgpl/generic/kpUrlFormatter.h"
@@ -53,7 +52,6 @@
 #include <KIO/StatJob>
 
 #include <QColor>
-#include <QBitmap>
 #include <QBrush>
 #include <QFile>
 #include <QImage>

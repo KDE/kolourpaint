@@ -34,7 +34,6 @@
 #include "kpLogCategories.h"
 
 #include "document/kpDocument.h"
-#include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
 

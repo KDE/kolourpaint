@@ -33,7 +33,6 @@
 
 #include <climits>
 
-#include <QLinkedList>
 #include <QMenu>
 
 #include <KSharedConfig>

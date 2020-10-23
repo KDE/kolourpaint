@@ -40,7 +40,6 @@
 #include "kpLogCategories.h"
 
 #include "kpColor.h"
-#include "kpImage.h"
 #include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"

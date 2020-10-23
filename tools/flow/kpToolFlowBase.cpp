@@ -46,7 +46,6 @@
 #include "imagelib/kpImage.h"
 #include "imagelib/kpPainter.h"
 #include "pixmapfx/kpPixmapFX.h"
-#include "layers/tempImage/kpTempImage.h"
 #include "environments/tools/kpToolEnvironment.h"
 #include "commands/tools/flow/kpToolFlowCommand.h"
 #include "widgets/toolbars/kpToolToolBar.h"

@@ -45,7 +45,6 @@
 
 #include "kpLogCategories.h"
 
-#include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
 #include "tools/kpTool.h"

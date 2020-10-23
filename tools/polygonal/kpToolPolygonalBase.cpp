@@ -35,9 +35,7 @@
 #include <QtMath>
 
 #include <QCursor>
-#include <QPoint>
 #include <QPolygon>
-#include <QRect>
 
 #include <KLocalizedString>
 
@@ -45,7 +43,6 @@
 #include "commands/kpCommandHistory.h"
 #include "document/kpDocument.h"
 #include "kpDefs.h"
-#include "imagelib/kpImage.h"
 #include "imagelib/kpPainter.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "layers/tempImage/kpTempImage.h"
