@@ -197,7 +197,6 @@ void kpGrip::cancel ()
     setCursor (Qt::ArrowCursor);
     m_shouldReleaseMouseButtons = true;
 
-    releaseKeyboard ();
     emit cancelledDraw ();
 }
 
@@ -224,7 +223,7 @@ void kpGrip::mousePressEvent (QMouseEvent *e)
         m_startPoint = e->pos ();
         m_currentPoint = e->pos ();
         emit beganDraw ();
-        grabKeyboard ();
+        setFocus();  // allow to receive keyboard events to be able to handle ESC
 
         setUserMessage (i18n ("Resize Image: Right click to cancel."));
         setCursor (cursorForType (m_type));
@@ -310,7 +309,6 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         m_currentPoint = KP_INVALID_POINT;
         m_startPoint = KP_INVALID_POINT;
 
-        releaseKeyboard ();
         emit endedDraw ((m_type & kpGrip::Right) ? dx : 0,
                         (m_type & kpGrip::Bottom) ? dy : 0);
     }
@@ -321,7 +319,6 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         setUserMessage(QString());
         setCursor (cursorForType (m_type));
 
-        releaseKeyboard ();
         emit releasedAllButtons ();
     }
 }
