@@ -96,7 +96,7 @@ void kpMainWindow::setupEditMenuActions ()
     d->actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
     connect (d->actionPasteInNewWindow, &QAction::triggered,
              this, &kpMainWindow::slotPasteInNewWindow);
-    ac->setDefaultShortcut (d->actionPasteInNewWindow, Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    ac->setDefaultShortcut (d->actionPasteInNewWindow, Qt::CTRL | Qt::SHIFT | Qt::Key_V);
 
     //d->actionDelete = KStandardAction::clear (this, SLOT (slotDelete()), ac);
     d->actionDelete = ac->addAction (QStringLiteral("edit_clear"));
