@@ -140,7 +140,7 @@ int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
 
 #define IS_ON_ANCHOR()                                            \
     (CursorIsOnWordChar (textLines, *cursorRow, *cursorCol) &&    \
-         (cursorCol == 0 ||                                       \
+         (cursorCol == nullptr ||                                 \
              !CursorIsOnWordChar (textLines, *cursorRow, *cursorCol - 1)))
 #define MOVE_CURSOR_LEFT()    \
     (MoveCursorLeft (textLines, cursorRow, cursorCol), ++numMoves)

@@ -46,7 +46,7 @@ public:
      * window. If parent is another widget, this widget becomes a child
      * window inside parent. The new widget is deleted when its parent is deleted.
      */
-    explicit kpNumInput(QWidget *parent = 0);
+    explicit kpNumInput(QWidget *parent = nullptr);
 
     /**
      * Destructor
@@ -162,7 +162,7 @@ public:
      * Constructs an input control for integer values
      * with initial value 0.
      */
-    explicit kpIntNumInput(QWidget *parent = 0);
+    explicit kpIntNumInput(QWidget *parent = nullptr);
     /**
      * Constructor
      * It constructs a QSpinBox that allows the input of integer numbers
@@ -173,7 +173,7 @@ public:
      * @param value  initial value for the control
      * @param parent parent QWidget
      */
-    explicit kpIntNumInput(int value, QWidget *parent = 0);
+    explicit kpIntNumInput(int value, QWidget *parent = nullptr);
 
     /**
      * Destructor
@@ -350,7 +350,7 @@ public:
      * Constructs an input control for double values
      * with initial value 0.00.
      */
-    explicit kpDoubleNumInput(QWidget *parent = 0);
+    explicit kpDoubleNumInput(QWidget *parent = nullptr);
 
     /**
      * Constructor
@@ -362,7 +362,7 @@ public:
      * @param precision number of digits after the decimal point
      * @param parent parent QWidget
      */
-    kpDoubleNumInput(double lower, double upper, double value, QWidget *parent = 0, double singleStep = 0.01,
+    kpDoubleNumInput(double lower, double upper, double value, QWidget *parent = nullptr, double singleStep = 0.01,
                     int precision = 2);
 
     /**

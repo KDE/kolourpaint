@@ -35,7 +35,7 @@ class SaneDialog : public KPageDialog
     Q_OBJECT
 
 public:
-    explicit SaneDialog(QWidget *parent = 0);
+    explicit SaneDialog(QWidget *parent = nullptr);
     ~SaneDialog();
 
     bool setup();
