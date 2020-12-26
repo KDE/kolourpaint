@@ -56,7 +56,11 @@ void kpMainWindow::setupTextToolBarActions ()
     d->actionTextFontFamily = ac->add<KFontAction> (QStringLiteral("text_font_family"));
     d->actionTextFontFamily->setText (i18n ("Font Family"));
     connect (d->actionTextFontFamily,
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 78, 0)
+             &KSelectAction::textTriggered,
+#else
              static_cast<void (KFontAction::*)(const QString&)>(&KFontAction::triggered),
+#endif
              this, &kpMainWindow::slotTextFontFamilyChanged);
 
     d->actionTextFontSize = ac->add<KFontSizeAction> (QStringLiteral("text_font_size"));
