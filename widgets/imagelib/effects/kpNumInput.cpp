@@ -32,7 +32,6 @@
 #include <QSlider>
 #include <QStyle>
 
-#include <KConfigDialogManager>
 #include <KLocalizedString>
 
 static inline int calcDiffByTen(int x, int y)
@@ -78,9 +77,6 @@ kpNumInput::kpNumInput(QWidget *parent)
 {
     setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     setFocusPolicy(Qt::StrongFocus);
-    KConfigDialogManager::changedMap()->insert(QStringLiteral("kpIntNumInput"), SIGNAL(valueChanged(int)));
-    KConfigDialogManager::changedMap()->insert(QStringLiteral("QSpinBox"), SIGNAL(valueChanged(int)));
-    KConfigDialogManager::changedMap()->insert(QStringLiteral("kpDoubleSpinBox"), SIGNAL(valueChanged(double)));
 }
 
 kpNumInput::~kpNumInput()
