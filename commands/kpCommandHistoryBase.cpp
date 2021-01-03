@@ -53,26 +53,16 @@
 
 //---------------------------------------------------------------------
 
-//template <typename T>
-static void ClearPointerList (QLinkedList <kpCommand *> *listPtr)
+static void ClearPointerList(QList<kpCommand *> &list)
 {
-    if (!listPtr)
-        return;
-
-    qDeleteAll (listPtr->begin (), listPtr->end ());
-
-    listPtr->clear ();
+    qDeleteAll(list);
+    list.clear();
 }
 
-
-struct kpCommandHistoryBasePrivate
-{
-};
-
+//--------------------------------------------------------------------------------
 
 kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
-    : d (new kpCommandHistoryBasePrivate ())
 {
     m_actionUndo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-undo")), undoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
@@ -109,14 +99,15 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
     }
 }
 
+//--------------------------------------------------------------------------------
+
 kpCommandHistoryBase::~kpCommandHistoryBase ()
 {
-    ::ClearPointerList (&m_undoCommandList);
-    ::ClearPointerList (&m_redoCommandList);
-
-    delete d;
+    ::ClearPointerList(m_undoCommandList);
+    ::ClearPointerList(m_redoCommandList);
 }
 
+//--------------------------------------------------------------------------------
 
 // public
 int kpCommandHistoryBase::undoLimit () const
@@ -270,7 +261,7 @@ void kpCommandHistoryBase::addCommand (kpCommand *command, bool execute)
     }
 
     m_undoCommandList.push_front (command);
-    ::ClearPointerList (&m_redoCommandList);
+    ::ClearPointerList(m_redoCommandList);
 
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "\tdocumentRestoredPosition=" << m_documentRestoredPosition;
@@ -298,8 +289,8 @@ void kpCommandHistoryBase::clear ()
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::clear()";
 #endif
 
-    ::ClearPointerList (&m_undoCommandList);
-    ::ClearPointerList (&m_redoCommandList);
+    ::ClearPointerList(m_undoCommandList);
+    ::ClearPointerList(m_redoCommandList);
 
     m_documentRestoredPosition = 0;
 
@@ -483,28 +474,21 @@ void kpCommandHistoryBase::trimCommandListsUpdateActions ()
     updateActions ();
 }
 
+//--------------------------------------------------------------------------------
+
 // protected
-void kpCommandHistoryBase::trimCommandList (QLinkedList <kpCommand *> *commandList)
+void kpCommandHistoryBase::trimCommandList(QList<kpCommand *> &commandList)
 {
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::trimCommandList()";
     QTime timer; timer.start ();
-#endif
 
-    if (!commandList)
-    {
-        qCCritical(kpLogCommands) << "kpCommandHistoryBase::trimCommandList() passed 0 commandList";
-        return;
-    }
-
-
-#if DEBUG_KP_COMMAND_HISTORY
-    qCDebug(kpLogCommands) << "\tsize=" << commandList->size ()
+    qCDebug(kpLogCommands) << "\tsize=" << commandList.size()
                << "    undoMinLimit=" << m_undoMinLimit
                << " undoMaxLimit=" << m_undoMaxLimit
                << " undoMaxLimitSizeLimit=" << m_undoMaxLimitSizeLimit;
 #endif
-    if (static_cast<int> (commandList->size ()) <= m_undoMinLimit)
+    if ( commandList.size() <= m_undoMinLimit )
     {
     #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\t\tsize under undoMinLimit - done";
@@ -517,12 +501,12 @@ void kpCommandHistoryBase::trimCommandList (QLinkedList <kpCommand *> *commandLi
     qCDebug(kpLogCommands) << "\tsize over undoMinLimit - iterating thru cmds:";
 #endif
 
-    QLinkedList <kpCommand *>::iterator it = commandList->begin ();
+    QList <kpCommand *>::iterator it = commandList.begin ();
     int upto = 0;
 
     kpCommandSize::SizeType sizeSoFar = 0;
 
-    while (it != commandList->end ())
+    while (it != commandList.end ())
     {
         bool advanceIt = true;
 
@@ -563,6 +547,8 @@ void kpCommandHistoryBase::trimCommandList (QLinkedList <kpCommand *> *commandLi
 #endif
 }
 
+//--------------------------------------------------------------------------------
+
 // protected
 void kpCommandHistoryBase::trimCommandLists ()
 {
@@ -570,8 +556,8 @@ void kpCommandHistoryBase::trimCommandLists ()
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::trimCommandLists()";
 #endif
 
-    trimCommandList (&m_undoCommandList);
-    trimCommandList (&m_redoCommandList);
+    trimCommandList(m_undoCommandList);
+    trimCommandList(m_redoCommandList);
 
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
@@ -596,7 +582,7 @@ void kpCommandHistoryBase::trimCommandLists ()
 
 static void populatePopupMenu (QMenu *popupMenu,
                                const QString &undoOrRedo,
-                               const QLinkedList <kpCommand *> &commandList)
+                               const QList <kpCommand *> &commandList)
 {
     if (!popupMenu) {
         return;
@@ -604,7 +590,7 @@ static void populatePopupMenu (QMenu *popupMenu,
 
     popupMenu->clear ();
 
-    QLinkedList <kpCommand *>::const_iterator it = commandList.begin ();
+    QList <kpCommand *>::const_iterator it = commandList.begin ();
     int i = 0;
     while (i < 10 && it != commandList.end ())
     {

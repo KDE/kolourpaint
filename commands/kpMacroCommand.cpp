@@ -38,14 +38,8 @@
 
 //---------------------------------------------------------------------
 
-struct kpMacroCommandPrivate
-{
-};
-
-
 kpMacroCommand::kpMacroCommand (const QString &name, kpCommandEnvironment *environ)
-    : kpNamedCommand (name, environ),
-      d (new kpMacroCommandPrivate ())
+    : kpNamedCommand (name, environ)
 {
 }
 
@@ -53,8 +47,7 @@ kpMacroCommand::kpMacroCommand (const QString &name, kpCommandEnvironment *envir
 
 kpMacroCommand::~kpMacroCommand ()
 {
-    qDeleteAll (m_commandList.begin (), m_commandList.end ());
-    delete d;
+    qDeleteAll(m_commandList);
 }
 
 //---------------------------------------------------------------------
@@ -96,14 +89,12 @@ void kpMacroCommand::execute ()
 
     viewManager()->setQueueUpdates();
 
-    for (QLinkedList <kpCommand *>::const_iterator it = m_commandList.begin ();
-         it != m_commandList.end ();
-         ++it)
+    foreach (kpCommand *command, m_commandList)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        qCDebug(kpLogCommands) << "\texecuting " << (*it)->name ();
+        qCDebug(kpLogCommands) << "\texecuting " << command->name();
     #endif
-        (*it)->execute ();
+        command->execute();
     }
 
     viewManager()->restoreQueueUpdates();
@@ -120,17 +111,12 @@ void kpMacroCommand::unexecute ()
 
     viewManager()->setQueueUpdates();
 
-    QLinkedList <kpCommand *>::const_iterator it = m_commandList.end ();
-    it--;
-
-    while (it != m_commandList.end ())
+    for (int i = m_commandList.count() - 1; i >= 0; i--)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        qCDebug(kpLogCommands) << "\tunexecuting " << (*it)->name ();
+        qCDebug(kpLogCommands) << "\tunexecuting " << m_commandList[i]->name();
     #endif
-        (*it)->unexecute ();
-
-        it--;
+        m_commandList[i]->unexecute();
     }
 
     viewManager()->restoreQueueUpdates();
@@ -139,9 +125,9 @@ void kpMacroCommand::unexecute ()
 //---------------------------------------------------------------------
 
 // public
-void kpMacroCommand::addCommand (kpCommand *command)
+void kpMacroCommand::addCommand(kpCommand *command)
 {
-    m_commandList.push_back (command);
+    m_commandList.append(command);
 }
 
 //---------------------------------------------------------------------

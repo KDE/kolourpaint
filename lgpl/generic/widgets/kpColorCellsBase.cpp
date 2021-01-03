@@ -426,7 +426,7 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
                          << " rgba=" << (int *) d->colors [cell].rgba();
             #endif
                Q_ASSERT (d->colors[cell].isValid());
-               KColorMimeData::createDrag(d->colors[cell], this)->start(Qt::CopyAction | Qt::MoveAction);
+               KColorMimeData::createDrag(d->colors[cell], this)->exec(Qt::CopyAction | Qt::MoveAction);
             #if DEBUG_KP_COLOR_CELLS_BASE
                qCDebug(kpLogColorCollection) << "finished drag";
             #endif

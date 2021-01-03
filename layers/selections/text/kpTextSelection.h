@@ -209,7 +209,7 @@ public:
     QList <QString> textLines () const;
     void setTextLines (const QList <QString> &textLines);
 
-    static QString TextForTextLines (const QList <QString> &textLines);
+    static QString textForTextLines (const QList <QString> &textLines);
     // Returns textLines() as one long newline-separated string.
     // If the last text line is not empty, there is no trailing newline.
     QString text () const;

@@ -32,7 +32,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QLinkedList>
+#include <QList>
 
 
 #include "commands/kpCommandSize.h"
@@ -106,7 +106,7 @@ protected:
     QString redoActionToolTip () const;
 
     void trimCommandListsUpdateActions ();
-    void trimCommandList (QLinkedList <kpCommand *> *commandList);
+    void trimCommandList(QList<kpCommand *> &commandList);
     void trimCommandLists ();
     void updateActions ();
 
@@ -126,8 +126,8 @@ protected:
     KToolBarPopupAction *m_actionUndo, *m_actionRedo;
 
     // (Front element is the next one)
-    QLinkedList <kpCommand *> m_undoCommandList;
-    QLinkedList <kpCommand *> m_redoCommandList;
+    QList <kpCommand *> m_undoCommandList;
+    QList <kpCommand *> m_redoCommandList;
 
     int m_undoMinLimit, m_undoMaxLimit;
     kpCommandSize::SizeType m_undoMaxLimitSizeLimit;
@@ -140,9 +140,6 @@ protected:
     //
     // ASSUMPTION: will never have INT_MAX commands in any list.
     int m_documentRestoredPosition;
-
-private:
-    struct kpCommandHistoryBasePrivate * const d;
 };
 
 

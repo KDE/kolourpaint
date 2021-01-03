@@ -151,14 +151,9 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
     }
 
 
-    for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-         it != d->views.end ();
-         ++it)
-    {
-        if ((*it)->underMouse ()) {
-            return (*it);
-        }
-    }
+    foreach (kpView *view, d->views)
+      if ( view->underMouse() )
+        return view;
 
     return nullptr;
 }
@@ -211,14 +206,9 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 // public
 bool kpViewManager::hasAViewWithFocus () const
 {
-    for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-         it != d->views.end ();
-         ++it)
-    {
-        if ((*it)->isActiveWindow ()) {
-            return true;
-        }
-    }
+    foreach (kpView *view, d->views)
+      if ( view->isActiveWindow() )
+        return true;
 
     return false;
 }
@@ -226,14 +216,10 @@ bool kpViewManager::hasAViewWithFocus () const
 //---------------------------------------------------------------------
 
 // public
-void kpViewManager::setCursor (const QCursor &cursor)
+void kpViewManager::setCursor(const QCursor &cursor)
 {
-    for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-         it != d->views.end ();
-         ++it)
-    {
-        (*it)->setCursor (cursor);
-    }
+    foreach (kpView *view, d->views)
+      view->setCursor(cursor);
 
     d->cursor = cursor;
 }
@@ -241,16 +227,12 @@ void kpViewManager::setCursor (const QCursor &cursor)
 //---------------------------------------------------------------------
 
 // public
-void kpViewManager::unsetCursor ()
+void kpViewManager::unsetCursor()
 {
-    for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-         it != d->views.end ();
-         ++it)
-    {
-        (*it)->unsetCursor ();
-    }
+    foreach (kpView *view, d->views)
+      view->unsetCursor();
 
-    d->cursor = QCursor ();
+    d->cursor = QCursor();
 }
 
 //---------------------------------------------------------------------

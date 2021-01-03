@@ -32,7 +32,7 @@
 
 #include "commands/kpNamedCommand.h"
 
-#include <QLinkedList>
+#include <QList>
 
 
 class kpMacroCommand : public kpNamedCommand
@@ -59,10 +59,7 @@ public:
     void addCommand (kpCommand *command);
 
 protected:
-    QLinkedList <kpCommand *> m_commandList;
-
-private:
-    struct kpMacroCommandPrivate * const d;
+    QList <kpCommand *> m_commandList;
 };
 
 

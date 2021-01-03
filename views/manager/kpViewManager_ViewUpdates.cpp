@@ -63,6 +63,8 @@ void kpViewManager::setQueueUpdates ()
 #endif
 }
 
+//--------------------------------------------------------------------------------
+
 // public slot
 void kpViewManager::restoreQueueUpdates ()
 {
@@ -75,15 +77,12 @@ void kpViewManager::restoreQueueUpdates ()
 
     if (d->queueUpdatesCounter == 0)
     {
-        for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-             it != d->views.end ();
-             ++it)
-        {
-            (*it)->updateQueuedArea ();
-        }
+      foreach (kpView *view, d->views)
+        view->updateQueuedArea();
     }
 }
 
+//--------------------------------------------------------------------------------
 
 // public slot
 bool kpViewManager::fastUpdates () const
@@ -200,12 +199,8 @@ void kpViewManager::updateViews (const QRect &docRect)
     qCDebug(kpLogViews) << "kpViewManager::updateViews (" << docRect << ")";
 #endif
 
-    for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-         it != d->views.end ();
-         ++it)
+    foreach (kpView *view, d->views)
     {
-        kpView *view = *it;
-
     #if DEBUG_KP_VIEW_MANAGER && 0
         qCDebug(kpLogViews) << "\tupdating view " << view->name ();
     #endif
@@ -236,6 +231,7 @@ void kpViewManager::updateViews (const QRect &docRect)
     }
 }
 
+//--------------------------------------------------------------------------------
 
 // public slot
 void kpViewManager::adjustViewsToEnvironment ()
@@ -245,12 +241,8 @@ void kpViewManager::adjustViewsToEnvironment ()
                << " numViews=" << d->views.count ()
                << endl;
 #endif
-    for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
-         it != d->views.end ();
-         ++it)
+    foreach (kpView *view, d->views)
     {
-        kpView *view = *it;
-
     #if DEBUG_KP_VIEW_MANAGER && 1
         qCDebug(kpLogViews) << "\tview: " << view->name ()
                    << endl;
@@ -258,3 +250,5 @@ void kpViewManager::adjustViewsToEnvironment ()
         view->adjustToEnvironment ();
     }
 }
+
+//--------------------------------------------------------------------------------

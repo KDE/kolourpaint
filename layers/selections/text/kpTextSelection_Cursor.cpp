@@ -74,13 +74,13 @@ int kpTextSelection::closestTextColForPoint (const QPoint &point) const
     const QFontMetrics fontMetrics (d->textStyle.fontMetrics ());
 
     // (should be 0 but call just in case)
-    int charLocalLeft = fontMetrics.width (d->textLines [row], 0);
+    int charLocalLeft = fontMetrics.horizontalAdvance(d->textLines [row], 0);
 
     // OPT: binary search or guess location then move
     for (int col = 0; col < static_cast<int> (d->textLines [row].length ()); col++)
     {
         // OPT: fontMetrics::charWidth() might be faster
-        const int nextCharLocalLeft = fontMetrics.width (d->textLines [row], col + 1);
+        const int nextCharLocalLeft = fontMetrics.horizontalAdvance(d->textLines [row], col + 1);
         if (localX <= (charLocalLeft + nextCharLocalLeft) / 2) {
             return col;
         }
@@ -119,7 +119,7 @@ QPoint kpTextSelection::pointForTextRowCol (int row, int col) const
     {
         line.insert (preeditText.position ().x (), preeditText.preeditString ());
     }
-    const int x = fontMetrics.width (line.left (col));
+    const int x = fontMetrics.horizontalAdvance(line.left(col));
     const int y = row * fontMetrics.height () +
                   (row >= 1 ? row * fontMetrics.leading () : 0);
 

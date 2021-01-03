@@ -33,7 +33,6 @@
 
 #include <QApplication>
 #include <QImage>
-#include <QLinkedList>
 #include <QList>
 #include <QPainter>
 
@@ -64,7 +63,7 @@ public:
 
 //---------------------------------------------------------------------
 
-static kpCommandSize::SizeType FillLinesListSize (const QLinkedList <kpFillLine> &fillLines)
+static kpCommandSize::SizeType FillLinesListSize (const QList <kpFillLine> &fillLines)
 {
     return (fillLines.size () * kpFillLine::size ());
 }
@@ -77,10 +76,10 @@ struct kpFloodFillPrivate
     // Copy of whatever was passed to the constructor.
     //
 
-    kpImage *imagePtr{};
-    int x{}, y{};
+    kpImage *imagePtr = nullptr;
+    int x = 0, y = 0;
     kpColor color;
-    int processedColorSimilarity{};
+    int processedColorSimilarity = 0;
 
 
     //
@@ -94,12 +93,12 @@ struct kpFloodFillPrivate
     // Set by Step 2.
     //
 
-    QLinkedList <kpFillLine> fillLines;
-    QList < QLinkedList <kpFillLine> > fillLinesCache;
+    QList <kpFillLine> fillLines;
+    QList < QList <kpFillLine> > fillLinesCache;
 
     QRect boundingRect;
 
-    bool prepared{};
+    bool prepared = false;
 };
 
 //---------------------------------------------------------------------
@@ -341,7 +340,7 @@ void kpFloodFill::prepare ()
 
     // ready cache
     for (int i = 0; i < d->imagePtr->height (); i++) {
-         d->fillLinesCache.append (QLinkedList <kpFillLine> ());
+         d->fillLinesCache.append (QList <kpFillLine> ());
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
@@ -351,28 +350,23 @@ void kpFloodFill::prepare ()
     // draw initial line
     addLine (d->y, findMinX (d->y, d->x), findMaxX (d->y, d->x));
 
-    for (QLinkedList <kpFillLine>::ConstIterator it = d->fillLines.begin ();
-         it != d->fillLines.end ();
-         ++it)
+    for (int i = 0; i < d->fillLines.count(); i++)
     {
+      kpFillLine &fl = d->fillLines[i];
+
     #if DEBUG_KP_FLOOD_FILL && 0
-        qCDebug(kpLogImagelib) << "Expanding from y=" << (*it).m_y
-                   << " x1=" << (*it).m_x1
-                   << " x2=" << (*it).m_x2
+        qCDebug(kpLogImagelib) << "Expanding from y=" << fl.m_y
+                   << " x1=" << fl.m_x1
+                   << " x2=" << fl.m_x2
                    << endl;
     #endif
 
         //
         // Make more lines above and below current line.
         //
-        // WARNING: Adds to end of "fillLines" (the linked list we are iterating
-        //          through).  Therefore, "fillLines" must remain a linked list
-        //          - you cannot change it into a vector.  Also, do not use
-        //          "foreach" for this loop as that makes a copy of the linked
-        //          list at the start and won't see new lines.
-        //
-        findAndAddLines (*it, -1);
-        findAndAddLines (*it, +1);
+        // WARNING: Adds to end of "fillLines" (the list we are iterating through).
+        findAndAddLines(fl, -1);
+        findAndAddLines(fl, +1);
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1

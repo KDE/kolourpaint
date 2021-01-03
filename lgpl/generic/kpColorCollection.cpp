@@ -262,7 +262,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    QTextStream str (device);
 
    QString description = d->desc.trimmed();
-   description = '#'+description.split( '\n', QString::KeepEmptyParts).join(QLatin1String("\n#"));
+   description = '#' + description.split('\n', Qt::KeepEmptyParts).join(QLatin1String("\n#"));
 
    str << "KDE RGB Palette\n";
    str << description << "\n";

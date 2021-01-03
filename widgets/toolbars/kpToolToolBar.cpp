@@ -110,8 +110,7 @@ kpToolToolBar::kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *p
              this, &kpToolToolBar::adjustToOrientation);
 
     m_buttonGroup = new QButtonGroup (this);
-    connect (m_buttonGroup,
-             static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+    connect (m_buttonGroup, &QButtonGroup::idClicked,
              this, &kpToolToolBar::slotToolButtonClicked);
 
     hideAllToolWidgets ();

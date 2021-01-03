@@ -189,8 +189,7 @@ int kpTextSelection::minimumHeight () const
 int kpTextSelection::PreferredMinimumWidthForTextStyle (const kpTextStyle &textStyle)
 {
     const int about15CharsWidth =
-        textStyle.fontMetrics ().width (
-            QStringLiteral ("1234567890abcde"));
+        textStyle.fontMetrics().horizontalAdvance(QLatin1String("1234567890abcde"));
 
     const int preferredMinWidth =
         qMax (150,
@@ -292,31 +291,31 @@ void kpTextSelection::setTextLines (const QList <QString> &textLines_)
     emit changed (boundingRect ());
 }
 
+//--------------------------------------------------------------------------------
 
 // public static
-QString kpTextSelection::TextForTextLines (const QList <QString> &textLines)
+QString kpTextSelection::textForTextLines(const QList<QString> &textLines)
 {
-    if (textLines.isEmpty ()) {
-        return {};
-    }
+    if (textLines.isEmpty ())
+      return QString();
 
-    QString bigString = textLines [0];
+    QString bigString = textLines[0];
 
-    for (QList <QString>::const_iterator it = textLines.begin () + 1;
-         it != textLines.end ();
-         ++it)
+    for (int i = 1; i < textLines.count(); i++)
     {
-        bigString += QLatin1String ("\n");
-        bigString += (*it);
+        bigString += QLatin1String("\n");
+        bigString += textLines[i];
     }
 
     return bigString;
 }
 
+//--------------------------------------------------------------------------------
+
 // public
 QString kpTextSelection::text () const
 {
-    return kpTextSelection::TextForTextLines (d->textLines);
+    return kpTextSelection::textForTextLines (d->textLines);
 }
 
 

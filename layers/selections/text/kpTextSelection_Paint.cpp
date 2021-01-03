@@ -73,12 +73,12 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
         {
             str = preeditString.mid (i, start - i);
             painter.drawText (x, y, str);
-            x += painter.fontMetrics ().width (str);
+            x += painter.fontMetrics().horizontalAdvance(str);
         }
 
         painter.save();
         str = preeditString.mid (start, length);
-        int width = painter.fontMetrics().width (str);
+        int width = painter.fontMetrics().horizontalAdvance(str);
         if (format.background ().color () != Qt::black)
         {
             painter.save ();
@@ -107,7 +107,7 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
     {
         str = preeditString.mid (i);
         painter.drawText (x, y, str);
-        x += painter.fontMetrics ().width (str);
+        x += painter.fontMetrics().horizontalAdvance(str);
     }
 }
 
@@ -224,7 +224,7 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
                 QString right = str.mid(col);
                 int x = theTextAreaRect.x();
                 painter.drawText(x, baseLine, left);
-                x += fontMetrics.width(left);
+                x += fontMetrics.horizontalAdvance(left);
                 drawPreeditString(painter, x, baseLine, thePreeditText);
 
                 painter.drawText(x, baseLine, right);

@@ -73,7 +73,7 @@ kpPreeditText::kpPreeditText (const QInputMethodEvent *event)
             break;
         }
     }
-    qSort (m_textFormatList.begin (), m_textFormatList.end (), attributeLessThan);
+    std::sort(m_textFormatList.begin(), m_textFormatList.end(), attributeLessThan);
 }
 
 //---------------------------------------------------------------------

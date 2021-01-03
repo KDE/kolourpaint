@@ -31,7 +31,7 @@
 
 
 #include <QCursor>
-#include <QLinkedList>
+#include <QList>
 
 
 class kpMainWindow;
@@ -43,7 +43,7 @@ struct kpViewManagerPrivate
 {
     kpMainWindow *mainWindow;
 
-    QLinkedList <kpView *> views;
+    QList <kpView *> views;
     kpView *viewUnderCursor;
 
     QCursor cursor;

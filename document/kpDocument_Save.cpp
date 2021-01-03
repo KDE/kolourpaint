@@ -239,14 +239,8 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
     imageToSave.setDotsPerMeterY (metaInfo.dotsPerMeterY ());
     imageToSave.setOffset (metaInfo.offset ());
 
-    QList <QString> keyList = metaInfo.textKeys ();
-    for (QList <QString>::const_iterator it = keyList.constBegin ();
-         it != keyList.constEnd ();
-         ++it)
-    {
-        imageToSave.setText (*it, metaInfo.text (*it));
-    }
-
+    foreach (const QString &key, metaInfo.textKeys())
+      imageToSave.setText(key, metaInfo.text(key));
 
     //
     // Save at required quality
@@ -254,9 +248,8 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
 
     int quality = -1;  // default
 
-    if (useSaveOptionsQuality) {
-        quality = saveOptions.quality ();
-    }
+    if (useSaveOptionsQuality)
+      quality = saveOptions.quality();
 
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tsaving";

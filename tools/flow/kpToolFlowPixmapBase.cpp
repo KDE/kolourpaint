@@ -34,8 +34,6 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "commands/tools/flow/kpToolFlowCommand.h"
 
-#include <QBitmap>
-
 //---------------------------------------------------------------------
 
 kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &description,
@@ -57,14 +55,11 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     QList <QPoint> points = kpPainter::interpolatePoints (lastPoint, thisPoint,
         brushIsDiagonalLine ());
 
-    for (QList <QPoint>::const_iterator pit = points.constBegin ();
-         pit != points.constEnd ();
-         ++pit)
+    foreach (const QPoint &p, points)
     {
         const QPoint point =
-            hotRectForMousePointAndBrushWidthHeight (
-                (*pit), brushWidth (), brushHeight ())
-                    .topLeft () - docRect.topLeft ();
+            hotRectForMousePointAndBrushWidthHeight(p, brushWidth(), brushHeight())
+                    .topLeft() - docRect.topLeft();
 
         // OPT: This may be redrawing pixels that were drawn on a previous
         //      iteration, since the brush is usually bigger than 1 pixel.

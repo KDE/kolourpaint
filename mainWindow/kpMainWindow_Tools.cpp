@@ -524,19 +524,11 @@ void kpMainWindow::readLastTool ()
 //---------------------------------------------------------------------
 
 // private
-int kpMainWindow::toolNumber () const
+int kpMainWindow::toolNumber() const
 {
-    int number = 0;
-    for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
-         it != d->tools.constEnd ();
-         ++it)
-    {
-        if (*it == tool ()) {
-            return number;
-        }
-
-        number++;
-    }
+    for (int i = 0; i < d->tools.count(); i++)
+      if ( d->tools[i] == tool() )
+        return i;
 
     return -1;
 }
@@ -547,10 +539,8 @@ int kpMainWindow::toolNumber () const
 void kpMainWindow::saveLastTool ()
 {
     int number = toolNumber ();
-    if (number < 0 || number >= d->tools.count ()) {
-        return;
-    }
-
+    if ( (number < 0) || (number >= d->tools.count()) )
+      return;
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
 

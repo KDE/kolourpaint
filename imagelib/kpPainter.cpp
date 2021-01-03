@@ -39,9 +39,9 @@
 
 #include <QPainter>
 #include <QPolygon>
+#include <QRandomGenerator>
 
 #include "kpLogCategories.h"
-#include <KRandom>
 
 //---------------------------------------------------------------------
 
@@ -52,14 +52,6 @@ bool kpPainter::pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q)
     int dy = qAbs (p.y () - q.y ());
 
     return (dx + dy == 1);
-}
-
-//---------------------------------------------------------------------
-
-// Returns a random integer from 0 to 999 inclusive.
-static int RandomNumberFrom0to999 ()
-{
-    return (KRandom::random () % 1000);
 }
 
 //---------------------------------------------------------------------
@@ -79,8 +71,8 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
 
     Q_ASSERT (probability >= 0.0 && probability <= 1.0);
     const int probabilityTimes1000 = qRound (probability * 1000);
-#define SHOULD_DRAW()  (probabilityTimes1000 == 1000/*avoid ::RandomNumberFrom0to999() call*/ ||  \
-                        ::RandomNumberFrom0to999 () < probabilityTimes1000)
+#define SHOULD_DRAW()  ( (probabilityTimes1000 == 1000) /*avoid QRandomGenerator call*/ ||  \
+                         (QRandomGenerator::global()->bounded(1000) < probabilityTimes1000) )
 
 
     // Derived from the zSprite2 Graphics Engine.
@@ -361,9 +353,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, void *data)
     bool didSomething = false;
 
     QList <QPoint> points = kpPainter::interpolatePoints (pack->startPoint, pack->endPoint);
-    for (QList <QPoint>::const_iterator pit = points.constBegin ();
-            pit != points.constEnd ();
-            ++pit)
+    foreach (const QPoint &p, points)
     {
         // OPT: This may be reading and possibly writing pixels that were
         //      visited on a previous iteration, since the pen is usually
@@ -376,7 +366,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, void *data)
                 pack->colorToReplace,
                 pack->readableImageRect,
                 kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
-                    *pit, pack->penWidth, pack->penHeight),
+                    p, pack->penWidth, pack->penHeight),
                 pack->processedColorSimilarity))
         {
             didSomething = true;
@@ -502,8 +492,8 @@ void kpPainter::sprayPoints (kpImage *image,
     {
         for (int i = 0; i < 10; i++)
         {
-            const int dx = (KRandom::random () % spraycanSize) - radius;
-            const int dy = (KRandom::random () % spraycanSize) - radius;
+            const int dx = (QRandomGenerator::global()->generate() % spraycanSize) - radius;
+            const int dy = (QRandomGenerator::global()->generate() % spraycanSize) - radius;
 
             // Make it look circular.
             // TODO: Can be done better by doing a random vector angle & length

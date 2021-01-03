@@ -157,7 +157,7 @@ bool kpDocument::urlExists (const QUrl &url) const
     if (url.isEmpty()) {
         return false;
     }
-    KIO::StatJob *job = KIO::stat (url, KIO::StatJob::SourceSide, 0);
+    KIO::StatJob *job = KIO::statDetails(url, KIO::StatJob::SourceSide, KIO::StatNoDetails);
     KJobWidgets::setWindow (job, d->environ->dialogParent ());
     return job->exec();
 }
