@@ -149,7 +149,7 @@ bool equalize(QImage &img)
 
     // form histogram
     memset(histogram, 0, 256*sizeof(HistogramListItem));
-    dest = (QRgb *)img.bits();
+    dest = reinterpret_cast<QRgb *>(img.bits());
 
     if(img.format() == QImage::Format_ARGB32_Premultiplied){
         for(i=0; i < count; ++i, ++dest){
@@ -198,7 +198,7 @@ bool equalize(QImage &img)
     }
 
     // stretch the histogram and write
-    dest = (QRgb *)img.bits();
+    dest = reinterpret_cast<QRgb *>(img.bits());
     if(img.format() == QImage::Format_ARGB32_Premultiplied){
         for(i=0; i < count; ++i, ++dest){
             pixel = convertFromPremult(*dest);
@@ -280,7 +280,7 @@ QImage Blitz::blur(QImage &img, int radius)
             mh = height - my;
         }
 
-        p1 = (QRgb*)buffer.scanLine(y);
+        p1 = reinterpret_cast<QRgb *>(buffer.scanLine(y));
 
         memset(as, 0, static_cast<unsigned int>(width) * sizeof(int));
         memset(rs, 0, static_cast<unsigned int>(width) * sizeof(int));
@@ -292,7 +292,7 @@ QImage Blitz::blur(QImage &img, int radius)
         case QImage::Format_ARGB32_Premultiplied: {
             QRgb pixel;
             for (auto i = 0; i < mh; i++) {
-                p2 = (QRgb *)img.scanLine(i + my);
+                p2 = reinterpret_cast<QRgb *>(img.scanLine(i + my));
                 for (auto j = 0; j < width; ++j) {
                     p2++;
                     pixel = convertFromPremult(*p2);
@@ -324,7 +324,7 @@ QImage Blitz::blur(QImage &img, int radius)
 
         default: {
             for (auto i = 0; i < mh; ++i) {
-                p2 = (QRgb *)img.scanLine(i + my);
+                p2 = reinterpret_cast<QRgb *>(img.scanLine(i + my));
                 for (auto j = 0; j < width; j++) {
                     p2++;
                     as[j] += qAlpha(*p2);
@@ -473,13 +473,13 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
 
         float r, g, b;
         for(y=0; y < h; ++y){
-            src = (QRgb *)img.scanLine(y);
-            dest = (QRgb *)buffer.scanLine(y);
+            src = reinterpret_cast<QRgb *>(img.scanLine(y));
+            dest = reinterpret_cast<QRgb *>(buffer.scanLine(y));
             // Read in scanlines to pixel neighborhood. If the scanline is outside
             // the image use the top or bottom edge.
             for(x=y-edge, i=0; x <= y+edge; ++i, ++x){
-                scanblock[i] = (QRgb *)
-                    img.scanLine((x < 0) ? 0 : (x > h-1) ? h-1 : x);
+                scanblock[i] = reinterpret_cast<QRgb *>(
+                    img.scanLine((x < 0) ? 0 : (x > h-1) ? h-1 : x));
             }
             // Now we are about to start processing scanlines. First handle the
             // part where the pixel neighborhood extends off the left edge.
@@ -650,7 +650,7 @@ QImage& Blitz::flatten(QImage &img, const QColor &ca, const QColor &cb)
 
     }
     else{
-        data = (unsigned int *)img.scanLine(0);
+        data = reinterpret_cast<QRgb *>(img.scanLine(0));
         end = data + (img.width()*img.height());
     }
 

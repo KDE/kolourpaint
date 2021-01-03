@@ -85,29 +85,6 @@ static inline int brightnessContrastGamma (int base,
                   newGamma);
 }
 
-static inline QRgb brightnessContrastGammaForRGB (QRgb rgb,
-    int channels,
-    int brightness, int contrast, int gamma)
-{
-    int red = qRed (rgb);
-    int green = qGreen (rgb);
-    int blue = qBlue (rgb);
-
-    if (channels & kpEffectBalance::Red) {
-        red = brightnessContrastGamma (red, brightness, contrast, gamma);
-    }
-    if (channels & kpEffectBalance::Green) {
-        green = brightnessContrastGamma (green, brightness, contrast, gamma);
-    }
-    if (channels & kpEffectBalance::Blue) {
-        blue = brightnessContrastGamma (blue, brightness, contrast, gamma);
-    }
-
-
-    return qRgba (red, green, blue, qAlpha (rgb));
-}
-
-
 // public static
 kpImage kpEffectBalance::applyEffect (const kpImage &image,
         int channels,
