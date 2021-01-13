@@ -60,7 +60,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 
     QWidget *base = new QWidget (this);
     m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, base);
-    m_boxLayout->setMargin (5);
+    m_boxLayout->setContentsMargins(5, 5, 5, 5);
     m_boxLayout->setSpacing (10 * 3);
 
     // This holds the current global foreground and background colors, for

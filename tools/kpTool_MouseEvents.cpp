@@ -67,7 +67,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
                << " beganDraw=" << d->beganDraw << endl;
 #endif
 
-    if (e->button () == Qt::MidButton)
+    if (e->button () == Qt::MiddleButton)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
     #if DEBUG_KP_TOOL && 1

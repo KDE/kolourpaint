@@ -315,8 +315,7 @@ QSize kpIntNumInput::minimumSizeHint() const
         h = qMax(h, priv->labelSize.height() + 2);
     }
 
-    const int spacingHint = style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
-    w = priv->slider ? priv->slider->sizeHint().width() + spacingHint : 0;
+    w = priv->slider ? priv->slider->sizeHint().width() : 0;
     w += priv->column1Width + priv->column2Width;
 
     if (priv->labelAlignment & (Qt::AlignTop | Qt::AlignBottom)) {
@@ -344,7 +343,7 @@ void kpIntNumInput::resizeEvent(QResizeEvent *e)
 
     int w = priv->column1Width;
     int h = 0;
-    const int spacingHint = style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    const int spacingHint = 0;//style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     if (priv->label && (priv->labelAlignment & Qt::AlignTop)) {
         priv->label->setGeometry(0, 0, e->size().width(), priv->labelSize.height());
@@ -524,7 +523,7 @@ QSize kpDoubleNumInput::minimumSizeHint() const
         h = qMax(h, priv->labelSize.height() + 2);
     }
 
-    const int spacingHint = style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    const int spacingHint = 0;//style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
     w = priv->slider ? priv->slider->sizeHint().width() + spacingHint : 0;
     w += priv->column1Width + priv->column2Width;
 
@@ -541,7 +540,7 @@ void kpDoubleNumInput::resizeEvent(QResizeEvent *e)
 
     int w = priv->column1Width;
     int h = 0;
-    const int spacingHint = style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    const int spacingHint = 0;//style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     if (priv->label && (priv->labelAlignment & Qt::AlignTop)) {
         priv->label->setGeometry(0, 0, e->size().width(), priv->labelSize.height());

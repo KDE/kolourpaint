@@ -96,7 +96,7 @@ int main(int argc, char *argv [])
   {
     // Creates a kpMainWindow using the default constructor and then
     // calls kpMainWindow::readProperties().
-    RESTORE(kpMainWindow)
+    kRestoreMainWindows<kpMainWindow>();
   }
   else
   {

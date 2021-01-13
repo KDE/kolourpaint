@@ -659,7 +659,7 @@ QVariant kpView::inputMethodQuery (Qt::InputMethodQuery query) const
     QVariant ret;
     switch (query)
     {
-      case Qt::ImMicroFocus:
+      case Qt::ImCursorRectangle:
       {
           QRect r = d->viewManager->textCursorRect ();
           r.setTopLeft (r.topLeft () + origin ());
