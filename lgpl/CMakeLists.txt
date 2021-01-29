@@ -33,4 +33,4 @@ set_target_properties(kolourpaint_lgpl
 
 generate_export_header(kolourpaint_lgpl BASE_NAME kolourpaint_lgpl)
 
-install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS kolourpaint_lgpl ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -350,7 +350,7 @@ if(KSANE_FOUND)
 endif(KSANE_FOUND)
 
 
-install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 ########### install files ###############
