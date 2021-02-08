@@ -89,6 +89,6 @@ ecm_install_icons(ICONS
     sc-actions-tool_rounded_rectangle.svgz
     sc-actions-tool_spraycan.svgz
     sc-actions-tool_text.svgz
-    DESTINATION ${DATA_INSTALL_DIR}/kolourpaint/icons
+    DESTINATION ${KDE_INSTALL_DATADIR}/kolourpaint/icons
     THEME hicolor
 )

@@ -355,8 +355,8 @@ install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 
-install(PROGRAMS org.kde.kolourpaint.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(PROGRAMS org.kde.kolourpaint.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.kolourpaint.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES kolourpaintui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/kolourpaint)
+install(FILES kolourpaintui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kolourpaint)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -5,6 +5,6 @@ ecm_install_icons(ICONS
     48-apps-kolourpaint.png
    128-apps-kolourpaint.png
     sc-apps-kolourpaint.svgz
-    DESTINATION ${ICON_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_ICONDIR}
     THEME hicolor
 )
