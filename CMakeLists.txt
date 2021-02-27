@@ -315,11 +315,10 @@ set(kolourpaint_SRCS
     ${kolourpaint_lib1_SRCS}
     ${kolourpaint_lib2_SRCS}
     ${kolourpaint_app_SRCS}
+    kolourpaint.qrc
 )
 
 add_subdirectory(lgpl)
-
-qt5_add_resources(kolourpaint_SRCS kolourpaint.qrc)
 
 #
 # Executable
