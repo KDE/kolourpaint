@@ -47,7 +47,7 @@ SaneDialog::SaneDialog(QWidget *parent)
     m_ksanew = new KSaneIface::KSaneWidget(this);
     addPage(m_ksanew, QString());
 
-    connect (m_ksanew, &KSaneIface::KSaneWidget::imageReady,
+    connect (m_ksanew, &KSaneIface::KSaneWidget::scannedImageReady,
              this, &SaneDialog::imageReady);
 
     m_openDev = QString();
@@ -107,11 +107,9 @@ SaneDialog::~SaneDialog()
     }
 }
 
-void SaneDialog::imageReady(QByteArray &data, int w, int h, int bpl, int f)
+void SaneDialog::imageReady(const QImage &img)
 {
-    /* copy the image data into img */
-    QImage img = m_ksanew->toQImage(data, w, h, bpl, static_cast<KSaneIface::KSaneWidget::ImageFormat> (f));
-    emit finalImage(img, nextId());
+    Q_EMIT finalImage(img, nextId());
 }
 
 int SaneDialog::nextId()

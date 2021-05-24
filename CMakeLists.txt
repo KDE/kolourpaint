@@ -43,7 +43,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
-find_package(KF5Sane)
+find_package(KF5Sane ${RELEASE_SERVICE_VERSION})
 
 if(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=1)

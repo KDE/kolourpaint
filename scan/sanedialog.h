@@ -53,7 +53,7 @@ Q_SIGNALS:
     void finalImage(const QImage &img, int id);
 
 protected Q_SLOTS:
-    void imageReady(QByteArray &, int, int, int, int);
+    void imageReady(const QImage &img);
 
 private:
     int nextId();
