@@ -146,7 +146,7 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   QTextStream stream(data);
 
   // Read first line
-  // Expected "GIMP Palette"
+  // Expected "GIMP Palette" or "KDE RGB Palette" or "KDE RGBA Palette"
   QString line = stream.readLine();
   if (line.indexOf(QLatin1String(" Palette")) == -1)
   {
@@ -157,13 +157,15 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
      return false;
   }
 
+  bool hasAlpha = line == QLatin1String("KDE RGBA Palette");   // new format includes alpha
+
   QList <ColorNode> newColorList;
   QString newDesc;
 
   while( !stream.atEnd() )
   {
      line = stream.readLine();
-     if (line[0] == '#')
+     if ( !line.isEmpty() && (line[0] == '#') )
      {
         // This is a comment line
         line = line.mid(1); // Strip '#'
@@ -178,15 +180,23 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
         // This is a color line, hopefully
         line = line.trimmed();
         if (line.isEmpty()) continue;
-        int r, g, b;
+        int r, g, b, a = 255;
         int pos = 0;
-        if (sscanf(line.toLatin1(), "%d %d %d%n", &r, &g, &b, &pos) >= 3)
+        bool ok = false;
+
+        if ( hasAlpha )
+          ok = (sscanf(line.toLatin1(), "%d %d %d %d%n", &r, &g, &b, &a, &pos) >= 4);
+        else
+          ok = (sscanf(line.toLatin1(), "%d %d %d%n", &r, &g, &b, &pos) >= 3);
+
+        if ( ok )
         {
            r = qBound(0, r, 255);
            g = qBound(0, g, 255);
            b = qBound(0, b, 255);
+           a = qBound(0, a, 255);
            QString name = line.mid(pos).trimmed();
-           newColorList.append(ColorNode(QColor(r, g, b), name));
+           newColorList.append(ColorNode(QColor(r, g, b, a), name));
         }
      }
   }
@@ -264,17 +274,17 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    QString description = d->desc.trimmed();
    description = '#' + description.split('\n', Qt::KeepEmptyParts).join(QLatin1String("\n#"));
 
-   str << "KDE RGB Palette\n";
+   str << "KDE RGBA Palette\n";
    str << description << "\n";
    for (const auto &node : d->colorList)
    {
        // Added for KolourPaint.
-       if(!node.color.isValid ())
+       if ( !node.color.isValid() )
            continue;
 
-       int r,g,b;
-       node.color.getRgb(&r, &g, &b);
-       str << r << " " << g << " " << b << " " << node.name << "\n";
+       int r, g, b, a;
+       node.color.getRgb(&r, &g, &b, &a);
+       str << r << " " << g << " " << b << " " << a << " " << node.name << "\n";
    }
 
    str.flush();
@@ -490,7 +500,7 @@ kpColorCollection::changeColor(int index,
                       const QString &newColorName)
 {
     if ((index < 0) || (index >= count()))
-	return -1;
+      return -1;
 
   ColorNode& node = d->colorList[index];
   node.color = newColor;
