@@ -115,16 +115,6 @@ public:
    bool saveAs(const QUrl &url, QWidget *parent) const;
 
    /**
-    * Save the collection to the KDE-local store
-    * (usually $HOME/.kde/share/config/colors) using name().
-    *
-    * @return 'true' if successful
-    *
-    * Renamed from save() for KolourPaint.
-    **/
-   bool saveKDE(QWidget *parent) const;
-
-   /**
     * Get the description of the collection.
     * @return the description of the collection.
     **/

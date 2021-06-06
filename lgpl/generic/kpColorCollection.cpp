@@ -379,18 +379,6 @@ kpColorCollection::saveAs(const QUrl &url, QWidget *parent) const
    return true;
 }
 
-bool
-kpColorCollection::saveKDE(QWidget *parent) const
-{
-   const QString name = d->name;
-   QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)
-                                                       + "colors/" + name;
-   const bool ret = saveAs (QUrl::fromLocalFile (filename), parent);
-   // (d->name is wiped by saveAs()).
-   d->name = name;
-   return ret;
-}
-
 QString kpColorCollection::description() const
 {
     return d->desc;
