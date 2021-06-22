@@ -168,24 +168,21 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
                                      QWidget *parent,
                                      bool *userCancelled)
 {
-    if (userCancelled) {
+    if (userCancelled)
         *userCancelled = false;
-    }
 
     QString type = QMimeDatabase().mimeTypeForName (saveOptions.mimeType ()).preferredSuffix ();
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tmimeType=" << saveOptions.mimeType ()
                << " type=" << type;
 #endif
-    if (type.isEmpty ()) {
+    if (type.isEmpty ())
         return false;
-    }
 
     if (lossyPrompt && !lossyPromptContinue (image, saveOptions, parent))
     {
-        if (userCancelled) {
+        if (userCancelled)
             *userCancelled = true;
-        }
 
     #if DEBUG_KP_DOCUMENT
         qCDebug(kpLogDocument) << "\treturning false because of lossyPrompt";
@@ -198,6 +195,7 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
     const bool useSaveOptionsColorDepth =
         (saveOptions.mimeTypeHasConfigurableColorDepth () &&
          !saveOptions.colorDepthIsInvalid ());
+
     const bool useSaveOptionsQuality =
         (saveOptions.mimeTypeHasConfigurableQuality () &&
          !saveOptions.qualityIsInvalid ());
