@@ -81,12 +81,6 @@
 
 #define kpSettingMoreEffectsLastEffect "More Effects - Last Effect"
 
-#define kpSettingsGroupMimeTypeProperties "MimeType Properties Version 1.2-3"
-#define kpSettingMimeTypeMaximumColorDepth "Maximum Color Depth"
-#define kpSettingMimeTypeHasConfigurableColorDepth "Configurable Color Depth"
-#define kpSettingMimeTypeHasConfigurableQuality "Configurable Quality Setting"
-
-
 #define kpSettingsGroupUndoRedo "Undo/Redo Settings"
 #define kpSettingUndoMinLimit "Min Limit"
 #define kpSettingUndoMaxLimit "Max Limit"

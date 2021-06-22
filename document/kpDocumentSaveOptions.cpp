@@ -409,81 +409,10 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
 }
 
 //---------------------------------------------------------------------
-
-
-static QStringList mimeTypesSupportingProperty (const QString &property,
-    const QStringList &defaultMimeTypesWithPropertyList)
-{
-    QStringList mimeTypeList;
-
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupMimeTypeProperties);
-
-    if (cfg.hasKey (property))
-    {
-        mimeTypeList = cfg.readEntry (property, QStringList ());
-    }
-    else
-    {
-        mimeTypeList = defaultMimeTypesWithPropertyList;
-
-        cfg.writeEntry (property, mimeTypeList);
-        cfg.sync ();
-    }
-
-    return mimeTypeList;
-}
-
-//---------------------------------------------------------------------
-
-static bool mimeTypeSupportsProperty (const QString &mimeType,
-    const QString &property, const QStringList &defaultMimeTypesWithPropertyList)
-{
-    const auto mimeTypeList = mimeTypesSupportingProperty (
-        property, defaultMimeTypesWithPropertyList);
-
-    return mimeTypeList.contains (mimeType);
-}
-
-//---------------------------------------------------------------------
-
-
-// SYNC: update mime info
-//
-// Only care about writable mimetypes.
-//
-// Run:
-//
-//     branches/kolourpaint/control/scripts/gen_mimetype_line.sh Write |
-//         branches/kolourpaint/control/scripts/split_mimetype_line.pl
-//
-// in the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is shipped with,
-// to check for any new mimetypes to add info for.  In the methods below,
-// you can specify this info (maximum color depth, whether it's lossy etc.).
-//
-// Update the below list and if you do change any of that info, bump up
-// "kpSettingsGroupMimeTypeProperties" in kpDefs.h.
-//
 // Currently, Depth and Quality settings are mutually exclusive with
 // Depth overriding Quality.  I've currently favoured Quality with the
 // below mimetypes (i.e. all lossy mimetypes are only given Quality settings,
 // no Depth settings).
-//
-// Mimetypes done:
-//  image/bmp
-//  image/jpeg
-//  image/jp2
-//  image/png
-//  image/tiff
-//  image/x-eps
-//  image/x-pcx
-//  image/x-portable-bitmap
-//  image/x-portable-graymap
-//  image/x-portable-pixmap
-//  image/x-rgb
-//  image/x-tga
-//  image/x-xbitmap
-//  image/x-xpixmap
-//  video/x-mng [COULD NOT TEST]
 //
 // To test whether depth is configurable, write an image in the new
 // mimetype with all depths and read each one back.  See what
@@ -491,37 +420,21 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 
 
 // public static
-int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
+int kpDocumentSaveOptions::mimeTypeMaximumColorDepth(const QString &mimeType)
 {
-    QStringList defaultList;
-
     // SYNC: update mime info here
 
-    // Grayscale actually (unenforced since depth not set to configurable)
-    defaultList << QStringLiteral ("image/x-eps:32");
+    if ( mimeType == QStringLiteral("image/x-eps") )
+      return 32;  // Grayscale actually (unenforced since depth not set to configurable)
 
-    defaultList << QStringLiteral ("image/x-portable-bitmap:1");
+    if ( mimeType == QStringLiteral("image/x-portable-bitmap") )
+      return 1;
 
-    // Grayscale actually (unenforced since depth not set to configurable)
-    defaultList << QStringLiteral ("image/x-portable-graymap:8");
+    if ( mimeType == QStringLiteral("image/x-portable-graymap") )
+      return 8; // Grayscale actually (unenforced since depth not set to configurable)
 
-    defaultList << QStringLiteral ("image/x-xbitmap:1");
-
-    const auto mimeTypeList = mimeTypesSupportingProperty (
-        kpSettingMimeTypeMaximumColorDepth, defaultList);
-
-    const QString mimeTypeColon = mimeType + QLatin1String (":");
-    for (const auto & it : mimeTypeList)
-    {
-        if (it.startsWith (mimeTypeColon))
-        {
-            int number = it.midRef (mimeTypeColon.length ()).toInt ();
-            if (!colorDepthIsInvalid (number))
-            {
-                return number;
-            }
-        }
-    }
+    if ( mimeType == QStringLiteral("image/x-xbitmap") )
+      return 1;
 
     return 32;
 }
@@ -553,9 +466,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
     // TODO: Only 8 and 24 - no 1.
     defaultMimeTypes << QStringLiteral ("image/x-xpixmap");
 
-    return mimeTypeSupportsProperty (mimeType,
-        kpSettingMimeTypeHasConfigurableColorDepth,
-        defaultMimeTypes);
+    return defaultMimeTypes.contains(mimeType);
 }
 
 //---------------------------------------------------------------------
@@ -576,11 +487,9 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
     // SYNC: update mime info here
     defaultMimeTypes << QStringLiteral ("image/jp2");
     defaultMimeTypes << QStringLiteral ("image/jpeg");
-    defaultMimeTypes << QStringLiteral ("image/x-webp");
+    defaultMimeTypes << QStringLiteral ("image/webp");
 
-    return mimeTypeSupportsProperty (mimeType,
-        kpSettingMimeTypeHasConfigurableQuality,
-        defaultMimeTypes);
+    return defaultMimeTypes.contains(mimeType);
 }
 
 //---------------------------------------------------------------------
@@ -596,7 +505,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality () const
 // public
 int kpDocumentSaveOptions::isLossyForSaving (const QImage &image) const
 {
-    auto ret = 0;
+    int ret = 0;
 
     if (mimeTypeMaximumColorDepth () < image.depth ())
     {
