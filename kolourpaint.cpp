@@ -34,6 +34,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QImageReader>
 #include <QDir>
 #include <KLocalizedString>
 
@@ -89,8 +90,23 @@ int main(int argc, char *argv [])
   cmdLine.addPositionalArgument(QStringLiteral("files"), i18n("Image files to open, optionally"), QStringLiteral("[files...]"));
 
   aboutData.setupCommandLine(&cmdLine);
+  cmdLine.addOption(QCommandLineOption("mimetypes", i18n("List all readable image MimeTypes")));
   cmdLine.process(app);
   aboutData.processCommandLine(&cmdLine);
+
+  // produce a list of MimeTypes which kolourpaint can handle (can be used inside the .desktop file)
+  if ( cmdLine.isSet("mimetypes") )
+  {
+    foreach (const QByteArray &type, QImageReader::supportedMimeTypes())
+    {
+      if ( !type.isEmpty() )
+        printf("%s;", type.constData());
+    }
+
+    printf("\n");
+
+    return 0;
+  }
 
   if ( app.isSessionRestored() )
   {

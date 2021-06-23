@@ -193,10 +193,8 @@ Type=Application
 Exec=kolourpaint %u
 X-DocPath=kolourpaint/index.html
 
-# SYNC: Run branches/kolourpaint/control/scripts/kde4port/gen_mimetype_line.sh in
-#       the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is
-#       shipped with.
-MimeType=image/avif;image/bmp;image/gif;image/jpeg;image/jp2;image/jpeg2000;image/png;image/tiff;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/vnd.microsoft.icon;image/x-pcx;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;video/x-mng;image/x-sun-raster;image/svg+xml;image/svg+xml-compressed;image/x-webp;
+# SYNC: Run kolourpaint --mimetypes
+MimeType=application/x-krita;application/x-navi-animation;image/avif;image/avif-sequence;image/bmp;image/gif;image/heif;image/jpeg;image/openraster;image/png;image/svg+xml;image/svg+xml-compressed;image/tiff;image/vnd.adobe.photoshop;image/vnd.microsoft.icon;image/vnd.wap.wbmp;image/webp;image/x-eps;image/x-exr;image/x-hdr;image/x-icns;image/x-mng;image/x-pcx;image/x-pic;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-rgb;image/x-sun-raster;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;
 
 Categories=Qt;KDE;Graphics;2DGraphics;RasterGraphics;
 Terminal=false
