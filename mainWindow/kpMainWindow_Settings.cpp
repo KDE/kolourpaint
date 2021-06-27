@@ -149,12 +149,13 @@ void kpMainWindow::slotKeyBindings ()
 {
     toolEndShape ();
 
-    if (KShortcutsDialog::configure (actionCollection (),
-            KShortcutsEditor::LetterShortcutsAllowed,
-            this))
-    {
-        // TODO: PROPAGATE: thru mainWindow's and interprocess
-    }
+    auto *dlg = new KShortcutsDialog(KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, this);
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
+    dlg->addCollection(actionCollection());
+
+    // TODO: PROPAGATE: through mainWindow's and interprocess, by connecting to
+    // KShortcutsDialog::saved() signal
+    dlg->configure(true /* save settings */);
 }
 
 //---------------------------------------------------------------------
