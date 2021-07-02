@@ -90,7 +90,7 @@ int main(int argc, char *argv [])
   cmdLine.addPositionalArgument(QStringLiteral("files"), i18n("Image files to open, optionally"), QStringLiteral("[files...]"));
 
   aboutData.setupCommandLine(&cmdLine);
-  cmdLine.addOption(QCommandLineOption("mimetypes", i18n("List all readable image MimeTypes")));
+  cmdLine.addOption(QCommandLineOption("mimetypes", i18n("List all readable image MIME types")));
   cmdLine.process(app);
   aboutData.processCommandLine(&cmdLine);
 
