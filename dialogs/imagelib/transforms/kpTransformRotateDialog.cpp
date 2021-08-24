@@ -41,6 +41,7 @@
 
 #include <QButtonGroup>
 #include <QGroupBox>
+#include <QIcon>
 #include <QLabel>
 #include <QLayout>
 #include <QSpinBox>
@@ -97,13 +98,28 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
     auto *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
     addCustomWidget (directionGroupBox);
 
+    QPixmap antiClockwisePixmap;
+    const QIcon rotateLeftIcon = QIcon::fromTheme(QStringLiteral("object-rotate-left"));
+    // Don't fall back to a generic "object-rotate" or "object"
+    if (rotateLeftIcon.isNull() || rotateLeftIcon.name() != QLatin1String("object-rotate-left")) {
+        antiClockwisePixmap = QPixmap(QStringLiteral(":/icons/image_rotate_anticlockwise"));
+    } else {
+        antiClockwisePixmap = rotateLeftIcon.pixmap(48);
+    }
 
     auto *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
-    antiClockwisePixmapLabel->setPixmap (QStringLiteral(":/icons/image_rotate_anticlockwise"));
+    antiClockwisePixmapLabel->setPixmap (antiClockwisePixmap);
+
+    QPixmap clockwisePixmap;
+    const QIcon rotateRightIcon = QIcon::fromTheme(QStringLiteral("object-rotate-right"));
+    if (rotateRightIcon.isNull() || rotateRightIcon.name() != QLatin1String("object-rotate-right")) {
+        clockwisePixmap = QPixmap(QStringLiteral(":/icons/image_rotate_clockwise"));
+    } else {
+        clockwisePixmap = rotateRightIcon.pixmap(48);
+    }
 
     auto *clockwisePixmapLabel = new QLabel (directionGroupBox);
-    clockwisePixmapLabel->setPixmap (QStringLiteral(":/icons/image_rotate_clockwise"));
-
+    clockwisePixmapLabel->setPixmap (clockwisePixmap);
 
     m_antiClockwiseRadioButton = new QRadioButton (i18n ("Cou&nterclockwise"), directionGroupBox);
     m_clockwiseRadioButton = new QRadioButton (i18n ("C&lockwise"), directionGroupBox);
