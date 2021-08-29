@@ -137,7 +137,12 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     reader.setAutoTransform(true);
     reader.setDecideFormatFromContent(true);
 
-    QImage image = reader.read();
+    // Do *NOT* convert to
+    // QImage image = reader.read();
+    // this variant is more lenient on errors and we may get something that we would not otherwise
+    // e.g. image from https://bugs.kde.org/show_bug.cgi?id=441554
+    QImage image;
+    reader.read(&image);
 
     if (image.isNull ())
     {
