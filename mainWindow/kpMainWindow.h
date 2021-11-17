@@ -368,6 +368,7 @@ private slots:
 
 private:
     void sendDocumentNameToPrinter (QPrinter *printer);
+    void setPrinterPageOrientation(QPrinter *printer);
     void sendImageToPrinter(QPrinter *printer, bool showPrinterSetupDialog);
 
 private slots:

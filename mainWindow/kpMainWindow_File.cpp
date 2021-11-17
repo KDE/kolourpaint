@@ -1159,6 +1159,14 @@ void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
 
 //--------------------------------------------------------------------------------
 
+void kpMainWindow::setPrinterPageOrientation(QPrinter *printer)
+{
+    const bool isLandscape = d->document->width() > d->document->height();
+    printer->setPageOrientation(isLandscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+}
+
+//--------------------------------------------------------------------------------
+
 void kpMainWindow::sendPreviewToPrinter(QPrinter *printer)
 {
   sendImageToPrinter(printer, false);
@@ -1367,6 +1375,7 @@ void kpMainWindow::slotPrint ()
     toolEndShape ();
 
     QPrinter printer;
+    setPrinterPageOrientation(&printer);
 
     sendImageToPrinter (&printer, true/*showPrinterSetupDialog*/);
 }
@@ -1378,7 +1387,9 @@ void kpMainWindow::slotPrintPreview ()
 {
     toolEndShape ();
 
-    QPrintPreviewDialog printPreview(this);
+    QPrinter printer;
+    setPrinterPageOrientation(&printer);
+    QPrintPreviewDialog printPreview(&printer, this);
     connect(&printPreview, &QPrintPreviewDialog::paintRequested, this, &kpMainWindow::sendPreviewToPrinter);
 
     printPreview.exec ();
