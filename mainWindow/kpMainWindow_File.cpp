@@ -1173,6 +1173,29 @@ void kpMainWindow::sendPreviewToPrinter(QPrinter *printer)
 }
 
 //--------------------------------------------------------------------------------
+
+void kpMainWindow::setupPrintDialog(QPrintDialog *printDialog)
+{
+    auto *optionsPage = new kpPrintDialogPage (this);
+    optionsPage->setPrintImageCenteredOnPage (d->configPrintImageCenteredOnPage);
+    printDialog->setOptionTabs ({optionsPage});
+    printDialog->setWindowTitle (i18nc ("@title:window", "Print Image"));
+    connect(printDialog, &QDialog::finished, this, [this, optionsPage]() {
+        if (optionsPage->printImageCenteredOnPage () !=
+            d->configPrintImageCenteredOnPage)
+        {
+            // Save config option even if the dialog was cancelled.
+            d->configPrintImageCenteredOnPage = optionsPage->printImageCenteredOnPage ();
+
+            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+            cfg.writeEntry (kpSettingPrintImageCenteredOnPage,
+                           d->configPrintImageCenteredOnPage);
+            cfg.sync ();
+        }
+   });
+}
+
+//--------------------------------------------------------------------------------
 // private
 void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         bool showPrinterSetupDialog)
@@ -1322,29 +1345,10 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
 
     if (showPrinterSetupDialog)
     {
-        auto *optionsPage = new kpPrintDialogPage (this);
-        optionsPage->setPrintImageCenteredOnPage (d->configPrintImageCenteredOnPage);
-
         QPrintDialog printDialog (printer, this);
-        printDialog.setOptionTabs ({optionsPage});
-        printDialog.setWindowTitle (i18nc ("@title:window", "Print Image"));
+        setupPrintDialog(&printDialog);
 
-        // Display dialog.
-        const bool wantToPrint = printDialog.exec ();
-
-        if (optionsPage->printImageCenteredOnPage () !=
-            d->configPrintImageCenteredOnPage)
-        {
-            // Save config option even if the dialog was cancelled.
-            d->configPrintImageCenteredOnPage = optionsPage->printImageCenteredOnPage ();
-
-            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
-            cfg.writeEntry (kpSettingPrintImageCenteredOnPage,
-                           d->configPrintImageCenteredOnPage);
-            cfg.sync ();
-        }
-
-        if (!wantToPrint) {
+        if (printDialog.exec() != QDialog::Accepted) {
             return;
         }
     }
@@ -1391,6 +1395,7 @@ void kpMainWindow::slotPrintPreview ()
     setPrinterPageOrientation(&printer);
     QPrintPreviewDialog printPreview(&printer, this);
     connect(&printPreview, &QPrintPreviewDialog::paintRequested, this, &kpMainWindow::sendPreviewToPrinter);
+    connect(&printPreview, &QPrintPreviewDialog::printDialogCreated, this, &kpMainWindow::setupPrintDialog);
 
     printPreview.exec ();
 }

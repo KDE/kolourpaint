@@ -48,6 +48,7 @@ class QMoveEvent;
 class QPoint;
 class QRect;
 class QSize;
+class QPrintDialog;
 
 class KConfigGroup;
 class KToolBar;
@@ -365,6 +366,7 @@ private slots:
     void slotEnableReload ();
     bool slotReload ();
     void sendPreviewToPrinter(QPrinter *printer);
+    void setupPrintDialog(QPrintDialog *printDialog);
 
 private:
     void sendDocumentNameToPrinter (QPrinter *printer);
