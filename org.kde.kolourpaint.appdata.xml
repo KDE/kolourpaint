@@ -87,7 +87,7 @@
     <p xml:lang="ar">الرسام هو برنامج رسم بسيط لإنشاء صور نقطية بسرعة. إنه مفيد كأداة تحسين ومهام بسيطة لتحرير الصور.</p>
     <p xml:lang="bs">KolourPaint je jednostavan crtaći program za brzo staranje rasterskih slika. On je koristan kao sredstvo retuširanja i jednostavne zadatke za uređivanje slika.</p>
     <p xml:lang="ca">El KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
-    <p xml:lang="ca-valencia">El KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
+    <p xml:lang="ca-valencia">KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
     <p xml:lang="da">KolourPaint er et simpelt tegneprogram til hurtigt at skabe raster-billeder. Det er et nyttigt værktøj til at tegne skitser eller udføre simple billedredigeringsopgaver.</p>
     <p xml:lang="de">KolourPaint ist ein einfach zu benutzendes Mal- und Zeichenprogramm um schnell Rasterbilder zu erstellen. Es kann für die Korrektur und einfache Bildbearbeitungsaufgaben benutzt werden.</p>
     <p xml:lang="el">Το KolourPaint είναι λενα απλό πρόγραμμα ζωραφικής για τη γρήγορη δημιουργία εικόνων χρωματικής περίπλεξης. Χρησιμεύει ως διορθωτικό και για απλές εργασίες επεξεργασίας εικόνων.</p>
@@ -355,7 +355,7 @@
       <caption>Painting in KolourPaint</caption>
       <caption xml:lang="ar">الرسم على الرسام</caption>
       <caption xml:lang="ca">Pintant al KolourPaint</caption>
-      <caption xml:lang="ca-valencia">Pintant al KolourPaint</caption>
+      <caption xml:lang="ca-valencia">Pintant a KolourPaint</caption>
       <caption xml:lang="cs">Malování v KolourPaint</caption>
       <caption xml:lang="da">Tegner i Kolourpaint</caption>
       <caption xml:lang="de">Malen mit KolourPaint</caption>
