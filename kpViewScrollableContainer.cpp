@@ -326,7 +326,11 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
 //---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void kpGrip::enterEvent (QEnterEvent * /*e*/)
+#else
 void kpGrip::enterEvent (QEvent * /*e*/)
+#endif
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     qCDebug(kpLogMisc) << "kpGrip::enterEvent()"

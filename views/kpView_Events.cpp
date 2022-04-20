@@ -207,7 +207,11 @@ void kpView::focusOutEvent (QFocusEvent *e)
 
 
 // protected virtual [base QWidget]
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void kpView::enterEvent (QEnterEvent *e)
+#else
 void kpView::enterEvent (QEvent *e)
+#endif
 {
 #if DEBUG_KP_VIEW && 0
     qCDebug(kpLogViews) << "kpView(" << objectName () << ")::enterEvent()";
