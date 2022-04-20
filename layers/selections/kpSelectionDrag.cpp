@@ -33,6 +33,7 @@
 
 #include <QDataStream>
 #include <QImage>
+#include <QIODevice>
 #include <QUrl>
 
 #include "kpLogCategories.h"
