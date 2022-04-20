@@ -25,7 +25,7 @@ include(ECMAddAppIcon)
 include(ECMSetupVersion)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Widgets
     PrintSupport
@@ -338,7 +338,7 @@ target_link_libraries(kolourpaint
     KF5::XmlGui
     KF5::KIOFileWidgets
     KF5::TextWidgets
-    Qt5::PrintSupport
+    Qt${QT_MAJOR_VERSION}::PrintSupport
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )
@@ -357,7 +357,7 @@ install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(PROGRAMS org.kde.kolourpaint.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.kolourpaint.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES kolourpaintui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kolourpaint)
+install(FILES kolourpaintui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kolourpaint)
 
 ki18n_install(po)
 kdoctools_install(po)

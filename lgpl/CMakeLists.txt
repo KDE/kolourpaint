@@ -22,7 +22,7 @@ target_link_libraries(kolourpaint_lgpl
     KF5::WidgetsAddons
     KF5::KIOCore
     KF5::JobWidgets
-    Qt5::Widgets
+    Qt${QT_MAJOR_VERSION}::Widgets
 )
 
 set_target_properties(kolourpaint_lgpl
