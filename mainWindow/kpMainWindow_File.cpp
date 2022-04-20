@@ -53,6 +53,7 @@
 #include <QPrintPreviewDialog>
 
 #include <KActionCollection>
+#include <KEMailClientLauncherJob>
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KFileCustomDialog>
@@ -61,7 +62,6 @@
 #include <KRecentFilesAction>
 #include <KStandardShortcut>
 #include <KStandardAction>
-#include <KToolInvocation>
 #include <KLocalizedString>
 
 #include "kpLogCategories.h"
@@ -1427,14 +1427,10 @@ void kpMainWindow::slotMail ()
         }
     }
 
-    KToolInvocation::invokeMailer (
-        QString()/*to*/,
-        QString()/*cc*/,
-        QString()/*bcc*/,
-        d->document->prettyFilename()/*subject*/,
-        QString()/*body*/,
-        QString()/*messageFile*/,
-        QStringList(d->document->url().url())/*attachments*/);
+    auto *job = new KEMailClientLauncherJob;
+    job->setSubject(d->document->prettyFilename());
+    job->setAttachments({d->document->url()});
+    job->start();
 }
 
 //---------------------------------------------------------------------
