@@ -81,6 +81,9 @@ public:
 
     kpToolWidgetBase *shownToolWidget (int which) const;
 
+protected:
+    bool event(QEvent *ev) override;
+
 signals:
     void sigToolSelected (kpTool *tool);  // tool may be 0
     void toolWidgetOptionSelected ();

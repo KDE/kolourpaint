@@ -404,6 +404,15 @@ void kpToolToolBar::adjustToOrientation(Qt::Orientation o)
     adjustSizeConstraint();
 }
 
+
+bool kpToolToolBar::event(QEvent *ev)
+{
+    if (ev->type() == QEvent::LayoutRequest) {
+        adjustSizeConstraint();
+    }
+    return KToolBar::event(ev);
+}
+
 //---------------------------------------------------------------------
 // this makes the size handled correctly during dragging/undocking the toolbar
 
