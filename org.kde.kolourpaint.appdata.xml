@@ -166,7 +166,7 @@
       <li xml:lang="ar">دعم لرسم أشكال مختلفة - خطوط ومستطيلات ومستطيلات مستديرة الشكل وأشكال بيضاوية ومضلعات</li>
       <li xml:lang="bs">Podrška za crtanje raznih oblika - linija, pravougaonika, zaobljenih pravougaonika, ovala i poligona</li>
       <li xml:lang="ca">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
-      <li xml:lang="ca-valencia">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
+      <li xml:lang="ca-valencia">Permet dibuixar diverses formes: llínees, rectangles, rectangles arrodonits, ovals i polígons</li>
       <li xml:lang="da">Understøtter at tegne diverse former - linjer, firkanter, afrundede firkanter, ovaler og polygoner</li>
       <li xml:lang="de">Das Zeichnen verschiedener Objekte wie Linien, Rechtecke, abgerundete Rechtecke, Ellipsen und Polygone wird unterstützt.</li>
       <li xml:lang="el">Υποστήριξη για σχεδίαση διαφόρων σχημάτων - ευθείες, ορθογώνια παραλληλόγραμμα, στρογγυλεμένα ορθογώνια, ελλείψεις και πολύγωνα</li>
@@ -203,7 +203,7 @@
       <li xml:lang="ar">المنحنيات والخطوط والنص</li>
       <li xml:lang="bs">Krive, linije i tekst</li>
       <li xml:lang="ca">Corbes, línies i text</li>
-      <li xml:lang="ca-valencia">Corbes, línies i text</li>
+      <li xml:lang="ca-valencia">Corbes, llínees i text</li>
       <li xml:lang="cs">Křivky, čáry a text</li>
       <li xml:lang="da">Kurver, linjer og tekst</li>
       <li xml:lang="de">Kurven, Linien und Text</li>
