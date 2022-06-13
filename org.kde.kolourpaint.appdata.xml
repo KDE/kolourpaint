@@ -87,7 +87,7 @@
     <p xml:lang="ar">الرسام هو برنامج رسم بسيط لإنشاء صور نقطية بسرعة. إنه مفيد كأداة تحسين ومهام بسيطة لتحرير الصور.</p>
     <p xml:lang="bs">KolourPaint je jednostavan crtaći program za brzo staranje rasterskih slika. On je koristan kao sredstvo retuširanja i jednostavne zadatke za uređivanje slika.</p>
     <p xml:lang="ca">El KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
-    <p xml:lang="ca-valencia">KolourPaint és un programa senzill de dibuix per a crear ràpidament imàgens ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imàgens.</p>
+    <p xml:lang="ca-valencia">KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles per a l'edició d'imatges.</p>
     <p xml:lang="da">KolourPaint er et simpelt tegneprogram til hurtigt at skabe raster-billeder. Det er et nyttigt værktøj til at tegne skitser eller udføre simple billedredigeringsopgaver.</p>
     <p xml:lang="de">KolourPaint ist ein einfach zu benutzendes Mal- und Zeichenprogramm um schnell Rasterbilder zu erstellen. Es kann für die Korrektur und einfache Bildbearbeitungsaufgaben benutzt werden.</p>
     <p xml:lang="el">Το KolourPaint είναι λενα απλό πρόγραμμα ζωραφικής για τη γρήγορη δημιουργία εικόνων χρωματικής περίπλεξης. Χρησιμεύει ως διορθωτικό και για απλές εργασίες επεξεργασίας εικόνων.</p>
@@ -162,7 +162,7 @@
       <li xml:lang="ar">دعم لرسم أشكال مختلفة - خطوط ومستطيلات ومستطيلات مستديرة الشكل وأشكال بيضاوية ومضلعات</li>
       <li xml:lang="bs">Podrška za crtanje raznih oblika - linija, pravougaonika, zaobljenih pravougaonika, ovala i poligona</li>
       <li xml:lang="ca">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
-      <li xml:lang="ca-valencia">Permet dibuixar diverses formes: llínees, rectangles, rectangles arrodonits, ovals i polígons</li>
+      <li xml:lang="ca-valencia">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
       <li xml:lang="da">Understøtter at tegne diverse former - linjer, firkanter, afrundede firkanter, ovaler og polygoner</li>
       <li xml:lang="de">Das Zeichnen verschiedener Objekte wie Linien, Rechtecke, abgerundete Rechtecke, Ellipsen und Polygone wird unterstützt.</li>
       <li xml:lang="el">Υποστήριξη για σχεδίαση διαφόρων σχημάτων - ευθείες, ορθογώνια παραλληλόγραμμα, στρογγυλεμένα ορθογώνια, ελλείψεις και πολύγωνα</li>
@@ -198,7 +198,7 @@
       <li xml:lang="ar">المنحنيات والخطوط والنص</li>
       <li xml:lang="bs">Krive, linije i tekst</li>
       <li xml:lang="ca">Corbes, línies i text</li>
-      <li xml:lang="ca-valencia">Corbes, llínees i text</li>
+      <li xml:lang="ca-valencia">Corbes, línies i text</li>
       <li xml:lang="cs">Křivky, čáry a text</li>
       <li xml:lang="da">Kurver, linjer og tekst</li>
       <li xml:lang="de">Kurven, Linien und Text</li>
@@ -312,7 +312,7 @@
       <li xml:lang="ar">دوران ، أحادية اللون وتأثيرات متقدمة أخرى</li>
       <li xml:lang="bs">Rotacija, monohrom i drugi napredni efekti</li>
       <li xml:lang="ca">Gir, monocrom i altres efectes avançats</li>
-      <li xml:lang="ca-valencia">Gir, monocrom i atres efectes avançats</li>
+      <li xml:lang="ca-valencia">Gir, monocrom i altres efectes avançats</li>
       <li xml:lang="da">Rotation, monokrom og andre avancerede effekter</li>
       <li xml:lang="de">Drehung, Umwandlung in Schwarzweiß und weitere Effekte können angewendet werden</li>
       <li xml:lang="el">Περιστροφή, μονοχρωμία και άλλα προηγμένα εφέ</li>
