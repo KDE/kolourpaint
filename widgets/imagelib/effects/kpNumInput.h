@@ -51,7 +51,7 @@ public:
     /**
      * Destructor
      */
-    ~kpNumInput();
+    ~kpNumInput() override;
 
     /**
      * Sets the text and alignment of the main description label.
@@ -180,7 +180,7 @@ public:
      *
      *
      */
-    virtual ~kpIntNumInput();
+    ~kpIntNumInput() override;
 
     /**
      * @return the current value.
@@ -368,7 +368,7 @@ public:
     /**
      * destructor
      */
-    virtual ~kpDoubleNumInput();
+    ~kpDoubleNumInput() override;
 
     /**
      * @return the current value.
