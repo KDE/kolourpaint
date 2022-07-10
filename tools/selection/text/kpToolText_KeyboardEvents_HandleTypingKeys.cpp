@@ -175,9 +175,8 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
     QString usableText;
     for (int i = 0; i < e->text ().length (); i++)
     {
-        if (e->text ().at (i).isPrint ()) {
-            usableText += e->text ().at (i);
-        }
+        if ( e->text().at(i).category() != QChar::Other_Control )
+            usableText += e->text().at(i);
     }
 #if DEBUG_KP_TOOL_TEXT
     qCDebug(kpLogTools) << "\tusableText=" << usableText;
