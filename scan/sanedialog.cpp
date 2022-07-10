@@ -63,14 +63,14 @@ bool SaneDialog::setup()
         return true;
     }
     // need to select a scanner
-    m_openDev = m_ksanew->selectDevice(nullptr);
+    m_openDev = m_ksanew->selectDevice(parentWidget());
     if (m_openDev.isEmpty()) {
        // either no scanner was found or then cancel was pressed.
         return false;
     }
     if (!m_ksanew->openDevice(m_openDev)) {
         // could not open the scanner
-        KMessageBox::error(nullptr, i18n("Opening the selected scanner failed."));
+        KMessageBox::error(parentWidget(), i18n("Opening the selected scanner failed."));
         m_openDev = QString();
         return false;
     }
