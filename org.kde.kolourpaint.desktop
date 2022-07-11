@@ -72,7 +72,7 @@ Name[uz]=KolourPaint
 Name[uz@cyrillic]=KolourPaint
 Name[vi]=KolourPaint
 Name[x-test]=xxKolourPaintxx
-Name[zh_CN]=KolourPaint
+Name[zh_CN]=KolourPaint 画图工具
 Name[zh_HK]=KolourPaint
 Name[zh_TW]=KolourPaint 小畫家
 GenericName=Paint Program
@@ -149,7 +149,7 @@ GenericName[vi]=Chương trình vẽ
 GenericName[wa]=Program di dessinaedje
 GenericName[xh]=Udweliso lwenkqubo lwepeyinti
 GenericName[x-test]=xxPaint Programxx
-GenericName[zh_CN]=绘图程序
+GenericName[zh_CN]=画图程序
 GenericName[zh_HK]=繪圖程式
 GenericName[zh_TW]=繪圖程式
 
@@ -189,7 +189,7 @@ Comment[tok]=ilo sitelen pona
 Comment[tr]=Kolay kullanılır bir boyama programı
 Comment[uk]=Проста у користуванні програма для малювання
 Comment[x-test]=xxAn easy-to-use paint programxx
-Comment[zh_CN]=一个简单易用的画图程序
+Comment[zh_CN]=一款简易画图程序
 Comment[zh_TW]=易於使用的繪圖程式
 
 Icon=kolourpaint
