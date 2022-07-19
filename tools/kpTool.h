@@ -87,9 +87,6 @@ public:
 
     QString text () const;
 
-    static QString toolTipForTextAndShortcut (const QString &text, const QList<QKeySequence> &shortcut);
-    QString toolTip () const;
-
     // Given a single <key>, returns a shortcut with <key>
     // (disabled when the user is editing text) and as an alternate,
     // <some modifiers>+<key>.
@@ -120,9 +117,6 @@ public:
 private:
     // Only called by ctor to create action().
     void initAction ();
-
-signals:
-    void actionToolTipChanged();
 
 public slots:
     // Call this when something below the mouse cursor may have changed

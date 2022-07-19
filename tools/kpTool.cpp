@@ -108,8 +108,6 @@ void kpTool::initAction ()
     d->action->setActionGroup(d->environ->toolsActionGroup ());
 
     d->action->setWhatsThis(d->description);
-
-    connect (d->action, &kpToolAction::changed, this, &kpTool::actionToolTipChanged);
 }
 
 //---------------------------------------------------------------------
@@ -118,37 +116,6 @@ void kpTool::initAction ()
 QString kpTool::text () const
 {
     return d->text;
-}
-
-//---------------------------------------------------------------------
-
-static bool KeyIsText (int key)
-{
-    // TODO: should work like !QKeyEvent::text().isEmpty()
-    return !(static_cast<unsigned int> (key) & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier));
-}
-
-//---------------------------------------------------------------------
-
-// public static
-QString kpTool::toolTipForTextAndShortcut (const QString &text,
-                                           const QList<QKeySequence> &shortcut)
-{
-    for(const auto &seq : shortcut)
-    {
-        if (seq.count () == 1 && ::KeyIsText (seq [0])) {
-            return i18nc ("<Tool Name> (<Single Accel Key>)", "%1 (%2)", text, seq.toString ().toUpper ());
-        }
-    }
-
-    return text;
-}
-
-//---------------------------------------------------------------------
-
-QString kpTool::toolTip () const
-{
-    return toolTipForTextAndShortcut(d->text, d->action->shortcuts());
 }
 
 //---------------------------------------------------------------------

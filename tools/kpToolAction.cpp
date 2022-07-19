@@ -45,25 +45,7 @@ kpToolAction::kpToolAction(const QString &text,
       connect (this, SIGNAL(triggered(bool)), receiver, slot);
   }
 
-  updateToolTip();
-  connect (this, &kpToolAction::changed, this, &kpToolAction::updateToolTip);
-
   ac->addAction(name, this);
-}
-
-//---------------------------------------------------------------------
-
-// protected
-void kpToolAction::updateToolTip()
-{
-  const QString newToolTip =
-      kpTool::toolTipForTextAndShortcut(text(), shortcuts()).remove(QLatin1Char('&'));
-
-  if ( newToolTip == toolTip() ) {
-    return;
-  }
-
-  setToolTip(newToolTip);
 }
 
 //---------------------------------------------------------------------

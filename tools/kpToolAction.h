@@ -44,9 +44,6 @@ class kpToolAction : public KToggleAction
                  const QString &pic, const QList<QKeySequence> &shortcut,
                  const QObject *receiver, const char *slot,
                  KActionCollection *ac, const QString &name);
-
-  private slots:
-    void updateToolTip();
 };
 
 
