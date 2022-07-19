@@ -50,12 +50,13 @@ class QMouseEvent;
 class QImage;
 class QWheelEvent;
 
+class KToggleAction;
+
 class kpColor;
 class kpCommandHistory;
 class kpDocument;
 class kpView;
 class kpViewManager;
-class kpToolAction;
 class kpToolEnvironment;
 class kpToolToolBar;
 
@@ -83,7 +84,7 @@ public:
             QObject *parent, const QString &name);
     ~kpTool () override;
 
-    kpToolAction *action () const;
+    KToggleAction *action () const;
 
     QString text () const;
 

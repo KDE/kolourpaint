@@ -40,7 +40,6 @@
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
-#include "tools/kpToolAction.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "environments/tools/kpToolEnvironment.h"
 

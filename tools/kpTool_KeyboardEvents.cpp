@@ -52,7 +52,6 @@
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
-#include "tools/kpToolAction.h"
 #include "environments/tools/kpToolEnvironment.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "views/kpView.h"

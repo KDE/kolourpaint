@@ -41,7 +41,6 @@
 
 #include "imagelib/kpColor.h"
 #include "widgets/toolbars/kpColorToolBar.h"
-#include "tools/kpToolAction.h"
 #include "environments/tools/kpToolEnvironment.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "views/kpView.h"
@@ -100,14 +99,16 @@ void kpTool::initAction ()
     KActionCollection *ac = d->environ->actionCollection ();
     Q_ASSERT (ac);
 
-    d->action = new kpToolAction(text(), objectName(), shortcutForKey(d->key),
-                                 this, SIGNAL(actionActivated()),
-                                 ac, objectName());
+    d->action = ac->add<KToggleAction>(objectName());
+    d->action->setText(text());
+    d->action->setWhatsThis(d->description);
+    d->action->setIcon(QIcon::fromTheme(objectName()));
+    ac->setDefaultShortcuts(d->action, shortcutForKey(d->key));
+
+    connect(d->action, &QAction::triggered, this, &kpTool::actionActivated);
 
     // Make tools mutually exclusive by placing them in the same group.
     d->action->setActionGroup(d->environ->toolsActionGroup ());
-
-    d->action->setWhatsThis(d->description);
 }
 
 //---------------------------------------------------------------------
@@ -139,7 +140,7 @@ QList<QKeySequence> kpTool::shortcutForKey (int key)
 //---------------------------------------------------------------------
 // public
 
-kpToolAction *kpTool::action () const
+KToggleAction *kpTool::action () const
 {
     return d->action;
 }

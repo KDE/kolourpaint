@@ -43,7 +43,6 @@
 #include "document/kpDocument.h"
 #include "layers/selections/image/kpImageSelectionTransparency.h"
 #include "tools/kpTool.h"
-#include "tools/kpToolAction.h"
 #include "tools/flow/kpToolBrush.h"
 #include "tools/flow/kpToolColorEraser.h"
 #include "tools/kpToolColorPicker.h"
@@ -242,7 +241,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 
     for (auto *tool : d->tools)
     {
-      kpToolAction *action = tool->action();
+      KToggleAction *action = tool->action();
       if (!enable && action->isChecked()) {
           action->setChecked(false);
       }

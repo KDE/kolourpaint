@@ -36,13 +36,14 @@
 #include "generic/kpSetOverrideCursorSaver.h"
 #include "layers/tempImage/kpTempImage.h"
 #include "environments/tools/kpToolEnvironment.h"
-#include "tools/kpToolAction.h"
 #include "views/manager/kpViewManager.h"
 #include "kpLogCategories.h"
 
-#include <QWidget>
-
 #include <KLocalizedString>
+#include <KToggleAction>
+
+#include <QIcon>
+#include <QWidget>
 
 //---------------------------------------------------------------------
 

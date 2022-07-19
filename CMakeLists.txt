@@ -215,7 +215,6 @@ set(kolourpaint_lib2_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolFlowPixmapBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolPen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolSpraycan.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpToolAction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpToolColorPicker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpTool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpTool_Drawing.cpp

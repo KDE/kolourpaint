@@ -39,9 +39,8 @@
   #undef environ  // macro on win32
 #endif
 
-class kpToolAction;
 class kpToolEnvironment;
-
+class KToggleAction;
 
 struct kpToolPrivate
 {
@@ -50,7 +49,7 @@ struct kpToolPrivate
     QString description;
     int key;
 
-    kpToolAction *action;
+    KToggleAction *action;
 
     // Drawing state.
     bool began;

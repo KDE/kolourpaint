@@ -37,11 +37,12 @@
 #include <QKeyEvent>
 #include <QToolButton>
 
+#include <KToggleAction>
+
 #include "kpLogCategories.h"
 
 #include "kpDefs.h"
 #include "tools/kpTool.h"
-#include "tools/kpToolAction.h"
 #include "widgets/toolbars/options/kpToolWidgetBrush.h"
 #include "widgets/toolbars/options/kpToolWidgetEraserSize.h"
 #include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
@@ -327,7 +328,7 @@ void kpToolToolBar::slotToolButtonClicked ()
 
     if (m_currentTool)
     {
-        kpToolAction *action = m_currentTool->action ();
+        KToggleAction *action = m_currentTool->action ();
         if (action)
         {
             action->setChecked (true);
