@@ -606,7 +606,7 @@ void kpMainWindow::slotPaste()
     {
         kpSetOverrideCursorSaver cursorSaver(Qt::ArrowCursor);
 
-        KMessageBox::sorry(this,
+        KMessageBox::error(this,
             i18n("<qt>KolourPaint cannot paste the contents of"
                  " the clipboard as it has an unknown format.</qt>"),
             i18n("Cannot Paste"));

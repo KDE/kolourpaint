@@ -543,7 +543,7 @@ void kpMainWindow::slotScan ()
         // No scanning support (kdegraphics/libkscan) installed?
         if (!d->scanDialog)
         {
-            KMessageBox::sorry (this,
+            KMessageBox::error (this,
                                 i18n("Failed to open scanning dialog."),
                                 i18nc("@title:window", "Scanning Failed"));
             return;

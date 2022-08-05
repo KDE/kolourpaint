@@ -117,7 +117,7 @@ kpColorCollection::~kpColorCollection()
 
 static void CouldNotOpenDialog (const QUrl &url, QWidget *parent)
 {
-     KMessageBox::sorry (parent,
+     KMessageBox::error (parent,
         i18n ("Could not open color palette \"%1\".",
               kpUrlFormatter::PrettyFilename (url)));
 }
@@ -150,7 +150,7 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   QString line = stream.readLine();
   if (line.indexOf(QLatin1String(" Palette")) == -1)
   {
-     KMessageBox::sorry (parent,
+     KMessageBox::error (parent,
         i18n ("Could not open color palette \"%1\" - unsupported format.\n"
               "The file may be corrupt.",
               kpUrlFormatter::PrettyFilename (url)));
@@ -210,7 +210,7 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
 
 static void CouldNotOpenKDEDialog (const QString &name, QWidget *parent)
 {
-     KMessageBox::sorry (parent,
+     KMessageBox::error (parent,
         i18n ("Could not open KDE color palette \"%1\".", name));
 }
 

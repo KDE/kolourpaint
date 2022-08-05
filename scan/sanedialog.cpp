@@ -70,7 +70,7 @@ bool SaneDialog::setup()
     }
     if (!m_ksanew->openDevice(m_openDev)) {
         // could not open the scanner
-        KMessageBox::sorry(nullptr, i18n("Opening the selected scanner failed."));
+        KMessageBox::error(nullptr, i18n("Opening the selected scanner failed."));
         m_openDev = QString();
         return false;
     }

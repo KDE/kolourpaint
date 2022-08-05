@@ -110,7 +110,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
             //       Or at least choose one consistently.
             //
             // TODO: Have captions for all dialogs in KolourPaint.
-            KMessageBox::sorry (parent,
+            KMessageBox::error (parent,
                                 i18n ("Could not open \"%1\".",
                                       kpUrlFormatter::PrettyFilename (url)));
         }
@@ -146,7 +146,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
 
     if (image.isNull ())
     {
-        KMessageBox::sorry (parent,
+        KMessageBox::error (parent,
                             i18n ("Could not open \"%1\" - unsupported image format.\n"
                                   "The file may be corrupt.",
                                   kpUrlFormatter::PrettyFilename (url)));

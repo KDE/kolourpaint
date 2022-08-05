@@ -743,7 +743,7 @@ void kpDocumentMetaInfoDialog::accept ()
     (void) metaInfo (&errorMessage);
     if (!errorMessage.isEmpty ())
     {
-        KMessageBox::sorry (this, errorMessage, i18nc ("@title:window", "Invalid Text Fields"));
+        KMessageBox::error (this, errorMessage, i18nc ("@title:window", "Invalid Text Fields"));
         return;
     }
 
