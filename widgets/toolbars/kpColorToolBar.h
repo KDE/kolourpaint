@@ -32,7 +32,7 @@
 
 #include <QDockWidget>
 #include <QFrame>
-#include <QWidget>
+#include <QCloseEvent>
 
 #include "imagelib/kpColor.h"
 
@@ -110,6 +110,8 @@ protected:
     // main window (by kpMainWindow::dropEvent()).
     void dragEnterEvent (QDragEnterEvent *e) override;
     void dragMoveEvent (QDragMoveEvent *e) override;
+
+    void closeEvent(QCloseEvent *event) override { event->ignore(); }
 
 private:
     void adjustToOrientation (Qt::Orientation o);
