@@ -30,7 +30,6 @@
 #define kpToolTextPrivate_H
 
 
-#include <QString>
 
 
 class kpToolTextInsertCommand;

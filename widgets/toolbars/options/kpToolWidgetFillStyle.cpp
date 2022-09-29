@@ -38,7 +38,6 @@
 
 #include "kpLogCategories.h"
 
-#include <QBrush>
 #include <QPainter>
 #include <QPixmap>
 

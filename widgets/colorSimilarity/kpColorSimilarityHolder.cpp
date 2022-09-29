@@ -37,9 +37,6 @@
 
 #include <cmath>
 
-#include <QPainter>
-#include <QPixmap>
-#include <QPolygon>
 
 #include "kpLogCategories.h"
 

@@ -31,7 +31,6 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "views/manager/kpViewManager.h"
 
-#include <QPainter>
 
 //---------------------------------------------------------------------
 

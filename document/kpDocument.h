@@ -30,7 +30,6 @@
 #define KP_DOCUMENT_H
 
 
-#include <QBitmap>
 #include <QObject>
 #include <QString>
 #include <QUrl>

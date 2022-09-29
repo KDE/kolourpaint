@@ -40,7 +40,6 @@
 
 #include <QColorDialog>
 #include <QContextMenuEvent>
-#include <QMouseEvent>
 #include <QScrollBar>
 
 //---------------------------------------------------------------------

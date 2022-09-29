@@ -31,13 +31,10 @@
 
 #include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 
-#include <QApplication>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
-#include <QTransform>
 #include <QImage>
 #include <QSpinBox>
 

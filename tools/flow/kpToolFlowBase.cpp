@@ -32,8 +32,6 @@
 
 #include <cstdlib>
 
-#include <QImage>
-#include <QPainter>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

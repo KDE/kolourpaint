@@ -34,7 +34,6 @@
 
 #include <QRadioButton>
 #include <QVBoxLayout>
-#include <QPrinter>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>

@@ -31,7 +31,6 @@
 
 
 #include <QDockWidget>
-#include <QFrame>
 #include <QCloseEvent>
 
 #include "imagelib/kpColor.h"

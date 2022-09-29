@@ -44,7 +44,6 @@
 #include <QEvent>
 #include <QKeyEvent>
 
-#include <KActionCollection>
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 

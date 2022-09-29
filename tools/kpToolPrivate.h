@@ -31,7 +31,6 @@
 
 
 #include <QPoint>
-#include <QPointer>
 
 #include <QSize>
 #ifdef Q_OS_WIN

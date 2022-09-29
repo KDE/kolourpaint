@@ -32,18 +32,10 @@
 #include "kpDocumentPrivate.h"
 
 
-#include <QColor>
-#include <QBitmap>
-#include <QBrush>
 #include <QFile>
 #include <QImage>
-#include <QList>
-#include <QPainter>
-#include <QRect>
 #include <QSaveFile>
-#include <QSize>
 #include <QTemporaryFile>
-#include <QTransform>
 #include <QMimeDatabase>
 
 #include "kpLogCategories.h"

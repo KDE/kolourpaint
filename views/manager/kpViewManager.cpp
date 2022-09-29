@@ -32,9 +32,6 @@
 #include "views/manager/kpViewManager.h"
 #include "kpViewManagerPrivate.h"
 
-#include <QApplication>
-#include <QList>
-#include <QTimer>
 
 #include "kpLogCategories.h"
 

@@ -29,11 +29,9 @@
 
 #include "kpViewScrollableContainer.h"
 
-#include <QBitmap>
 #include <QCursor>
 #include <QKeyEvent>
 #include <QPainter>
-#include <QPen>
 #include <QPixmap>
 #include <QTimer>
 #include <QScrollBar>

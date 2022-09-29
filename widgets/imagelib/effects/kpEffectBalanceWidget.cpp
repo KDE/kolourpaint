@@ -43,7 +43,6 @@
 #include <QComboBox>
 #include <QGridLayout>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
 
 #if DEBUG_KP_EFFECT_BALANCE

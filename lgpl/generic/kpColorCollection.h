@@ -35,7 +35,6 @@
 #include <kolourpaint_lgpl_export.h>
 
 #include <QColor>
-#include <QList>
 #include <QString>
 #include <QStringList>
 #include <QWidget>

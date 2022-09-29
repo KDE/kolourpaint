@@ -31,7 +31,6 @@
 
 #include <cmath>
 
-#include <QBitmap>
 #include <QImage>
 
 #include "kpLogCategories.h"

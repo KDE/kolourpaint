@@ -27,7 +27,6 @@
 #include <QApplication>
 #include <QDebug>
 #include <QLabel>
-#include <QLineEdit>
 #include <QResizeEvent>
 #include <QSlider>
 #include <QStyle>

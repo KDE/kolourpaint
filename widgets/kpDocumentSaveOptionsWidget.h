@@ -31,7 +31,6 @@
 
 
 #include <QRect>
-#include <QSize>
 #include <QWidget>
 
 #include "imagelib/kpDocumentMetaInfo.h"

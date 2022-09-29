@@ -51,7 +51,6 @@
 #include "kpViewManagerPrivate.h"
 
 #include <QApplication>
-#include <QList>
 #include <QTimer>
 //#include <QInputContext>
 

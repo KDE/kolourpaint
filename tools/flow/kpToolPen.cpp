@@ -38,7 +38,6 @@
 #include <KLocalizedString>
 
 #include <QPainter>
-#include <QPen>
 
 //---------------------------------------------------------------------
 

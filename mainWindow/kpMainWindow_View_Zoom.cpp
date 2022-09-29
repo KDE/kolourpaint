@@ -35,7 +35,6 @@
 
 #include <KSelectAction>
 #include <KStandardAction>
-#include <KToggleAction>
 #include <KActionCollection>
 #include <KLocalizedString>
 

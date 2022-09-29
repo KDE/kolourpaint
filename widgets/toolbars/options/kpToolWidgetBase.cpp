@@ -38,11 +38,8 @@
 #include <KSharedConfig>
 #include "kpLogCategories.h"
 
-#include <QBitmap>
-#include <QColor>
 #include <QEvent>
 #include <QHelpEvent>
-#include <QImage>
 #include <QPainter>
 #include <QPixmap>
 #include <QToolTip>

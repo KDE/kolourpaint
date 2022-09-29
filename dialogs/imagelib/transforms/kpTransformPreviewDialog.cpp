@@ -32,12 +32,10 @@
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 #include <QApplication>
-#include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
 
 #include "kpLogCategories.h"

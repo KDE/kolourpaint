@@ -33,8 +33,6 @@
 
 #include <KLocalizedString>
 
-#include <QBitmap>
-#include <QPainter>
 #include <QPixmap>
 
 

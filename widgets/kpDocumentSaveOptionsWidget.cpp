@@ -43,18 +43,14 @@
 #include <KConfigGroup>
 
 #include <QApplication>
-#include <QBoxLayout>
 #include <QBuffer>
 #include <QComboBox>
-#include <QEvent>
-#include <QGridLayout>
 #include <QImage>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTimer>
-
+#include <QHBoxLayout>
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
         const QImage &docPixmap,

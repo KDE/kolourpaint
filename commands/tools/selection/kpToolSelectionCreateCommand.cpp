@@ -44,15 +44,6 @@
 
 #include "kpLogCategories.h"
 
-#include <QApplication>
-#include <QBitmap>
-#include <QCursor>
-#include <QEvent>
-#include <QMenu>
-#include <QPainter>
-#include <QPixmap>
-#include <QPolygon>
-#include <QTimer>
 
 
 kpToolSelectionCreateCommand::kpToolSelectionCreateCommand (const QString &name,

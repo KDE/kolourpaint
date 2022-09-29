@@ -38,14 +38,11 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <QBitmap>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QImage>
-#include <QLayout>
-#include <QPixmap>
 #include <QRadioButton>
-
+#include <QVBoxLayout>
 
 kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
                                                         QWidget *parent)

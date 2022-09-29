@@ -39,7 +39,6 @@
 
 #include <QGridLayout>
 #include <QLabel>
-#include <QSpinBox>
 
 
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,

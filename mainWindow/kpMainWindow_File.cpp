@@ -31,7 +31,6 @@
 #include "kpMainWindowPrivate.h"
 
 #include <QAction>
-#include <QDataStream>
 #include <QDesktopWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -41,7 +40,6 @@
 #include <QSize>
 #include <QPrinter>
 #include <QPrintDialog>
-#include <QScreen>
 #include <QApplication>
 #include <QTimer>
 #include <QLabel>
@@ -51,6 +49,7 @@
 #include <QImageWriter>
 #include <QMimeDatabase>
 #include <QPrintPreviewDialog>
+#include <QScreen>
 
 #include <KActionCollection>
 #include <KEMailClientLauncherJob>

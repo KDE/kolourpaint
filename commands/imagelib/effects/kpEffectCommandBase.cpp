@@ -34,6 +34,8 @@
 
 #include <KLocalizedString>
 
+#include <QCursor>
+
 //--------------------------------------------------------------------------------
 
 struct kpEffectCommandBasePrivate

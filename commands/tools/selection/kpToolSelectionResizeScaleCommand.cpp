@@ -41,7 +41,6 @@
 #include "kpLogCategories.h"
 
 #include <QApplication>
-#include <QCursor>
 #include <QTimer>
 
 #include <KLocalizedString>

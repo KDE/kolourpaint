@@ -52,14 +52,9 @@
 #include <KIO/StatJob>
 
 #include <QColor>
-#include <QBrush>
-#include <QFile>
 #include <QImage>
-#include <QList>
-#include <QPainter>
 #include <QRect>
 #include <QSize>
-#include <QTransform>
 
 //---------------------------------------------------------------------
 

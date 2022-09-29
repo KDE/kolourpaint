@@ -39,17 +39,14 @@
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include <QButtonGroup>
 #include <QGroupBox>
 #include <QIcon>
 #include <QLabel>
-#include <QLayout>
 #include <QSpinBox>
-#include <QPolygon>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QTransform>
-
+#include <QGridLayout>
 
 // private static
 int kpTransformRotateDialog::s_lastWidth = -1,

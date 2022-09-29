@@ -32,7 +32,6 @@
 
 #include <limits.h>
 
-#include <QtGlobal>
 #include <QPoint>
 #include <QSize>
 #include <QString>

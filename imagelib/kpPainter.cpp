@@ -38,7 +38,6 @@
 #include <cstdio>
 
 #include <QPainter>
-#include <QPolygon>
 #include <QRandomGenerator>
 
 #include "kpLogCategories.h"

@@ -34,7 +34,6 @@
 
 
 #include <QRect>
-#include <QString>
 
 #include <KLocalizedString>
 

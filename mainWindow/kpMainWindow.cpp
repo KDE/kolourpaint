@@ -51,9 +51,7 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
-#include <QEvent>
 #include <QMenu>
-#include <QTimer>
 #include <QDropEvent>
 
 #include "kpLogCategories.h"

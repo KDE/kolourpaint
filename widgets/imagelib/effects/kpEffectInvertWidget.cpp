@@ -39,10 +39,7 @@
 #include <KLocalizedString>
 
 #include <QCheckBox>
-#include <QImage>
-#include <QLayout>
-#include <QPixmap>
-
+#include <QVBoxLayout>
 
 kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
                                             QWidget *parent)

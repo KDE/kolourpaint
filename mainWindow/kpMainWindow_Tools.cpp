@@ -30,7 +30,6 @@
 #include "kpMainWindowPrivate.h"
 
 #include <QActionGroup>
-#include <QList>
 
 #include <KActionCollection>
 #include <KSharedConfig>

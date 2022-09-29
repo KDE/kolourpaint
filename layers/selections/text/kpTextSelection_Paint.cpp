@@ -41,7 +41,6 @@
 
 #include "kpLogCategories.h"
 
-#include <QBitmap>
 #include <QFont>
 #include <QList>
 #include <QPainter>

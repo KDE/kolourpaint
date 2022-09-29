@@ -40,7 +40,6 @@
 #include "kpLogCategories.h"
 
 #include <QFontMetrics>
-#include <QList>
 
 
 // public

@@ -37,7 +37,6 @@
 #include "kpLogCategories.h"
 #include <KSharedConfig>
 
-#include <QBitmap>
 #include <QImage>
 #include <QString>
 

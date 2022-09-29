@@ -33,9 +33,7 @@
 
 
 #include <QPainter>
-#include <QPainterPath>
 #include <QImage>
-#include <QPoint>
 #include <QPolygon>
 
 #include "kpLogCategories.h"

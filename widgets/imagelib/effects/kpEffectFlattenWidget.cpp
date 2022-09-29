@@ -42,8 +42,7 @@
 #include <KLocalizedString>
 
 #include <QCheckBox>
-#include <QLayout>
-
+#include <QVBoxLayout>
 
 // public static
 QColor kpEffectFlattenWidget::s_lastColor1;

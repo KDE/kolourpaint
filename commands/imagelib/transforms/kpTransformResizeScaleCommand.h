@@ -30,7 +30,6 @@
 #define kpTransformResizeScaleCommand_H
 
 
-#include <QPixmap>
 
 #include "imagelib/kpColor.h"
 #include "commands/kpCommand.h"
