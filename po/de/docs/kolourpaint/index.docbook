@@ -1,0 +1,1786 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % German "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>Das Handbuch zu &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2018-03-23</date>
+<releaseinfo
+>Anwendungen 18.04</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; ist ein freies und einfach zu benutzendes Mal- und Zeichenprogramm von &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Einleitung</title>
+<para
+>&kolourpaint; ist ein freies und einfach zu benutzendes Mal- und Zeichenprogramm von &kde;. Es ist gut geeignet für alltägliche Aufgaben wie:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Zeichnen von Diagrammen und <quote
+>Freihandzeichnen</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Bearbeitung von Bildschirmfotos - Aufnehmen und verändern</para>
+</listitem>
+<listitem>
+<para
+>Bildbearbeitung - Fotos und eingescannte Fotos bearbeiten, Effekte anwenden</para>
+</listitem>
+<listitem>
+<para
+>Bearbeitung von Symbolen - Zeichnen von Cliparts und Logos mit Transparenz</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Arbeiten mit &kolourpaint;</title>
+
+<para
+>Klicken Sie auf folgende Verknüpfungen, um die Eigenschaften von &kolourpaint; kennen zu lernen:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Werkzeuge</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Arbeiten mit Farben</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Ansichtsoptionen</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Bildeffekte</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Werkzeuge</title>
+
+<para
+>Im Menü <guimenu
+>Einstellungen</guimenu
+> können Sie festlegen, ob mit Anti-Aliasing (Voreinstellung) oder ohne gezeichnet wird. </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Aufnehmen von Bildschirmfotos</title>
+
+<para
+>Ein <quote
+>Bildschirmfoto</quote
+> zeigt den Inhalt des Bildschirms Ihres Rechners. Damit können Sie erklären, welche Aktionen für ein bestimmte Aufgabe ausgeführt werden sollen oder Probleme zeigen, die Sie gefunden haben. </para>
+<para
+>Um Bildschirmfotos zur Bearbeitung in das &kolourpaint; zu laden wählen Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Bildschirmfoto aufnehmen</guimenuitem
+></menuchoice
+> aus dem Menü. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Stellen Sie dann im Dialog eine <guilabel
+>Verzögerung für Bildschirmfotos</guilabel
+> ein und aktivieren oder deaktivieren <guilabel
+>Hauptfenster ausblenden</guilabel
+> für die Aufnahme. Haben Sie alles richtig eingestellt, drücken Sie auf <guibutton
+>OK</guibutton
+>. Das aufgenommenen Bildschirmfoto wird dann direkt im Bearbeitungsbereich von &kolourpaint; angezeigt. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Referenz der Werkzeuge</title>
+
+<para
+>Um ein Werkzeug in &kolourpaint; schnell auszuwählen, drücken Sie das einzelne zugeordnete Tastenkürzel. Diese Tastenkürzel werden im folgenden Text und in den Kurztipps des <interface
+>Werkzeugkastens</interface
+> beschrieben. Sie können diese Tastenkürzel auch mit gedrückten <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+>-Tasten benutzen, dies ist sogar bei der Texteingabe erforderlich (die einzelnen Tastenkürzel sind hier abgeschaltet). Um zum Beispiel den Pinsel auszuwählen, drücken Sie <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> oder nur B, wenn Sie keinen Text eingeben. </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Pinsel</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Farbradierer</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Farbauswahl</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Linienzug</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Kurve</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>Ellipse</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Radierer</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Fläche füllen</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Linie</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Stift</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Polygon</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Rechteck</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Abgerundetes Rechteck</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Auswahl (elliptisch)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Auswahl (Freihand)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Auswahl (rechteckig)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Sprühdose</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Text</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Pinsel <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Klicken oder Ziehen Sie mit der gedrückten linken Maustaste, um mit dem Pinsel zu malen.  </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Klicken Sie auf eine der Formen, um die Art des Pinsels auszuwählen. Es gibt Pinsel als Kreis, Quadrat, Schrägstrich und umgekehrten Schrägstrich.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Farbauswahl <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Um die Vordergrundfarbe einzustellen, klicken Sie mit der <mousebutton
+>linken</mousebutton
+> Maustaste auf ein Pixel im Bild. Für die Hintergrundfarbe benutzen Sie die <mousebutton
+>rechte</mousebutton
+> Maustaste. &kolourpaint; arbeitet dann mit dem vorher gewählten Werkzeug weiter.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Linienzug und Polygon <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken oder Ziehen Sie mit der gedrückten linken Maustaste, um Linienzüge zu zeichnen. Für Polygone klicken Sie einzelne Punkte, die Anfangs- und Endpunkte werden dann automatisch zu einem Polygon verbunden.</para>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; Maustaste in der Hintergrundfarbe und kehrt auch die Füllfarbe für Polygone um.</para>
+
+<para
+>Sie können die <link linkend="tool-options"
+>Linienbreite</link
+> und für Polygone auch die <link linkend="tool-options"
+>Flächenfüllung</link
+> einstellen.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Kurve <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Mit Klicken und Ziehen zeichnen Sie eine Linie - dies legt den Anfangs- und Endpunkt der Kurve fest. Durch Ziehen können Sie bis zu zwei Kontrollpunkte setzen. Um die Kurve ohne diese Kontrollpunkte zu zeichnen, klicken Sie mit der anderen Maustaste. Das Werkzeug Kurve zeichnet eine kubische Bezier-Kurve.</para>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe.</para>
+
+<para
+>Sie können auch die <link linkend="tool-options"
+>Linienbreite</link
+> einstellen.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Ellipse <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie, um eine Ellipse zu zeichnen.</para>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe und kehrt die Füllfarbe um.</para>
+
+<para
+>Sie können auch die <link linkend="tool-options"
+>Linienbreite und die Flächenfüllung</link
+> einstellen.</para>
+
+<para
+>Weitere Funktionen erreichen Sie mit diesen Zusatztasten:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Halten Sie die &Shift;-Taste gedrückt und ziehen Sie, um einen Kreis zu zeichnen.</para>
+</listitem>
+<listitem>
+<para
+>Um eine Ellipse mit einem bestimmten Mittelpunkt zu zeichnen, halten Sie die &Ctrl;-Taste, klicken auf den Mittelpunkt und ziehen, bis die Ellipse die gewünschte Größe und Form hat.</para>
+</listitem>
+<listitem>
+<para
+>Um einen Kreis mit einem bestimmten Mittelpunkt zu zeichnen, halten Sie die &Ctrl;- und die &Shift;-Tasten, klicken auf den Mittelpunkt und ziehen, bis der Kreis die gewünschte Größe hat.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Die Radierer</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Radierer <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie mit dem Radierer, um Fehler zu beseitigen.</para>
+
+<note>
+<para
+>Im Gegensatz zu den anderen Werkzeugen zeichnet der Radierer in der Hintergrundfarbe. Um mit der Vordergrundfarbe zu radieren, benutzen Sie die &RMB;.</para>
+</note>
+
+<para
+>Der Radierer hat nur eine <link linkend="tool-options"
+>quadratische </link
+>Form. Um mit anderen Formen zu radieren, benutzen Sie den <link linkend="tool-brush"
+>Pinsel</link
+> und die &RMB;.</para>
+
+<tip>
+<para
+>Ein Doppelklick auf das Symbol Radierer löscht die gesamte Zeichnung. Dies erreichen Sie auch mit <link linkend="image-clear"
+>Löschen</link
+> im Menü Bild.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Farbradierer <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie, um in den Pixeln die Vordergrundfarbe durch die Hintergrundfarbe zu ersetzen. Um alle Pixel auf gleiche Art (aber nicht zwingend genau gleich) in die Vordergrundfarbe umzuwandeln, wie zum Beispiel Bilder mit Dither oder Fotos, benutzen Sie als Einstellung für <link linkend="color-box"
+>Farbähnlichkeit</link
+> einen anderen Wert als Exakt.</para>
+
+<note>
+<para
+>Im Gegensatz zu den anderen Werkzeugen zeichnet der Radierer in der Hintergrundfarbe. Um in den Pixeln die Hintergrundfarbe durch die Vordergrundfarbe zu ersetzen, benutzen Sie die &RMB;.</para>
+</note>
+
+<para
+>Sie können die <link linkend="tool-options"
+>Größe des Radierers</link
+> einstellen.</para>
+
+<tip>
+<para
+>Mit einem Doppelklick auf das Symbol „Farbradierer“ bearbeiten Sie das gesamte Bild.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Fläche füllen <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken Sie in einen Bereich, um ihn mit Farbe zu füllen. Für eine Füllung mit Dither stellen Sie die <link linkend="color-box"
+>Farbähnlichkeit</link
+> auf einen andern Wert als Exakt ein.</para>
+
+<para
+>Die &LMB; füllt mit der Vordergrundfarbe, die &RMB; mit der Hintergrundfarbe.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Linie <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie, um eine Linie zu zeichnen.</para>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe.</para>
+
+<para
+>Sie können auch die <link linkend="tool-options"
+>Linienbreite</link
+> einstellen.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Mit gedrückter &Ctrl;-Taste zeichnen Sie Linien mit Winkeln in 30 Grad-Schritten - dies sind die Linien im roten Diagramm.</para>
+</listitem>
+<listitem>
+<para
+>Mit gedrückter &Shift;-Taste zeichnen Sie Linien mit Winkeln in 45 Grad-Schritten - dies sind die Linien im blauen Diagramm.</para>
+</listitem>
+<listitem>
+<para
+>Mit gedrückter &Ctrl;- und &Shift;-Taste zeichnen Sie Linien mit Winkeln in 30 und 45 Grad-Schritten - dies sind die Linien im grünen Diagramm.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Stift <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Mit Klicken zeichnen Sie einen Punkt, mit Klicken und Ziehen eine Freihandlinie.</para>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Rechtecke <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie, um ein Rechteck zu zeichnen. Das Abgerundete Rechteck wird mit runden Ecken gezeichnet.</para>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe und kehrt die Füllfarbe um.</para>
+
+<para
+>Sie können auch die <link linkend="tool-options"
+>Linienbreite und die Flächenfüllung</link
+> einstellen.</para>
+
+<para
+>Weitere Funktionen erreichen Sie mit diesen Zusatztasten:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Ziehen bei gedrückter &Shift;-Taste zeichnet ein Quadrat.</para>
+</listitem>
+<listitem>
+<para
+>Um ein Rechteck mit einem bestimmten Mittelpunkt zu zeichnen, halten Sie die &Ctrl;-Taste, klicken auf den Mittelpunkt und ziehen, bis das Rechteck die gewünschte Größe und Form hat.</para>
+</listitem>
+<listitem>
+<para
+>Um ein Quadrat mit einem bestimmten Mittelpunkt zu zeichnen, halten Sie die &Ctrl;- und die &Shift;-Tasten, klicken auf den Mittelpunkt und ziehen, bis das Quadrat die gewünschte Größe hat.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Auswahl <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Mit den Auswahlwerkzeugen können Sie die Grenzen einer Auswahl zeichnen.</para>
+
+<para
+>Klicken Sie auf eine Auswahl und ziehen Sie, um sie zu verschieben. Die Ansicht des gesamten Bildes wird, falls notwendig, auch verschoben, damit Sie sie die Auswahl auch in aktuell nicht angezeigte Teile des Bildes bewegen können.</para>
+
+<para
+>Sie können das ganze Bild mit <link linkend="image-resize-scale"
+>Größe verändern</link
+> oder die Auswahl mit <link linkend="image-resize-scale"
+>Intelligent skalieren</link
+> durch Ziehen an den Kontrollpunkten bearbeiten. Drücken Sie die &Shift;taste beim Ziehen, um das Seitenverhältnis einer Auswahl beizubehalten. Die &RMB; öffnet ein Kontextmenü mit den Befehlen <guimenu
+>Bearbeiten</guimenu
+> und <link linkend="image-effects-section"
+>Bildeffekte</link
+>. </para>
+
+<tip>
+<para
+>Sie können auch die Cursor-Tasten benutzen, um die Grenze einer Auswahl zu zeichnen oder sie zu verschieben.</para>
+</tip>
+
+<para
+>Wenn Sie die &Ctrl;-Taste drücken, ehe Sie die Auswahl verschieben, wird die Auswahl kopiert. Wenn Sie die &Shift;-Taste drücken, ehe Sie die Auswahl verschieben, wird die Auswahl verwischt. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Es gibt zwei Auswahl-Modi: Deckend (Voreinstellung) und Transparent. Benutzen Sie den transparenten Auswahl-Modus, dann sind alle Pixel in der Hintergrundfarbe transparent (Hintergrund-Subtraktion). Damit können Sie einen Bereich ohne den Hintergrund auswählen. Um die Hintergrund-Subtraktion in einem Bild mit Dither anzuwenden, müssen Sie die  <link linkend="color-box"
+>Farbähnlichkeit</link
+> auf einen anderen Wert als Exakt einstellen.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Sie können Bildeffekte auf eine Auswahl anwenden - weitere Informationen finden Sie unter <link linkend="image-effects-section"
+>Bildeffekte</link
+>.</para>
+
+<para
+>Sie können eine Auswahl in eine Datei speichern, indem Sie den Eintrag <guimenuitem
+>In Datei kopieren ...</guimenuitem
+> aus dem Auswahl-Kontextmenü oder den Eintrag <guimenuitem
+>In Datei kopieren ...</guimenuitem
+> aus dem Hauptmenü verwenden. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Sprühdose <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie, um Farbe aufzusprühen. Halten Sie den Mauszeiger mit gedrückter Taste länger auf die gleiche Stelle, um die Farbe kräftiger aufzutragen.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicken Sie auf eine Form, um die Größe der Sprühdose einzustellen. Zur Auswahl stehen Ihnen Größen von 9x9, 17x17 und 29x29 Pixeln.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Text <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicken und ziehen Sie, um ein Textfeld für die Eingabe zu öffnen. Sobald der Rand angezeigt wird, können Sie Text eingeben. Klicken und ziehen Sie den Rand, um das Feld zu verschieben. Die Größe des Textfeldes können Sie mit den Kontrollpunkten oder im Dialog <link linkend="image-resize-scale"
+>Größe ändern</link
+> einstellen. </para>
+
+<tip>
+<para
+>Wenn Sie das Textfeld abgewählt haben, können Sie mit <guimenuitem
+>Rückgängig</guimenuitem
+> den Text noch einmal bearbeiten.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Arbeiten mit transparenten Farben</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Links sehen Sie ein Beispielbild. Rechts das Bild mit Text in deckenden Vorder- und Hintergrundfarben. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Links sehen Sie das Beispielbild mit eingefügtem Text in deckender Vordergrundfarbe und transparenter Hintergrundfarbe. Rechts das Beispielbild mit eingefügtem Text in transparenter Vordergrundfarbe und deckender Hintergrundfarbe.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Gemeinsame Optionen für Werkzeuge</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicken Sie auf ein Quadrat, um die Größe der Radierer einzustellen. Zur Auswahl stehen Quadrate mit Seitenlängen von 2, 3, 5, 9, 17 und 29 Pixeln.</para>
+
+<para
+>Diese Einstellung der Größe wirkt sich auf alle <link linkend="tool-erasers"
+>Radierer</link
+> aus.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicken Sie auf eine der Linien, um die Breite einzustellen. Zur Auswahl stehen Linienbreiten von 1, 2, 3, 5 und 8 Pixeln.</para>
+
+<para
+>Die Einstellung der Linienbreite wirkt sich auf <link linkend="tool-polystar"
+>Linienzug</link
+>, <link linkend="tool-curve"
+>Kurve</link
+>, <link linkend="tool-ellipse"
+>Ellipse</link
+>, <link linkend="tool-line"
+>Linien</link
+>, <link linkend="tool-polystar"
+>Polygon</link
+>, <link linkend="tool-rectangles"
+>Rechteck</link
+> und <link linkend="tool-rectangles"
+>Abgerundetes Rechteck</link
+> aus. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicken Sie auf eines der Rechtecke, um die Flächenfüllung einzustellen. Zur Auswahl stehen <quote
+>Keine Füllung</quote
+> und Füllung mit Vorder- oder Hintergrundfarbe.</para
+> <para
+>Die Einstellung der Flächenfüllung wirkt sich auf <link linkend="tool-ellipse"
+>Ellipse</link
+>, <link linkend="tool-polystar"
+>Polygon</link
+>, <link linkend="tool-rectangles"
+>Rechteck</link
+> und <link linkend="tool-rectangles"
+>Abgerundetes Rechteck</link
+> aus. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Arbeiten mit Farben</title>
+
+<sect1 id="color-box">
+<title
+>Das Farbfeld</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Farbfeld</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Das Farbfeld ist in drei Abschnitte eingeteilt. Die Farbtafel, die Farbpalette und die Auswahl der Farbähnlichkeit.</para>
+
+<para
+>Die Farbtafel zeigt die aktuelle Vordergrundfarbe als Quadrat auf einem anderen Quadrat mit der Hintergrundfarbe. Die <mousebutton
+>linke</mousebutton
+> Maustaste zeichnet in der Vordergrundfarbe, die <mousebutton
+>rechte</mousebutton
+> Maustaste in der Hintergrundfarbe (mit Ausnahme der <link linkend="tool-erasers"
+>Radierer</link
+>). Ein Klick auf den Doppelpfeil vertauscht Vorder- und Hintergrundfarbe. </para>
+
+<para
+>Die Farbpalette zeigt eine Reihe von Farben zur Auswahl an. Die durchsichtige Pyramide stellt die transparente Farbe dar. Ein Klick mit der linken Maustaste auf eine Farbe setzt die Vordergrundfarbe, ein Klick mit der rechten Maustaste auf eine Farbe die Hintergrundfarbe. Außerdem können Sie jede deckende Farbe auf die Quadrate der Farbtafel ziehen. Mit einem Doppelklick bearbeiten Sie Farben in der Farbtafel oder Farbpalette. Mit dem Werkzeug <link linkend="tool-color-picker"
+>Farbwahl</link
+> können Sie auch eine Farbe aus dem Bild auswählen. </para>
+
+<para
+>Mit Farbähnlichkeit können Sie Bilder und Fotos mit Dither besser bearbeiten, etwa so wie mit der Eigenschaft <quote
+>Zauberstab</quote
+> anderer Zeichenprogramme. Farbähnlichkeit wird angewendet auf transparente Auswahl, aber auch auf die Werkzeuge <link linkend="tool-flood-fill"
+>Fläche füllen</link
+>, <link linkend="tool-eraser-clr"
+>Farbradierer</link
+> und <link linkend="image-autocrop"
+>Automatisch zuschneiden / Internen Rand entfernen</link
+>. Mit Doppelklick auf das Symbol Farbähnlichkeit können Sie einstellen, wie ähnlich Farben sein müssen, um als gleich bewertet zu werden. Arbeiten Sie mit einer Auswahl im transparenten Modus, wird jede Farbe der Auswahl, die der Hintergrundfarbe ähnlich ist, auch transparent. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Das Bild links zeigt ein Beispiel. Die rechten Bilder zeigen die Anwendung der Flächenfüllung mit Farbähnlichkeiten von 5&nbsp;%, 15&nbsp;% und 30&nbsp;%. In diesem Beispiel füllt die Flächenfüllung mit einer Farbähnlichkeit <guilabel
+>Exakt</guilabel
+> in (80, 100) nur einen Punkt, da die benachbarten Pixel ähnlich, aber nicht gleich sind. Wird die Einstellung für die Farbähnlichkeit vergrößert, werden auch mehr Pixel mit ähnlicher Farbe als gleich bewertet, dadurch vergrößert sich die Flächenfüllung.  </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Ansichtsoptionen</title>
+
+<sect1 id="view-options-section">
+<title
+>Referenz der Ansichtsoptionen</title>
+
+<para
+><link linkend="view-zoom"
+>Vergrößerung einschließlich des Gitters</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Vorschaubild</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Vergrößerung einschließlich des Gitters</title>
+<para
+>Erhöhen Sie den Vergrößerungsfaktor, um Bilder genauer bearbeiten zu können, oder verringern Sie ihn, um das gesamte Bild zu sehen.</para>
+
+<important>
+<para
+>Bei Vergrößerungsfaktoren, die kein Vielfaches von 100&nbsp;% sind, können sich Teile des Bildes bei der Bearbeitung verschieben. Außerdem treten auch kleinere Darstellungsfehler auf. </para>
+</important>
+
+<para
+>Bei Vergrößerungsfaktoren von mehr als 400&nbsp;%, die ein Vielfaches von 100&nbsp;% sind, können Sie ein <guimenuitem
+>Gitter anzeigen</guimenuitem
+> lassen, um einzelne Pixel genauer bearbeiten zu können.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Das erste Bild zeigt das Werkzeugsymbol <link linkend="tool-text"
+>Text</link
+>, das nächste das gleiche Symbol bei einem Vergrößerungsfaktor von 600&nbsp;% mit eingeschaltetem Gitter.</para>
+
+<tip>
+<para
+>Zusätzlich können Sie mit dem <mousebutton
+>Mausrad</mousebutton
+> bei gedrückter &Ctrl;taste die Vergrößerung ändern. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Vorschaubild</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Im <guimenuitem
+>Modus „Vollständiges Vorschaubild“</guimenuitem
+> wird das gesamte Bild so skaliert, das es vollständig in das Vorschaufenster passt (Bild rechts-oben). </para>
+<para
+>Ansonsten zeigt das Vorschaubild den oberen linken Bereich des Bildes im Hauptfensters an (Bild rechts-unten). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Bildeffekte</title>
+
+<sect1 id="image-effects-section">
+<title
+>Referenz der Bildeffekte</title>
+<para
+><link linkend="image-autocrop"
+>Automatisch zuschneiden / Internen Rand entfernen</link
+></para>
+<para
+><link linkend="image-balance"
+>Abgleich</link
+></para>
+<para
+><link linkend="image-clear"
+>Löschen</link
+></para>
+<para
+><link linkend="image-emboss"
+>Relief</link
+></para>
+<para
+><link linkend="image-flatten"
+>Einfärben</link
+></para>
+<para
+><link linkend="image-flip"
+>Senkrecht spiegeln</link
+></para>
+<para
+><link linkend="image-invert"
+>Invertieren</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Farben reduzieren</link
+></para>
+<para
+><link linkend="image-grayscale"
+>In Graustufen umwandeln</link
+></para>
+<para
+><link linkend="image-monochrome"
+>In Schwarzweiß umwandeln (mit Dither)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Waagerecht spiegeln</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Größe ändern / Skalieren</link
+></para>
+<para
+><link linkend="image-rotate"
+>Drehen</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Als Bild verwenden (Zuschneiden)</link
+></para>
+<para
+><link linkend="image-skew"
+>Kippen</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Weich- &amp; Scharfzeichnen</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Mehr Effekte</link
+></para>
+<para
+><link linkend="image-notes"
+>Anmerkungen</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Automatisch zuschneiden / Internen Rand entfernen</title>
+
+<para
+>Entfernt automatisch den Randbereich eines Bildes oder einer Auswahl. Benutzen Sie ‚Automatisch zuschneiden‘ für eine Zeichnung, die das gesamte Bild oder die Auswahl nicht ausfüllt, wenn Sie den überstehenden Randbereich abschneiden wollen. Verwenden Sie diese Eigenschaft bei einem Randbereich mit Dither, müssen Sie auch die <link linkend="color-box"
+>Farbähnlichkeit</link
+> einstellen.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Abgleich</title>
+
+<para
+>Diese Eigenschaft erreichen Sie über den Dialog <link linkend="image-more-effects"
+>Mehr Effekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Hier können Sie Helligkeit, Kontrast und Gammawert des Bildes oder der Auswahl einstellen. </para>
+
+<note>
+<para
+>Der gebräuchliche Wert für Gamma (ein Dezimalwert von 0,10 bis 10,00) wird zwischen dem Drehfeld <guilabel
+>Gamma</guilabel
+> und dem Knopf <guibutton
+>Zurücksetzen</guibutton
+> angezeigt. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Löschen</title>
+
+<para
+>Dies füllt das gesamte Bild oder die Auswahl mit der Hintergrundfarbe.</para>
+
+<tip>
+<para
+>Mit einem Doppelklick auf das Symbol <link linkend="tool-eraser-std"
+>Radierer</link
+> löschen Sie das gesamte Bild.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Relief</title>
+
+<para
+>Diese Eigenschaft erreichen Sie über den Dialog <link linkend="image-more-effects"
+>Mehr Effekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Kreuzen Sie <guilabel
+>Aktivieren</guilabel
+> an, um den Prägeeffekt zu verwenden. Dies betont die Kanten und gibt dem Bild oder der Auswahl ein &quot;eingraviertes Aussehen&quot;. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Einfärben</title>
+
+<para
+>Diese Eigenschaft erreichen Sie über den Dialog <link linkend="image-more-effects"
+>Mehr Effekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Färbt das Bild in verschiedenen Zwischentönen der beiden ausgewählten Farben. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Senkrecht spiegeln</title>
+
+<para
+>Spiegelt das gesamte Bild oder die Auswahl senkrecht.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Invertieren</title>
+
+<para
+>Diese Eigenschaft erreichen Sie über den Dialog <link linkend="image-more-effects"
+>Mehr Effekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Invertiert einen oder mehr RGB-Kanäle eines Bildes oder einer Auswahl. Wählen Sie <guilabel
+>Alle</guilabel
+>, um ein Foto in ein Negativ und umgekehrt zu ändern.</para>
+
+<tip>
+<para
+>Um schnell alle Kanäle zu invertieren, müssen Sie nicht diesen Dialog verwenden. Wählen Sie stattdessen den Eintrag <guimenuitem
+>Farben invertieren</guimenuitem
+> im Menü <guimenu
+>Bild</guimenu
+> oder im Menü  <guimenu
+>Auswahl</guimenu
+>. Das Menü <guimenu
+>Auswahl</guimenu
+> wird nur dann angezeigt, wenn Sie ein Auswahlwerkzeug verwenden. Zusätzlich finden Sie diese Aktion im Kontextmenü, das durch einen Klick mit der &RMBn; in den Bildbereich geöffnet wird. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Waagerecht spiegeln</title>
+
+<para
+>Spiegelt das gesamte Bild oder die Auswahl waagerecht.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Farben reduzieren</title>
+
+<para
+>Diese Eigenschaft erreichen Sie über den Dialog <link linkend="image-more-effects"
+>Mehr Effekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Dies verringert die Anzahl der im Bild oder der Auswahl benutzten Farben, mit oder ohne Dither. </para>
+
+<para
+>Dither ergibt im allgemeinen bessere Ergebnisse, für künstliche Effekte aber können Sie Dither auch abschalten, &eg; erzeugt <guilabel
+>Schwarzweiß</guilabel
+> anstelle von <guilabel
+>Schwarzweiß (Dither)</guilabel
+> eine Silhouette als Effekt. </para>
+
+<para
+>Ein weiterer wichtiger Unterschied: Während <guilabel
+>Schwarzweiß (Dither)</guilabel
+> immer das gesamte Bild oder die Auswahl in schwarzweiß umwandelt, geschieht das bei <guilabel
+>Schwarzweiß</guilabel
+> nur wenn, das Bild oder die Auswahl mehr als zwei Farben enthält. </para>
+
+<tip>
+<para
+>Mit dem Menüeintrag <link linkend="image-monochrome"
+>In Schwarzweiß umwandeln (mit Dither)</link
+> aus dem Menü <guimenu
+>Bild</guimenu
+> oder <guimenu
+>Auswahl</guimenu
+> können Sie schnell ein Bild oder eine Auswahl in Schwarzweiß umwandeln. Das Menü <guimenu
+>Auswahl</guimenu
+> wird nur dann angezeigt, wenn Sie ein Auswahlwerkzeug verwenden. Zusätzlich finden Sie diese Aktion im Kontextmenü, das durch einen Klick mit der &RMBn; in den Bildbereich geöffnet wird. </para>
+</tip>
+
+<note>
+<para
+>Die Änderung der Anzahl der Farben hier hat keine Auswirkungen auf die Farbtiefe des Dateiformates. Wenn Sie die Farbtiefe ändern wollen, müssen Sie dies im Dialog <quote
+>Datei speichern</quote
+> eingeben. Beachten Sie aber, das die Änderung der Farbtiefe auch die Anzahl der Farben ändert. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>In Graustufen umwandeln</title>
+
+<para
+>Wandelt das gesamte Bild oder die Auswahl in Graustufen um.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>In Schwarzweiß umwandeln (mit Dither)</title>
+
+<para
+>Dies wandelt das gesamte Bild oder die Auswahl in Schwarzweiß um.</para>
+
+<tip>
+<para
+>Benutzen Sie den Dialog <link linkend="image-reduce-colors"
+>Farben reduzieren</link
+>, wenn die Umwandlung ohne Dither erfolgen soll </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Größe ändern / Skalieren</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Die Änderung der Größe eines Bildes verändert nicht den vorhandenen Inhalt. Eine Skalierung des Bildes jedoch passt den Inhalt an die neue Größe an. <guibutton
+>Intelligent Skalieren</guibutton
+> ergibt im allgemeinen bessere Ergebnisse durch Mischen benachbarter Farben als Skalieren.</para>
+
+<para
+>Die neuen Abmessungen können Sie in Pixeln oder als Verhältnis zur Originalgröße eingeben. Wenn Sie <guilabel
+>Seitenverhältnis beibehalten</guilabel
+> ankreuzen, wird Breite und Höhe um den gleichen Faktor verändert.</para>
+
+<tip>
+<para
+>Mit den Kontrollpunkten können Sie das ganze Bild in der <guibutton
+>Größe ändern</guibutton
+> oder eine Auswahl <guibutton
+>Intelligent Skalieren</guibutton
+>. </para>
+</tip>
+
+<note>
+<para
+>Eine Auswahl können Sie nur Skalieren und ein Textfeld nur in der Größe verändern. In den <link linkend="image-notes"
+>Anmerkungen</link
+> finden Sie weitere Einzelheiten über die Anwendung dieser Effekte.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Drehen</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Dreht das Bild. Geben Sie Winkel und Richtung der Drehung ein.</para>
+
+<tip>
+<para
+>Die Drehrichtung können Sie mit der Eingabe eines negativen Winkels umkehren.</para>
+</tip>
+
+<note>
+<para
+>In den <link linkend="image-notes"
+>Anmerkungen</link
+> finden Sie Einzelheiten über die Anwendung dieses Effektes auf eine Auswahl. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Als Bild verwenden (Zuschneiden)</title>
+
+<para
+>Ersetzt das Bild durch die Auswahl.</para>
+
+<note>
+<para
+>Dies kann nur bei einer aktiven Auswahl angewählt werden.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Kippen</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Kippt das gesamte Bild oder die Auswahl waagerecht und/oder senkrecht.</para>
+
+<note>
+<para
+>In den <link linkend="image-notes"
+>Anmerkungen</link
+> finden Sie Einzelheiten über die Anwendung dieses Effektes auf eine Auswahl.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Weich- &amp; Scharfzeichnen</title>
+
+<para
+>Diese Eigenschaft erreichen Sie über den Dialog <link linkend="image-more-effects"
+>Mehr Effekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Mit diesem Effekt können Sie das Bild weich- oder scharfzeichnen. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Mehr Effekte</title>
+
+<para
+>Dieser Dialog enthält die Eigenschaften <link linkend="image-balance"
+>Abgleich</link
+>, <link linkend="image-emboss"
+>Relief</link
+>, <link linkend="image-flatten"
+>Einfärben</link
+>, <link linkend="image-invert"
+>Invertieren</link
+>, <link linkend="image-reduce-colors"
+>Farben reduzieren</link
+> und <link linkend="image-soften-sharpen"
+>Weich- &amp; Scharfzeichnen</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Anmerkungen</title>
+
+<para
+><link linkend="image-resize-scale"
+>Größe ändern / Skalieren</link
+>, <link linkend="image-rotate"
+>Drehen</link
+> und <link linkend="image-skew"
+>Kippen</link
+> können die Größe des Bildes verändern. Die neuen Abmessungen sehen Sie im Dialog.</para>
+
+<para
+>Wenn Sie diese Effekte auf ein Bild anwenden, wird dessen Größe verändert, falls erforderlich. Wenden Sie diese Effekte jedoch auf eine Auswahl an, wird die Größe des Bildes nicht verändert, sogar wenn die umgeformte Auswahl nicht ins Bild passt.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Das linke Bild wurde um 30 Grad im Uhrzeigersinn gedreht und ergibt damit das rechte Bild. &kolourpaint; hat das Bild automatisch vergrößert, um den größeren Inhalt ein zu passen. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Die linke <emphasis
+>Auswahl</emphasis
+> wurde um 30 Grad im Uhrzeigersinn gedreht und ergibt damit die rechte Auswahl. Die Größe des Bildes ist unverändert, daher sind Teile der Auswahl ohne <link linkend="image-resize-scale"
+>Anpassung der Größe</link
+> des <emphasis
+>Bildes</emphasis
+> nicht sichtbar.  </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Danksagungen und Lizenz</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Dies ist vielleicht nicht die prägnanteste und nicht die vollständige Dokumentation, aber die aufrichtigste Dokumentation. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Programm Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>Symbole für &kolourpaint; Copyright &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Dokumentation und zusätzliche Vorlagen für die Dokumentation Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;.</para>
+
+<para
+>Teile der Dokumentation mit Genehmigung von <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Übersetzung Burkhard Lück <email
+>lueck@hube-lueck.de</email
+></para
+> &underFDL; <para
+>Diese Programm hat folgende Lizenz:</para>
+
+<para
+>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

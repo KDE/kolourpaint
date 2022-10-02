@@ -1,0 +1,1784 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>Handbok &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2018-03-23</date>
+<releaseinfo
+>Program 18.04</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; är ett fritt, lättanvänt ritprogram av &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Inledning</title>
+<para
+>&kolourpaint; är ett fritt, lättanvänt ritprogram av &kde;. Det är perfekt för vardagsuppgifter som:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Rita - rita diagram och <quote
+>fingermålningar</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Handera skärmbilder - ta och redigera skärmbilder</para>
+</listitem>
+<listitem>
+<para
+>Bildbehandling - redigera foton och hämtade bilder, införa effekter</para>
+</listitem>
+<listitem>
+<para
+>Ikonredigering - rita clipart och logotyper med genomskinlighet</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Använda &kolourpaint;</title>
+
+<para
+>Klicka på följande länkar för att utforska &kolourpaint;s möjligheter:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Verktyg</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Arbeta med färger</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Visa alternativ</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Bildeffekter</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Verktyg</title>
+
+<para
+>Ett ytterligare alternativ i menyn <guimenu
+>Inställningar</guimenu
+> gör det möjligt att definiera om verktygen ritar med kantdetektering (förval) eller inte. </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Ta skärmbilder</title>
+
+<para
+>En <quote
+>skärmbild</quote
+> är en ögonblicksbild av vad som finns på datorskärmen. Den kan vara användbar för att förklara en viss åtgärd som ska utföras för att erhålla resultatet, eller för att visa ett problem som du har hittat. </para>
+<para
+>För att göra skärmbilder klara att redigera i &kolourpaint;s fönster kan man använda <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Ta skärmbild</guimenuitem
+></menuchoice
+> i &kolourpaint;s huvudmeny. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Genom att använda dialogrutan som visas kan man ändra <guilabel
+>Fördröjning för skärmbild</guilabel
+> (i sekunder) och välja <guilabel
+>Dölj huvudfönster</guilabel
+> när skärmbilden tas. När du är klar att ta skärmbilden, klicka på <guibutton
+>Ok</guibutton
+>. Den tagna skärmbilden placeras direkt i &kolourpaint;s redigeringsområde. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Verktygsreferens</title>
+
+<para
+>Ett snabbt sätt att välja ett verktyg i &kolourpaint; är att trycka på genvägen med en tangent som hör ihop med det, dokumenterad nedan och med verktygstips i <interface
+>verktygsrutan</interface
+>. Du kan också hålla nere <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> när du trycker på tangenten, vilket är nödvändigt när du skriver in text (eftersom genvägar med en tangent då är inaktiverade). För att till exempel välja penseln, tryck på <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> eller bara B (när du inte skriver in text). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Pensel</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Färgsudd</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Färghämtare</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Sammanbundna linjer</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Kurva</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>Ellips</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Radera</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Fyll</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Linje</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Penna</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Polygon</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Rektangel</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Rundad rektangel</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Markering (ellips)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Markering (fri form)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Markering (rektangulär)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Sprayburk</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Text</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Pensel <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Klicka eller dra med penseln för att rita. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Klicka på en av formerna för att välja penselns form. Du kan använda en cirkulär, kvadratisk, snedstrecksformad eller bakstrecksformad pensel.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Färghämtare <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>För att ange förgrundsfärg, <mousebutton
+>vänster</mousebutton
+>klicka på en bildpunkt. För att ange bakgrundsfärg, <mousebutton
+>höger</mousebutton
+>klicka på en bildpunkt. &kolourpaint; återgår därefter till verktyget som tidigare var valt.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Sammanbundna linjer och polygon <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att rita sammanbundna linjer. Polygonverktyget används på samma sätt, dock förbinds start och slutpunkterna automatiskt för att skapa en polygon.</para>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen, och byter också färg som polygonen fylls med.</para>
+
+<para
+>Du kan <link linkend="tool-options"
+>ställa in linjebredden</link
+>. För polygoner kan du också <link linkend="tool-options"
+>ställa in  fyllsättet</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Kurva <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att rita en linje: detta anger start och slutpunkterna. Du kan ange upp till två styrpunkter genom att dra. För att avsluta kurvan utan att använda båda eller någon av styrpunkterna, klicka med andra musknappen. Verktyget ritar en kubisk Bezier-kurva.</para>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen.</para>
+
+<para
+>Du kan också <link linkend="tool-options"
+>ställa in linjebredden</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Ellips <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att rita en ellips.</para>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen, och byter också färg som fylls med.</para>
+
+<para
+>Du kan också <link linkend="tool-options"
+>ställa in linjebredden och fyllsättet</link
+>.</para>
+
+<para
+>För ytterligare funktioner, använd väljartangenterna:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Håll nere &Shift; och dra för att rita en cirkel.</para>
+</listitem>
+<listitem>
+<para
+>För att rita en ellips där du väljer mittpunkt, håll nere &Ctrl;, klicka på mittpunkten och dra till ellipsen har rätt storlek och form.</para>
+</listitem>
+<listitem>
+<para
+>För att rita en cirkel där du väljer mittpunkt, håll nere &Ctrl;, &Shift;-klicka på mittpunkten och dra till cirkeln har rätt storlek.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Radering</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Radera <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra med raderverktyget för att sudda ut misstag.</para>
+
+<note>
+<para
+>I motsats till andra verktyg, ritar raderverktygen med bakgrundsfärgen. För att rita med förgrundsfärgen, använd höger musknapp.</para>
+</note>
+
+<para
+>Raderverktyget har bara <link linkend="tool-options"
+>kvadratiska former</link
+>. För att rita med andra former såsom cirklar, använd <link linkend="tool-brush"
+>penseln</link
+> och höger musknapp.</para>
+
+<tip>
+<para
+>Dubbelklicka på raderverktyget för att rensa hela bilden. Det här är samma sak som att använda alternativet <link linkend="image-clear"
+>Rensa</link
+> i menyn Bild.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Färgsudd <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att ersätta bildpunkter av förgrundsfärgen med bakgrundsfärgen. För att ersätta alla bildpunkter som liknar förgrundsfärgen (men inte nödvändigtvis är exakt likadana), som i bilder och foton med gitter, använd en annan inställning av <link linkend="color-box"
+>Färglikhet</link
+> än Exakt.</para>
+
+<note>
+<para
+>I motsats till andra verktyg, ritar raderverktyget med bakgrundsfärgen. För att ersätta bildpunkter i bakgrundsfärgen med förgrundsfärgen, använd höger musknapp.</para>
+</note>
+
+<para
+>Du kan ställa in <link linkend="tool-options"
+>raderverktygets storlek</link
+>.</para>
+
+<tip>
+<para
+>Dubbelklicka på färgsuddikonen för att använda den för hela bilden.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Fyll <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka för att fylla ett område. För att fylla ett gitterområde, använd en annan inställning av <link linkend="color-box"
+>Färglikhet</link
+> än Exakt.</para>
+
+<para
+>Vänster musknapp fyller i förgrundsfärgen. Höger musknapp fyller i bakgrundsfärgen.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Linje <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att rita en linje.</para>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen.</para>
+
+<para
+>Du kan också <link linkend="tool-options"
+>ställa in linjebredden</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Håll nere &Ctrl; för att rita linjer som är vinklade med närmaste multipel av 30 grader. Detta är linjerna i det röda diagrammet.</para>
+</listitem>
+<listitem>
+<para
+>Håll nere &Shift; för att rita linjer som är vinklade med närmaste multipel av 45 grader. Detta är linjerna i det blåa diagrammet.</para>
+</listitem>
+<listitem>
+<para
+>Håll nere &Ctrl; och &Shift; för att rita linjer som är vinklade med närmaste multipel av 30 eller 45 grader. Detta är linjerna i det gröna diagrammet.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Penna <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka för att rita en punkt eller klicka och dra för att rita en linje med frihand.</para>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Rektanglar <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att rita en rektangel. Den rundade rektangeln är en rektangel med rundade hörn.</para>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen, och byter också färg som fylls med.</para>
+
+<para
+>Du kan också <link linkend="tool-options"
+>ställa in linjebredden och fyllsättet</link
+>.</para>
+
+<para
+>För ytterligare funktioner, använd väljartangenterna:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Håll nere &Shift; och dra för att rita en kvadrat.</para>
+</listitem>
+<listitem>
+<para
+>För att rita en rektangel där du väljer mittpunkt, håll nere &Ctrl;, klicka på mittpunkten och dra till rektangeln har rätt storlek och form.</para>
+</listitem>
+<listitem>
+<para
+>För att rita en kvadrat där du väljer mittpunkt, håll nere &Ctrl; och &Shift;, klicka på mittpunkten och dra till kvadraten har rätt storlek.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Markeringar <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Använd markeringsverktygen för att ange en markerings kanter.</para>
+
+<para
+>För att flytta en markering, klicka och dra i den. Huvudvyn panorerar efter behov för att låta dig flytta markeringen till en del av bilden som för närvarande inte visas.</para>
+
+<para
+>Du kan fritt <link linkend="image-resize-scale"
+>ändra storlek</link
+> på hela bilden eller använda <link linkend="image-resize-scale"
+>jämn skalning</link
+> av markeringen med motsvarande grepp. Håll nere &Shift; vid fri skalning av markeringen för att behålla proportionen. Högerknappen visar en sammanhangsberoende meny med vanliga <guimenu
+>redigeringskommandon</guimenu
+> och <link linkend="image-effects-section"
+>bildeffekter</link
+>. </para>
+
+<tip>
+<para
+>Du kan använda piltangenterna medan du ritar markeringens kant eller när du flyttar den.</para>
+</tip>
+
+<para
+>Om du håller nere &Ctrl; innan markeringen flyttas, flyttar du en kopia av den. Markeringen smetas ut om du flyttar den medan du håller nere &Shift;. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Det finns två markeringslägen: Ogenomskinligt (förvalt) och genomskinligt. Om du använder genomskinligt markeringsläge blir alla bilder i bakgrundsfärgen genomskinliga (subtraktion av bakgrunden). Det låter dig klistra in en markering utan bakgrunden. För att utföra bakgrundssubtraktion på en bild med gitter, använd en annan inställning av <link linkend="color-box"
+>Färglikhet</link
+> än Exakt.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Du kan använda bildeffekter på en markering: se avsnittet <link linkend="image-effects-section"
+>Bildeffekter</link
+> för mer information.</para>
+
+<para
+>Det är möjligt att spara markeringen i en fil genom att använda alternativet <guimenuitem
+>Kopiera till fil...</guimenuitem
+> i markeringens sammanhangsberoende meny eller alternativet <menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Kopiera till fil...</guimenuitem
+></menuchoice
+> i huvudmenyn. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Sprayburk <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra för att spreja graffiti. Håll nere musknappen för att få en mer koncentrerad spray.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicka på en av kvadraterna för att välja spraystorlek. Du kan välja bland spraystorlekarna 9x9, 17x17 och 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Vänster musknapp ritar med förgrundsfärgen. Höger musknapp ritar med bakgrundsfärgen.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Text <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klicka och dra ett område där text ska skrivas in. Så snart kanten visas kan du börja skriva in texten. Klicka och dra på kanten för att flytta den. Du kan ändra storlek på textrutan genom att dra i greppen eller genom att använda dialogrutan <link linkend="image-resize-scale"
+>Ändra storlek</link
+>. </para>
+
+<tip>
+<para
+>Om du har avmarkerat textrutan kan du använda <guimenuitem
+>Ångra</guimenuitem
+> för att redigera texten igen.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Använda den genomskinliga färgen</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Den vänstra bilden visar exempelbilden. Den högra bilden visar tillägg av text med en ogenomskinliga förgrunds- och bakgrundsfärger. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Den vänstra bilden visar tillägg av text med en ogenomskinlig förgrundsfärg och en genomskinlig bakgrundsfärg. Den högra bilden visar tillägg av text med en genomskinlig förgrundsfärg och en ogenomskinlig bakgrundsfärg.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Vanliga verktygsalternativ</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicka på en av kvadraterna för att välja raderstorlek. Du kan välja bland kvadrater med sidolängderna 2, 3, 5, 9, 17 och 29 bildpunkter.</para>
+
+<para
+>Storleksinställningarna för radering påverkar <link linkend="tool-erasers"
+>Raderingsverktygen</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicka på en av linjerna för att välja linjebredd. Du kan välja bland linjebredderna 1, 2, 3, 5 och 8 bildpunkter.</para>
+
+<para
+>Inställningen av linjebredd påverkar verktygen <link linkend="tool-polystar"
+>Sammanbundna linjer</link
+>, <link linkend="tool-curve"
+>Kurva</link
+>, <link linkend="tool-ellipse"
+>Ellips</link
+>, <link linkend="tool-line"
+>Linje</link
+>, <link linkend="tool-polystar"
+>Polygon</link
+>, <link linkend="tool-rectangles"
+>Rektangel</link
+> och <link linkend="tool-rectangles"
+>Rundad rektangel</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klicka på en av rektanglarna för att välja fyllstilen. Du kan välja bland Fyll inte, Fyll med bakgrundsfärg och Fyll med förgrundsfärg.</para
+> <para
+>Inställningen av fyllstil påverkar verktygen <link linkend="tool-ellipse"
+>Ellips</link
+>, <link linkend="tool-polystar"
+>Polygon</link
+>, <link linkend="tool-rectangles"
+>Rektangel</link
+> och <link linkend="tool-rectangles"
+>Rundad rektangel</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Arbeta med färg</title>
+
+<sect1 id="color-box">
+<title
+>Färgrutan</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Färgruta</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Färgrutan har tre huvudväljare: Färgtavlan, färgpaletten och färglikhetsväljaren.</para>
+
+<para
+>Färgtavlan visar nuvarande förgrundsfärg som en fyrkant ovanför en annan fyrkant som representerar nuvarande bakgrundsfärg. När du ritar med vänster musknapp används förgrundsfärgen, och när du ritar med höger musknapp används bakgrundsfärgen (utom för <link linkend="tool-erasers"
+>Radera</link
+>). Du kan klicka på dubbelhövdade pilen för att växla förgrunds- och bakgrundsfärg. </para>
+
+<para
+>Färgpaletten visar en uppsättning färger som du kan välja bland. Den halvgenomskinliga pyramiden representerar den genomskinliga färgen. Vänsterklicka på en färg för att ange förgrundsfärgen och högerklicka på en färg för att ange bakgrundsfärgen. Du kan också dra och släppa vilken ogenomskinlig färg som helst på färgtavlans kvadrater. Dubbelklicka på en färg i färgtavlan eller paletten för att redigera den. Verktyget <link linkend="tool-color-picker"
+>Färghämtare</link
+> låter dig välja en färg från bilden. </para>
+
+<para
+>Färglikhet låter dig arbeta effektivare med gitterbilder och foton, på ett sätt som är jämförbart med funktionen <quote
+>trollstav</quote
+> i andra ritprogram. Den gäller genomskinliga markeringar, samt verktygen <link linkend="tool-flood-fill"
+>Fyll</link
+>, <link linkend="tool-eraser-clr"
+>Färgsudd</link
+> och <link linkend="image-autocrop"
+>Beskär automatiskt eller ta bort intern kant</link
+>. Dubbelklicka på färglikhetsväljaren för att välja hur lika färger måste vara för att anses identiska. När du använder markeringar med genomskinligt läge, blir alla färger i markeringen som liknar bakgrundsfärgen också genomskinliga.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Den vänstra bilden visar exempelbilden. Den högra bilden demonstrerar användning av fyllverktyget, med färglikhetsinställningarna 5 %, 15 % och 30 %. I exemplet, med färglikhetsinställningen <guilabel
+>Exakt</guilabel
+>, skulle fyll vid (80, 100) bara fylla en bildpunkt, eftersom omkringliggande bildpunkter är liknande men inte identiska. När färglikheten ökas, anses fler bildpunkter som har liknande färg vara identiska, och därför utökas fyllningen ytterligare. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Visningsalternativ</title>
+
+<sect1 id="view-options-section">
+<title
+>Visningsalternativreferens</title>
+
+<para
+><link linkend="view-zoom"
+>Zooma och ta med rutnätet</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Miniatyrbild</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Zooma och ta med rutnätet</title>
+<para
+>Öka zoomnivån för att redigera bilder med större noggrannhet, eller minska den för att se mer av bilden.</para>
+
+<important>
+<para
+>Med zoomnivåer som inte är multipler av 100 % kan delar av bilden verka flytta sig när användaren arbetar med den. Andra mindre störningar i omritningen kan också uppstå med sådana zoomnivåer. </para>
+</important>
+
+<para
+>Vid zoomnivån 400 % eller större som också är multipler av 100 % kan du <guimenuitem
+>Visa rutnät</guimenuitem
+> för att noggrannare redigera enskilda bildpunkter.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Den första bilden visar ikonen för verktyget <link linkend="tool-text"
+>Text</link
+>, medan den följande visar den vid 600 % zoomning med rutnätet aktiverat.</para>
+
+<tip>
+<para
+>Ett annat sätt att zooma när du inte ritar är att rulla med <mousebutton
+>mushjulet</mousebutton
+> medan du håller nere &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Miniatyrbild</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Om <guimenuitem
+>Miniatyrbildsläge med zoom</guimenuitem
+> är markerat, visas hela bilden skalad efter behov för att passa i miniatyrbildsfönstret (bilden överst till höger). </para>
+<para
+>Annars visar miniatyrbilden så mycket som möjligt av bilden, med början i huvudvyns vänstra övre hörn (bild längst ner till höger). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Bildeffekter</title>
+
+<sect1 id="image-effects-section">
+<title
+>Bildeffektreferens</title>
+<para
+><link linkend="image-autocrop"
+>Beskär automatiskt eller ta bort intern kant</link
+></para>
+<para
+><link linkend="image-balance"
+>Balans</link
+></para>
+<para
+><link linkend="image-clear"
+>Rensa</link
+></para>
+<para
+><link linkend="image-emboss"
+>Relief</link
+></para>
+<para
+><link linkend="image-flatten"
+>Utjämna</link
+></para>
+<para
+><link linkend="image-flip"
+>Vänd (upp-och-ner)</link
+></para>
+<para
+><link linkend="image-invert"
+>Invertera</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Reducera färger</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Reducera till gråskala</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Reducera till enfärgat (med gitter)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Spegla (horisontellt)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Ändra storlek eller skala</link
+></para>
+<para
+><link linkend="image-rotate"
+>Rotera</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Ställ in som bild (beskär)</link
+></para>
+<para
+><link linkend="image-skew"
+>Skjuva</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Skärpa och oskärpa</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Fler effekter</link
+></para>
+<para
+><link linkend="image-notes"
+>Anmärkningar</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Beskär automatiskt eller ta bort intern kant</title>
+
+<para
+>Det här tar automatiskt bor kanten på en bild eller markering. Använd automatisk beskärning om du har en figur som inte helt fyller bilden och du vill ta bort överflödig tomt utrymme. För att beskära en bild som har en bildkant med gitter, måste du också använda <link linkend="color-box"
+>Färglikhet</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Balans</title>
+
+<para
+>Den här funktionen är tillgänglig i dialogrutan <link linkend="image-more-effects"
+>Fler effekter</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Den låter dig ställa in bildens eller markeringens ljusstyrka, kontrast och gammavärde. </para>
+
+<note>
+<para
+>Det vanligare måttet på gammavärdet (ett decimalt värde från 0,10 till 10,00) visas mellan inställningsrutan <guilabel
+>Gamma</guilabel
+> och knappen <guibutton
+>Återställ</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Rensa</title>
+
+<para
+>Detta fyller i hela bilden eller markeringen med bakgrundsfärgen.</para>
+
+<tip>
+<para
+>Dubbelklicka på ikonen <link linkend="tool-eraser-std"
+>Radera</link
+> för att rensa hela bilden.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Relief</title>
+
+<para
+>Den här funktionen är tillgänglig i dialogrutan <link linkend="image-more-effects"
+>Fler effekter</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Markera <guilabel
+>Aktivera</guilabel
+> för att verkställa reliefeffekten. Den markerar kanterna och ger bilden eller markeringen ett &quot;graverat&quot; utseende. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Utjämna</title>
+
+<para
+>Den här funktionen är tillgänglig i dialogrutan <link linkend="image-more-effects"
+>Fler effekter</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Detta färgar om bilden med olika nyanser av de två valda färgerna. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Vänd (upp-och-ner)</title>
+
+<para
+>Detta vänder hela bilden eller markeringen vertikalt.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Invertera</title>
+
+<para
+>Den här funktionen är tillgänglig i dialogrutan <link linkend="image-more-effects"
+>Fler effekter</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Detta låter dig invertera en eller flera RGB-kanaler i bilden eller markeringen. Använd <guilabel
+>Alla</guilabel
+> för att göra om ett foto till ett negativ och vice versa. I allmänhet ser det ganska konstigt ut.</para>
+
+<tip>
+<para
+>För att snabbt invertera alla kanaler, behöver du inte använda dialogrutan. Du kan istället välja alternativet <guimenuitem
+>Invertera färger</guimenuitem
+> i menyn <guimenu
+>Bild</guimenu
+> eller <guimenu
+>Markering</guimenu
+>. Alternativet i <guimenu
+>Markering</guimenu
+> visas bara i menyraden om du använder ett av markeringsverktygen. Dessutom kan åtgärden nås från den sammanhangsberoende menyn som visas med ett högerklick i bildområdet. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Spegla (horisontellt)</title>
+
+<para
+>Detta speglar hela bilden eller markeringen horisontellt.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Reducera färger</title>
+
+<para
+>Den här funktionen är tillgänglig i dialogrutan <link linkend="image-more-effects"
+>Fler effekter</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Detta reducerar antal färger som används av bilden eller markeringen, med eller utan gitter. </para>
+
+<para
+>Att använda gitter ger resultat med bättre kvalitet, men du kan dock vilja låta bli att använda det för artistiska effekter, <abbrev
+>t.ex.</abbrev
+> ger användning av <guilabel
+>Svartvit</guilabel
+> istället för <guilabel
+>Svartvit (med gitter)</guilabel
+> en siluetteffekt. </para>
+
+<para
+>En annan viktig skillnad är att medan <guilabel
+>Svartvit (med gitter)</guilabel
+> alltid reducerar hela bilden eller markeringen till svartvit, gör <guilabel
+>Svartvit</guilabel
+> det bara om bilden eller markeringen innehåller mer än två färger. </para>
+
+<tip>
+<para
+>För att snabbt skapa en svartvit bild eller markering med gitter, använd alternativet <link linkend="image-monochrome"
+>Reducera till svarvit (med gitter)</link
+> i menyn <guimenu
+>Bild</guimenu
+> eller <guimenu
+>Markering</guimenu
+>. Alternativet i <guimenu
+>Markering</guimenu
+> visas bara i menyraden om du använder ett av markeringsverktygen. Dessutom kan åtgärden nås från den sammanhangsberoende menyn som visas med ett högerklick i bildområdet. </para>
+</tip>
+
+<note>
+<para
+>Att ändra antal färger här har ingen betydelse för filformatets färgdjup. Om du vill ändra färgdjupet, ska du välja det i dialogrutor för att spara filer. Observera att, förvirrande nog, ändras också antal färger när färgdjupet ändras. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Reducera till gråskala</title>
+
+<para
+>Det här reducerar hela bilden eller markeringen till gråskala.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Reducera till svartvit (med gitter)</title>
+
+<para
+>Det här reducerar hela bilden eller markeringen till svartvitt.</para>
+
+<tip>
+<para
+>Om du inte vill att bilden eller markeringen ska ändras med användning av gitter, använd dialogrutan <link linkend="image-reduce-colors"
+>Reducera färger</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Ändra storlek eller skala</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Att ändra bildens storlek ändrar dess dimensioner om inte en transformering utförs på det befintliga innehållet. Skalas bilden sträcks det befintliga innehållet till de nya dimensionerna. <guibutton
+>Jämn skalning</guibutton
+> ger i allmänhet ett resultat med bättre kvalitet än Skala, genom att blanda angränsande färger.</para>
+
+<para
+>Du kan uttrycka de nya dimensionerna i bildpunkter, eller som procent av ursprunglig storlek. Om du väljer <guilabel
+>Behåll proportion</guilabel
+>, skalas bredd och höjd med samma procenttal.</para>
+
+<tip>
+<para
+>Du kan fritt <guibutton
+>ändra storlek</guibutton
+> på hela bilden eller använda <guibutton
+>jämn skalning</guibutton
+> av markeringen med motsvarande grepp. </para>
+</tip>
+
+<note>
+<para
+>Skalning stöds bara för markeringar, och storleksändring stöds bara för textrutor. Se <link linkend="image-notes"
+>Anmärkningar</link
+> för ytterligare detaljinformation om hur effekterna används.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Rotera</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Detta roterar bilden. Du kan ange vinkel och rotationens riktning.</para>
+
+<tip>
+<para
+>Du kan vända rotationens riktning genom att ange en negativ egen vinkel.</para>
+</tip>
+
+<note>
+<para
+>Se <link linkend="image-notes"
+>Anmärkningar</link
+> för detaljinformation om hur effekten används för en markering. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Ställ in som bild (beskär)</title>
+
+<para
+>Detta ändrar bilden till markeringen.</para>
+
+<note>
+<para
+>Det är bara tillgängligt när du har en aktiv markering.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Skjuva</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Detta skjuvar hela bilden eller markeringen horisontellt och/eller vertikalt.</para>
+
+<note>
+<para
+>Se <link linkend="image-notes"
+>Anmärkningar</link
+> för detaljinformation om hur effekten används för en markering.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Skärpa och oskärpa</title>
+
+<para
+>Den här funktionen är tillgänglig i dialogrutan <link linkend="image-more-effects"
+>Fler effekter</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Använd den här effekten för att göra bilden skarpare eller oskarpare. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Fler effekter</title>
+
+<para
+>Dialogrutan innehåller funktionerna <link linkend="image-balance"
+>Balans</link
+>, <link linkend="image-emboss"
+>Relief</link
+>, <link linkend="image-flatten"
+>Utjämna</link
+>, <link linkend="image-invert"
+>Invertera</link
+>, <link linkend="image-reduce-colors"
+>Reducera färger</link
+> och <link linkend="image-soften-sharpen"
+>Skärpa och oskärpa</link
+> </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Anmärkningar</title>
+
+<para
+><link linkend="image-resize-scale"
+>Ändra storlek eller skala</link
+>, <link linkend="image-rotate"
+>Rotera</link
+> och <link linkend="image-skew"
+>Skjuva</link
+> kan ändra bildens dimensioner. Du kan se de nya dimensionerna i dialogrutan.</para>
+
+<para
+>Om du använder effekterna för en bild, ändras storlek om det behövs. Om du istället använder effekterna för en markering, ändras inte bildens storlek, även om den transformerade markeringen inte får plats.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Den vänstra bilden har roterats 30 grader medurs för att skapa den högra bilden. &kolourpaint; har automatiskt förstorat bilden för att omfatta det större innehållet. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Den vänstra <emphasis
+>markeringen</emphasis
+> har roterats 30 grader medurs för att skapa den högra markeringen. Bildstorleken har förblivit samma, därför syns inte delar av markeringen utan att <link linkend="image-resize-scale"
+>ändra storlek</link
+> på <emphasis
+>bilden</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Tack till och licens</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Det kanske inte är koncis dokumentation, det kanske inte är fullständig dokumentation, men det är ärlig dokumentation. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Program Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>&kolourpaint;-specifika ikoner Copyright &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Dokumentation och ytterligare grafik för dokumentation Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;.</para>
+
+<para
+>Delar reproducerade med tillåtelse från <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; <para
+>Detta program licensieras enligt följande:</para>
+
+<para
+>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

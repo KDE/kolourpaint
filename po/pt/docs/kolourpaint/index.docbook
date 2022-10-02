@@ -1,0 +1,1776 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Portuguese "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>O Manual do &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>José</firstname
+><surname
+>Pires</surname
+><affiliation
+><address
+><email
+>zepires@gmail.com</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2016-07-25</date>
+<releaseinfo
+>Aplicações 16.08</releaseinfo>
+
+<abstract>
+<para
+>O &kolourpaint; é um programa livre e simples de usar do &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Introdução</title>
+<para
+>O &kolourpaint; é um programa de desenho livre e simples de usar do &kde;. É perfeito para as tarefas do dia-a-dia como:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Desenho - desenhar diagramas e <quote
+>pinturas manuais</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Manipular Capturas do Ecrã - adquirir e editar capturas</para>
+</listitem>
+<listitem>
+<para
+>Manipulação de Imagens - editar imagens e capturas; aplicar efeitos</para>
+</listitem>
+<listitem>
+<para
+>Edição de Ícones - desenhar imagens e logótipos com transparência</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Utilizar o &kolourpaint;</title>
+
+<para
+>Carregue nas seguintes referências para explorar as capacidades do &kolourpaint;:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Ferramentas</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Trabalhar com Cores</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Opções de Visualização</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Efeitos de Imagens</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Ferramentas</title>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Adquirir Capturas do Ecrã</title>
+
+<para
+>Uma <quote
+>captura do ecrã</quote
+> é uma imagem do que se passa no ecrã do seu computador. Pode ser útil para explicar algumas acções que deverão ser feitas para obter o resultado ou para demonstrar o problema com que se deparou. </para>
+<para
+>Para tornar uma captura do ecrã pronta para ser editada na janela do &kolourpaint;, pode usar a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Capturar o Ecrã</guimenuitem
+></menuchoice
+> do menu principal do &kolourpaint;. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Ao usar a janela aberta, poderá mudar o <guilabel
+>Atraso da Captura</guilabel
+> (em segundos) e optar por <guilabel
+>Esconder a Janela Principal</guilabel
+> durante a captura. Quando estiver tudo pronto, basta carregar em <guibutton
+>OK</guibutton
+>. A imagem capturada será colocada então directamente na área de edição do &kolourpaint;. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Referência de Ferramentas</title>
+
+<para
+>Uma forma rápida de seleccionar uma ferramenta no &kolourpaint; é carregar no atalho de teclado associado a ele, o qual aparece documentado em baixo e nas dicas da <interface
+>Caixa de Ferramentas</interface
+>. Poderá também manter carregado o <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> enquanto carrega na tecla, o que é necessário quando você estiver a escrever texto (dado que os atalhos de teclado com teclas simples ficarão desactivados). Por exemplo, para seleccionar o pincel, carregue em <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> ou apenas em B (quando não estiver a escrever texto). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Pincel</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Borracha de Cores</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+> Extractor de Cores </link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+> Linhas Interligadas </link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+> Curva </link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+> Elipse </link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+> Borracha </link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+> Preenchimento </link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+> Linha </link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+> Traço </link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+> Polígono </link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+> Rectângulo </link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+> Rectângulo Arredondado </link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+> Selecção (Elíptica) </link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+> Selecção (Livre) </link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+> Selecção (Rectangular) </link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+> 'Spray' </link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+> Texto </link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Pincel <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Carregue simplesmente ou carregue e arraste o pincel para desenhar. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Carregue numa das formas para seleccionar a forma geométrica do pincel. Você poderá usar uma forma de pincel circular, quadrada, em barra ou em barra invertida.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Obter uma Cor <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Para atribuir a nova cor de desenho, carregue com o botão <mousebutton
+>esquerdo</mousebutton
+> num pixel. Para atribuir a nova cor de fundo, carregue com o &RMB; num pixel. O &kolourpaint; irá então voltar à ferramenta seleccionada anteriormente.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Linhas Interligadas e Polígonos <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para desenhar linhas interligadas ou poligonais. A ferramenta do polígono é usada da mesma forma, só que os pontos iniciais e final são automaticamente ligados para formar um polígono.</para>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo e irá inverter também a cor de preenchimento dos polígonos.</para>
+
+<para
+>Você poderá <link linkend="tool-options"
+>definir a espessura do traço</link
+>. Para os polígonos, você também poderá <link linkend="tool-options"
+>definir o estilo de preenchimento</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Curva <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para desenhar uma linha - isto configurar os pontos inicial e final. Você poderá definir até dois pontos de controlo por arrastamento. Para terminar a curva sem usar qualquer um dos pontos de controlo, carregue com o outro botão do rato. A ferramenta de curvas desenha uma Bezier Cúbica.</para>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo.</para>
+
+<para
+>Você poderá também <link linkend="tool-options"
+>configurar a espessura do traço</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Elipse <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para desenhar uma elipse.</para>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo e irá inverter também a cor de preenchimento.</para>
+
+<para
+>Você poderá também <link linkend="tool-options"
+>configurar a espessura do traço e o estilo do preenchimento</link
+>.</para>
+
+<para
+>Para as funcionalidades adicionais, use as teclas modificadoras:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Mantenha o &Shift; carregado e arraste para desenhar um círculo.</para>
+</listitem>
+<listitem>
+<para
+>Para desenhar uma elipse com um ponto central à sua escolha, mantenha o &Ctrl; carregado, carregue no ponto central e arraste até que a elipse tenha o tamanho e forma correctos.</para>
+</listitem>
+<listitem>
+<para
+>Para desenhar um círculo com um ponto central à sua escolha, mantenha o &Ctrl; e o &Shift; carregados, carregue no ponto central e arraste até que o círculo tenha o tamanho correcto.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Borrachas</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Borracha <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue a arraste a borracha para apagar os erros.</para>
+
+<note>
+<para
+>Ao contrário das outras ferramentas, as borrachas desenham com a cor de fundo. Para desenhar com a cor principal, use o &RMB;.</para>
+</note>
+
+<para
+>A borracha só tem <link linkend="tool-options"
+>formas quadradas</link
+>. Para desenhar com outras formas, como por exemplo, círculos, use o <link linkend="tool-brush"
+>Pincel</link
+> e o &RMB;.</para>
+
+<tip>
+<para
+>Faça duplo-click no ícone da Borracha para limpar a imagem por inteiro. Isto é equivalente a usar a opção <link linkend="image-clear"
+>Limpar</link
+> do menu Imagem.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Limpeza de Cor <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para substituir os pixels da cor principal com a cor de fundo. Para substituir todos os pixels de cores semelhantes (mas não necessariamente iguais) à cor principal, como nas imagens com meios-tons e nas fotos, use uma configuração de <link linkend="color-box"
+>Semelhança de Cores</link
+> em vez da Exacta.</para>
+
+<note>
+<para
+>Ao contrário das outras ferramentas, as borrachas desenham com a cor de fundo. Para substituir os pixels da cor de fundo com a cor principal, use o &RMB;.</para>
+</note>
+
+<para
+>Você poderá configurar o <link linkend="tool-options"
+>tamanho da borracha</link
+>.</para>
+
+<tip>
+<para
+>Faça duplo-click no ícone da Borracha de Cor para o aplicar à imagem inteira.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Preenchimento <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue para preencher uma dada região. Para preencher uma região com meios-tons, use uma configuração de <link linkend="color-box"
+>Semelhança de Cores</link
+> em vez da Exacta.</para>
+
+<para
+>O &LMB; preenche com a cor principal. O &RMB; preenche com a cor de fundo.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Linha <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para desenhar uma linha.</para>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo.</para>
+
+<para
+>Você poderá também <link linkend="tool-options"
+>configurar a espessura do traço</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Mantenha o &Ctrl; carregado para desenhar linhas com ângulos com o múltiplo de 30 graus mais próximo - estas são as linhas no diagrama vermelho.</para>
+</listitem>
+<listitem>
+<para
+>Mantenha o &Shift; carregado para desenhar linhas com ângulos com o múltiplo de 45 graus mais próximo - estas são as linhas no diagrama azul.</para>
+</listitem>
+<listitem>
+<para
+>Mantenha o &Ctrl; e &Shift; carregado para desenhar linhas com ângulos com o múltiplo de 30 ou 45 graus mais próximo - estas são as linhas no diagrama verde.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Traço <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue para desenhar um ponto ou carregue e arraste para desenhar uma linha livre.</para>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Rectângulos <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para desenhar um rectângulo. O Rectângulo Arredondado ou Rectângulo Arredondado é um rectângulo com os cantos arredondados.</para>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo e irá inverter também a cor de preenchimento.</para>
+
+<para
+>Você poderá também <link linkend="tool-options"
+>configurar a espessura do traço e o estilo do preenchimento</link
+>.</para>
+
+<para
+>Para as funcionalidades adicionais, use as teclas modificadoras:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Mantenha o &Shift; carregado e arraste para desenhar um quadrado.</para>
+</listitem>
+<listitem>
+<para
+>Para desenhar um rectângulo com um ponto central à sua escolha, mantenha o &Ctrl; carregado, carregue no ponto central e arraste até que o rectângulo tenha o tamanho e forma correctos.</para>
+</listitem>
+<listitem>
+<para
+>Para desenhar um quadrado com um ponto central à sua escolha, mantenha o &Ctrl; e o &Shift; carregados, carregue no ponto central e arraste até que o quadrado tenha o tamanho correcto.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Selecções <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Use as ferramentas de selecção para definir o contorno de uma selecção.</para>
+
+<para
+>Para mover a selecção, carregue e arraste-a. A janela principal deslocar-se-á para lhe permitir mover a selecção para uma parte da imagem que não esteja visível de momento.</para>
+
+<para
+>Poderá fazer uma <link linkend="image-resize-scale"
+>Escala Suave</link
+> da selecção ou <link linkend="image-resize-scale"
+>Redimensionar</link
+> a imagem com as pegas. Mantenha o &Shift; carregado, enquanto faz uma escala livre, para manter as proporções de tamanho. O &RMB; invoca um menu de contexto com comandos comuns para <guimenu
+>Editar</guimenu
+> e <link linkend="image-effects-section"
+>Efeitos de Imagem</link
+>. </para>
+
+<tip>
+<para
+>Você poderá usar as teclas dos cursores enquanto define o limite da selecção ou enquanto a muda de posição.</para>
+</tip>
+
+<para
+>Se você mantiver carregado o &Ctrl; antes de mover a selecção, então você irá mudar de posição uma cópia do mesmo. Se mantiver o &Shift; carregado antes de mudar de posição a selecção, você irá manchá-la. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Existem dois módulos de selecção: o Opaco (por omissão) e o Transparente. Se você usar o modo de selecção Transparente, todos os pixels com a cor de fundo ficarão transparentes (subtracção do fundo). Isto permite-lhe colar uma selecção sem o fundo. Para efectuar a subtracção de fundo numa imagem com meios-tons, use uma configuração de <link linkend="color-box"
+>Semelhança de Cores</link
+> em vez da Exacta.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Você poderá aplicar Efeitos de Imagem a uma selecção - veja a secção sobre <link linkend="image-effects-section"
+>Efeitos de Imagens</link
+> para mais informações.</para>
+
+<para
+>É possível gravar a selecção para um ficheiro, usando o item <guimenuitem
+>Copiar para um Ficheiro...</guimenuitem
+> do menu de contexto da selecção ou a opção <menuchoice
+><guimenu
+>Editar</guimenu
+><guimenuitem
+>Copiar para um Ficheiro...</guimenuitem
+></menuchoice
+> do menu principal. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Lata de spray <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste para fazer 'graffitis' com 'spray'. Mantenha o botão do rato carregado para um 'spray' mais concentrado.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Carregue numa das formas para seleccionar o tamanho do 'spray'. Você poderá seleccionar os tamanhos do 'spray' 9x9, 17x17 e 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>O &LMB; desenha com a cor principal. O &RMB; desenha com a cor de fundo.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Texto <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Carregue e arraste uma área na qual irá escrever algum texto. Carregue e arraste o contorno para o mudar de posição. Poderá dimensionar a área de texto, arrastando as pegas ou usando a janela para <link linkend="image-resize-scale"
+>Dimensionar</link
+>. </para>
+
+<tip>
+<para
+>Se você tiver deseleccionado uma área de texto, você poderá carregar em <guimenuitem
+>Desfazer</guimenuitem
+> para editar o texto de novo.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Usar a Cor Transparente</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>A imagem da esquerda mostra a imagem de exemplo. A imagem da direita mostra a adição de texto com uma cor de texto e de fundo opacas. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>A imagem da esquerda mostra a adição do texto com uma cor de texto opaca e de fundo transparente. A imagem da direita mostra a adição de texto com uma cor de texto transparente e de fundo opaca.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Opções Comuns das Ferramentas</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Carregue num dos quadrados para seleccionar o tamanho da borracha. Você poderá seleccionar quadrados cujo tamanho tenha 2, 3, 5, 9, 17 e 29 pixels.</para>
+
+<para
+>A configuração do tamanho afecta as <link linkend="tool-erasers"
+>Borrachas</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Carregue numa das linhas para seleccionar a espessura do traço. Você poderá seleccionar as espessuras de traços de 1, 2, 3, 5 e 8 pixel(s).</para>
+
+<para
+>A configuração da espessura do traço afecta as <link linkend="tool-polystar"
+>Linhas Interligadas</link
+>, <link linkend="tool-curve"
+>Curva</link
+>, <link linkend="tool-ellipse"
+>Elipse</link
+>, <link linkend="tool-line"
+>Linha</link
+>, <link linkend="tool-polystar"
+>Polígono</link
+>, <link linkend="tool-rectangles"
+>Rectângulos</link
+> e <link linkend="tool-rectangles"
+>Rectângulos Arredondados</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Carregue num dos rectângulos para seleccionar o tipo de preenchimento. Você poderá optar por Sem Preenchimento, Preencher com a Cor de Fundo e Preencher com a Cor Principal.</para
+> <para
+>O estilo de preenchimento afecta as ferramentas <link linkend="tool-ellipse"
+>Elipse</link
+>, <link linkend="tool-polystar"
+>Polígono</link
+>, <link linkend="tool-rectangles"
+>Rectângulo</link
+> e <link linkend="tool-rectangles"
+>Rectângulo Arredondado</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Trabalhar com Cores</title>
+
+<sect1 id="color-box">
+<title
+>A Área de Cores</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Área de Cores</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>A Área de Cores tem três secções principais: a Tableta de Cores, a Paleta de Cores e o Selector de Semelhança de Cores.</para>
+
+<para
+>A Tableta de Cores mostra a cor principal actual como um quadrado por cima de outro quadrado que representa a cor de fundo actual. Ao desenhar com o &LMB;, é usada a cor principal e, ao desenhar com o &RMB;, é usada a cor de fundo (excepto nas <link linkend="tool-erasers"
+>Borrachas</link
+>). Você poderá carregar na seta de duas pontas para trocar as cores. </para>
+
+<para
+>A Paleta de Cores mostra uma selecção de cores onde você poderá escolher a cor a usar. A pirâmide translúcida representa a cor transparente. Carregue com o &LMB; para definir a cor principal e com o &RMB; para definir a cor de fundo. Você poderá também arrastar e largar qualquer cor opaca nos quadrados da Tableta de Cores. Para editar uma cor na Tableta ou na Paleta de Cores, faça duplo-click nela. A ferramenta de <link linkend="tool-color-picker"
+>Extracção de Cores</link
+> permite-lhe seleccionar uma cor da imagem. </para>
+
+<para
+>A Semelhança de Cores permite-lhe trabalhar de forma mais efectiva com as imagens com meios-tons e com as fotos, de forma semelhante à <quote
+>Varinha Mágica</quote
+> de outros programas. Ela aplica-se às selecções transparentes, assim como ao <link linkend="tool-flood-fill"
+>Preenchimento</link
+>, à <link linkend="tool-eraser-clr"
+>Borracha de Cores</link
+> e ao <link linkend="image-autocrop"
+>Auto-corte / Remover o Contorno Interno</link
+>. Faça duplo-click no selector de Semelhança de Cores para indicar como é que as cores semelhantes poderão ser consideradas iguais. Ao usar as selecções no modo Transparente, todas as cores da selecção que sejam semelhantes às cores de fundo ficarão também transparentes.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>A figura da esquerda mostra a imagem de exemplo. As figuras à direita demonstram a utilização de um preenchimento com a opção de Semelhança de Cores a 5%, 15% e 30%. Neste exemplo, com uma opção de Semelhança de Cores <guilabel
+>Exacta</guilabel
+>, um preenchimento em (80, 100) iria só preencher um pixel, dado que os pixels adjacentes não são idênticos. À medida que a Semelhança de Cores vai aumentando. os pixels que sejam semelhantes em termos de cores são considerados idênticos, daí o preenchimento se extender mais um pouco. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Opções de Visualização</title>
+
+<sect1 id="view-options-section">
+<title
+>Referência das Opções de Visualização</title>
+
+<para
+><link linkend="view-zoom"
+>Ampliação com Grelha Incorporada</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Miniatura</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Ampliação com grelha incorporada</title>
+<para
+>Aumenta o nível de ampliação para editar as imagens com maior precisão ou reduz-lo, para ver mais partes da imagem.</para>
+
+<important>
+<para
+>No caso dos níveis de ampliação que não sejam múltiplos de 100%, partes da imagem irão parecer que se movem, quando o utilizador interage com elas. Poderão também ocorrer algumas pequenas falhas de actualização nesses níveis de ampliação. </para>
+</important>
+
+<para
+>Nos níveis de ampliação de 400% ou superior, que sejam também múltiplos de 100%, poderá <guimenuitem
+>Mostrar a Grelha</guimenuitem
+> para editar com maior precisão os pixels individuais.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>A primeira imagem mostra o ícone da ferramenta de <link linkend="tool-text"
+>Texto</link
+>, enquanto a última mostra-a com uma ampliação de 600%, com a grelha activada.</para>
+
+<tip>
+<para
+>Outra forma de ampliar, quando não está a desenhar, é deslocar a <mousebutton
+>roda</mousebutton
+> do rato enquanto carrega no &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Miniatura</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Se estiver seleccionado o <guimenuitem
+>Modo de Miniaturas Ampliadas</guimenuitem
+>, a imagem inteira é apresentada e dimensionada como for necessário para caber na janela de miniaturas (imagem do canto superior direito). </para>
+<para
+>Caso contrário, a miniatura mostra o máximo possível da imagem, a começar no canto superior esquerdo da área principal (imagem inferior-direita). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Efeitos de Imagens</title>
+
+<sect1 id="image-effects-section">
+<title
+>Referência dos Efeitos de Imagens</title>
+<para
+><link linkend="image-autocrop"
+>Auto-corte / Remover o Contorno Interno</link
+></para>
+<para
+><link linkend="image-balance"
+>Balanceamento</link
+></para>
+<para
+><link linkend="image-clear"
+>Limpar</link
+></para>
+<para
+><link linkend="image-emboss"
+>Gravar</link
+></para>
+<para
+><link linkend="image-flatten"
+>Aplanar</link
+></para>
+<para
+><link linkend="image-flip"
+>Inverter (baixo para cima)</link
+></para>
+<para
+><link linkend="image-invert"
+>Inverter</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Reduzir as Cores</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Reduzir para Tons de Cinzento</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Reduzir para Monocromático (Rasterizado)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Espelho (horizontal)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Redimensionar</link
+></para>
+<para
+><link linkend="image-rotate"
+>Rodar</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Definir como Imagem (Recortar)</link
+></para>
+<para
+><link linkend="image-skew"
+>Inclinar</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Suavizar &amp; Afiar</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Mais Efeitos</link
+></para>
+<para
+><link linkend="image-notes"
+>Notas</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Auto-corte / Remover o Contorno Interno</title>
+
+<para
+>Isto remove automaticamente o contorno de uma imagem ou da selecção. Use o Auto-Corte se tiver uma figura que não ocupe a imagem inteira e deseja remover o espaço em branco em excesso. Para auto-cortar uma imagem com um contorno de imagem com meios-tons, use também a <link linkend="color-box"
+>Semelhança de Cores</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Balanceamento</title>
+
+<para
+>Esta funcionalidade está acessível através da janela <link linkend="image-more-effects"
+>Mais Efeitos</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Isto permite-lhe definir o brilho, o contraste e o factor 'gama' da imagem ou da área seleccionada. </para>
+
+<note>
+<para
+>A medida mais comum do 'gama' (um valor decimal de 0,10 a 10,00) está localizado entre o campo incremental <guilabel
+>Gama</guilabel
+> e o botão <guibutton
+>Limpar</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Limpar</title>
+
+<para
+>Isto preenche a imagem inteira ou a selecção com a cor de fundo.</para>
+
+<tip>
+<para
+>Faça duplo-click no ícone da <link linkend="tool-eraser-std"
+>Borracha</link
+> para limpar a imagem por inteiro.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Gravar</title>
+
+<para
+>Esta funcionalidade está acessível através da janela <link linkend="image-more-effects"
+>Mais Efeitos</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Carregue em <guilabel
+>Activar</guilabel
+> para aplicar o efeito de Gravação. Isto realça os extremos e dá à imagem ou selecção um &quot;efeito de gravado&quot;. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Aplanar</title>
+
+<para
+>Esta funcionalidade está acessível através da janela <link linkend="image-more-effects"
+>Mais Efeitos</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Volta a colorir a imagem com tons variados das duas cores seleccionadas. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Inverter (baixo para cima)</title>
+
+<para
+>Isto inverte a imagem inteira ou a selecção na vertical.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Inverter</title>
+
+<para
+>Esta funcionalidade está acessível através da janela <link linkend="image-more-effects"
+>Mais Efeitos</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Isto permite-lhe inverter um ou mais canais RGB na imagem ou na selecção. Seleccione <guilabel
+>Tudo</guilabel
+> para mudar uma foto para o seu negativo e vice-versa. Isto normalmente cria um efeito bastante engraçado.</para>
+
+<tip>
+<para
+>Para inverter rapidamente todos os canais, não precisa de usar esta janela. Poderá aceder em alternativa ao item <guimenuitem
+>Inverter as Cores</guimenuitem
+> do menu <guimenu
+>Imagem</guimenu
+> ou <guimenu
+>Selecção</guimenu
+>. O item <guimenu
+>Selecção</guimenu
+> só aparece no menu se usar uma das ferramentas de selecção. Adicionalmente, poderá chegar a esta opção com o menu de contexto que aparece com o &RMB; sobre a área da imagem. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Espelho (horizontal)</title>
+
+<para
+>Isto inverte a imagem inteira ou a selecção na horizontal.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Reduzir as Cores</title>
+
+<para
+>Esta funcionalidade está acessível através da janela <link linkend="image-more-effects"
+>Mais Efeitos</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Isto reduz o número de cores usado pela imagem ou pela selecção, com ou sem rasterização. </para>
+
+<para
+>A rasterização oferece normalmente melhores resultados de qualidade, contudo, poderá querer desactivá-la para efeitos artísticos; &eg; ao usar o <guilabel
+>Monocromático</guilabel
+> em vez do <guilabel
+>Monocromático (Rasterizado)</guilabel
+> irá dar um efeito de silhueta. </para>
+
+<para
+>Outra distinção importante é que, enquanto o <guilabel
+>Monocromático (Rasterizado)</guilabel
+> irá reduzir sempre a imagem inteira ou a selecção para preto-e-branco, o <guilabel
+>Monocromático</guilabel
+> só fará isso se a imagem ou a selecção tiver mais que 2 cores. </para>
+
+<tip>
+<para
+>Para uma imagem monocromática rápida e rasterizada, use o item <link linkend="image-monochrome"
+>Reduzir para Monocromático (Rasterizado)</link
+> do menu <guimenu
+>Imagem</guimenu
+> ou <guimenu
+>Selecção</guimenu
+>. O item <guimenu
+>Selecção</guimenu
+> só aparece no menu se usar uma das ferramentas de selecção. Adicionalmente, poderá chegar a esta opção com o menu de contexto que aparece com o &RMB; sobre a área da imagem. </para>
+</tip>
+
+<note>
+<para
+>A alteração das cores aqui não terá efeito na profundidade de cor do formato do ficheiro. Se quiser alterar a profundidade de cor, o utilizador devê-la-á seleccionar nas janelas de gravação de ficheiros. Repare que, confusamente, a alteração da profundidade de cor irá também alterar o número de cores. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Reduzir para Tons de Cinzento</title>
+
+<para
+>Isto reduz a imagem completa ou a selecção para tons de cinzento.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Reduzir para Monocromático (Rasterizado)</title>
+
+<para
+>Isto reduz a imagem inteira ou a selecção para preto e branco.</para>
+
+<tip>
+<para
+>Se não quiser que a imagem ou a selecção seja rasterizada, use a janela para <link linkend="image-reduce-colors"
+> Reduzir as Cores</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Redimensionar</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>O redimensionamento de uma imagem altera as dimensões da mesma sem aplicar uma transformação do conteúdo existente. A mudança de escala irá reduzir o conteúdo existente para as dimensões novas. A <guibutton
+>Escala Suave</guibutton
+> normalmente dá melhores resultados de qualidade que a Escala, misturando as cores adjacentes.</para>
+
+<para
+>Você poderá exprimir as novas dimensões em pixels, ou como uma percentagem do tamanho original. Se você seleccionar a opção <guilabel
+>Manter as proporções</guilabel
+>, a largura e a altura serão escaladas na mesma medida.</para>
+
+<tip>
+<para
+>Poderá fazer uma <guibutton
+>Escala Suave</guibutton
+> livre da selecção ou <guibutton
+>Redimensionar</guibutton
+> a imagem com as pegas. </para>
+</tip>
+
+<note>
+<para
+>Só é permitido o redimensionamento por escala para as selecções, e só é permitido o redimensionamento para as zonas de texto. Veja as <link linkend="image-notes"
+>Notas</link
+> para mais detalhes sobre a aplicação destes efeitos.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Rodar</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Isto roda a imagem. Você poderá especificar o ângulo e a direcção da rotação.</para>
+
+<tip>
+<para
+>Você poderá inverter a direcção da rotação se indicar um ângulo negativo.</para>
+</tip>
+
+<note>
+<para
+>Veja as <link linkend="image-notes"
+>Notas</link
+> para mais detalhes sobre como aplicar este efeito a uma selecção. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Definir como Imagem (Recortar)</title>
+
+<para
+>Isto fará com que a selecção passe a ser a imagem em si.</para>
+
+<note>
+<para
+>Isto só está disponível quando você tiver uma selecção activa.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Inclinar</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Isto inclina a imagem inteira ou a selecção na horizontal e/ou na vertical.</para>
+
+<note>
+<para
+>Veja as <link linkend="image-notes"
+>Notas</link
+> para mais detalhes sobre como aplicar este efeito a uma selecção.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Suavizar &amp; Afiar</title>
+
+<para
+>Esta funcionalidade está acessível através da janela <link linkend="image-more-effects"
+>Mais Efeitos</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Use este efeito para suavizar ou afiar os detalhes da imagem. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Mais Efeitos</title>
+
+<para
+>Esta janela contém as funcionalidades para <link linkend="image-balance"
+>Balanceamento</link
+>, <link linkend="image-emboss"
+>Gravar</link
+>, <link linkend="image-flatten"
+>Aplanar</link
+>, <link linkend="image-invert"
+>Inverter</link
+>, <link linkend="image-reduce-colors"
+>Reduzir Cores</link
+> e <link linkend="image-soften-sharpen"
+>Suavizar &amp; Afiar</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Notas</title>
+
+<para
+>O <link linkend="image-resize-scale"
+>Redimensionamento</link
+>, a <link linkend="image-rotate"
+>Rotação</link
+> e a <link linkend="image-skew"
+>Inclinação</link
+> podem alterar as dimensões da imagem. Você poderá ver as novas dimensões na janela.</para>
+
+<para
+>Se você aplicar estes efeitos a uma imagem, esta será redimensionada se necessário. Contudo, se você aplicar estes efeitos a uma selecção, a imagem não será redimensionada, mesmo que a selecção transformada não caiba.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>A imagem da esquerda foi rodada 30 graus no sentido dos ponteiros do relógio para formar a imagem correcta. O &kolourpaint; alargou automaticamente a imagem para acomodar o conteúdo maior. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>A <emphasis
+>selecção</emphasis
+> da esquerda foi rodada 30 graus para formar a selecção correcta. O tamanho da imagem manteve-se o mesmo, dado que partes da selecção não serão visíveis sem <link linkend="image-resize-scale"
+>Redimensionar</link
+> a <emphasis
+>imagem</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Créditos e Licença</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Poderá não ser uma documentação concisa, poderá não ser completa, mas é documentação honesta. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Programa Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>Ícones específicos do &kolourpaint; com 'copyright' &copy; 2004, 2005 de Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Documentação e desenhos adicionais da documentação Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;.</para>
+
+<para
+>Partes foram reproduzidas com permissão de <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Tradução de José Nuno Pires <email
+>zepires@gmail.com</email
+></para
+> 
+&underFDL; <para
+>Este programa está licenciado da seguinte forma:</para>
+
+<para
+>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

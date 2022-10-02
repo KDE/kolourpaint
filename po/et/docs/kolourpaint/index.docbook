@@ -1,0 +1,1792 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&kolourpaint;">
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY package "kdegraphics">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>&kolourpaint;i käsiraamat</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+> <firstname
+>Marek</firstname
+> <surname
+>Laane</surname
+> <affiliation
+><address
+><email
+>bald@starman.ee</email
+></address
+> </affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2011-04-03</date>
+<releaseinfo
+>&kde; 4.7</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; on vaba ja hõlpsasti kasutatav &kde; joonistamisrakendus. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Sissejuhatus</title>
+<para
+>&kolourpaint; on vaba ja hõlpsasti kasutatav &kde; joonistamisrakendus. See sobib suurepäraselt sellisteks igapäevasteks asjadeks, nagu:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Joonistamine - diagrammide loomine ja <quote
+>käsitsijoonistused</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Ekraanipiltide käitlemine - nende hankimine ja redigeerimine</para>
+</listitem>
+<listitem>
+<para
+>Pilditöötlus - ekraanipiltide ja fotode redigeerimine ning efektide rakendamine</para>
+</listitem>
+<listitem>
+<para
+>Ikoonitöötlus - ikoonipiltide ja logode joonistamine (ka läbipaistvalt)</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>&kolourpaint;i kasutamine</title>
+
+<para
+>Klõpsa mõnel järgmistest viitadest &kolourpaint;i võimalustega tutvumiseks:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Tööriistad</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Värvide kasutamine</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Vaatevalikud</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Pildiefektid</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Tööriistad</title>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Ekraanipiltide hankimine</title>
+
+<para
+><quote
+>Ekraanipilt</quote
+>, nagu nimigi ütleb, näitab seda, mida näed oma ekraanil. Sellest võib olla abi seletamaks, mida sa oled ette võtnud konkreetse tulemuse saavutamiseks, või leitud vea näitamiseks. </para>
+<para
+>Ekraanipildi redigeerimiseks &kolourpaint;is võib kasutada menüükäsku <menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Ekraanipildi võtmine</guimenuitem
+></menuchoice
+>, mille leiab &kolourpaint;i peamenüüst. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Ilmuvas dialoogis saab muuta <guilabel
+>pildistamise viivitust</guilabel
+> (sekundites) ja valida <guilabel
+>peaakna peitmise</guilabel
+> pildistamise ajal. Kui oled ekraanipildi tegemiseks valmis, klõpsa lihtsalt <guibutton
+>OK</guibutton
+>. Ekraanipilt asetatakse otse &kolourpaint;i redigeerimisalasse. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Tööriistade seletused</title>
+
+<para
+>Kiireim võimalus valida mõni &kolourpaint;i tööriist on vajutada sellega seotud kiirkorraldusele ehk klahvile. Millised need on, saab teada nii käesolevast käsiraamatust kui ka <interface
+>tööriistakast</interface
+>i kohtspikritelt. Kiirklahvi vajutamise ajal võib olla vajalik all hoida klahve <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> - seda just siis, kui sisestad parajasti teksti, sest sel juhul üheklahvilised kiirkorraldused ei toimi. Näiteks pintsli valimiseks vajuta <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> või lihtsalt B (kui sa ei kirjuta parajasti teksti). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Pintsel</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Värvikustutaja</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Värvivalija</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Ühendatud sirged</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Kõver</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>Ellips</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Kustutaja</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Ülekanduv täitumine</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Sirge</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Pliiats</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Hulknurk</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Ristkülik</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Ümardatud ristkülik</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Valik (elliptiline)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Valik (vabakäsi)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Valik (ristkülikuline)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Pihusti</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Tekst</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Pintsel <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Joonistamiseks klõpsa või lohista pintslit. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Klõpsa mõnel kujundil pintslikuju valimiseks. Kasutada on võimalik ümarat, ruudukujulist ning kahtpidi diagonaalset pintslit.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Värvivalija <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Esiplaani värvi määramiseks klõpsa pikslil hiire <mousebutton
+>vasaku</mousebutton
+> nupuga. Taustavärvi määramiseks klõpsa pikslil &HPN;ga. Pärast seda naaseb &kolourpaint; eelnevalt valitud tööriista juurde.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Ühendatud sirged ja hulknurk <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Ühendatud sirgete joonistamiseks klõpsa ja lohista hiirt. Hulknurki joonistatakse samamoodi, ainult et algus- ja lõpp-punkt ühendatakse automaatselt hulknurga loomiseks.</para>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi, samuti muuta vastupidiseks hulknurka täitva värvi.</para>
+
+<para
+>Võimalik on <link linkend="tool-options"
+>määrata sirge laius</link
+>. Hulknurga korral saab ka <link linkend="tool-options"
+>määrata täitmise stiili</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Kõver <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa ja lohista sirge joonistamiseks - nii määrad algus- ja lõpp-punkti. Lohistades saab määrata kuni kaks kontrollpunkti. Kõvera lõpetamiseks mõlemat kontrollpunkti kasutades või kasutamata jättes klõpsa hiire teise nupuga. Kõvera tööriist joonistab Bezier' kõvera.</para>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi.</para>
+
+<para
+>Võimalik on ka <link linkend="tool-options"
+>määrata sirge laius</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Ellips <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Ellipsi joonistamiseks klõpsa ja lohista hiirt.</para>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi, samuti muuta vastupidiseks täitevärvi.</para>
+
+<para
+>Võimalik on ka <link linkend="tool-options"
+>määrata sirge laius ja täitmise stiil</link
+>.</para>
+
+<para
+>Lisavõimalusi pakuvad muuteklahvid:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Hoia all klahv &Shift; ja joonista hiirt lohistades ring.</para>
+</listitem>
+<listitem>
+<para
+>Ellipsi joonistamiseks enda määratud keskpunktiga hoia all klahvi &Ctrl;, klõpsa keskpunktile ja lohista hiirt, kuni ellips on just vajaliku suuruse ja kujuga.</para>
+</listitem>
+<listitem>
+<para
+>Ringi joonistamiseks enda määratud keskpunktiga hoia all klahvi &Ctrl;, klõpsa keskpunktile ja lohista hiirt, kuni ring on just vajaliku suurusega.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Kustutajad</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Kustutaja <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa ja lohista kustutajat vigade kõrvaldamiseks.</para>
+
+<note>
+<para
+>Erinevalt muudest tööriistadest joonistavad kustutajad taustavärvi. Esiplaani värvi joonistamiseks on mõeldud &HPN;.</para>
+</note>
+
+<para
+>Kustutaja töötab ainult <link linkend="tool-options"
+>ruuduga</link
+>. Muude kujundite, näiteks ringide jaoks, võta kasutusele <link linkend="tool-brush"
+>pintsel</link
+> ja &HPN;.</para>
+
+<tip>
+<para
+>Topeltklõpsuga kustutaja ikoonil saab eemaldada terve pildi. See on võrdväärne pildimenüüst käsu <link linkend="image-clear"
+>Puhasta</link
+> valimisega.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Värvikustutaja <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa ja lohista hiirt esiplaani pikslite asendamiseks taustavärviga. Kõigi esiplaani värvi sarnaste (kuid mitte tingimata täpselt samade) pikslite asendamiseks näiteks pseudotoonitud piltidel ja fotodel määra <link linkend="color-box"
+>värvisarnasuse</link
+> väärtuseks midagi muud kui täpne.</para>
+
+<note>
+<para
+>Erinevalt muudest tööriistadest joonistavad kustutajad taustavärvi. Taustavärvi pikslite asendamiseks esiplaani värviga on mõeldud &HPN;.</para>
+</note>
+
+<para
+><link linkend="tool-options"
+>Kustutaja suurust</link
+> on võimalik seadistada.</para>
+
+<tip>
+<para
+>Topeltklõps värvikustutaja ikoonil rakendab seda tervele pildile.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Ülekanduv täitmine <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa mingi piirkonna täitmiseks. Pseudotoonitud piirkonna täitmiseks määra <link linkend="color-box"
+>värvisarnasuse</link
+> väärtuseks midagi muud kui täpne.</para>
+
+<para
+>&HVN; täidab esiplaani värvi, &HPN; taustavärvi.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Sirge <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Sirge joonistamiseks klõpsa ja lohista hiirt.</para>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi.</para>
+
+<para
+>Võimalik on ka <link linkend="tool-options"
+>määrata sirge laius</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Klahvi &Ctrl; all hoides saab joonistada sirgeid 30-kraadiste vahedega, nagu näitab punane diagramm.</para>
+</listitem>
+<listitem>
+<para
+>Klahvi &Shift; all hoides saab joonistada sirgeid 45-kraadiste vahedega, nagu näitab sinine diagramm.</para>
+</listitem>
+<listitem>
+<para
+>Klahve &Ctrl; ja &Shift; all hoides saab joonistada sirgeid 30- või 45-kraadiste vahedega, nagu näitab roheline diagramm.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Pliiats <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa punkti joonistamiseks või klõpsa ja lohista hiirt vabakäesirge joonistamiseks.</para>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Ristkülikud <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa ja lohista hiirt ristküliku joonistamiseks. Ümardatud ristkülik on ristkülik ümarate nurkadega.</para>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi, samuti muuta vastupidiseks täitevärvi.</para>
+
+<para
+>Võimalik on ka <link linkend="tool-options"
+>määrata sirge laius ja täitmise stiil</link
+>.</para>
+
+<para
+>Lisavõimalusi pakuvad muuteklahvid:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Klahvi &Shift; all hoides saab hiirt lohistades joonistada ruudu.</para>
+</listitem>
+<listitem>
+<para
+>Ristküliku joonistamiseks enda määratud keskpunktiga hoia all klahvi &Ctrl;, klõpsa keskpunktile ja lohista hiirt, kuni ristkülik on just vajaliku suuruse ja kujuga.</para>
+</listitem>
+<listitem>
+<para
+>Ruudu joonistamiseks enda määratud keskpunktiga hoia all klahve &Ctrl; ja &Shift;, klõpsa keskpunktile ja lohista hiirt, kuni ruut on just vajaliku suurusega.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Valikud <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Valiku tööriistadega saab joonistada valiku piirjooned.</para>
+
+<para
+>Valiku liigutamiseks klõpsa ja lohista seda hiirega. Vajadusel liigub ka peavaade kaasa, võimaldades liigutada valiku pildi parajasti mittenähtavasse osasse.</para>
+
+<para
+>Sangu kasutades on võimalik valikut <link linkend="image-resize-scale"
+>sujuvalt skaleerida</link
+> või selle <link linkend="image-resize-scale"
+>suurust muuta</link
+>. Proportsioonide säilitamiseks hoia skaleerimise ajal all klahv &Shift;. Klõps &HPN;ga avab kontekstimenüü, millest leiab levinumad <guimenu
+>redigeerimis</guimenu
+>käsud ja <link linkend="image-effects-section"
+>pildiefektid</link
+>. </para>
+
+<tip>
+<para
+>Valiku piirjooni joonistades või liigutades võib kasutada ka nooleklahve.</para>
+</tip>
+
+<para
+>Kui vajutada enne valiku liigutamist alla klahv &Ctrl;, saab liigutada valiku koopia. Kui aga hoida all klahv &Shift;, saab valikut nihutada. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Valikul on kaks režiimi: läbipaistmatu (vaikimisi) ja läbipaistev. Kui kasutad viimast, on kõik taustavärvi pikslid näha. See võimaldab valiku ilma taustata asetada. Tausta eraldamiseks pseudotoonitud pildil määra <link linkend="color-box"
+>värvisarnasuse</link
+> väärtuseks midagi muud kui täpne.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Valikule võib rakendada ka pildiefekte - vaata selle kohta lähemalt <link linkend="image-effects-section"
+>pildiefektide</link
+> osa.</para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Pihusti <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa ja lohista hiirt pihusti kasutamiseks. Hiirenuppu all hoides saab pihusti värvijuga tihendada.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klõpsa mõnel ruudukesel kustutaja suuruse valimiseks. Võimalik on valida suuruste 9x9, 17x17 ja 29x29 vahel.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>&HVN;ga saab joonistada esiplaani värvi, &HPN;ga tausta värvi.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Tekst <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klõpsa ja loo hiirt lohistades ala, kuhu soovid teksti kirjutada. Niipea kui näeb piiret, võid hakata teksti kirjuta,a. Loodud kasti serval klõpsates saab seda lohistada teise kohta, samuti on võimalik selle suurust muuta ka sangu lohistades või <link linkend="image-resize-scale"
+>vastavas dialoogis</link
+>. </para>
+
+<tip>
+<para
+>Kui oled tekstikastist väljunud, saad käsuga <guimenuitem
+>Võta tagasi</guimenuitem
+> uuesti teksti redigeerima asuda.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Läbipaistva värvi kasutamine</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Vasakul on näidispilt. Paremal on sama pilt, millele on lisatud läbipaistmatu esiplaani ja taustavärviga tekst. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Vasakul on pildile lisatud läbipaistmatu esiplaani värvi ja läbipaistva taustavärviga tekst. Paremal on pildile lisatud läbipaistva esiplaani värvi ja läbipaistmatu taustavärviga tekst.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Üldised tööriistade valikud</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klõpsa mõnel ruudukesel kustutaja suuruse valimiseks. Võimalik on valida ruutude vahel, mille küljepikkuseks on 2, 3, 5, 9, 17 ja 29 pikslit.</para>
+
+<para
+>Kustutaja suurus mõjutab <link linkend="tool-erasers"
+>kustutajaid</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klõpsa mõnel joonel laiuse valimiseks. Võimalik on valida laiuse 1, 2, 3, 5 ja 8 pikslit vahel.</para>
+
+<para
+>Sirge laius mõjutab <link linkend="tool-polystar"
+>ühendatud sirgeid</link
+>, <link linkend="tool-curve"
+>kõveraid</link
+>, <link linkend="tool-ellipse"
+>ellipseid</link
+>, <link linkend="tool-line"
+>sirgeid</link
+>, <link linkend="tool-polystar"
+>hulknurki</link
+>, <link linkend="tool-rectangles"
+>ristkülikuid</link
+> ja <link linkend="tool-rectangles"
+>ümardatud ristkülikuid</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klõpsa mõnel ristkülikul täitmise stiili valimiseks. Võimalusteks on täitmise puudumine, taustavärviga täitmine ja esiplaani värviga täitmine.</para
+> <para
+>Täitmise stiil mõjutab<link linkend="tool-ellipse"
+>ellipseid</link
+>, <link linkend="tool-polystar"
+>hulknurki</link
+>, <link linkend="tool-rectangles"
+>ristkülikuid</link
+> ja <link linkend="tool-rectangles"
+>ümardatud ristkülikuid</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Värvide kasutamine</title>
+
+<sect1 id="color-box">
+<title
+>Värvikast</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Värvikast</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Värvikast koosneb kolmest põhiosast: värvitabloo, värvipalett ja värvisarnasuse valija.</para>
+
+<para
+>Värvitabloo näitab parajasti kehtivat esiplaani värvi ruudukesena teise ruudu peal, mis tähistab parajasti kehtivat taustavärvi. &HVN;ga lohistamisel kasutatakse esiplaani, &HPN;ga lohistamisel taustavärvi (välja arvatud <link linkend="tool-erasers"
+>kustutajate</link
+> puhul). Kahe otsaga noolel klõpsates saab esiplaani ja taustavärvi vahetada. </para>
+
+<para
+>Värvipalett näitab värve, mille seast valida. Läbipaistev püramiid näitab läbipaistvat värvi. Hiire vasaku nupu klõpsuga värvil saab määrata esiplaani, parema nupu klõpsuga taustavärvi. Samuti võib läbipaistmatu värvi lohistada värvitabloo ruudukestele. Värvi muutmiseks tablool või paletil tee sellel topeltklõps. <link linkend="tool-color-picker"
+>Värvivalija</link
+> võimaldab valida pildilt mõne värvi. </para>
+
+<para
+>Värvisarnasuse valija võimaldab paremini toime tulla pseudotoonitud piltide ja fotodega, sarnanedes mitmes muus joonistamisprogrammis kasutatava <quote
+>võlukepiga</quote
+>. See mõjutab läbipaistvat valikut, samuti <link linkend="tool-flood-fill"
+>ülekanduvat täitmist</link
+>, <link linkend="tool-eraser-clr"
+>värvikustutajat</link
+> ja <link linkend="image-autocrop"
+>automaatset kärpimist / sisepiirde eemaldamist</link
+>. Topeltklõpsuga värvisarnasuse valijal saab määrata, milliseid sarnaseid värve tuleks hinnata ühesuguseks. Valiku kasutamisel läbipaistvuse korral muudetakse iga värv valikus, mis on sarnane taustavärviga, samuti läbipaistvaks.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Vasakul on näha näidispilt. Paremal näeb ülekanduva täitmise tulemust, mille puhul värvisarnasuseks on 5%, 15% ja 30%. Toodud näites täidetakse valiku <guilabel
+>Täpne</guilabel
+> korral asukohas (80,100) ainult üks piksel, sest ümbritsevad pikslid on küll sarnased, aga mitte samased. Värvisarnasuse suurendamisel peetakse aina suuremat hulka sarnase värviga piksleid samaseks ning vastavalt suureneb ka täitmise ala. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Vaatevalikud</title>
+
+<sect1 id="view-options-section">
+<title
+>Vaatevalikute seletused</title>
+
+<para
+><link linkend="view-zoom"
+>Suurendus koos alusvõrguga</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Pisipilt</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Suurendus koos alusvõrguga</title>
+<para
+>Suurendab, et pilte saaks täpsemalt muuta, või vähendab, et näha korraga rohkem pildist.</para>
+
+<important>
+<para
+>Kui suurendustase ei ole täpselt 100%-kordne, võivad mõningad pildi osad nendega tegelemisel paista liikuvat. Ebatraditsioonilise suurendustaseme kasutamisel võib ette tulla ka muid väiksemaid pildi esitamise probleeme. </para>
+</important>
+
+<para
+>Suurendustasemel 400% või enam (aga 100%-kordse väärtusega) on mõttekas lülitada sisse <guimenuitem
+>alusvõrgu näitamine</guimenuitem
+>, mis lubab iga pikslit täpsemini muuta.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Esimene pilt näitab <link linkend="tool-text"
+>tekstitööriista</link
+> ikooni, teine aga sedasama suurendusega 600% ja alusvõrguga.</para>
+
+<tip>
+<para
+>Teine viis suurendamiseks ajal, mil sa ei joonista, on kerida hiire <mousebutton
+>rattaga</mousebutton
+>, hoides samal ajal all klahvi &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Pisipilt</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Kui valitud on <guimenuitem
+>suurendatud pisipildi režiim</guimenuitem
+>, näidatakse kogu pilti, mida vajadusel skaleeritakse, et see pisipildiaknasse mahuks (pilt üleval paremal). </para>
+<para
+>Vastasel juhul näitab pisipilt pilti nii palju kui aknasse mahub alates peavaate ülemisest vasakust nurgast (pilt all paremal). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Pildiefektid</title>
+
+<sect1 id="image-effects-section">
+<title
+>Pildiefektide seletused</title>
+<para
+><link linkend="image-autocrop"
+>Automaatne kärpimine / Sisepiirde eemaldamine</link
+></para>
+<para
+><link linkend="image-balance"
+>Balanss</link
+></para>
+<para
+><link linkend="image-clear"
+>Puhastamine</link
+></para>
+<para
+><link linkend="image-emboss"
+>Kohrutus</link
+></para>
+<para
+><link linkend="image-flatten"
+>Kihtide ühendamine</link
+></para>
+<para
+><link linkend="image-flip"
+>Pea peale (ülemine pool alla)</link
+></para>
+<para
+><link linkend="image-invert"
+>Värvide inverteerimine</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Värvide taandamine</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Taandamine halltoonidesse</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Taandamine ühevärviliseks (pseudotoonitud)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Peegeldamine (horisontaalselt)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Suuruse muutmine / skaleerimine</link
+></para>
+<para
+><link linkend="image-rotate"
+>Pööramine</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Määramine pildiks (kärpimine)</link
+></para>
+<para
+><link linkend="image-skew"
+>Pööramine nurgeti</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Pehmendus ja teravdus</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Rohkem efekte</link
+></para>
+<para
+><link linkend="image-notes"
+>Märkused</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Automaatne kärpimine / Sisepiirde eemaldamine</title>
+
+<para
+>See eemaldab automaatselt pildi või valiku piirde. Kasuta automaatset kärpimist, kui sul on tegemist kujundiga, mis ei mahu tervele pildile ning soovid eemaldada ülearuse tühjuse. Pseudotoonitud pildipiirdega pildi automaatseks kärpimiseks tuleb kasutada ka <link linkend="color-box"
+>värvisarnasuse valija</link
+> abi.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Balanss</title>
+
+<para
+>Seda võimalust saab kasutada dialoogis <link linkend="image-more-effects"
+>Rohkem efekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>See võimaldab määrata pildi või valiku heleduse, kontrasti ja gamma. </para>
+
+<note>
+<para
+>Gamma kõige levinum väärtus (kümnendarv vahemikus 0,10 kui 10,00) asub keritava kasti <guilabel
+>Gamma</guilabel
+> ja nupu <guibutton
+>Lähtesta</guibutton
+> vahel. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Puhastamine</title>
+
+<para
+>See täidab kogu pildi või valiku taustavärviga.</para>
+
+<tip>
+<para
+>Topeltklõps <link linkend="tool-eraser-std"
+>kustutaja</link
+> ikoonil lubab puhastada kogu pildi.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Kohrutus</title>
+
+<para
+>Seda võimalust saab kasutada dialoogis <link linkend="image-more-effects"
+>Rohkem efekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Kohrutusefekti kasutamiseks märgi ära <guilabel
+>Lubatud</guilabel
+>. See rõhutab pildi või valiku servi ja tekitab &quot;graveeringu&quot; mulje. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Kihtide ühendamine</title>
+
+<para
+>Seda võimalust saab kasutada dialoogis <link linkend="image-more-effects"
+>Rohkem efekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>See muudab pildi värvi, tekitades seal kahe valitud värvi mitmesuguseid varjundeid. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Pea peale (ülemine pool alla)</title>
+
+<para
+>See peegeldab kogu pilti või valikut vertikaalselt.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Värvide inverteerimine</title>
+
+<para
+>Seda võimalust saab kasutada dialoogis <link linkend="image-more-effects"
+>Rohkem efekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>See muudab iga piksli punase, rohelise ja sinise komponendi vastupidiseks. Selle abil saab näiteks fotost teha negatiivi ja vastupidi, kui valida <guilabel
+>Kõik</guilabel
+>. Üldiselt on see päris naljakas.</para>
+
+<tip>
+<para
+>Kõigi RGB-kanalite kiireks inverteerimiseks ei ole dialoog vajalik. Selle asemel saab kasutada käsku <guimenuitem
+>Inverteeri värvid</guimenuitem
+>, mille leiab menüüst <guimenu
+>Pilt</guimenu
+> või <guimenu
+>Valik</guimenu
+>. Kirje <guimenu
+>Valik</guimenu
+> leiab menüüribalt ainult siis, kui kasutad mõnda valikutööriista. Lisaks saab seda kasutada kontekstimenüüst, kui teha &HPNga; klõps pildialal. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Peegeldamine (horisontaalselt)</title>
+
+<para
+>See peegeldab kogu pilti või valikut horisontaalselt.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Värvide taandamine</title>
+
+<para
+>Seda võimalust saab kasutada dialoogis <link linkend="image-more-effects"
+>Rohkem efekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>See taandab pildi või valiku värvide arvu pseudotoonimist kasutades või ilma. </para>
+
+<para
+>Pseudotoonimine tagab tavaliselt parema kvaliteedi, kuid kunsti huvides võib olla mõttekas seda mitte kasutada - nt. <guilabel
+>Ühevärviline</guilabel
+> annab <guilabel
+>ühevärviline (pseudotoonitud)</guilabel
+> asemel kasutades tulemuseks vahva silueti. </para>
+
+<para
+>Teine oluline erinevus seisab selles, et kui <guilabel
+>Ühevärviline (pseudotoonitud)</guilabel
+> taandab alati kogu pildi või valiku mustvalgeks, siis <guilabel
+>Ühevärviline</guilabel
+> teeb seda ainult juhul, kui pildil või valikul on üle kahe värvi. </para>
+
+<tip>
+<para
+>Pildi või valiku kiireks taandamiseks pseudotoonitud ühevärviliseks kasuta käsku <link linkend="image-monochrome"
+>Taanda ühevärviliseks (pseudotoonitud)</link
+>, mille leiab menüüst <guimenu
+>Pilt</guimenu
+> või <guimenu
+>Valik</guimenu
+>. Kirje <guimenu
+>Valik</guimenu
+> leiab menüüribalt ainult siis, kui kasutad mõnda valikutööriista. Lisaks saab seda kasutada kontekstimenüüst, kui teha &HPNga; klõps pildialal. </para>
+</tip>
+
+<note>
+<para
+>Värvide arvu muutmine siin ei mõjuta failivormingu värvisügavust. Kui soovid muuta värvisügavust, tuleb see valida faili salvestamise dialoogis. Pane siiski tähele, et värvisügavuse muutmine muudab ühtlasi ka värvide arvu. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Taandamine halltoonidesse</title>
+
+<para
+>See taandab kogu pildi või valiku halltoonidesse.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Taandamine ühevärviliseks (pseudotoonitud)</title>
+
+<para
+>See taandab kogu pildi või valiku mustvalgeks.</para>
+
+<tip>
+<para
+>Kui sa ei soovi pildi või valiku pseudotoonimist, kasuta dialoogi <link linkend="image-reduce-colors"
+>Värvide taandamine</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Suuruse muutmine / skaleerimine</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Suuruse muutmine muudab pildi mõõtmeid ilma sisu kuidagi muutmata. Skaleerimisega saab pildi sisu venitada uutesse mõõtmetesse. <guibutton
+>Sujuv skaleerimine</guibutton
+> tagab üldiselt parema tulemuse kui lihtne skaleerimine, seset nii liidetakse ka naabervärvid.</para>
+
+<para
+>Uued mõõtmed võib määrata pikslites või protsendina algsuurusest. Kui valida võimalus <guilabel
+>Proportsioon säilitatakse</guilabel
+>, skaleeritakse laiust ja kõrgust ühevõrra.</para>
+
+<tip>
+<para
+>Sangu kasutades saab valikut vabalt <guibutton
+>sujuvalt skaleerida</guibutton
+> või selle <guibutton
+>suurust muuta</guibutton
+>. </para>
+</tip>
+
+<note>
+<para
+>Valiku korral saab kasutada ainult skaleerimist, tekstikastide korral ainult suuruse muutmist. Vaata <link linkend="image-notes"
+>märkuste osast</link
+> täpsemalt, kuidas neid efekte rakendada.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Pööramine</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>See pöörab pilti. Võimalik on määrata pööramise nurk ja suund.</para>
+
+<tip>
+<para
+>Pööramise suuna saab muuta vastupidiseks negatiivset pööramisnurka määrates.</para>
+</tip>
+
+<note>
+<para
+>Vaata <link linkend="image-notes"
+>märkuste osast</link
+> täpsemalt, kuidas seda efekti valikule rakendada. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Määra pildiks (kärbi)</title>
+
+<para
+>See määrab valiku pildiks.</para>
+
+<note>
+<para
+>Seda saab kasutada ainult aktiivse valiku olemasolul.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Pööramine nurgeti</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>See pöörab kogu pilti või valikut horisontaalselt ja/või vertikaalselt.</para>
+
+<note>
+<para
+>Vaata <link linkend="image-notes"
+>märkuste osast</link
+> täpsemalt, kuidas seda efekti valikule rakendada.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Pehmendus ja teravdus</title>
+
+<para
+>Seda võimalust saab kasutada dialoogis <link linkend="image-more-effects"
+>Rohkem efekte</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Sellega saab pilti pehmendada või teravdada. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Rohkem efekte</title>
+
+<para
+>Selles dialoogis saab kasutada võimalusi <link linkend="image-balance"
+>Balanss</link
+>, <link linkend="image-emboss"
+>Kohrutus</link
+>, <link linkend="image-flatten"
+>Kihtide ühendamine</link
+>, <link linkend="image-invert"
+>Värvide inverteerimine</link
+>, <link linkend="image-reduce-colors"
+>Värvide taandamine</link
+> ning <link linkend="image-soften-sharpen"
+>Pehmendus ja teravdus</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Märkused</title>
+
+<para
+><link linkend="image-resize-scale"
+>Suuruse muutmine</link
+>, <link linkend="image-rotate"
+>pööramine</link
+> ja <link linkend="image-skew"
+>pööramine nurgeti</link
+> võivad muuta pildi mõõtmeid. Uusi mõõtmeid saab näha dialoogis.</para>
+
+<para
+>Nende efektide rakendamisel pildile muudetakse vajaduse korral selle suurust. Kui aga rakendad neid valikule, ei muudeta pildi suurust isegi juhul, kui muudetud valik sellesse enam ei sobi.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Vasakpoolset pilti on pööratud 30 kraadi päripäeva, mis annab tulemuseks parempoolse pildi. &kolourpaint; suurendab automaatselt pilti, et see sobituks suurema sisuga. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Vasakpoolset <emphasis
+>valikut</emphasis
+> on pööratud 30 kraadi päripäeva, mis annab tulemuseks parempoolse valiku. Pildi suurus jääb samaks, seepärast ei ole osa valikust näha muidu kui <emphasis
+>pildi</emphasis
+> <link linkend="image-resize-scale"
+>suurust muutes</link
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Autorid ja litsents</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>See ei ole võib-olla kõige täpsem dokumentatsioon, võib-olla ka mitte täielik, aga kindlasti on see aus dokumentatsioon. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Rakenduse autoriõigus &copy; 2003, 2004, 2005: &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>&kolourpaint;i spetsiifiliste ikoonide autoriõigus &copy; 2004, 2005: Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+>. </para>
+
+<para
+>Dokumentatsiooni ja selle kunstilise vormistuse autoriõigus &copy; 2004, 2005: &Thurston.Dang; &Thurston.Dang.mail;.</para>
+
+<para
+>Mõned osad on loaga kopeeritud aadressilt <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Tõlge eesti keelde: Marek Laane <email
+>bald@smail.ee</email
+></para
+> 
+&underFDL; <para
+>Programmi litsents on järgmine:</para>
+
+<para
+>Autoriõigus &copy; 2003, 2004, 2005: &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+<appendix id="installation">
+<title
+>Paigaldamine</title>
+<sect1 id="getting-kapp">
+<title
+>&kolourpaint;i hankimine</title>
+&install.intro.documentation; <para
+>Uusimad väljalasked koos varasemate &kde; versioonide toetusega leiab aadressilt <ulink url="http://kolourpaint.sourceforge.net/"
+>http://kolourpaint.sourceforge.net/</ulink
+>.</para>
+
+</sect1>
+
+<sect1 id="compilation">
+<title
+>Kompileerimine ja paigaldamine</title>
+
+<note>
+<para
+>Kui sa loed seda &abikeskus;es, tähendab see seda, et &kolourpaint; on juba sinu arvutisse paigaldatud ja sul ei ole siintoodud juhistega suurt midagi peale hakata. </para>
+</note
+> &install.compile.documentation; </sect1>
+
+</appendix>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

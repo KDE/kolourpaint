@@ -1,0 +1,3026 @@
+# Translation for kolourpaint.po to Euskara/Basque (eu).
+# Copyright (C) 2005-2018, Free Software Foundation.
+# Copyright (C) 2019-2021, This file is copyright:
+# This file is distributed under the same license as the kolourpaint package.
+# KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
+#
+# Translators:
+# Marcos  <marcos@euskalgnu.org>, 2005.
+# Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# Enbata <urazpian@hotmail.com>, 2009.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2011, 2018, 2020, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kolourpaint\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"PO-Revision-Date: 2021-07-21 12:25+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 21.04.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ion Gaztañaga, Marcos Goyenetxe"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "igaztanaga@gmail.com, marcos@euskalgnu.org"
+
+#: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
+#, kde-format
+msgid "Balance"
+msgstr "Oreka"
+
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:52
+#, kde-format
+msgid "Soften"
+msgstr "Bigundu"
+
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:53
+#, kde-format
+msgid "Sharpen"
+msgstr "Zorroztu"
+
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:58
+#, kde-format
+msgid "Clear"
+msgstr "Garbitu"
+
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:60
+#: commands/imagelib/effects/kpEffectCommandBase.cpp:68
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:83
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:74
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:77
+#, kde-format
+msgid "Selection: %1"
+msgstr "Hautapena: %1"
+
+#: commands/imagelib/effects/kpEffectEmbossCommand.cpp:42
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:113
+#, kde-format
+msgid "Emboss"
+msgstr "Bozeldu"
+
+#: commands/imagelib/effects/kpEffectFlattenCommand.cpp:43
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:114
+#, kde-format
+msgid "Flatten"
+msgstr "Berdindu"
+
+#: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
+#, kde-format
+msgid "Reduce to Grayscale"
+msgstr "Bihurtu gris-eskalara"
+
+#: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
+#, kde-format
+msgid "Hue, Saturation, Value"
+msgstr "Ñabardura, saturazioa, balioa"
+
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
+#, kde-format
+msgid "Invert Colors"
+msgstr "Alderantzikatu koloreak"
+
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:117
+#, kde-format
+msgid "Invert"
+msgstr "Alderantzikatu"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
+#, kde-format
+msgid "Reduce to Monochrome (Dithered)"
+msgstr "Bihurtu monokromora (bilbatua)"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
+#, kde-format
+msgid "Reduce to Monochrome"
+msgstr "Bihurtu monokromora"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
+#, kde-format
+msgid "Reduce to 256 Color (Dithered)"
+msgstr "Bihurtu 256 koloretara (bilbatua)"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
+#, kde-format
+msgid "Reduce to 256 Color"
+msgstr "Bihurtu 256 koloretara"
+
+#: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:41
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
+#, kde-format
+msgid "Histogram Equalizer"
+msgstr "Histogramaren ekualizadorea"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
+#, kde-format
+msgid "Flip"
+msgstr "Irauli"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:69
+#, kde-format
+msgid "Flip horizontally and vertically"
+msgstr "Irauli horizontalki eta bertikalki"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:71
+#, kde-format
+msgid "Flip horizontally"
+msgstr "Irauli horizontalki"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:73
+#, kde-format
+msgid "Flip vertically"
+msgstr "Irauli bertikalki"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:101
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
+#, kde-format
+msgid "Text: Resize Box"
+msgstr "Testua: aldatu koadroaren tamaina"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:107
+#, kde-format
+msgid "Selection: Scale"
+msgstr "Hautapena: eskalatu"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:111
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:54
+#, kde-format
+msgid "Selection: Smooth Scale"
+msgstr "Hautapena: eskalatze leuna"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:120
+#, kde-format
+msgid "Resize"
+msgstr "Aldatu tamaina"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:122
+#, kde-format
+msgid "Scale"
+msgstr "Eskalatu"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:124
+#, kde-format
+msgid "Smooth Scale"
+msgstr "Eskalatze leuna"
+
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:72
+#, kde-format
+msgid "Rotate"
+msgstr "Biratu"
+
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
+#, kde-format
+msgid "Skew"
+msgstr "Okertu"
+
+#: commands/kpCommandHistoryBase.cpp:437
+#, kde-format
+msgid "&Undo: %1"
+msgstr "&Desegin: %1"
+
+#: commands/kpCommandHistoryBase.cpp:437
+#, kde-format
+msgid "&Undo"
+msgstr "&Desegin"
+
+#: commands/kpCommandHistoryBase.cpp:445
+#, kde-format
+msgid "&Redo: %1"
+msgstr "Be&rregin: %1"
+
+#: commands/kpCommandHistoryBase.cpp:445
+#, kde-format
+msgid "&Redo"
+msgstr "Be&rregin"
+
+#: commands/kpCommandHistoryBase.cpp:454
+#, kde-format
+msgid "Undo: %1"
+msgstr "Desegin: %1"
+
+#: commands/kpCommandHistoryBase.cpp:454 commands/kpCommandHistoryBase.cpp:635
+#, kde-format
+msgid "Undo"
+msgstr "Desegin"
+
+#: commands/kpCommandHistoryBase.cpp:462
+#, kde-format
+msgid "Redo: %1"
+msgstr "Berregin: %1"
+
+#: commands/kpCommandHistoryBase.cpp:462 commands/kpCommandHistoryBase.cpp:656
+#, kde-format
+msgid "Redo"
+msgstr "Berregin"
+
+#: commands/kpCommandHistoryBase.cpp:597
+#, kde-format
+msgid "%1: %2"
+msgstr "%1: %2"
+
+#: commands/kpCommandHistoryBase.cpp:608
+#, kde-format
+msgid "%1 more item"
+msgid_plural "%1 more items"
+msgstr[0] "elementu %1 gehiago"
+msgstr[1] "%1 elementu gehiago"
+
+#: commands/tools/kpToolColorPickerCommand.cpp:59
+#: tools/kpToolColorPicker.cpp:45
+#, kde-format
+msgid "Color Picker"
+msgstr "Kolore-hautatzailea"
+
+#: commands/tools/kpToolFloodFillCommand.cpp:77 tools/kpToolFloodFill.cpp:55
+#, kde-format
+msgid "Flood Fill"
+msgstr "Betegarria"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:89
+#, kde-format
+msgctxt "@title:window"
+msgid "More Image Effects (Selection)"
+msgstr "Irudi-efektu gehiago (hautapena)"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
+#, kde-format
+msgctxt "@title:window"
+msgid "More Image Effects"
+msgstr "Irudi-efektu gehiago"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
+#, kde-format
+msgid "&Effect:"
+msgstr "&Efektua:"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:118
+#, kde-format
+msgid "Reduce Colors"
+msgstr "Murriztu koloreak"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
+#, kde-format
+msgid "Soften & Sharpen"
+msgstr "Bigundu eta zorroztu"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:121
+#, kde-format
+msgctxt "@title:window"
+msgid "Document Properties"
+msgstr "Dokumentuaren propietateak"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:141
+#, kde-format
+msgid "Dots &Per Inch (DPI)"
+msgstr "Puntu &hazbeteko (dpi)"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:148
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:159
+#, kde-format
+msgid "Unspecified"
+msgstr "Zehaztu gabea"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:151
+#, kde-format
+msgctxt "Horizontal DPI 'x' Vertical DPI"
+msgid " x "
+msgstr " x "
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
+#, kde-format
+msgid "Horizontal:"
+msgstr "Horizontala:"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:167
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:217
+#, kde-format
+msgid "Vertical:"
+msgstr "Bertikala:"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
+#, kde-format
+msgid ""
+"<qt><p><b>Dots Per Inch</b> (DPI) specifies the number of pixels of the "
+"image that should be printed inside one inch (2.54cm).</p><p>The higher the "
+"image's DPI, the smaller the printed image. Note that your printer is "
+"unlikely to produce high quality prints if you increase this to more than "
+"300 or 600 DPI, depending on the printer.</p><p>If you would like to print "
+"the image so that it is the same size as it is displayed on the screen, set "
+"the image's DPI values to be the same as the screen's.</p><p>If either DPI "
+"value is <b>Unspecified</b>, the image will also be printed to be the same "
+"size as on the screen.</p><p>Not all image formats support DPI values. If "
+"the format you save in does not support them, they will not be saved.</p></"
+"qt>"
+msgstr ""
+"<qt><p><b>Puntu hazbeteko</b> (DPI) unitateak irudiaren pixel kopurua "
+"hazbete (2,54 cm) baten barruan zehazten du.</p> <p>Irudiaren DPIa zenbat "
+"eta altuagoa izan hare eta txikiagoa izango da inprimatutako irudia. Jakin "
+"ezazu balio hau 300 edo 600 dpi baino gehiagora handiagotzen baduzu, "
+"litekeena da inprimagailuak kalitate altuagoan ezin inprimatzea, beti ere "
+"inprimagailu motaren arabera noski.</p><p>Irudiak pantailan daukan tamaina "
+"berdinean inprimatzea nahi baduzu, ezarri irudiaren DPI balioa "
+"pantailakoaren berdinarekin.</p><p>DPIaren balioa <b>Zehaztu gabea</b> bada, "
+"irudia pantailako tamaina berdinean inprimatu ahalko da baita ere.</"
+"p><p>Irudien formatu batzuk ez dute DPI balioak onartzen. Gordetzen duzun "
+"formatuak ez badu onartzen, balio horiek ez dira gordeko.</p></qt>"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
+#, kde-format
+msgid "O&ffset"
+msgstr "&Desplazamendua"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:225
+#, kde-format
+msgid ""
+"<qt><p>The <b>Offset</b> is the relative position where this image should be "
+"placed, compared to other images.</p><p>Not all image formats support the "
+"<b>Offset</b> feature. If the format you save in does not support it, the "
+"values specified here will not be saved.</p></qt>"
+msgstr ""
+"<qt><p><b>Desplazamendua</b> irudi hau kokatuta egon beharko lukeen posizio "
+"erlatiboa da, beste irudi batzuekin konparatuz.</p><p>Irudien formatu batzuk "
+"ez dute <b>Desplazamendua</b> ezaugarria onartzen. Erabiltzen duzun "
+"formatuak ez badu desplazamendua onartzen, hemen zehaztutako balioa ez da "
+"gordeko.</p></qt>"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
+#, kde-format
+msgid "&Text Fields"
+msgstr "&Testuaren eremuak"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:253
+#, kde-format
+msgid "&Add Row"
+msgstr "&Gehitu errenkada"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:258
+#, kde-format
+msgid "&Delete Row"
+msgstr "&Ezabatu errenkada"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:263
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
+#, kde-format
+msgid "&Reset"
+msgstr "Be&rrezarri"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
+#, kde-format
+msgid ""
+"<qt><p><b>Text Fields</b> provide extra information about the image. This is "
+"probably a comment area that you can freely write any text in.</"
+"p><p>However, this is format-specific so the fields could theoretically be "
+"computer-interpreted data - that you should not modify - but this is "
+"unlikely.</p><p>Not all image formats support <b>Text Fields</b>. If the "
+"format you save in does not support them, they will not be saved.</p></qt>"
+msgstr ""
+"<qt><p><b>Testu eremuek</b> irudiari buruzko informazio gehigarria "
+"eskaintzen dute. Baliteke hau iruzkinentzako txokoa izatea nahi duzun "
+"edozein testu bertan idazteko.</p><p>Hala ere, formatuaren araberakoa denez, "
+"teorikoki ordenagailuak interpreta ditzakeen datuak eduki ditzakete eremuok, "
+"eta ez zenuke aldatu beharko, baina hori gertatzea ia ezinezkoa dela esan "
+"daiteke.</p><p>Irudien formatu batzuk ez dute <b>Testuaren eremuak</b> "
+"onartzen. Erabiltzen duzun formatuak ez baditu onartzen, hauek ez dira "
+"gordeko.</p></qt>"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#, kde-format
+msgid "Key"
+msgstr "Gakoa"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#, kde-format
+msgid "Value"
+msgstr "Balioa"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
+#, kde-format
+msgid "The text value \"%1\" on line %2 requires a key."
+msgstr "Testuaren \"%1\" balioa gako bat behar du %2 lerroan."
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
+#, kde-format
+msgid ""
+"All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
+"identical."
+msgstr ""
+"Testuaren gako guztiak esklusiboak izan behar dute. Testuaren \"%1\" gakoa "
+"%2 eta %3 lerroan berdinak dira."
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid Text Fields"
+msgstr "Testu eremu baliogabeak"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
+#, kde-format
+msgid "Dimensions"
+msgstr "Dimentsioak"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:288
+#, kde-format
+msgid "Original:"
+msgstr "Jatorrizkoa:"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:143
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:251
+#: mainWindow/kpMainWindow_StatusBar.cpp:92
+#: mainWindow/kpMainWindow_StatusBar.cpp:236
+#, kde-format
+msgid "%1 x %2"
+msgstr "%1 x %2"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:170
+#: dialogs/kpColorSimilarityDialog.cpp:58
+#, kde-format
+msgid "Preview"
+msgstr "Aurrebista"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:177
+#: dialogs/kpColorSimilarityDialog.cpp:63
+#, kde-format
+msgid "&Update"
+msgstr "&Eguneratu"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:90
+#, kde-format
+msgctxt "@title:window"
+msgid "Resize / Scale"
+msgstr "Aldatu tamaina / Eskalatu"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
+#, kde-format
+msgid "Ac&t on:"
+msgstr "&Eragin hemen:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
+#, kde-format
+msgid "Entire Image"
+msgstr "Irudi osoa"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:168
+#: layers/selections/image/kpAbstractImageSelection.cpp:204
+#, kde-format
+msgid "Selection"
+msgstr "Hautapena"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:171
+#, kde-format
+msgid "Text Box"
+msgstr "Testu-koadroa"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:220
+#, kde-format
+msgid "Operation"
+msgstr "Eragiketa"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:222
+#, kde-format
+msgid ""
+"<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
+"creating new areas to the right and/or bottom (filled in with the background "
+"color) or decreased by cutting it at the right and/or bottom.</"
+"li><li><b>Scale</b>: The picture will be expanded by duplicating pixels or "
+"squashed by dropping pixels.</li><li><b>Smooth Scale</b>: This is the same "
+"as <i>Scale</i> except that it blends neighboring pixels to produce a "
+"smoother looking picture.</li></ul></qt>"
+msgstr ""
+"<qt><ul><li><b>Aldatu tamaina</b>: irudiaren tamaina handituko da eskuinean "
+"eta/edo behean area berriak sortuz (atzeko planoko kolorearekin beteko dira) "
+"edo txikiagotu egingo da eskuinean eta/edo behean moztuz.</"
+"li><li><b>Eskalatu</b>: irudia hedatuko da pixelak bikoiztuz edo txikiagotu "
+"egingo da pixelak kenduz.</li><li><b>Eskalatze leuna</b>: hau <i>Eskalatu</"
+"i>-ren berdina da baina bere inguruko pixelak nahasten ditu itxura leunagoko "
+"irudi bat sortzeko.</li></ul></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
+#, kde-format
+msgid "&Resize"
+msgstr "&Aldatu tamaina"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
+#, kde-format
+msgid "&Scale"
+msgstr "E&skalatu"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#, kde-format
+msgid "S&mooth Scale"
+msgstr "Es&kalatze leuna"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:283
+#, kde-format
+msgid "Width:"
+msgstr "Zabalera:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:285
+#, kde-format
+msgid "Height:"
+msgstr "Altuera:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:292
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:300
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:312
+#, kde-format
+msgid "x"
+msgstr "x"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:297
+#, kde-format
+msgid "&New:"
+msgstr "&Berria:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:304
+#, kde-format
+msgid "&Percent:"
+msgstr "E&hunekoa:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:310
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:319
+#: dialogs/kpColorSimilarityDialog.cpp:81
+#, kde-format
+msgid "%"
+msgstr "%"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:321
+#, kde-format
+msgid "Keep &aspect ratio"
+msgstr "Mantendu &aspektu-erlazioa"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:724
+#, kde-format
+msgid ""
+"<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to resize the text box?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Testu-koadroaren tamaina %1x%2 -(e)ra aldatzeak memoria kopuru handia "
+"behar dezake. Honek sistemaren erantzuteko gaitasuna txikiagotu eta "
+"aplikazioen baliabidetan arazoak sor ditzake.</p><p>Ziur zaude testu-"
+"koadroaren tamaina aldatzea nahi duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
+#, kde-format
+msgctxt "@title:window"
+msgid "Resize Text Box?"
+msgstr "Testu-koadroaren tamaina aldatu?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
+#, kde-format
+msgid "R&esize Text Box"
+msgstr "&Aldatu testu-koadroaren tamaina"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:738
+#: mainWindow/kpMainWindow_Tools.cpp:652
+#, kde-format
+msgid ""
+"<qt><p>Resizing the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to resize the image?</p></qt>"
+msgstr ""
+"<qt><p>Irudiaren tamaina %1x%2-(e)ra aldatzeak memoria kopuru handia behar "
+"dezake. Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude irudiaren tamaina "
+"aldatzea nahi duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
+#: mainWindow/kpMainWindow_Tools.cpp:662
+#, kde-format
+msgctxt "@title:window"
+msgid "Resize Image?"
+msgstr "Irudiaren tamaina aldatu?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
+#: mainWindow/kpMainWindow_Tools.cpp:663
+#, kde-format
+msgid "R&esize Image"
+msgstr "&Aldatu irudiaren tamaina"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:756
+#, kde-format
+msgid ""
+"<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to scale the image?</p></qt>"
+msgstr ""
+"<qt><p>Irudia %1x%2-(e)ra eskalatzeak memoria kopuru handia behar dezake. "
+"Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude irudia eskalatzea nahi "
+"duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
+#, kde-format
+msgctxt "@title:window"
+msgid "Scale Image?"
+msgstr "Eskalatu irudia?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
+#, kde-format
+msgid "Scal&e Image"
+msgstr "&Eskalatu irudia"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:770
+#, kde-format
+msgid ""
+"<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to scale the selection?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Hautapena %1x%2-(e)ra eskalatzeak memoria kopuru handia behar dezake. "
+"Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude hautapena eskalatzea "
+"nahi duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
+#, kde-format
+msgctxt "@title:window"
+msgid "Scale Selection?"
+msgstr "Eskalatu hautapena?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
+#, kde-format
+msgid "Scal&e Selection"
+msgstr "&Eskalatu hautapena"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:788
+#, kde-format
+msgid ""
+"<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to smooth scale the image?</"
+"p></qt>"
+msgstr ""
+"<qt><p>Irudia %1x%2-(e)ra leunki eskalatzeak memoria kopuru handia behar "
+"dezake. Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude irudia leunki eskalatzea "
+"nahi duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
+#, kde-format
+msgctxt "@title:window"
+msgid "Smooth Scale Image?"
+msgstr "Leunki eskalatu irudia?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
+#, kde-format
+msgid "Smooth Scal&e Image"
+msgstr "Eskalatu &leunki irudia"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:802
+#, kde-format
+msgid ""
+"<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
+"of memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to smooth scale the selection?"
+"</p></qt>"
+msgstr ""
+"<qt><p>Hautapena %1x%2-(e)ra leunki eskalatzeak memoria kopuru handia behar "
+"dezake. Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude hautapena leunki "
+"eskalatzea nahi duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
+#, kde-format
+msgctxt "@title:window"
+msgid "Smooth Scale Selection?"
+msgstr "Leunki eskalatu hautapena?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
+#, kde-format
+msgid "Smooth Scal&e Selection"
+msgstr "Eskalatu &leunki irudia"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Selection"
+msgstr "Biratu hautapena"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Image"
+msgstr "Biratu irudia"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
+#, kde-format
+msgid "After rotate:"
+msgstr "Biratu ondoren:"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
+#, kde-format
+msgid "Direction"
+msgstr "Norabidea"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
+#, kde-format
+msgid "Cou&nterclockwise"
+msgstr "Erlojuaren noratzaren &kontra"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:122
+#, kde-format
+msgid "C&lockwise"
+msgstr "Erlo&juaren noratzan"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:146
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:97
+#, kde-format
+msgid "Angle"
+msgstr "Angelua"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:150
+#, kde-format
+msgid "90 &degrees"
+msgstr "90 gra&du"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:151
+#, kde-format
+msgid "180 d&egrees"
+msgstr "180 gr&adu"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:152
+#, kde-format
+msgid "270 de&grees"
+msgstr "270 &gradu"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:154
+#, kde-format
+msgid "C&ustom:"
+msgstr "&Pertsonalizatua:"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:159
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:110
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:122
+#, kde-format
+msgid "degrees"
+msgstr "gradu"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
+#, kde-format
+msgid ""
+"<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Hautapena %1x%2-(e)ra biratzeak memoria kopuru handia behar dezake. "
+"Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude hautapena biratzea nahi "
+"duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Selection?"
+msgstr "Biratu hautapena?"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
+#, kde-format
+msgid "Rotat&e Selection"
+msgstr "Birat&u hautapena"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
+#, kde-format
+msgid ""
+"<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
+msgstr ""
+"<qt><p>Irudia %1x%2-(e)ra biratzeak memoria kopuru handia behar dezake. "
+"Honek sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen "
+"baliabideetan arazoak sor ditzake.</p><p>Ziur zaude irudia biratzea nahi "
+"duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Image?"
+msgstr "Biratu irudia?"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
+#, kde-format
+msgid "Rotat&e Image"
+msgstr "&Biratu irudia"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Selection"
+msgstr "Okertu hautapena"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Image"
+msgstr "Okertu irudia"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
+#, kde-format
+msgid "After skew:"
+msgstr "Okertu ondoren:"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
+#, kde-format
+msgid "&Horizontal:"
+msgstr "&Horizontala:"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:116
+#, kde-format
+msgid "&Vertical:"
+msgstr "&Bertikala:"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
+#, kde-format
+msgid ""
+"<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to skew the selection?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Hautapena %1x%2-(e)ra oketzeak memoria asko erabil dezake. Honek "
+"sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen baliabideetan "
+"arazoak sor ditzake.</p><p>Ziur zaude hautapena okertzea nahi duzula?</p></"
+"qt>"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Selection?"
+msgstr "Okertu hautapena?"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
+#, kde-format
+msgid "Sk&ew Selection"
+msgstr "&Okertu hautapena"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
+#, kde-format
+msgid ""
+"<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to skew the image?</p></qt>"
+msgstr ""
+"<qt><p>Irudia %1x%2-(e)ra okertzeak memoria asko erabil dezake. Honek "
+"sistemaren erantzuteko gaitasuna txikiagotu eta aplikazioen baliabideetan "
+"arazoak sor ditzake.</p><p>Ziur zaude irudia okertzea nahi duzula?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Image?"
+msgstr "Okertu irudia?"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
+#, kde-format
+msgid "Sk&ew Image"
+msgstr "O&kertu irudia"
+
+#: dialogs/kpColorSimilarityDialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Color Similarity"
+msgstr "Koloreen antzekotasuna"
+
+#: dialogs/kpColorSimilarityDialog.cpp:75
+#, kde-format
+msgid "&RGB Color Cube Distance"
+msgstr "&GBU koloreen kuboaren distanzia"
+
+#: dialogs/kpColorSimilarityDialog.cpp:82
+#, kde-format
+msgid "Exact Match"
+msgstr "Bat egite zehatza"
+
+#: dialogs/kpColorSimilarityDialog.cpp:87
+#, kde-format
+msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
+msgstr ""
+"<a href=\"dummy_to_make_link_clickable\">Zer da koloreen antzekotasuna?</a>"
+
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:58
+#, kde-format
+msgctxt "@title:window"
+msgid "Save Preview"
+msgstr "Gorde aurrebista"
+
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:126
+#, kde-format
+msgid "1 byte (approx. %2%)"
+msgid_plural "%1 bytes (approx. %2%)"
+msgstr[0] "Byte 1 (gutxi gorab. % %2)"
+msgstr[1] "%1 byte (gutxi gorab. % %2)"
+
+#: document/kpDocument_Open.cpp:114
+#, kde-format
+msgid "Could not open \"%1\"."
+msgstr "Ezin izan da \"%1\" ireki."
+
+#: document/kpDocument_Open.cpp:150
+#, kde-format
+msgid ""
+"Could not open \"%1\" - unsupported image format.\n"
+"The file may be corrupt."
+msgstr ""
+"Ezin izan da \"%1\" ireki - ez da irudiaren formatua onartzen.\n"
+"Fitxategia hondatuta egon daiteke."
+
+#: document/kpDocument_Save.cpp:74
+#, kde-format
+msgid "Could not save image - insufficient information."
+msgstr "Ezin izan da irudia gorde - ez dago nahikoa informazio."
+
+#: document/kpDocument_Save.cpp:75
+#, kde-format
+msgid ""
+"URL: %1\n"
+"Mimetype: %2"
+msgstr ""
+"URLa: %1\n"
+"MIME mota: %2"
+
+#: document/kpDocument_Save.cpp:79
+#, kde-format
+msgid "<empty>"
+msgstr "<hutsik>"
+
+#: document/kpDocument_Save.cpp:81
+#, kde-format
+msgctxt "@title:window"
+msgid "Internal Error"
+msgstr "Barneko akatsa"
+
+#: document/kpDocument_Save.cpp:116
+#, kde-format
+msgid ""
+"<qt><p>The <b>%1</b> format may not be able to preserve all of the image's "
+"color information.</p><p>Are you sure you want to save in this format?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Agian <b>%1</b> formatuak ezin izango du irudiaren kolore informazio "
+"guztia gorde.</p><p>Ziur zaude formatu honetan gorde nahi duzula?</p></qt>"
+
+#: document/kpDocument_Save.cpp:123
+#, kde-format
+msgctxt "@title:window"
+msgid "Lossy File Format"
+msgstr "Galeradun fitxategi-formatua"
+
+#: document/kpDocument_Save.cpp:132
+#, kde-format
+msgid ""
+"<qt><p>Saving the image at the low color depth of %1-bit may result in the "
+"loss of color information. Any transparency might also be removed.</p><p>Are "
+"you sure you want to save at this color depth?</p></qt>"
+msgstr ""
+"<qt><p>Irudia %1 biteko kolore-sakonera baxuarekin gordetzean kolorearen "
+"informazioa gal daiteke. Edozein gardentasun kenduko da.</p><p>Ziur zaude "
+"kolore-sakonera honekin gorde nahi duzula?</p></qt>"
+
+#: document/kpDocument_Save.cpp:142
+#, kde-format
+msgctxt "@title:window"
+msgid "Low Color Depth"
+msgstr "Kolore-sakonera baxua"
+
+#: document/kpDocument_Save.cpp:267
+#, kde-format
+msgid "Could not save image - unable to create temporary file."
+msgstr "Ezin izan da irudia gorde - ezin da behin-behineko fitxategia sortu."
+
+#: document/kpDocument_Save.cpp:275
+#, kde-format
+msgid "Could not save as \"%1\": %2"
+msgstr "Ezin izan da «%1» bezala gorde: %2"
+
+#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#, kde-format
+msgid "Error saving image"
+msgstr "Errorea irudia gordetzean"
+
+#: document/kpDocument_Save.cpp:425
+#, kde-format
+msgid "Could not save image - failed to upload."
+msgstr "Ezin izan da irudia gorde - erroea kargatzean."
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:384
+#, kde-format
+msgid "Remove Internal B&order"
+msgstr "Kendu barneko &ertza"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:387
+#, kde-format
+msgid "Remove Internal Border"
+msgstr "Kendu barneko ertza"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:391
+#, kde-format
+msgid "Autocr&op"
+msgstr "Auto-&mozketa"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:393
+#, kde-format
+msgid "Autocrop"
+msgstr "Auto-mozketa"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:623
+#, kde-format
+msgid ""
+"KolourPaint cannot remove the selection's internal border as it could not be "
+"located."
+msgstr ""
+"KolourPaint-ek ezin du hautapenaren barneko ertza kendu, ezin izan delako "
+"aurkitu."
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:625
+#, kde-format
+msgctxt "@title:window"
+msgid "Cannot Remove Internal Border"
+msgstr "Ezin da barneko ertza kendu"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:631
+#, kde-format
+msgid ""
+"KolourPaint cannot automatically crop the image as its border could not be "
+"located."
+msgstr ""
+"KolourPaint-ek ezin du automatikoki irudia moztu, bere ertza ezin delako "
+"kokatu."
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:633
+#, kde-format
+msgctxt "@title:window"
+msgid "Cannot Autocrop"
+msgstr "Ezin da auto-moztu"
+
+#: imagelib/transforms/kpTransformCrop.cpp:69
+#: imagelib/transforms/kpTransformCrop.cpp:72
+#, kde-format
+msgid "Set as Image"
+msgstr "Ezarri irudi gisa"
+
+#: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:251
+#: mainWindow/kpMainWindow_Edit.cpp:365 mainWindow/kpMainWindow_Image.cpp:320
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:74
+#, kde-format
+msgid "Selection: Create"
+msgstr "Hautapena: sortu"
+
+#: kolourpaint.cpp:51
+#, kde-format
+msgid "KolourPaint"
+msgstr "KolourPaint"
+
+#: kolourpaint.cpp:53
+#, kde-format
+msgid "Paint Program by KDE"
+msgstr "KDEren margotzeko programa"
+
+#: kolourpaint.cpp:67
+#, kde-format
+msgid "Clarence Dang"
+msgstr "Clarence Dang"
+
+#: kolourpaint.cpp:67
+#, kde-format
+msgid "Project Founder"
+msgstr "Proiektuaren sortzailea"
+
+#: kolourpaint.cpp:69
+#, kde-format
+msgid "Thurston Dang"
+msgstr "Thurston Dang"
+
+#: kolourpaint.cpp:69
+#, kde-format
+msgid "Chief Investigator"
+msgstr "Ikertzaile-burua"
+
+#: kolourpaint.cpp:72
+#, kde-format
+msgid "Martin Koller"
+msgstr "Martin Koller"
+
+#: kolourpaint.cpp:72
+#, kde-format
+msgid "Scanning Support, Alpha Support, Current Maintainer"
+msgstr "Eskaneatzeko euskarria, alfaren euskarria, uneko mantentzailea"
+
+#: kolourpaint.cpp:75
+#, kde-format
+msgid "Kristof Borrey"
+msgstr "Kristof Borrey"
+
+#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#, kde-format
+msgid "Icons"
+msgstr "Ikonoak"
+
+#: kolourpaint.cpp:76
+#, kde-format
+msgid "Tasuku Suzuki"
+msgstr "Tasuku Suzuki"
+
+#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#, kde-format
+msgid "InputMethod Support"
+msgstr "Sarrerako metodoaren euskarria"
+
+#: kolourpaint.cpp:77
+#, kde-format
+msgid "Kazuki Ohta"
+msgstr "Kazuki Ohta"
+
+#: kolourpaint.cpp:78
+#, kde-format
+msgid "Nuno Pinheiro"
+msgstr "Nuno Pinheiro"
+
+#: kolourpaint.cpp:79
+#, kde-format
+msgid "Danny Allen"
+msgstr "Danny Allen"
+
+#: kolourpaint.cpp:80
+#, kde-format
+msgid "Mike Gashler"
+msgstr "Mike Gashler"
+
+#: kolourpaint.cpp:80
+#, kde-format
+msgid "Image Effects"
+msgstr "Irudien efektuak"
+
+#: kolourpaint.cpp:82
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: kolourpaint.cpp:82
+#, kde-format
+msgid "KDE 4 Porting"
+msgstr "KDE 4 moldaketa"
+
+#: kolourpaint.cpp:83
+#, kde-format
+msgid "Christoph Feck"
+msgstr "Christoph Feck"
+
+#: kolourpaint.cpp:83
+#, kde-format
+msgid "KF 5 Porting"
+msgstr "KF 5 eratorpena"
+
+#: kolourpaint.cpp:85
+#, kde-format
+msgid ""
+"Thanks to the many others who have helped to make this program possible."
+msgstr "Mila esker beste hainbati programa hau posible izaten laguntzeagatik."
+
+#: kolourpaint.cpp:90
+#, kde-format
+msgid "Image files to open, optionally"
+msgstr "Ireki beharreko irudi fitxategiak, aukera gisa"
+
+#: kolourpaint.cpp:93
+#, kde-format
+msgid "List all readable image MIME types"
+msgstr "Zerrendatu irudi irakurgarri guztien MIME motak"
+
+#. i18n: ectx: Menu (view)
+#: kolourpaintui.rc:36
+#, kde-format
+msgid "&View"
+msgstr "&Ikusi"
+
+#. i18n: ectx: Menu (image)
+#: kolourpaintui.rc:71 kolourpaintui.rc:207
+#, kde-format
+msgid "&Image"
+msgstr "&Irudia"
+
+#. i18n: ectx: Menu (colors)
+#: kolourpaintui.rc:99
+#, kde-format
+msgid "&Colors"
+msgstr "&Koloreak"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kolourpaintui.rc:147
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Tresna-barra nagusia"
+
+#. i18n: ectx: ToolBar (textToolBar)
+#: kolourpaintui.rc:162
+#, kde-format
+msgid "Text Toolbar"
+msgstr "Testuaren tresna-barra"
+
+#. i18n: ectx: Menu (selectionToolRMBMenu)
+#: kolourpaintui.rc:172
+#, kde-format
+msgid "Selection Tool RMB Menu"
+msgstr "Hautapen tresnaren laster-menua"
+
+#. i18n: ectx: Menu (edit)
+#: kolourpaintui.rc:174
+#, kde-format
+msgid "&Edit"
+msgstr "&Editatu"
+
+#: kpThumbnail.cpp:129
+#, kde-format
+msgctxt "@title:window"
+msgid "Thumbnail"
+msgstr "Koadro txikia"
+
+#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
+#: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
+#, kde-format
+msgid "Left drag the handle to resize the image."
+msgstr ""
+"Arrastatu heldulekua ezkerreko botoiarekin irudiaren tamaina aldatzeko."
+
+#: kpViewScrollableContainer.cpp:194
+#, kde-format
+msgid "Resize Image: Let go of all the mouse buttons."
+msgstr "Aldatu irudiaren tamaina: saguaren botoi guztiak baimendu."
+
+#: kpViewScrollableContainer.cpp:226
+#, kde-format
+msgid "Resize Image: Right click to cancel."
+msgstr ""
+"Aldatu irudiaren tamaina: eskuin botoiarekin klik egin bertan behera uzteko."
+
+#: layers/selections/text/kpTextSelection.cpp:136
+#: tools/selection/text/kpToolText.cpp:55
+#, kde-format
+msgid "Text"
+msgstr "Testua"
+
+#: lgpl/generic/kpColorCollection.cpp:120
+#, kde-format
+msgid "Could not open color palette \"%1\"."
+msgstr "Ezin izan da \"%1\" kolore-paleta ireki."
+
+#: lgpl/generic/kpColorCollection.cpp:153
+#, kde-format
+msgid ""
+"Could not open color palette \"%1\" - unsupported format.\n"
+"The file may be corrupt."
+msgstr ""
+"Ezin izan da \"%1\" kolore-paleta ireki - ez da formatua onartzen.\n"
+"Fitxategia hondatuta egon daiteke."
+
+#: lgpl/generic/kpColorCollection.cpp:213
+#, kde-format
+msgid "Could not open KDE color palette \"%1\"."
+msgstr "Ezin izan da KDEren \"%1\" kolore-paleta ireki."
+
+#: lgpl/generic/kpColorCollection.cpp:263
+#, kde-format
+msgid "Could not save color palette as \"%1\"."
+msgstr "Ezin izan da kolore-paleta \"%1\" gisa gorde."
+
+#: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
+#: widgets/toolbars/kpColorToolBar.cpp:283
+#, kde-format
+msgid "Untitled"
+msgstr "Titulu gabea"
+
+#: mainWindow/kpMainWindow_Colors.cpp:61
+#, kde-format
+msgid "Use KolourPaint Defaults"
+msgstr "Erabili KolourPaint-en lehenespenak"
+
+#: mainWindow/kpMainWindow_Colors.cpp:66
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Use KDE's"
+msgstr "KDErenak erabili"
+
+#: mainWindow/kpMainWindow_Colors.cpp:78
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "&Open..."
+msgstr "&Ireki..."
+
+#: mainWindow/kpMainWindow_Colors.cpp:82
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Reloa&d"
+msgstr "Birkar&gatu"
+
+#: mainWindow/kpMainWindow_Colors.cpp:87
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "&Save"
+msgstr "&Gorde"
+
+#: mainWindow/kpMainWindow_Colors.cpp:92
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Save &As..."
+msgstr "Gorde &honela..."
+
+#: mainWindow/kpMainWindow_Colors.cpp:97
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Add Row"
+msgstr "Gehitu errenkada"
+
+#: mainWindow/kpMainWindow_Colors.cpp:102
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Delete Last Row"
+msgstr "Ezabatu azken errenkada"
+
+#: mainWindow/kpMainWindow_Colors.cpp:115
+#, kde-format
+msgid "Color Box"
+msgstr "Kolore-koadroa"
+
+#: mainWindow/kpMainWindow_Colors.cpp:200
+#, kde-format
+msgid ""
+"The color palette \"%1\" has been modified.\n"
+"Do you want to save it?"
+msgstr ""
+"\"%1\" kolore-paleta aldatu da.\n"
+"Gorde nahi duzu?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:212
+#, kde-format
+msgid ""
+"The KDE color palette \"%1\" has been modified.\n"
+"Do you want to save it to a file?"
+msgstr ""
+"KDEko \"%1\" kolore-paleta aldatu da.\n"
+"Fitxategi batean gordetzea nahi duzu?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:221
+#, kde-format
+msgid ""
+"The default color palette has been modified.\n"
+"Do you want to save it to a file?"
+msgstr ""
+"Kolore-paleta lehenetsia aldatu da.\n"
+"Fitxategi batean gordetzea nahi duzu?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:340
+#, kde-format
+msgctxt "@title:window"
+msgid "Open Color Palette"
+msgstr "Ireki kolore-paleta"
+
+#: mainWindow/kpMainWindow_Colors.cpp:369
+#, kde-format
+msgid ""
+"The color palette \"%1\" has been modified.\n"
+"Reloading will lose all changes since you last saved it.\n"
+"Are you sure?"
+msgstr ""
+"\"%1\" kolore-paleta aldatu da.\n"
+"Birkargatzean azken aldiz kargatu zenuenetik egindako aldaketak galduko "
+"dituzu.\n"
+"Ziur zaude?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:374
+#: mainWindow/kpMainWindow_Colors.cpp:387
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
+#, kde-format
+msgid "&Reload"
+msgstr "&Birkargatu"
+
+#: mainWindow/kpMainWindow_Colors.cpp:382
+#, kde-format
+msgid ""
+"The KDE color palette \"%1\" has been modified.\n"
+"Reloading will lose all changes.\n"
+"Are you sure?"
+msgstr ""
+"KDEko \"%1\" kolore-paleta aldatu da.\n"
+"Birkargatzean aldaketa guztiak galduko dituzu.\n"
+"Ziur zaude?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:392
+#, kde-format
+msgid ""
+"The default color palette has been modified.\n"
+"Reloading will lose all changes.\n"
+"Are you sure?"
+msgstr ""
+"Kolore-paleta lehenetsia aldatu da.\n"
+"Birkargatzean aldaketa guztiak galduko dituzu.\n"
+"Ziur zaude?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:453
+#, kde-format
+msgid "Save Color Palette As"
+msgstr "Gorde kolore-paleta honela"
+
+#: mainWindow/kpMainWindow_Edit.cpp:96
+#, kde-format
+msgid "Paste in &New Window"
+msgstr "Itsatsi lehio &berrian"
+
+#: mainWindow/kpMainWindow_Edit.cpp:103
+#, kde-format
+msgid "&Delete Selection"
+msgstr "&Ezabatu hautapena"
+
+#: mainWindow/kpMainWindow_Edit.cpp:111
+#, kde-format
+msgid "C&opy to File..."
+msgstr "K&opiatu fitxategian..."
+
+#: mainWindow/kpMainWindow_Edit.cpp:115
+#, kde-format
+msgid "Paste &From File..."
+msgstr "Itsatsi &fitxategitik..."
+
+#: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
+#: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
+#, kde-format
+msgid "Text: Create Box"
+msgstr "Testua: sortu koadroa"
+
+#: mainWindow/kpMainWindow_Edit.cpp:444
+#, kde-format
+msgid "Text: Paste"
+msgstr "Testua: itsatsi"
+
+#: mainWindow/kpMainWindow_Edit.cpp:610
+#, kde-format
+msgid ""
+"<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
+"unknown format.</qt>"
+msgstr ""
+"<qt>KolourPaint-ek ezin du itsatsi arbelaren edukia formatu ezezaguna "
+"duelako.</qt>"
+
+#: mainWindow/kpMainWindow_Edit.cpp:612
+#, kde-format
+msgid "Cannot Paste"
+msgstr "Ezin da itsatsi"
+
+#: mainWindow/kpMainWindow_Edit.cpp:691
+#, kde-format
+msgid "Text: Delete Box"
+msgstr "Testua: ezabatu koadroa"
+
+#. i18n ("Text: Delete")
+#: mainWindow/kpMainWindow_Edit.cpp:692
+#, kde-format
+msgid "Selection: Delete"
+msgstr "Hautapena: ezabatu"
+
+#: mainWindow/kpMainWindow_Edit.cpp:766
+#, kde-format
+msgid "Text: Finish"
+msgstr "Testua: amaitu"
+
+#: mainWindow/kpMainWindow_Edit.cpp:767
+#, kde-format
+msgid "Selection: Deselect"
+msgstr "Testua: desautatu"
+
+#: mainWindow/kpMainWindow_Edit.cpp:851
+#, kde-format
+msgctxt "@title:window"
+msgid "Copy to File"
+msgstr "Kopiatu fitxategira"
+
+#: mainWindow/kpMainWindow_Edit.cpp:898
+#, kde-format
+msgctxt "@title:window"
+msgid "Paste From File"
+msgstr "Itsatsi fitxategitik"
+
+#: mainWindow/kpMainWindow_File.cpp:104
+#, kde-format
+msgid "E&xport..."
+msgstr "E&sportatu..."
+
+#: mainWindow/kpMainWindow_File.cpp:109
+#, kde-format
+msgid "Scan..."
+msgstr "Eskaneatu..."
+
+#: mainWindow/kpMainWindow_File.cpp:118
+#, kde-format
+msgid "Acquire Screenshot"
+msgstr "Egin pantaila-argazkia"
+
+#: mainWindow/kpMainWindow_File.cpp:122
+#, kde-format
+msgid "Properties"
+msgstr "Propietateak"
+
+#: mainWindow/kpMainWindow_File.cpp:128
+#, kde-format
+msgid "Reloa&d"
+msgstr "Birkar&gatu"
+
+#: mainWindow/kpMainWindow_File.cpp:458
+#, kde-format
+msgid "All Supported Files (%1)"
+msgstr "Onartutako fitxategi guztiak (%1)"
+
+#: mainWindow/kpMainWindow_File.cpp:483
+#, kde-format
+msgctxt "@title:window"
+msgid "Open Image"
+msgstr "Ireki irudia"
+
+#: mainWindow/kpMainWindow_File.cpp:546
+#, kde-format
+msgid "Failed to open scanning dialog."
+msgstr "Huts egin du eskaneatzeko elkarrizketa-koadroa irekitzea."
+
+#: mainWindow/kpMainWindow_File.cpp:547
+#, kde-format
+msgctxt "@title:window"
+msgid "Scanning Failed"
+msgstr "Ezkaneatzea huts egin du"
+
+#: mainWindow/kpMainWindow_File.cpp:664
+#, kde-format
+msgid "Snapshot Delay"
+msgstr "Kapturaren atzerapena"
+
+#: mainWindow/kpMainWindow_File.cpp:667
+#, kde-format
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " segundo"
+msgstr[1] " segundo"
+
+#: mainWindow/kpMainWindow_File.cpp:668
+#, kde-format
+msgid "No delay"
+msgstr "Atzerapenik ez"
+
+#: mainWindow/kpMainWindow_File.cpp:670
+#, kde-format
+msgid "Hide Main Window"
+msgstr "Ezkutatu leiho nagusia"
+
+#: mainWindow/kpMainWindow_File.cpp:724
+#, kde-format
+msgid "Document Properties"
+msgstr "Dokumentuaren propietateak"
+
+#: mainWindow/kpMainWindow_File.cpp:959
+#, kde-format
+msgctxt "@title:window"
+msgid "Save Image As"
+msgstr "Gorde irudia honela"
+
+#: mainWindow/kpMainWindow_File.cpp:1007
+#, kde-format
+msgctxt "@title:window"
+msgid "Export"
+msgstr "Esportatu"
+
+#: mainWindow/kpMainWindow_File.cpp:1071
+#, kde-format
+msgid ""
+"The document \"%1\" has been modified.\n"
+"Reloading will lose all changes since you last saved it.\n"
+"Are you sure?"
+msgstr ""
+"\"%1\" dokumentua aldatu da.\n"
+"Birkargatzean azken aldiz kargatu zenuenetik egindako aldaketak galduko "
+"dituzu.\n"
+"Ziur zaude?"
+
+#: mainWindow/kpMainWindow_File.cpp:1081
+#, kde-format
+msgid ""
+"The document \"%1\" has been modified.\n"
+"Reloading will lose all changes.\n"
+"Are you sure?"
+msgstr ""
+"\"%1\" dokumentua aldatu da.\n"
+"Birkargatzean aldaketa guztiak galduko dituzu.\n"
+"Ziur zaude?"
+
+#: mainWindow/kpMainWindow_File.cpp:1329
+#, kde-format
+msgctxt "@title:window"
+msgid "Print Image"
+msgstr "Inprimatu irudia"
+
+#: mainWindow/kpMainWindow_File.cpp:1409
+#, kde-format
+msgid ""
+"You must save this image before sending it.\n"
+"Do you want to save it?"
+msgstr ""
+"Bidali aurretik irudi hau gorde behar duzu.\n"
+"Gorde nahi duzu?"
+
+#: mainWindow/kpMainWindow_File.cpp:1447
+#, kde-format
+msgid ""
+"The document \"%1\" has been modified.\n"
+"Do you want to save it?"
+msgstr ""
+"\"%1\" dokumentua aldatu da.\n"
+"Gorde nahi duzu?"
+
+#: mainWindow/kpMainWindow_Image.cpp:117
+#, kde-format
+msgid "R&esize / Scale..."
+msgstr "T&amaina aldatu / Eskalatu..."
+
+#: mainWindow/kpMainWindow_Image.cpp:123
+#, kde-format
+msgid "Se&t as Image (Crop)"
+msgstr "Eza&rri irudi gisa (moztu)"
+
+#: mainWindow/kpMainWindow_Image.cpp:133
+#, kde-format
+msgid "&Flip (upside down)"
+msgstr "&Irauli (goitik-behera)"
+
+#: mainWindow/kpMainWindow_Image.cpp:138
+#, kde-format
+msgid "Mirror (horizontally)"
+msgstr "Ispilua (horizontalki)"
+
+#: mainWindow/kpMainWindow_Image.cpp:143
+#, kde-format
+msgid "&Rotate..."
+msgstr "&Biratu..."
+
+#: mainWindow/kpMainWindow_Image.cpp:149
+#, kde-format
+msgid "Rotate &Left"
+msgstr "Biratu e&zkerrera"
+
+#: mainWindow/kpMainWindow_Image.cpp:155
+#, kde-format
+msgid "Rotate Righ&t"
+msgstr "Biratu e&skuinera"
+
+#: mainWindow/kpMainWindow_Image.cpp:161
+#, kde-format
+msgid "S&kew..."
+msgstr "&Okertu..."
+
+#: mainWindow/kpMainWindow_Image.cpp:166
+#, kde-format
+msgid "Reduce to Mo&nochrome (Dithered)"
+msgstr "Bihurtu mo&nokromora (bilbatua)"
+
+#: mainWindow/kpMainWindow_Image.cpp:171
+#, kde-format
+msgid "Reduce to &Grayscale"
+msgstr "Bihurtu &gris-eskalara"
+
+#: mainWindow/kpMainWindow_Image.cpp:175
+#, kde-format
+msgid "&Invert Colors"
+msgstr "&Alderantzikatu koloreak"
+
+#: mainWindow/kpMainWindow_Image.cpp:180
+#, kde-format
+msgid "C&lear"
+msgstr "Ga&rbitu"
+
+#: mainWindow/kpMainWindow_Image.cpp:185
+#, kde-format
+msgid "Make Confidential"
+msgstr "Egin isilpekoa"
+
+#: mainWindow/kpMainWindow_Image.cpp:189
+#, kde-format
+msgid "&More Effects..."
+msgstr "Efektu &gehiago..."
+
+#: mainWindow/kpMainWindow_Image.cpp:230
+#, kde-format
+msgctxt ""
+"Image/Selection Menu caption - make sure the translation has the same accel "
+"as the Select&ion translation"
+msgid "&Image"
+msgstr "&Irudia"
+
+#: mainWindow/kpMainWindow_Image.cpp:234
+#, kde-format
+msgctxt ""
+"Image/Selection Menu caption - make sure that translation has the same accel "
+"as the &Image translation"
+msgid "Select&ion"
+msgstr "Haut&apena"
+
+#: mainWindow/kpMainWindow_Settings.cpp:66
+#, kde-format
+msgid "Show &Path"
+msgstr "Erakutsi &bide-izena"
+
+#: mainWindow/kpMainWindow_Settings.cpp:71
+#, kde-format
+msgid "Draw Anti-Aliased"
+msgstr "Marraztu ertzak leunduta"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:156
+#, kde-format
+msgid "%1,%2"
+msgstr "%1,%2"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:162
+#, kde-format
+msgid "%1,%2 - %3,%4"
+msgstr "%1,%2 - %3,%4"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:205
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:264
+#, kde-format
+msgid "%1bpp"
+msgstr "%1bpp"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:290
+#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#, kde-format
+msgid "%1%"
+msgstr "% %1"
+
+#: mainWindow/kpMainWindow_Text.cpp:56
+#, kde-format
+msgid "Font Family"
+msgstr "Letra-tipoen familia"
+
+#: mainWindow/kpMainWindow_Text.cpp:62
+#, kde-format
+msgid "Font Size"
+msgstr "Letra-tamaina"
+
+#: mainWindow/kpMainWindow_Text.cpp:69
+#, kde-format
+msgid "Bold"
+msgstr "Lodia"
+
+#: mainWindow/kpMainWindow_Text.cpp:75
+#, kde-format
+msgid "Italic"
+msgstr "Etzana"
+
+#: mainWindow/kpMainWindow_Text.cpp:81
+#, kde-format
+msgid "Underline"
+msgstr "Azpimarratua"
+
+#: mainWindow/kpMainWindow_Text.cpp:87
+#, kde-format
+msgid "Strike Through"
+msgstr "Marratua"
+
+#: mainWindow/kpMainWindow_Tools.cpp:133
+#, kde-format
+msgid "Previous Tool Option (Group #1)"
+msgstr "Aurreko tresnaren aukera (1. taldea)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:139
+#, kde-format
+msgid "Next Tool Option (Group #1)"
+msgstr "Hurrengo tresnaren aukera (1. taldea)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:145
+#, kde-format
+msgid "Previous Tool Option (Group #2)"
+msgstr "Aurreko tresnaren aukera (2. taldea)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:151
+#, kde-format
+msgid "Next Tool Option (Group #2)"
+msgstr "Hurrengo tresnaren aukera (2. taldea)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:163
+#, kde-format
+msgid "&Draw Opaque"
+msgstr "&Marraztu opakoa"
+
+#: mainWindow/kpMainWindow_Tools.cpp:168
+#, kde-format
+msgid "Draw With Color Similarity..."
+msgstr "Marraztu koloreen antzekotasunarekin..."
+
+#: mainWindow/kpMainWindow_Tools.cpp:179
+#, kde-format
+msgid "Tool Box"
+msgstr "Tresna-koadroa"
+
+#: mainWindow/kpMainWindow_View.cpp:65
+#, kde-format
+msgid "Show &Grid"
+msgstr "Erakutsi &sareta"
+
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
+#, kde-format
+msgid "Show T&humbnail"
+msgstr "Erakutsi &koadro txikiak"
+
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
+#, kde-format
+msgid "Zoo&med Thumbnail Mode"
+msgstr "Zoo&madun koadro txikien modua"
+
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
+#, kde-format
+msgid "Enable Thumbnail &Rectangle"
+msgstr "Gaitu koadro txikien &laukizuzena"
+
+#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#, kde-format
+msgid "&Zoom"
+msgstr "&Zooma"
+
+#: scan/sanedialog.cpp:41
+#, kde-format
+msgctxt "@title:window"
+msgid "Acquire Image"
+msgstr "Eskuratu irudia"
+
+#: scan/sanedialog.cpp:73
+#, kde-format
+msgid "Opening the selected scanner failed."
+msgstr "Hautatutako eskanerra irekitzea huts egin du."
+
+#: tools/flow/kpToolBrush.cpp:35
+#, kde-format
+msgid "Brush"
+msgstr "Brotxa"
+
+#: tools/flow/kpToolBrush.cpp:36
+#, kde-format
+msgid "Draw using brushes of different shapes and sizes"
+msgstr "Marraztu forma eta tamaina desberdineko brotxak erabiliz"
+
+#: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
+#, kde-format
+msgid "Click to draw dots or drag to draw strokes."
+msgstr "Egin klik puntuak marrazteko edo arrastatu trazak marrazteko."
+
+#: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
+#, kde-format
+msgid "Color Eraser"
+msgstr "Koloreen borragoma"
+
+#: tools/flow/kpToolColorEraser.cpp:50
+#, kde-format
+msgid "Replaces pixels of the foreground color with the background color"
+msgstr "Aurreko planoko kolorea atzeko planoko kolorearekin ordezten du"
+
+#: tools/flow/kpToolColorEraser.cpp:115
+#, kde-format
+msgid "Click or drag to erase pixels of the foreground color."
+msgstr "Egin klik edo arrastatu aurreko planoaren koloreko pixelak ezabatzeko."
+
+#: tools/flow/kpToolEraser.cpp:42
+#, kde-format
+msgid "Eraser"
+msgstr "Borragoma"
+
+#: tools/flow/kpToolEraser.cpp:43
+#, kde-format
+msgid "Lets you rub out mistakes"
+msgstr "Zure akatsak ezabatzeko aukera ematen dizu"
+
+#: tools/flow/kpToolEraser.cpp:70
+#, kde-format
+msgid "Click or drag to erase."
+msgstr "Egin klik edo arrastatu ezabatzeko."
+
+#: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
+#: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
+#: tools/polygonal/kpToolPolygonalBase.cpp:435
+#: tools/rectangular/kpToolRectangularBase.cpp:351
+#: tools/selection/kpAbstractSelectionTool.cpp:261
+#: tools/selection/kpAbstractSelectionTool.cpp:528
+#, kde-format
+msgid "Let go of all the mouse buttons."
+msgstr "Baimendu saguaren botoi guztiak."
+
+#: tools/flow/kpToolPen.cpp:45
+#, kde-format
+msgid "Pen"
+msgstr "Arkatza"
+
+#: tools/flow/kpToolPen.cpp:45
+#, kde-format
+msgid "Draws dots and freehand strokes"
+msgstr "Puntuak eta pultsuan trazak marrazten ditu"
+
+#: tools/flow/kpToolSpraycan.cpp:56
+#, kde-format
+msgid "Spraycan"
+msgstr "Aerografoa"
+
+#: tools/flow/kpToolSpraycan.cpp:56
+#, kde-format
+msgid "Sprays graffiti"
+msgstr "Graffiti-ak marrazten ditu"
+
+#: tools/flow/kpToolSpraycan.cpp:71
+#, kde-format
+msgid "Click or drag to spray graffiti."
+msgstr "Egin klik edo arrastatu graffitia marrazteko."
+
+#: tools/kpTool_UserNotifications.cpp:42
+#, kde-format
+msgid "Right click to cancel."
+msgstr "Eskuin-klik egin bertan behera uzteko."
+
+#: tools/kpTool_UserNotifications.cpp:45
+#, kde-format
+msgid "Left click to cancel."
+msgstr "Ezker-klik egin bertan behera uzteko."
+
+#: tools/kpTool_UserNotifications.cpp:75
+#, kde-format
+msgid "%1: "
+msgstr "%1: "
+
+#: tools/kpToolColorPicker.cpp:45
+#, kde-format
+msgid "Lets you select a color from the image"
+msgstr "Irudiko kolore bat hautatzeko aukera ematen dizu"
+
+#: tools/kpToolColorPicker.cpp:68
+#, kde-format
+msgid "Click to select a color."
+msgstr "Egin klik kolore bat hautatzeko."
+
+#: tools/kpToolFloodFill.cpp:55
+#, kde-format
+msgid "Fills regions in the image"
+msgstr "Bete irudiaren eskualdeak"
+
+#: tools/kpToolFloodFill.cpp:75
+#, kde-format
+msgid "Click to fill a region."
+msgstr "Egin klik eskualde bat betetzeko"
+
+#: tools/kpToolZoom.cpp:75
+#, kde-format
+msgid "Zoom"
+msgstr "Zooma"
+
+#: tools/kpToolZoom.cpp:75
+#, kde-format
+msgid "Zooms in and out of the image"
+msgstr "Handiagotu eta txikiagotu irudiaren zooma"
+
+#: tools/kpToolZoom.cpp:119
+#, kde-format
+msgid "Click to zoom in/out or left drag to zoom into a specific area."
+msgstr ""
+"Egin klik zooma handiagotzeko/txikiagotzeko edo ezker-arrastatu area zehatz "
+"baten zooma egiteko."
+
+#: tools/polygonal/kpToolCurve.cpp:103
+#, kde-format
+msgid "Curve"
+msgstr "Kurba"
+
+#: tools/polygonal/kpToolCurve.cpp:104
+#, kde-format
+msgid "Draws curves"
+msgstr "Marraztu kurbak"
+
+#: tools/polygonal/kpToolCurve.cpp:118
+#, kde-format
+msgid "Drag out the start and end points."
+msgstr "Arrastatu eta mantendu hasierako eta amaierako puntuak."
+
+#: tools/polygonal/kpToolCurve.cpp:157
+#, kde-format
+msgid "Left drag to set the first control point or right click to finish."
+msgstr ""
+"Ezker-arrastatu lehen kontrol-puntua ezartzeko edo eskuin-klik egin "
+"amaitzeko."
+
+#: tools/polygonal/kpToolCurve.cpp:162
+#, kde-format
+msgid "Right drag to set the first control point or left click to finish."
+msgstr ""
+"Eskuin-arrastatu lehen kontrol-puntua ezartzeko edo ezker-klik egin "
+"amaitzeko."
+
+#: tools/polygonal/kpToolCurve.cpp:172
+#, kde-format
+msgid "Left drag to set the last control point or right click to finish."
+msgstr ""
+"Ezker-arrastatu azken kontrol-puntua ezartzeko edo eskuin-klik egin "
+"amaitzeko."
+
+#: tools/polygonal/kpToolCurve.cpp:177
+#, kde-format
+msgid "Right drag to set the last control point or left click to finish."
+msgstr ""
+"Eskuin-arrastatu azken kontrol-puntua ezartzeko edo ezker-klik egin "
+"amaitzeko."
+
+#: tools/polygonal/kpToolLine.cpp:41
+#, kde-format
+msgid "Line"
+msgstr "Marra"
+
+#: tools/polygonal/kpToolLine.cpp:42
+#, kde-format
+msgid "Draws lines"
+msgstr "Marrak marrazten ditu"
+
+#: tools/polygonal/kpToolLine.cpp:55
+#: tools/rectangular/kpToolRectangularBase.cpp:119
+#, kde-format
+msgid "Drag to draw."
+msgstr "Arrastatu marrazteko."
+
+#: tools/polygonal/kpToolPolygon.cpp:93
+#, kde-format
+msgid "Polygon"
+msgstr "Poligonoa"
+
+#: tools/polygonal/kpToolPolygon.cpp:94
+#, kde-format
+msgid "Draws polygons"
+msgstr "Poligonoak marrazten ditu"
+
+#: tools/polygonal/kpToolPolygon.cpp:112 tools/polygonal/kpToolPolyline.cpp:60
+#, kde-format
+msgid "Drag to draw the first line."
+msgstr "Arrastatu lehen marra marrazteko."
+
+#: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
+#, kde-format
+msgid "Left drag another line or right click to finish."
+msgstr ""
+"Ezker-arrastatu beste marra bat arrastatzeko edo eskuin-klik egin amaitzeko."
+
+#: tools/polygonal/kpToolPolygon.cpp:186 tools/polygonal/kpToolPolyline.cpp:121
+#, kde-format
+msgid "Right drag another line or left click to finish."
+msgstr ""
+"Eskuin-arrastatu beste marra bat marrastatzeko edo ezker-klik egin amaitzeko."
+
+#: tools/polygonal/kpToolPolyline.cpp:46
+#, kde-format
+msgid "Connected Lines"
+msgstr "Konektatutako marrak"
+
+#: tools/polygonal/kpToolPolyline.cpp:47
+#, kde-format
+msgid "Draws connected lines"
+msgstr "Marraztu konektatutako marrak"
+
+#: tools/rectangular/kpToolEllipse.cpp:42
+#, kde-format
+msgid "Ellipse"
+msgstr "Elipsea"
+
+#: tools/rectangular/kpToolEllipse.cpp:43
+#, kde-format
+msgid "Draws ellipses and circles"
+msgstr "Elipseak eta zirkuluak marrazten ditu"
+
+#: tools/rectangular/kpToolRectangle.cpp:43
+#, kde-format
+msgid "Rectangle"
+msgstr "Laukizuzena"
+
+#: tools/rectangular/kpToolRectangle.cpp:44
+#, kde-format
+msgid "Draws rectangles and squares"
+msgstr "Laukizuzenak eta karratuak marrazten ditu"
+
+#: tools/rectangular/kpToolRoundedRectangle.cpp:42
+#, kde-format
+msgid "Rounded Rectangle"
+msgstr "Biribildutako laukizuzena"
+
+#: tools/rectangular/kpToolRoundedRectangle.cpp:43
+#, kde-format
+msgid "Draws rectangles and squares with rounded corners"
+msgstr "Ertz biribildun laukizuzen eta karratuak marrazten ditu"
+
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
+#, kde-format
+msgid "Left drag to create selection."
+msgstr "Ezker-arrastatu hautapena sortzeko."
+
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
+#, kde-format
+msgid "Left drag to move selection."
+msgstr "Ezker-arrastatu hautapena lekuz aldatzeko."
+
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
+#, kde-format
+msgid "Left drag to scale selection."
+msgstr "Ezker-arrastatu hautapena eskalatzeko."
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
+#, kde-format
+msgid "Selection: Opaque"
+msgstr "Hautapena: opakoa"
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
+#, kde-format
+msgid "Selection: Transparent"
+msgstr "Hautapena: gardena"
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:184
+#, kde-format
+msgid "Selection: Transparency Color"
+msgstr "Hautapena: gardentasunaren kolorea"
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:205
+#, kde-format
+msgid "Selection: Transparency Color Similarity"
+msgstr "Hautapena: gardentasun kolorearen antzekotasuna"
+
+#: tools/selection/image/kpToolEllipticalSelection.cpp:42
+#, kde-format
+msgid "Selection (Elliptical)"
+msgstr "Hautapena (eliptikoa)"
+
+#: tools/selection/image/kpToolEllipticalSelection.cpp:43
+#, kde-format
+msgid "Makes an elliptical or circular selection"
+msgstr "Hautapen eliptiko edo zirkular bat egiten du"
+
+#: tools/selection/image/kpToolFreeFormSelection.cpp:45
+#, kde-format
+msgid "Selection (Free-Form)"
+msgstr "Hautapena (forma librekoa)"
+
+#: tools/selection/image/kpToolFreeFormSelection.cpp:46
+#, kde-format
+msgid "Makes a free-form selection"
+msgstr "Forma libreko hautapen bat egiten du"
+
+#: tools/selection/image/kpToolRectSelection.cpp:40
+#, kde-format
+msgid "Selection (Rectangular)"
+msgstr "Hautapena (laukizuzena)"
+
+#: tools/selection/image/kpToolRectSelection.cpp:41
+#, kde-format
+msgid "Makes a rectangular selection"
+msgstr "Hautapen laukizuzen bat egiten du"
+
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:324
+#, kde-format
+msgid "Selection: Move"
+msgstr "Hautapena: lekuz aldatu"
+
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:347
+#, kde-format
+msgid "%1: Smear"
+msgstr "%1: lohitu"
+
+#: tools/selection/text/kpToolText.cpp:55
+#, kde-format
+msgid "Writes text"
+msgstr "Testua idazten du"
+
+#: tools/selection/text/kpToolText_Commands.cpp:69
+#, kde-format
+msgid "Text: Backspace"
+msgstr "Testua: atzera-tekla"
+
+#: tools/selection/text/kpToolText_Commands.cpp:86
+#, kde-format
+msgid "Text: Delete"
+msgstr "Testua: ezabatu"
+
+#: tools/selection/text/kpToolText_Commands.cpp:103
+#, kde-format
+msgid "Text: New Line"
+msgstr "Testua: lerro berria"
+
+#: tools/selection/text/kpToolText_Commands.cpp:120
+#, kde-format
+msgid "Text: Write"
+msgstr "Testua: idatzi"
+
+#: tools/selection/text/kpToolText_Create.cpp:48
+#, kde-format
+msgid "Left drag to create text box."
+msgstr "Ezker-arrastatu testu-koadroa sortzeko."
+
+#: tools/selection/text/kpToolText_Move.cpp:42
+#, kde-format
+msgid "Left drag to move text box."
+msgstr "Ezker-arrastatu testu-koadroa mugitzeko."
+
+#: tools/selection/text/kpToolText_Move.cpp:61
+#, kde-format
+msgid "Text: Move Box"
+msgstr "Testua: mugitu koadroa"
+
+#: tools/selection/text/kpToolText_ResizeScale.cpp:42
+#, kde-format
+msgid "Left drag to resize text box."
+msgstr "Ezker-arrastatu testu-koadroaren tamaina aldatzeko."
+
+#: tools/selection/text/kpToolText_SelectText.cpp:57
+#, kde-format
+msgid "Left click to change cursor position."
+msgstr "Ezker-klik kurtsorearen posizioa aldatzeko."
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:113
+#, kde-format
+msgid "Text: Opaque Background"
+msgstr "Testua: atzeko planoa opakoa"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:114
+#, kde-format
+msgid "Text: Transparent Background"
+msgstr "Testua: atzeko aplano gardena"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:137
+#, kde-format
+msgid "Text: Swap Colors"
+msgstr "Testua: aldatu koloreak"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:158
+#, kde-format
+msgid "Text: Foreground Color"
+msgstr "Testua: aurreko planoko kolorea"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:179
+#, kde-format
+msgid "Text: Background Color"
+msgstr "Testua: atzeko planoko kolorea"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:215
+#, kde-format
+msgid "Text: Font"
+msgstr "Testua: letra-tipoa"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:242
+#, kde-format
+msgid "Text: Font Size"
+msgstr "Testua: letra-tamaina"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:265
+#, kde-format
+msgid "Text: Bold"
+msgstr "Testua: lodia"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:287
+#, kde-format
+msgid "Text: Italic"
+msgstr "Testua: etzana"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:309
+#, kde-format
+msgid "Text: Underline"
+msgstr "Testua: azpimarratua"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:331
+#, kde-format
+msgid "Text: Strike Through"
+msgstr "Testua: marratua"
+
+#: views/kpUnzoomedThumbnailView.cpp:86
+#, kde-format
+msgid "Unzoomed Mode - Thumbnail"
+msgstr "Zoomik gabeko modua - Koadro txikia"
+
+#: views/kpZoomedThumbnailView.cpp:65
+#, kde-format
+msgid "%1% - Thumbnail"
+msgstr "% %1 - Koadro txikia"
+
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
+#, kde-format
+msgid ""
+"<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
+"pixels must be, for operations to consider them to be the same.</p><p>If you "
+"set it to something other than <b>Exact Match</b>, you can work more "
+"effectively with dithered images and photos, in a comparable manner to the "
+"\"Magic Wand\" feature of other paint programs.</p><p>This feature applies "
+"to:</p><ul><li><b>Selections</b>: In <b>Transparent</b> mode, any color in "
+"the selection that is <i>similar</i> to the background color will be made "
+"transparent.</li><li><b>Flood Fill</b>: For regions with <i>similar</i> - "
+"but not identical - colored pixels, a higher setting is likely to fill more "
+"pixels.</li><li><b>Color Eraser</b>: Any pixel whose color is <i>similar</i> "
+"to the foreground color will be replaced with the background color.</"
+"li><li><b>Autocrop</b> and <b>Remove Internal Border</b>: For borders with "
+"<i>similar</i> - but not identical - colored pixels, a higher setting is "
+"more likely to crop the whole border.</li></ul><p>Higher settings mean that "
+"operations consider an increased range of colors to be sufficiently "
+"<i>similar</i> so as to be the same. Therefore, you should increase the "
+"setting if the above operations are not affecting pixels whose colors you "
+"consider to be similar enough.</p><p>However, if they are having too much of "
+"an effect and are changing pixels whose colors you do not consider to be "
+"similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
+"decrease this setting.</p><p>To configure it, click on the cube.</p></qt>"
+msgstr ""
+"<qt><p><b>Kolorearen antzekotasuna</b> da pixel desberdinetako koloreak "
+"zenbateraino antzekoak izan behar diren, eragiketek berdin gisa hartu "
+"ditzaten.</p><p><b>Erabat berdina</b> ez den beste zerbaitekin ezartzen "
+"baduzu, bilbatutako irudi eta argazkiekin hobeto lan egingo duzu, "
+"marrazketako beste aplikazio batzuen \"makila magikoa\" moduaren parekoa "
+"izanez.</p><p> Eginbide hau honakoei aplikatzen zaie:</"
+"p><ul><li><b>Hautapenak</b>: <b>gardena</b> moduan, atzeko planoko "
+"kolorearen <i>antzekoa</i> den hautapeneko edozein kolore garden jarriko da."
+"</li><li><b>Betegarria</b>: <i>antzeko</i> (baina ez berdinak) koloreko "
+"pixelakdituzten eskualdeentzako, ezarpen altuago batek pixel gehiago beteko "
+"ditu.</li><li><b>Koloreen borragoma</b>: aurreko planoko kolorearen "
+"<i>antzeko</i> koloreak dituzten edozein pixel atzeko planoko kolorearekin "
+"ordeztuko da.</li><li><b>Auto-mozketa</b> eta <b>Kendu barneko ertza</b>: "
+"<i>antzeko</i> (baina ez berdinak) koloreko pixelak dituzten ertzentzako, "
+"ezarpen altuago baten ertz osoago bat moztuko du.</li></ul><p>Ezarpen altuak "
+"zera adierazten dute: nahiko <i>antzekoak</i> diren handitutako kolore-"
+"barrutia eragiketek berdinak bezala hartzea. Horrela, ezarpena handiagotu "
+"beharko zenuke gaineko eragiketek ez badiete eragiten zuk nahiko antzekotzat "
+"hartzen dituzun pixeletan.</p><p>Hala ere, efektu gehiegi jasotzen badute "
+"eta antzeko koloreak ez direla uste dituzun pixelak aldatzen badute (adib. "
+"<b>Betegarria</b>k pixel gehiegi aldatzen baditu), ezarpen hau gutxiagotu "
+"dezakezu.</p><p>Hau konfiguratzeko, egin klik kuboan.</p></qt>"
+
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
+#, kde-format
+msgid ""
+"<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
+"pixels must be, for operations to consider them to be the same.</p><p>If you "
+"set it to something other than <b>Exact Match</b>, you can work more "
+"effectively with dithered images and photos, in a comparable manner to the "
+"\"Magic Wand\" feature of other paint programs.</p><p>This feature applies "
+"to:</p><ul><li><b>Selections</b>: In <b>Transparent</b> mode, any color in "
+"the selection that is <i>similar</i> to the background color will be made "
+"transparent.</li><li><b>Flood Fill</b>: For regions with <i>similar</i> - "
+"but not identical - colored pixels, a higher setting is likely to fill more "
+"pixels.</li><li><b>Color Eraser</b>: Any pixel whose color is <i>similar</i> "
+"to the foreground color will be replaced with the background color.</"
+"li><li><b>Autocrop</b> and <b>Remove Internal Border</b>: For borders with "
+"<i>similar</i> - but not identical - colored pixels, a higher setting is "
+"more likely to crop the whole border.</li></ul><p>Higher settings mean that "
+"operations consider an increased range of colors to be sufficiently "
+"<i>similar</i> so as to be the same. Therefore, you should increase the "
+"setting if the above operations are not affecting pixels whose colors you "
+"consider to be similar enough.</p><p>However, if they are having too much of "
+"an effect and are changing pixels whose colors you do not consider to be "
+"similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
+"decrease this setting.</p></qt>"
+msgstr ""
+"<qt><p><b>Kolorearen antzekotasuna</b> da pixel desberdinetako koloreak "
+"zenbateraino antzekoak izan behar diren, eragiketek berdin gisa hartu "
+"ditzaten.</p><p><b>Erabat berdina</b>  ez den beste zerbaitekin ezartzen "
+"baduzu, bilbatutako irudi eta argazkiekin hobeto lan egingo duzu, "
+"marrazketako beste aplikazio batzuen \"makila magikoa\" moduaren parekoa "
+"izanez.</p><p> Eginbide hau honakoei aplikatzen zaie:</p> "
+"<ul><li><b>Hautapenak</b>: <b>gardena</b> moduan, atzeko planoko kolorearen "
+"<i>antzekoa</i> den hautapeneko edozein kolore garden jarriko da.</"
+"li><li><b>Betegarria</b>: <i>antzeko</i> (baina ez berdinak) koloreko "
+"pixelakdituzten eskualdeentzako, ezarpen altuago batek pixel gehiago beteko "
+"ditu.</li><li><b>Koloreen borragoma</b>: aurreko planoko kolorearen "
+"<i>antzeko</i> koloreak dituzten edozein pixel atzeko planoko kolorearekin "
+"ordeztuko da.</li><li><b>Auto-mozketa</b> eta <b>Kendu barneko ertza</b>: "
+"<i>antzeko</i> (baina ez berdinak) koloreko pixelak dituzten ertzentzako, "
+"ezarpen altuago baten ertz osoago bat moztuko du.</li></ul><p>Ezarpen altuak "
+"zera adierazten dute: nahiko <i>antzekoak</i> diren handitutako kolore-"
+"barrutia eragiketek berdinak bezala hartzea. Horrela, ezarpena handiagotu "
+"beharko zenuke gaineko eragiketek ez badiete eragiten zuk nahiko antzekotzat "
+"hartzen dituzun pixeletan.</p><p>Hala ere, efektu gehiegi jasotzen badute "
+"eta antzeko koloreak ez direla uste dituzun pixelak aldatzen badute (adib. "
+"<b>Betegarria</b>k pixel gehiegi aldatzen baditu), ezarpen hau gutxiagotu "
+"dezakezu.</p></qt>"
+
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
+#, kde-format
+msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgstr ""
+"<p>Kolorearen antzekotasuna: % %1</p><p align=\"center\">Egin klik "
+"konfiguratzeko.</p>"
+
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
+#, kde-format
+msgid ""
+"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"p>"
+msgstr ""
+"<p>Kolorearen antzekotasuna: bat egite zehatza</p><p align=\"center\">Egin "
+"klik konfiguratzeko.</p>"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
+#, kde-format
+msgid "&Brightness:"
+msgstr "&Distira:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
+#, kde-format
+msgid "Re&set"
+msgstr "Berre&zarri"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
+#, kde-format
+msgid "Co&ntrast:"
+msgstr "Ko&ntrastea:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:70
+#, kde-format
+msgid "&Gamma:"
+msgstr "&Gamma:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
+#, kde-format
+msgid "Rese&t"
+msgstr "&Berrezarri"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
+#, kde-format
+msgid "C&hannels:"
+msgstr "&Kanalak:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:88
+#, kde-format
+msgid "All"
+msgstr "Guztiak"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:89
+#, kde-format
+msgid "Red"
+msgstr "Gorria"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:90
+#, kde-format
+msgid "Green"
+msgstr "Berdea"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:91
+#, kde-format
+msgid "Blue"
+msgstr "Urdina"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
+#, kde-format
+msgid "Reset &All Values"
+msgstr "Berrezarri balio &guztiak"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
+#, kde-format
+msgid "Settings"
+msgstr "Ezarpenak"
+
+#: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:51
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:56
+#, kde-format
+msgid "&Amount:"
+msgstr "&Kopurua:"
+
+#: widgets/imagelib/effects/kpEffectEmbossWidget.cpp:51
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:71
+#, kde-format
+msgid "E&nable"
+msgstr "&Gaitu"
+
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:130
+#, kde-format
+msgid "Colors"
+msgstr "Koloreak"
+
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:47
+#, kde-format
+msgid "&Hue:"
+msgstr "&Ñabardura:"
+
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:48
+#, kde-format
+msgid "&Saturation:"
+msgstr "&Saturazioa:"
+
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:49
+#, kde-format
+msgctxt "The V of HSV"
+msgid "&Value:"
+msgstr "&Balioa:"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:57
+#, kde-format
+msgid "&Red"
+msgstr "&Gorria"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:58
+#, kde-format
+msgid "&Green"
+msgstr "&Berdea"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:59
+#, kde-format
+msgid "&Blue"
+msgstr "&Urdina"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:64
+#, kde-format
+msgid "&All"
+msgstr "&Guztiak"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:141
+#, kde-format
+msgid "Channels"
+msgstr "Kanalak"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:55
+#, kde-format
+msgid "&Monochrome"
+msgstr "&Monokromoa"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
+#, kde-format
+msgid "Mo&nochrome (dithered)"
+msgstr "Mo&nokromoa (bilbatua)"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
+#, kde-format
+msgid "256 co&lor"
+msgstr "256 ko&lore"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:62
+#, kde-format
+msgid "256 colo&r (dithered)"
+msgstr "256 kolo&re (bilbatua)"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
+#, kde-format
+msgid "24-&bit color"
+msgstr "24-&biteko kolorea"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:144
+#, kde-format
+msgid "Reduce To"
+msgstr "Murriztu hona"
+
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:54
+#, kde-format
+msgid "&Granularity:"
+msgstr "&Pikortatzea:"
+
+#: widgets/kpColorCells.cpp:195
+#, kde-format
+msgid ""
+"<qt><p>To select the foreground color that tools use to draw, left-click on "
+"a filled-in color cell. To select the background color, right-click instead."
+"</p><p>To change the color of a color cell itself, double-click on it.</"
+"p><p>You can also swap the color of a filled-in cell with any other cell "
+"using drag and drop. Also, if you hold down the <b>Ctrl</b> key, the "
+"destination cell's color will be overwritten, instead of being swapped with "
+"the color of the source cell.</p></qt>"
+msgstr ""
+"<qt><p>Tresnek marrazteko erabiliko duten aurreko planoko kolorea "
+"hautatzeko, egin klik ezkerreko botoiarekin kolorez betetako gelaxkan. "
+"Atzeko planoko kolorea hautatzeko egin klik saguaren eskuineko botoiarekin.</"
+"p><p>Kolore-gelaxka baten kolorea aldatzeko, egin klik bikoitza beraren "
+"gainean.</p><p> Betetako gelaxka baten kolorea beste gelaxka batekoarekin "
+"truka dezakezu baita ere arrastatu eta jareginez. Gainera, <b>Ktrl</b> tekla "
+"sakatuta edukiz, helburuko gelaxkaren kolorea gainidatziko da, iturburuko "
+"gelaxkako kolorearekin trukatu ordez.</p></qt>"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:85
+#, kde-format
+msgid "Convert &to:"
+msgstr "Bihurtu &hona:"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:90
+#, kde-format
+msgid "Quali&ty:"
+msgstr "Kal&itatea:"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:98
+#, kde-format
+msgid "&Preview"
+msgstr "&Aurrebista"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:223
+#, kde-format
+msgid "Monochrome"
+msgstr "Monokromoa"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:224
+#, kde-format
+msgid "Monochrome (Dithered)"
+msgstr "Monokromoa (bilbatua)"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:228
+#, kde-format
+msgid "256 Color"
+msgstr "256 kolore"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:229
+#, kde-format
+msgid "256 Color (Dithered)"
+msgstr "256 kolore (bilbatua)"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:234
+#, kde-format
+msgid "24-bit Color"
+msgstr "24-biteko kolorea"
+
+#: widgets/kpPrintDialogPage.cpp:57
+#, kde-format
+msgctxt "@title:tab"
+msgid "I&mage Position"
+msgstr "I&rudiaren kokapena"
+
+#: widgets/kpPrintDialogPage.cpp:59
+#, kde-format
+msgid "&Center of the page"
+msgstr "Orrialdearen ze&ntrua"
+
+#: widgets/kpPrintDialogPage.cpp:61
+#, kde-format
+msgid "Top-&left of the page"
+msgstr "Orrialdearen goi-e&zkerraldea"
+
+#: widgets/kpTransparentColorCell.cpp:53
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44
+#, kde-format
+msgid "Transparent"
+msgstr "Gardena"
+
+#: widgets/toolbars/kpColorToolBar.cpp:278
+#, kde-format
+msgid "KolourPaint Defaults"
+msgstr "KolourPaint lehenespenak"
+
+#: widgets/toolbars/kpColorToolBar.cpp:293
+#, kde-format
+msgctxt "Colors: name_or_url_of_color_palette"
+msgid "Colors: %1"
+msgstr "Koloreak: %1"
+
+#: widgets/toolbars/kpColorToolBar.cpp:300
+#, kde-format
+msgctxt "Colors: name_or_url_of_color_palette [modified]"
+msgid "Colors: %1 [modified]"
+msgstr "Koloreak: %1 [aldatua]"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
+#, kde-format
+msgid "1x1"
+msgstr "1x1"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:208
+#, kde-format
+msgid "Circle"
+msgstr "Zirkulua"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:211
+#, kde-format
+msgid "Square"
+msgstr "Karratua"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:215
+#, kde-format
+msgid "Slash"
+msgstr "Barra"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:219
+#, kde-format
+msgid "Backslash"
+msgstr "Alderantzizko barra"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:227
+#, kde-format
+msgid "%1x%2 %3"
+msgstr "%1x%2 %3"
+
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:117
+#, kde-format
+msgid "No Fill"
+msgstr "Betegarririk ez"
+
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:120
+#, kde-format
+msgid "Fill with Background Color"
+msgstr "Bete atzeko planoko kolorearekin"
+
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:123
+#, kde-format
+msgid "Fill with Foreground Color"
+msgstr "Bete aurreko planoko kolorearekin"
+
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:42
+#, kde-format
+msgid "Opaque"
+msgstr "Opakoa"
+
+#~ msgctxt "<Tool Name> (<Single Accel Key>)"
+#~ msgid "%1 (%2)"
+#~ msgstr "%1 (%2)"
+
+#~ msgid ""
+#~ "A document called \"%1\" already exists.\n"
+#~ "Do you want to overwrite it?"
+#~ msgstr ""
+#~ "\"%1\" izeneko dokumentua badago lehendik ere.\n"
+#~ "Gainidatzi nahi duzu?"
+
+#~ msgid ""
+#~ "A color palette called \"%1\" already exists.\n"
+#~ "Do you want to overwrite it?"
+#~ msgstr ""
+#~ "\"%1\" izeneko kolore-paleta badago lehendik ere.\n"
+#~ "Gainidatzi nahi duzu?"
+
+#~ msgid ""
+#~ "Setting the zoom level to a value that is not a multiple of 100% results "
+#~ "in imprecise editing and redraw glitches.\n"
+#~ "Do you really want to set to zoom level to %1%?"
+#~ msgstr ""
+#~ "Zoomaren maila % 100-en multiploa ez den balio batera ezartzean "
+#~ "zehaztasunik gabeko edizioa eta bistaratzeko erroreak sor ditzake.\n"
+#~ "Ziur zaude zoomaren maila % %1 baliora ezarri nahi duzula?"
+
+#~ msgid "Set Zoom Level to %1%"
+#~ msgstr "Ezarri zooma % %1 mailara"
+
+#~ msgid "None"
+#~ msgstr "Bat ere ez"
+
+#~ msgid ""
+#~ "<qt><p>Resizing the image to %1x%2 may take a substantial amount of "
+#~ "memory. This can reduce system responsiveness and cause other application "
+#~ "resource problems.</p><p>Are you sure want to resize the image?</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Irudia %1x%2 tamainara aldatzeak memoria asko erabil dezake. Honek "
+#~ "sistemaren erantzuteko denbora txikiagotu eta aplikazioen baliabideetan "
+#~ "arazoak sor ditzake.</p><p>Ziur zaude irudiaren tamaina aldatzea nahi "
+#~ "duzula?</p></qt>"
+
+#~ msgid "Overwrite"
+#~ msgstr "Gainidatzi"
+
+#~ msgid "Could not open \"%1\" - unknown mimetype."
+#~ msgstr "Ezin izan da \"%1\" ireki - MIME mota ezezaguna."
+
+#~ msgid "Save Preview"
+#~ msgstr "Gordetzearen aurrebista"
+
+#~ msgid "To obtain support, please visit the website."
+#~ msgstr "Laguntza eskuratzeko, bisitatu webgunea."
+
+#~ msgid "No Scanning Support"
+#~ msgstr "Eskaneatzea ez dago onartuta"
+
+#~ msgid "Scanning support is not installed."
+#~ msgstr "Eskanerraren euskarria ez dago instalatuta."
+
+#~ msgid ""
+#~ "<qt><p>KolourPaint cannot paste the contents of the clipboard as the data "
+#~ "unexpectedly disappeared.</p><p>This usually occurs if the application "
+#~ "which was responsible for the clipboard contents has been closed.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>KolourPaint-ek ezin ditu arbelaren edukia itsatsi, datuak "
+#~ "ustekabean desagertu direlako.</p><p>Hau normalean arbelaren arduraduna "
+#~ "den aplikazioa itxi delako gertatzen da.</p></qt>"
+
+#~ msgid "Acquiring &Screenshots"
+#~ msgstr "Egin &pantaila-argazkiak"
+
+#, fuzzy
+#~| msgid ""
+#~| "<p>To acquire a screenshot, press <b>%1</b>.  The screenshot will be "
+#~| "placed into the clipboard and you will be able to paste it in "
+#~| "KolourPaint.</p><p>You may configure the <b>Desktop Screenshot</b> "
+#~| "shortcut in the KDE Control Center module <a href=\"configure kde "
+#~| "shortcuts\">Keyboard Shortcuts</a>.</p><p>Alternatively, you may try the "
+#~| "application <a href=\"run ksnapshot\">KSnapshot</a>.</p>"
+#~ msgid ""
+#~ "<p>To acquire a screenshot, press <b>%1</b>.  The screenshot will be "
+#~ "placed into the clipboard and you will be able to paste it in KolourPaint."
+#~ "</p><p>You may configure the <b>Desktop Screenshot</b> shortcut in the "
+#~ "KDE System Settings module <a href=\"configure kde shortcuts\">Keyboard "
+#~ "Shortcuts</a>.</p><p>Alternatively, you may try the application <a href="
+#~ "\"run ksnapshot\">KSnapshot</a>.</p>"
+#~ msgstr ""
+#~ "<p>Pantaila-argazki bat egiteko, sakatu <b>%1</b>. Pantaila-argazkia "
+#~ "arbelean kokatuko da eta KolourPaint-en itsasteko aukera izango duzu.</"
+#~ "p><p>KDEren kontrol-zentruko <a href=\"configure kde shortcuts\">Teklatua "
+#~ "bidezko lasterbideak</a> moduluan <b>Mahaigainaren pantaila-argazkia</b> "
+#~ "lasterbidea konfigura dezakezu.</p><p>Honez gain, <a href=\"run ksnapshot"
+#~ "\"> KSnapshot</a> aplikazioa erabil dezakezu.</p>"
+
+#~ msgid ""
+#~ "<p>You do not appear to be running KDE.</p><p>Once you have loaded KDE:"
+#~ "<br><blockquote>To acquire a screenshot, press <b>%1</b>.  The screenshot "
+#~ "will be placed into the clipboard and you will be able to paste it in "
+#~ "KolourPaint.</blockquote></p><p>Alternatively, you may try the "
+#~ "application <a href=\"run ksnapshot\">KSnapshot</a>.</p>"
+#~ msgstr ""
+#~ "<p>Badirudi ez zaudela KDE ingurunean.</p><p>KDE kargatu eta ondoren:"
+#~ "<br><blockquote>Pantaila-argazkia egiteko, sakatu <b>%1</b>. Pantaila-"
+#~ "argazkia arbelean jarriko da eta KolourPaint-en itsasteko aukera duzu.</"
+#~ "blockquote></p> <p>Honez gain, <a href=\"run ksnapshot\"> KSnapshot</a> "
+#~ "aplikazioa erabil dezakezu.</p>"
+
+#~ msgid "Set as Wa&llpaper (Centered)"
+#~ msgstr "Ezarri &horma-paper gisa (zentratua)"
+
+#~ msgid "Set as Wallpaper (&Tiled)"
+#~ msgstr "Ezarri horma-paper gisa (&lauza moduan)"
+
+#~ msgid ""
+#~ "Before this image can be set as the wallpaper, you must save it as a "
+#~ "local file.\n"
+#~ "Do you want to save it?"
+#~ msgstr ""
+#~ "Irudi hau horma-papera bezala ezarri aurretik, fitxategi lokal bat bezala "
+#~ "gorde behar duzu.\n"
+#~ "Gorde nahi duzu?"
+
+#~ msgid ""
+#~ "Before this image can be set as the wallpaper, you must save it.\n"
+#~ "Do you want to save it?"
+#~ msgstr ""
+#~ "Irudi hau horma-papera bezala ezarri aurretik, gorde egin behar duzu.\n"
+#~ "Gorde nahi duzu?"
+
+#~ msgid "Could not change wallpaper."
+#~ msgstr "Ezin izan da horma-papera aldatu."
+
+#~ msgid "..."
+#~ msgstr "..."
+
+#~ msgid "Flip Selection"
+#~ msgstr "Irauli hautapena"
+
+#~ msgid "Flip Image"
+#~ msgstr "Irauli irudia"
+
+#~ msgid "&Vertical (upside-down)"
+#~ msgstr "&Bertikala (goitik-behera)"
+
+#~ msgid "&Horizontal"
+#~ msgstr "&Horizontala"
+
+#~ msgid "Loss of Color and Translucency Information"
+#~ msgstr "Kolore eta zeharrargitasunaren informazioaren galera"
+
+#~ msgid "Loss of Color Information"
+#~ msgstr "Kolorearen informazioaren galera"
+
+#~ msgid "Loss of Translucency Information"
+#~ msgstr "Zeharrargitasunaren informazioaren galera"
+
+#~ msgid ""
+#~ "<qt><p>KolourPaint does not support the current screen depth of %1bpp. "
+#~ "KolourPaint will attempt to start but may act unreliably.</p><p>To avoid "
+#~ "this issue, please change your screen depth to 24bpp and then restart "
+#~ "KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>KolourPaint-ek ez du pantailaren uneko %1 bpp sakonera onartzen. "
+#~ "KolourPaint abiatzen saiatuko da baina agian ez da ongi ibiliko.</p> "
+#~ "<p>Arazo hau saihesteko, aldatu pantailaren sakonera 24 bpp baliora, "
+#~ "ondoren berrabiarazi KolourPaint.</p></qt>"
+
+#~ msgid "Unsupported Screen Mode"
+#~ msgstr "Onartu gabeko pantailaren modua"
+
+#~ msgid ""
+#~ "<qt><p>This effect does not support the current screen depth of %1bpp.</"
+#~ "p><p>To avoid this issue, please change your screen depth to 24bpp and "
+#~ "then restart KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Efektu honek ez du pantailaren uneko %1 bpp sakonera onartzen.</"
+#~ "p><p>Arazo hau saihesteko, aldatu pantailaren sakonera 24 bpp baliora, "
+#~ "ondoren berrabiarazi KolourPaint.</p></qt>"
+
+#~ msgid "Cannot scan - out of graphics memory."
+#~ msgstr "Ezin da eskaneatu - memoria grafikorik gabe."
+
+#~ msgid "Cannot Scan"
+#~ msgstr "Ezin da eskaneatu"
+
+#~ msgid "&Flip..."
+#~ msgstr "&Irauli..."
+
+#~ msgid ""
+#~ "<qt><p>The image to be pasted may have more colors than the current "
+#~ "screen mode can support. In order to display it, some color information "
+#~ "may be removed.</p><p><b>If you save this image, any color loss will "
+#~ "become permanent.</b></p><p>To avoid this issue, increase your screen "
+#~ "depth to at least %1bpp and then restart KolourPaint.</p><hr/><p>It also "
+#~ "contains translucency which is not fully supported. The translucency data "
+#~ "will be approximated with a 1-bit transparency mask.</p><p><b>If you save "
+#~ "this image, this loss of translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Itsasteko irudiak uneko pantailako moduak baino kolore gehiago "
+#~ "izan ditzake. Bistaratzean, kolore batzuk gal daitezke.</p><p><b>Irudi "
+#~ "hau gordetzen baduzu, edozein kolore galera betirako izango da.</b></"
+#~ "p><p>Arazo hau saihesteko, saiatu pantailaren sakonera gutxienez %1bpp-"
+#~ "etara handitzen, eta gero berrabiarazi KolourPaint.</p><hr/><p>Guztiz "
+#~ "onartzen ez den zeharrargitasuna ere badu. Zeharrargitasunaren datuak bit "
+#~ "bakarreko gardentasun-maskarekin ordeztuko dira.</p><p><b>Irudi hau "
+#~ "gordetzen baduzu, zeharrargitasunaren galera betirako izango da.</b></p></"
+#~ "qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image to be pasted may have more colors than the current "
+#~ "screen mode can support. In order to display it, some color information "
+#~ "may be removed.</p><p><b>If you save this image, any color loss will "
+#~ "become permanent.</b></p><p>To avoid this issue, increase your screen "
+#~ "depth to at least %1bpp and then restart KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Itsasteko irudiak uneko pantailako moduak baino kolore gehiago "
+#~ "izan ditzake. Bistaratzean, kolore batzuk gal daitezke.</p><p><b>Irudi "
+#~ "hau gordetzen baduzu, edozein kolore galera betirako izango da.</b></"
+#~ "p><p>Arazo hau saihesteko, saiatu pantailaren sakonera gutxienez %1bpp-"
+#~ "etara handitzen, eta gero berrabiarazi KolourPaint.</p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image to be pasted contains translucency which is not fully "
+#~ "supported. The translucency data will be approximated with a 1-bit "
+#~ "transparency mask.</p><p><b>If you save this image, this loss of "
+#~ "translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Itsateko irudiak guztiz onartzen ez den zeharrargitasuna ere badu. "
+#~ "Zeharrargitasunaren datuak bit bakarreko gardentasun-maskarekin ordeztuko "
+#~ "dira.</p><p><b>Irudi hau gordetzen baduzu, zeharrargitasunaren galera "
+#~ "betirako izango da.</b></p></qt>"
+
+#~ msgid "<qt><p>There is nothing in the clipboard to paste.</p></qt>"
+#~ msgstr "<qt><p>Ezdago ezer arbelean itsasteko.</p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image \"%1\" may have more colors than the current screen mode "
+#~ "can support. In order to display it, some color information may be "
+#~ "removed.</p><p><b>If you save this image, any color loss will become "
+#~ "permanent.</b></p><p>To avoid this issue, increase your screen depth to "
+#~ "at least %2bpp and then restart KolourPaint.</p><hr/><p>It also contains "
+#~ "translucency which is not fully supported. The translucency data will be "
+#~ "approximated with a 1-bit transparency mask.</p><p><b>If you save this "
+#~ "image, this loss of translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>\"%1\" irudiak uneko pantailako moduak baina kolore gehiago izan "
+#~ "ditzake. Bistaratzean, kolore batzuk gal daitezke.</p><p><b>Irudi hau "
+#~ "gordetzen baduzu, edozein kolore galera betirako galduko da.</b></"
+#~ "p><p>Arazo hau saihesteko , saiatu pantailaren sakonera gutxienez %2bpp-"
+#~ "etara handitzen, eta ondoren berrabiarazi KolourPaint.</p><hr/><p>Guztiz "
+#~ "onartzen ez den zeharrargitasuna ere badu. Zeharrargitasun datuak bit "
+#~ "bakarreko gardentasun-maskarekin ordezkatuko dira.</p><p><b>Irudi hau "
+#~ "gordetzen baduzu, zeharrargitasunaren galera betirako izango da.</b></p></"
+#~ "qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image \"%1\" may have more colors than the current screen mode "
+#~ "can support. In order to display it, some color information may be "
+#~ "removed.</p><p><b>If you save this image, any color loss will become "
+#~ "permanent.</b></p><p>To avoid this issue, increase your screen depth to "
+#~ "at least %2bpp and then restart KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>\"%1\" irudiak uneko pantailako moduak baina kolore gehiago izan "
+#~ "ditzake. Bistaratzean, kolore batzuk gal daitezke.</p><p><b>Irudi hau "
+#~ "gordetzen baduzu, edozein kolore galera betirako galduko da.</b></"
+#~ "p><p>Arazo hau saihesteko , saiatu pantailaren sakonera gutxienez %2bpp-"
+#~ "etara handitzen, eta ondoren berrabiarazi KolourPaint.</p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image \"%1\" contains translucency which is not fully "
+#~ "supported. The translucency data will be approximated with a 1-bit "
+#~ "transparency mask.</p><p><b>If you save this image, this loss of "
+#~ "translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>\"%1\" irudiak guztiz onartzen ez den zeharrargitasuna ere badu. "
+#~ "Zeharrargitasun datuak bit bakarreko gardentasun-maskarekin ordezkatuko "
+#~ "dira.</p><p><b>Irudi hau gordetzen baduzu, zeharrargitasunaren galera "
+#~ "betirako izango da.</b></p></qt>"
+
+#~ msgid "Could not open \"%1\" - out of graphics memory."
+#~ msgstr "Ezin izan da \"%1\" ireki -  memoria grafikorik gabe."
+
+#~ msgid "Scanning Support"
+#~ msgstr "Eskanerraren euskarria"

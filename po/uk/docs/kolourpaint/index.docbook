@@ -1,0 +1,1781 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>Підручник з &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>23 березня 2018 року</date>
+<releaseinfo
+>Програми 18.04</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; — це вільна, проста у користуванні програма для малювання від &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Вступ</title>
+<para
+>&kolourpaint; — це вільна, проста у користуванні програма для малювання від &kde;. Вона чудово пасує до таких частих завдань як:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Малювання — креслення діаграм і <quote
+>малювання пальцем</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Обробки знімків вікон — отримання та редагування знімків вікон</para>
+</listitem>
+<listitem>
+<para
+>Роботи з зображеннями — редагування фотографій, сканованих зображень та знімків екрана з застосуванням ефектів</para>
+</listitem>
+<listitem>
+<para
+>Редагування піктограм — малювання ілюстрацій та логотипів з прозорістю</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Користування &kolourpaint;</title>
+
+<para
+>Пройдіть за наступними посиланням, щоб вивчити можливості &kolourpaint;:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Інструменти</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Робота з кольором</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Параметри перегляду</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Ефекти зображення</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Інструменти</title>
+
+<para
+>За допомогою додаткового пункту у меню <guimenu
+>Параметри</guimenu
+> ви можете визначити, буде програма малювати зі згладжуванням (типова поведінка) чи ні. </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Робота зі знімками вікон</title>
+
+<para
+>«Знімок вікна» — це зображення того, що ви бачите на вашому екрані. Знімком можна скористатися для пояснення дій, які треба виконати для досягнення певного результату, або демонстрації знайденої вами вади. </para>
+<para
+>Щоб створити знімок екрана, готовий до редагування у &kolourpaint;, ви можете скористатися пунктом <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Отримати знімок вікна</guimenuitem
+></menuchoice
+> головного меню &kolourpaint;. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>За допомогою відкритого діалогового вікна ви можете змінити <guilabel
+>Затримку знімка</guilabel
+> (у секундах) та вказати, чи слід <guilabel
+>Сховати головне вікно</guilabel
+> під час створення знімка. Після належного налаштування натисніть кнопку <guibutton
+>Гаразд</guibutton
+>. Створений знімок вікна буде надіслано безпосередньо до області редагування &kolourpaint;. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Довідник з інструментів</title>
+
+<para
+>Найшвидшим способом вибору інструментів у &kolourpaint; є натискання клавіші пов’язаної з цим інструментом, визначити цю клавішу можна за списком, поданим нижче, або за підказками <interface
+>Панелі інструментів</interface
+>. Крім того, вам слід буде утримувати комбінацію клавіш <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> під час натискання відповідної клавіші, якщо ви вводите на малюнку текст (оскільки одноклавішні прив’язки у цьому випадку не працюватимуть). Наприклад, щоб вибрати пензель, натисніть комбінацію клавіш <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> або просто у латинській розкладці B (якщо ви не вводите тест). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Пензель</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Кольорова гумка</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Піпетка</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>З’єднані лінії</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Крива</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>Еліпс</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Гумка</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Заповнення повінню</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Лінія</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Перо</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Багатокутник</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Прямокутник</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Округлений прямокутник</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Вибір (еліптичний)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Вибір (довільна форма)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Вибір (прямокутний)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Пульверизатор</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Текст</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Пензель <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Клацніть кнопкою миші або натисніть її і перетягніть вказівник, щоб малювати пензлем. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Наведіть вказівник миші на одну з форм пензля і клацніть лівою кнопкою, щоб обрати форму пензля. Ви можете скористатися круглою, квадратною, похилою або зворотною похилою формами пензля.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Натискання лівої кнопки миші призводить до малювання кольором переднього плану. Натискання правої — кольором тла.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Піпетка <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб встановити колір переднього плану, наведіть вказівник миші на піксель і клацніть <mousebutton
+>лівою</mousebutton
+> кнопкою миші. Щоб встановити колір тла, наведіть вказівник миші на піксель і клацніть <mousebutton
+>правою</mousebutton
+> кнопкою миші. Після цього &kolourpaint; повернеться до попереднього обраного інструмента.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>З’єднані лінії і багатокутник <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Для того, щоб накреслити з’єднані лінії, клацайте кнопкою миші і перетягуйте вказівник. Інструмент «Багатокутник» використовується у подібний спосіб, але за його використання початкову і кінцеву точки отриманої ламаної буде з’єднано лінією.</para>
+
+<para
+>Використання лівої кнопки миші призводить до малювання кольором переднього плану. За допомогою правої кнопки миші можна малювати кольором тла, а також обертати колір заливання багатокутників.</para>
+
+<para
+>Ви можете самі <link linkend="tool-options"
+>встановити товщину ліній</link
+>. Крім того, для багатокутників ви можете <link linkend="tool-options"
+>встановити стиль заливання</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Крива <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб намалювати лінію, клацайте кнопкою миші і перетягуйте вказівник, — таким чином ви визначите початкову і кінцеву точки. Перетягуванням ви встановлюєте дві контрольні точки. Щоб завершити малювання кривої без обох або якоїсь з контрольних точок, натисніть кнопку миші, що відрізняється від тої, яку ви використовували для малювання. Інструмент «Крива» будує кубічні криві Без’є.</para>
+
+<para
+>Натискання лівої кнопки миші призводить до малювання кольором переднього плану. Натискання правої — кольором тла.</para>
+
+<para
+>Крім того, ви можете <link linkend="tool-options"
+>встановити товщину лінії</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Еліпс <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб намалювати еліпс, клацніть кнопкою миші і перетягніть вказівник.</para>
+
+<para
+>Використання лівої кнопки миші призводить до малювання кольором переднього плану. За допомогою правої кнопки миші можна малювати кольором тла, а також обертати колір заливання.</para>
+
+<para
+>Крім того, ви можете <link linkend="tool-options"
+>встановити товщину лінії і стиль заливання</link
+>.</para>
+
+<para
+>Щоб отримати доступ до додаткових можливостей, скористайтесь клавішами-модифікаторами:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Утримуйте натиснутою клавішу &Shift; і перетягуйте вказівник, щоб намалювати коло.</para>
+</listitem>
+<listitem>
+<para
+>Щоб намалювати еліпс з обраним вами центром, утримуйте натиснутою клавішу &Ctrl;, наведіть вказівник на точку центра і клацніть кнопкою, а потім перетягуйте вказівник, доки еліпс не набуде потрібного розміру і форми.</para>
+</listitem>
+<listitem>
+<para
+>Щоб намалювати коло з вибраним вами центром, натисніть і утримуйте клавіші &Ctrl; і &Shift;, наведіть вказівник миші на точку центра, клацніть кнопкою миші, а потім перетягніть вказівник миші, аж доки коло не набуде потрібного розміру.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Гумки</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Гумка <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Натисніть кнопку миші і перетягніть вказівник, щоб витерти гумкою зроблені вами помилки.</para>
+
+<note>
+<para
+>На відміну від інших інструментів, гумки малюють кольором тла. Щоб малювати кольором переднього плану, скористайтеся для операцій правою кнопкою миші.</para>
+</note>
+
+<para
+>Гумка може бути лише <link linkend="tool-options"
+>квадратної форми</link
+>. Щоб малювати іншими формами, наприклад кругами, скористайтеся інструментом <link linkend="tool-brush"
+>Пензель</link
+> і правою кнопкою миші.</para>
+
+<tip>
+<para
+>Наведіть вказівник на піктограму інструмента «Гумка» і двічі клацніть кнопкою миші, щоб очистити все зображення. Ця дія є еквівалентною до використання пункту <link linkend="image-clear"
+>Очистити</link
+> з меню «Зображення».</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Гумка для кольору <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Натисніть кнопку миші і перетягніть вказівник, щоб замінити пікселі з кольором переднього плану на пікселі з кольором тла. Щоб замінити всі подібні пікселі (але не обов’язково точно того самого кольору) на колір переднього плану, як це робиться на розмитих зображеннях і фотографіях, скористайтеся значенням <link linkend="color-box"
+>Подібності кольорів</link
+> відмінним від «Точний збіг».</para>
+
+<note>
+<para
+>На відміну від інших інструментів, гумки малюють кольором тла. Щоб малювати кольором переднього плану, скористайтеся для операцій правою кнопкою миші.</para>
+</note>
+
+<para
+>Ви можете налаштувати <link linkend="tool-options"
+>розмір гумки</link
+>.</para>
+
+<tip>
+<para
+>Наведіть вказівник миші на піктограму інструмента «Гумка для кольору» і двічі клацніть кнопкою миші, щоб застосувати цей інструмент до всього зображення.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Заповнення повінню <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб залити область, наведіть на неї вказівник і клацніть кнопкою миші. Щоб залити розмиту область, скористайтеся значенням <link linkend="color-box"
+>Подібності кольорів</link
+> відмінним від «Точний збіг».</para>
+
+<para
+>За використання лівої кнопки миші для заливання буде використано колір переднього плану. За допомогою правої кнопки миші можна залити область кольором тла.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Лінія <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб намалювати лінію, натисніть кнопку миші і перетягніть вказівник.</para>
+
+<para
+>Натискання лівої кнопки миші призводить до малювання кольором переднього плану. Натискання правої — кольором тла.</para>
+
+<para
+>Крім того, ви можете <link linkend="tool-options"
+>встановити товщину лінії</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Щоб малювати лінії розташовані за множниками кута 30 градусів, утримуйте натиснутою клавішу &Ctrl;, — це лінії на червоній діаграмі.</para>
+</listitem>
+<listitem>
+<para
+>Щоб малювати лінії розташовані за множниками кута 45 градусів, утримуйте натиснутою клавішу &Shift;, — це лінії на синій діаграмі.</para>
+</listitem>
+<listitem>
+<para
+>Щоб малювати лінії розташовані за множниками кутів 30 або 45 градусів, утримуйте натиснутими клавіші &Ctrl; і &Shift;, — це лінії на зеленій діаграмі.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Перо <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Клацніть кнопкою миші, щоб намалювати точку, або натисніть кнопку миші і перетягніть вказівник, щоб намалювати довільну криву.</para>
+
+<para
+>Натискання лівої кнопки миші призводить до малювання кольором переднього плану. Натискання правої — кольором тла. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Прямокутники <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб намалювати прямокутник, натисніть кнопку миші і перетягніть вказівник. Округлений прямокутник — це прямокутних з заокругленими кутами.</para>
+
+<para
+>Використання лівої кнопки миші призводить до малювання кольором переднього плану. За допомогою правої кнопки миші можна малювати кольором тла, а також обертати колір заливання.</para>
+
+<para
+>Крім того, ви можете <link linkend="tool-options"
+>встановити товщину лінії і стиль заливання</link
+>.</para>
+
+<para
+>Щоб отримати доступ до додаткових можливостей, скористайтесь клавішами-модифікаторами:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Щоб намалювати квадрат, натисніть і утримуйте клавішу &Shift; під час перетягування вказівника миші.</para>
+</listitem>
+<listitem>
+<para
+>Щоб намалювати прямокутних з вибраним вами центром, натисніть і утримуйте клавішу &Ctrl;, наведіть вказівник миші на точку центра, натисніть кнопку миші і перетягуйте вказівник, аж доки прямокутник не набуде потрібного розміру і форми.</para>
+</listitem>
+<listitem>
+<para
+>Щоб намалювати квадрат з обраним вами центром, натисніть і утримуйте клавіші &Ctrl; і &Shift;, наведіть вказівник на бажану точку центра, натисніть кнопку миші і перетягуйте вказівник миші, аж доки квадрат не набуде потрібного розміру.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Області вибору <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Інструменти вибору слід використовувати для визначення границь області вибору.</para>
+
+<para
+>Щоб пересунути область вибору, наведіть вказівник на цю область, натисніть кнопку миші і перетягніть область вказівником миші у потрібне місце. За потреби область перегляду пересуватиметься слідом за вашим рухом так, щоб ви могли пересунути вибране у місце зображення, яке на даний момент часу залишається невидимим.</para>
+
+<para
+>Ви можете довільним чином <link linkend="image-resize-scale"
+>Змінити розмір</link
+> всього зображення або <link linkend="image-resize-scale"
+>плавно змінити масштаб</link
+> вибраної області за допомогою відповідних засобів керування. Утримуйте клавішу &Shift; під час довільної зміни масштабу, щоб програма зберігала співвідношення сторін області. Клацання правою кнопкою миші викличе контекстне меню зі звичайними командами <guimenu
+>Правки</guimenu
+> і <link linkend="image-effects-section"
+>Ефектів зображення</link
+>. </para>
+
+<tip>
+<para
+>Для креслення границь області вибору або для пересування області ви можете скористатися клавішами зі стрілками на клавіатурі.</para>
+</tip>
+
+<para
+>Якщо ви натиснете і триматимете клавішу &Ctrl; перед пересуванням вибраної області, ви пересуватимете копію цієї області. Якщо утримуватиметься клавіша &Shift;, під час пересування вибрану область буде розмито. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Існує два режими вибору: непрозорий (типовий) і прозорий. Якщо ви користуєтеся прозорим режимом вибору, всі пікселі кольору тла будуть прозорими (віднімання тла). Це надасть вам змогу вставляти вибране без тла. Щоб виконати віднімання тла на розмитому зображенні, скористайтеся значенням <link linkend="color-box"
+>Подібності кольорів</link
+> відмінним від «Точного збігу».</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Ви можете застосувати ефекти зображення до вибраної області — щоб дізнатися про це більше, прочитайте розділ, присвячений <link linkend="image-effects-section"
+>ефектам зображення</link
+>.</para>
+
+<para
+>Передбачено можливість зберігати позначений фрагмент до файла за допомогою пункту <guimenuitem
+>Скопіювати у файл...</guimenuitem
+> контекстного меню позначеного фрагмента або пункту <menuchoice
+><guimenu
+>Зміни</guimenu
+><guimenuitem
+>Скопіювати у файл...</guimenuitem
+></menuchoice
+> головного меню програми. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Пульверизатор <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щоб намалювати пульверизатором графіті, клацніть кнопкою миші і перетягніть вказівник. Натисніть і утримуйте кнопку миші, щоб отримати концентрованіший слід.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щоб обрати розмір області розбризкування з пульверизатора, наведіть вказівник миші на зображення одної з форм. Ви можете обрати розмір області розбризкування серед таких розмірів: 9x9, 17x17 і 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Натискання лівої кнопки миші призводить до малювання кольором переднього плану. Натискання правої — кольором тла.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Текст <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Натисніть кнопку миші і перетягніть вказівник, щоб визначити область, у яку будете записувати текст. Щойно рамку буде показано ви зможете почати введення тексту. Щоб пересунути цю область, наведіть на неї вказівник миші натисніть кнопку миші і перетягніть вказівник. Ви можете змінювати розмір текстової області перетягуванням відповідних елементів керування або за допомогою діалогового вікна <link linkend="image-resize-scale"
+>Змінити розмір</link
+>. </para>
+
+<tip>
+<para
+>Якщо ви випадково зняли виділення з текстової області, ви можете скористатися інструментом <guimenuitem
+>Вернути</guimenuitem
+>, щоб повернутися до редагування тексту.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Використання прозорого кольору</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>На зображенні ліворуч показано зразок зображення. На зображення, розташованому праворуч, показано додавання тексту з непрозорими кольорами переднього плану і тла. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>На зображенні ліворуч показано додавання тексту з непрозорим кольором переднього плану і прозорим кольором тла. На зображенні, розташованому праворуч, показано додавання тексту з прозорим кольором переднього плану і непрозорим кольором тла.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Загальні параметри інструментів</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щоб обрати розмір гумки, наведіть вказівник миші на один з квадратиків і клацніть кнопкою миші. Ви можете обрати один з квадратиків з довжиною сторони у 2, 3, 5, 9, 17 і 29 пікселів.</para>
+
+<para
+>Параметри розміру гумок стосується <link linkend="tool-erasers"
+>Гумок</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щоб обрати товщину лінії, наведіть вказівник на одну з ліній і клацніть кнопкою миші. Ви можете обрати одну з товщин: 1, 2, 3, 5 або 8 пікселів.</para>
+
+<para
+>Параметри товщини ліній стосується інструментів <link linkend="tool-polystar"
+>З’єднані лінії</link
+>, <link linkend="tool-curve"
+>Крива</link
+>, <link linkend="tool-ellipse"
+>Еліпс</link
+>, <link linkend="tool-line"
+>Лінія</link
+>, <link linkend="tool-polystar"
+>Багатокутник</link
+>, <link linkend="tool-rectangles"
+>Прямокутник</link
+> і <link linkend="tool-rectangles"
+>Округлений прямокутник</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щоб обрати стиль заливання, наведіть вказівник миші на один з прямокутників і клацніть кнопкою миші. Ви можете обрати один зі стилів: без заливання, заливання кольором тла і заливання кольором переднього плану.</para
+> <para
+>Стиль заливання стосується інструментів <link linkend="tool-ellipse"
+>Еліпс</link
+>, <link linkend="tool-polystar"
+>Багатокутник</link
+>, <link linkend="tool-rectangles"
+>Прямокутник</link
+> і <link linkend="tool-rectangles"
+>Округлений прямокутник</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Робота з кольором</title>
+
+<sect1 id="color-box">
+<title
+>Пенал кольорів</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Пенал кольорів</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>На пеналі кольорів є 3 головних розділи: планшет кольорів, палітра кольорів і засіб для вибору подібності кольорів.</para>
+
+<para
+>На планшеті кольорів показано поточний колір переднього плану у вигляді квадратика над іншим квадратиком, який показує поточний колір тла. Під час малювання за допомогою лівої кнопки миші буде використано колір переднього плану, а під час малювання за допомогою правої кнопки миші — колір тла (винятком є <link linkend="tool-erasers"
+>Гумки</link
+>). Якщо ви натиснете лінію з двома стрілками на кінцях, кольори тла і переднього плану поміняються місцями. </para>
+
+<para
+>На палітрі кольорів показано кольори, з яких ви можете вибирати. Прозора пірамідка відповідає прозорому кольору. Наведення вказівника миші на позначку кольору з наступним клацанням лівою кнопкою миші робить цей колір кольором переднього плану, а клацання правою кнопкою миші, коли вказівник знаходиться на позначці кольору, робить його кольором тла. Крім того, ви можете перетягнути і скинути будь-який з непрозорих кольорів на квадратики планшета кольорів. Щоб змінити колір на планшеті кольорів або у палітрі, наведіть вказівник миші на відповідну позначку і двічі клацніть лівою кнопкою миші. Інструмент <link linkend="tool-color-picker"
+>Піпетка</link
+> надає вам змогу взяти колір безпосередньо з зображення. </para>
+
+<para
+>Визначенні подібності кольорів надає вам змогу ефективніше працювати з розмитими зображеннями і фотографіями, у спосіб, який можна порівняти з дією інструмента <quote
+>Чарівна паличка</quote
+> інших програм для малювання. Подібність стосується вибору прозорих областей, а також інструментів <link linkend="tool-flood-fill"
+>Заливання повінню</link
+>, <link linkend="tool-eraser-clr"
+>Гумка для кольорів</link
+> і <link linkend="image-autocrop"
+>Автообрізання / Вилучення зовнішньої рамки</link
+>. Щоб обрати ступінь подібності кольорів, які програма вважатиме однаковими, наведіть вказівник миші на засіб вибору подібності кольорів і двічі клацніть лівою кнопкою миші. Якщо ви використовуєте вибір у режимі прозорості, будь-який колір, подібний до кольору тла, буде також вважатися прозорим.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>На картинці ліворуч показано приклад зображення. На зображеннях, розташованих праворуч, показано результат використання заливання повінню з налаштуваннями подібності кольорів 5%, 15% і 30%. У цьому прикладі з встановленим значенням подібності кольорів <guilabel
+>Точний збіг</guilabel
+> заливання повінню з точки (80, 100) вплинуло б лише на один піксель, оскільки пікселі, які його оточують мають схожі, але не тотожні з ним кольори. Якщо підвищувати рівень подібності кольорів, все більше пікселів, які мають подібний колір, вважатимуться ідентичними за кольором, отже, область заливання зростатиме. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Параметри перегляду</title>
+
+<sect1 id="view-options-section">
+<title
+>Список параметрів перегляду</title>
+
+<para
+><link linkend="view-zoom"
+>Зміна розміру з врахуванням ґратки</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Мініатюра</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Зміна розміру з врахуванням ґратки</title>
+<para
+>Збільшуйте масштаб зображення для точнішого редагування зображення, або зменшуйте його, щоб побачити більше деталей зображення.</para>
+
+<important>
+<para
+>За масштабу, який не є кратним 100%, частини зображення можуть візуально зміщуватися під час роботи з ними користувача. За таких масштабів також можливі деякі інші невеликі похибки перемальовування. </para>
+</important>
+
+<para
+>За масштабу 400% або більших масштабів, які також є кратними 100%, ви можете скористатися пунктом меню <guimenuitem
+>Показувати ґратку</guimenuitem
+> для точнішої роботи з окремими пікселями.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>На першій картинці показано піктограму інструмента <link linkend="tool-text"
+>Текст</link
+> у масштабі 600% з увімкненою ґраткою.</para>
+
+<tip>
+<para
+>Ще одним способом зміни масштабу зображення є прокручування <mousebutton
+>коліщатка</mousebutton
+> миші з одночасним утримуванням натиснутою клавіші &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Мініатюра</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Якщо обрано пункт меню <guimenuitem
+>Режим збільшеної мініатюри</guimenuitem
+>, буде показано все зображення у такому масштабі, який потрібен, щоб воно вмістилося у вікні мініатюри (картинка згори праворуч). </para>
+<para
+>У іншому випадку у мініатюрі буде показано якомога більшу частину зображення, починаючи з верхнього лівого кута вікна основного перегляду (картинка внизу праворуч). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Ефекти зображення</title>
+
+<sect1 id="image-effects-section">
+<title
+>Список ефектів зображення</title>
+<para
+><link linkend="image-autocrop"
+>Автообрізання / Вилучити внутрішню границю</link
+></para>
+<para
+><link linkend="image-balance"
+>Баланс</link
+></para>
+<para
+><link linkend="image-clear"
+>Очистити</link
+></para>
+<para
+><link linkend="image-emboss"
+>Барельєф</link
+></para>
+<para
+><link linkend="image-flatten"
+>Вирівняти</link
+></para>
+<para
+><link linkend="image-flip"
+>Перевернути (догори низом)</link
+></para>
+<para
+><link linkend="image-invert"
+>Інвертувати</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Зменшити кількість кольорів</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Перетворити до відтінків сірого</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Перетворити на чорно-біле (зі змішуванням)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Віддзеркалити горизонтально</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Змінити розмір / масштаб</link
+></para>
+<para
+><link linkend="image-rotate"
+>Обертати</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Зробити зображенням (Обрізати)</link
+></para>
+<para
+><link linkend="image-skew"
+>Перекосити</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Пом’якшити або збільшити різкість</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Додаткові ефекти</link
+></para>
+<para
+><link linkend="image-notes"
+>Нотатки</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Автообрізання / Вилучити внутрішню границю</title>
+
+<para
+>За допомогою цього пункту можна вилучити рамку навколо зображення або його вибраної часини у автоматичному режимі. Скористайтеся Автообрізанням, якщо змістовна картинка займає лише частину площі зображення або його виділеної області, і ви бажаєте вилучити зайві поля. Щоб скористатися цим інструментом для розмитих рамок зображення, вам слід змінити значення <link linkend="color-box"
+>Подібності кольорів</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Баланс</title>
+
+<para
+>Доступ до цього ефекту можна отримати за допомогою діалогового вікна <link linkend="image-more-effects"
+>Додаткові ефекти</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>За допомогою цього ефекту ви можете встановити яскравість, контрастність і гаму зображення або вибраної його частини. </para>
+
+<note>
+<para
+>Звичнішу величину виміру гами (десяткове число між 0.10 і 10.00) розташовано між лічильником <guilabel
+>Гама</guilabel
+> і кнопкою <guibutton
+>Скинути</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Очистити</title>
+
+<para
+>За допомогою цього пункту можна залити все зображення або його частину кольором тла.</para>
+
+<tip>
+<para
+>Щоб очистити все зображення, наведіть вказівник миші на піктограму інструмента <link linkend="tool-eraser-std"
+>Гумка</link
+> і двічі клацніть лівою кнопкою миші.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Барельєф</title>
+
+<para
+>Доступ до цього ефекту можна отримати за допомогою діалогового вікна <link linkend="image-more-effects"
+>Додаткові ефекти</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Щоб застосувати ефект «Барельєф», позначте поле <guilabel
+>Увімкнути</guilabel
+>. Застосування цього ефекту підкреслить межі об’єктів і надасть зображенню або його вибраній області вигляду гравірування. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Вирівняти</title>
+
+<para
+>Доступ до цього ефекту можна отримати за допомогою діалогового вікна <link linkend="image-more-effects"
+>Додаткові ефекти</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>За допомогою цього ефекту можна перефарбувати зображення у різні відтінки двох вибраних кольорів. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Перевернути (догори низом)</title>
+
+<para
+>Цей ефект перевертає все зображення або вибрану його частину вертикально.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Інвертувати</title>
+
+<para
+>Доступ до цього ефекту можна отримати за допомогою діалогового вікна <link linkend="image-more-effects"
+>Додаткові ефекти</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>За допомогою цього ефекту ви зможете інвертувати один або декілька каналів RGB зображення або його вибраної області. Оберіть <guilabel
+>Все</guilabel
+>, щоб перетворити фотографію на негатив, і навпаки. Загалом, це виглядає досить цікаво.</para>
+
+<tip>
+<para
+>Для інвертування всіх каналів нашвидкуруч вам не потрібні послуги цього вікна. Замість нього ви можете скористатися пунктом <guimenuitem
+>Інвертувати кольори</guimenuitem
+> у меню <guimenu
+>Зображення</guimenu
+> або <guimenu
+>Вибір</guimenu
+>. Пункт <guimenu
+>Вибір</guimenu
+> буде показано у меню, лише якщо ви використовуєте якийсь з інструментів вибору. Крім того, ви можете отримати доступ до інвертування з контекстного меню, яке відкривається клацанням правою кнопкою миші на панелі зображення. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Віддзеркалити горизонтально</title>
+
+<para
+>Цей ефект віддзеркалює все зображення або вибрану його частину горизонтально.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Зменшити кількість кольорів</title>
+
+<para
+>Доступ до цього ефекту можна отримати за допомогою діалогового вікна <link linkend="image-more-effects"
+>Додаткові ефекти</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Цей ефект зменшує кількість кольорів, які буде використано для відтворення зображення або його частини з розмиттям або без розмиття. </para>
+
+<para
+>Розмивання, загалом кажучи, дає якісніші результати, але ви можете вимкнути його з художніх міркувань, наприклад, використати <guilabel
+>Чорно-біле</guilabel
+> замість <guilabel
+>Чорно-біле (із змішуванням)</guilabel
+> надасть зображенню ефекту силуетів. </para>
+
+<para
+>Інша важлива відмінність полягає у тому, що дія <guilabel
+>Чорно-біле (із змішуванням)</guilabel
+> завжди призводить до перетворення всього зображення або його вибраної області у чорно-біле, а <guilabel
+>Чорно-біле</guilabel
+> виконує цю операцію, лише якщо у зображенні або його вибраній частині більше за 2 кольори. </para>
+
+<tip>
+<para
+>Щоб отримати розмите монохромне зображення або його вибрану частину швидше, ви можете скористатися пунктом <link linkend="image-monochrome"
+>Перетворити на чорно-біле (із змішуванням)</link
+> меню <guimenu
+>Зображення</guimenu
+> або <guimenu
+>Вибір</guimenu
+>. Пункт <guimenu
+>Вибір</guimenu
+> буде показано у меню, лише якщо ви використовуєте якийсь з інструментів вибору. Крім того, ви можете отримати доступ до інвертування з контекстного меню, яке відкривається клацанням правою кнопкою миші на панелі зображення. </para>
+</tip>
+
+<note>
+<para
+>Зміна кількості кольорів за допомогою цих ефектів не вплине на глибину кольорів формату файла. Якщо ви бажаєте змінити глибину кольорів, вам слід скористатися відповідними параметрами у діалогових вікнах збереження файлів. Пам’ятайте, що, на жаль, зміна глибини кольорів неодмінно призводить до зміни кількості кольорів. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Перетворити до відтінків сірого</title>
+
+<para
+>Ця дія перетворює кольори зображення або його частини на відтінки сірого.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Перетворити на чорно-біле (із змішуванням)</title>
+
+<para
+>Ця дія перетворює все зображення або його частину на чорно-біле.</para>
+
+<tip>
+<para
+>Якщо ви не бажаєте, щоб зображення або його вибрана частина розмивалися, скористайтеся діалоговим вікном <link linkend="image-reduce-colors"
+>Зменшити кількість кольорів</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Змінити розмір / масштаб</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Зміна розмірів зображення змінює лише розміри полотна зображення без зміни розмірів існуючого вмісту зображення. Зміна ж масштабу зображення змінює і розмір вмісту зображення відповідно до нових розмірів полотна. <guibutton
+>Плавна зміна масштабу</guibutton
+>, загалом кажучи, дає якісніші результати, ніж звичайна зміна масштабу за рахунок змішування сусідніх кольорів.</para>
+
+<para
+>Ви можете вказати нові розміри у пікселях або у відсотках до попереднього розміру. Якщо ви позначите поле <guilabel
+>Зберігати співвідношення розмірів</guilabel
+>, співвідношення ширини до висоти зміненого зображення залишиться тим самим, яким воно було у початкового зображення.</para>
+
+<tip>
+<para
+>Ви можете довільним чином <guibutton
+>Змінити розмір</guibutton
+> всього зображення або <guibutton
+>Плавно змінити масштаб</guibutton
+> вибраної області за допомогою відповідних засобів керування. </para>
+</tip>
+
+<note>
+<para
+>Для вибраних областей підтримується лише зміна масштабу, для текстових полів — лише зміна розмірів. Щоб отримати додаткову інформацію щодо застосування цих ефектів, перегляньте <link linkend="image-notes"
+>Нотатки</link
+>.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Обертати</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>За допомогою цього пункту можна обертати зображення. Ви можете вказати кут і напрямок обертання.</para>
+
+<tip>
+<para
+>Ви можете повернути зображення у іншу сторону, якщо задасте від’ємне значення кута.</para>
+</tip>
+
+<note>
+<para
+>Щоб дізнатися про подробиці застосування цього ефекту до вибраної області, перегляньте <link linkend="image-notes"
+>Нотатки</link
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Зробити зображенням (Обрізати)</title>
+
+<para
+>За допомогою цього пункту можна зробити вибрану область окремим зображенням.</para>
+
+<note>
+<para
+>Цю дію можна виконувати, лише якщо на зображенні є активна вибрана область.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Перекосити</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>За допомогою цього пункту можна перекосити все зображення або його вибрану частину у горизонтальному або вертикальному напрямку.</para>
+
+<note>
+<para
+>Щоб дізнатися про подробиці застосування цього ефекту до вибраної області, перегляньте <link linkend="image-notes"
+>Нотатки</link
+>.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Пом’якшити або збільшити різкість</title>
+
+<para
+>Доступ до цього ефекту можна отримати за допомогою діалогового вікна <link linkend="image-more-effects"
+>Додаткові ефекти</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Цей ефект використовується для пом’якшення або збільшення різкості зображення. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Додаткові ефекти</title>
+
+<para
+>У цьому діалоговому вікні ви можете обрати один з таких ефектів: <link linkend="image-balance"
+>Баланс</link
+>, <link linkend="image-emboss"
+>Барельєф</link
+>, <link linkend="image-flatten"
+>Вирівняти</link
+>, <link linkend="image-invert"
+>Інвертувати</link
+>, <link linkend="image-reduce-colors"
+>Зменшити кількість кольорів</link
+> та <link linkend="image-soften-sharpen"
+>Пом’якшити або збільшити різкість</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Нотатки</title>
+
+<para
+>Дії <link linkend="image-resize-scale"
+>Змінити розміри / масштаб</link
+>, <link linkend="image-rotate"
+>Обертати</link
+> і <link linkend="image-skew"
+>Перекосити</link
+> можуть змінити розміри зображення. Нові розміри зображення ви зможете побачити у відповідному діалоговому вікні.</para>
+
+<para
+>Якщо ви застосуєте ці ефекти до зображення, його розміри буде, за потреби, змінено. Але, якщо ви застосовуєте їх до вибраної області, зміни розмірів зображення не відбудеться, навіть якщо перетворена вибрана область не зможе вміститися у зображення.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Для того, щоб отримати зображення, розташоване праворуч, зображення, розташоване ліворуч, було повернуто на 30° за годинниковою стрілкою. &kolourpaint; автоматично збільшив розміри зображення, щоб у ньому можна було розташувати змінений вміст. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+><emphasis
+>Вибрану область</emphasis
+> на зображенні ліворуч було повернуто на 30° за годинниковою стрілкою, щоб отримати вибрану область на зображенні праворуч. Розмір самого зображення не змінився, а отже, частина вибраної області буде невидимою, якщо ви не <link linkend="image-resize-scale"
+>зміните розміри</link
+> <emphasis
+>зображення</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Подяки і ліцензія</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Ця документація може бути не зовсім точною, вона може бути не зовсім повною, але це чесна документація. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Авторські права на програму &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>Авторські права на специфічні для &kolourpaint; піктограми &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Авторські права на документацію і художні роботи у документації &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>Відтворення частин можливе лише за дозволу отриманого за  <ulink url="http://kolourpaint.sourceforge.net/"
+>цією</ulink
+> адресою.</para>
+
+<para
+>Переклад українською: Юрій Чорноіван <email
+>yurchor@ukr.net</email
+></para
+> 
+&underFDL; <para
+>Ліцензування цієї програми таке:</para>
+
+<para
+>Авторські права &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

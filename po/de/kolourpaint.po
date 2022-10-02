@@ -1,0 +1,3056 @@
+# Stefan Winter <swinter@kde.org>, 2004, 2005.
+# Stephan Johach <hunsum@gmx.de>, 2004, 2005.
+# Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2007, 2008, 2010.
+# Burkhard Lück <lueck@hube-lueck.de>, 2007, 2008, 2009, 2011, 2013, 2014, 2015, 2017, 2020, 2021.
+# Panagiotis Papadopoulos <pano_90@gmx.net>, 2010, 2011.
+# Frederik Schwarzer <schwarzer@kde.org>, 2011, 2012, 2013, 2016, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: kolourpaint\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"PO-Revision-Date: 2021-07-14 10:23+0200\n"
+"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Winter,Thomas Reitelbach"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "swinter@kde.org,tr@erdfunkstelle.de"
+
+#: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
+#, kde-format
+msgid "Balance"
+msgstr "Abgleich"
+
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:52
+#, kde-format
+msgid "Soften"
+msgstr "Weichzeichnen"
+
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:53
+#, kde-format
+msgid "Sharpen"
+msgstr "Schärfen"
+
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:58
+#, kde-format
+msgid "Clear"
+msgstr "Löschen"
+
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:60
+#: commands/imagelib/effects/kpEffectCommandBase.cpp:68
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:83
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:74
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:77
+#, kde-format
+msgid "Selection: %1"
+msgstr "Auswahl: %1"
+
+#: commands/imagelib/effects/kpEffectEmbossCommand.cpp:42
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:113
+#, kde-format
+msgid "Emboss"
+msgstr "Relief"
+
+#: commands/imagelib/effects/kpEffectFlattenCommand.cpp:43
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:114
+#, kde-format
+msgid "Flatten"
+msgstr "Einfärben"
+
+#: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
+#, kde-format
+msgid "Reduce to Grayscale"
+msgstr "In Graustufen umwandeln"
+
+#: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
+#, kde-format
+msgid "Hue, Saturation, Value"
+msgstr "Farbton, Sättigung, Hellwert"
+
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
+#, kde-format
+msgid "Invert Colors"
+msgstr "Farben invertieren"
+
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:117
+#, kde-format
+msgid "Invert"
+msgstr "Invertieren"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
+#, kde-format
+msgid "Reduce to Monochrome (Dithered)"
+msgstr "In Schwarzweiß umwandeln (mit Rasterung)"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
+#, kde-format
+msgid "Reduce to Monochrome"
+msgstr "In Schwarzweiß umwandeln"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
+#, kde-format
+msgid "Reduce to 256 Color (Dithered)"
+msgstr "In 256 Graustufen umwandeln (mit Rasterung)"
+
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
+#, kde-format
+msgid "Reduce to 256 Color"
+msgstr "In 256 Graustufen umwandeln"
+
+#: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:41
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
+#, kde-format
+msgid "Histogram Equalizer"
+msgstr "Histogramm-Equalizer"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
+#, kde-format
+msgid "Flip"
+msgstr "Spiegeln"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:69
+#, kde-format
+msgid "Flip horizontally and vertically"
+msgstr "Waagerecht / Senkrecht spiegeln"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:71
+#, kde-format
+msgid "Flip horizontally"
+msgstr "Waagerecht spiegeln"
+
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:73
+#, kde-format
+msgid "Flip vertically"
+msgstr "Senkrecht spiegeln"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:101
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
+#, kde-format
+msgid "Text: Resize Box"
+msgstr "Text: Feldgröße ändern"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:107
+#, kde-format
+msgid "Selection: Scale"
+msgstr "Auswahl: Skalieren"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:111
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:54
+#, kde-format
+msgid "Selection: Smooth Scale"
+msgstr "Auswahl: Weich skalieren"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:120
+#, kde-format
+msgid "Resize"
+msgstr "Größe ändern"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:122
+#, kde-format
+msgid "Scale"
+msgstr "Skalieren"
+
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:124
+#, kde-format
+msgid "Smooth Scale"
+msgstr "Weich skalieren"
+
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:72
+#, kde-format
+msgid "Rotate"
+msgstr "Drehen"
+
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
+#, kde-format
+msgid "Skew"
+msgstr "Kippen"
+
+#: commands/kpCommandHistoryBase.cpp:437
+#, kde-format
+msgid "&Undo: %1"
+msgstr "&Rückgängig: %1"
+
+#: commands/kpCommandHistoryBase.cpp:437
+#, kde-format
+msgid "&Undo"
+msgstr "&Rückgängig"
+
+#: commands/kpCommandHistoryBase.cpp:445
+#, kde-format
+msgid "&Redo: %1"
+msgstr "&Wiederherstellen: %1"
+
+#: commands/kpCommandHistoryBase.cpp:445
+#, kde-format
+msgid "&Redo"
+msgstr "&Wiederherstellen"
+
+#: commands/kpCommandHistoryBase.cpp:454
+#, kde-format
+msgid "Undo: %1"
+msgstr "Rückgängig: %1"
+
+#: commands/kpCommandHistoryBase.cpp:454 commands/kpCommandHistoryBase.cpp:635
+#, kde-format
+msgid "Undo"
+msgstr "Rückgängig"
+
+#: commands/kpCommandHistoryBase.cpp:462
+#, kde-format
+msgid "Redo: %1"
+msgstr "Wiederherstellen: %1"
+
+#: commands/kpCommandHistoryBase.cpp:462 commands/kpCommandHistoryBase.cpp:656
+#, kde-format
+msgid "Redo"
+msgstr "Wiederherstellen"
+
+#: commands/kpCommandHistoryBase.cpp:597
+#, kde-format
+msgid "%1: %2"
+msgstr "%1: %2"
+
+#: commands/kpCommandHistoryBase.cpp:608
+#, kde-format
+msgid "%1 more item"
+msgid_plural "%1 more items"
+msgstr[0] "%1 weiteres Objekt"
+msgstr[1] "%1 weitere Objekte"
+
+#: commands/tools/kpToolColorPickerCommand.cpp:59
+#: tools/kpToolColorPicker.cpp:45
+#, kde-format
+msgid "Color Picker"
+msgstr "Farbpipette"
+
+#: commands/tools/kpToolFloodFillCommand.cpp:77 tools/kpToolFloodFill.cpp:55
+#, kde-format
+msgid "Flood Fill"
+msgstr "Farbeimer"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:89
+#, kde-format
+msgctxt "@title:window"
+msgid "More Image Effects (Selection)"
+msgstr "Mehr Bildeffekte (Auswahl)"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
+#, kde-format
+msgctxt "@title:window"
+msgid "More Image Effects"
+msgstr "Mehr Bildeffekte"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
+#, kde-format
+msgid "&Effect:"
+msgstr "&Effekt:"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:118
+#, kde-format
+msgid "Reduce Colors"
+msgstr "Farben reduzieren"
+
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
+#, kde-format
+msgid "Soften & Sharpen"
+msgstr "Weich- & Scharfzeichnen"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:121
+#, kde-format
+msgctxt "@title:window"
+msgid "Document Properties"
+msgstr "Dokument-Eigenschaften"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:141
+#, kde-format
+msgid "Dots &Per Inch (DPI)"
+msgstr "&Punkte pro Zoll (DPI)"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:148
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:159
+#, kde-format
+msgid "Unspecified"
+msgstr "Nicht festgelegt"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:151
+#, kde-format
+msgctxt "Horizontal DPI 'x' Vertical DPI"
+msgid " x "
+msgstr " × "
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
+#, kde-format
+msgid "Horizontal:"
+msgstr "Waagerecht:"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:167
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:217
+#, kde-format
+msgid "Vertical:"
+msgstr "Senkrecht:"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
+#, kde-format
+msgid ""
+"<qt><p><b>Dots Per Inch</b> (DPI) specifies the number of pixels of the "
+"image that should be printed inside one inch (2.54cm).</p><p>The higher the "
+"image's DPI, the smaller the printed image. Note that your printer is "
+"unlikely to produce high quality prints if you increase this to more than "
+"300 or 600 DPI, depending on the printer.</p><p>If you would like to print "
+"the image so that it is the same size as it is displayed on the screen, set "
+"the image's DPI values to be the same as the screen's.</p><p>If either DPI "
+"value is <b>Unspecified</b>, the image will also be printed to be the same "
+"size as on the screen.</p><p>Not all image formats support DPI values. If "
+"the format you save in does not support them, they will not be saved.</p></"
+"qt>"
+msgstr ""
+"<qt><p><b>Punkte pro Zoll</b> (DPI) geben die Anzahl Pixel im Bild an, die "
+"auf einem Zoll (2,54 cm) gedruckt werden sollen.</p>\n"
+"<p>Je höher die Auflösung eines Bildes in DPI ist, desto kleiner wird der "
+"Ausdruck auf dem Papier. Viele Drucker sind nicht in der Lage, "
+"hochqualitative Ausdrucke mit mehr als 300 oder 600 DPI zu erzeugen.</"
+"p><p>Wenn das Bild genauso groß ausgedruckt werden soll, wie es auf dem "
+"Bildschirm zu sehen ist, so stellen Sie den Wert für DPI auf den gleichen "
+"Wert wie für Ihren Bildschirm ein.</p><p>Wenn beide Werte <b>Nicht "
+"festgelegt</b> sind, wird das Bild in der Anzeigegröße auf dem Bildschirm "
+"gedruckt.</p><p>Nicht alle Bildformate unterstützen die Angabe von DPI-"
+"Werten. Wenn das gewählte Dateiformat keine DPI-Angabe unterstützt, so "
+"werden die Werte nicht gespeichert.</p></qt>"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
+#, kde-format
+msgid "O&ffset"
+msgstr "&Versatz:"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:225
+#, kde-format
+msgid ""
+"<qt><p>The <b>Offset</b> is the relative position where this image should be "
+"placed, compared to other images.</p><p>Not all image formats support the "
+"<b>Offset</b> feature. If the format you save in does not support it, the "
+"values specified here will not be saved.</p></qt>"
+msgstr ""
+"<qt><p>Der <b>Versatz</b> ist die relative Position, an der das Bild im "
+"Vergleich zu anderen Bildern positioniert wird.</p><p>Nicht alle Bildformate "
+"unterstützen die Angabe eines <b>Versatz</b>. Wenn das gewählte Dateiformat "
+"keine Versatz-Angabe unterstützt, so werden die Werte nicht gespeichert.</"
+"p></qt>"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
+#, kde-format
+msgid "&Text Fields"
+msgstr "&Textfelder"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:253
+#, kde-format
+msgid "&Add Row"
+msgstr "Zeile &hinzufügen"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:258
+#, kde-format
+msgid "&Delete Row"
+msgstr "Zeile &löschen"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:263
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
+#, kde-format
+msgid "&Reset"
+msgstr "&Zurücksetzen"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
+#, kde-format
+msgid ""
+"<qt><p><b>Text Fields</b> provide extra information about the image. This is "
+"probably a comment area that you can freely write any text in.</"
+"p><p>However, this is format-specific so the fields could theoretically be "
+"computer-interpreted data - that you should not modify - but this is "
+"unlikely.</p><p>Not all image formats support <b>Text Fields</b>. If the "
+"format you save in does not support them, they will not be saved.</p></qt>"
+msgstr ""
+"<qt><p><b>Textfelder</b> enthalten zusätzliche Informationen über ein Bild. "
+"Sie können sie als Kommentarbereiche betrachten, in die Sie beliebigen Text "
+"schreiben können.</p><p>Textfelder sind jedoch formatabhängig und können "
+"theoretisch Daten enthalten, die vom Rechner automatisch interpretiert "
+"werden. Diese Daten sollten Sie nicht verändern.</p><p>Nicht alle "
+"Bildformate unterstützen die Angabe eines <b>Textfeldes</b>. Wenn das "
+"gewählte Dateiformat keine Textfelder unterstützt, so werden die Daten nicht "
+"gespeichert.</p></qt>"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#, kde-format
+msgid "Key"
+msgstr "Schlüssel"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#, kde-format
+msgid "Value"
+msgstr "Wert"
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
+#, kde-format
+msgid "The text value \"%1\" on line %2 requires a key."
+msgstr "Für den Textwert „%1“ in Zeile %2 ist ein Schlüssel erforderlich."
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
+#, kde-format
+msgid ""
+"All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
+"identical."
+msgstr ""
+"Alle Text-Schlüssel müssen einmalig sein. Die Text-Schlüssel „%1“ in den "
+"Zeilen %2 und %3 sind aber identisch."
+
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
+#, kde-format
+msgctxt "@title:window"
+msgid "Invalid Text Fields"
+msgstr "Ungültige Textfelder"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
+#, kde-format
+msgid "Dimensions"
+msgstr "Abmessungen"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:288
+#, kde-format
+msgid "Original:"
+msgstr "Original:"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:143
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:251
+#: mainWindow/kpMainWindow_StatusBar.cpp:92
+#: mainWindow/kpMainWindow_StatusBar.cpp:236
+#, kde-format
+msgid "%1 x %2"
+msgstr "%1 × %2"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:170
+#: dialogs/kpColorSimilarityDialog.cpp:58
+#, kde-format
+msgid "Preview"
+msgstr "Vorschau"
+
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:177
+#: dialogs/kpColorSimilarityDialog.cpp:63
+#, kde-format
+msgid "&Update"
+msgstr "&Aktualisieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:90
+#, kde-format
+msgctxt "@title:window"
+msgid "Resize / Scale"
+msgstr "Ausdehnen / Skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
+#, kde-format
+msgid "Ac&t on:"
+msgstr "An&wenden auf:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
+#, kde-format
+msgid "Entire Image"
+msgstr "Gesamtes Bild"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:168
+#: layers/selections/image/kpAbstractImageSelection.cpp:204
+#, kde-format
+msgid "Selection"
+msgstr "Auswahl"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:171
+#, kde-format
+msgid "Text Box"
+msgstr "Textfeld"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:220
+#, kde-format
+msgid "Operation"
+msgstr "Skalier-Modus"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:222
+#, kde-format
+msgid ""
+"<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
+"creating new areas to the right and/or bottom (filled in with the background "
+"color) or decreased by cutting it at the right and/or bottom.</"
+"li><li><b>Scale</b>: The picture will be expanded by duplicating pixels or "
+"squashed by dropping pixels.</li><li><b>Smooth Scale</b>: This is the same "
+"as <i>Scale</i> except that it blends neighboring pixels to produce a "
+"smoother looking picture.</li></ul></qt>"
+msgstr ""
+"<qt><ul><li><b>Größe ändern</b>: Das Bild wird vergrößert, indem links/"
+"rechts bzw. oben/unten neue Flächen eingefügt werden (mit der "
+"Hintergrundfarbe gefüllt), oder verkleinert, indem rechts/links bzw. oben/"
+"unten Teile abgeschnitten werden.</li><li><b>Skalieren</b>: Das Bild wird "
+"vergrößert, indem Pixel ausgedehnt oder dupliziert werden bzw. verkleinert, "
+"indem Pixel weggelassen werden.</li><li><b>Weich Skalieren</b>: Genau wie "
+"<i>Skalieren</i>, allerdings werden benachbarte Pixel aneinander "
+"angeglichen, um ein weicher aussehendes Bild zu erhalten.</li></ul></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
+#, kde-format
+msgid "&Resize"
+msgstr "&Größe ändern"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
+#, kde-format
+msgid "&Scale"
+msgstr "&Skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#, kde-format
+msgid "S&mooth Scale"
+msgstr "&Weich skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:283
+#, kde-format
+msgid "Width:"
+msgstr "Breite:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:285
+#, kde-format
+msgid "Height:"
+msgstr "Höhe:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:292
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:300
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:312
+#, kde-format
+msgid "x"
+msgstr "x"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:297
+#, kde-format
+msgid "&New:"
+msgstr "&Neu:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:304
+#, kde-format
+msgid "&Percent:"
+msgstr "&Prozent:"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:310
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:319
+#: dialogs/kpColorSimilarityDialog.cpp:81
+#, kde-format
+msgid "%"
+msgstr " %"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:321
+#, kde-format
+msgid "Keep &aspect ratio"
+msgstr "&Seitenverhältnis beibehalten"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:724
+#, kde-format
+msgid ""
+"<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to resize the text box?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Die Größenänderung des Textfeldes auf %1x%2 kann sehr viel "
+"Speicherplatz verbrauchen. Dies kann dazu führen, dass das System sehr "
+"langsam reagiert, und es kann zu weiteren Problemen mit anderen Programmen "
+"führen.</p><p>Sind Sie sicher, dass Sie die Größe des Textfeldes ändern "
+"möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
+#, kde-format
+msgctxt "@title:window"
+msgid "Resize Text Box?"
+msgstr "Textfeld skalieren?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
+#, kde-format
+msgid "R&esize Text Box"
+msgstr "Textfeld &skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:738
+#: mainWindow/kpMainWindow_Tools.cpp:652
+#, kde-format
+msgid ""
+"<qt><p>Resizing the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to resize the image?</p></qt>"
+msgstr ""
+"<qt><p>Die Größenänderung des Bildes auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie die Größe des Bildes ändern möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
+#: mainWindow/kpMainWindow_Tools.cpp:662
+#, kde-format
+msgctxt "@title:window"
+msgid "Resize Image?"
+msgstr "Bildgröße ändern?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
+#: mainWindow/kpMainWindow_Tools.cpp:663
+#, kde-format
+msgid "R&esize Image"
+msgstr "Bild&größe ändern"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:756
+#, kde-format
+msgid ""
+"<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to scale the image?</p></qt>"
+msgstr ""
+"<qt><p>Die Skalierung des Bildes auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie das Bild skalieren möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
+#, kde-format
+msgctxt "@title:window"
+msgid "Scale Image?"
+msgstr "Bild skalieren?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
+#, kde-format
+msgid "Scal&e Image"
+msgstr "Bild &skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:770
+#, kde-format
+msgid ""
+"<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to scale the selection?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Die Skalierung der Auswahl auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie die Auswahl skalieren möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
+#, kde-format
+msgctxt "@title:window"
+msgid "Scale Selection?"
+msgstr "Auswahl skalieren?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
+#, kde-format
+msgid "Scal&e Selection"
+msgstr "Auswahl &skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:788
+#, kde-format
+msgid ""
+"<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to smooth scale the image?</"
+"p></qt>"
+msgstr ""
+"<qt><p>Die weiche Skalierung des Bildes auf %1x%2 kann sehr viel "
+"Speicherplatz verbrauchen. Dies kann dazu führen, dass das System sehr "
+"langsam reagiert, und es kann zu weiteren Problemen mit anderen Programmen "
+"führen.</p><p>Sind Sie sicher, dass Sie das Bild weich skalieren möchten?</"
+"p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
+#, kde-format
+msgctxt "@title:window"
+msgid "Smooth Scale Image?"
+msgstr "Bild weich skalieren?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
+#, kde-format
+msgid "Smooth Scal&e Image"
+msgstr "Bild weich &skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:802
+#, kde-format
+msgid ""
+"<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
+"of memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to smooth scale the selection?"
+"</p></qt>"
+msgstr ""
+"<qt><p>Die weiche Skalierung der Auswahl auf %1x%2 kann sehr viel "
+"Speicherplatz verbrauchen. Dies kann dazu führen, dass das System sehr "
+"langsam reagiert, und es kann zu weiteren Problemen mit anderen Programmen "
+"führen.</p><p>Sind Sie sicher, dass Sie die Auswahl weich skalieren möchten?"
+"</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
+#, kde-format
+msgctxt "@title:window"
+msgid "Smooth Scale Selection?"
+msgstr "Auswahl weich skalieren?"
+
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
+#, kde-format
+msgid "Smooth Scal&e Selection"
+msgstr "Auswahl weich &skalieren"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Selection"
+msgstr "Auswahl drehen"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Image"
+msgstr "Bild drehen"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
+#, kde-format
+msgid "After rotate:"
+msgstr "Nach dem Drehen:"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
+#, kde-format
+msgid "Direction"
+msgstr "Richtung"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
+#, kde-format
+msgid "Cou&nterclockwise"
+msgstr "&Gegen den Uhrzeigersinn"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:122
+#, kde-format
+msgid "C&lockwise"
+msgstr "&Mit dem Uhrzeigersinn"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:146
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:97
+#, kde-format
+msgid "Angle"
+msgstr "Winkel"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:150
+#, kde-format
+msgid "90 &degrees"
+msgstr "&90 Grad"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:151
+#, kde-format
+msgid "180 d&egrees"
+msgstr "&180 Grad"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:152
+#, kde-format
+msgid "270 de&grees"
+msgstr "&270 Grad"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:154
+#, kde-format
+msgid "C&ustom:"
+msgstr "&Benutzerdefiniert:"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:159
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:110
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:122
+#, kde-format
+msgid "degrees"
+msgstr "Grad"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
+#, kde-format
+msgid ""
+"<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Das Drehen der Auswahl auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie die Auswahl drehen möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Selection?"
+msgstr "Auswahl drehen?"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
+#, kde-format
+msgid "Rotat&e Selection"
+msgstr "Auswahl &drehen"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
+#, kde-format
+msgid ""
+"<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
+msgstr ""
+"<qt><p>Das Drehen des Bildes auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie das Bild drehen möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
+#, kde-format
+msgctxt "@title:window"
+msgid "Rotate Image?"
+msgstr "Bild drehen?"
+
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
+#, kde-format
+msgid "Rotat&e Image"
+msgstr "Bild &drehen"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Selection"
+msgstr "Auswahl kippen"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Image"
+msgstr "Bild kippen"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
+#, kde-format
+msgid "After skew:"
+msgstr "Nach dem Kippen:"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
+#, kde-format
+msgid "&Horizontal:"
+msgstr "&Waagerecht:"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:116
+#, kde-format
+msgid "&Vertical:"
+msgstr "&Senkrecht:"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
+#, kde-format
+msgid ""
+"<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
+"memory. This can reduce system responsiveness and cause other application "
+"resource problems.</p><p>Are you sure you want to skew the selection?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Das Kippen der Auswahl auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie die Auswahl kippen möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Selection?"
+msgstr "Auswahl kippen?"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
+#, kde-format
+msgid "Sk&ew Selection"
+msgstr "Auswahl &kippen"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
+#, kde-format
+msgid ""
+"<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
+"This can reduce system responsiveness and cause other application resource "
+"problems.</p><p>Are you sure you want to skew the image?</p></qt>"
+msgstr ""
+"<qt><p>Das Kippen des Bildes auf %1x%2 kann sehr viel Speicherplatz "
+"verbrauchen. Dies kann dazu führen, dass das System sehr langsam reagiert, "
+"und es kann zu weiteren Problemen mit anderen Programmen führen.</p><p>Sind "
+"Sie sicher, dass Sie das Bild kippen möchten?</p></qt>"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
+#, kde-format
+msgctxt "@title:window"
+msgid "Skew Image?"
+msgstr "Bild kippen?"
+
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
+#, kde-format
+msgid "Sk&ew Image"
+msgstr "Bild &kippen"
+
+#: dialogs/kpColorSimilarityDialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Color Similarity"
+msgstr "Farbähnlichkeit"
+
+#: dialogs/kpColorSimilarityDialog.cpp:75
+#, kde-format
+msgid "&RGB Color Cube Distance"
+msgstr "Farbdistanz im &RGB-Modell"
+
+#: dialogs/kpColorSimilarityDialog.cpp:82
+#, kde-format
+msgid "Exact Match"
+msgstr "Exakte Übereinstimmung"
+
+#: dialogs/kpColorSimilarityDialog.cpp:87
+#, kde-format
+msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
+msgstr "<a href=\"dummy_to_make_link_clickable\">Was ist Farbähnlichkeit?</a>"
+
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:58
+#, kde-format
+msgctxt "@title:window"
+msgid "Save Preview"
+msgstr "Vorschau speichern"
+
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:126
+#, kde-format
+msgid "1 byte (approx. %2%)"
+msgid_plural "%1 bytes (approx. %2%)"
+msgstr[0] "1 Byte (ca. %2 %)"
+msgstr[1] "%1 Bytes (ca. %2 %)"
+
+#: document/kpDocument_Open.cpp:114
+#, kde-format
+msgid "Could not open \"%1\"."
+msgstr "„%1“ lässt sich nicht öffnen."
+
+#: document/kpDocument_Open.cpp:150
+#, kde-format
+msgid ""
+"Could not open \"%1\" - unsupported image format.\n"
+"The file may be corrupt."
+msgstr ""
+"„%1“ lässt sich nicht öffnen – nicht unterstütztes Format.\n"
+"Die Datei könnte beschädigt sein."
+
+#: document/kpDocument_Save.cpp:74
+#, kde-format
+msgid "Could not save image - insufficient information."
+msgstr "Bild kann nicht gespeichert werden – ungenügend Informationen."
+
+#: document/kpDocument_Save.cpp:75
+#, kde-format
+msgid ""
+"URL: %1\n"
+"Mimetype: %2"
+msgstr ""
+"Adresse: %1\n"
+"MIME-Typ: %2"
+
+#: document/kpDocument_Save.cpp:79
+#, kde-format
+msgid "<empty>"
+msgstr "<leer>"
+
+#: document/kpDocument_Save.cpp:81
+#, kde-format
+msgctxt "@title:window"
+msgid "Internal Error"
+msgstr "Interner Fehler"
+
+#: document/kpDocument_Save.cpp:116
+#, kde-format
+msgid ""
+"<qt><p>The <b>%1</b> format may not be able to preserve all of the image's "
+"color information.</p><p>Are you sure you want to save in this format?</p></"
+"qt>"
+msgstr ""
+"<qt><p>Das Format <b>%1</b> kann eventuell nicht alle Farbinformationen "
+"dieses Bildes speichern.</p><p>Sind Sie sicher, dass Sie in diesem Format "
+"speichern möchten?</p></qt>"
+
+#: document/kpDocument_Save.cpp:123
+#, kde-format
+msgctxt "@title:window"
+msgid "Lossy File Format"
+msgstr "Verlustbehaftetes Dateiformat"
+
+#: document/kpDocument_Save.cpp:132
+#, kde-format
+msgid ""
+"<qt><p>Saving the image at the low color depth of %1-bit may result in the "
+"loss of color information. Any transparency might also be removed.</p><p>Are "
+"you sure you want to save at this color depth?</p></qt>"
+msgstr ""
+"<qt><p>Das Speichern dieses Bildes in der niedrigen Farbtiefe von %1 Bit "
+"kann zu Verlust von Farbinformationen führen. Auch alle "
+"Transparenzinformationen gehen verloren.</p><p>Sind Sie sicher, dass Sie in "
+"dieser Farbtiefe speichern möchten?</p></qt>"
+
+#: document/kpDocument_Save.cpp:142
+#, kde-format
+msgctxt "@title:window"
+msgid "Low Color Depth"
+msgstr "Niedrige Farbtiefe"
+
+#: document/kpDocument_Save.cpp:267
+#, kde-format
+msgid "Could not save image - unable to create temporary file."
+msgstr ""
+"Das Bild kann nicht gespeichert werden – die temporäre Datei kann nicht "
+"angelegt werden."
+
+#: document/kpDocument_Save.cpp:275
+#, kde-format
+msgid "Could not save as \"%1\": %2"
+msgstr "Das Bild kann nicht als „%1“ gespeichert werden: %2"
+
+#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#, kde-format
+msgid "Error saving image"
+msgstr "Fehler beim Speichern des Bildes"
+
+#: document/kpDocument_Save.cpp:425
+#, kde-format
+msgid "Could not save image - failed to upload."
+msgstr "Das Bild kann nicht gespeichert werden – Hochladen fehlgeschlagen."
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:384
+#, kde-format
+msgid "Remove Internal B&order"
+msgstr "Internen Rand &entfernen"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:387
+#, kde-format
+msgid "Remove Internal Border"
+msgstr "Internen Rand entfernen"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:391
+#, kde-format
+msgid "Autocr&op"
+msgstr "Automatisch &zuschneiden"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:393
+#, kde-format
+msgid "Autocrop"
+msgstr "Automatisch zuschneiden"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:623
+#, kde-format
+msgid ""
+"KolourPaint cannot remove the selection's internal border as it could not be "
+"located."
+msgstr ""
+"Der interne Rand der Auswahl kann nicht entfernt werden, da sie nicht "
+"lokalisiert werden kann."
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:625
+#, kde-format
+msgctxt "@title:window"
+msgid "Cannot Remove Internal Border"
+msgstr "Der interne Rand kann nicht entfernt werden"
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:631
+#, kde-format
+msgid ""
+"KolourPaint cannot automatically crop the image as its border could not be "
+"located."
+msgstr ""
+"Das Bild kann nicht automatisch zugeschnitten werden, da der Rand nicht "
+"genau bestimmt werden kann."
+
+#: imagelib/transforms/kpTransformAutoCrop.cpp:633
+#, kde-format
+msgctxt "@title:window"
+msgid "Cannot Autocrop"
+msgstr "Automatisches Zuschneiden unmöglich"
+
+#: imagelib/transforms/kpTransformCrop.cpp:69
+#: imagelib/transforms/kpTransformCrop.cpp:72
+#, kde-format
+msgid "Set as Image"
+msgstr "Als Bild festlegen"
+
+#: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:251
+#: mainWindow/kpMainWindow_Edit.cpp:365 mainWindow/kpMainWindow_Image.cpp:320
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:74
+#, kde-format
+msgid "Selection: Create"
+msgstr "Auswahl: Erzeugen"
+
+#: kolourpaint.cpp:51
+#, kde-format
+msgid "KolourPaint"
+msgstr "KolourPaint"
+
+#: kolourpaint.cpp:53
+#, kde-format
+msgid "Paint Program by KDE"
+msgstr "Mal- und Zeichenprogramm von KDE"
+
+#: kolourpaint.cpp:67
+#, kde-format
+msgid "Clarence Dang"
+msgstr "Clarence Dang"
+
+#: kolourpaint.cpp:67
+#, kde-format
+msgid "Project Founder"
+msgstr "Projekt-Initiator"
+
+#: kolourpaint.cpp:69
+#, kde-format
+msgid "Thurston Dang"
+msgstr "Thurston Dang"
+
+#: kolourpaint.cpp:69
+#, kde-format
+msgid "Chief Investigator"
+msgstr "Entwicklungsüberwachung"
+
+#: kolourpaint.cpp:72
+#, kde-format
+msgid "Martin Koller"
+msgstr "Martin Koller"
+
+#: kolourpaint.cpp:72
+#, kde-format
+msgid "Scanning Support, Alpha Support, Current Maintainer"
+msgstr "Scanner-Unterstützung, Alpha-Unterstützung, derzeitiger Betreuer"
+
+#: kolourpaint.cpp:75
+#, kde-format
+msgid "Kristof Borrey"
+msgstr "Kristof Borrey"
+
+#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#, kde-format
+msgid "Icons"
+msgstr "Symbole"
+
+#: kolourpaint.cpp:76
+#, kde-format
+msgid "Tasuku Suzuki"
+msgstr "Tasuku Suzuki"
+
+#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#, kde-format
+msgid "InputMethod Support"
+msgstr "Unterstützung für Eingabemethoden"
+
+#: kolourpaint.cpp:77
+#, kde-format
+msgid "Kazuki Ohta"
+msgstr "Kazuki Ohta"
+
+#: kolourpaint.cpp:78
+#, kde-format
+msgid "Nuno Pinheiro"
+msgstr "Nuno Pinheiro"
+
+#: kolourpaint.cpp:79
+#, kde-format
+msgid "Danny Allen"
+msgstr "Danny Allen"
+
+#: kolourpaint.cpp:80
+#, kde-format
+msgid "Mike Gashler"
+msgstr "Mike Gashler"
+
+#: kolourpaint.cpp:80
+#, kde-format
+msgid "Image Effects"
+msgstr "Bildeffekte"
+
+#: kolourpaint.cpp:82
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: kolourpaint.cpp:82
+#, kde-format
+msgid "KDE 4 Porting"
+msgstr "KDE-4-Portierung"
+
+#: kolourpaint.cpp:83
+#, kde-format
+msgid "Christoph Feck"
+msgstr "Christoph Feck"
+
+#: kolourpaint.cpp:83
+#, kde-format
+msgid "KF 5 Porting"
+msgstr "KF-5-Portierung"
+
+#: kolourpaint.cpp:85
+#, kde-format
+msgid ""
+"Thanks to the many others who have helped to make this program possible."
+msgstr ""
+"Vielen Dank an die vielen Helfer, die die Entwicklung dieses Programms erst "
+"möglich gemacht haben."
+
+#: kolourpaint.cpp:90
+#, kde-format
+msgid "Image files to open, optionally"
+msgstr "Zu öffnende Bilddateien (optional)"
+
+#: kolourpaint.cpp:93
+#, kde-format
+msgid "List all readable image MIME types"
+msgstr "Zeigt alle lesbaren MIME-Typen von Bildern"
+
+#. i18n: ectx: Menu (view)
+#: kolourpaintui.rc:36
+#, kde-format
+msgid "&View"
+msgstr "&Ansicht"
+
+#. i18n: ectx: Menu (image)
+#: kolourpaintui.rc:71 kolourpaintui.rc:207
+#, kde-format
+msgid "&Image"
+msgstr "B&ild"
+
+#. i18n: ectx: Menu (colors)
+#: kolourpaintui.rc:99
+#, kde-format
+msgid "&Colors"
+msgstr "&Farben"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: kolourpaintui.rc:147
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Haupt-Werkzeugleiste"
+
+#. i18n: ectx: ToolBar (textToolBar)
+#: kolourpaintui.rc:162
+#, kde-format
+msgid "Text Toolbar"
+msgstr "Text-Werkzeugleiste"
+
+#. i18n: ectx: Menu (selectionToolRMBMenu)
+#: kolourpaintui.rc:172
+#, kde-format
+msgid "Selection Tool RMB Menu"
+msgstr "Auswahlwerkzeug-Menü (mit rechter Maustaste)"
+
+#. i18n: ectx: Menu (edit)
+#: kolourpaintui.rc:174
+#, kde-format
+msgid "&Edit"
+msgstr "&Bearbeiten"
+
+#: kpThumbnail.cpp:129
+#, kde-format
+msgctxt "@title:window"
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
+#: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
+#, kde-format
+msgid "Left drag the handle to resize the image."
+msgstr "Ziehen Sie an dem Kontrollpunkt, um die Bildgröße zu ändern."
+
+#: kpViewScrollableContainer.cpp:194
+#, kde-format
+msgid "Resize Image: Let go of all the mouse buttons."
+msgstr "Bildgröße ändern: alle Maustasten loslassen."
+
+#: kpViewScrollableContainer.cpp:226
+#, kde-format
+msgid "Resize Image: Right click to cancel."
+msgstr "Bildgröße ändern: zum Abbrechen rechts klicken."
+
+#: layers/selections/text/kpTextSelection.cpp:136
+#: tools/selection/text/kpToolText.cpp:55
+#, kde-format
+msgid "Text"
+msgstr "Text"
+
+#: lgpl/generic/kpColorCollection.cpp:120
+#, kde-format
+msgid "Could not open color palette \"%1\"."
+msgstr "Farbpalette „%1“ lässt sich nicht öffnen."
+
+#: lgpl/generic/kpColorCollection.cpp:153
+#, kde-format
+msgid ""
+"Could not open color palette \"%1\" - unsupported format.\n"
+"The file may be corrupt."
+msgstr ""
+"Farbpalette „%1“ lässt sich nicht öffnen – nicht unterstütztes Format.\n"
+"Die Datei könnte beschädigt sein."
+
+#: lgpl/generic/kpColorCollection.cpp:213
+#, kde-format
+msgid "Could not open KDE color palette \"%1\"."
+msgstr "KDE-Farbpalette „%1“ lässt sich nicht öffnen."
+
+#: lgpl/generic/kpColorCollection.cpp:263
+#, kde-format
+msgid "Could not save color palette as \"%1\"."
+msgstr "Die Farbpalette kann nicht unter „%1“ gespeichert werden."
+
+#: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
+#: widgets/toolbars/kpColorToolBar.cpp:283
+#, kde-format
+msgid "Untitled"
+msgstr "Unbenannt"
+
+#: mainWindow/kpMainWindow_Colors.cpp:61
+#, kde-format
+msgid "Use KolourPaint Defaults"
+msgstr "KolourPaint-Voreinstellung"
+
+#: mainWindow/kpMainWindow_Colors.cpp:66
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Use KDE's"
+msgstr "KDE-Farben"
+
+#: mainWindow/kpMainWindow_Colors.cpp:78
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "&Open..."
+msgstr "Öff&nen ..."
+
+#: mainWindow/kpMainWindow_Colors.cpp:82
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Reloa&d"
+msgstr "Neu &laden"
+
+#: mainWindow/kpMainWindow_Colors.cpp:87
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "&Save"
+msgstr "&Speichern"
+
+#: mainWindow/kpMainWindow_Colors.cpp:92
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Save &As..."
+msgstr "Speichern &unter ..."
+
+#: mainWindow/kpMainWindow_Colors.cpp:97
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Add Row"
+msgstr "Zeile hinzufügen"
+
+#: mainWindow/kpMainWindow_Colors.cpp:102
+#, kde-format
+msgctxt "@item:inmenu colors"
+msgid "Delete Last Row"
+msgstr "Letzte Zeile löschen"
+
+#: mainWindow/kpMainWindow_Colors.cpp:115
+#, kde-format
+msgid "Color Box"
+msgstr "Farbkasten"
+
+#: mainWindow/kpMainWindow_Colors.cpp:200
+#, kde-format
+msgid ""
+"The color palette \"%1\" has been modified.\n"
+"Do you want to save it?"
+msgstr ""
+"Die Farbpalette „%1“ wurde geändert.\n"
+"Möchten Sie sie speichern?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:212
+#, kde-format
+msgid ""
+"The KDE color palette \"%1\" has been modified.\n"
+"Do you want to save it to a file?"
+msgstr ""
+"Die KDE-Farbpalette „%1“ wurde geändert.\n"
+"Möchten Sie sie in eine Datei speichern?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:221
+#, kde-format
+msgid ""
+"The default color palette has been modified.\n"
+"Do you want to save it to a file?"
+msgstr ""
+"Die Standardfarbpalette wurde geändert.\n"
+"Möchten Sie sie in eine Datei speichern?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:340
+#, kde-format
+msgctxt "@title:window"
+msgid "Open Color Palette"
+msgstr "Farbpalette öffnen"
+
+#: mainWindow/kpMainWindow_Colors.cpp:369
+#, kde-format
+msgid ""
+"The color palette \"%1\" has been modified.\n"
+"Reloading will lose all changes since you last saved it.\n"
+"Are you sure?"
+msgstr ""
+"Die Farbpalette „%1“ wurde geändert.\n"
+"Beim erneuten Laden gehen alle Änderungen seit dem letzten Speichern "
+"verloren.\n"
+"Sind Sie sicher?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:374
+#: mainWindow/kpMainWindow_Colors.cpp:387
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
+#, kde-format
+msgid "&Reload"
+msgstr "Neu &laden"
+
+#: mainWindow/kpMainWindow_Colors.cpp:382
+#, kde-format
+msgid ""
+"The KDE color palette \"%1\" has been modified.\n"
+"Reloading will lose all changes.\n"
+"Are you sure?"
+msgstr ""
+"Die KDE-Farbpalette „%1“ wurde geändert.\n"
+"Beim erneuten Laden gehen alle Änderungen verloren.\n"
+"Sind Sie sicher?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:392
+#, kde-format
+msgid ""
+"The default color palette has been modified.\n"
+"Reloading will lose all changes.\n"
+"Are you sure?"
+msgstr ""
+"Die Standardfarbpalette wurde geändert.\n"
+"Beim erneuten Laden gehen alle Änderungen verloren.\n"
+"Sind Sie sicher?"
+
+#: mainWindow/kpMainWindow_Colors.cpp:453
+#, kde-format
+msgid "Save Color Palette As"
+msgstr "Farbpalette speichern unter"
+
+#: mainWindow/kpMainWindow_Edit.cpp:96
+#, kde-format
+msgid "Paste in &New Window"
+msgstr "In &neues Fenster einfügen"
+
+#: mainWindow/kpMainWindow_Edit.cpp:103
+#, kde-format
+msgid "&Delete Selection"
+msgstr "Auswahl &löschen"
+
+#: mainWindow/kpMainWindow_Edit.cpp:111
+#, kde-format
+msgid "C&opy to File..."
+msgstr "In Datei &kopieren ..."
+
+#: mainWindow/kpMainWindow_Edit.cpp:115
+#, kde-format
+msgid "Paste &From File..."
+msgstr "Aus Datei &einfügen ..."
+
+#: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
+#: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
+#, kde-format
+msgid "Text: Create Box"
+msgstr "Text: Feld erzeugen"
+
+#: mainWindow/kpMainWindow_Edit.cpp:444
+#, kde-format
+msgid "Text: Paste"
+msgstr "Text: Einfügen"
+
+#: mainWindow/kpMainWindow_Edit.cpp:610
+#, kde-format
+msgid ""
+"<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
+"unknown format.</qt>"
+msgstr ""
+"<qt>KolourPaint kann den Inhalt der Zwischenablage nicht einfügen, da die "
+"Daten ein unbekanntes Format haben</qt>"
+
+#: mainWindow/kpMainWindow_Edit.cpp:612
+#, kde-format
+msgid "Cannot Paste"
+msgstr "Einfügen nicht möglich"
+
+#: mainWindow/kpMainWindow_Edit.cpp:691
+#, kde-format
+msgid "Text: Delete Box"
+msgstr "Text: Feld löschen"
+
+#. i18n ("Text: Delete")
+#: mainWindow/kpMainWindow_Edit.cpp:692
+#, kde-format
+msgid "Selection: Delete"
+msgstr "Auswahl: Löschen"
+
+#: mainWindow/kpMainWindow_Edit.cpp:766
+#, kde-format
+msgid "Text: Finish"
+msgstr "Text: Fertigstellen"
+
+#: mainWindow/kpMainWindow_Edit.cpp:767
+#, kde-format
+msgid "Selection: Deselect"
+msgstr "Auswahl: Aufheben"
+
+#: mainWindow/kpMainWindow_Edit.cpp:851
+#, kde-format
+msgctxt "@title:window"
+msgid "Copy to File"
+msgstr "In Datei kopieren"
+
+#: mainWindow/kpMainWindow_Edit.cpp:898
+#, kde-format
+msgctxt "@title:window"
+msgid "Paste From File"
+msgstr "Aus Datei einfügen"
+
+#: mainWindow/kpMainWindow_File.cpp:104
+#, kde-format
+msgid "E&xport..."
+msgstr "E&xportieren ..."
+
+#: mainWindow/kpMainWindow_File.cpp:109
+#, kde-format
+msgid "Scan..."
+msgstr "Scannen ..."
+
+#: mainWindow/kpMainWindow_File.cpp:118
+#, kde-format
+msgid "Acquire Screenshot"
+msgstr "Bildschirmfoto aufnehmen"
+
+#: mainWindow/kpMainWindow_File.cpp:122
+#, kde-format
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: mainWindow/kpMainWindow_File.cpp:128
+#, kde-format
+msgid "Reloa&d"
+msgstr "Neu &laden"
+
+#: mainWindow/kpMainWindow_File.cpp:458
+#, kde-format
+msgid "All Supported Files (%1)"
+msgstr "Alle unterstützten Dateien (%1)"
+
+#: mainWindow/kpMainWindow_File.cpp:483
+#, kde-format
+msgctxt "@title:window"
+msgid "Open Image"
+msgstr "Bild öffnen"
+
+#: mainWindow/kpMainWindow_File.cpp:546
+#, kde-format
+msgid "Failed to open scanning dialog."
+msgstr "Fehler beim Öffnen des Scan-Dialogs."
+
+#: mainWindow/kpMainWindow_File.cpp:547
+#, kde-format
+msgctxt "@title:window"
+msgid "Scanning Failed"
+msgstr "Scannen fehlgeschlagen"
+
+#: mainWindow/kpMainWindow_File.cpp:664
+#, kde-format
+msgid "Snapshot Delay"
+msgstr "Verzögerung für Bildschirmfotos"
+
+#: mainWindow/kpMainWindow_File.cpp:667
+#, kde-format
+msgid " second"
+msgid_plural " seconds"
+msgstr[0] " Sekunde"
+msgstr[1] " Sekunden"
+
+#: mainWindow/kpMainWindow_File.cpp:668
+#, kde-format
+msgid "No delay"
+msgstr "Keine Verzögerung"
+
+#: mainWindow/kpMainWindow_File.cpp:670
+#, kde-format
+msgid "Hide Main Window"
+msgstr "Hauptfenster ausblenden"
+
+#: mainWindow/kpMainWindow_File.cpp:724
+#, kde-format
+msgid "Document Properties"
+msgstr "Dokument-Eigenschaften"
+
+#: mainWindow/kpMainWindow_File.cpp:959
+#, kde-format
+msgctxt "@title:window"
+msgid "Save Image As"
+msgstr "Bild speichern unter"
+
+#: mainWindow/kpMainWindow_File.cpp:1007
+#, kde-format
+msgctxt "@title:window"
+msgid "Export"
+msgstr "Exportieren"
+
+#: mainWindow/kpMainWindow_File.cpp:1071
+#, kde-format
+msgid ""
+"The document \"%1\" has been modified.\n"
+"Reloading will lose all changes since you last saved it.\n"
+"Are you sure?"
+msgstr ""
+"Das Dokument „%1“ wurde geändert.\n"
+"Beim erneuten Laden gehen alle Änderungen seit dem letzten Speichern "
+"verloren.\n"
+"Sind Sie sicher?"
+
+#: mainWindow/kpMainWindow_File.cpp:1081
+#, kde-format
+msgid ""
+"The document \"%1\" has been modified.\n"
+"Reloading will lose all changes.\n"
+"Are you sure?"
+msgstr ""
+"Das Dokument „%1“ wurde geändert.\n"
+"Beim erneuten Laden gehen alle Änderungen verloren.\n"
+"Sind Sie sicher?"
+
+#: mainWindow/kpMainWindow_File.cpp:1329
+#, kde-format
+msgctxt "@title:window"
+msgid "Print Image"
+msgstr "Bild drucken"
+
+#: mainWindow/kpMainWindow_File.cpp:1409
+#, kde-format
+msgid ""
+"You must save this image before sending it.\n"
+"Do you want to save it?"
+msgstr ""
+"Das Bild muss gespeichert werden, bevor Sie es senden.\n"
+"Möchten Sie es nun speichern?"
+
+#: mainWindow/kpMainWindow_File.cpp:1447
+#, kde-format
+msgid ""
+"The document \"%1\" has been modified.\n"
+"Do you want to save it?"
+msgstr ""
+"Das Dokument „%1“ wurde geändert.\n"
+"Möchten Sie es speichern?"
+
+#: mainWindow/kpMainWindow_Image.cpp:117
+#, kde-format
+msgid "R&esize / Scale..."
+msgstr "S&kalieren ..."
+
+#: mainWindow/kpMainWindow_Image.cpp:123
+#, kde-format
+msgid "Se&t as Image (Crop)"
+msgstr "Als Bild &verwenden (Zuschneiden)"
+
+#: mainWindow/kpMainWindow_Image.cpp:133
+#, kde-format
+msgid "&Flip (upside down)"
+msgstr "&Senkrecht spiegeln"
+
+#: mainWindow/kpMainWindow_Image.cpp:138
+#, kde-format
+msgid "Mirror (horizontally)"
+msgstr "Waagerecht spiegeln"
+
+#: mainWindow/kpMainWindow_Image.cpp:143
+#, kde-format
+msgid "&Rotate..."
+msgstr "&Drehen ..."
+
+#: mainWindow/kpMainWindow_Image.cpp:149
+#, kde-format
+msgid "Rotate &Left"
+msgstr "&Links drehen"
+
+#: mainWindow/kpMainWindow_Image.cpp:155
+#, kde-format
+msgid "Rotate Righ&t"
+msgstr "&Rechts drehen"
+
+#: mainWindow/kpMainWindow_Image.cpp:161
+#, kde-format
+msgid "S&kew..."
+msgstr "&Kippen ..."
+
+#: mainWindow/kpMainWindow_Image.cpp:166
+#, kde-format
+msgid "Reduce to Mo&nochrome (Dithered)"
+msgstr "In Schwarz&weiß umwandeln (mit Rasterung)"
+
+#: mainWindow/kpMainWindow_Image.cpp:171
+#, kde-format
+msgid "Reduce to &Grayscale"
+msgstr "In &Graustufen umwandeln"
+
+#: mainWindow/kpMainWindow_Image.cpp:175
+#, kde-format
+msgid "&Invert Colors"
+msgstr "Farben &invertieren"
+
+#: mainWindow/kpMainWindow_Image.cpp:180
+#, kde-format
+msgid "C&lear"
+msgstr "&Löschen"
+
+#: mainWindow/kpMainWindow_Image.cpp:185
+#, kde-format
+msgid "Make Confidential"
+msgstr "Als Vertraulich einstufen"
+
+#: mainWindow/kpMainWindow_Image.cpp:189
+#, kde-format
+msgid "&More Effects..."
+msgstr "&Mehr Effekte ..."
+
+#: mainWindow/kpMainWindow_Image.cpp:230
+#, kde-format
+msgctxt ""
+"Image/Selection Menu caption - make sure the translation has the same accel "
+"as the Select&ion translation"
+msgid "&Image"
+msgstr "Bi&ld"
+
+#: mainWindow/kpMainWindow_Image.cpp:234
+#, kde-format
+msgctxt ""
+"Image/Selection Menu caption - make sure that translation has the same accel "
+"as the &Image translation"
+msgid "Select&ion"
+msgstr "Auswah&l"
+
+#: mainWindow/kpMainWindow_Settings.cpp:66
+#, kde-format
+msgid "Show &Path"
+msgstr "&Pfad anzeigen"
+
+#: mainWindow/kpMainWindow_Settings.cpp:71
+#, kde-format
+msgid "Draw Anti-Aliased"
+msgstr "Mit Kantenglättung zeichnen"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:156
+#, kde-format
+msgid "%1,%2"
+msgstr "%1,%2"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:162
+#, kde-format
+msgid "%1,%2 - %3,%4"
+msgstr "%1,%2 – %3,%4"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:205
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:264
+#, kde-format
+msgid "%1bpp"
+msgstr "%1 bpp"
+
+#: mainWindow/kpMainWindow_StatusBar.cpp:290
+#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#, kde-format
+msgid "%1%"
+msgstr "%1 %"
+
+#: mainWindow/kpMainWindow_Text.cpp:56
+#, kde-format
+msgid "Font Family"
+msgstr "Schriftfamilie"
+
+#: mainWindow/kpMainWindow_Text.cpp:62
+#, kde-format
+msgid "Font Size"
+msgstr "Schriftgröße"
+
+#: mainWindow/kpMainWindow_Text.cpp:69
+#, kde-format
+msgid "Bold"
+msgstr "Fett"
+
+#: mainWindow/kpMainWindow_Text.cpp:75
+#, kde-format
+msgid "Italic"
+msgstr "Kursiv"
+
+#: mainWindow/kpMainWindow_Text.cpp:81
+#, kde-format
+msgid "Underline"
+msgstr "Unterstrichen"
+
+#: mainWindow/kpMainWindow_Text.cpp:87
+#, kde-format
+msgid "Strike Through"
+msgstr "Durchgestrichen"
+
+#: mainWindow/kpMainWindow_Tools.cpp:133
+#, kde-format
+msgid "Previous Tool Option (Group #1)"
+msgstr "Vorherige Werkzeugoption (Gruppe #1)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:139
+#, kde-format
+msgid "Next Tool Option (Group #1)"
+msgstr "Nächste Werkzeugoption (Gruppe #1)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:145
+#, kde-format
+msgid "Previous Tool Option (Group #2)"
+msgstr "Vorherige Werkzeugoption (Gruppe #2)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:151
+#, kde-format
+msgid "Next Tool Option (Group #2)"
+msgstr "Nächste Werkzeugoption (Gruppe #2)"
+
+#: mainWindow/kpMainWindow_Tools.cpp:163
+#, kde-format
+msgid "&Draw Opaque"
+msgstr "Deckend &zeichnen"
+
+#: mainWindow/kpMainWindow_Tools.cpp:168
+#, kde-format
+msgid "Draw With Color Similarity..."
+msgstr "Mit Farbähnlichkeit zeichnen ..."
+
+#: mainWindow/kpMainWindow_Tools.cpp:179
+#, kde-format
+msgid "Tool Box"
+msgstr "Werkzeugkasten"
+
+#: mainWindow/kpMainWindow_View.cpp:65
+#, kde-format
+msgid "Show &Grid"
+msgstr "&Gitter anzeigen"
+
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
+#, kde-format
+msgid "Show T&humbnail"
+msgstr "&Vorschaubild anzeigen"
+
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
+#, kde-format
+msgid "Zoo&med Thumbnail Mode"
+msgstr "&Skaliertes Vorschaubild"
+
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
+#, kde-format
+msgid "Enable Thumbnail &Rectangle"
+msgstr "&Rechteck um Vorschaubild"
+
+#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#, kde-format
+msgid "&Zoom"
+msgstr "&Zoom"
+
+#: scan/sanedialog.cpp:41
+#, kde-format
+msgctxt "@title:window"
+msgid "Acquire Image"
+msgstr "Bild holen"
+
+#: scan/sanedialog.cpp:73
+#, kde-format
+msgid "Opening the selected scanner failed."
+msgstr "Das Öffnen des gewählten Scanners ist fehlgeschlagen."
+
+#: tools/flow/kpToolBrush.cpp:35
+#, kde-format
+msgid "Brush"
+msgstr "Pinsel"
+
+#: tools/flow/kpToolBrush.cpp:36
+#, kde-format
+msgid "Draw using brushes of different shapes and sizes"
+msgstr "Zeichnen mit Pinseln verschiedener Form und Größe"
+
+#: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
+#, kde-format
+msgid "Click to draw dots or drag to draw strokes."
+msgstr ""
+"Klicken Sie, um Punkte zu zeichnen oder ziehen Sie, um Striche zu zeichnen."
+
+#: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
+#, kde-format
+msgid "Color Eraser"
+msgstr "Farbradierer"
+
+#: tools/flow/kpToolColorEraser.cpp:50
+#, kde-format
+msgid "Replaces pixels of the foreground color with the background color"
+msgstr "Ersetzt Pixel der Vordergrundfarbe mit der Hintergrundfarbe"
+
+#: tools/flow/kpToolColorEraser.cpp:115
+#, kde-format
+msgid "Click or drag to erase pixels of the foreground color."
+msgstr "Klicken oder ziehen Sie, um Pixel der Vordergrundfarbe zu radieren."
+
+#: tools/flow/kpToolEraser.cpp:42
+#, kde-format
+msgid "Eraser"
+msgstr "Radiergummi"
+
+#: tools/flow/kpToolEraser.cpp:43
+#, kde-format
+msgid "Lets you rub out mistakes"
+msgstr "Zum Ausradieren von Fehlern"
+
+#: tools/flow/kpToolEraser.cpp:70
+#, kde-format
+msgid "Click or drag to erase."
+msgstr "Klicken oder ziehen Sie, um zu radieren."
+
+#: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
+#: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
+#: tools/polygonal/kpToolPolygonalBase.cpp:435
+#: tools/rectangular/kpToolRectangularBase.cpp:351
+#: tools/selection/kpAbstractSelectionTool.cpp:261
+#: tools/selection/kpAbstractSelectionTool.cpp:528
+#, kde-format
+msgid "Let go of all the mouse buttons."
+msgstr "Alle Maustasten loslassen."
+
+#: tools/flow/kpToolPen.cpp:45
+#, kde-format
+msgid "Pen"
+msgstr "Stift"
+
+#: tools/flow/kpToolPen.cpp:45
+#, kde-format
+msgid "Draws dots and freehand strokes"
+msgstr "Zeichnet Punkte und Freihandstriche"
+
+#: tools/flow/kpToolSpraycan.cpp:56
+#, kde-format
+msgid "Spraycan"
+msgstr "Sprühdose"
+
+#: tools/flow/kpToolSpraycan.cpp:56
+#, kde-format
+msgid "Sprays graffiti"
+msgstr "Sprüht Graffiti"
+
+#: tools/flow/kpToolSpraycan.cpp:71
+#, kde-format
+msgid "Click or drag to spray graffiti."
+msgstr "Klicken oder ziehen Sie, um Graffiti zu sprühen."
+
+#: tools/kpTool_UserNotifications.cpp:42
+#, kde-format
+msgid "Right click to cancel."
+msgstr "Zum Abbrechen rechts klicken."
+
+#: tools/kpTool_UserNotifications.cpp:45
+#, kde-format
+msgid "Left click to cancel."
+msgstr "Zum Abbrechen links klicken."
+
+#: tools/kpTool_UserNotifications.cpp:75
+#, kde-format
+msgid "%1: "
+msgstr "%1: "
+
+#: tools/kpToolColorPicker.cpp:45
+#, kde-format
+msgid "Lets you select a color from the image"
+msgstr "Ermöglicht die Auswahl einer Farbe aus dem Bild"
+
+#: tools/kpToolColorPicker.cpp:68
+#, kde-format
+msgid "Click to select a color."
+msgstr "Klicken Sie, um eine Farbe zu wählen."
+
+#: tools/kpToolFloodFill.cpp:55
+#, kde-format
+msgid "Fills regions in the image"
+msgstr "Füllt Bereiche des Bildes"
+
+#: tools/kpToolFloodFill.cpp:75
+#, kde-format
+msgid "Click to fill a region."
+msgstr "Klicken Sie, um einen Bildbereich zu füllen."
+
+#: tools/kpToolZoom.cpp:75
+#, kde-format
+msgid "Zoom"
+msgstr "Zoom"
+
+#: tools/kpToolZoom.cpp:75
+#, kde-format
+msgid "Zooms in and out of the image"
+msgstr "Zoomt in das Bild hinein oder heraus"
+
+#: tools/kpToolZoom.cpp:119
+#, kde-format
+msgid "Click to zoom in/out or left drag to zoom into a specific area."
+msgstr ""
+"Klicken Sie, um hinein oder heraus zu zoomen, oder ziehen Sie mit der linken "
+"Maustaste, um einen Bereich anzuzeigen."
+
+#: tools/polygonal/kpToolCurve.cpp:103
+#, kde-format
+msgid "Curve"
+msgstr "Kurve"
+
+#: tools/polygonal/kpToolCurve.cpp:104
+#, kde-format
+msgid "Draws curves"
+msgstr "Zeichnet Kurven"
+
+#: tools/polygonal/kpToolCurve.cpp:118
+#, kde-format
+msgid "Drag out the start and end points."
+msgstr "Ziehen Sie die Start- und Endpunkte."
+
+#: tools/polygonal/kpToolCurve.cpp:157
+#, kde-format
+msgid "Left drag to set the first control point or right click to finish."
+msgstr ""
+"Ziehen Sie mit der linken Maustaste, um den ersten Kontrollpunkt zu setzen, "
+"oder klicken Sie mit rechts zum Beenden."
+
+#: tools/polygonal/kpToolCurve.cpp:162
+#, kde-format
+msgid "Right drag to set the first control point or left click to finish."
+msgstr ""
+"Ziehen Sie mit der rechten Maustaste, um den ersten Kontrollpunkt zu setzen, "
+"oder klicken Sie mit links zum Beenden."
+
+#: tools/polygonal/kpToolCurve.cpp:172
+#, kde-format
+msgid "Left drag to set the last control point or right click to finish."
+msgstr ""
+"Ziehen Sie mit der linken Maustaste, um den letzten Kontrollpunkt zu setzen, "
+"oder klicken Sie mit rechts zum Beenden."
+
+#: tools/polygonal/kpToolCurve.cpp:177
+#, kde-format
+msgid "Right drag to set the last control point or left click to finish."
+msgstr ""
+"Ziehen Sie mit der rechten Maustaste, um den letzten Kontrollpunkt zu "
+"setzen, oder klicken Sie mit links zum Beenden."
+
+#: tools/polygonal/kpToolLine.cpp:41
+#, kde-format
+msgid "Line"
+msgstr "Linie"
+
+#: tools/polygonal/kpToolLine.cpp:42
+#, kde-format
+msgid "Draws lines"
+msgstr "Zeichnet Linien"
+
+#: tools/polygonal/kpToolLine.cpp:55
+#: tools/rectangular/kpToolRectangularBase.cpp:119
+#, kde-format
+msgid "Drag to draw."
+msgstr "Ziehen Sie, um zu zeichnen."
+
+#: tools/polygonal/kpToolPolygon.cpp:93
+#, kde-format
+msgid "Polygon"
+msgstr "Polygon"
+
+#: tools/polygonal/kpToolPolygon.cpp:94
+#, kde-format
+msgid "Draws polygons"
+msgstr "Zeichnet Polygone"
+
+#: tools/polygonal/kpToolPolygon.cpp:112 tools/polygonal/kpToolPolyline.cpp:60
+#, kde-format
+msgid "Drag to draw the first line."
+msgstr "Ziehen Sie, um die erste Linie zu zeichnen."
+
+#: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
+#, kde-format
+msgid "Left drag another line or right click to finish."
+msgstr ""
+"Ziehen Sie mit der linken Maustaste eine weitere Linie oder klicken Sie mit "
+"rechts zum Abschließen."
+
+#: tools/polygonal/kpToolPolygon.cpp:186 tools/polygonal/kpToolPolyline.cpp:121
+#, kde-format
+msgid "Right drag another line or left click to finish."
+msgstr ""
+"Ziehen Sie mit der rechten Maustaste eine weitere Linie oder klicken Sie mit "
+"links zum Abschließen."
+
+#: tools/polygonal/kpToolPolyline.cpp:46
+#, kde-format
+msgid "Connected Lines"
+msgstr "Linienpfad"
+
+#: tools/polygonal/kpToolPolyline.cpp:47
+#, kde-format
+msgid "Draws connected lines"
+msgstr "Zeichnet miteinander verbundene Linien"
+
+#: tools/rectangular/kpToolEllipse.cpp:42
+#, kde-format
+msgid "Ellipse"
+msgstr "Ellipse"
+
+#: tools/rectangular/kpToolEllipse.cpp:43
+#, kde-format
+msgid "Draws ellipses and circles"
+msgstr "Zeichnet Ellipsen und Kreise"
+
+#: tools/rectangular/kpToolRectangle.cpp:43
+#, kde-format
+msgid "Rectangle"
+msgstr "Rechteck"
+
+#: tools/rectangular/kpToolRectangle.cpp:44
+#, kde-format
+msgid "Draws rectangles and squares"
+msgstr "Zeichnet Rechtecke und Quadrate"
+
+#: tools/rectangular/kpToolRoundedRectangle.cpp:42
+#, kde-format
+msgid "Rounded Rectangle"
+msgstr "Abgerundetes Rechteck"
+
+#: tools/rectangular/kpToolRoundedRectangle.cpp:43
+#, kde-format
+msgid "Draws rectangles and squares with rounded corners"
+msgstr "Zeichnet Rechtecke und Quadrate mit abgerundeten Ecken"
+
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
+#, kde-format
+msgid "Left drag to create selection."
+msgstr "Ziehen Sie mit der linken Maustaste, um eine Auswahl zu erstellen."
+
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
+#, kde-format
+msgid "Left drag to move selection."
+msgstr "Ziehen Sie mit der linken Maustaste, um die Auswahl zu verschieben."
+
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
+#, kde-format
+msgid "Left drag to scale selection."
+msgstr ""
+"Ziehen Sie mit der linken Maustaste, um die Größe der Auswahl zu ändern."
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
+#, kde-format
+msgid "Selection: Opaque"
+msgstr "Auswahl: Undurchsichtig"
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
+#, kde-format
+msgid "Selection: Transparent"
+msgstr "Auswahl: Transparent"
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:184
+#, kde-format
+msgid "Selection: Transparency Color"
+msgstr "Auswahl: Transparenzfarbe"
+
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:205
+#, kde-format
+msgid "Selection: Transparency Color Similarity"
+msgstr "Auswahl: ähnliche Transparenzfarbe"
+
+#: tools/selection/image/kpToolEllipticalSelection.cpp:42
+#, kde-format
+msgid "Selection (Elliptical)"
+msgstr "Auswahl (elliptisch)"
+
+#: tools/selection/image/kpToolEllipticalSelection.cpp:43
+#, kde-format
+msgid "Makes an elliptical or circular selection"
+msgstr "Erzeugt eine elliptische oder kreisförmige Auswahl"
+
+#: tools/selection/image/kpToolFreeFormSelection.cpp:45
+#, kde-format
+msgid "Selection (Free-Form)"
+msgstr "Auswahl (Freihand)"
+
+#: tools/selection/image/kpToolFreeFormSelection.cpp:46
+#, kde-format
+msgid "Makes a free-form selection"
+msgstr "Erstellt eine Freihand-Auswahl"
+
+#: tools/selection/image/kpToolRectSelection.cpp:40
+#, kde-format
+msgid "Selection (Rectangular)"
+msgstr "Auswahl (rechteckig)"
+
+#: tools/selection/image/kpToolRectSelection.cpp:41
+#, kde-format
+msgid "Makes a rectangular selection"
+msgstr "Erstellt eine rechteckige Auswahl"
+
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:324
+#, kde-format
+msgid "Selection: Move"
+msgstr "Auswahl: Verschieben"
+
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:347
+#, kde-format
+msgid "%1: Smear"
+msgstr "%1: Verschmieren"
+
+#: tools/selection/text/kpToolText.cpp:55
+#, kde-format
+msgid "Writes text"
+msgstr "Schreibt Text"
+
+#: tools/selection/text/kpToolText_Commands.cpp:69
+#, kde-format
+msgid "Text: Backspace"
+msgstr "Text: letztes Zeichen löschen"
+
+#: tools/selection/text/kpToolText_Commands.cpp:86
+#, kde-format
+msgid "Text: Delete"
+msgstr "Text: Löschen"
+
+#: tools/selection/text/kpToolText_Commands.cpp:103
+#, kde-format
+msgid "Text: New Line"
+msgstr "Text: Neue Zeile"
+
+#: tools/selection/text/kpToolText_Commands.cpp:120
+#, kde-format
+msgid "Text: Write"
+msgstr "Text: Schreiben"
+
+#: tools/selection/text/kpToolText_Create.cpp:48
+#, kde-format
+msgid "Left drag to create text box."
+msgstr "Ziehen Sie mit der linken Maustaste, um ein Textfeld zu erstellen."
+
+#: tools/selection/text/kpToolText_Move.cpp:42
+#, kde-format
+msgid "Left drag to move text box."
+msgstr "Ziehen Sie mit der linken Maustaste, um das Textfeld zu verschieben."
+
+#: tools/selection/text/kpToolText_Move.cpp:61
+#, kde-format
+msgid "Text: Move Box"
+msgstr "Text: Feld verschieben"
+
+#: tools/selection/text/kpToolText_ResizeScale.cpp:42
+#, kde-format
+msgid "Left drag to resize text box."
+msgstr "Ziehen Sie mit der linken Maustaste, um das Textfeld zu verändern."
+
+#: tools/selection/text/kpToolText_SelectText.cpp:57
+#, kde-format
+msgid "Left click to change cursor position."
+msgstr ""
+"Klicken Sie mit der linken Maustaste, um die Cursor-Position zu ändern."
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:113
+#, kde-format
+msgid "Text: Opaque Background"
+msgstr "Text: undurchsichtiger Hintergrund"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:114
+#, kde-format
+msgid "Text: Transparent Background"
+msgstr "Text: transparenter Hintergrund"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:137
+#, kde-format
+msgid "Text: Swap Colors"
+msgstr "Text: Farben tauschen"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:158
+#, kde-format
+msgid "Text: Foreground Color"
+msgstr "Text: Vordergrundfarbe"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:179
+#, kde-format
+msgid "Text: Background Color"
+msgstr "Text: Hintergrundfarbe"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:215
+#, kde-format
+msgid "Text: Font"
+msgstr "Text: Schriftart"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:242
+#, kde-format
+msgid "Text: Font Size"
+msgstr "Text: Schriftgröße"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:265
+#, kde-format
+msgid "Text: Bold"
+msgstr "Text: Fett"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:287
+#, kde-format
+msgid "Text: Italic"
+msgstr "Text: Kursiv"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:309
+#, kde-format
+msgid "Text: Underline"
+msgstr "Text: Unterstrichen"
+
+#: tools/selection/text/kpToolText_TextStyle.cpp:331
+#, kde-format
+msgid "Text: Strike Through"
+msgstr "Text: Durchgestrichen"
+
+#: views/kpUnzoomedThumbnailView.cpp:86
+#, kde-format
+msgid "Unzoomed Mode - Thumbnail"
+msgstr "Bildausschnitt – Vorschaubild"
+
+#: views/kpZoomedThumbnailView.cpp:65
+#, kde-format
+msgid "%1% - Thumbnail"
+msgstr "%1 % – Vorschaubild"
+
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
+#, kde-format
+msgid ""
+"<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
+"pixels must be, for operations to consider them to be the same.</p><p>If you "
+"set it to something other than <b>Exact Match</b>, you can work more "
+"effectively with dithered images and photos, in a comparable manner to the "
+"\"Magic Wand\" feature of other paint programs.</p><p>This feature applies "
+"to:</p><ul><li><b>Selections</b>: In <b>Transparent</b> mode, any color in "
+"the selection that is <i>similar</i> to the background color will be made "
+"transparent.</li><li><b>Flood Fill</b>: For regions with <i>similar</i> - "
+"but not identical - colored pixels, a higher setting is likely to fill more "
+"pixels.</li><li><b>Color Eraser</b>: Any pixel whose color is <i>similar</i> "
+"to the foreground color will be replaced with the background color.</"
+"li><li><b>Autocrop</b> and <b>Remove Internal Border</b>: For borders with "
+"<i>similar</i> - but not identical - colored pixels, a higher setting is "
+"more likely to crop the whole border.</li></ul><p>Higher settings mean that "
+"operations consider an increased range of colors to be sufficiently "
+"<i>similar</i> so as to be the same. Therefore, you should increase the "
+"setting if the above operations are not affecting pixels whose colors you "
+"consider to be similar enough.</p><p>However, if they are having too much of "
+"an effect and are changing pixels whose colors you do not consider to be "
+"similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
+"decrease this setting.</p><p>To configure it, click on the cube.</p></qt>"
+msgstr ""
+"<qt><p><b>Farbähnlichkeit</b> beschreibt, wie <i>ähnlich</i> sich die Farben "
+"benachbarte Pixel sein müssen, damit die Pixel für Maloperationen als gleich "
+"behandelt werden.</p><p>Wenn Sie hier etwas anderes als <b>Exakte "
+"Übereinstimmung</b> angeben, können Sie sehr effektiv mit farbgerasterten "
+"Bildern arbeiten, so wie mit der „magischen Wand“ einiger Malprogramme.</"
+"p><p>Diese Funktion ist anwendbar für:</p><ul><li><b>Auswahlen</b>: Im "
+"<b>Transparenzmodus</b> werden alle Farben in der Auswahl, die der "
+"Hintergrundfarbe <i>ähnlich</i> sind, transparent gemacht.</"
+"li><li><b>Farbeimer</b>: Für Bereiche mit <i>ähnlichen</i> – aber nicht "
+"identischen – Farben sorgt ein höherer Wert dafür, dass größere Bereiche mit "
+"Farbe gefüllt werden.</li><li><b>Farbradierer</b>: Alle Pixel, die der "
+"Vordergrundfarbe <i>ähnlich</i> sind, werden mit der Hintergrundfarbe "
+"übermalt.</li><li><b>Automatisch Zuschneiden</b> und <b>Internen Rand "
+"beschneiden</b>: Bei Rändern mit <i>ähnlichen</i> – aber nicht identischen – "
+"Farben, wird durch höhere Werte mit höherer Wahrscheinlichkeit der gesamte "
+"Randbereich zugeschnitten.</li></ul><p>Grundsätzlich bedeuten größere Werte, "
+"dass ein größerer Pixelbereich für Maloperationen als <i>farbähnlich</i> "
+"betrachtet und somit wie Pixel mit identischen Farben behandelt wird. Falls "
+"eine Maloperation Pixelbereiche ausschließt, die Sie als ähnlich genug "
+"empfinden, so sollten Sie den Wert erhöhen, um sie in die Aktion mit "
+"einzuschließen.</p><p>Ebenso sollten Sie den Wert verringern, wenn die "
+"Maloperation zu viele Pixel einschließt (z. B. wenn der <b>Farbeimer</b> zu "
+"viele Pixel mit Farbe füllt).</p><p>Um dies einzurichten, klicken Sie auf "
+"den Würfel.</p></qt>"
+
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
+#, kde-format
+msgid ""
+"<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
+"pixels must be, for operations to consider them to be the same.</p><p>If you "
+"set it to something other than <b>Exact Match</b>, you can work more "
+"effectively with dithered images and photos, in a comparable manner to the "
+"\"Magic Wand\" feature of other paint programs.</p><p>This feature applies "
+"to:</p><ul><li><b>Selections</b>: In <b>Transparent</b> mode, any color in "
+"the selection that is <i>similar</i> to the background color will be made "
+"transparent.</li><li><b>Flood Fill</b>: For regions with <i>similar</i> - "
+"but not identical - colored pixels, a higher setting is likely to fill more "
+"pixels.</li><li><b>Color Eraser</b>: Any pixel whose color is <i>similar</i> "
+"to the foreground color will be replaced with the background color.</"
+"li><li><b>Autocrop</b> and <b>Remove Internal Border</b>: For borders with "
+"<i>similar</i> - but not identical - colored pixels, a higher setting is "
+"more likely to crop the whole border.</li></ul><p>Higher settings mean that "
+"operations consider an increased range of colors to be sufficiently "
+"<i>similar</i> so as to be the same. Therefore, you should increase the "
+"setting if the above operations are not affecting pixels whose colors you "
+"consider to be similar enough.</p><p>However, if they are having too much of "
+"an effect and are changing pixels whose colors you do not consider to be "
+"similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
+"decrease this setting.</p></qt>"
+msgstr ""
+"<qt><p><b>Farbähnlichkeit</b> beschreibt, wie <i>ähnlich</i> sich die Farben "
+"benachbarte Pixel sein müssen, damit die Pixel für Maloperationen als gleich "
+"behandelt werden.</p><p>Wenn Sie hier etwas anderes als <b>Exakte "
+"Übereinstimmung</b> angeben, können Sie sehr effektiv mit farbgerasterten "
+"Bildern arbeiten, so wie mit der „magischen Wand“ einiger Malprogramme.</"
+"p><p>Diese Funktion ist anwendbar für:</p><ul><li><b>Auswahlen</b>: Im "
+"<b>Transparenzmodus</b> werden alle Farben in der Auswahl, die der "
+"Hintergrundfarbe <i>ähnlich</i> sind, transparent gemacht.</"
+"li><li><b>Farbeimer</b>: Für Bereiche mit <i>ähnlichen</i> – aber nicht "
+"identischen – Farben sorgt ein höherer Wert dafür, dass größere Bereiche mit "
+"Farbe gefüllt werden.</li><li><b>Farbradierer</b>: Alle Pixel, die der "
+"Vordergrundfarbe <i>ähnlich</i> sind, werden mit der Hintergrundfarbe "
+"übermalt.</li><li><b>Automatisch Zuschneiden</b> und <b>Internen Rand "
+"beschneiden</b>: Bei Rändern mit <i>ähnlichen</i> – aber nicht identischen – "
+"Farben, wird durch höhere Werte mit höherer Wahrscheinlichkeit der gesamte "
+"Randbereich zugeschnitten.</li></ul><p>Grundsätzlich bedeuten größere Werte, "
+"dass ein größerer Pixelbereich für Maloperationen als <i>farbähnlich</i> "
+"betrachtet und somit wie Pixel mit identischen Farben behandelt wird. Falls "
+"eine Maloperation Pixelbereiche ausschließt, die Sie als ähnlich genug "
+"empfinden, so sollten Sie den Wert erhöhen, um sie in die Aktion mit "
+"einzuschließen.</p><p>Ebenso sollten Sie den Wert verringern, wenn die "
+"Maloperation zu viele Pixel einschließt (z. B. wenn der <b>Farbeimer</b> zu "
+"viele Pixel mit Farbe füllt).</p></qt>"
+
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
+#, kde-format
+msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgstr ""
+"<p>Farbähnlichkeit: %1 %</p><p align=\"center\">Hier klicken für "
+"Einstellungen</p> "
+
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
+#, kde-format
+msgid ""
+"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"p>"
+msgstr ""
+"<p>Farbähnlichkeit: Exakte Übereinstimmung</p><p align=\"center\">Hier "
+"klicken für Einstellungen</p>"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
+#, kde-format
+msgid "&Brightness:"
+msgstr "&Helligkeit:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
+#, kde-format
+msgid "Re&set"
+msgstr "&Zurücksetzen"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
+#, kde-format
+msgid "Co&ntrast:"
+msgstr "&Kontrast:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:70
+#, kde-format
+msgid "&Gamma:"
+msgstr "&Gammawert:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
+#, kde-format
+msgid "Rese&t"
+msgstr "Zu&rücksetzen"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
+#, kde-format
+msgid "C&hannels:"
+msgstr "Ka&näle:"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:88
+#, kde-format
+msgid "All"
+msgstr "Alle"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:89
+#, kde-format
+msgid "Red"
+msgstr "Rot"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:90
+#, kde-format
+msgid "Green"
+msgstr "Grün"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:91
+#, kde-format
+msgid "Blue"
+msgstr "Blau"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
+#, kde-format
+msgid "Reset &All Values"
+msgstr "Alle &Werte zurücksetzen"
+
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
+#, kde-format
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:51
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:56
+#, kde-format
+msgid "&Amount:"
+msgstr "&Menge:"
+
+#: widgets/imagelib/effects/kpEffectEmbossWidget.cpp:51
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:71
+#, kde-format
+msgid "E&nable"
+msgstr "A&ktivieren"
+
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:130
+#, kde-format
+msgid "Colors"
+msgstr "Farben"
+
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:47
+#, kde-format
+msgid "&Hue:"
+msgstr "&Tonwert:"
+
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:48
+#, kde-format
+msgid "&Saturation:"
+msgstr "&Sättigung:"
+
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:49
+#, kde-format
+msgctxt "The V of HSV"
+msgid "&Value:"
+msgstr "Hell&wert:"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:57
+#, kde-format
+msgid "&Red"
+msgstr "&Rot"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:58
+#, kde-format
+msgid "&Green"
+msgstr "&Grün"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:59
+#, kde-format
+msgid "&Blue"
+msgstr "&Blau"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:64
+#, kde-format
+msgid "&All"
+msgstr "&Alle"
+
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:141
+#, kde-format
+msgid "Channels"
+msgstr "Kanäle"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:55
+#, kde-format
+msgid "&Monochrome"
+msgstr "Schwarzweiß"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
+#, kde-format
+msgid "Mo&nochrome (dithered)"
+msgstr "Schwarz/Weiß (mit &Raster)"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
+#, kde-format
+msgid "256 co&lor"
+msgstr "&256 Farben"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:62
+#, kde-format
+msgid "256 colo&r (dithered)"
+msgstr "2&56 Farben (mit Raster)"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
+#, kde-format
+msgid "24-&bit color"
+msgstr "2&4-Bit Farbe"
+
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:144
+#, kde-format
+msgid "Reduce To"
+msgstr "Reduzieren auf"
+
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:54
+#, kde-format
+msgid "&Granularity:"
+msgstr "&Körnung:"
+
+#: widgets/kpColorCells.cpp:195
+#, kde-format
+msgid ""
+"<qt><p>To select the foreground color that tools use to draw, left-click on "
+"a filled-in color cell. To select the background color, right-click instead."
+"</p><p>To change the color of a color cell itself, double-click on it.</"
+"p><p>You can also swap the color of a filled-in cell with any other cell "
+"using drag and drop. Also, if you hold down the <b>Ctrl</b> key, the "
+"destination cell's color will be overwritten, instead of being swapped with "
+"the color of the source cell.</p></qt>"
+msgstr ""
+"<qt><p>Zum Festlegen der Vordergrundfarbe, mit der die Werkzeuge malen, "
+"klicken Sie mit der linken Maustaste auf ein Farbfeld. Um die "
+"Hintergrundfarbe festzulegen, klicken Sie stattdessen mit der rechten "
+"Maustaste.</p><p>Um die Farbe einer Farbzelle selbst zu ändern, klicken Sie "
+"doppelt darauf.</p><p>Sie können die Farben solcher Farbzellen auch "
+"vertauschen, indem Sie die Farbfelder Ziehen und Ablegen. Wenn Sie beim "
+"Ziehen und Ablegen mit der Maus die <b>Strg</b>-Taste gedrückt halten, wird "
+"die Zielfarbe überschrieben anstatt die Farbe mit dem Quellfeld zu tauschen."
+"</p></qt>"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:85
+#, kde-format
+msgid "Convert &to:"
+msgstr "Umwandeln &in:"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:90
+#, kde-format
+msgid "Quali&ty:"
+msgstr "&Qualität:"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:98
+#, kde-format
+msgid "&Preview"
+msgstr "&Vorschau"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:223
+#, kde-format
+msgid "Monochrome"
+msgstr "Schwarzweiß"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:224
+#, kde-format
+msgid "Monochrome (Dithered)"
+msgstr "Schwarz/Weiß (mit Raster)"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:228
+#, kde-format
+msgid "256 Color"
+msgstr "256 Farben"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:229
+#, kde-format
+msgid "256 Color (Dithered)"
+msgstr "256 Farben (mit Raster)"
+
+#: widgets/kpDocumentSaveOptionsWidget.cpp:234
+#, kde-format
+msgid "24-bit Color"
+msgstr "24-Bit Farbe"
+
+#: widgets/kpPrintDialogPage.cpp:57
+#, kde-format
+msgctxt "@title:tab"
+msgid "I&mage Position"
+msgstr "Bild&position"
+
+#: widgets/kpPrintDialogPage.cpp:59
+#, kde-format
+msgid "&Center of the page"
+msgstr "&Mitte der Seite"
+
+#: widgets/kpPrintDialogPage.cpp:61
+#, kde-format
+msgid "Top-&left of the page"
+msgstr "Obere &linke Ecke der Seite"
+
+#: widgets/kpTransparentColorCell.cpp:53
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44
+#, kde-format
+msgid "Transparent"
+msgstr "Transparent"
+
+#: widgets/toolbars/kpColorToolBar.cpp:278
+#, kde-format
+msgid "KolourPaint Defaults"
+msgstr "KolourPaint-Voreinstellung"
+
+#: widgets/toolbars/kpColorToolBar.cpp:293
+#, kde-format
+msgctxt "Colors: name_or_url_of_color_palette"
+msgid "Colors: %1"
+msgstr "Farben: %1"
+
+#: widgets/toolbars/kpColorToolBar.cpp:300
+#, kde-format
+msgctxt "Colors: name_or_url_of_color_palette [modified]"
+msgid "Colors: %1 [modified]"
+msgstr "Farben: %1 [geändert]"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
+#, kde-format
+msgid "1x1"
+msgstr "1×1"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:208
+#, kde-format
+msgid "Circle"
+msgstr "Kreis"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:211
+#, kde-format
+msgid "Square"
+msgstr "Quadrat"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:215
+#, kde-format
+msgid "Slash"
+msgstr "Schrägstrich (/)"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:219
+#, kde-format
+msgid "Backslash"
+msgstr "Schrägstrich (\\)"
+
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:227
+#, kde-format
+msgid "%1x%2 %3"
+msgstr "%1x%2 %3"
+
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:117
+#, kde-format
+msgid "No Fill"
+msgstr "Keine Füllung"
+
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:120
+#, kde-format
+msgid "Fill with Background Color"
+msgstr "Mit Hintergrundfarbe füllen"
+
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:123
+#, kde-format
+msgid "Fill with Foreground Color"
+msgstr "Mit Vordergrundfarbe füllen"
+
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:42
+#, kde-format
+msgid "Opaque"
+msgstr "Deckend"
+
+#~ msgctxt "<Tool Name> (<Single Accel Key>)"
+#~ msgid "%1 (%2)"
+#~ msgstr "%1 (%2)"
+
+#~ msgid ""
+#~ "A document called \"%1\" already exists.\n"
+#~ "Do you want to overwrite it?"
+#~ msgstr ""
+#~ "Es gibt bereits eine Datei namens „%1“.\n"
+#~ "Soll sie überschrieben werden?"
+
+#~ msgid ""
+#~ "A color palette called \"%1\" already exists.\n"
+#~ "Do you want to overwrite it?"
+#~ msgstr ""
+#~ "Es gibt bereits eine Farbpalette „%1“.\n"
+#~ "Soll sie überschrieben werden?"
+
+#~ msgid ""
+#~ "Setting the zoom level to a value that is not a multiple of 100% results "
+#~ "in imprecise editing and redraw glitches.\n"
+#~ "Do you really want to set to zoom level to %1%?"
+#~ msgstr ""
+#~ "Ein Vergrößerungsfaktor, der kein Vielfaches von 100 % ist, führt zu "
+#~ "ungenauer Bearbeitung und Darstellungsfehlern.\n"
+#~ "Möchten Sie den Vergrößerungsfaktor wirklich auf %1 % setzen?"
+
+#~ msgid "Set Zoom Level to %1%"
+#~ msgstr "Vergrößerungsfaktor auf %1 % setzen"
+
+#~ msgid "None"
+#~ msgstr "Keine"
+
+#~ msgid ""
+#~ "<qt><p>Resizing the image to %1x%2 may take a substantial amount of "
+#~ "memory. This can reduce system responsiveness and cause other application "
+#~ "resource problems.</p><p>Are you sure want to resize the image?</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Die Größenänderung auf %1x%2 kann sehr viel Speicherplatz "
+#~ "verbrauchen. Dies kann dazu führen, dass das System sehr langsam "
+#~ "reagiert, und es kann zu weiteren Problemen mit anderen Programmen führen."
+#~ "</p><p>Sind Sie sicher, dass Sie die Größe ändern möchten?</p></qt>"
+
+#~ msgid "Overwrite"
+#~ msgstr "Überschreiben"
+
+#~ msgid "Could not open \"%1\" - unknown mimetype."
+#~ msgstr "„%1“ lässt sich nicht öffnen – unbekannter MIME-Typ."
+
+#~ msgid "Save Preview"
+#~ msgstr "Vorschau speichern"
+
+#~ msgid "To obtain support, please visit the website."
+#~ msgstr "Für Unterstützung und Hilfe besuchen Sie bitte die Webseite."
+
+#~ msgid ""
+#~ "No plugin was found which provides the scanner dialog.\n"
+#~ "This usually means that the package providing the ksaneplugin is not "
+#~ "installed."
+#~ msgstr ""
+#~ "Es wurde kein Modul gefunden, das einen Scanner-Dialog bereitstellt.\n"
+#~ "Normalerweise bedeutet das, das ein Paket mit dem Modul „KSaneplugin“ "
+#~ "nicht installiert ist."
+
+#~ msgid "No Scanning Support"
+#~ msgstr "Keine Scan-Unterstützung"
+
+#~ msgid "Scanning support is not installed."
+#~ msgstr "Es ist keine Unterstützung für Scannen installiert."
+
+#~ msgid ""
+#~ "<qt><p>KolourPaint cannot paste the contents of the clipboard as the data "
+#~ "unexpectedly disappeared.</p><p>This usually occurs if the application "
+#~ "which was responsible for the clipboard contents has been closed.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Der Inhalt der Zwischenablage kann nicht eingefügt werden, da die "
+#~ "Daten unerwartet verschwunden sind.</p><p>Das kann passieren, wenn die "
+#~ "für den Inhalt der Zwischenablage zuständige Anwendung geschlossen wurde."
+#~ "</p></qt>"
+
+#~ msgid "Acquiring &Screenshots"
+#~ msgstr "Aufnehmen von &Bildschirmfotos"
+
+# Informationen zu Systemeinstellungen etwas veraltet. Vllt besser ganz entfernen?
+#~ msgid ""
+#~ "<p>To acquire a screenshot, press <b>%1</b>.  The screenshot will be "
+#~ "placed into the clipboard and you will be able to paste it in KolourPaint."
+#~ "</p><p>You may configure the <b>Desktop Screenshot</b> shortcut in the "
+#~ "KDE System Settings module <a href=\"configure kde shortcuts\">Keyboard "
+#~ "Shortcuts</a>.</p><p>Alternatively, you may try the application <a href="
+#~ "\"run ksnapshot\">KSnapshot</a>.</p>"
+#~ msgstr ""
+#~ "<p>Um ein Bildschirmfoto aufzunehmen, drücken Sie <b>%1</b>. Das Foto "
+#~ "wird dann in der Zwischenablage gespeichert, sodass Sie es in KolourPaint "
+#~ "einfügen können.</p><p>Sie können den Kurzbefehl für <b>Bildschirmfoto "
+#~ "(Arbeitsfläche)</b> im Systemeinstellungen-Modul <a href=\"configure kde "
+#~ "shortcuts\">Tastenkürzel (im Menüpunkt „Regionaleinstellungen && "
+#~ "Zugangshilfen“)</a> einstellen.</p><p>Sie können auch das Programm <a "
+#~ "href=\"run ksnapshot\">KSnapshot</a> ausprobieren.</p>"
+
+#~ msgid ""
+#~ "<p>You do not appear to be running KDE.</p><p>Once you have loaded KDE:"
+#~ "<br><blockquote>To acquire a screenshot, press <b>%1</b>.  The screenshot "
+#~ "will be placed into the clipboard and you will be able to paste it in "
+#~ "KolourPaint.</blockquote></p><p>Alternatively, you may try the "
+#~ "application <a href=\"run ksnapshot\">KSnapshot</a>.</p>"
+#~ msgstr ""
+#~ "<p>Sie haben KDE offenbar nicht gestartet.</p><p>Sobald Sie das getan "
+#~ "haben:<br><blockquote>Um ein Bildschirmfoto aufzunehmen, drücken Sie <b>"
+#~ "%1</b>. Das Foto wird dann in der Zwischenablage gespeichert, sodass Sie "
+#~ "es in KolourPaint einfügen können.</blockquote></p><p>Sie können auch das "
+#~ "Programm <a href=\"run ksnapshot\">KSnapshot</a> ausprobieren.</p>"
+
+#~ msgid "Set as Wa&llpaper (Centered)"
+#~ msgstr "Als Hintergrundbild (&zentriert)"
+
+#~ msgid "Set as Wallpaper (&Tiled)"
+#~ msgstr "Als Hintergrundbild (&gekachelt)"
+
+#~ msgid ""
+#~ "Before this image can be set as the wallpaper, you must save it as a "
+#~ "local file.\n"
+#~ "Do you want to save it?"
+#~ msgstr ""
+#~ "Sie müssen das Bild lokal speichern, bevor Sie es als Hintergrundbild "
+#~ "verwenden können.\n"
+#~ "Möchten Sie es nun speichern?"
+
+#~ msgid ""
+#~ "Before this image can be set as the wallpaper, you must save it.\n"
+#~ "Do you want to save it?"
+#~ msgstr ""
+#~ "Sie müssen das Bild speichern, bevor Sie es als Hintergrundbild verwenden "
+#~ "können.\n"
+#~ "Möchten Sie es nun speichern?"
+
+#~ msgid "Could not change wallpaper."
+#~ msgstr "Das Hintergrundbild kann nicht geändert werden."
+
+#~ msgid "..."
+#~ msgstr "..."
+
+#~ msgid "Flip Selection"
+#~ msgstr "Auswahl spiegeln"
+
+#~ msgid "Flip Image"
+#~ msgstr "Bild spiegeln"
+
+#~ msgid "&Vertical (upside-down)"
+#~ msgstr "&Senkrecht (auf den Kopf)"
+
+#~ msgid "&Horizontal"
+#~ msgstr "&Waagerecht"
+
+#~ msgid "Loss of Color and Translucency Information"
+#~ msgstr "Verlust von Farb- und Transparenzinformationen"
+
+#~ msgid "Loss of Color Information"
+#~ msgstr "Verlust von Farbinformationen"
+
+#~ msgid "Loss of Translucency Information"
+#~ msgstr "Verlust von Transparenzinformationen"
+
+#~ msgid ""
+#~ "<qt><p>KolourPaint does not support the current screen depth of %1bpp. "
+#~ "KolourPaint will attempt to start but may act unreliably.</p><p>To avoid "
+#~ "this issue, please change your screen depth to 24bpp and then restart "
+#~ "KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>KolourPaint unterstützt die derzeitige Farbtiefe von %1 Bit nicht. "
+#~ "KolourPaint wird nun starten, könnte aber unzuverlässig sein.</p><p>Um "
+#~ "dieses Problem zu vermeiden, sollten Sie die Farbtiefe auf 24 Bit "
+#~ "einstellen und KolourPaint erneut starten.</p></qt>"
+
+#~ msgid "Unsupported Screen Mode"
+#~ msgstr "Bildschirmmodus nicht unterstützt"
+
+#~ msgid ""
+#~ "<qt><p>This effect does not support the current screen depth of %1bpp.</"
+#~ "p><p>To avoid this issue, please change your screen depth to 24bpp and "
+#~ "then restart KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Dieser Effekt unterstützt die derzeitige Farbtiefe von %1 Bit "
+#~ "nicht.</p><p>Um dieses Problem zu vermeiden, sollten Sie die Farbtiefe "
+#~ "auf 24 Bit einstellen und KolourPaint erneut starten.</p></qt>"
+
+#~ msgid "Cannot scan - out of graphics memory."
+#~ msgstr "Scannen ist nicht möglich – ungenügend Grafikspeicher."
+
+#~ msgid "Cannot Scan"
+#~ msgstr "Scannen nicht möglich"
+
+#~ msgid "&Flip..."
+#~ msgstr "&Spiegeln ..."
+
+#~ msgid ""
+#~ "<qt><p>The image to be pasted may have more colors than the current "
+#~ "screen mode can support. In order to display it, some color information "
+#~ "may be removed.</p><p><b>If you save this image, any color loss will "
+#~ "become permanent.</b></p><p>To avoid this issue, increase your screen "
+#~ "depth to at least %1bpp and then restart KolourPaint.</p><hr/><p>It also "
+#~ "contains translucency which is not fully supported. The translucency data "
+#~ "will be approximated with a 1-bit transparency mask.</p><p><b>If you save "
+#~ "this image, this loss of translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Das Bild, das einfügt werden soll, kann mehr Farben enthalten als "
+#~ "die aktuell eingestellte Farbtiefe des Bildschirms. Um das Bild anzeigen "
+#~ "zu können, müssen Farbinformationen gelöscht werden.</p><p><b>Wenn Sie "
+#~ "das Bild speichern, werden diese Farbinformationen endgültig entfernt.</"
+#~ "b></p><p>Versuchen Sie, Ihre Bildschirmfarbtiefe auf mindestens %1 bpp zu "
+#~ "erhöhen und dann KolourPaint neu zu starten.</p><hr/><p>Das Bild enthält "
+#~ "auch Transparenzinformationen, die nicht vollständig unterstützt werden. "
+#~ "Die Transparenzdaten werden mit einer 1-Bit-Transparenzmaske angenähert.</"
+#~ "p><p><b>Wenn Sie das Bild speichern, werden diese "
+#~ "Transparenzinformationen endgültig entfernt.</b></p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image to be pasted may have more colors than the current "
+#~ "screen mode can support. In order to display it, some color information "
+#~ "may be removed.</p><p><b>If you save this image, any color loss will "
+#~ "become permanent.</b></p><p>To avoid this issue, increase your screen "
+#~ "depth to at least %1bpp and then restart KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Das Bild, das einfügt werden soll, kann mehr Farben enthalten als "
+#~ "die aktuell eingestellte Farbtiefe des Bildschirms. Um das Bild anzeigen "
+#~ "zu können, müssen Farbinformationen gelöscht werden.</p><p><b>Wenn Sie "
+#~ "das Bild speichern, werden diese Farbinformationen endgültig entfernt.</"
+#~ "b></p><p>Versuchen Sie, Ihre Bildschirmfarbtiefe auf mindestens %1 bpp zu "
+#~ "erhöhen und dann KolourPaint neu zu starten.</p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image to be pasted contains translucency which is not fully "
+#~ "supported. The translucency data will be approximated with a 1-bit "
+#~ "transparency mask.</p><p><b>If you save this image, this loss of "
+#~ "translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Das Bild, das eingefügt werden soll, enthält "
+#~ "Transparenzinformationen, die nicht vollständig unterstützt werden. Die "
+#~ "Transparenzdaten werden mit einer 1-Bit-Transparenzmaske angenähert.</"
+#~ "p><p><b>Wenn Sie das Bild speichern, werden diese "
+#~ "Transparenzinformationen endgültig entfernt.</b></p></qt>"
+
+#~ msgid "<qt><p>There is nothing in the clipboard to paste.</p></qt>"
+#~ msgstr "<qt><p>Die Zwischenablage ist leer.</p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image \"%1\" may have more colors than the current screen mode "
+#~ "can support. In order to display it, some color information may be "
+#~ "removed.</p><p><b>If you save this image, any color loss will become "
+#~ "permanent.</b></p><p>To avoid this issue, increase your screen depth to "
+#~ "at least %2bpp and then restart KolourPaint.</p><hr/><p>It also contains "
+#~ "translucency which is not fully supported. The translucency data will be "
+#~ "approximated with a 1-bit transparency mask.</p><p><b>If you save this "
+#~ "image, this loss of translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Das Bild „%1“ kann mehr Farben enthalten als die aktuell "
+#~ "eingestellte Farbtiefe des Bildschirms. Um das Bild anzeigen zu können, "
+#~ "müssen Farbinformationen gelöscht werden.</p><p><b>Wenn Sie das Bild "
+#~ "speichern, werden diese Farbinformationen endgültig entfernt.</b></"
+#~ "p><p>Versuchen Sie, Ihre Bildschirmfarbtiefe auf mindestens %2 bpp zu "
+#~ "erhöhen und dann KolourPaint neu zu starten.</p><hr/><p>Das Bild enthält "
+#~ "auch Transparenzinformationen, die nicht vollständig unterstützt werden. "
+#~ "Die Transparenzdaten werden mit einer 1-Bit-Transparenzmaske angenähert.</"
+#~ "p><p><b>Wenn Sie das Bild speichern, werden diese "
+#~ "Transparenzinformationen endgültig entfernt.</b></p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image \"%1\" may have more colors than the current screen mode "
+#~ "can support. In order to display it, some color information may be "
+#~ "removed.</p><p><b>If you save this image, any color loss will become "
+#~ "permanent.</b></p><p>To avoid this issue, increase your screen depth to "
+#~ "at least %2bpp and then restart KolourPaint.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Das Bild „%1“ kann mehr Farben enthalten als die aktuell "
+#~ "eingestellte Farbtiefe des Bildschirms. Um das Bild anzeigen zu können, "
+#~ "müssen Farbinformationen gelöscht werden.</p><p><b>Wenn Sie das Bild "
+#~ "speichern, werden diese Farbinformationen endgültig entfernt.</b></"
+#~ "p><p>Versuchen Sie, Ihre Bildschirmfarbtiefe auf mindestens %2 bpp zu "
+#~ "erhöhen und dann KolourPaint neu zu starten.</p></qt>"
+
+#~ msgid ""
+#~ "<qt><p>The image \"%1\" contains translucency which is not fully "
+#~ "supported. The translucency data will be approximated with a 1-bit "
+#~ "transparency mask.</p><p><b>If you save this image, this loss of "
+#~ "translucency will become permanent.</b></p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Das Bild „%1“ enthält Transparenzinformationen, die nicht "
+#~ "vollständig unterstützt werden. Die Transparenzdaten werden mit einer 1-"
+#~ "Bit-Transparenzmaske angenähert.</p><p><b>Wenn Sie das Bild speichern, "
+#~ "werden diese Transparenzinformationen endgültig entfernt.</b></p></qt>"
+
+#~ msgid "Could not open \"%1\" - out of graphics memory."
+#~ msgstr "„%1“ lässt sich nicht öffnen – ungenügend Speicher."
+
+#~ msgid "Scanning Support"
+#~ msgstr "Unterstützung für Scannen"
+
+#~ msgid "DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu"
+#~ msgstr "DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu"
+
+#~ msgid "Selection: Transparency"
+#~ msgstr "Auswahl: Transparenz"
+
+#~ msgid "Tone Enhance"
+#~ msgstr "Tonwertverbesserung"

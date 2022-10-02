@@ -1,0 +1,1770 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>El manual del &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>23 de març de 2018</date>
+<releaseinfo
+>Aplicacions 18.04</releaseinfo>
+
+<abstract>
+<para
+>El &kolourpaint; és un programa de dibuix lliure i fàcil d'utilitzar creat per la comunitat &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Introducció</title>
+<para
+>El &kolourpaint; és un programa de dibuix lliure i fàcil d'utilitzar creat per la comunitat &kde;. És perfecte per a tasques diàries, com ara:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Pintura: dibuixar diagrames i <quote
+>pintar amb els dits</quote
+>.</para>
+</listitem>
+<listitem>
+<para
+>Manipular captures de pantalla: obtenir i editar captures de pantalla.</para>
+</listitem>
+<listitem>
+<para
+>Manipular imatges: editar fotografies i obtenir imatges; aplicar efectes.</para>
+</listitem>
+<listitem>
+<para
+>Editar icones: dibuixar «clip art» i logos amb transparències.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Ús del &kolourpaint;</title>
+
+<para
+>Feu clic als següents enllaços per explorar les capacitats del &kolourpaint;:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Eines</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Treballar amb els colors</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Opcions de visualització</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Efectes d'imatge</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Eines</title>
+
+<para
+>Una opció addicional al menú <guimenu
+>Arranjament</guimenu
+> permet definir si les eines s'utilitzen o no amb antialiàsing (per omissió). </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Obtenir captures de pantalla</title>
+
+<para
+>Una <quote
+>captura de pantalla</quote
+> és una instantània del que hi ha a la pantalla del vostre ordinador. Pot ser útil per explicar algunes de les accions que s'han de realitzar per obtenir el resultat, o per mostrar el problema que heu trobat. </para>
+<para
+>Per crear una captura de pantalla llesta per a la seva edició a la finestra del &kolourpaint; podeu utilitzar l'element <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Obtén una captura de pantalla</guimenuitem
+></menuchoice
+> des del menú principal del &kolourpaint;. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Utilitzant el diàleg obert podreu canviar el <guilabel
+>Retard de la captura de pantalla</guilabel
+> (en segons), i escollir <guilabel
+>Oculta la finestra principal</guilabel
+> durant la captura. Una vegada esteu llest per prendre una captura de pantalla, simplement feu clic a <guibutton
+>D'acord</guibutton
+>. La captura de pantalla presa es col·locarà directament a l'àrea d'edició del &kolourpaint;. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Referència de les eines</title>
+
+<para
+>Una forma ràpida de seleccionar una eina al &kolourpaint; és prémer la drecera associada amb aquesta, descrita a continuació i en els consells sobre el <interface
+>Quadre d'eines</interface
+>. També podeu mantenir premudes les tecles <keycombo action="simul"
+>&Alt;&Maj;</keycombo
+> mentre premeu la tecla, el qual és necessari quan s'escriu text (ja que les dreceres d'una sola tecla resten desactivades). Per exemple, per a seleccionar el pinzell, premeu <keycombo action="simul"
+>&Alt;&Maj;<keycap
+>B</keycap
+></keycombo
+>, o simplement <keycap
+>B</keycap
+> (quan no esteu escrivint text). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Pinzell</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Eliminador de color</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Selector de color</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Línies connectades</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Corba</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>El·lipse</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Goma d'esborrar</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Omple</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Línia</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Llapis</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Polígon</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Rectangle</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Rectangle arrodonit</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Selecció (el·líptica)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Selecció (Lliure)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Selecció (Rectangular)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Polvoritzador</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Text</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Pinzell <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Per a dibuixar feu clic o clic i arrossegueu amb el pinzell. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Per a seleccionar la forma del pinzell feu clic sobre una de les formes. Podeu utilitzar una forma de pinzell circular, quadrada, barra o barra inversa.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Selector de color <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Per establir el color de primer pla, feu clic <mousebutton
+>esquerre</mousebutton
+> sobre un píxel. Per establir el color de fons, feu clic <mousebutton
+>dret</mousebutton
+> sobre un píxel. El &kolourpaint; després retornarà a l'eina seleccionada prèviament.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Línies i polígons connectats <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a dibuixar línies connectades. L'eina de polígon s'utilitza de la mateixa manera, però, els punts d'inici i de final es connectaran automàticament per formar un polígon.</para>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons. i també invertirà el color d'ompliment per als polígons.</para>
+
+<para
+>Podeu <link linkend="tool-options"
+>establir l'amplada de la línia</link
+>. Per als polígons, també podreu <link linkend="tool-options"
+>establir l'estil de l'ompliment</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Corba <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a dibuixar una línia -això establirà els punts d'inici i final-. Podeu establir fins a dos punts de control per arrossegar. Per acabar la corba sense utilitzar ambdós o cap dels punts de control, feu clic amb l'altra botó del ratolí. L'eina de corba dibuixarà una Bézier cúbica.</para>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons.</para>
+
+<para
+>També podeu <link linkend="tool-options"
+>establir l'amplada de la línia</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>El·lipse <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a dibuixar una el·lipse.</para>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons, i invertirà el color de l'ompliment.</para>
+
+<para
+>També podeu <link linkend="tool-options"
+>establir l'amplada de la línia i l'estil de l'ompliment</link
+>.</para>
+
+<para
+>Per a característiques addicionals, utilitzeu les tecles modificadores:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Manteniu premuda la tecla &Maj; i arrossegueu per a dibuixar un cercle.</para>
+</listitem>
+<listitem>
+<para
+>Per a dibuixar una el·lipse amb un punt central de la vostra elecció, manteniu premuda la tecla &Ctrl;, feu clic sobre el punt central, i arrossegueu fins que l'el·lipse tingui la mida i la forma correctes.</para>
+</listitem>
+<listitem>
+<para
+>Per a dibuixar un cercle amb un punt central de la vostra elecció, manteniu premudes les tecles &Ctrl; i &Maj;, feu clic sobre el punt central, i arrossegueu fins que el cercle tingui la mida i la forma correctes.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Gomes</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Goma d'esborrar <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu amb la goma d'esborrar per esborrar els errors.</para>
+
+<note>
+<para
+>A diferència d'altres eines, les gomes dibuixen en el color de fons. Per a dibuixar en el color de primer pla, utilitzeu el &BDR;.</para>
+</note>
+
+<para
+>La goma d'esborrar només té <link linkend="tool-options"
+>formes quadrades</link
+>. Per a dibuixar amb altres formes com ara cercles utilitzeu el <link linkend="tool-brush"
+>Pinzell</link
+> i el &BDR;.</para>
+
+<tip>
+<para
+>Feu doble clic sobre la icona «Goma d'esborrar» per esborrar tota la imatge. Això és equivalent a fer servir l'opció <link linkend="image-clear"
+>Neteja</link
+> al menú «Imatge».</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Eliminador del color <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a substituir píxels del color de primer pla amb el color de fons. Per a substituir tots els píxels similars (però no necessàriament exactament iguals) amb el color de primer pla, com en imatges i fotografies difuminades, utilitzeu una opció per a <link linkend="color-box"
+>Similitud del color</link
+> que no sigui «Exacte».</para>
+
+<note>
+<para
+>A diferència d'altres eines, les gomes dibuixen en el color de fons. Per a substituir els píxels del color de fons amb el color de primer pla, utilitzeu el &BDR;.</para>
+</note>
+
+<para
+>Podeu configurar la <link linkend="tool-options"
+>mida de la goma d'esborrar</link
+>.</para>
+
+<tip>
+<para
+>Feu doble clic sobre la icona «Eliminador del color» per aplicar-ho a tota la imatge.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Omple <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic per omplir una regió. Per omplir una regió difuminada, utilitzeu una opció per a <link linkend="color-box"
+>Similitud del color</link
+> que no sigui «Exacte».</para>
+
+<para
+>El &BER; omplirà en el color de primer pla. El &BDR; omplirà en el color de fons.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Línia <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a dibuixar una línia.</para>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons.</para>
+
+<para
+>També podeu <link linkend="tool-options"
+>establir l'amplada de la línia</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Manteniu premuda la tecla &Ctrl; per a dibuixar línies orientades segons un angle múltiple de 30 graus -aquestes són les línies en el diagrama vermell-.</para>
+</listitem>
+<listitem>
+<para
+>Manteniu premuda la tecla &Maj; per a dibuixar línies orientades segons un angle múltiple de 45 graus -aquestes són les línies en el diagrama blau-.</para>
+</listitem>
+<listitem>
+<para
+>Manteniu premudes les tecles &Ctrl; i &Maj; per a dibuixar línies orientades segons un angle múltiple de 30 o 45 graus -aquestes són les línies en el diagrama verd-.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Llapis <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic per a dibuixar un punt o feu clic i arrossegueu per a dibuixar una línia a mà alçada.</para>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Rectangles <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a dibuixar un rectangle. El rectangle arrodonit és un rectangle amb les cantonades arrodonides.</para>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons, i invertirà el color de l'ompliment.</para>
+
+<para
+>També podeu <link linkend="tool-options"
+>establir l'amplada de la línia i l'estil de l'ompliment</link
+>.</para>
+
+<para
+>Per a característiques addicionals, utilitzeu les tecles modificadores:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Manteniu premuda la tecla &Maj; i arrossegueu per a dibuixar un quadrat.</para>
+</listitem>
+<listitem>
+<para
+>Per a dibuixar un rectangle amb un punt central de la vostra elecció, manteniu premuda la tecla &Ctrl;, feu clic sobre el punt central, i arrossegueu fins que el rectangle tingui la mida i la forma correctes.</para>
+</listitem>
+<listitem>
+<para
+>Per a dibuixar un quadrat amb un punt central de la vostra elecció, manteniu premudes les tecles &Ctrl; i &Maj;, feu clic sobre el punt central, i arrossegueu fins que el quadrat tingui la mida i la forma correctes.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Seleccions <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Utilitzeu les eines de selecció per a dibuixar el contorn d'una selecció.</para>
+
+<para
+>Per a moure la selecció, feu-hi clic i arrossegueu-la. La vista principal es desplaçarà en conseqüència, permetent que pugueu moure la selecció a una part de la imatge que actualment no es mostra.</para>
+
+<para
+>Podeu fer <link linkend="image-resize-scale"
+>Redimensiona</link
+> sobre tota la imatge o fer un <link linkend="image-resize-scale"
+>Escalat suau</link
+> de la selecció utilitzant les nanses corresponents. Manteniu premuda la tecla &Maj; mentre escaleu la selecció per a mantenir la relació d'aspecte. El &BDR; obrirà un menú contextual amb les ordres comunes <guimenu
+>Edita</guimenu
+> i <link linkend="image-effects-section"
+>Efectes de la imatge</link
+>. </para>
+
+<tip>
+<para
+>Podeu utilitzar les tecles del cursor mentre dibuixeu el contorn de la selecció o mentre el moveu.</para>
+</tip>
+
+<para
+>Si manteniu premuda la tecla &Ctrl; abans de moure la selecció, llavors moureu una còpia. La selecció deixarà un rastre si es mou mentre es prem la tecla &Maj;. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Hi ha dos modes de selecció: Opac (per omissió) i Transparent. Si utilitzeu el mode de selecció transparent, tots els píxels del color de fons seran transparents (sostracció del fons). Això permet enganxar una selecció sense el fons. Per dur a terme la sostracció del fons en una imatge difuminada, utilitzeu una opció per a <link linkend="color-box"
+>Similitud del color</link
+> que no sigui «Exacte».</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Podeu aplicar efectes de la imatge a una selecció -vegeu la secció <link linkend="image-effects-section"
+>Efectes de la imatge</link
+> per obtenir més informació-.</para>
+
+<para
+>És possible desar la selecció al fitxer emprant l'element <guimenuitem
+>Copia a un fitxer...</guimenuitem
+> des del menú contextual de la selecció o l'element <menuchoice
+><guimenu
+>Edita</guimenu
+><guimenuitem
+>Copia a un fitxer...</guimenuitem
+></menuchoice
+> des del menú principal. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Polvoritzador <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu per a polvoritzar un graffiti. Manteniu premut el botó del ratolí per a un polvoritzat més concentrat.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Feu clic sobre una de les formes per a seleccionar la mida de la polvorització. Podeu seleccionar entre les mides de polvoritzacions de 9x9, 17x17 i 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>El &BER; dibuixarà en el color de primer pla. El &BDR; dibuixarà en el color de fons.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Text <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Feu clic i arrossegueu una àrea en la qual voleu escriure text. Així que es mostrarà la vora i podreu començar a escriure el text. Feu clic i arrossegueu la vora per a moure-la. Podeu canviar la mida del quadre de text arrossegant les nanses o utilitzant el diàleg <link linkend="image-resize-scale"
+>Redimensiona</link
+>. </para>
+
+<tip>
+<para
+>Si heu desseleccionat un quadre de text, podreu utilitzar el botó <guimenuitem
+>Desfés</guimenuitem
+> per editar el text de nou.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Usar el color transparent</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>La imatge de l'esquerra mostra la imatge d'exemple. La imatge de la dreta mostra el text afegit amb fons opac i colors de fons. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>La imatge de l'esquerra mostra l'afegit de text amb colors de primer pla opacs i un color de fons transparent. La imatge de la dreta mostra l'afegit de text amb un color de primer pla transparent i un color de fons opac.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Opcions comunes de l'eina</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Feu clic sobre un dels quadrats per a seleccionar la mida de la goma d'esborrar. Podeu seleccionar entre quadrats amb longitud lateral de 2, 3, 5, 9, 17 i 29 píxels.</para>
+
+<para
+>L'ajust de la mida de la goma d'esborrar afectarà les <link linkend="tool-erasers"
+>Gomes d'esborrar</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Feu clic sobre una de les línies per a seleccionar l'amplada de la línia. Podeu seleccionar entre les amplades de la línia d'1, 2, 3, 5 i 8 píxels.</para>
+
+<para
+>L'establiment de l'amplada de la línia afectarà les eines <link linkend="tool-polystar"
+>Línies connectades</link
+>, <link linkend="tool-curve"
+>Corba</link
+>, <link linkend="tool-ellipse"
+>El·lipse</link
+>, <link linkend="tool-line"
+>Línia</link
+>, <link linkend="tool-polystar"
+>Polígon</link
+>, <link linkend="tool-rectangles"
+>Rectangle</link
+> i <link linkend="tool-rectangles"
+>Rectangle arrodonit</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Feu clic sobre un dels rectangles per a seleccionar l'estil de l'ompliment. Podeu seleccionar entre «No omplis», «Omple amb el color de fons» i «Omple amb el color de primer pla».</para
+> <para
+>L'establiment de l'estil de l'ompliment afectarà les eines <link linkend="tool-ellipse"
+>El·lipse</link
+>, <link linkend="tool-polystar"
+>Polígon</link
+>, <link linkend="tool-rectangles"
+>Rectangle</link
+> i <link linkend="tool-rectangles"
+>Rectangle arrodonit</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Treballar amb els colors</title>
+
+<sect1 id="color-box">
+<title
+>El quadre de colors</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Quadre de colors</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>El quadre de colors té 3 seccions principals: la «Tauleta de colors», la «Paleta de colors» i el «Selector de similitud dels colors».</para>
+
+<para
+>La tauleta de colors mostra el color de primer pla actual com un quadrat sobre d'un altre que representa el color de fons actual. En dibuixar amb el &BER;, s'utilitzarà el color de primer pla, i quan es dibuixi amb el &BDR; s'utilitzarà el color de fons (a excepció de les <link linkend="tool-erasers"
+>Gomes</link
+>). Podeu fer clic a la fletxa de doble punta per intercanviar els colors de primer pla i de fons. </para>
+
+<para
+>La paleta de colors mostra una selecció de colors perquè escolliu. La piràmide translúcida representa el color transparent. Feu clic esquerre sobre un color per establir el color de primer pla i feu clic esquerre sobre un color per establir el color de fons. També podeu arrossegar i deixar anar qualsevol color opac als quadrats de la tauleta de colors. Per editar un color a la tauleta o la paleta de colors, feu-hi doble clic. L'eina <link linkend="tool-color-picker"
+>Selector de colors</link
+> permet seleccionar un color de la imatge. </para>
+
+<para
+>La similitud dels colors permet treballar de manera més eficaç amb imatges i fotografies difuminades, de manera comparable a la característica <quote
+>Vareta màgica</quote
+> d'altres programes de pintura. S'aplica a les seleccions transparents, així com les eines <link linkend="tool-flood-fill"
+>Omple</link
+>, <link linkend="tool-eraser-clr"
+>Eliminador del color</link
+> i <link linkend="image-autocrop"
+>Escapça / Elimina la vora interna</link
+>. Feu doble clic sobre el selector de colors per escollir com hauran de ser de similars per a considerar-los idèntics. En utilitzar les seleccions en el mode transparent, qualsevol color en la selecció que sigui similar al color de fons també es tornarà transparent.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>La imatge de l'esquerra mostra la imatge d'exemple. Les imatges de la dreta demostren l'ús d'un ompliment, amb opcions de «Similitud del color» de 5%, 15% i 30%. En aquest exemple, amb una opció de «Similitud del color» d'<guilabel
+>Exacte</guilabel
+>, un ompliment a (80, 100) sols s'omplirà un píxel, ja que els píxels circumdants són similars però no idèntics. Com més gran sigui la similitud del color, més píxels amb colors similars seran considerats idèntics, per tant, l'ompliment s'estendrà encara més. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Opcions de la visualització</title>
+
+<sect1 id="view-options-section">
+<title
+>Referència de les opcions de la visualització</title>
+
+<para
+><link linkend="view-zoom"
+>El zoom i la graella</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Miniatura</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>El zoom i la graella</title>
+<para
+>Incrementeu el nivell de zoom per editar les imatges amb més precisió, o reduïu-lo per a veure-les més bé.</para>
+
+<important>
+<para
+>En els nivells de zoom que no siguin múltiples de 100%, en moure'l poden aparèixer parts de la imatge quan l'usuari interactua amb aquesta. També poden ocórrer altres errors menors a conseqüència dels nivells de zoom. </para>
+</important>
+
+<para
+>En els nivells de zoom de 400% o superiors que també siguin múltiples de 100%, podreu fer <guimenuitem
+>Mostra la graella</guimenuitem
+> per editar amb major precisió els píxels individuals.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>La primera imatge mostra la icona de l'eina <link linkend="tool-text"
+>Text</link
+>, mentre que la segona mostra al zoom a 600% amb la graella activada.</para>
+
+<tip>
+<para
+>Una altra manera de fer zoom quan no es dibuixa és desplaçant la <mousebutton
+>roda</mousebutton
+> mentre manteniu premuda la tecla &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Miniatura</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Si el <guimenuitem
+>Mode de miniatura ampliada</guimenuitem
+> està seleccionat, es mostrarà tota la imatge, en una escala segons sigui necessari per ajustar-la a la finestra de miniatures (imatge superior dreta). </para>
+<para
+>En cas contrari, la miniatura mostrarà la imatge fins on sigui possible, començant per la part superior esquerra de la vista principal (imatge inferior dreta). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Efectes de la imatge</title>
+
+<sect1 id="image-effects-section">
+<title
+>Referència dels efectes de la imatge</title>
+<para
+><link linkend="image-autocrop"
+>Escapça / Elimina la vora interna</link
+></para>
+<para
+><link linkend="image-balance"
+>Balanç</link
+></para>
+<para
+><link linkend="image-clear"
+>Neteja</link
+></para>
+<para
+><link linkend="image-emboss"
+>Relleu</link
+></para>
+<para
+><link linkend="image-flatten"
+>Aplana</link
+></para>
+<para
+><link linkend="image-flip"
+>Inverteix (capgirada)</link
+></para>
+<para
+><link linkend="image-invert"
+>Inverteix</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Redueix els colors</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Redueix a escala de grisos</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Redueix a monocrom (tramat)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Mirall (horitzontal)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Redimensiona / Escala</link
+></para>
+<para
+><link linkend="image-rotate"
+>Gira</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Estableix com a imatge (escapça)</link
+></para>
+<para
+><link linkend="image-skew"
+>Esbiaixa</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Suavitza i afila</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Més efectes</link
+></para>
+<para
+><link linkend="image-notes"
+>Notes</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Escapça / Elimina la vora interna</title>
+
+<para
+>Això eliminarà automàticament la vora d'una imatge o selecció. Utilitzeu l'escapçat si teniu una figura que no omple tota la imatge o la selecció i voleu eliminar l'excés d'espai en blanc. Per utilitzar aquesta característica amb una vora de la imatge difuminada, també haureu d'utilitzar <link linkend="color-box"
+>Similitud del color</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Balanç</title>
+
+<para
+>Aquesta característica és accessible des del diàleg <link linkend="image-more-effects"
+>Més efectes</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Permet ajustar la brillantor, contrast i gamma de la imatge o de la selecció. </para>
+
+<note>
+<para
+>La mesura més comuna de la gamma (un decimal entre 0,10 i 10,00) es troba entre el botó de selecció de valors <guilabel
+>Gamma</guilabel
+> i el botó <guibutton
+>Reinicia</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Neteja</title>
+
+<para
+>Això omplirà tota la imatge o la selecció amb el color de fons.</para>
+
+<tip>
+<para
+>Feu doble clic sobre la icona <link linkend="tool-eraser-std"
+>Goma d'esborrar</link
+> per esborrar tota la imatge.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Relleu</title>
+
+<para
+>Aquesta característica és accessible des del diàleg <link linkend="image-more-effects"
+>Més efectes</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Marqueu <guilabel
+>Habilita</guilabel
+> per aplicar l'efecte de relleu. Això posarà en relleu les vores i donarà a la imatge o la selecció un <quote
+>aspecte de gravat</quote
+>. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Aplana</title>
+
+<para
+>Aquesta característica és accessible des del diàleg <link linkend="image-more-effects"
+>Més efectes</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Això torna a donar color a la imatge amb diferents tons dels dos colors seleccionats. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Inverteix (capgirada)</title>
+
+<para
+>Això dona la volta verticalment a tota la imatge o a la selecció.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Inverteix</title>
+
+<para
+>Aquesta característica és accessible des del diàleg <link linkend="image-more-effects"
+>Més efectes</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Això permet invertir un o més canals RGB en la imatge o la selecció. Seleccioneu <guilabel
+>Tot</guilabel
+> per a convertir una fotografia en un negatiu i viceversa. En general, això es veu molt divertit.</para>
+
+<tip>
+<para
+>Per invertir ràpidament tots els canals, no cal utilitzar aquest diàleg. En el seu lloc podeu accedir a l'element <guimenuitem
+>Inverteix els colors</guimenuitem
+> en els menús <guimenu
+>Imatge</guimenu
+> o <guimenu
+>Selecció</guimenu
+>. L'element <guimenu
+>Selecció</guimenu
+> només es mostrarà a la barra de menús si utilitzeu una de les eines de selecció. A més, podreu arribar a aquesta acció des del menú contextual que s'obre amb un clic del &BDR; sobre l'àrea de la imatge. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Mirall (horitzontal)</title>
+
+<para
+>És el reflex horitzontal de tota la imatge o de la selecció.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Redueix els colors</title>
+
+<para
+>Aquesta característica és accessible des del diàleg <link linkend="image-more-effects"
+>Més efectes</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Això redueix el nombre de colors utilitzats per la imatge o la selecció, amb tramat o sense. </para>
+
+<para
+>El difuminat generalment proporciona millors resultats de qualitat, però, molts de vosaltres voldreu desactivar-lo per a efectes artístics, &pex;, utilitzant <guilabel
+>Monocrom</guilabel
+> en lloc de <guilabel
+>Monocrom (tramat)</guilabel
+> que li donarà un efecte de silueta. </para>
+
+<para
+>Una altra diferència important és que mentre <guilabel
+>Monocrom (tramat)</guilabel
+> sempre redueix tota la imatge o la selecció a negre i blanc, <guilabel
+>Monocrom</guilabel
+> només ho farà si la imatge o la selecció conté més de 2 colors. </para>
+
+<tip>
+<para
+>Per obtenir un difuminat monocrom de forma ràpida d'una imatge o selecció, utilitzeu l'element <link linkend="image-monochrome"
+>Redueix a monocrom (tramat)</link
+> des dels menús <guimenu
+>Imatge</guimenu
+> o <guimenu
+>Selecció</guimenu
+>. L'element <guimenu
+>Selecció</guimenu
+> només es mostrarà a la barra de menús si utilitzeu una de les eines de selecció. A més, podreu arribar a aquesta acció des del menú contextual que s'obre amb un clic del &BDR; sobre l'àrea de la imatge. </para>
+</tip>
+
+<note>
+<para
+>Canviar el nombre de colors aquí no afectarà sobre la profunditat del color del format de fitxer. Per a canviar la profunditat del color, haureu de seleccionar-la en els diàlegs per desar el fitxer. Tingueu en compte que, confusament, canviant la profunditat del color també canviareu el nombre de colors. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Redueix a escala de grisos</title>
+
+<para
+>Això redueix tota la imatge o la selecció a escala de grisos.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Redueix a monocrom (tramat)</title>
+
+<para
+>Això redueix tota la imatge o la selecció a blanc i negre.</para>
+
+<tip>
+<para
+>Si no voleu difuminar la imatge o la selecció, utilitzeu el diàleg <link linkend="image-reduce-colors"
+>Redueix els colors</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Redimensiona / Escala</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Canviar la mida de la imatge canviarà les dimensions d'aquesta sense aplicar una transformació als continguts existents. Escalar la imatge estirarà el contingut existent a les noves dimensions. Un <guibutton
+>Escalat suau</guibutton
+> generalment proporciona millors resultats de qualitat que l'escalat normal, mitjançant la barreja dels colors veïns.</para>
+
+<para
+>Podeu expressar les noves dimensions en píxels, o com un percentatge de la mida original. Si seleccioneu <guilabel
+>Mantén la relació d'aspecte</guilabel
+>, l'amplada i l'alçada s'ampliaran en el mateix percentatge.</para>
+
+<tip>
+<para
+>Podeu fer <guibutton
+>Redimensiona</guibutton
+> sobre tota la imatge o un <guibutton
+>Escalat suau</guibutton
+> de la selecció utilitzant les nanses corresponents. </para>
+</tip>
+
+<note>
+<para
+>Per a les seleccions només s'admet l'escalat, mentre que per als quadres de text només s'admet canviar la mida. Vegeu <link linkend="image-notes"
+>Notes</link
+> per a detalls addicionals sobre l'aplicació d'aquests efectes.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Gira</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Això fa girar la imatge. Podeu especificar l'angle i la direcció de la rotació.</para>
+
+<tip>
+<para
+>Podeu invertir la direcció de la rotació especificant un angle personalitzat negatiu.</para>
+</tip>
+
+<note>
+<para
+>Vegeu <link linkend="image-notes"
+>Notes</link
+> per obtenir detalls sobre l'aplicació d'aquest efecte a una selecció. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Estableix com a imatge (escapça)</title>
+
+<para
+>Això establirà com a imatge la selecció actual.</para>
+
+<note>
+<para
+>Sols estarà disponible quan tingueu una selecció activa.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Esbiaixa</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Això inclinarà en sentit horitzontal i/o vertical tota la imatge o selecció.</para>
+
+<note>
+<para
+>Vegeu <link linkend="image-notes"
+>Notes</link
+> per obtenir detalls sobre l'aplicació d'aquest efecte a una selecció.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Suavitza i afila</title>
+
+<para
+>Aquesta característica és accessible des del diàleg <link linkend="image-more-effects"
+>Més efectes</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Utilitzeu aquest efecte per a suavitzar o afilar la imatge. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Més efectes</title>
+
+<para
+>Aquest diàleg conté les característiques <link linkend="image-balance"
+>Balanç</link
+>, <link linkend="image-emboss"
+>Relleu</link
+>, <link linkend="image-flatten"
+>Aplana</link
+>, <link linkend="image-invert"
+>Inverteix</link
+>, <link linkend="image-reduce-colors"
+>Redueix els colors</link
+> i <link linkend="image-soften-sharpen"
+>Suavitza i Afila</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Notes</title>
+
+<para
+><link linkend="image-resize-scale"
+>Redimensiona / Escala</link
+>, <link linkend="image-rotate"
+>Gira</link
+> i <link linkend="image-skew"
+>Esbiaixa</link
+> poden canviar les dimensions de la imatge. Podreu veure les noves dimensions en el diàleg.</para>
+
+<para
+>Si apliqueu aquests efectes a una imatge, aquesta es canviarà de mida si cal. Tanmateix, si apliqueu aquests efectes a una selecció, la imatge no es podrà canviar de mida, fins i tot quan la selecció transformada no encaixi.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>La imatge de l'esquerra ha estat girada 30 graus cap a la dreta per formar la imatge de la dreta. El &kolourpaint; ha ampliat la imatge automàticament per acomodar-la al contingut més gran. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>La <emphasis
+>selecció</emphasis
+> de l'esquerra s'ha girat 30 graus cap a la dreta per formar la selecció de la dreta. La mida de la imatge segueix sent la mateixa, per tant, les parts de la selecció no seran visibles sense fer un <link linkend="image-resize-scale"
+>Redimensiona</link
+> sobre la <emphasis
+>imatge</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Crèdits i llicència</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Potser no es tracta d'una documentació concisa o completa, però sí que és honesta. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Copyright del programa &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>Icones específiques del &kolourpaint;, Copyright &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Documentació i material gràfic addicional de la documentació, Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>Parts reproduïdes amb el permís de <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Traductor/Revisor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; <para
+>Aquest programa està llicenciat com segueix:</para>
+
+<para
+>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

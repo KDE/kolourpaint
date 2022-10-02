@@ -1,0 +1,1836 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>Руководство пользователя &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>Илья</firstname
+><surname
+>Бухман</surname
+><affiliation
+><address
+><email
+>me@justerr.net</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Иван</firstname
+><surname
+>Кашуков</surname
+><affiliation
+><address
+><email
+>dolphin210@yandex.ru</email
+></address
+></affiliation
+><contrib
+>Обновление русского перевода</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Александр</firstname
+><surname
+>Подольский</surname
+><affiliation
+><address
+><email
+>apd2004@gmail.com</email
+></address
+></affiliation
+><contrib
+>Обновление русского перевода 2010</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Алексей</firstname
+><surname
+>Баранов</surname
+><affiliation
+><address
+><email
+>aleksei.ee@gmail.com</email
+></address
+></affiliation
+><contrib
+>Обновление русского перевода 2014</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>23 марта 2018 г.</date>
+<releaseinfo
+>Приложения KDE 18.04</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; &mdash; это свободно распространяемое, простое в использовании графическое приложение от &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Введение</title>
+<para
+>&kolourpaint; &mdash; это свободно распространяемое графическое приложение от &kde;. &kolourpaint; идеально подходит для решения таких повседневных задач, как:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Рисование: составление диаграмм и рисование <quote
+>от руки</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Операции со снимками экрана: создание и редактирование снимков экрана</para>
+</listitem>
+<listitem>
+<para
+>Обработка изображений: редактирование фотографий и отсканированных изображений, применение эффектов</para>
+</listitem>
+<listitem>
+<para
+>Редактирование значков: рисование иллюстраций и логотипов с использованием прозрачности</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Использование &kolourpaint;</title>
+
+<para
+>Щёлкните мышью на следующих ссылках, чтобы узнать больше о возможностях &kolourpaint;:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Инструменты</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Работа с цветом</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Параметры просмотра</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Эффекты изображения</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Инструменты</title>
+
+<para
+>Дополнительный параметр в меню <guimenu
+>Настройка</guimenu
+> позволяет указать, следует ли использовать сглаживание при рисовании (по умолчанию этот параметр включён). </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Создание снимков экрана</title>
+
+<para
+><quote
+>Снимок экрана</quote
+> &mdash; это снимок содержимого экрана на вашем компьютере. Он может быть полезен для наглядного представления действий, которые необходимо предпринять для достижения какого-либо результата, либо для того, чтобы показать найденную вами проблему. </para>
+<para
+>Для создания снимка экрана, готового для редактирования в окне &kolourpaint;, вы можете использовать пункт в главном меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Сделать снимок экрана</guimenuitem
+></menuchoice
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>В открывшемся диалоговом окне вы можете менять задержку создания снимка в секундах, также вы можете <guilabel
+>Скрыть главное окно</guilabel
+> при создании снимка. Когда вы будете готовы сделать снимок экрана, просто нажмите на кнопку <guibutton
+>OK</guibutton
+>. Готовый снимок будет сразу помещён в область редактирования &kolourpaint;. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Описание инструментов</title>
+
+<para
+>Чтобы быстро выбрать инструмент в &kolourpaint;, нажмите связанную с ним комбинацию клавиш. Комбинации описаны в секции ниже и в советах по <interface
+>инструментам</interface
+>. Если вы находитесь в режиме набора текста, нажмите <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> и необходимую клавишу. Например, чтобы выбрать кисть, введите <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> или, в обычном режиме, просто В. </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Кисть</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Очистка цвета</link
+> (O) </member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+> Выбор цвета </link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+> Соединённые линии </link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+> Кривая </link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+> Эллипс </link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+> Ластик </link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+> Заливка </link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+> Линия </link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Перо</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+> Многоугольник </link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+> Прямоугольник </link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+> Округлённый прямоугольник </link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+> Выделение (эллиптическое) </link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+> Выделение (свободное) </link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+> Выделение (прямоугольное) </link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+> Распылитель </link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+> Текст </link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Кисть <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Щёлкните мышью или передвигайте мышь с нажатой кнопкой, чтобы провести линию. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Щёлкните на одной из фигур для выбора формы кисточки. Вы можете выбрать круглую, квадратную форму кисти или форму в виде наклонной линии.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Левая кнопка мыши выполняет рисование основным цветом. Правая &mdash; позволяет рисовать цветом фона.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Выбор цвета <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Для того чтобы выбрать основной цвет, щёлкните <mousebutton
+>левой</mousebutton
+> кнопкой мыши на любой точке изображения. Для задания фонового цвета щёлкните <mousebutton
+>правой</mousebutton
+> кнопкой. После этого &kolourpaint; вернётся к последнему выбранному инструменту.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Соединенные линии и Многоугольник <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Перемещайте мышь с нажатой кнопкой для того, чтобы рисовать соединенные линии. Инструмент «Многоугольник» используется точно так же, с той лишь разницей, что начальная и конечная точки автоматически соединяются, образуя многоугольник.</para>
+
+<para
+>Левая кнопка мыши позволяет рисовать основным цветом, правая &mdash; рисует цветом фона, а также инвертирует цвет заливки для многоугольников.</para>
+
+<para
+>Вы можете <link linkend="tool-options"
+>установить ширину линии</link
+>. А для многоугольников вы также можете <link linkend="tool-options"
+>задать способ заливки</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Кривая <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Нажмите левую кнопку мыши и перемещайте мышь для того, чтобы рисовать линию &mdash; таким образом вы установите её начальную и конечную точки. Вы можете установить до двух контрольных точек перетаскиванием. Для того, чтобы завершить формирование кривой без использования контрольных точек, нажмите другую клавишу мыши. Инструмент "Кривая" создает кубическую кривую Безье.</para>
+
+<para
+>Левая кнопка мыши выполняет рисование основным цветом. Правая &mdash; позволяет рисовать цветом фона.</para>
+
+<para
+>Вы также можете <link linkend="tool-options"
+>установить ширину линии</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Эллипс <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Нажмите кнопку мыши и перемещайте курсор для рисования эллипса.</para>
+
+<para
+>Левая клавиша мыши позволяет рисовать основным цветом, правая &mdash; рисует цветом фона, а также инвертирует цвет заливки.</para>
+
+<para
+>Вы также можете <link linkend="tool-options"
+>установить ширину линии и задать способ заливки</link
+>.</para>
+
+<para
+>Для использования дополнительных функций применяйте клавиши-модификаторы:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Чтобы нарисовать круг, передвигайте курсор, удерживая клавишу &Shift;.</para>
+</listitem>
+<listitem>
+<para
+>Для рисования эллипса с заданной центральной точкой необходимо нажать и удерживать &Ctrl;, щёлкнуть на желаемое место центра эллипса и передвигать курсор до тех пор, пока эллипс не примет нужные размер и форму.</para>
+</listitem>
+<listitem>
+<para
+>Для рисования круга с заданной центральной точкой необходимо нажать и удерживать &Ctrl; и &Shift;, щёлкнуть на желаемое место центра круга и передвигать курсор до тех пор, пока круг не примет нужный размер.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Ластики</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Ластик <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Удерживайте кнопку мыши и перемещайте курсор для того, чтобы стирать элементы рисунка.</para>
+
+<note>
+<para
+>В отличие от других инструментов, ластики рисуют цветом фона. Для того, чтобы рисовать основным цветом, используйте правую кнопку мыши.</para>
+</note>
+
+<para
+>Ластик может быть только <link linkend="tool-options"
+>квадратным</link
+>. Для того, чтобы использовать другие формы, например, круг, выберите <link linkend="tool-brush"
+>инструмент «Кисточка»</link
+> и, перемещая её, удерживайте правую кнопку мыши.</para>
+
+<tip>
+<para
+>Дважды щёлкните на пиктограмме ластика, чтобы полностью очистить рисунок. Это действие эквивалентно использованию пункта <link linkend="image-clear"
+>Очистить</link
+> меню «Изображение».</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Очистка цвета <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Удерживайте кнопку мыши и перемещайте курсор для замены точек основного цвета на точки с цветом фона. Для замены всех похожих по цвету пикселов (но необязательно с точно одинаковым цветом) на пикселы с цветом фона, например, в смешанных изображениях или фотографиях, используйте настройку <link linkend="color-box"
+>Похожие цвета</link
+> вместо «Точное соответствие».</para>
+
+<note>
+<para
+>В отличие от других инструментов, ластики рисуют цветом фона. Для того, чтобы заменять цвет фона основным цветом, используйте правую кнопку мыши.</para>
+</note>
+
+<para
+>Вы можете настроить <link linkend="tool-options"
+>размер ластика</link
+>.</para>
+
+<tip>
+<para
+>Дважды щёлкните на иконке «Очистка цвета», чтобы применить её ко всему изображению.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Заливка <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Для заполнения области одного цвета щёлкните мышью внутри неё. Для заполнения области с похожими цветами используйте пункт <link linkend="color-box"
+>Похожие цвета</link
+> вместо «Точное соответствие».</para>
+
+<para
+>По щелчку левой кнопки мыши будет произведена заливка основным цветом, правой &mdash; цветом фона.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Линия <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Удерживайте клавишу мыши и перемещайте курсор, чтобы нарисовать линию.</para>
+
+<para
+>Левая кнопка мыши выполняет рисование основным цветом. Правая &mdash; позволяет рисовать цветом фона.</para>
+
+<para
+>Вы также можете <link linkend="tool-options"
+>установить ширину линии</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Удерживайте &Ctrl; для рисования линий под углами, кратными 30 градусам &mdash; это линии в красной диаграмме.</para>
+</listitem>
+<listitem>
+<para
+>Удерживайте &Shift; для рисования линий под углом в 45 градусов &mdash; эти линии на синей диаграмме.</para>
+</listitem>
+<listitem>
+<para
+>Удерживайте &Ctrl; и &Shift; для рисования линий под углом, кратным 30 или 45 градусам &mdash; эти линии на зеленой диаграмме.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Перо <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Щёлкните мышью для того, чтобы поставить одну точку, или перемещайте курсор с нажатой кнопкой для рисования произвольной линии.</para>
+
+<para
+>Левая кнопка мыши выполняет рисование основным цветом. Правая &mdash; позволяет рисовать цветом фона. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Прямоугольники <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Удерживая кнопку мыши, перемещайте курсор для рисования прямоугольника. Округленный прямоугольник &mdash; это прямоугольник с скругленными углами.</para>
+
+<para
+>Левая клавиша мыши позволяет рисовать основным цветом, правая &mdash; рисует цветом фона, а также инвертирует цвет заливки.</para>
+
+<para
+>Вы также можете <link linkend="tool-options"
+>установить ширину линии и задать способ заливки</link
+>.</para>
+
+<para
+>Для использования дополнительных функций применяйте клавиши-модификаторы:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Удерживайте &Shift;, чтобы нарисовать квадрат.</para>
+</listitem>
+<listitem>
+<para
+>Для рисования прямоугольника с заданным центром необходимо нажать и удерживать &Ctrl;, кликнуть на желаемое место центра прямоугольника и передвигать курсор до тех пор, пока фигура не примет нужные размер и форму.</para>
+</listitem>
+<listitem>
+<para
+>Для рисования квадрата с заданным центром необходимо нажать и удерживать &Ctrl; и &Shift;, кликнуть на желаемое место центра квадрата и передвигать курсор до тех пор, пока фигура не примет нужный размер.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Выделение <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Используйте инструменты выделения для выбора определённой области изображения.</para>
+
+<para
+>Чтобы перетащить выделенную область, удерживайте левую клавишу мыши и начните перемещать курсор. Главное окно будет прокручиваться по мере необходимости, что позволит вам перетащить выделенное на ту часть изображения, которая в данный момент не видна.</para>
+
+<para
+>Вы можете изменять размер всего изображения или выделенной области с помощью диалоговых окон <link linkend="image-resize-scale"
+>Изменить размер</link
+> и <link linkend="image-resize-scale"
+>Сглаженное масшатбирование</link
+> или простым перетаскивание соответствующих контрольных точек (квадратики рядом со сторонами границы). Зажмите &Shift; во время изменения размера выделенной области для сохранения пропорций. Правая кнопка мыши вызывает контекстное меню со стандартными командами редактирования из меню <guimenu
+>Правка</guimenu
+> и <link linkend="image-effects-section"
+>эффектами изображения</link
+>. </para>
+
+<tip>
+<para
+>Вы можете использовать курсорные клавиши, чтобы выделять и перемещать область.</para>
+</tip>
+
+<para
+>Если перед перемещением выделенной области зажать &Ctrl;, будет перемещаться копия выделенной области. При зажатом &Shift; выделенная область будет размазываться. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Существует два режима выделения: сплошной (выбирается по умолчанию) и прозрачный. Если вы используете прозрачный режим выделения, то все пикселы фонового цвета будут считаться прозрачными (вычитание фона). Это позволяет вставить выделенную область без фона. Для того, чтобы выполнить отделение фона на фрагменте со смешанными цветами, используйте параметр <link linkend="color-box"
+>Схожесть цвета</link
+>.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Можно применять различные эффекты к выделенной области &mdash; см. секцию <link linkend="image-effects-section"
+>Эффекты изображения</link
+> для получения дополнительной информации.</para>
+
+<para
+>Возможно сохранить выделение в файл: выберите в контекстном меню выделения пункт <guimenuitem
+>Копировать в файл...</guimenuitem
+> или воспользуйтесь пунктом главного меню <menuchoice
+><guimenu
+>Правка</guimenu
+><guimenuitem
+>Копировать в файл...</guimenuitem
+></menuchoice
+>. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Распылитель <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Нажмите кнопку мыши и перемещайте курсор, чтобы использовать распылитель. Чем дольше вы будете удерживать клавишу мыши на одном месте, тем более концентрированным будет цветовое пятно.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щёлкните мышью на одном из квадратов, чтобы выбрать размер области распыления. Вы можете выбирать размер в 9x9, 17x17 и 29x29 пикселов.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Левая кнопка мыши выполняет рисование основным цветом. Правая &mdash; позволяет рисовать цветом фона.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Текст <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Выделите курсором мыши область, в которой вы бы хотели разместить текст. Как только появится рамка, ограничивающая область ввода текста, вы можете начинать вводить его. Чтобы переместить эту область, нажмите и удерживайте левую кнопку мыши на границе области, и перемещайте её. Чтобы изменить размер области, используйте диалоговое окно <link linkend="image-resize-scale"
+>Изменить размер</link
+> или перетаскивайте контрольные точки (квадратики рядом со сторонами границы). </para>
+
+<tip>
+<para
+>Если вы случайно сняли выделение с текстовой области, вы можете использовать пункт меню <guimenuitem
+>Отменить действие</guimenuitem
+>, чтобы вернуться к редактированию текста.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Использование прозрачного цвета</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>На картинке слева вы можете увидеть пример изображения. Правая картинка показывает добавление текста с непрозрачными цветами фона и переднего плана. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Изображение слева демонстрирует добавление текста с непрозрачным основным цветом и прозрачным цветом фона. Рисунок справа показывает добавление текста с прозрачным основным цветом и непрозрачным цветом фона.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Общие параметры инструментов</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щёлкните мышью на одном из квадратов для выбора размера ластика. Вы можете выбирать размер в 2, 3, 5, 9, 17 и 29 пикселов.</para>
+
+<para
+>Изменение размера ластика влияет только на <link linkend="tool-erasers"
+>ластики</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щелкните мышью на одной из линий, чтобы изменить ширину линии. Вы можете выбрать ширину в 1, 2, 3, 5 и 8 пикселов.</para>
+
+<para
+>Изменение ширины линии влияет на инструменты: <link linkend="tool-polystar"
+>Соединённые линии</link
+>, <link linkend="tool-curve"
+>Кривая</link
+>, <link linkend="tool-ellipse"
+>Эллипс</link
+>, <link linkend="tool-line"
+>Линия</link
+>, <link linkend="tool-polystar"
+>Многоугольник</link
+>, <link linkend="tool-rectangles"
+>Прямоугольник</link
+> и <link linkend="tool-rectangles"
+>Скругленный прямоугольник</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Щелкните на одном из прямоугольников для выбора стиля заливки. Существуют следующие варианты заливки: без заполнения, заполнение фоновым цветом и заполнение основным цветом.</para
+> <para
+>Тип заливки влияет на следующие инструменты: <link linkend="tool-ellipse"
+>Эллипс</link
+>, <link linkend="tool-polystar"
+>Многоугольник</link
+>, <link linkend="tool-rectangles"
+>Прямоугольник</link
+> и <link linkend="tool-rectangles"
+>Скругленный прямоугольник</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Работа с цветом</title>
+
+<sect1 id="color-box">
+<title
+>Цветовая палитра</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Цветовая палитра</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Цветовая палитра разделена на три секции: цветовая табличка, непосредственно палитра и инструмент для настройки степени схожести цветов.</para>
+
+<para
+>Цветовая табличка показывает текущий основной цвет в виде квадратика поверх другого такого же квадрата, представляющего цвет фона. При рисовании с использованием левой кнопки мыши используется основной цвет, при использовании правой &mdash; цвет фона (за исключением <link linkend="tool-erasers"
+>ластиков</link
+>). Вы можете щёлкнуть на двунаправленной стрелке, чтобы поменять местами основной и фоновый цвета. </para>
+
+<para
+>Цветовая палитра отображает набор доступных цветов. Полупрозрачная пирамида представляет прозрачный цвет. Щелкните левой кнопкой мыши на любом цвете для выбора основного цвета либо используйте правую кнопку для установки цвета фона. Также вы можете перетаскивать мышью любой непрозрачный цвет в квадраты цветовой таблички. Для редактирования цвета в табличке или палитре дважды щелкните на нем мышью. Инструмент <link linkend="tool-color-picker"
+>Выбор цвета</link
+> позволяет выбрать любой цвет, уже имеющийся в изображении. </para>
+
+<para
+>Настройка схожести цвета позволяет более эффективно работать с изображениями и фотографиями, содержащими смешанные цвета (как и инструмент <quote
+>Волшебная палочка</quote
+>, присутствующий во многих других программах для работы с графикой). Настройка схожести цветов используется при работе с прозрачным выделением, а также с инструментами <link linkend="tool-flood-fill"
+>Заливка</link
+>, <link linkend="tool-eraser-clr"
+>Очистка цвета</link
+> и <link linkend="image-autocrop"
+>Автообрезка</link
+>. Дважды щелкните на инструменте настройки схожести цвета для выбора того, насколько похожими должны быть цвета, чтобы считаться идентичными. При использовании инструмента выделения в режиме прозрачности, любой цвет в области выделения, считающийся идентичным цвету фона, будет также считаться прозрачным.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Левое изображение показывает образец. Справа изображены результаты использования заливки со значениями «Степени схожести цветов» в 5%, 15% и 30%. В этом примере, с использованием настройки схожести цветов <guilabel
+>Точное соответствие</guilabel
+>, заливка от точки (80, 100) заполнит только один пиксел, так как остальные пикселы схожи, но не полностью идентичны. С увеличением параметра схожести цветов больше пикселов будут считаться идентичными, и заливка распространится больше. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Параметры просмотра</title>
+
+<sect1 id="view-options-section">
+<title
+>Описание параметров просмотра</title>
+
+<para
+><link linkend="view-zoom"
+>Наложение сетки при увеличении</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Миниатюра</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Наложение сетки при увеличении</title>
+<para
+>Увеличьте масштаб для редактирования изображения с высокой точностью или уменьшите его, чтобы увидеть большую часть изображения.</para>
+
+<important>
+<para
+>С масштабом не кратным 100%, некоторые части изображения могут смещаться неравномерно (могут смещаться относительно изображения), когда пользователь работает с ним.  Другие незначительные сбои прорисовки могут происходить при таком масштабе. </para>
+</important>
+
+<para
+>При масштабе в 400% или большем, который также является кратным 100%,  вы можете использовать режим <guimenuitem
+>Показать сетку</guimenuitem
+> для точного редактирования каждого пиксела.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Первая картинка показывает значок инструмента <link linkend="tool-text"
+>Текст</link
+>, в то время как вторая показывает это же при увеличении в 600% и с наложенной сеткой.</para>
+
+<tip>
+<para
+>Другой способ увеличения или уменьшения масштаба, когда вы не рисуете, — это прокручивание <mousebutton
+>колёсика</mousebutton
+> мыши, зажимая &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Миниатюра</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Если <guimenuitem
+>Режим увеличения миниатюр</guimenuitem
+> активен, то всё изображение отображается, масштабируется по мере необходимости, чтобы умещаться в окне для миниатюр (верхнее правое изображение). </para>
+<para
+>В противном случае, миниатюра показывает как можно большую часть изображения, начиная с верхнего левого угла (правый нижний рисунок). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Эффекты изображения</title>
+
+<sect1 id="image-effects-section">
+<title
+>Описание эффектов</title>
+<para
+><link linkend="image-autocrop"
+>Автообрезка / Удалить внутреннюю границу</link
+></para>
+<para
+><link linkend="image-balance"
+>Баланс</link
+></para>
+<para
+><link linkend="image-clear"
+>Очистить</link
+></para>
+<para
+><link linkend="image-emboss"
+>Рельеф</link
+></para>
+<para
+><link linkend="image-flatten"
+>Вдавленный</link
+></para>
+<para
+><link linkend="image-flip"
+>Перевернуть (сверху вниз)</link
+></para>
+<para
+><link linkend="image-invert"
+>Инвертировать цвета</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Уменьшить количество цветов</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Преобразовать в оттенки серого</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Сделать чёрно-белым (со смешиванием)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Отразить (слева направо)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Изменить размер / Масштабировать</link
+></para>
+<para
+><link linkend="image-rotate"
+>Повернуть</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Кадрировать</link
+></para>
+<para
+><link linkend="image-skew"
+>Исказить</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Резкость</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Больше эффектов</link
+></para>
+<para
+><link linkend="image-notes"
+>Примечания</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Автообрезка / Удалить внутреннюю границу</title>
+
+<para
+>Автоматически обрезает область, окаймляющую изображение или выделенный участок. Используйте этот инструмент, если основной элемент изображения не занимает всю область рисунка, и вы желаете удалить лишнее пустое пространство. Если в области, которую планируется обрезать, имеются смешанные цвета, то вам также потребуется использовать настройку <link linkend="color-box"
+>схожести цветов</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Баланс</title>
+
+<para
+>Параметр доступен через диалоговое окно <link linkend="image-more-effects"
+>Больше эффектов</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Инструмент позволяет изменить яркость, контраст и гамму всего изображения или выделенной области. </para>
+
+<note>
+<para
+>Чтобы изменить значение гаммы (в пределах от 0.10 до 10.00), используйте поле ввода числа <guilabel
+>Гамма</guilabel
+> и кнопку <guibutton
+>Сбросить</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Очистить</title>
+
+<para
+>Заполняет всю область изображения цветом фона.</para>
+
+<tip>
+<para
+>Дважды щёлкните мышью на значке инструмента <link linkend="tool-eraser-std"
+>Ластик</link
+>, чтобы очистить всё изображение.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Рельеф</title>
+
+<para
+>Параметр доступен через диалоговое окно <link linkend="image-more-effects"
+>Больше эффектов</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Чтобы применить эффект, нажмите кнопку <guilabel
+>Включить</guilabel
+>. При этом углы будут сделаны более чёткими, а изображение будет больше похоже на гравюру. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Вдавленный</title>
+
+<para
+>Параметр доступен через диалоговое окно <link linkend="image-more-effects"
+>Больше эффектов</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Области, закрашенные выбранным цветом, будут перерисованы с заменой цвета на его градации. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Перевернуть (сверху вниз)</title>
+
+<para
+>Переворачивает всё изображение или выделенную область относительно горизонтальной оси.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Инвертировать</title>
+
+<para
+>Параметр доступен через диалоговое окно <link linkend="image-more-effects"
+>Больше эффектов</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Красная, зелёная или синяя компоненты (несколько или все вместе) будут инвертированы (заменены на дополнения до максимального значения). Вы можете использовать этот эффект для преобразования фотографии в негатив или наоборот. Обычно это выглядит довольно забавно.</para>
+
+<tip>
+<para
+>Чтобы инвертировать сразу все компоненты, используйте пункт <guimenuitem
+>Инвертировать цвета</guimenuitem
+> меню <guimenu
+>Изображение</guimenu
+> или <guimenu
+>Выделение</guimenu
+>. Пункт меню <guimenu
+>Выделение</guimenu
+> доступен, если вы используете один из инструментов выделения.  Кроме того, вы можете использовать пункт из контекстного меню, вызванного нажатием правой кнопки мыши в области изображения. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Отразить (слева направо)</title>
+
+<para
+>Отражает всё изображение или выделенную область относительно вертикальной оси.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Уменьшить количество цветов</title>
+
+<para
+>Параметр доступен через диалоговое окно <link linkend="image-more-effects"
+>Больше эффектов</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Уменьшить количество цветов, используемых во всём изображении или в выделенной области, со смешиванием или без него. </para>
+
+<para
+>При использовании смешивания результаты обычно получаются лучше, однако в некоторых случаях лучше его не использовать (для создания художественных эффектов). Например, если вы будете использовать <guilabel
+>Чёрно-белый</guilabel
+> вместо <guilabel
+>Чёрно-белый (со смешиванием)</guilabel
+>, вы получите силуэт изображённого объекта. </para>
+
+<para
+>Другим важным отличием является то, что в то время как <guilabel
+>Чёрно-белый (со смешиванием)</guilabel
+> всегда будет преобразовывать всё изображение (или выделенную область) в чёрно-белое, <guilabel
+>Чёрно-белый</guilabel
+> сделает это только тогда, когда изображение или выделенная область содержит более двух цветов. </para>
+
+<tip>
+<para
+>Чтобы быстро привести изображение к чёрно-белому со смешиванием, используйте пункт <link linkend="image-monochrome"
+>Преобразовать в чёрно-белый (со смешиванием)</link
+> меню <guimenu
+>Изображение</guimenu
+> или <guimenu
+>Выделение</guimenu
+>. Пункт меню <guimenu
+>Выделение</guimenu
+> доступен, если вы используете один из инструментов выделения.  Кроме того, вы можете использовать пункт из контекстного меню, вызванного нажатием правой кнопки мыши в области изображения. </para>
+</tip>
+
+<note>
+<para
+>Изменение количества цветов не влияет на глубину цвета изображения. Глубину цвета можно изменить в диалоговом окне сохранения изображения. Однако, к сожалению, при уменьшении глубины цвета будет уменьшено и количество цветов. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Преобразовать в оттенки серого</title>
+
+<para
+>Преобразует цвета всего изображения или выделенной области в оттенки серого.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Преобразовать в чёрно-белый (со смешиванием)</title>
+
+<para
+>Преобразует цвета всего изображения или выделенной области в чёрный и белый.</para>
+
+<tip>
+<para
+>Если вы не хотите применять смешивание, используйте диалоговое окно <link linkend="image-reduce-colors"
+>Уменьшить количество цветов</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Изменить размер/Масштабировать</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Размеры изображения будут увеличены, однако никакие фактические изменения не вносятся. При использовании команды <guibutton
+>Масштабировать выделение со сглаживанием</guibutton
+> результаты обычно получаются лучше, так как при этом соседние цвета смешиваются.</para>
+
+<para
+>Вы можете задавать новый размер в пикселах или в процентах от исходного размера. Если вы включите параметр <guilabel
+>Сохранять пропорции</guilabel
+>, то ширина и высота будут меняться в одинаковое количество раз.</para>
+
+<tip>
+<para
+>Вы можете свободно трансформировать изображение, используя инструмент <guibutton
+>Изменить размер</guibutton
+>, или, используя <guibutton
+>Масштабировать выделение со сглаживанием</guibutton
+>, трансформировать выделенную область. </para>
+</tip>
+
+<note>
+<para
+>Для выделенной области возможно использование только обычного масштабирования. А для текстовых областей возможно только изменение размера. См. <link linkend="image-notes"
+>примечания</link
+> для получения дополнительной информации о работе с этими эффектами.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Повернуть</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Поворачивает изображение. Вы можете указать угол и направление поворота.</para>
+
+<tip>
+<para
+>Можно выполнить вращение в обратную сторону. Для этого нужно задать отрицательное значение угла.</para>
+</tip>
+
+<note>
+<para
+>См. <link linkend="image-notes"
+>примечания</link
+> для информации о применении этого эффекта к выделенной области. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Кадрировать</title>
+
+<para
+>Обрезает все части изображения, находящиеся за границами выделенной области.</para>
+
+<note>
+<para
+>Этот эффект доступен только в том случае, если задана выделенная область.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Исказить</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Искажает всё изображение или выделенную область по горизонтали и/или вертикали.</para>
+
+<note>
+<para
+>См. <link linkend="image-notes"
+>примечания</link
+> для информации о применении этого эффекта к выделенной области.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Резкость</title>
+
+<para
+>Параметр доступен через диалоговое окно <link linkend="image-more-effects"
+>Больше эффектов</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Используйте этот эффект, чтобы изменить резкость изображения. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Больше эффектов</title>
+
+<para
+>Диалоговое окно содержит инструменты <link linkend="image-balance"
+>Баланс</link
+>, <link linkend="image-emboss"
+>Рельеф</link
+>, <link linkend="image-flatten"
+>Вдавленный</link
+>, <link linkend="image-invert"
+>Инвертировать</link
+>, <link linkend="image-reduce-colors"
+>Уменьшить количество цветов</link
+> и <link linkend="image-soften-sharpen"
+>Резкость</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Заметки</title>
+
+<para
+>Эффекты <link linkend="image-resize-scale"
+>Изменение размера</link
+>, <link linkend="image-rotate"
+>Поворот</link
+> и <link linkend="image-skew"
+>Искажение</link
+> могут изменить размер рабочей области рисунка. Вы можете наблюдать новые размеры в диалоговом окне.</para>
+
+<para
+>Если вы применяете эти эффекты к изображению, изображение при необходимости будет увеличено или уменьшено. Тем не менее, если вы применяете их к выделенной области, размер изображения не сменится даже в случае, если выделенная область не будет помещаться в нем после применения фильтра.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Левое изображение получилось из правого в результате поворота на 30 градусов по часовой стрелке. &kolourpaint; автоматически увеличила изображение. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Левая <emphasis
+>выделенная область</emphasis
+> получилась из правой в результате поворота на 30 градусов. Размер изображения не был изменён, однако часть повёрнутой области не будет видна без <link linkend="image-resize-scale"
+>изменения размера</link
+> <emphasis
+>изображения</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Авторские права и лицензия</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Возможно, эта документация недостаточно лаконична, возможно, она не закончена, но это честная документация. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Все права защищены &copy;  2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>&kolourpaint; &mdash; авторские права на использованные пиктограммы принадлежат : &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Документация и иллюстрации к документации Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>Части программы воспроизведены с разрешения <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Перевод на русский язык: Илья Бухман <email
+>me@justerr.net</email
+></para
+><para
+>Перевод на русский язык: Иван Кашуков <email
+>dolphin210@yandex.ru</email
+></para
+><para
+>Обновление русского перевода 2010: Александр Подольский <email
+>apd2004@gmail.com</email
+></para
+><para
+>Обновление русского перевода 2014: Алексей Баранов <email
+>aleksei.ee@gmail.com</email
+></para
+> &underFDL; <para
+>Условия лицензии программы:</para>
+
+<para
+>Программа &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>Все права защищены.
+
+
+Разрешается повторное распространение и использование
+как в виде исходного кода, так и в двоичной форме,
+с изменениями или без, при соблюдении следующих условий:
+
+1. При повторном распространении исходного кода должны оставаться
+    указанное выше уведомление об авторском праве, этот список условий
+    и последующий отказ от гарантий.
+
+2. При повторном распространении двоичного кода указанное выше
+    уведомление об авторском праве, этот список условий и последующий
+    отказ от гарантий должны оставаться в документации и/или в других
+    материалах, поставляемых при распространении.
+
+
+ЭТА ПРОГРАММА ПРЕДОСТАВЛЯЕТСЯ АВТОРОМ «КАК ЕСТЬ» БЕЗ КАКИХ-ЛИБО
+ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ ГАРАНТИЙ, В ТОМ ЧИСЛЕ ПОДРАЗУМЕВАЕМЫХ
+ГАРАНТИЙ КОММЕРЧЕСКОЙ ЦЕННОСТИ И ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ.
+АВТОР НИ В КОЕМ СЛУЧАЕ НЕ НЕСЁТ ОТВЕТСТВЕННОСТИ ЗА ЛЮБЫЕ ПРЯМЫЕ,
+КОСВЕННЫЕ, СЛУЧАЙНЫЕ, ФАКТИЧЕСКИЕ, ШТРАФНЫЕ ИЛИ ПОСЛЕДОВАВШИЕ
+УБЫТКИ (ВКЛЮЧАЯ, СРЕДИ ПРОЧЕГО, ПРИОБРЕТЕНИЕ ЗАМЕНЯЮЩИХ ТОВАРОВ
+ИЛИ УСЛУГ; УТРАТУ ЭКСПЛУАТАЦИОННЫХ КАЧЕСТВ, ДАННЫХ ИЛИ ДОХОДОВ;
+ИЛИ ПЕРЕРЫВ В КОММЕРЧЕСКОЙ ДЕЯТЕЛЬНОСТИ), НЕЗАВИСИМО ОТ ОБРАЗА И
+ПРИЧИНЫ ИХ ВОЗНИКНОВЕНИЯ, БУДЬ ТО В СИЛУ ДОГОВОРА, ПРЯМОЙ
+ОТВЕТСТВЕННОСТИ ИЛИ ПРАВОНАРУШЕНИЯ (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ
+ИНОЕ), ВОЗНИКШИЕ ВСЛЕДСТВИЕ ИСПОЛЬЗОВАНИЯ ЭТОГО ПРОГРАММНОГО
+ОБЕСПЕЧЕНИЯ, ДАЖЕ ЕСЛИ БЫЛ ИЗВЕЩЁН О ВОЗМОЖНОСТИ ТАКИХ УБЫТКОВ.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

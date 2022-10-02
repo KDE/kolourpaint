@@ -1,0 +1,1764 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>Het handboek van &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+&Freek.de.Kruijf;&Ruben.Van.Laerhoven; 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2018-03-23</date>
+<releaseinfo
+>Applications 18.04</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; is een vrij en gemakkelijk te gebruiken grafisch programma door &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Inleiding</title>
+<para
+>&kolourpaint; is een vrij en gemakkelijk te gebruiken grafisch programma door &kde;. Het is perfect voor alledaagse taken zoals:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Tekenen - diagrammen tekenen en <quote
+>vingerverven</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Schermafdrukken behandelen - verkrijg en bewerkt schermafdrukken</para>
+</listitem>
+<listitem>
+<para
+>Afbeeldingen bewerken - foto's en verkregen afbeeldingen bewerken; effecten toepassen</para>
+</listitem>
+<listitem>
+<para
+>Pictogrammen bewerken - clip-arts en logo's met transparantie tekenen</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>&kolourpaint; gebruiken</title>
+
+<para
+>Klik op de volgende koppelingen om de mogelijkheden van &kolourpaint; te verkennen:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Hulpmiddelen</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Werken met kleur</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Weergave-opties</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Afbeeldingseffecten</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Hulpmiddelen</title>
+
+<para
+>Een extra optie in het menu <guimenu
+>Instellingen</guimenu
+> stelt u in staat te definiëren of de hulpmiddelen tekenen met anti-aliasing (standaard) of niet. </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Schermafdrukken verkrijgen</title>
+
+<para
+>Een <quote
+>schermafdruk</quote
+> is een momentopname van wat er op uw computerscherm stond. Het kan nuttig zijn om sommige acties, die gedaan moeten worden, uit te leggen om het resultaat te verkrijgen of om het probleem te laten zien dat u hebt gevonden. </para>
+<para
+>Om een schermafdruk gereed te maken voor bewerking in het venster van &kolourpaint; kunt u het menuitem <menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Schermafdruk verkrijgen</guimenuitem
+></menuchoice
+> uit het hoofdmenu van &kolourpaint; gebruiken. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Met de geopende dialoog kunt u <guilabel
+>Vertraging schermafdruk</guilabel
+> (in seconden) wijzigen en <guilabel
+>Hoofdvenster verbergen</guilabel
+> kiezen bij het maken van de schermafdruk. Als u klaar bent om de schermafdruk te maken, klikt u gewoon op de knop <guibutton
+>OK</guibutton
+>. De genomen schermafdruk zal direct in het bewerkingsgebied van &kolourpaint; worden geplaatst. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Verwijzing naar hulpmiddelen</title>
+
+<para
+>Een snelle manier om een hulpmiddel te selecteren in &kolourpaint; is om de sneltoets (bestaat maar uit 1 teken) in te drukken die aan dat hulpmiddel gekoppeld is, zoals hieronder beschreven en zoals in de tooltips van het <interface
+>Hulpmiddelenvak</interface
+>. U kunt ook tegelijk <keycombo action="simul"
+>&Alt; &Shift;</keycombo
+> en de juiste toets indrukken, wat bijvoorbeeld nodig is wanneer u tekst aan het schrijven bent (de reden hiervoor is dat bij het schrijven van tekst de sneltoetsen die bestaan uit 1 teken uitgeschakeld zullen zijn). Om bijvoorbeeld het penseel te selecteren, drukt u op <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+> </keycombo
+> of gewoon B (wanneer u geen tekst aan het typen bent). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Penseel</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Kleurwisser</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Kleurenkiezer</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Verbonden lijnen</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Kromme</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>Ellips</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Gum</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Vloedvulling</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Lijn</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Pen</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Veelhoek</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Rechthoek</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Afgeronde rechthoek</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Selectie (ellipsvormig)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Selectie (vrije vorm)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Selectie (rechthoekig) </link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Spuitbus</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Tekst</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Penseel <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Klik, of klik en sleep met het penseel om te tekenen. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Klik op een van de penseelmodellen om een model te kiezen. U kunt een cirkelvormige, vierkante, schuine streep voorover en schuine streep achterover gebruiken.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Kleurenkiezer <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik met de <mousebutton
+>linker muisknop</mousebutton
+> op een pixel om de voorgrondkleur in te stellen. Om de achtergrondkleur in te stellen klikt u met de <mousebutton
+>rechter</mousebutton
+> op een pixel. &kolourpaint; zal daarna terugkeren naar het vorige geselecteerde hulpmiddel.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Verbonden lijnen en veelhoek <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om verbonden lijnen te tekenen. Het veelhoekhulpmiddel wordt op dezelfde manier gebruikt, maar de begin- en eindpunten worden automatisch verbonden om een veelhoek te vormen.</para>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur en keert ook de vulkleur om voor veelhoeken.</para>
+
+<para
+>U kunt de <link linkend="tool-options"
+>lijndikte instellen</link
+>. En voor veelhoeken kunt u eveneens <link linkend="tool-options"
+>de vulstijl instellen</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Kromme <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om een lijn te tekenen - hierdoor stelt u de start- en eindpunten in. Door te slepen kunt u twee controlepunten instellen. Als u de controlepunten niet (allemaal) wilt gebruiken, klikt u gewoon met de andere muistoets. Dan zal het hulpmiddel een kubische Bezier-kromme tekenen.</para>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur.</para>
+
+<para
+>U kunt ook <link linkend="tool-options"
+>de lijndikte instellen</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Ellips <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om een ellips te tekenen.</para>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur en keert ook de vulkleur om.</para>
+
+<para
+>U kunt ook <link linkend="tool-options"
+>de lijndikte en vulstijl instellen</link
+>.</para>
+
+<para
+>Gebruik de modificatietoetsen voor nog meer functies:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Houd &Shift; ingedrukt en sleep dan om een cirkel te tekenen.</para>
+</listitem>
+<listitem>
+<para
+>Om een ellips te tekenen met een centraal punt naar uw keuze, houdt u &Ctrl; ingedrukt, klikt u op het centrale punt, en sleept dan totdat de juiste grootte en vorm voor de ellips bereikt is.</para>
+</listitem>
+<listitem>
+<para
+>Om een cirkel te tekenen met een centraal punt naar uw keuze, houdt u &Ctrl; en &Shift; ingedrukt, klikt u op het centrale punt en sleept dan totdat de cirkel de juiste grootte heeft.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Gummen</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Gum <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep met de gum om fouten uit te wissen.</para>
+
+<note>
+<para
+>In tegenstelling tot andere hulpmiddelen, tekent de gum in de achtergrondkleur. Om in de voorgrondkleur te tekenen, gebruikt u de &RMB;.</para>
+</note>
+
+<para
+>De gum heeft alleen <link linkend="tool-options"
+>vierkante vormen </link
+>. Om andere vormen, zoals cirkels, te gebruiken, kunt u het <link linkend="tool-brush"
+>Penseel</link
+> nemen en gebruiken met de achtergrondkleur.</para>
+
+<tip>
+<para
+>Dubbelklik op het pictogram van de gum om de hele afbeelding te wissen. Dit is hetzelfde als de optie <link linkend="image-clear"
+>Wissen</link
+> in het afbeeldingsmenu.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Kleurwisser <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om pixels in de voorgrondkleur te vervangen door de achtergrondkleur. Om alle gelijkaardige (maar niet perfect gelijke) pixels te vervangen met de voorgrondkleur, zoals bijvoorbeeld in diffuus gekleurde afbeeldingen en foto's, stelt u de <link linkend="color-box"
+>Kleurovereenkomst</link
+> in op een andere waarde dan Exact.</para>
+
+<note>
+<para
+>Anders dan andere gereedschappen, gebruikt de gum de achtergrondkleur. Om pixels in de achtergrondkleur te vervangen door de voorgrondkleur, kunt u de &RMB; gebruiken.</para>
+</note>
+
+<para
+>U kunt de <link linkend="tool-options"
+>gumgrootte</link
+> instellen.</para>
+
+<tip>
+<para
+>Dubbelklik op het Kleurwisser-pictogram om het hulpmiddel toe te passen op de hele afbeelding.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Vloedvulling <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik om een gebied te vullen. Om een diffuus gebied te vullen, kunt u <link linkend="color-box"
+>Kleurovereenkomst</link
+> instellen op iets anders dan Exact.</para>
+
+<para
+>De &LMB; vult met de voorgrondkleur. Daartegenover vult de &RMB; met de achtergrondkleur.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Lijn <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om een lijn te tekenen.</para>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur.</para>
+
+<para
+>U kunt ook <link linkend="tool-options"
+>de lijndikte instellen</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Houd &Ctrl; ingedrukt om lijnen te tekenen in een hoek die het dichtst ligt bij een veelvoud van 30 graden - dit zijn de lijnen in het rode diagram.</para>
+</listitem>
+<listitem>
+<para
+>Houd &Shift; ingeduwd om lijnen te tekenen in een hoek die het dichtst ligt bij een veelvoud van 45 graden - dit zijn de lijnen in het blauwe diagram.</para>
+</listitem>
+<listitem>
+<para
+>Houd &Ctrl; en &Shift; ingeduwd om lijnen te tekenen in een hoek die het dichtst ligt bij een veelvoud van 30 of 45 graden - dit zijn de lijnen in het groene diagram.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Pen <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik om een punt te tekenen of klik en sleep om een lijn te tekenen met de losse hand.</para>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Rechthoeken <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om een rechthoek te tekenen. De Afgeronde rechthoek is een rechthoek met afgeronde hoeken.</para>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur en keert ook de vulkleur om.</para>
+
+<para
+>U kunt ook <link linkend="tool-options"
+>de lijndikte en vulstijl instellen</link
+>.</para>
+
+<para
+>Gebruik de modificatietoetsen voor nog meer functies:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Houd &Shift; ingedrukt om een vierkant te tekenen.</para>
+</listitem>
+<listitem>
+<para
+>Om een rechthoek te tekenen met een middelpunt naar keuze, drukt u op &Ctrl;, klik daarna op het middelpunt en sleep totdat de rechthoek de juiste vorm en grootte heeft.</para>
+</listitem>
+<listitem>
+<para
+>Om een vierkant te tekenen met een centraal punt naar uw keuze, houdt u &Ctrl; en &Shift; ingedrukt, klik op het middelpunt en sleep dan de muis totdat het vierkant de juiste grootte heeft.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Selecties <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Gebruik de selectiehulpmiddelen om de grenzen van een selectie te tekenen.</para>
+
+<para
+>Om een selectie te verplaatsen, kunt u erop klikken en deze verslepen.  De hoofdweergave zal meeschuiven wanneer u de selectie wilt verplaatsen naar een plaats op de afbeelding die momenteel niet getoond wordt.</para>
+
+<para
+>U kunt <link linkend="image-resize-scale"
+> de grootte wijzigen</link
+> (vrije vorm) van de hele afbeelding of de selectie <link linkend="image-resize-scale"
+>Vloeiend schalen</link
+> met de handgrepen. Houdt &Shift; ingedrukt als u met de vrije hand een selectie schaalt, maar daarbij toch de beeldverhoudingen wilt behouden. De &RMB; roept een contextmenu op met de algemene commando's voor <guimenu
+>Bewerken</guimenu
+> en <link linkend="image-effects-section"
+>Afbeeldingseffecten</link
+>. </para>
+
+<tip>
+<para
+>U kunt de pijltjestoetsen gebruiken bij het uitbreiden van de selectie, of bij het verplaatsen ervan.</para>
+</tip>
+
+<para
+>U kunt &Ctrl; indrukken voor het verplaatsen van de selectie. Op die manier verplaatst u een kopie van de oorspronkelijke selectie. De selectie zal uitgesmeerd worden wanneer u &Shift; ingedrukt houdt. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Er zijn twee selectiemodussen: dekkend (standaard) en transparant. Wanneer u de transparante selectiemodus gebruikt, zullen alle pixels in de achtergrondkleur transparant zijn (uittrekken uit achtergrond). Hierdoor kunt u een selectie plakken zonder achtergrond. Om uit te trekken uit de achtergrond in een diffuse afbeelding, stelt u <link linkend="color-box"
+>Kleurovereenkomst</link
+> in op iets anders dan Exact.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>U kunt Afbeeldingseffecten toepassen op een selectie - zie het deel <link linkend="image-effects-section"
+>Afbeeldingseffecten</link
+> voor meer informatie.</para>
+
+<para
+>Het is mogelijk om selectie naar bestand op te slaan met het item <guimenuitem
+>Naar bestand kopiëren...</guimenuitem
+> uit het contextmenu voor selectie of item <menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Naar bestand kopiëren...</guimenuitem
+></menuchoice
+> uit het hoofdmenu. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Spuitbus <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om graffiti te spuiten. Houd de muisknop ingedrukt om een meer geconcentreerde straal te verkrijgen.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klik op één van de vormen om een spuitgrootte te selecteren. U kunt spuitgroottes selecteren van 9x9, 17x17 en 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>De &LMB; tekent in de voorgrondkleur. De &RMB; tekent in de achtergrondkleur.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Tekst <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Klik en sleep om een gebied te creëren waarin u tekst wilt typen. Zodra de rand wordt getoond kunt beginnen met typen van de tekst. Klik op de rand en versleep dan het gebied. U kunt de grootte van het tekstvak wijzigen door een van de handgrepen te verslepen of door gebruik te maken van het dialoogvenster <link linkend="image-resize-scale"
+>Grootte wijzigen</link
+>. </para>
+
+<tip>
+<para
+>Als u een tekstvak gedeselecteerd hebt, kunt u dit <guimenuitem
+>Ongedaan maken</guimenuitem
+> om de tekst opnieuw te bewerken.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Transparante kleur gebruiken</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>De linkerafbeelding is het voorbeeld. De rechter toont de toevoeging van tekst met dekkende voor- en achtergrondkleuren. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>De linker afbeelding toont de toevoeging van tekst met dekkende voorgrondkleuren en een transparante achtergrondkleur. De rechter afbeelding toont de toevoeging van tekst met een transparante voorgrondkleur en een dekkende achtergrondkleur.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Algemene hulpmiddelopties</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klik op de vierkanten om een gumgrootte te selecteren. U kunt vierkanten selecteren met een lengte van 2, 3, 5, 9, 17 en 29 pixels voor een zijde.</para>
+
+<para
+>De grootte-instelling van de gum is van toepassing op <link linkend="tool-erasers"
+>Gummen</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klik op een van de lijnen om een lijndikte te selecteren. U kunt volgende lijndiktes instellen: 1, 2, 3, 5 en 8 pixel(s).</para>
+
+<para
+>De instelling voor lijndikte is van toepassing op volgende hulpmiddelen:<link linkend="tool-polystar"
+>Verbonden lijnen</link
+>, <link linkend="tool-curve"
+>Kromme</link
+>, <link linkend="tool-ellipse"
+>Ellips</link
+>, <link linkend="tool-line"
+>Lijn</link
+>, <link linkend="tool-polystar"
+>Veelhoek</link
+>, <link linkend="tool-rectangles"
+>rechthoek</link
+> en <link linkend="tool-rectangles"
+>Afgeronde rechthoek</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Klik op een van de rechthoeken om een vulstijl te selecteren. U kunt de volgende stijlen selecteren: Geen vulling, vullen met achtergrondkleur en vullen met voorgrondkleur.</para
+> <para
+>De instelling voor vulstijlen is van toepassing op de volgende hulpmiddelen:<link linkend="tool-ellipse"
+>Ellips</link
+>, <link linkend="tool-polystar"
+>Veelhoek</link
+>, <link linkend="tool-rectangles"
+>Rechthoek</link
+> en <link linkend="tool-rectangles"
+>Afgeronde rechthoek</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Werken met kleur</title>
+
+<sect1 id="color-box">
+<title
+>Het kleurenpallet</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Kleurenpallet</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Het kleurenpallet heeft 3 hoofddelen: het kleurenvak, het kleurenpalet en de kleurovereenkomstkiezer.</para>
+
+<para
+>Het kleurenvak toont de huidige voorgrondkleur als een vierkant bovenop het andere vierkant dat de huidige achtergrondkleur vertegenwoordigt. Als u tekent met de &LMB;, wordt de voorgrondkleur gebruikt, en wanneer u tekent met de &RMB; wordt de achtergrondkleur gebruikt (behalve voor <link linkend="tool-erasers"
+>Gummen</link
+>). U kunt klikken op de dubbele pijl om de voor- en achtergrondkleuren om te wisselen. </para>
+
+<para
+>Het kleurenpalet toont een selectie van kleuren waaruit u kunt kiezen. De transparante pyramide vertegenwoordigt de transparantiekleur. Klik met de linkermuisknop op een kleur om de voorgrondkleur in te stellen en gebruikt de rechtermuisknop om een kleur te selecteren voor de achtergrondkleur. U kunt ook een dekkende kleur slepen naar de vierkanten van het kleurenvak. Om een kleur te bewerken in het kleurenvak of kleurenpalet, kunt u erop dubbelklikken. Met de <link linkend="tool-color-picker"
+>Kleurenkiezer</link
+> kunt u dan een kleur uit de afbeelding kiezen. </para>
+
+<para
+>Met kleurovereenkomst kunt u beter diffuse afbeeldingen en foto's bewerken; dit is gelijkaardig aan een <quote
+>Magische toverstok</quote
+>functie in andere tekenprogramma's. Het wordt gebruikt bij de volgende hulpmiddelen:  transparante selecties, <link linkend="tool-flood-fill"
+>Vloedvulling</link
+>, <link linkend="tool-eraser-clr"
+>Kleurwisser</link
+> en <link linkend="image-autocrop"
+>Automatisch bijsnijden / interne rand verwijderen</link
+>. Dubbelklik op het pictogram voor kleurovereenkomst om te kiezen wanneer gelijkaardige kleuren identiek moeten worden beschouwd. Als u in de transparantiemodus selecties gebruikt, zal elke kleur die gelijkaardig is aan de achtergrondkleur ook transparant gemaakt worden.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>De linker afbeelding toont een voorbeeld. De rechter demonstreert de toepassing van een vloedvulling, met kleurovereenkomstinstellingen van 5%, 15% en 30%. In dit voorbeeld, met als kleurovereenkomstinstelling <guilabel
+>Exact</guilabel
+> en een vloedvulling van (80,100), zou er maar één pixel gevuld worden, omdat de omliggende pixels gelijkaardig maar niet identiek zijn. Wanneer de kleurovereenkomst verhoogd wordt, zullen er meer pixels die gelijkaardig zijn qua kleur als identiek beschouwd worden, waardoor de vulling zich natuurlijk verder uitbreidt. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Weergave-opties</title>
+
+<sect1 id="view-options-section">
+<title
+>Verwijzing naar weergave-opties</title>
+
+<para
+><link linkend="view-zoom"
+>Zoomen volgens raster</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Miniatuur</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Zoomen volgens raster</title>
+<para
+>Verhoog het zoomniveau om afbeeldingen met een grotere precisie te bewerken, of verlaag dit om een groter deel van de afbeelding te zien.</para>
+
+<important>
+<para
+>Bij zoomniveau's die geen veelvouden van 100% zijn, kan het lijken dat bepaalde delen van de afbeelding verschuiven wanneer de gebruiker ermee bezig is. Er kunnen zich ook andere kleine weergaveproblemen voordoen bij deze zoomniveau's. </para>
+</important>
+
+<para
+>Bij zoomniveau's gelijk aan of groter dan 400% (die ook veelvouden zijn van 100%), kunt u het <guimenuitem
+>Raster tonen</guimenuitem
+> om individuele pixels nauwkeuriger te bewerken.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>De eerste afbeelding toont het <link linkend="tool-text"
+>Tekst</link
+>hulpmiddelenpictogram, terwijl de laatste deze toont met een zoomniveau van 600% met het raster aan.</para>
+
+<tip>
+<para
+>Een andere manier om te zoomen, terwijl u niet aan het tekenen bent, is scrollen met het <mousebutton
+>muiswiel</mousebutton
+> terwijl u &Ctrl; ingedrukt houdt. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Miniatuur</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Als <guimenuitem
+>Gezoomde miniatuurmodus</guimenuitem
+> geselecteerd is, wordt de gehele afbeelding getoond, indien nodig geschaald om in het miniatuurvenster te passen (afbeelding rechtsboven). </para>
+<para
+>Anders toont de miniatuur zoveel mogelijk van de afbeelding, vertrekkend vanuit links-boven hoek van de hoofdweergave (afbeelding rechtsonder). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Afbeeldingseffecten</title>
+
+<sect1 id="image-effects-section">
+<title
+>Verwijzing naar afbeeldingseffecten</title>
+<para
+><link linkend="image-autocrop"
+>Automatisch bijsnijden / Interne rand verwijderen</link
+></para>
+<para
+><link linkend="image-balance"
+>Balans</link
+></para>
+<para
+><link linkend="image-clear"
+>Wissen</link
+></para>
+<para
+><link linkend="image-emboss"
+>Reliëf</link
+></para>
+<para
+><link linkend="image-flatten"
+>Plat maken</link
+></para>
+<para
+><link linkend="image-flip"
+>Omdraaien (ondersteboven)</link
+></para>
+<para
+><link linkend="image-invert"
+>Kleuren omkeren</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Kleuren beperken</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Reduceren naar grijswaarden</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Reduceren naar monochroom (diffuus)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Spiegelen (horizontaal)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Grootte wijzigen / schalen</link
+></para>
+<para
+><link linkend="image-rotate"
+>Roteren</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Als afbeelding instellen (bijsnijden)</link
+></para>
+<para
+><link linkend="image-skew"
+>Scheeftrekken</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Verzachten &amp; verscherpen</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Meer effecten</link
+></para>
+<para
+><link linkend="image-notes"
+>Opmerkingen</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Automatisch bijsnijden / Interne rand verwijderen</title>
+
+<para
+>Dit verwijdert automatisch de rand van een afbeelding of selectie. Gebruik automatisch bijsnijden als u een figuur hebt die niet de gehele afbeelding of selectie vult, en u de overbodige witruimte wilt verwijderen. Om deze functie te gebruiken bij een diffuse afbeeldingsrand, zult u ook gebruik moeten maken van <link linkend="color-box"
+>Kleurovereenkomst</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Balans</title>
+
+<para
+>Deze functie is bereikbaar in het <link linkend="image-more-effects"
+>Meer effecten</link
+> dialoogvenster. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Hiermee kunt u de helderheid, het contrast en het gamma van de afbeelding of selectie instellen. </para>
+
+<note>
+<para
+>De meer algemene waarden voor gamma (een decimaal tussen 0,10 en 10,00) zijn gelegen tussen de <guilabel
+>Gamma</guilabel
+>schuifregelaar en de <guibutton
+>Reset</guibutton
+>-knop. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Beginwaarde</title>
+
+<para
+>Dit vult de hele afbeelding of selectie met de achtergrondkleur.</para>
+
+<tip>
+<para
+>Dubbelklik op het pictogram <link linkend="tool-eraser-std"
+>Gum</link
+> om de hele afbeelding te wissen.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Reliëf</title>
+
+<para
+>Deze functie is bereikbaar in het <link linkend="image-more-effects"
+>Meer effecten</link
+> dialoogvenster. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Activeer <guilabel
+>Inschakelen</guilabel
+> om het reliëfeffect toe te passen. Dit benadrukt de randen en geeft de afbeelding of selectie een &quot;gegraveerd uiterlijk&quot;. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Plat maken</title>
+
+<para
+>Deze functie is bereikbaar in het <link linkend="image-more-effects"
+>Meer effecten</link
+> dialoogvenster. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Dit kleurt de afbeelding opnieuw in met verschillende kleurtinten van de twee geselecteerde kleuren. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Omdraaien (ondersteboven)</title>
+
+<para
+>Dit spiegelt de hele afbeelding of selectie verticaal.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Kleuren omkeren</title>
+
+<para
+>Deze functie is bereikbaar in het <link linkend="image-more-effects"
+>Meer effecten</link
+> dialoogvenster. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Hiermee kunt u één of meerdere RGB kanalen in de afbeelding of selectie omkeren. Selecteer <guilabel
+>Allemaal</guilabel
+> om een foto in een negatief te veranderen en vice versa. Dit ziet er meestal wel grappig uit.</para>
+
+<tip>
+<para
+>Om snel alle kanalen om te keren, moet u dit dialoogvenster niet gebruiken. U kunt in plaats daarvan het <guimenuitem
+>Kleuren omkeren</guimenuitem
+> item in het menu <guimenu
+>Afbeelding</guimenu
+> of <guimenu
+>Selectie</guimenu
+> gebruiken. Het <guimenu
+>Selectie</guimenu
+>-menu wordt enkel getoond in de menubalk als u één van de selectiehulpmiddelen gebruikt. U kunt deze actie ook bereiken vanuit het contextmenu met een &RMB; klik in het afbeeldingsgebied. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Spiegelen (horizontaal)</title>
+
+<para
+>Dit spiegelt de hele afbeelding of selectie horizontaal.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Kleuren beperken</title>
+
+<para
+>Deze functie is bereikbaar in het <link linkend="image-more-effects"
+>Meer effecten</link
+> dialoogvenster. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Dit beperkt het aantal kleuren dat gebruikt wordt in de afbeelding of selectie, met of zonder verspreiding. </para>
+
+<para
+>Verspreiding resulteert normaal gezien in een betere kwaliteit, hoewel u het misschien wilt uitschakelen voor artistieke effecten; &eg; als u <guilabel
+>Monochroom</guilabel
+> gebruikt i.p.v. <guilabel
+>Monochroom (diffuus)</guilabel
+> geeft dit een silhouet-effect. </para>
+
+<para
+>Een ander belangrijk onderscheid is dat <guilabel
+>Monochroom (diffuus)</guilabel
+> altijd de hele afbeelding of selectie naar zwart-wit reduceert, terwijl <guilabel
+>Monochroom</guilabel
+> dit alleen zal doen als de afbeelding of selectie meer dan 2 kleuren bevat. </para>
+
+<tip>
+<para
+>Gebruik voor een snelle, benaderde monochrome afbeelding of selectie, het item <link linkend="image-monochrome"
+>Reduceren naar monochroom (diffuus)</link
+> in het menu <guimenu
+>Afbeelding</guimenu
+> of <guimenu
+>Selectie</guimenu
+>. Het menu <guimenu
+>Selectie</guimenu
+> wordt enkel getoond in de menubalk wanneer u een van de selectiehulpmiddelen gebruikt. U kunt deze actie ook bereiken vanuit het contextmenu met een &RMB;-klik in het afbeeldingsgebied. </para>
+</tip>
+
+<note>
+<para
+>Het aantal kleuren hier veranderen heeft geen effect op de kleurdiepte van het bestandsformaat. Als u de kleurdiepte wilt veranderen, doet u dat in het dialoogvenster doen waar u het bestand opslaat. Merk op dat de kleurdiepte veranderen ook het aantal kleuren verandert (wat verwarrend kan zijn). </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Beperken naar grijswaarden</title>
+
+<para
+>Dit beperkt de gehele afbeelding of selectie naar grijswaarden.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Reduceren naar monochroom (diffuus)</title>
+
+<para
+>Dit reduceert de gehele afbeelding of selectie naar zwart-wit.</para>
+
+<tip>
+<para
+>Als u de afbeelding of selectie niet diffuus wilt hebben, gebruikt u het dialoogvenster <link linkend="image-reduce-colors"
+>Kleuren beperken</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Grootte wijzigen / schalen</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Een afbeelding veranderen van grootte verandert de afmetingen van een afbeelding zonder een transformatie toe te passen op de bestaande inhoud. Een afbeelding schalen zal de bestaande inhoud uitgerekt worden naar de nieuwe afmetingen. Maar <guibutton
+>Vloeiend schalen</guibutton
+> realiseert meestal een betere kwaliteit dan gewoon schalen, omdat pixels dan vermengd worden met de naburige kleuren.</para>
+
+<para
+>U kunt de nieuwe afmetingen in pixels uitdrukken of in een percentage t.o.v. de oorspronkelijke afmetingen. Als u <guilabel
+>Verhoudingen behouden</guilabel
+> selecteert, zal de breedte en hoogte met hetzelfde percentage geschaald worden.</para>
+
+<tip>
+<para
+>U kunt een hele afbeelding met de losse hand van <guibutton
+>Grootte veranderen</guibutton
+>, of een selectie <guibutton
+>Vloeiend schalen</guibutton
+> door gebruik te maken van de daarvoor bestemde handgrepen. </para>
+</tip>
+
+<note>
+<para
+>Bij selecties wordt alleen schalen ondersteund en bij tekstvakken alleen een verandering van grootte. Zie <link linkend="image-notes"
+>Opmerkingen</link
+> voor extra details over het toepassen van deze effecten.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Roteren</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Dit roteert de afbeelding. U kunt de hoek en de richting van de rotatie specificeren.</para>
+
+<tip>
+<para
+>U kunt de richting van de rotatie veranderen door een bepaalde negatieve waarde op te geven voor de hoek.</para>
+</tip>
+
+<note>
+<para
+>Zie <link linkend="image-notes"
+>Opmerkingen</link
+> voor details over het toepassen van dit effect op een selectie. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Als afbeelding instellen (bijsnijden)</title>
+
+<para
+>Dit zal de selectie instellen als een afbeelding.</para>
+
+<note>
+<para
+>Deze mogelijkheid is alleen beschikbaar wanneer u met een actieve selectie bezig bent.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Scheeftrekken</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Dit trekt de hele afbeelding of selectie scheef: horizontaal en/of verticaal.</para>
+
+<note>
+<para
+>Zie <link linkend="image-notes"
+>Opmerkingen</link
+> voor details over het toepassen van dit effect op een selectie.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Verzachten &amp; verscherpen</title>
+
+<para
+>Deze functie is bereikbaar in het <link linkend="image-more-effects"
+>Meer effecten</link
+> dialoogvenster. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Gebruik dit effect om een afbeelding te verscherpen of te verzachten. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Meer effecten</title>
+
+<para
+>Dit dialoogvenster bevat de functies <link linkend="image-balance"
+>Balans</link
+>, <link linkend="image-emboss"
+>Reliëf</link
+>, <link linkend="image-flatten"
+>Plat maken</link
+>, <link linkend="image-invert"
+>Omkeren</link
+>, <link linkend="image-reduce-colors"
+>Kleuren beperken</link
+> en <link linkend="image-soften-sharpen"
+> Verzachten &amp; verscherpen</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Opmerkingen</title>
+
+<para
+><link linkend="image-resize-scale"
+>Grootte wijzigen / schalen</link
+>, <link linkend="image-rotate"
+>Roteren</link
+> en <link linkend="image-skew"
+>Hellen</link
+> kunnen de afmetingen van een afbeelding veranderen. U kunt de nieuwe afmetingen zien in het dialoogvenster.</para>
+
+<para
+>Als u deze effecten op een afbeelding toepast, zal de grootte van de afbeelding, indien nodig, gewijzigd worden. Als u daarentegen deze effecten toepast op een selectie, zal de afbeelding niet van grootte veranderen, zelfs niet wanneer de getransformeerde selectie niet meer past in de oorspronkelijke afbeelding.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>De linker afbeelding is 30 graden met de klok mee gedraaid om de rechter afbeelding te vormen. &kolourpaint; heeft de afbeelding automatisch vergroot om de grotere inhoud de nodige plaats te geven. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>De linker <emphasis
+>selectie</emphasis
+> is 30 graden met de klok mee gedraaid om de rechter selectie te verkrijgen. De grootte van de afbeelding is hetzelfde gebleven, ondanks dat sommige delen van de afbeelding niet zichtbaar zullen zijn zonder de <emphasis
+>afbeelding</emphasis
+> van <link linkend="image-resize-scale"
+>grootte te veranderen</link
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Dankbetuiging en licentie</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Het kan zijn dat de documentatie niet erg beknopt is; het is ook mogelijk dat het geen volledige documentatie is; maar het is wel eerlijke documentatie. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Copyright programma &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>Specifieke pictogrammen voor &kolourpaint; Copyright &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Documentatie en extra artistieke bijdragen Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>Gedeelten zijn gereproduceerd met toelating van <ulink url="http://kolourpaint.sourceforge.net/"
+> </ulink
+>.</para>
+
+&meld.fouten;&vertaling.freek;&vertaling.ruben;&nagelezen.freek; &underFDL; <para
+>Dit programma heeft volgende licentie:</para>
+
+<para
+>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

@@ -1,0 +1,1754 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&kolourpaint;">
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY package "kdegraphics">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Polish "INCLUDE">
+]>
+
+<book lang="&language;">
+
+<bookinfo>
+<title
+>Podręcznik programu &kolourpaint;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>Marcin</firstname
+><surname
+>Kocur</surname
+><affiliation
+><address
+><email
+>marcin2006@gmail.com</email
+></address
+></affiliation
+><contrib
+>Polskie tłumaczenie</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2005-12-29</date>
+<releaseinfo
+>1.4_relight</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; jest wolnym (w sensie wolności), prostym w obsłudze programem graficznym dla &kde;. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolourpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Wprowadzenie</title>
+<para
+>&kolourpaint; jest wolnym (w sensie wolności), prostym w obsłudze programem graficznym dla &kde;. Nadaje się świetnie do popularnych zadań, takich jak:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Malowanie - rysowanie diagramów i <quote
+>malowanie odręczne</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Modyfikacja obrazów - edycja zrzutów ekranu i fotografii; dodawanie efektów</para>
+</listitem>
+<listitem>
+<para
+>Edycja ikon - rysowanie przezroczystych clipartów i log</para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Obsługa programu &kolourpaint;</title>
+
+<para
+>Kliknij na poniższe odnośniki, aby zapoznać się z możliwościami &kolourpaint;:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Narzędzia</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Praca z kolorami</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Opcje widoku</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Efekty obrazów</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Narzędzia</title>
+
+<sect1 id="tool-reference">
+<title
+>Spis narzędzi</title>
+
+<para
+>Szybkim sposobem na wybranie narzędzia w &kolourpaint; jest wciśnięcie pojedynczego klawisza, przypisanego do odpowiedniego narzędzia. Informacje na temat tych przypisań znajdują się poniżej, a także w dymkach podpowiedzi, wyświetlanych po najechaniu kursorem myszy na odpowiednie narzędzie, znajdujące się na <interface
+>Pasku narzędzi</interface
+>. Możesz także przytrzymać <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> podczas naciskania przycisku. Jest to konieczne, jeśli piszesz jakiś tekst (wciśnięcie w tym momencie pojedynczego przycisku spowoduje napisane tej litery, zamiast wyboru narzędzia). Przykładowy wybór Pędzla: <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> lub po prostu B (gdy nie wpisujesz tekstu). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>Pędzel</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Usuwacz koloru</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Narzędzie wybierania koloru</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Połączone linie</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>Krzywa</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>Elipsa</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Gumka</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Wypełnienie</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>Linia</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>Pióro</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>Wielokąt</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Prostokąt</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>Zaokrąglony prostokąt</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Zaznaczenie (eliptyczne)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Zaznaczenie (dowolny kształt)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>Zaznaczenie (prostokątne)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>Malowanie rozpylaczem</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>Tekst</link
+> (T) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Pędzel <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Kliknij lub przyciśnij i przeciągnij pędzlem po kartce, aby malować. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Kliknij na jednym z kształtów, aby wybrać kształt końcówki pędzla. Z kształtów możesz wybrać okrąg, kwadrat, ukośnik lub odwrotny ukośnik.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Lewy przycisk myszy maluje kolorem pierwszoplanowym, prawy przycisk maluje kolorem tła.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Narzędzie wybierania koloru <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Aby za pomocą narzędzia wybierania koloru wybrać kolor pierwszoplanowy, kliknij <mousebutton
+>lewym</mousebutton
+> przyciskiem myszy na fragmencie obrazu. Aby wybrać kolor tła, kliknij <mousebutton
+>prawym</mousebutton
+> przyciskiem myszy na fragmencie obrazu. Po wybraniu koloru, &kolourpaint; wróci do poprzednio używanego narzędzia.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Połączone linie i Wielokąt <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknij w kilku miejscach, aby narysować połączone linie. Narzędzie wielokątu obsługuje się w ten sam sposób, jednak punkt początkowy i końcowy są automatycznie łączone w formę wielokątu.</para>
+
+<para
+>Lewy przycisk myszy rysuje na pierwszym planie. Prawy przycisk myszy rysuje tło, a także odwraca kolor wypełnienia dla wielokątów.</para>
+
+<para
+>Możesz <link linkend="tool-options"
+>wybrać szerokość linii</link
+>. Dla wielokątów możesz także <link linkend="tool-options"
+>wybrać sposób wypełniania</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Krzywa <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymaj przycisk myszy i przeciągnij, aby narysować linię - spowoduje to określenie punktu startowego i końcowego. Możesz ustawić do dwóch punktów pośrednich przez klikanie w dowolnych miejscach. Aby zakończyć krzywą bez użycia obu lub choćby jednego punktu pośredniego, kliknij inny przycisk myszy. Narzędzie Krzywa rysuje krzywe Baziera.</para>
+
+<para
+>Lewy przycisk myszy maluje kolorem pierwszoplanowym, prawy przycisk maluje kolorem tła.</para>
+
+<para
+>Możesz także <link linkend="tool-options"
+>określić szerokość linii</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Elipsa <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymaj przycisk myszy i przeciągnij, aby narysować elipsę.</para>
+
+<para
+>Lewy przycisk myszy rysuje kolor pierwszoplanowy. Prawy przycisk myszy rysuje kolor tła i odwraca kolor wypełnienia.</para>
+
+<para
+>Możesz także <link linkend="tool-options"
+>określić szerokość linii i sposób wypełnienia</link
+>.</para>
+
+<para
+>Dodatkowa funkcjonalność jest dostępna przy użyciu klawiszy modyfikujących:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Przytrzymaj &Shift; i przeciągnij, przytrzymując klawisz myszy, aby narysować okrąg.</para>
+</listitem>
+<listitem>
+<para
+>Aby wybrać środek elipsy, przytrzymaj &Ctrl;, kliknij w miejscu, w którym ma się znaleźć środek elipsy, przytrzymując w dalszym ciągu przycisk myszy, przeciągaj nią tak długo, aż elipsa nabierze odpowiedniego rozmiaru i kształtu.</para>
+</listitem>
+<listitem>
+<para
+>Aby wybrać środek okręgu, przytrzymaj &Ctrl; i &Shift;, kliknij w miejscu, w którym ma się znaleźć środek okręgu, przytrzymując w dalszym ciągu przycisk myszy, przeciągaj nią tak długo, aż okrąg nabierze odpowiedniego rozmiaru.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Wymazywacze</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Gumka <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymaj lewy przycisk myszy i przeciągnij gumką, aby wygumować popełnione błędy.</para>
+
+<note>
+<para
+>W odróżnieniu od innych narzędzi, gumka rysuje na warstwie koloru tła. Aby rysować na pierwszym planie, użyj prawego przycisku myszy.</para>
+</note>
+
+<para
+>Gumka posiada tylko <link linkend="tool-options"
+>kwadratowe kształty</link
+>. Aby rysować innymi kształtami, takimi jak np. okręgi, użyj <link linkend="tool-brush"
+>Pędzla</link
+> prawym przyciskiem myszy.</para>
+
+<tip>
+<para
+>Kliknij podwójnie na ikonie gumki, aby wyczyścić cały obszar kartki. Jest to odpowiednik polecenia <link linkend="image-clear"
+>Wyczyść</link
+> z menu Obrazek.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Usuwacz koloru <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymując lewy przycisk myszy, przeciągnij po obrazie, aby zamienić kolor pierwszoplanowy na kolor tła. Aby podmienić piksele o kolorze pierwszoplanowy lub do niego podobnym (przydatne dla obrazków lub zdjęć z efektem wygładzania) na kolor tła, ustaw opcję <link linkend="color-box"
+>Podobieństwo kolorów</link
+> na wartość inną, niż "Dokładne dopasowanie".</para>
+
+<note>
+<para
+>W odróżnieniu od innych narzędzi, usuwacz koloru rysuje na warstwie koloru tła. Aby rysować na pierwszym planie, użyj prawego przycisku myszy.</para>
+</note>
+
+<para
+>Możesz określić <link linkend="tool-options"
+>rozmiar usuwacza koloru</link
+>.</para>
+
+<tip>
+<para
+>Kliknij podwójnie na ikonę usuwacza koloru, aby zastosować go na całym obrazie.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Wypełnienie <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknij, aby wypełnić obszar. Aby wypełnić wygładzony obszar, ustaw opcję <link linkend="color-box"
+>Podobieństwo kolorów</link
+> na wartość inną, niż "Dokładne dopasowanie".</para>
+
+<para
+>Lewy przycisk myszy wypełnia kolorem pierwszopalnowy. Prawy przycisk myszy wypełnia kolorem tła.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Linia <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymując klawisz myszy, przeciągnij, aby narysować linię.</para>
+
+<para
+>Lewy przycisk myszy maluje kolorem pierwszoplanowym, prawy przycisk maluje kolorem tła.</para>
+
+<para
+>Możesz także <link linkend="tool-options"
+>określić szerokość linii</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Przytrzymaj &Ctrl;, aby rysować linie oddalone od siebie o 30 stopni - ilustruje je diagram czerwony.</para>
+</listitem>
+<listitem>
+<para
+>Przytrzymaj &Shift;, aby rysować linie oddalone od siebie o 45 stopni - ilustruje je diagram niebieski.</para>
+</listitem>
+<listitem>
+<para
+>Przytrzymaj &Ctrl; i &Shift;, aby rysować linie oddalone od siebie o 30 lub 45 stopni - ilustruje je diagram zielony.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Pióro <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknij, aby narysować kropkę lub przytrzymując przeciągnij, aby narysować dowolną linię.</para>
+
+<para
+>Lewy przycisk myszy maluje kolorem pierwszoplanowym, prawy przycisk maluje kolorem tła. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Prostokąty <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymaj i przeciągnij, aby narysować prostokąt. Zaokrąglony prostokąt to prostokąt z zaokrąglonymi narożnikami.</para>
+
+<para
+>Lewy przycisk myszy rysuje kolor pierwszoplanowy. Prawy przycisk myszy rysuje kolor tła i odwraca kolor wypełnienia.</para>
+
+<para
+>Możesz także <link linkend="tool-options"
+>określić szerokość linii i sposób wypełnienia</link
+>.</para>
+
+<para
+>Dodatkowa funkcjonalność jest dostępna przy użyciu klawiszy modyfikujących:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Przytrzymaj &Shift;, aby narysować kwadrat.</para>
+</listitem>
+<listitem>
+<para
+>Aby wybrać środek prostokąta, przytrzymaj &Ctrl;, przyciśnij przycisk myszy w wybranym punkcie środkowym i przeciągnij nią, aż prostokąt nabierze odpowiedniego rozmiaru i kształtu.</para>
+</listitem>
+<listitem>
+<para
+>Aby wybrać środek kwadratu, przytrzymaj &Ctrl; i &Shift;, przyciśnij przycisk myszy w wybranym punkcie środkowym i przeciągnij nią, aż kwadrat nabierze odpowiedniego rozmiaru.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Zaznaczenia <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Użyj narzędzi do zaznaczania, aby wyznaczyć granice zaznaczenia.</para>
+
+<para
+>Aby przesunąć zaznaczenie, przytrzymaj nad nim przycisk myszy i przeciągnij. Obrazek zostanie odpowiednio przesunięty, abyś mógł bez przeszkód dotrzeć nawet do aktualnie niewidocznej jego części.</para>
+
+<para
+>Możesz <link linkend="image-resize-scale"
+>zmienić rozmiar</link
+> całego obrazka lub <link linkend="image-resize-scale"
+>płynnie przeskalować</link
+> zaznaczenie przy użyciu odpowiednich uchwytów. Przytrzymaj &Shift; podczas zmiany rozmiaru zaznaczenia, aby zachować proporcje (najpierw zacznij zmieniać rozmiar, później wciśnij &Shift; - przyp. tłumacza). Prawy przycisk myszy przywołuje menu z popularnymi poleceniami menu <guimenu
+>Edycja</guimenu
+>, a także z <link linkend="image-effects-section"
+>Efektami obrazów</link
+>. </para>
+
+<tip>
+<para
+>Możesz użyć przycisków ze strzałkami podczas wyznaczania granicy zaznaczenia lub podczas przenoszenia zaznaczenia.</para>
+</tip>
+
+<para
+>Jeśli wciśniesz &Ctrl; przed przeniesieniem zaznaczenia, spowodujesz przeniesienie kopii tego zaznaczenia. Jeśli wciśniesz &Shift;, zaznaczenie zostanie rozsmarowane podczas przenoszenia. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Istnieją dwa sposoby zaznaczania. Nieprzezroczysty (domyślny) i przezroczysty. Jeśli użyjesz sposobu przezroczystego, kolor tła stanie się przezroczysty (zostanie usunięty). Pozwoli Ci to na wklejenie zaznaczenia bez tła. Aby usunąć kolor tła na wygładzonym obrazku, użyj <link linkend="color-box"
+>podobieństwa kolorów</link
+> innego, niż "Dokładne dopasowanie".</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Możesz zastosować Efekty obrazów na zaznaczeniu - przeczytaj sekcję <link linkend="image-effects-section"
+>Efekty obrazów</link
+> aby uzyskać więcej informacji.</para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Malowanie rozpylaczem <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymując klawisz myszy przeciągaj, aby rysować graffiti za pomocą sprayu. Aby uzyskać bardziej skoncentrowaną farbę, przesuwaj wolniej myszą lub ją zatrzymaj.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknij na jednym z kształtów, aby wybrać zakres rozpylania farby. Możesz wybrać promień rozpylanej farby w pikselach: 9x9, 17x17 i 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Lewy przycisk myszy maluje kolorem pierwszoplanowym, prawy przycisk maluje kolorem tła.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Tekst <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Przytrzymując przycisk myszy, narysuj obszar, w którym chcesz pisać tekst. Przytrzymując przycisk myszy na obramowaniu ramki tekstowej, możesz nią przesuwać. Możesz zmienić rozmiar ramki tekstowej przy użyciu uchwytów lub przy użyciu okna <link linkend="image-resize-scale"
+>zmiany rozmiaru</link
+>. </para>
+
+<tip>
+<para
+>Jeśli odznaczyłeś ramkę tekstową, możesz użyć funkcji <guimenuitem
+>Cofnij</guimenuitem
+>, aby ponownie edytować tekst.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Obsługa przezroczystości kolorów</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Obrazek po lewej to przykład. Obrazek po prawej to przykład wraz z ramką tekstową o nieprzezroczystym kolorze pierwszoplanowym i nieprzezroczystym kolorze tła. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Obrazek po lewej ukazuje przykład wraz z ramką tekstową o nieprzezroczystym kolorze pierwszoplanowym i przezroczystym kolorze tła. Obrazek po prawej ukazuje przykład wraz z ramką tekstową o przezroczystym kolorze pierwszoplanowym i nieprzezroczystym kolorze tła. </para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Wspólne parametry narzędzi</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknij na jednym z kwadratów, aby wybrać rozmiar wymazywacza. Możesz wybrać spomiędzy kwadratów o długości boku 2, 3, 5, 9, 17 i 29 pikseli.</para>
+
+<para
+>Powyższe ustawienie działa dla <link linkend="tool-erasers"
+>Wymazywaczy</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknij na jednej z linii, aby wybrać jej grubość. Możesz ją wybrać spomiędzy odcinków o grubości 1, 2, 3, 5 i 8 pikseli.</para>
+
+<para
+>Ustawienie grubości linii ma zastosowanie dla narzędzi: <link linkend="tool-polystar"
+>Połączone linie</link
+>, <link linkend="tool-curve"
+>Krzywa</link
+>, <link linkend="tool-ellipse"
+>Elipsa</link
+>, <link linkend="tool-line"
+>Linia</link
+>, <link linkend="tool-polystar"
+>Wielokąt</link
+>, <link linkend="tool-rectangles"
+>Prostokąt</link
+> i <link linkend="tool-rectangles"
+>Zaokrąglony prostokąt</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknij na jednym z prostokątów, aby zdecydować o sposobie wypełnienia. Możesz wybrać spomiędzy braku wypełnienia, wypełnienia kolorem tła i wypełnienia kolorem pierwszoplanowym.</para
+> <para
+>Ustawienie wypełniania działa dla narzędzi: <link linkend="tool-ellipse"
+>Elipsa</link
+>, <link linkend="tool-polystar"
+>Wielokąt</link
+>, <link linkend="tool-rectangles"
+>Prostokąt</link
+> i <link linkend="tool-rectangles"
+>Zaokrąglony prostokąt</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Praca z kolorem</title>
+
+<sect1 id="color-box">
+<title
+>Pasek narzędzi koloru</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Pasek narzędzi koloru</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Pasek narzędzi koloru dzieli się na 3 obszary: Podglądu kolorów, Palety kolorów i Podobieństwa kolorów.</para>
+
+<para
+>Podgląd kolorów wyświetla bieżący kolor pierwszoplanowy w postaci kwadratu, położonego na kwadracie koloru tła. Podczas rysowania lewym przyciskiem myszy używany jest kolor pierwszoplanowy, rysowanie prawym przyciskiem myszy powoduje użycie koloru tła (za wyjątkiem <link linkend="tool-erasers"
+>Wymazywaczy</link
+>). Możesz kliknąć na strzałce zakończonej dwoma grotami, aby zamienić kolor tła z kolorem pierwszoplanowym. </para>
+
+<para
+>Paleta kolorów wyświetla próbki kolorów, z których można wybierać. Przezroczysta piramida reprezentuje kolor przezroczysty. Kliknięcie lewym przyciskiem myszy na próbce koloru powoduje ustawienie go jako koloru pierwszoplanowego. Kliknięcie prawym przyciskiem myszy na próbce koloru powoduje ustawienie go jako koloru tła. <link linkend="tool-color-picker"
+>Narzędzie wybierania koloru</link
+> pozwala na pobranie koloru z obrazka. </para>
+
+<para
+>Podobieństwo kolorów pozwala na efektywniejszą pracę z wygładzonymi obrazami i fotografiami. Funkcja ta działa podobnie do funkcji <quote
+>Magic Wand</quote
+> (Magiczna różdżka), znanej z innych programów graficznych. Ma ona zastosowanie do przezroczystych zaznaczeń, jak również do narzędzi <link linkend="tool-flood-fill"
+>Wypełnienie</link
+>, <link linkend="tool-eraser-clr"
+>Usuwacz koloru</link
+> i <link linkend="image-autocrop"
+>Przytnij automatycznie / Usuń wewnętrzną ramkę</link
+>. Podwójne kliknięcie na obszarze podobieństwa kolorów pozwala określić, jak podobne muszą być kolory, aby zostały potraktowane jak identyczne. Podczas zaznaczania sposobem przezroczystym, każdy kolor w zaznaczeniu, który jest podobny do koloru tła, stanie się przezroczysty.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Po lewej stronie znajduje się przykładowe zdjęcie. Zdjęcia dalej na prawo demonstrują użycie na przykładowym obrazku Wypełnienia z Podobieństwem kolorów ustawionym odpowiednio na 5%, 15% i 30%. Zakładając, że przy podobieństwie kolorów ustawionym na <guilabel
+>Dokładne dopasowanie</guilabel
+> użyjesz narzędzia Wypełnienie na pikselu (65, 70), wypełniony zostanie tylko ten jeden piksel, ponieważ piksele otaczające są podobne do niego, lecz nie identyczne. Przy zwiększaniu współczynnika Podobieństwa kolorów, więcej pikseli zostanie zinterpretowanych jako identyczne (choć w rzeczywistości będą tylko podobne), a więc wypełnienie zacznie się rozszerzać na kolejne piksele. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Polecenia menu Widok</title>
+
+<sect1 id="view-options-section">
+<title
+>Lista poleceń</title>
+
+<para
+><link linkend="view-zoom"
+>Powiększenie w połączeniu z siatką</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Miniaturka</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Powiększenie w połączeniu z siatką</title>
+<para
+>Zwiększ wartość powiększenia, aby edytować obraz z większą precyzją lub zmniejsz, aby zobaczyć więcej obrazka.</para>
+
+<important>
+<para
+>W powiększeniach, które nie są wielokrotnością 100%, przy edytowaniu pewnych części obrazka, może się wydawać, że te części się poruszają. Mogą wystąpić również inne zakłócenia. </para>
+</important>
+
+<para
+>Przy powiększeniu 600% lub większym (ale wielokrotnym 100%) możesz wyświetlić siatkę, aby uzyskać lepszą kontrolę nad poszczególnymi pikselami.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Pierwsza ilustracja przedstawia ikonę narzędzia <link linkend="tool-text"
+>Tekst</link
+>, zaś druga tę samą ikonę w powiększeniu 600% z włączoną siatką.</para>
+
+<tip>
+<para
+>Jeśli niczego aktualnie nie rysujesz, możesz powiększać obrazek za pomocą <mousebutton
+>kółka</mousebutton
+> myszy, przytrzymując &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Miniaturka</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Jeśli wybrane zostało polecenie <guimenuitem
+>Pokaż miniaturkę</guimenuitem
+>, cały obraz zostanie wyświetlony w pomniejszeniu w osobnym okienku (obrazek po prawej u góry). </para>
+<para
+>Jeśli cały obraz nie może się zmieścić w oknie miniaturki, wyświetlone zostanie tyle obrazu, ile to tylko możliwe, zaczynając od lewego górnego rogu (obrazek po prawej na dole). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Polecenia menu <guilabel
+>Obrazek/Zaznaczenie</guilabel
+> i Efekty obrazów</title>
+
+<sect1 id="image-effects-section">
+<title
+>Spis</title>
+<para
+><link linkend="image-autocrop"
+>Przytnij automatycznie / Usuń wewnętrzną ramkę</link
+></para>
+<para
+><link linkend="image-balance"
+>Balans</link
+></para>
+<para
+><link linkend="image-clear"
+>Wyczyść</link
+></para>
+<para
+><link linkend="image-emboss"
+>Uwypuklij</link
+></para>
+<para
+><link linkend="image-flatten"
+>Spłaszcz</link
+></para>
+<para
+><link linkend="image-flip"
+>Odwróć</link
+></para>
+<para
+><link linkend="image-invert"
+>Zamień kanały</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Zmniejsz liczbę kolorów</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Zmień na odcienie szarości</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Zmień na monochromatyczny (wygładzony)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Zmień rozmiar / skaluj</link
+></para>
+<para
+><link linkend="image-rotate"
+>Obróć</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Ustaw jako obrazek (przytnij)</link
+></para>
+<para
+><link linkend="image-skew"
+>Pochyl</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Rozmiękczanie i wyostrzanie</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Więcej efektów</link
+></para>
+<para
+><link linkend="image-notes"
+>Uwagi</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Przytnij automatycznie / Usuń wewnętrzną ramkę</title>
+
+<para
+>Funkcja ta usuwa ramkę z obrazka lub zaznaczenia. Jest ona przydatna, gdy masz obiekt, który na obrazku lub w zaznaczeniu nie zajmuje całej jego powierzchni i chcesz pozbyć się pozostałego, białego obszaru, który do obiektu nie należy. Aby użyć tej funkcji na wygładzonej ramce obrazka, włącz <link linkend="color-box"
+>Podobieństwo kolorów</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Balans</title>
+
+<para
+>Funkcja ta jest dostępna poprzez okno <link linkend="image-more-effects"
+>Więcej efektów</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Pozwala ona na ustawienie wartości jasności, kontrastu i gammy obrazka lub zaznaczenia. </para>
+
+<note>
+<para
+>Zwykle stosowana jednostka gammy (dziesiętna od 0.10 do 10.00) znajduje się pomiędzy suwakiem <guilabel
+>Gamma</guilabel
+>, a przyciskiem <guibutton
+>Przywróć</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Wyczyść</title>
+
+<para
+>Funkcja ta wypełnia cały obrazek lub zaznaczenie kolorem tła.</para>
+
+<tip>
+<para
+>Kliknij podwójnie na narzędziu <link linkend="tool-eraser-std"
+> Gumka</link
+>, aby uzyskać ten sam efekt.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Uwypuklij</title>
+
+<para
+>Funkcja ta jest dostępna poprzez okno <link linkend="image-more-effects"
+>Więcej efektów</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Zaznacz <guilabel
+>Włącz</guilabel
+>, aby zastosować efekt uwypuklenia. Powoduje on podkreślenie krawędzi i nadaje obrazkowi lub zaznaczeniu wygląd &quot;wygrawerowanego&quot;. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Spłaszcz</title>
+
+<para
+>Funkcja ta jest dostępna poprzez okno <link linkend="image-more-effects"
+>Więcej efektów</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Funkcja ta nadaje obrazowi odcienie dwóch wybranych kolorów. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Odwróć</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flip.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Funkcja ta powoduje odwrócenie obrazka lub zaznaczenia pionowo lub poziomo.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Zamień kanały</title>
+
+<para
+>Funkcja ta jest dostępna poprzez okno <link linkend="image-more-effects"
+>Więcej efektów</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Funkcja ta pozwala na zamianę jednego lub więcej kanałów RGB na obrazku lub w zaznaczeniu. Wybierz <guilabel
+>Wszystkie</guilabel
+>, aby zamienić obraz w negatyw i na odwrót. Zwykle wygląda to całkiem zabawnie.</para>
+
+<tip>
+<para
+>Aby szybko zamienić wszystkie kanały, nie musisz używać tego okna dialogowego. Zamiast tego możesz wybrać pozycję <guimenuitem
+>Odwróć kolory</guimenuitem
+> z menu <guimenu
+>Obrazek</guimenu
+> lub <guimenu
+>Zaznaczenie</guimenu
+>. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Zmniejsz liczbę kolorów</title>
+
+<para
+>Funkcja ta jest dostępna poprzez okno <link linkend="image-more-effects"
+>Więcej efektów</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Funkcja ta zmniejsza liczbę kolorów użytych w obrazku lub zaznaczeniu z użyciem lub bez użycia wygładzania. </para>
+
+<para
+>Włączenie wygładzania zwykle daje lepszą jakość, jednak możesz wyłączyć wygładzanie, aby uzyskać bardziej artystyczny efekt, np. po użyciu <guilabel
+>Monochromatycznego</guilabel
+> zmniejszenia liczby kolorów zamiast <guilabel
+>Monochromatycznego (wygładzonego)</guilabel
+> otrzymasz zarys (sylwetkę) jakiejś postaci. </para>
+
+<para
+>Kolejną ważną różnicą jest to, że monochromatyczne (wygładzone) zmniejszenie liczby kolorów zawsze zmniejszy liczbę kolorów obrazka lub zaznaczenia do białego i czarnego, a monochromatyczne zmniejszenie liczby kolorów zmniejszy liczbę kolorów tylko wtedy, gdy obrazek lub zaznaczenie zawiera więcej niż 2 kolory. </para>
+
+<tip>
+<para
+>Aby szybko uzyskać monochromatyczny wygładzony obraz lub zaznaczenie, użyj funkcji <link linkend="image-monochrome"
+>Zmień na monochromatyczny (wygładzony)</link
+> z menu <guimenu
+>Obrazek</guimenu
+> lub <guimenu
+>Zaznaczenie</guimenu
+>. </para>
+</tip>
+
+<note>
+<para
+>Zmiana liczby kolorów przy użyciu w/w poleceń nie ma wpływu na głębię kolorów pliku graficznego. Jeśli chcesz zmienić głębię kolorów, powinieneś wybrać odpowiednią opcję w oknie dialogowym zapisu pliku. Zauważ, że (o ironio) zmiana głębi kolorów zmienia także liczbę kolorów. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Zmień na odcienie szarości</title>
+
+<para
+>Funkcja ta redukuje kolory w obrazku lub zaznaczeniu na odcienie szarości.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Zmień na monochromatyczny (wygładzony)</title>
+
+<para
+>Funkcja ta redukuje kolory w obrazku lub zaznaczeniu do czarnego i białego.</para>
+
+<tip>
+<para
+>Jeśli nie chcesz, aby obraz lub zaznaczenie zostało wygładzone, użyj okna <link linkend="image-reduce-colors"
+>Więcej efektów</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Zmień rozmiar / Skaluj</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Zmiana rozmiaru obrazu nie powoduje zmiany jego zawartości. Przeskalowanie obrazu spowoduje transformację zawartości w celu spełnienia nowo ustalonego rozmiaru. <guibutton
+>Płynne przeskalowanie</guibutton
+> daje zwykle lepsze rezultaty niż <guibutton
+>Przeskalowanie</guibutton
+>, dzięki wygładzeniu sąsiadujących kolorów.</para>
+
+<para
+>Nowy rozmiar możesz wyrazić w pikselach lub jako procent rozmiaru oryginalnego. Jeśli zaznaczysz opcję <guilabel
+>Zachowaj proporcje</guilabel
+>, wysokość i szerokość obrazu zostaną procentowo zmienione tak samo.</para>
+
+<tip>
+<para
+>Możesz dowolnie <guibutton
+>Zmieniać rozmiar</guibutton
+> całego obrazka lub <guibutton
+>Płynnie przeskalować zaznaczenie</guibutton
+>, używając odpowiednich poleceń. </para>
+</tip>
+
+<note>
+<para
+>Dla zaznaczeń obsługiwane jest tylko skalowanie, a dla pól tekstowych obsługiwana jest tylko zmiana rozmiaru. Przeczytaj <link linkend="image-notes"
+>Uwagi</link
+>, aby uzyskać więcej informacji na temat stosowania tych efektów.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Obróć</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Funkcja ta obraca obraz. Możesz określić kąt, o jaki obraz zostanie obrócony oraz kierunek obracania.</para>
+
+<tip>
+<para
+>Kierunek obracania można odwrócić używając ujemnego kąta obrotu.</para>
+</tip>
+
+<note>
+<para
+>Przeczytaj <link linkend="image-notes"
+>Uwagi</link
+>, aby uzyskać więcej informacji na temat stosowania tych efektów. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Ustaw jako obrazek (przytnij)</title>
+
+<para
+>Funkcja ta spowoduje przekształcenie zaznaczenia w obrazek.</para>
+
+<note>
+<para
+>Funkcja ta jest dostępna tylko wtedy, gdy na obrazie znajduje się aktywne zaznaczenie.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Pochyl</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Funkcja ta powoduje pochylenie całego obrazka lub zaznaczenia pionowo i/lub poziomo.</para>
+
+<note>
+<para
+>Przeczytaj <link linkend="image-notes"
+>Uwagi</link
+>, aby uzyskać więcej informacji na temat stosowania tych efektów.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Rozmiękczanie i wyostrzanie</title>
+
+<para
+>Funkcja ta jest dostępna poprzez okno <link linkend="image-more-effects"
+>Więcej efektów</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Użyj tego efektu w celu zmiękczenia lub wyostrzenia zdjęcia. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Więcej efektów</title>
+
+<para
+>Okno to zawiera następujące efekty: <link linkend="image-balance"
+>Balans</link
+>, <link linkend="image-emboss"
+>Uwypuklenie</link
+>, <link linkend="image-flatten"
+>Spłaszczenie</link
+>, <link linkend="image-invert"
+>Odwrócenie kolorów</link
+>, <link linkend="image-reduce-colors"
+>Zmniejszenie liczby kolorów</link
+> i <link linkend="image-soften-sharpen"
+>Rozmiękczanie i wyostrzanie</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Uwagi</title>
+
+<para
+><link linkend="image-resize-scale"
+>Zmiana rozmiaru / Skalowanie</link
+>, <link linkend="image-rotate"
+>Obracanie</link
+> i <link linkend="image-skew"
+>Pochylanie</link
+> mogą zmienić rozmiary zdjęcia. Nowe rozmiary możesz zobaczyć w oknie dialogowym każdej z wymienionych tu funkcji.</para>
+
+<para
+>Gdy zastosujesz wyżej wymienione funkcje do obrazka, zmieniony zostanie jego rozmiar, jeśli to konieczne. Jeśli jednak zastosujesz wyżej wymienione funkcje do zaznaczenia, rozmiar obrazka nie zostanie zmieniony, nawet jeśli nowo utworzone zaznaczenie nie będzie pasowało.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Obrazek po lewej został obrócony o 30 stopni zgodnie z kierunkiem wskazówek zegara. Ilustruje to obrazek po prawej. Jak widać, &kolourpaint; automatycznie dopasował rozmiary obrazka do powiększonej zawartości. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+><emphasis
+>Zaznaczenie</emphasis
+> po lewej zostało obrócone o 30 stopni zgodnie z kierunkiem wskazówek zegara. Ilustruje to obrazek po prawej. Rozmiar obrazka jest ten sam, dlatego wykraczające części zaznaczenia nie będą widoczne bez operacji <link linkend="image-resize-scale"
+>Zmiany rozmiaru</link
+> (powiększenia) <emphasis
+>obrazka</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Autorzy i licencja</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Może nie jest to zwięzła dokumentacja, może nie jest to kompletna dokumentacja, ale na pewno jest porządna. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Prawa autorskie do programu &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>&kolourpaint; - prawa autorskie do niektórych ikon &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Dokumentacja i dodatkowa praca artystyczna dla dokumentacji: &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>Część dokumentacji powstała z wykorzystaniem i za pozwoleniem strony <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Marcin Kocur<email
+>marcin2006@gmail.com</email
+></para
+> 
+&underFDL; <para
+>Ten program jest licencjonowany, jak poniżej:</para>
+
+<para
+>Prawa autorskie &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+<appendix id="installation">
+<title
+>Instalacja</title>
+<sect1 id="getting-kapp">
+<title
+>Jak zdobyć program &kolourpaint;</title>
+&install.intro.documentation; <para
+>Częstsze wydania, wspierające starsze wersje &kde; dostępne są na stronie <ulink url="http://kolourpaint.sourceforge.net/"
+>http://kolourpaint.sourceforge.net/</ulink
+>.</para>
+
+</sect1>
+
+<sect1 id="requirements">
+<title
+>Wymagania</title>
+
+<para
+>&kolourpaint; 1.4_relight wymaga &kde; 3.5.</para>
+</sect1>
+
+<sect1 id="compilation">
+<title
+>Kompilacja i instalacja</title>
+
+<note>
+<para
+>Jeśli czytasz tą pomoc w &khelpcenter-miejscownik;, oznacza to, że &kolourpaint; jest już zainstalowany w Twoim systemie, więc nie musisz stosować się do poniższych, standardowych instrukcji. </para>
+</note
+> &install.compile.documentation; </sect1>
+
+<sect1 id="configuration">
+<title
+>Konfiguracja</title>
+
+<para
+>&kolourpaint; powinien działać bez dodatkowych czynności konfiguracyjnych.</para>
+</sect1>
+
+</appendix>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
