@@ -328,11 +328,12 @@ msgstr ""
 "PPP de la imatge, més xicoteta serà la imatge impresa. Cal tindre en compte "
 "que la vostra impressora probablement no podrà imprimir en alta qualitat si "
 "augmenteu el PPP més enllà de 300 o 600.</p><p>Si voleu imprimir la imatge "
-"de manera que siga de la mateixa mida com es mostra a la pantalla, fixeu el "
+"de manera que siga de la mateixa mida com es mostra en la pantalla, fixeu el "
 "valor PPP de la imatge al mateix valor de la pantalla.</p><p>Si el valor PPP "
-"és <b>Sense definir</b>, la imatge també s'imprimirà a la mateixa mida que a "
-"la pantalla.</p><p>No tots els formats d'imatge permeten els valors de PPP. "
-"Si el format en què l'heu guardat no els permet, no es guardaran.</p></qt>"
+"és <b>Sense definir</b>, la imatge també s'imprimirà a la mateixa mida que "
+"en la pantalla.</p><p>No tots els formats d'imatge permeten els valors de "
+"PPP. Si el format en què l'heu guardat no els permet, no es guardaran.</p></"
+"qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
 #, kde-format
@@ -404,7 +405,7 @@ msgstr "Valor"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
-msgstr "El valor del text «%1» a la línia %2 necessita una clau."
+msgstr "El valor del text «%1» en la línia %2 necessita una clau."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
 #, kde-format
