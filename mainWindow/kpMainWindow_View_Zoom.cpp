@@ -31,6 +31,7 @@
 #include "kpMainWindowPrivate.h"
 #include "kpLogCategories.h"
 
+#include <QRegularExpression>
 #include <QScrollBar>
 
 #include <KSelectAction>
@@ -61,7 +62,7 @@ static int ZoomLevelFromString (const QString &stringIn)
     // 1. kdelibs adds accelerators to actions' text directly
     // 2. ',' is automatically added to change "1000%" to "1,000%"
     QString string = stringIn;
-    string.remove (QRegExp ("[^0-9]"));
+    string.remove(QRegularExpression(QStringLiteral("[^0-9]")));
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\twithout non-digits='" << string << "'";
 #endif
