@@ -35,8 +35,8 @@
 #include <QImage>
 #include <QList>
 #include <QMenu>
-#include <QDesktopWidget>
 #include <QScrollBar>
+#include <QScreen>
 
 #include "kpLogCategories.h"
 #include <KMessageBox>
@@ -500,8 +500,9 @@ void kpMainWindow::pasteText (const QString &text,
           width = std::max(width, fontMetrics.horizontalAdvance(str));
 
         // limit the size to avoid memory overflow
-        width = qMin(qMax(QApplication::desktop()->width(), d->document ? d->document->width() : 0), width);
-        height = qMin(qMax(QApplication::desktop()->height(), d->document ? d->document->height() : 0), height);
+        const QSize desktopSize = QApplication::primaryScreen()->virtualSize();
+        width = qMin(qMax(desktopSize.width(), d->document ? d->document->width() : 0), width);
+        height = qMin(qMax(desktopSize.height(), d->document ? d->document->height() : 0), height);
 
         const int selWidth = qMax (kpTextSelection::MinimumWidthForTextStyle (ts),
                                    width + kpTextSelection::TextBorderSize () * 2);
