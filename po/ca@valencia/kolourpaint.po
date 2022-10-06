@@ -361,7 +361,7 @@ msgstr "Camps de &text"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:253
 #, kde-format
 msgid "&Add Row"
-msgstr "&Afig una fila"
+msgstr "Afi&g una fila"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:258
 #, kde-format
@@ -452,7 +452,7 @@ msgstr "Vista prèvia"
 #: dialogs/kpColorSimilarityDialog.cpp:63
 #, kde-format
 msgid "&Update"
-msgstr "&Actualitza"
+msgstr "Act&ualitza"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:90
 #, kde-format
@@ -1319,7 +1319,7 @@ msgstr "Utilitza la de KDE"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
-msgstr "&Obri..."
+msgstr "O&bri..."
 
 #: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
@@ -1454,7 +1454,7 @@ msgstr "C&opia a un fitxer..."
 #: mainWindow/kpMainWindow_Edit.cpp:115
 #, kde-format
 msgid "Paste &From File..."
-msgstr "Apega des d'un &fitxer..."
+msgstr "Apega des d'un fi&txer..."
 
 #: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
 #: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
@@ -1660,7 +1660,7 @@ msgstr "Es&tablix com a imatge (escapça)"
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "&Invertix (capgirada)"
+msgstr "I&nvertix (capgirada)"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
@@ -1690,7 +1690,7 @@ msgstr "Es&biaixa..."
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
-msgstr "&Reduïx a monocrom (tramat)"
+msgstr "Red&uix a monocrom (tramat)"
 
 #: mainWindow/kpMainWindow_Image.cpp:171
 #, kde-format
@@ -1700,7 +1700,7 @@ msgstr "Reduïx &a escala de grisos"
 #: mainWindow/kpMainWindow_Image.cpp:175
 #, kde-format
 msgid "&Invert Colors"
-msgstr "&Invertix els colors"
+msgstr "I&nvertix els colors"
 
 #: mainWindow/kpMainWindow_Image.cpp:180
 #, kde-format
