@@ -31,7 +31,6 @@
 #include "kpMainWindowPrivate.h"
 
 #include <QAction>
-#include <QDesktopWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFileDialog>
@@ -697,7 +696,7 @@ void kpMainWindow::slotScreenshot()
 void kpMainWindow::slotMakeScreenshot()
 {
   QCoreApplication::processEvents();
-  QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+  QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(0 /* entire screen*/);
 
   auto *doc = new kpDocument(pixmap.width(), pixmap.height(), documentEnvironment());
   doc->setImage(pixmap.toImage());
