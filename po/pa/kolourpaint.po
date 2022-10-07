@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"POT-Creation-Date: 2022-10-07 00:43+0000\n"
 "PO-Revision-Date: 2012-07-05 07:22+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -1330,8 +1330,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
+#: mainWindow/kpMainWindow_File.cpp:1085
 #, kde-format
 msgid "&Reload"
 msgstr "ਮੁੜ-ਲੋਡ(&R)"
@@ -1398,138 +1398,138 @@ msgstr "ਪਾਠ: ਬਕਸਾ ਬਣਾਓ"
 msgid "Text: Paste"
 msgstr "ਪਾਠ: ਚਿਪਕਾਓ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:610
+#: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Edit.cpp:612
+#: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
 msgid "Cannot Paste"
 msgstr "ਚਿਪਕਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:691
+#: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "ਪਾਠ: ਬਕਸਾ ਹਟਾਓ"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:693
 #, kde-format
 msgid "Selection: Delete"
 msgstr "ਚੋਣ: ਹਟਾਓ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:766
+#: mainWindow/kpMainWindow_Edit.cpp:767
 #, kde-format
 msgid "Text: Finish"
 msgstr "ਟੈਕਸਟ: ਮੁਕੰਮਲ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:768
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "ਚੋਣ: ਅਣਚੁਣਿਆ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:851
+#: mainWindow/kpMainWindow_Edit.cpp:852
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "ਫਾਇਲ ਤੋਂ ਕਾਪੀ ਕਰੋ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:898
+#: mainWindow/kpMainWindow_Edit.cpp:899
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "ਫਾਇਲ ਤੋਂ ਚੇਪੋ"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "E&xport..."
 msgstr "ਐਕਸਪੋਰਟ(&x)..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:108
 #, kde-format
 msgid "Scan..."
 msgstr "ਸਕੈਨ..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:117
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "ਸਕਰੀਨਸ਼ਾਟ ਲਵੋ"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:121
 #, kde-format
 msgid "Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Reloa&d"
 msgstr "ਮੁੜ-ਲੋਡ(&d)"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:457
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:482
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "ਚਿੱਤਰ ਖੋਲ੍ਹੋ"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:545
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "ਸਨੈਪਸ਼ਾਟ ਦੇਰੀ"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:666
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " ਸਕਿੰਟ"
 msgstr[1] " ਸਕਿੰਟ"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid "No delay"
 msgstr "ਕੋਈ ਦੇਰੀ ਨਹੀਂ"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Hide Main Window"
 msgstr "ਮੁੱਖ ਵਿੰਡੋ ਓਹਲੇ"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:723
 #, kde-format
 msgid "Document Properties"
 msgstr "ਡੌਕੂਮੈਂਟ ਵਿਸ਼ੇਸ਼ਤਾ"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:958
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "ਚਿੱਤਰ ਇੰਝ ਸੰਭਾਲੋ"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1006
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "ਐਕਸਪੋਰਟ"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1070
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1540,7 +1540,7 @@ msgstr ""
 "ਆਖਰੀ ਵਾਰ ਸੰਭਾਲਣ ਤੋਂ ਬਾਅਦ ਦੀਆਂ ਸਭ ਤਬਦੀਲੀਆਂ ਗੁੰਮ ਜਾਣਗੀਆਂ।\n"
 "ਕੀ ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1080
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1551,13 +1551,13 @@ msgstr ""
 "ਮੁੜ-ਲੋਡ ਕਰਨ ਨਾਲ ਸਭ ਤਬਦੀਲੀਆਂ ਗੁੰਮ ਜਾਣਗੀਆਂ।\n"
 "ਕੀ ਤੁਸੀਂ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1328
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "ਚਿੱਤਰ ਪਰਿੰਟ ਕਰੋ"
 
-#: mainWindow/kpMainWindow_File.cpp:1409
+#: mainWindow/kpMainWindow_File.cpp:1408
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1566,7 +1566,7 @@ msgstr ""
 "ਇਸ ਤੋਂ ਪਹਿਲਾਂ ਕਿ ਤੁਸੀਂ ਚਿੱਤਰ ਨੂੰ ਭੇਜੋ, ਤੁਹਾਨੂੰ ਸੰਭਾਲਣਾ ਪਵੇਗਾ।\n"
 "ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਸੰਭਾਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1447
+#: mainWindow/kpMainWindow_File.cpp:1446
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1695,7 +1695,7 @@ msgid "%1bpp"
 msgstr "%1bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
@@ -1785,7 +1785,7 @@ msgstr "ਜ਼ੂਮ ਕੀਤਾ ਥੰਮਨੇਲ ਮੋਡ(&m)"
 msgid "Enable Thumbnail &Rectangle"
 msgstr "ਥੰਮਨੇਲ ਚਤੁਰਭੁਜ ਯੋਗ ਕਰੋ(&R)"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
 msgid "&Zoom"
 msgstr "ਜ਼ੂਮ(&Z)"

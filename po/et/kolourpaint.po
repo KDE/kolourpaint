@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"POT-Creation-Date: 2022-10-07 00:43+0000\n"
 "PO-Revision-Date: 2020-06-03 20:33+0300\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1389,8 +1389,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
+#: mainWindow/kpMainWindow_File.cpp:1085
 #, kde-format
 msgid "&Reload"
 msgstr "Laa&di uuesti"
@@ -1453,7 +1453,7 @@ msgstr "Tekst: Loo kast"
 msgid "Text: Paste"
 msgstr "Tekst: Aseta"
 
-#: mainWindow/kpMainWindow_Edit.cpp:610
+#: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
@@ -1462,131 +1462,131 @@ msgstr ""
 "<qt>KolourPaint ei saa asetada lõikepuhvri sisu, sest selle vorming on "
 "tundmatu.</qt>"
 
-#: mainWindow/kpMainWindow_Edit.cpp:612
+#: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
 msgid "Cannot Paste"
 msgstr "Asetamine nurjus"
 
-#: mainWindow/kpMainWindow_Edit.cpp:691
+#: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "Tekst: Kustuta kast"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:693
 #, kde-format
 msgid "Selection: Delete"
 msgstr "Valik: Kustuta"
 
-#: mainWindow/kpMainWindow_Edit.cpp:766
+#: mainWindow/kpMainWindow_Edit.cpp:767
 #, kde-format
 msgid "Text: Finish"
 msgstr "Tekst: Lõpeta"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:768
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "Valik: Tühista valik"
 
-#: mainWindow/kpMainWindow_Edit.cpp:851
+#: mainWindow/kpMainWindow_Edit.cpp:852
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "Kopeerimine faili"
 
-#: mainWindow/kpMainWindow_Edit.cpp:898
+#: mainWindow/kpMainWindow_Edit.cpp:899
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Failist asetamine"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "E&xport..."
 msgstr "&Eksport..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:108
 #, kde-format
 msgid "Scan..."
 msgstr "Skaneeri..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:117
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Ekraanipildi võtmine"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:121
 #, kde-format
 msgid "Properties"
 msgstr "Omadused"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Reloa&d"
 msgstr "Laa&di uuesti"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:457
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Kõik toetatud failid (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:482
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Pildi avamine"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:545
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Skannimisdialoogi avamine nurjus."
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Skannimine nurjus"
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Pildistamise viivitus"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:666
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " sekund"
 msgstr[1] " sekundit"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid "No delay"
 msgstr "Puudub"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Peaakna peitmine"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:723
 #, kde-format
 msgid "Document Properties"
 msgstr "Dokumendi omadused"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:958
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Pildi salvestamine"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1006
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Eksport"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1070
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1597,7 +1597,7 @@ msgstr ""
 "Taaslaadimisel kaotad kõik pärast viimast salvestamist tehtud muudatused.\n"
 "Kas tõesti tahad seda?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1080
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1608,13 +1608,13 @@ msgstr ""
 "Taaslaadimisel kaotad kõik muudatused.\n"
 "Kas tõesti tahad seda?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1328
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Pildi trükkimine"
 
-#: mainWindow/kpMainWindow_File.cpp:1409
+#: mainWindow/kpMainWindow_File.cpp:1408
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1623,7 +1623,7 @@ msgstr ""
 "See pilt tuleb enne saatmist salvestada.\n"
 "Kas salvestada pilt?"
 
-#: mainWindow/kpMainWindow_File.cpp:1447
+#: mainWindow/kpMainWindow_File.cpp:1446
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1751,7 +1751,7 @@ msgid "%1bpp"
 msgstr "%1bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
@@ -1841,7 +1841,7 @@ msgstr "Pisipiltide suurendusrežii&m"
 msgid "Enable Thumbnail &Rectangle"
 msgstr "Pisipiltide &ristküliku lubamine"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
 msgid "&Zoom"
 msgstr "&Suurendus"

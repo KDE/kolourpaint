@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"POT-Creation-Date: 2022-10-07 00:43+0000\n"
 "PO-Revision-Date: 2021-07-17 12:12+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -1384,8 +1384,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
+#: mainWindow/kpMainWindow_File.cpp:1085
 #, kde-format
 msgid "&Reload"
 msgstr "&Obnoviť"
@@ -1448,7 +1448,7 @@ msgstr "Text: Vytvoriť box"
 msgid "Text: Paste"
 msgstr "Text: Vložiť"
 
-#: mainWindow/kpMainWindow_Edit.cpp:610
+#: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
@@ -1457,97 +1457,97 @@ msgstr ""
 "<qt>KolourPaint nemôže vložiť obsah schránky, pretože je v neznámom formáte."
 "</qt>"
 
-#: mainWindow/kpMainWindow_Edit.cpp:612
+#: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
 msgid "Cannot Paste"
 msgstr "Nepodarilo sa vložiť"
 
-#: mainWindow/kpMainWindow_Edit.cpp:691
+#: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "Text: Odstrániť box"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:693
 #, kde-format
 msgid "Selection: Delete"
 msgstr "Výber: Odstrániť"
 
-#: mainWindow/kpMainWindow_Edit.cpp:766
+#: mainWindow/kpMainWindow_Edit.cpp:767
 #, kde-format
 msgid "Text: Finish"
 msgstr "Text: Dokončiť"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:768
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "Výber: Zrušiť výber"
 
-#: mainWindow/kpMainWindow_Edit.cpp:851
+#: mainWindow/kpMainWindow_Edit.cpp:852
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "Kopírovať do súboru"
 
-#: mainWindow/kpMainWindow_Edit.cpp:898
+#: mainWindow/kpMainWindow_Edit.cpp:899
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Vložiť zo &súboru"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "E&xport..."
 msgstr "E&xportovať..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:108
 #, kde-format
 msgid "Scan..."
 msgstr "Skenovať..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:117
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Snímať obrazovku"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:121
 #, kde-format
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Reloa&d"
 msgstr "Znovu na&hrať"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:457
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Všetky podporované súbory (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:482
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Otvoriť obrázok"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:545
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Zlyhalo otvorenie skenovacieho dialógu"
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Skenovanie zlyhalo"
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Trvanie snímky"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:666
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
@@ -1555,34 +1555,34 @@ msgstr[0] "sekunda"
 msgstr[1] "sekundy"
 msgstr[2] "sekundy"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid "No delay"
 msgstr "Bez čakania"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Skryť hlavné okno"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:723
 #, kde-format
 msgid "Document Properties"
 msgstr "Vlastnosti dokumentu"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:958
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Uložiť obrázok ako"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1006
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportovať"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1070
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1593,7 +1593,7 @@ msgstr ""
 "Jeho znovunačítanie spôsobí stratu všetkých zmien od posledného uloženie.\n"
 "Naozaj chcete pokračovať?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1080
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1604,13 +1604,13 @@ msgstr ""
 "Jeho znovunačítanie spôsobí stratu všetkých zmien.\n"
 "Naozaj chcete pokračovať?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1328
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Vytlačiť obrázok"
 
-#: mainWindow/kpMainWindow_File.cpp:1409
+#: mainWindow/kpMainWindow_File.cpp:1408
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1619,7 +1619,7 @@ msgstr ""
 "Pred poslaním musíte obrázok uložiť.\n"
 "Chcete ho uložiť?"
 
-#: mainWindow/kpMainWindow_File.cpp:1447
+#: mainWindow/kpMainWindow_File.cpp:1446
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1747,7 +1747,7 @@ msgid "%1bpp"
 msgstr "%1bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
@@ -1837,7 +1837,7 @@ msgstr "&Mód zváčšených miniatúr"
 msgid "Enable Thumbnail &Rectangle"
 msgstr "Povoliť obdĺžnik miniatú&r"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
 msgid "&Zoom"
 msgstr "Priblížiť"

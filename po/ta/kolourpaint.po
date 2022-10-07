@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"POT-Creation-Date: 2022-10-07 00:43+0000\n"
 "PO-Revision-Date: 2021-06-19 19:45+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1432,8 +1432,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
+#: mainWindow/kpMainWindow_File.cpp:1085
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "திரும்ப ஏற்று"
@@ -1505,144 +1505,144 @@ msgstr "உரை: பெட்டியை உருவாக்கு"
 msgid "Text: Paste"
 msgstr "உரை: ஒட்டு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:610
+#: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Edit.cpp:612
+#: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
 msgid "Cannot Paste"
 msgstr "ஒட்ட முடியவில்லை"
 
-#: mainWindow/kpMainWindow_Edit.cpp:691
+#: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "உரை: பெட்டியை அழி"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:693
 #, kde-format
 msgid "Selection: Delete"
 msgstr "தேந்தெடுப்பு: அழி"
 
-#: mainWindow/kpMainWindow_Edit.cpp:766
+#: mainWindow/kpMainWindow_Edit.cpp:767
 #, kde-format
 msgid "Text: Finish"
 msgstr "உரை: முடி"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:768
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "தேர்ந்தெடுப்பு: தேர்வை நீக்கு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:851
+#: mainWindow/kpMainWindow_Edit.cpp:852
 #, fuzzy, kde-format
 #| msgid "Copy to File"
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "கோப்பிற்கு நகல் எடு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:898
+#: mainWindow/kpMainWindow_Edit.cpp:899
 #, fuzzy, kde-format
 #| msgid "Paste From File"
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "கோப்பிலிருந்து ஒட்டு"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "E&xport..."
 msgstr "ஏற்றுமதி..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:108
 #, fuzzy, kde-format
 msgid "Scan..."
 msgstr "..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:117
 #, fuzzy, kde-format
 #| msgid "Acquiring Screenshots"
 msgid "Acquire Screenshot"
 msgstr "திரைப்பிடிப்புகளை பெறுகிறது"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:121
 #, kde-format
 msgid "Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Reloa&d"
 msgstr "திரும்ப ஏற்று"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:457
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:482
 #, fuzzy, kde-format
 #| msgid "Open Image"
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "படிமத்தை திற"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:545
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Snapshot Delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:666
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid "No delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:669
 #, fuzzy, kde-format
 #| msgid "Paste in &New Window"
 msgid "Hide Main Window"
 msgstr "புதிய சாளரத்தில் ஒட்டு"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:723
 #, kde-format
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:958
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "படிமத்தை சேமிக்க"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1006
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "ஏற்றுமதி..."
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1070
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1653,7 +1653,7 @@ msgstr ""
 "திரும்ப ஏற்றுவது கண்டிப்பாக கடைசியாக மாற்றியவையை இழந்துவிடும்.\n"
 "நீங்கள் விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1080
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1664,14 +1664,14 @@ msgstr ""
 "திரும்ப ஏற்றினால் எல்லா மாற்றங்களையும் இழக்க நேரிடும்.\n"
 "உறுதியாக செய்யலாமா?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1328
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "முழு பிம்பம்"
 
-#: mainWindow/kpMainWindow_File.cpp:1409
+#: mainWindow/kpMainWindow_File.cpp:1408
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1680,7 +1680,7 @@ msgstr ""
 "நீங்கள் அனுப்புவதற்கு முன் சேமிக்க வேண்டும்.\n"
 "நீங்கள் சேமிக்க விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_File.cpp:1447
+#: mainWindow/kpMainWindow_File.cpp:1446
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1812,7 +1812,7 @@ msgid "%1bpp"
 msgstr "%1bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
@@ -1904,7 +1904,7 @@ msgstr "பெரிதாக்கப்பட்ட சிறுபிம்�
 msgid "Enable Thumbnail &Rectangle"
 msgstr "சிறுபிம்ப நீள்வடிவத்தை செயல்படுத்து"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
 msgid "&Zoom"
 msgstr ""

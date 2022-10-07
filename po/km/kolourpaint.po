@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-30 00:41+0000\n"
+"POT-Creation-Date: 2022-10-07 00:43+0000\n"
 "PO-Revision-Date: 2012-06-11 14:07+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -1393,8 +1393,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
+#: mainWindow/kpMainWindow_File.cpp:1085
 #, kde-format
 msgid "&Reload"
 msgstr "ផ្ទុក​ឡើង​វិញ"
@@ -1457,7 +1457,7 @@ msgstr "អត្ថបទ ៖ បង្កើត​ប្រអប់"
 msgid "Text: Paste"
 msgstr "អត្ថបទ ៖ បិទភ្ជាប់"
 
-#: mainWindow/kpMainWindow_Edit.cpp:610
+#: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
@@ -1466,130 +1466,130 @@ msgstr ""
 "<qt>KolourPaint មិន​អាច​បិទភ្ជាប់​មាតិកា​ក្ដារតម្បៀតខ្ទាស់​​បាន​ទេ ព្រោះ​ថា​វា​មាន​ទ្រង់ទ្រាយ​ដែលមិន​"
 "ស្គាល់ ។</qt>"
 
-#: mainWindow/kpMainWindow_Edit.cpp:612
+#: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
 msgid "Cannot Paste"
 msgstr "មិន​អាច​បិទភ្ជាប់​បាន​ឡើយ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:691
+#: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "អត្ថបទ ៖ លុប​ប្រអប់"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:693
 #, kde-format
 msgid "Selection: Delete"
 msgstr "ជម្រើស ៖ លុប"
 
-#: mainWindow/kpMainWindow_Edit.cpp:766
+#: mainWindow/kpMainWindow_Edit.cpp:767
 #, kde-format
 msgid "Text: Finish"
 msgstr "អត្ថបទ ៖ បញ្ចប់"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:768
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "ជម្រើស ៖ ដោះ​ជម្រើស"
 
-#: mainWindow/kpMainWindow_Edit.cpp:851
+#: mainWindow/kpMainWindow_Edit.cpp:852
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "ចម្លង​ទៅ​ឯកសារ"
 
-#: mainWindow/kpMainWindow_Edit.cpp:898
+#: mainWindow/kpMainWindow_Edit.cpp:899
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "បិទភ្ជាប់​ពី​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "E&xport..."
 msgstr "នាំចេញ..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:108
 #, kde-format
 msgid "Scan..."
 msgstr "ស្កេន..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:117
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "ទទួល​រូបថត​អេក្រង់"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:121
 #, kde-format
 msgid "Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Reloa&d"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:457
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:482
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "បើក​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:545
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "ពន្យារ​ពេល​កា​រថតរូប"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:666
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] "វិនាទី"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid "No delay"
 msgstr "គ្មាន​ការ​ពន្យារ"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Hide Main Window"
 msgstr "បិទភ្ជាប់​ក្នុង​បង្អួច​ថ្មី"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:723
 #, kde-format
 msgid "Document Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:958
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "រក្សាទុក​រូបភាព​ជា"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1006
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "នាំចេញ"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1070
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1600,7 +1600,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ដែល​អ្នក​បាន​រក្សាទុក​ចុងក្រោយ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1080
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1611,13 +1611,13 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1328
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "បោះពុម្ព​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:1409
+#: mainWindow/kpMainWindow_File.cpp:1408
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1626,7 +1626,7 @@ msgstr ""
 "អ្នក​ត្រូវ​តែ​រក្សាទុក​រូបភាព​នេះ​សិន មុន​នឹង​ផ្ញើ​វា ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ឬ​ទេ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1447
+#: mainWindow/kpMainWindow_File.cpp:1446
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1754,7 +1754,7 @@ msgid "%1bpp"
 msgstr "%1bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:87
+#: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
@@ -1844,7 +1844,7 @@ msgstr "របៀប​រូបភាព​តូច​ពង្រីក"
 msgid "Enable Thumbnail &Rectangle"
 msgstr "អនុញ្ញាត​ឲ្យ​មាន​ចតុកោណកែង​រូបភាព​តូច"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:109
+#: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
 msgid "&Zoom"
 msgstr "ពង្រីក"
