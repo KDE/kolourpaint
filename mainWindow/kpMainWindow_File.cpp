@@ -76,6 +76,7 @@
 
 #if HAVE_KSANE
 #include "../scan/sanedialog.h"
+#include <kwidgetsaddons_version.h>
 #endif // HAVE_KSANE
 
 // private
@@ -1404,13 +1405,21 @@ void kpMainWindow::slotMail ()
         !(d->document->isFromExistingURL () && d->document->urlExists (d->document->url ())) ||
         d->document->isModified ()/*needs to be saved*/)
     {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        int result = KMessageBox::questionTwoActions(this,
+#else
         int result = KMessageBox::questionYesNo (this,
+#endif
                         i18n ("You must save this image before sending it.\n"
                               "Do you want to save it?"),
                         QString(),
                         KStandardGuiItem::save (), KStandardGuiItem::cancel ());
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        if (result == KMessageBox::ButtonCode::PrimaryAction)
+#else
         if (result == KMessageBox::Yes)
+#endif
         {
             if (!save ())
             {
@@ -1442,7 +1451,11 @@ bool kpMainWindow::queryCloseDocument ()
         return true;  // ok to close current doc
     }
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    int result = KMessageBox::warningTwoActionsCancel(this,
+#else
     int result = KMessageBox::warningYesNoCancel (this,
+#endif
                      i18n ("The document \"%1\" has been modified.\n"
                            "Do you want to save it?",
                            d->document->prettyFilename ()),
@@ -1451,9 +1464,17 @@ bool kpMainWindow::queryCloseDocument ()
 
     switch (result)
     {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    case KMessageBox::ButtonCode::PrimaryAction:
+#else
     case KMessageBox::Yes:
+#endif
         return slotSave ();  // close only if save succeeds
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    case KMessageBox::ButtonCode::SecondaryAction:
+#else
     case KMessageBox::No:
+#endif
         return true;  // close without saving
     default:
         return false;  // don't close current doc

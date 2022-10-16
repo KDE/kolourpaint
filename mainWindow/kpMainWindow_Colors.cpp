@@ -41,6 +41,7 @@
 
 #include <QFileDialog>
 #include <QAction>
+#include <kwidgetsaddons_version.h>
 
 //---------------------------------------------------------------------
 
@@ -196,7 +197,11 @@ bool kpMainWindow::queryCloseColors ()
 
     if (!colorCells ()->url ().isEmpty ())
     {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        result = KMessageBox::warningTwoActionsCancel(this,
+#else
         result = KMessageBox::warningYesNoCancel (this,
+#endif
             i18n ("The color palette \"%1\" has been modified.\n"
                   "Do you want to save it?",
                   kpUrlFormatter::PrettyFilename (colorCells ()->url ())),
@@ -208,7 +213,11 @@ bool kpMainWindow::queryCloseColors ()
         const QString name = colorCells ()->colorCollection ()->name ();
         if (!name.isEmpty ())
         {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+            result = KMessageBox::warningTwoActionsCancel(this,
+#else
             result = KMessageBox::warningYesNoCancel (this,
+#endif
                 i18n ("The KDE color palette \"%1\" has been modified.\n"
                       "Do you want to save it to a file?",
                       name),
@@ -217,7 +226,11 @@ bool kpMainWindow::queryCloseColors ()
         }
         else
         {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+            result = KMessageBox::warningTwoActionsCancel(this,
+#else
             result = KMessageBox::warningYesNoCancel (this,
+#endif
                 i18n ("The default color palette has been modified.\n"
                       "Do you want to save it to a file?"),
                 QString ()/*caption*/,
@@ -227,9 +240,17 @@ bool kpMainWindow::queryCloseColors ()
 
     switch (result)
     {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    case KMessageBox::ButtonCode::PrimaryAction:
+#else
     case KMessageBox::Yes:
+#endif
         return slotColorsSave ();  // close only if save succeeds
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    case KMessageBox::ButtonCode::SecondaryAction:
+#else
     case KMessageBox::No:
+#endif
         return true;  // close without saving
     default:
         return false;  // don't close current doc
