@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-07 00:43+0000\n"
+"POT-Creation-Date: 2022-10-17 00:44+0000\n"
 "PO-Revision-Date: 2022-07-08 16:49+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1303,59 +1303,59 @@ msgstr "No s'ha pogut desar la paleta de colors com a «%1»."
 msgid "Untitled"
 msgstr "Sense títol"
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:62
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "Usa els valors predeterminats del KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "Empra la del KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:79
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Obre..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:83
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Recarre&ga"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:88
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Desa"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:93
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Desa &com a..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:98
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Afegeix una fila"
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:103
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Suprimeix la darrera fila"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:116
 #, kde-format
 msgid "Color Box"
 msgstr "Quadre de colors"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:205
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1364,7 +1364,7 @@ msgstr ""
 "S'ha modificat la paleta de colors «%1».\n"
 "Voleu desar-la?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1373,7 +1373,7 @@ msgstr ""
 "S'ha modificat la paleta de colors del KDE «%1».\n"
 "Voleu desar-la en un fitxer?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:234
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1382,13 +1382,13 @@ msgstr ""
 "S'ha modificat la paleta de colors per omissió.\n"
 "Voleu desar-la en un fitxer?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:361
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Obrir la paleta de colors"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1400,15 +1400,15 @@ msgstr ""
 "la.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
-#: mainWindow/kpMainWindow_File.cpp:1085
+#: mainWindow/kpMainWindow_Colors.cpp:395
+#: mainWindow/kpMainWindow_Colors.cpp:408
+#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "&Recarrega"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:403
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1419,7 +1419,7 @@ msgstr ""
 "En recarregar es perdran tots els canvis.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:413
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1430,7 +1430,7 @@ msgstr ""
 "En recarregar es perdran tots els canvis.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:474
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Desa la paleta de colors com a"
@@ -1513,93 +1513,93 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Enganxar des d'un fitxer"
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
 msgstr "E&xporta..."
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-format
 msgid "Scan..."
 msgstr "Escaneja..."
 
-#: mainWindow/kpMainWindow_File.cpp:117
+#: mainWindow/kpMainWindow_File.cpp:118
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Obtén una captura de pantalla"
 
-#: mainWindow/kpMainWindow_File.cpp:121
+#: mainWindow/kpMainWindow_File.cpp:122
 #, kde-format
 msgid "Properties"
 msgstr "Propietats"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
 msgstr "Recarre&ga"
 
-#: mainWindow/kpMainWindow_File.cpp:457
+#: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Tots els fitxers admesos (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:482
+#: mainWindow/kpMainWindow_File.cpp:483
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Obre una imatge"
 
-#: mainWindow/kpMainWindow_File.cpp:545
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Ha fallat en obrir el diàleg d'escaneig."
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Ha fallat l'escaneig"
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Retard de la captura de pantalla"
 
-#: mainWindow/kpMainWindow_File.cpp:666
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " segon"
 msgstr[1] " segons"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
 msgid "No delay"
 msgstr "Sense retard"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Oculta la finestra principal"
 
-#: mainWindow/kpMainWindow_File.cpp:723
+#: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
 msgid "Document Properties"
 msgstr "Propietats del document"
 
-#: mainWindow/kpMainWindow_File.cpp:958
+#: mainWindow/kpMainWindow_File.cpp:959
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Desar la imatge com a"
 
-#: mainWindow/kpMainWindow_File.cpp:1006
+#: mainWindow/kpMainWindow_File.cpp:1007
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportació"
 
-#: mainWindow/kpMainWindow_File.cpp:1070
+#: mainWindow/kpMainWindow_File.cpp:1071
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1611,7 +1611,7 @@ msgstr ""
 "lo.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_File.cpp:1080
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1622,13 +1622,13 @@ msgstr ""
 "En recarregar es perdran tots els canvis.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_File.cpp:1328
+#: mainWindow/kpMainWindow_File.cpp:1329
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Impressió de la imatge"
 
-#: mainWindow/kpMainWindow_File.cpp:1408
+#: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1637,7 +1637,7 @@ msgstr ""
 "Heu de desar la imatge abans d'enviar-la.\n"
 "Voleu desar-la?"
 
-#: mainWindow/kpMainWindow_File.cpp:1446
+#: mainWindow/kpMainWindow_File.cpp:1459
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

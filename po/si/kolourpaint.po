@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-07 00:43+0000\n"
+"POT-Creation-Date: 2022-10-17 00:44+0000\n"
 "PO-Revision-Date: 2011-08-19 07:37+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -1311,59 +1311,59 @@ msgstr "වර්ණ පුවරුව \"%1\" ලෙස සුරැකිය �
 msgid "Untitled"
 msgstr "මාතෘකා නොමැති"
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:62
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "KolourPaint පෙරනිමි භාවිත කරන්න"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "KDE යන් භාවිත කරන්න"
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:79
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "විවෘත (&O)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:83
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "ප්‍රතිපූර්ණය (&d)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:88
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "සුරකින්න (&S)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:93
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "ලෙස සුරකින්න (&A)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:98
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "පේළියක් එක් කරන්න"
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:103
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "අවසන් පේළිය මකන්න"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:116
 #, kde-format
 msgid "Color Box"
 msgstr "වර්ණ කොටෘව"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:205
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1372,7 +1372,7 @@ msgstr ""
 "\"%1\" වර්ණ පුවරුව වෙනස්වී ඇත.\n"
 "එය මතින් ලිවිමට ඇවැසිද?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1381,7 +1381,7 @@ msgstr ""
 "\"%1\" KDE වර්ණ පුවරුව වෙනස් කර ඇත.\n"
 "ඔබට එය ගොනුවකට සුරැකීමට ඇවැසිද?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:234
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1390,13 +1390,13 @@ msgstr ""
 "පෙරනිමි වර්ණ පුවරුව වෙනස්වී ඇත.\n"
 "ඔබට එය ගොනුවකට සුරැකීමට ඇවැසිද?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:361
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "වර්ණ පුවරුව විවෘත කරන්න"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1407,15 +1407,15 @@ msgstr ""
 "ප්‍රතිපූර්ණය ඔබේ අවසන් සුරැකීමේ සිට සියළු වෙනස්කම් ඉවත දමයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
-#: mainWindow/kpMainWindow_File.cpp:1085
+#: mainWindow/kpMainWindow_Colors.cpp:395
+#: mainWindow/kpMainWindow_Colors.cpp:408
+#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "ප්‍රතිපූර්ණය (&R)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:403
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1426,7 +1426,7 @@ msgstr ""
 "ප්‍රතිපුර්ණය සියළු වෙනස්කම් ඉවත දමයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:413
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1437,7 +1437,7 @@ msgstr ""
 "ප්‍රතිපුර්ණය සියළු වෙනස්කම් ඉවත දමයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:474
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "ලෙස වර්ණ පුවරුව සුරකින්න"
@@ -1518,93 +1518,93 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "ගොනුවෙන් පිටපත්"
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
 msgstr "අපනයනය (&x)..."
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-format
 msgid "Scan..."
 msgstr "පරිලෝකනය..."
 
-#: mainWindow/kpMainWindow_File.cpp:117
+#: mainWindow/kpMainWindow_File.cpp:118
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "තිරසටහන ලබාගන්න"
 
-#: mainWindow/kpMainWindow_File.cpp:121
+#: mainWindow/kpMainWindow_File.cpp:122
 #, kde-format
 msgid "Properties"
 msgstr "වත්කම්"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
 msgstr "ප්‍රතිපූර්ණය (&d)"
 
-#: mainWindow/kpMainWindow_File.cpp:457
+#: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:482
+#: mainWindow/kpMainWindow_File.cpp:483
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "පිළිබිඹුව විවෘත"
 
-#: mainWindow/kpMainWindow_File.cpp:545
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "සේයාරූ පමාව"
 
-#: mainWindow/kpMainWindow_File.cpp:666
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " තත්පරය"
 msgstr[1] " තත්පර"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
 msgid "No delay"
 msgstr "ප්‍රමාදය නොමැත"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Hide Main Window"
 msgstr "සැඟවුනු ප්‍රධාන කවුළුව"
 
-#: mainWindow/kpMainWindow_File.cpp:723
+#: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
 msgid "Document Properties"
 msgstr "ලේඛන වත්කම්"
 
-#: mainWindow/kpMainWindow_File.cpp:958
+#: mainWindow/kpMainWindow_File.cpp:959
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "ලෙස පිළිබිඹුව සුරකින්න"
 
-#: mainWindow/kpMainWindow_File.cpp:1006
+#: mainWindow/kpMainWindow_File.cpp:1007
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "අපනයනය"
 
-#: mainWindow/kpMainWindow_File.cpp:1070
+#: mainWindow/kpMainWindow_File.cpp:1071
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1615,7 +1615,7 @@ msgstr ""
 "නැවත පූර්ණය අවසන් වර සුරැකීමේ සිට සියළු වෙනස්කම් ඉවතලයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_File.cpp:1080
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1626,13 +1626,13 @@ msgstr ""
 "නැවත පූර්ණය සියළු වෙනස්කම් ඉවතලයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_File.cpp:1328
+#: mainWindow/kpMainWindow_File.cpp:1329
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "පිළිබිඹුව මුද්‍රණය"
 
-#: mainWindow/kpMainWindow_File.cpp:1408
+#: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1641,7 +1641,7 @@ msgstr ""
 "මෙම පිළිබිඹුව යැවීමට පෙර සුරැකිය යුතුයි.\n"
 "ඔබට එය සුරැකීමට අවශ්‍යද?"
 
-#: mainWindow/kpMainWindow_File.cpp:1446
+#: mainWindow/kpMainWindow_File.cpp:1459
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

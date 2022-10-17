@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-07 00:43+0000\n"
+"POT-Creation-Date: 2022-10-17 00:44+0000\n"
 "PO-Revision-Date: 2014-09-28 22:50-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1316,62 +1316,62 @@ msgid "Untitled"
 msgstr "名前なし"
 
 # ACCELERATOR added by translator
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:62
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "KolourPaint の標準色を使う(&U)"
 
 # ACCELERATOR added by translator
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "KDE の色を使う(&K)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:79
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "開く(&O)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:83
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "再読み込み(&D)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:88
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "保存(&S)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:93
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "名前を付けて保存(&A)..."
 
 # ACCELERATOR added by translator
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:98
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "行を追加(&R)"
 
 # ACCELERATOR added by translator
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:103
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "最後の行を削除(&L)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:116
 #, kde-format
 msgid "Color Box"
 msgstr "カラーボックス"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:205
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1380,7 +1380,7 @@ msgstr ""
 "カラーパレット “%1” が変更されています。\n"
 "保存しますか？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1389,7 +1389,7 @@ msgstr ""
 "KDE のカラーパレット “%1” が変更されています。\n"
 "ファイルに保存しますか？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:234
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1398,13 +1398,13 @@ msgstr ""
 "標準のカラーパレットが変更されています。\n"
 "ファイルに保存しますか？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:361
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "カラーパレットを開く"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1415,15 +1415,15 @@ msgstr ""
 "再読み込みすると、最後に保存した以降のすべての変更が失われます。\n"
 "本当に再読み込みしますか？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
-#: mainWindow/kpMainWindow_File.cpp:1085
+#: mainWindow/kpMainWindow_Colors.cpp:395
+#: mainWindow/kpMainWindow_Colors.cpp:408
+#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "再読み込み(&R)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:403
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1434,7 +1434,7 @@ msgstr ""
 "再読み込みすると、すべての変更が失われます。\n"
 "本当に再読み込みしますか？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:413
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1445,7 +1445,7 @@ msgstr ""
 "再読み込みすると、すべての変更が失われます。\n"
 "本当に再読み込みしますか？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:474
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "名前を付けてカラーパレットを保存"
@@ -1526,95 +1526,95 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "ファイルから貼り付け"
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
 msgstr "エクスポート(&X)..."
 
 # ACCELERATOR added by translator
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-format
 msgid "Scan..."
 msgstr "スキャン(&K)..."
 
-#: mainWindow/kpMainWindow_File.cpp:117
+#: mainWindow/kpMainWindow_File.cpp:118
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "スクリーンショットを撮影"
 
 # ACCELERATOR added by translator
-#: mainWindow/kpMainWindow_File.cpp:121
+#: mainWindow/kpMainWindow_File.cpp:122
 #, kde-format
 msgid "Properties"
 msgstr "プロパティ(&E)"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
 msgstr "再読み込み(&D)"
 
-#: mainWindow/kpMainWindow_File.cpp:457
+#: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:482
+#: mainWindow/kpMainWindow_File.cpp:483
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "画像を開く"
 
-#: mainWindow/kpMainWindow_File.cpp:545
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
 msgid "Snapshot Delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:666
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " 秒"
 msgstr[1] " 秒"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
 msgid "No delay"
 msgstr "遅れなし"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Hide Main Window"
 msgstr "メインウィンドウを隠す"
 
-#: mainWindow/kpMainWindow_File.cpp:723
+#: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
 msgid "Document Properties"
 msgstr "文書のプロパティ"
 
-#: mainWindow/kpMainWindow_File.cpp:958
+#: mainWindow/kpMainWindow_File.cpp:959
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "名前を付けて画像を保存"
 
-#: mainWindow/kpMainWindow_File.cpp:1006
+#: mainWindow/kpMainWindow_File.cpp:1007
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "エクスポート"
 
-#: mainWindow/kpMainWindow_File.cpp:1070
+#: mainWindow/kpMainWindow_File.cpp:1071
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1625,7 +1625,7 @@ msgstr ""
 "再読み込みすると、最後に保存した以降のすべての変更が失われます。\n"
 "本当に再読み込みしますか？"
 
-#: mainWindow/kpMainWindow_File.cpp:1080
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1636,13 +1636,13 @@ msgstr ""
 "再読み込みすると、すべての変更が失われます。\n"
 "本当に再読み込みしますか？"
 
-#: mainWindow/kpMainWindow_File.cpp:1328
+#: mainWindow/kpMainWindow_File.cpp:1329
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "画像の印刷"
 
-#: mainWindow/kpMainWindow_File.cpp:1408
+#: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1651,7 +1651,7 @@ msgstr ""
 "送信する前に画像を保存しなければなりません。\n"
 "保存しますか？"
 
-#: mainWindow/kpMainWindow_File.cpp:1446
+#: mainWindow/kpMainWindow_File.cpp:1459
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

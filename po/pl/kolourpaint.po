@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-07 00:43+0000\n"
+"POT-Creation-Date: 2022-10-17 00:44+0000\n"
 "PO-Revision-Date: 2021-07-03 08:42+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -1307,59 +1307,59 @@ msgstr "Nie można zapisać palety kolorów jako \"%1\"."
 msgid "Untitled"
 msgstr "Bez tytułu"
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:62
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "Użyj wartości domyślnych KolourPainta"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:79
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Otwórz..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:83
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Wczytaj &ponownie"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:88
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Zapisz"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:93
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Zapisz &jako..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:98
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Dodaj wiersz"
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:103
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Usuń ostatni wiersz"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:116
 #, kde-format
 msgid "Color Box"
 msgstr "Kolory"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:205
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1368,7 +1368,7 @@ msgstr ""
 "Paleta kolorów \"%1\" została zmieniona.\n"
 "Czy zachować zmiany?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1377,7 +1377,7 @@ msgstr ""
 "Paleta kolorów KDE \"%1\" została zmieniona.\n"
 "Czy zapisać ją do pliku?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:234
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1386,13 +1386,13 @@ msgstr ""
 "Domyślna paleta kolorów została zmieniona.\n"
 "Czy zapisać ją do pliku?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:361
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Otwórz paletę kolorów"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1403,15 +1403,15 @@ msgstr ""
 "Ponowne otwarcie spowoduje utratę niezapisanych zmian.\n"
 "Czy jesteś pewien?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
-#: mainWindow/kpMainWindow_File.cpp:1085
+#: mainWindow/kpMainWindow_Colors.cpp:395
+#: mainWindow/kpMainWindow_Colors.cpp:408
+#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "W&czytaj ponownie"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:403
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1422,7 +1422,7 @@ msgstr ""
 "Ponowne otwarcie spowoduje utratę zmian.\n"
 "Czy jesteś pewien?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:413
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1433,7 +1433,7 @@ msgstr ""
 "Ponowne otwarcie spowoduje utratę zmian.\n"
 "Czy jesteś pewien?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:474
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Zapisz paletę kolorów jako"
@@ -1516,59 +1516,59 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Wklej z pliku"
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
 msgstr "Wye&ksportuj..."
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-format
 msgid "Scan..."
 msgstr "Skanuj..."
 
-#: mainWindow/kpMainWindow_File.cpp:117
+#: mainWindow/kpMainWindow_File.cpp:118
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Zrób zrzut ekranu"
 
-#: mainWindow/kpMainWindow_File.cpp:121
+#: mainWindow/kpMainWindow_File.cpp:122
 #, kde-format
 msgid "Properties"
 msgstr "Właściwości"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
 msgstr "W&czytaj ponownie"
 
-#: mainWindow/kpMainWindow_File.cpp:457
+#: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Wszystkie obsługiwane pliki (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:482
+#: mainWindow/kpMainWindow_File.cpp:483
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Otwórz obraz"
 
-#: mainWindow/kpMainWindow_File.cpp:545
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Nieudane otwieranie okna skanowania."
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Nieudane skanowanie"
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Opóźnienie migawki"
 
-#: mainWindow/kpMainWindow_File.cpp:666
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
@@ -1576,34 +1576,34 @@ msgstr[0] " sekunda"
 msgstr[1] " sekundy"
 msgstr[2] " sekund"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
 msgid "No delay"
 msgstr "Bez opóźnień"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Ukryj główne okno"
 
-#: mainWindow/kpMainWindow_File.cpp:723
+#: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
 msgid "Document Properties"
 msgstr "Właściwości dokumentu"
 
-#: mainWindow/kpMainWindow_File.cpp:958
+#: mainWindow/kpMainWindow_File.cpp:959
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Zapisz obraz jako"
 
-#: mainWindow/kpMainWindow_File.cpp:1006
+#: mainWindow/kpMainWindow_File.cpp:1007
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Wyeksportuj"
 
-#: mainWindow/kpMainWindow_File.cpp:1070
+#: mainWindow/kpMainWindow_File.cpp:1071
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1614,7 +1614,7 @@ msgstr ""
 "Ponowne jego otwarcie spowoduje utratę niezapisanych zmian.\n"
 "Czy jesteś pewien?"
 
-#: mainWindow/kpMainWindow_File.cpp:1080
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1625,13 +1625,13 @@ msgstr ""
 "Ponowne otwarcie spowoduje utratę zmian w pliku.\n"
 "Czy jesteś pewien?"
 
-#: mainWindow/kpMainWindow_File.cpp:1328
+#: mainWindow/kpMainWindow_File.cpp:1329
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Wydruk obrazu"
 
-#: mainWindow/kpMainWindow_File.cpp:1408
+#: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1640,7 +1640,7 @@ msgstr ""
 "Musisz zapisać obraz przed wysłaniem.\n"
 "Zapisać go?"
 
-#: mainWindow/kpMainWindow_File.cpp:1446
+#: mainWindow/kpMainWindow_File.cpp:1459
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

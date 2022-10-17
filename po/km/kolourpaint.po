@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-07 00:43+0000\n"
+"POT-Creation-Date: 2022-10-17 00:44+0000\n"
 "PO-Revision-Date: 2012-06-11 14:07+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -1295,59 +1295,59 @@ msgstr "មិនអាច​រក្សាទុក​ក្ដារ​លា
 msgid "Untitled"
 msgstr "គ្មាន​ចំណង​ជើង"
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:62
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "ប្រើ​លំនាំដើម​របស់ KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "ប្រើ​របស់ KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:79
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "បើក..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:83
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:88
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "រក្សាទុក"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:93
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "រក្សាទុក​ជា..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:98
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "បន្ថែម​ជួរ​ដេក"
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:103
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "លុប​ជួរដេក​ចុងក្រោយ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:116
 #, kde-format
 msgid "Color Box"
 msgstr "ប្រអប់​ពណ៌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:205
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1356,7 +1356,7 @@ msgstr ""
 "ក្ដារ​លាយ​ពណ៌ \"%1\" ត្រូវបាន​កែប្រែ ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1365,7 +1365,7 @@ msgstr ""
 "ក្ដារលាយ​ពណ៌​ \"%1\" របស់ KDE ត្រូវបាន​កែប្រែ ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ទៅកាន់​ឯកសារ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:234
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1374,13 +1374,13 @@ msgstr ""
 "ក្ដារ​លាយពណ៌​លំនាំដើម ត្រូវបាន​កែប្រែ ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ទៅ​ឯកសារ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:361
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "បើក​ក្ដារ​លាយ​ពណ៌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1391,15 +1391,15 @@ msgstr ""
 "ការ​ផ្ទុកឡើងវិញ នឹង​បាត់បង់​រាល់ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ នៅពេល​ដែល​អ្នក​បាន​រក្សាទុកវា​ចុងក្រោយ ។\n"
 "តើ​អ្នក​ពិតជា​ចង់​ផ្ទុកឡើងវិញ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
-#: mainWindow/kpMainWindow_File.cpp:1085
+#: mainWindow/kpMainWindow_Colors.cpp:395
+#: mainWindow/kpMainWindow_Colors.cpp:408
+#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:403
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1410,7 +1410,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើងវិញ​នឹង​ធ្វើ​ឲ្យ​បាត់បង់​រាល់ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ពិតជា​ចង់​ផ្ទុក​ឡើងវិញ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:413
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1421,7 +1421,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​នឹង​ធ្វើ​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ពិតជា​ចង់ផ្ទុកឡើង​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:474
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "រក្សាទុក​ក្ដារ​លាយ​ពណ៌​ជា"
@@ -1504,92 +1504,92 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "បិទភ្ជាប់​ពី​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
 msgstr "នាំចេញ..."
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-format
 msgid "Scan..."
 msgstr "ស្កេន..."
 
-#: mainWindow/kpMainWindow_File.cpp:117
+#: mainWindow/kpMainWindow_File.cpp:118
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "ទទួល​រូបថត​អេក្រង់"
 
-#: mainWindow/kpMainWindow_File.cpp:121
+#: mainWindow/kpMainWindow_File.cpp:122
 #, kde-format
 msgid "Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_File.cpp:457
+#: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:482
+#: mainWindow/kpMainWindow_File.cpp:483
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "បើក​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:545
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "ពន្យារ​ពេល​កា​រថតរូប"
 
-#: mainWindow/kpMainWindow_File.cpp:666
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] "វិនាទី"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
 msgid "No delay"
 msgstr "គ្មាន​ការ​ពន្យារ"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Hide Main Window"
 msgstr "បិទភ្ជាប់​ក្នុង​បង្អួច​ថ្មី"
 
-#: mainWindow/kpMainWindow_File.cpp:723
+#: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
 msgid "Document Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:958
+#: mainWindow/kpMainWindow_File.cpp:959
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "រក្សាទុក​រូបភាព​ជា"
 
-#: mainWindow/kpMainWindow_File.cpp:1006
+#: mainWindow/kpMainWindow_File.cpp:1007
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "នាំចេញ"
 
-#: mainWindow/kpMainWindow_File.cpp:1070
+#: mainWindow/kpMainWindow_File.cpp:1071
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1600,7 +1600,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ដែល​អ្នក​បាន​រក្សាទុក​ចុងក្រោយ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1080
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1611,13 +1611,13 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1328
+#: mainWindow/kpMainWindow_File.cpp:1329
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "បោះពុម្ព​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:1408
+#: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1626,7 +1626,7 @@ msgstr ""
 "អ្នក​ត្រូវ​តែ​រក្សាទុក​រូបភាព​នេះ​សិន មុន​នឹង​ផ្ញើ​វា ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ឬ​ទេ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1446
+#: mainWindow/kpMainWindow_File.cpp:1459
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

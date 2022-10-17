@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-07 00:43+0000\n"
+"POT-Creation-Date: 2022-10-17 00:44+0000\n"
 "PO-Revision-Date: 2006-01-10 02:28+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -1309,65 +1309,65 @@ msgstr "無法儲存為「%1」。"
 msgid "Untitled"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:62
 #, fuzzy, kde-format
 #| msgid "KolourPaint"
 msgid "Use KolourPaint Defaults"
 msgstr "KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Flip..."
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "反轉(&F)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:83
 #, fuzzy, kde-format
 #| msgid "Reloa&d"
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "重新載入(&D)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:88
 #, fuzzy, kde-format
 #| msgid "&Scale"
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "縮放(&S)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:93
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "儲存圖像為"
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:98
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:103
 #, fuzzy, kde-format
 #| msgid "&Delete Selection"
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "刪除所選(&D)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:116
 #, kde-format
 msgid "Color Box"
 msgstr "顏色盒"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:205
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1379,7 +1379,7 @@ msgstr ""
 "「%1」文件已修改。\n"
 "要儲存嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1391,7 +1391,7 @@ msgstr ""
 "「%1」文件已修改。\n"
 "要儲存嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:234
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1403,14 +1403,14 @@ msgstr ""
 "「%1」文件已修改。\n"
 "要儲存嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:361
 #, fuzzy, kde-format
 #| msgid "Colors"
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "色彩"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1425,15 +1425,15 @@ msgstr ""
 "重新載入會失去上次儲存之後的所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1075
-#: mainWindow/kpMainWindow_File.cpp:1085
+#: mainWindow/kpMainWindow_Colors.cpp:395
+#: mainWindow/kpMainWindow_Colors.cpp:408
+#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "重新載入(&D)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:403
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1448,7 +1448,7 @@ msgstr ""
 "重新載入會失去所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:413
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1463,7 +1463,7 @@ msgstr ""
 "重新載入會失去所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:474
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgid "Save Color Palette As"
@@ -1547,96 +1547,96 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "從檔案貼上"
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
 msgstr "匯出(&X)..."
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, fuzzy, kde-format
 msgid "Scan..."
 msgstr "..."
 
-#: mainWindow/kpMainWindow_File.cpp:117
+#: mainWindow/kpMainWindow_File.cpp:118
 #, fuzzy, kde-format
 #| msgid "Acquiring Screenshots"
 msgid "Acquire Screenshot"
 msgstr "正在取得螢幕截圖"
 
-#: mainWindow/kpMainWindow_File.cpp:121
+#: mainWindow/kpMainWindow_File.cpp:122
 #, kde-format
 msgid "Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
 msgstr "重新載入(&D)"
 
-#: mainWindow/kpMainWindow_File.cpp:457
+#: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:482
+#: mainWindow/kpMainWindow_File.cpp:483
 #, fuzzy, kde-format
 #| msgid "Open Image"
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "開啟圖像"
 
-#: mainWindow/kpMainWindow_File.cpp:545
+#: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
 msgid "Snapshot Delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:666
+#: mainWindow/kpMainWindow_File.cpp:667
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] ""
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
 msgid "No delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, fuzzy, kde-format
 #| msgid "Paste in &New Window"
 msgid "Hide Main Window"
 msgstr "貼上至新視窗(&N)"
 
-#: mainWindow/kpMainWindow_File.cpp:723
+#: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:958
+#: mainWindow/kpMainWindow_File.cpp:959
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "儲存圖像為"
 
-#: mainWindow/kpMainWindow_File.cpp:1006
+#: mainWindow/kpMainWindow_File.cpp:1007
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "匯出(&X)..."
 
-#: mainWindow/kpMainWindow_File.cpp:1070
+#: mainWindow/kpMainWindow_File.cpp:1071
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1647,7 +1647,7 @@ msgstr ""
 "重新載入會失去上次儲存之後的所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_File.cpp:1080
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1658,14 +1658,14 @@ msgstr ""
 "重新載入會失去所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_File.cpp:1328
+#: mainWindow/kpMainWindow_File.cpp:1329
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "整個圖像"
 
-#: mainWindow/kpMainWindow_File.cpp:1408
+#: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1674,7 +1674,7 @@ msgstr ""
 "傳送此圖像之前必須先儲存。\n"
 "要儲存嗎？"
 
-#: mainWindow/kpMainWindow_File.cpp:1446
+#: mainWindow/kpMainWindow_File.cpp:1459
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
