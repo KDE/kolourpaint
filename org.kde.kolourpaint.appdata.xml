@@ -24,6 +24,7 @@
   <name xml:lang="ia">KolourPaint</name>
   <name xml:lang="id">KolourPaint</name>
   <name xml:lang="it">KolourPaint</name>
+  <name xml:lang="ka">KolourPaint</name>
   <name xml:lang="ko">KolourPaint</name>
   <name xml:lang="lt">KolourPaint</name>
   <name xml:lang="nb">KolourPaint</name>
@@ -64,6 +65,7 @@
   <summary xml:lang="ia">Programma per pinger</summary>
   <summary xml:lang="id">Program Lukis</summary>
   <summary xml:lang="it">Programma di disegno</summary>
+  <summary xml:lang="ka">სახატავი პროგრამა</summary>
   <summary xml:lang="ko">그리기 프로그램</summary>
   <summary xml:lang="lt">Piešimo programa</summary>
   <summary xml:lang="nb">Malepogram</summary>
@@ -146,6 +148,7 @@
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Caratteristiche:</p>
+    <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="lt">Galimybės:</p>
     <p xml:lang="nb">Funksjoner:</p>
@@ -225,6 +228,7 @@
       <li xml:lang="ia">Curvas, lineas e texto</li>
       <li xml:lang="id">Lengkung, garis, dan teks</li>
       <li xml:lang="it">Curve, linee e testo</li>
+      <li xml:lang="ka">მრუდები, ხაზები და ტექსტი</li>
       <li xml:lang="ko">곡선, 직선 및 텍스트</li>
       <li xml:lang="lt">Kreivės, tiesės ir tekstas</li>
       <li xml:lang="nb">Kurver, linjer og tekst</li>
@@ -265,6 +269,7 @@
       <li xml:lang="ia">Selector de color</li>
       <li xml:lang="id">Penukil warna</li>
       <li xml:lang="it">Selettore del colore</li>
+      <li xml:lang="ka">ფერების არჩევა</li>
       <li xml:lang="ko">색 선택기</li>
       <li xml:lang="lt">Spalvų parinkiklis</li>
       <li xml:lang="nb">Fargevelger</li>
@@ -305,6 +310,7 @@
       <li xml:lang="ia">Selectiones</li>
       <li xml:lang="id">Pemilihan</li>
       <li xml:lang="it">Selezioni</li>
+      <li xml:lang="ka">მონიშნულები</li>
       <li xml:lang="ko">선택</li>
       <li xml:lang="lt">Žymėjimai</li>
       <li xml:lang="nb">Utvalg</li>
@@ -344,6 +350,7 @@
       <li xml:lang="ia">Rotation, monochrome e altere effectos avantiate</li>
       <li xml:lang="id">Perotasian, monokrom, dan efek tingkat lanjut lainnya</li>
       <li xml:lang="it">Rotazione, monocromia e altri effetti avanzati</li>
+      <li xml:lang="ka">მობრუნება, შავთეთრობა და სხვა დამატებითი ეფექტები</li>
       <li xml:lang="ko">회전, 흑백, 기타 고급 효과</li>
       <li xml:lang="nb">Dreiing, monokrom og andre avanserte effekter</li>
       <li xml:lang="nds">Dreihen, Swatt-Witt un en Reeg verwiedert Effekten</li>
@@ -388,6 +395,7 @@
       <caption xml:lang="ia">Pingente in KolourPaint</caption>
       <caption xml:lang="id">Melukis di KolourPaint</caption>
       <caption xml:lang="it">Dipingere in KolourPaint</caption>
+      <caption xml:lang="ka">KolourPaint-ში ხატვა</caption>
       <caption xml:lang="ko">KolourPaint로 그림 그리기</caption>
       <caption xml:lang="nl">In KolourPaint tekenen</caption>
       <caption xml:lang="nn">Teikning med KolourPaint</caption>
