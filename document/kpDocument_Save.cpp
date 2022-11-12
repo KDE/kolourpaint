@@ -410,7 +410,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
         }
 
         // Copy local temporary file to overwrite remote.
-        // It's the kioslave's job to make this atomic (write to .part, then rename .part file)
+        // It's the KIO worker's job to make this atomic (write to .part, then rename .part file)
         KIO::FileCopyJob *job = KIO::file_copy (QUrl::fromLocalFile (tempFileName),
                                                 url,
                                                 -1,
