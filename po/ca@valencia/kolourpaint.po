@@ -2130,7 +2130,7 @@ msgstr "Rectangle arredonit"
 #: tools/rectangular/kpToolRoundedRectangle.cpp:43
 #, kde-format
 msgid "Draws rectangles and squares with rounded corners"
-msgstr "Dibuixa uns rectangles i quadrats amb cantonades arredonides"
+msgstr "Dibuixa uns rectangles i quadrats amb cantons arredonits"
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
 #, kde-format
