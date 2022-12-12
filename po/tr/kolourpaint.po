@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-17 00:44+0000\n"
-"PO-Revision-Date: 2022-11-24 16:56+0300\n"
+"PO-Revision-Date: 2022-12-11 20:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -506,8 +506,8 @@ msgid ""
 msgstr ""
 "<qt><ul><li><b>Yeniden boyutlandırma</b>: Resim sağda ve/veya aşşağıda yeni "
 "alanların oluşturulması(arka plan rengi ile doldurularak) ile büyütülecek "
-"veya sağdan ve/veya aşşağıdan kesilme ile küçültülecek.</li><li><b>Ölçek</"
-"b>: Resim beneklerin çoğaltılması ile genişletilcek veya azaltılması ile "
+"veya sağdan ve/veya aşağıdan kesilme ile küçültülecek.</li><li><b>Ölçek</b>: "
+"Resim beneklerin çoğaltılması ile genişletilecek veya azaltılması ile "
 "küçültülecek.</li><li><b>Yumuşak Ölçek</b>: Bu <i>Ölçek</i> ile aynıdır "
 "fakat bu sefer komşu beneklerin karıştırılması ile daha güzel gözüken bir "
 "görsel yaratır.</li></ul></qt>"
@@ -1609,9 +1609,9 @@ msgid ""
 "Are you sure?"
 msgstr ""
 "\"%1\" belgesi değiştirildi.\n"
-"Yeniden yüklemek eski kayıdınızdan bu yana yaptığınız tüm değişiklikleri "
+"Yeniden yüklemek son kaydınızdan bu yana yaptığınız tüm değişiklikleri "
 "kaybettirecek.\n"
-"Devam etmek istiyor musunuz?"
+"Sürdürmek istiyor musunuz?"
 
 #: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
@@ -1622,7 +1622,7 @@ msgid ""
 msgstr ""
 "\"%1\" belgesi değiştirildi.\n"
 "Yeniden yüklemek tüm değişiklikleri kaybettirecek.\n"
-"Devam etmek istiyor musunuz?"
+"Sürdürmek istiyor musunuz?"
 
 #: mainWindow/kpMainWindow_File.cpp:1329
 #, kde-format
@@ -2569,7 +2569,7 @@ msgstr "256 r&enk (titrek)"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
 #, kde-format
 msgid "24-&bit color"
-msgstr "24-&bit renk"
+msgstr "24 &bit renk"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:144
 #, kde-format
