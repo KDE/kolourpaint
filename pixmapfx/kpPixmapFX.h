@@ -47,10 +47,6 @@ class QPen;
 class QImage;
 class QPoint;
 class QPolygon;
-class QRect;
-
-
-
 
 //
 // QPixmap (view) Manipulation.

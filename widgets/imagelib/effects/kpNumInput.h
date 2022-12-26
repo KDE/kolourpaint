@@ -26,7 +26,6 @@
 #include <QSpinBox>
 
 class QSlider;
-class QSpinBox;
 
 class kpNumInputPrivate;
 
