@@ -413,7 +413,7 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
-"Totes les claus de text han de ser úniques. La clau de text «%1» a les "
+"Totes les claus de text han de ser úniques. La clau de text «%1» en les "
 "línies %2 i %3 són idèntiques."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
