@@ -487,6 +487,9 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
     defaultMimeTypes << QStringLiteral ("image/jp2");
     defaultMimeTypes << QStringLiteral ("image/jpeg");
     defaultMimeTypes << QStringLiteral ("image/webp");
+    defaultMimeTypes << QStringLiteral ("image/avif");
+    defaultMimeTypes << QStringLiteral ("image/heif");
+    defaultMimeTypes << QStringLiteral ("image/heic");
 
     return defaultMimeTypes.contains(mimeType);
 }
