@@ -1627,7 +1627,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
-msgstr "Impressió de la imatge"
+msgstr "Imprimiu la imatge"
 
 #: mainWindow/kpMainWindow_File.cpp:1413
 #, kde-format
