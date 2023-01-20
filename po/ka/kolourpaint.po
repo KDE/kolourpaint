@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-17 00:44+0000\n"
-"PO-Revision-Date: 2022-09-28 12:33+0200\n"
+"PO-Revision-Date: 2023-01-19 16:11+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1108,7 +1108,7 @@ msgstr ""
 #: kolourpaint.cpp:90
 #, kde-format
 msgid "Image files to open, optionally"
-msgstr ""
+msgstr "სურათის ფაილებს გახსნა. არასავალდებულოა"
 
 #: kolourpaint.cpp:93
 #, kde-format
@@ -1177,7 +1177,7 @@ msgstr ""
 #: kpViewScrollableContainer.cpp:226
 #, kde-format
 msgid "Resize Image: Right click to cancel."
-msgstr ""
+msgstr "სურათის ზომის შეცვლა: მარჯვენა წკაპი გასაუქმებლად."
 
 #: layers/selections/text/kpTextSelection.cpp:136
 #: tools/selection/text/kpToolText.cpp:55
@@ -1188,7 +1188,7 @@ msgstr "ტექსტი"
 #: lgpl/generic/kpColorCollection.cpp:120
 #, kde-format
 msgid "Could not open color palette \"%1\"."
-msgstr ""
+msgstr "ფერების პალიტრის \"%1\" გახსნის შეცდომა."
 
 #: lgpl/generic/kpColorCollection.cpp:153
 #, kde-format
@@ -1358,7 +1358,7 @@ msgstr "ტექსტი: ყუთის შექმნა"
 #: mainWindow/kpMainWindow_Edit.cpp:444
 #, kde-format
 msgid "Text: Paste"
-msgstr ""
+msgstr "ტექსტი: ჩასმა"
 
 #: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
@@ -1580,7 +1580,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Image.cpp:175
 #, kde-format
 msgid "&Invert Colors"
-msgstr ""
+msgstr "&ინვერსიული ფერები"
 
 #: mainWindow/kpMainWindow_Image.cpp:180
 #, kde-format
@@ -1595,7 +1595,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
 msgid "&More Effects..."
-msgstr ""
+msgstr "&მეტი ეფექტები..."
 
 #: mainWindow/kpMainWindow_Image.cpp:230
 #, kde-format
@@ -1616,7 +1616,7 @@ msgstr "&მონიშნული"
 #: mainWindow/kpMainWindow_Settings.cpp:66
 #, kde-format
 msgid "Show &Path"
-msgstr ""
+msgstr "&ბილიკის ჩვენება"
 
 #: mainWindow/kpMainWindow_Settings.cpp:71
 #, kde-format
@@ -1714,7 +1714,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Tools.cpp:179
 #, kde-format
 msgid "Tool Box"
-msgstr ""
+msgstr "ინსტრუმენტები"
 
 #: mainWindow/kpMainWindow_View.cpp:65
 #, kde-format
@@ -1750,7 +1750,7 @@ msgstr "გამოსახულების მიღება"
 #: scan/sanedialog.cpp:73
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr ""
+msgstr "მონიშნული სკანერის გახსნის შეცდომა."
 
 #: tools/flow/kpToolBrush.cpp:35
 #, kde-format
@@ -1770,7 +1770,7 @@ msgstr ""
 #: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
 #, kde-format
 msgid "Color Eraser"
-msgstr ""
+msgstr "ფერის საშლელი"
 
 #: tools/flow/kpToolColorEraser.cpp:50
 #, kde-format
@@ -1961,7 +1961,7 @@ msgstr ""
 #: tools/polygonal/kpToolPolyline.cpp:46
 #, kde-format
 msgid "Connected Lines"
-msgstr ""
+msgstr "დაკავშირებული ხაზები"
 
 #: tools/polygonal/kpToolPolyline.cpp:47
 #, kde-format
@@ -2066,37 +2066,37 @@ msgstr ""
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:324
 #, kde-format
 msgid "Selection: Move"
-msgstr ""
+msgstr "მონიშნული: გადატანა"
 
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:347
 #, kde-format
 msgid "%1: Smear"
-msgstr ""
+msgstr "%1: ნაცხი"
 
 #: tools/selection/text/kpToolText.cpp:55
 #, kde-format
 msgid "Writes text"
-msgstr ""
+msgstr "წერს ტექსტს"
 
 #: tools/selection/text/kpToolText_Commands.cpp:69
 #, kde-format
 msgid "Text: Backspace"
-msgstr ""
+msgstr "ტექსტი: Backspace"
 
 #: tools/selection/text/kpToolText_Commands.cpp:86
 #, kde-format
 msgid "Text: Delete"
-msgstr ""
+msgstr "ტექსტი: წაშლა"
 
 #: tools/selection/text/kpToolText_Commands.cpp:103
 #, kde-format
 msgid "Text: New Line"
-msgstr ""
+msgstr "ტექსტი: ახალი ხაზი"
 
 #: tools/selection/text/kpToolText_Commands.cpp:120
 #, kde-format
 msgid "Text: Write"
-msgstr ""
+msgstr "ტექსტი: დაწერა"
 
 #: tools/selection/text/kpToolText_Create.cpp:48
 #, kde-format
@@ -2136,47 +2136,47 @@ msgstr ""
 #: tools/selection/text/kpToolText_TextStyle.cpp:137
 #, kde-format
 msgid "Text: Swap Colors"
-msgstr ""
+msgstr "ტექსტი: ფერების შეცვლა"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:158
 #, kde-format
 msgid "Text: Foreground Color"
-msgstr ""
+msgstr "ტექსტი: წინა პლანის ფერი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:179
 #, kde-format
 msgid "Text: Background Color"
-msgstr ""
+msgstr "ტექსტის ფონის ფერი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:215
 #, kde-format
 msgid "Text: Font"
-msgstr ""
+msgstr "ტექსტი: ფონტი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:242
 #, kde-format
 msgid "Text: Font Size"
-msgstr ""
+msgstr "ტექსტი: ფონტის ზომა"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:265
 #, kde-format
 msgid "Text: Bold"
-msgstr ""
+msgstr "ტექსტი: სქელი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:287
 #, kde-format
 msgid "Text: Italic"
-msgstr ""
+msgstr "ტექსტი: კურსივი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:309
 #, kde-format
 msgid "Text: Underline"
-msgstr ""
+msgstr "ტექსტი: ხაზგასმა"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:331
 #, kde-format
 msgid "Text: Strike Through"
-msgstr ""
+msgstr "ტექსტი: ხაზის გადასმა"
 
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
@@ -2186,7 +2186,7 @@ msgstr ""
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr ""
+msgstr "%1% - მინიატურა"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
 #, kde-format
@@ -2425,7 +2425,7 @@ msgstr ""
 #: widgets/kpDocumentSaveOptionsWidget.cpp:90
 #, kde-format
 msgid "Quali&ty:"
-msgstr ""
+msgstr "&ხარისხი:"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:98
 #, kde-format
@@ -2445,7 +2445,7 @@ msgstr ""
 #: widgets/kpDocumentSaveOptionsWidget.cpp:228
 #, kde-format
 msgid "256 Color"
-msgstr ""
+msgstr "256 ფერი"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:229
 #, kde-format
@@ -2455,18 +2455,18 @@ msgstr ""
 #: widgets/kpDocumentSaveOptionsWidget.cpp:234
 #, kde-format
 msgid "24-bit Color"
-msgstr ""
+msgstr "24-ბიტიანი ფერი"
 
 #: widgets/kpPrintDialogPage.cpp:57
 #, kde-format
 msgctxt "@title:tab"
 msgid "I&mage Position"
-msgstr ""
+msgstr "&გამოსახულების მდებარეობა"
 
 #: widgets/kpPrintDialogPage.cpp:59
 #, kde-format
 msgid "&Center of the page"
-msgstr ""
+msgstr "&გვერდის ცენტრი"
 
 #: widgets/kpPrintDialogPage.cpp:61
 #, kde-format
