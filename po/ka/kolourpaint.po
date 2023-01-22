@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-17 00:44+0000\n"
-"PO-Revision-Date: 2023-01-19 16:11+0100\n"
+"PO-Revision-Date: 2023-01-21 19:32+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1590,7 +1590,7 @@ msgstr "გასუ&ფთავება"
 #: mainWindow/kpMainWindow_Image.cpp:185
 #, kde-format
 msgid "Make Confidential"
-msgstr ""
+msgstr "კონფიდენციალურად გადაკეთება"
 
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
@@ -1704,7 +1704,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Tools.cpp:163
 #, kde-format
 msgid "&Draw Opaque"
-msgstr ""
+msgstr "გაუმჭვირვალედ &ხატვა"
 
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
@@ -1825,22 +1825,22 @@ msgstr "აეროზოლი"
 #: tools/flow/kpToolSpraycan.cpp:56
 #, kde-format
 msgid "Sprays graffiti"
-msgstr ""
+msgstr "გრაფიტის მისხურება"
 
 #: tools/flow/kpToolSpraycan.cpp:71
 #, kde-format
 msgid "Click or drag to spray graffiti."
-msgstr ""
+msgstr "გრაფიტის მისასხურებლად დააწკაპუნეთ ან გაათრიეთ."
 
 #: tools/kpTool_UserNotifications.cpp:42
 #, kde-format
 msgid "Right click to cancel."
-msgstr ""
+msgstr "მარჯვენა წკაპი გასაუქმებლად."
 
 #: tools/kpTool_UserNotifications.cpp:45
 #, kde-format
 msgid "Left click to cancel."
-msgstr ""
+msgstr "მარცხენა წკაპი გასაუქმებლად."
 
 #: tools/kpTool_UserNotifications.cpp:75
 #, kde-format
@@ -1855,17 +1855,17 @@ msgstr ""
 #: tools/kpToolColorPicker.cpp:68
 #, kde-format
 msgid "Click to select a color."
-msgstr ""
+msgstr "ფერის ასარჩევად დააწკაპუნეთ."
 
 #: tools/kpToolFloodFill.cpp:55
 #, kde-format
 msgid "Fills regions in the image"
-msgstr ""
+msgstr "გამოსახულების რეგიონების შევსება"
 
 #: tools/kpToolFloodFill.cpp:75
 #, kde-format
 msgid "Click to fill a region."
-msgstr ""
+msgstr "წკაპი რეგიონის შესავსებად."
 
 #: tools/kpToolZoom.cpp:75
 #, kde-format
@@ -1875,7 +1875,7 @@ msgstr "გადიდება"
 #: tools/kpToolZoom.cpp:75
 #, kde-format
 msgid "Zooms in and out of the image"
-msgstr ""
+msgstr "ადიდებს და აპატარავებს გამოსახულებას"
 
 #: tools/kpToolZoom.cpp:119
 #, kde-format
@@ -1890,7 +1890,7 @@ msgstr "მრუდი"
 #: tools/polygonal/kpToolCurve.cpp:104
 #, kde-format
 msgid "Draws curves"
-msgstr ""
+msgstr "მრუდების დახატვა"
 
 #: tools/polygonal/kpToolCurve.cpp:118
 #, kde-format
@@ -1966,7 +1966,7 @@ msgstr "დაკავშირებული ხაზები"
 #: tools/polygonal/kpToolPolyline.cpp:47
 #, kde-format
 msgid "Draws connected lines"
-msgstr ""
+msgstr "დაკავშირებული ხაზების დახატვა"
 
 #: tools/rectangular/kpToolEllipse.cpp:42
 #, kde-format
@@ -1976,7 +1976,7 @@ msgstr "ოვალი"
 #: tools/rectangular/kpToolEllipse.cpp:43
 #, kde-format
 msgid "Draws ellipses and circles"
-msgstr ""
+msgstr "ოვალებისა და წრეწირების დახატვა"
 
 #: tools/rectangular/kpToolRectangle.cpp:43
 #, kde-format
@@ -1986,12 +1986,12 @@ msgstr "მართკუთხედი"
 #: tools/rectangular/kpToolRectangle.cpp:44
 #, kde-format
 msgid "Draws rectangles and squares"
-msgstr ""
+msgstr "მართკუთხედებისა და მრავალკუთხედების დახატვა"
 
 #: tools/rectangular/kpToolRoundedRectangle.cpp:42
 #, kde-format
 msgid "Rounded Rectangle"
-msgstr ""
+msgstr "მომრგვალებული მართკუთხედი"
 
 #: tools/rectangular/kpToolRoundedRectangle.cpp:43
 #, kde-format
@@ -2001,37 +2001,37 @@ msgstr ""
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
 #, kde-format
 msgid "Left drag to create selection."
-msgstr ""
+msgstr "მარცხენა გადათრევა მონიშნულის შესაქმნელად."
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
 #, kde-format
 msgid "Left drag to move selection."
-msgstr ""
+msgstr "მარცხენა გადათრევა მონიშნულის გადასატანად."
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
 #, kde-format
 msgid "Left drag to scale selection."
-msgstr ""
+msgstr "მარცხენა გადათრევა მონიშნულის მასშტაბირებისთვის."
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
 #, kde-format
 msgid "Selection: Opaque"
-msgstr ""
+msgstr "მონიშნული: გაუმჭვირვალობა"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
 #, kde-format
 msgid "Selection: Transparent"
-msgstr ""
+msgstr "მონიშნული: გამჭვირვალე"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:184
 #, kde-format
 msgid "Selection: Transparency Color"
-msgstr ""
+msgstr "მონიშნული: გამჭვირვალობის ფერი"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:205
 #, kde-format
 msgid "Selection: Transparency Color Similarity"
-msgstr ""
+msgstr "მონიშნული: გამჭვირვალობის ფერის მსგავსება"
 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:42
 #, kde-format
@@ -2046,7 +2046,7 @@ msgstr ""
 #: tools/selection/image/kpToolFreeFormSelection.cpp:45
 #, kde-format
 msgid "Selection (Free-Form)"
-msgstr ""
+msgstr "მონიშნული (ხელით)"
 
 #: tools/selection/image/kpToolFreeFormSelection.cpp:46
 #, kde-format
@@ -2126,12 +2126,12 @@ msgstr ""
 #: tools/selection/text/kpToolText_TextStyle.cpp:113
 #, kde-format
 msgid "Text: Opaque Background"
-msgstr ""
+msgstr "ტექსტი: გაუმჭვირვალე ფონი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:114
 #, kde-format
 msgid "Text: Transparent Background"
-msgstr ""
+msgstr "ტექსტი: გამჭვირვალეფონი"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:137
 #, kde-format
