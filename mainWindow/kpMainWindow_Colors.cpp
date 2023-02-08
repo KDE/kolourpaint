@@ -67,9 +67,15 @@ void kpMainWindow::setupColorsMenuActions ()
     d->actionColorsKDE->setText (i18nc ("@item:inmenu colors", "Use KDE's"));
     // TODO: Will this slot be called spuriously if there are no colors
     //       installed?
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect (d->actionColorsKDE,
              static_cast<void (KSelectAction::*)(QAction*)>(&KSelectAction::triggered),
              this, &kpMainWindow::slotColorsKDE);
+#else
+    connect (d->actionColorsKDE,
+             &KSelectAction::actionTriggered,
+             this, &kpMainWindow::slotColorsKDE);
+#endif
 
     for (const auto &colName : ::KDEColorCollectionNames ()) {
         d->actionColorsKDE->addAction (colName);

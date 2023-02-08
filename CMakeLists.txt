@@ -24,14 +24,20 @@ include(ECMInstallIcons)
 include(ECMAddAppIcon)
 include(ECMSetupVersion)
 include(FeatureSummary)
-
+if (QT_MAJOR_VERSION STREQUAL "6")
+    set(QT_REQUIRED_VERSION "6.4.0")
+    set(KF_MIN_VERSION "5.240.0")
+    set(KF_MAJOR_VERSION "6")
+else()
+    set(KF_MAJOR_VERSION "5")
+endif()
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Widgets
     PrintSupport
 )
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
+find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     DocTools
     I18n
     GuiAddons
@@ -334,9 +340,9 @@ ecm_add_app_icon(kolourpaint_SRCS ICONS
 add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
-    KF5::XmlGui
-    KF5::KIOFileWidgets
-    KF5::TextWidgets
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::KIOFileWidgets
+    KF${KF_MAJOR_VERSION}::TextWidgets
     Qt${QT_MAJOR_VERSION}::PrintSupport
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
