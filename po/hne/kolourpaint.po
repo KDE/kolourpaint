@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-17 00:44+0000\n"
+"POT-Creation-Date: 2023-02-09 00:58+0000\n"
 "PO-Revision-Date: 2009-02-26 15:35+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -1065,126 +1065,126 @@ msgstr "फोटू अइसन सेट करव"
 msgid "Selection: Create"
 msgstr "चयन: बनाव"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "कलर-पेंट"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:55
 #, fuzzy, kde-format
 #| msgid "Paint Program for KDE"
 msgid "Paint Program by KDE"
 msgstr "केडीई बर पेंट प्रोग्राम"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr "क्लेरेंस डैंग"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "परियोजना संस्थापक"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr "टर्स्टन डैंग"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "मुख्य अनुसन्धानकर्ता"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr "मार्टिन कोलर"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr ""
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "क्रिस्टाफ बोरे"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "चिनहा"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr ""
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "इनपुटमेथड समर्थन"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "काजुकी ओथा"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "नुनो पिन्हेरो"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr "डैनी एलन"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr "माइक गैसलर"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "फोटू प्रभाव"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr "लारेंट मोंटेल"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "केडीई ४ मं पोर्ट करना"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, fuzzy, kde-format
 #| msgid "KDE 4 Porting"
 msgid "KF 5 Porting"
 msgstr "केडीई ४ मं पोर्ट करना"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "बहुत से दूसर ल घलोक धन्यवाद जऊन ए प्रोग्राम ल संभव बनाए मं मदद की."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgid "Image files to open, optionally"
 msgstr "फोटू फाइल जऊन ल खोलना हे"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
@@ -1302,54 +1302,54 @@ msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "केडीई के उपयोग करव"
 
-#: mainWindow/kpMainWindow_Colors.cpp:79
+#: mainWindow/kpMainWindow_Colors.cpp:85
 #, fuzzy, kde-format
 #| msgid "&Open..."
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "खोलव... (&O)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:83
+#: mainWindow/kpMainWindow_Colors.cpp:89
 #, fuzzy, kde-format
 #| msgid "Reloa&d"
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "फिर से लोड करव (&d)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:88
+#: mainWindow/kpMainWindow_Colors.cpp:94
 #, fuzzy, kde-format
 #| msgid "&Save"
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "सहेजव (&S)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:93
+#: mainWindow/kpMainWindow_Colors.cpp:99
 #, fuzzy, kde-format
 #| msgid "Save &As..."
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "अइसन सहेजव (&A)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:98
+#: mainWindow/kpMainWindow_Colors.cpp:104
 #, fuzzy, kde-format
 #| msgid "Add Row"
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "लकीर जोड़व"
 
-#: mainWindow/kpMainWindow_Colors.cpp:103
+#: mainWindow/kpMainWindow_Colors.cpp:109
 #, fuzzy, kde-format
 #| msgid "Delete Last Row"
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "पिछला लकीर मेटाव"
 
-#: mainWindow/kpMainWindow_Colors.cpp:116
+#: mainWindow/kpMainWindow_Colors.cpp:122
 #, kde-format
 msgid "Color Box"
 msgstr "रंग डब्बा"
 
-#: mainWindow/kpMainWindow_Colors.cpp:205
+#: mainWindow/kpMainWindow_Colors.cpp:211
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1358,7 +1358,7 @@ msgstr ""
 "रंग पैलेट \"%1\" सुधार दे गे हे.\n"
 " का आप मन एला सहेजना चाहथो ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:227
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1367,7 +1367,7 @@ msgstr ""
 "केडीई रंग पैलेट \"%1\" परिवर्धित करिस.\n"
 "का आप मन एला कोनो फाइल मं सहेजना चाहथो ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:234
+#: mainWindow/kpMainWindow_Colors.cpp:240
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1376,14 +1376,14 @@ msgstr ""
 "डिफाल्ट रंग पैलेट सुधार दे गे हे.\n"
 "का आप मन एला कोनो फाइल मं सहेजना चाहथो ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:361
+#: mainWindow/kpMainWindow_Colors.cpp:367
 #, fuzzy, kde-format
 #| msgid "Open Color Palette"
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "रंग पैलेट खोलव"
 
-#: mainWindow/kpMainWindow_Colors.cpp:390
+#: mainWindow/kpMainWindow_Colors.cpp:396
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1391,15 +1391,15 @@ msgid ""
 "Are you sure?"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:395
-#: mainWindow/kpMainWindow_Colors.cpp:408
-#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_Colors.cpp:401
+#: mainWindow/kpMainWindow_Colors.cpp:414
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "फिर से  लोड करव (&R)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:403
+#: mainWindow/kpMainWindow_Colors.cpp:409
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1410,7 +1410,7 @@ msgstr ""
 "इसको फिर से लोड करे मं पिछला दफा सहेजे जाय के बाद के सब्बो बदलाव गंवा हो जाही.\n"
 "का आप मन सुनिस्चित हो?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:413
+#: mainWindow/kpMainWindow_Colors.cpp:419
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1421,7 +1421,7 @@ msgstr ""
 "इसको फिर से लोड करे मं पिछला दफा सहेजे जाय के बाद के सब्बो बदलाव गंवा हो जाही.\n"
 "का आप मन सुनिस्चित हो?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:474
+#: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "रंग पैलेट ल ए रूप मं सहेजव"

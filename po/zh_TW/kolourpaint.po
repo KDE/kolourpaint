@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-17 00:44+0000\n"
+"POT-Creation-Date: 2023-02-09 00:58+0000\n"
 "PO-Revision-Date: 2022-12-30 18:03+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -1044,123 +1044,123 @@ msgstr "設定為影像"
 msgid "Selection: Create"
 msgstr "選擇區域：建立"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "KDE 的繪圖程式"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "專案發起者"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "主要審查者"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "掃描支援，Alpha 支援，目前維護者"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "圖示"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "輸入法支援"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "影像效果"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "KDE 4 移植"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "移植到 KF5"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "感謝許多人讓這個軟體成真。"
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "要開啟的影像檔，選擇性"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "列出所有能夠讀取的 MIME 類型"
@@ -1276,55 +1276,55 @@ msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "使用 KDE 的值"
 
-#: mainWindow/kpMainWindow_Colors.cpp:79
+#: mainWindow/kpMainWindow_Colors.cpp:85
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "開啟(&O)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:83
+#: mainWindow/kpMainWindow_Colors.cpp:89
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "重新載入(&D)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:88
+#: mainWindow/kpMainWindow_Colors.cpp:94
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "儲存(&S)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:93
+#: mainWindow/kpMainWindow_Colors.cpp:99
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "另存新檔(&A)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:98
+#: mainWindow/kpMainWindow_Colors.cpp:104
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "新增列"
 
-#: mainWindow/kpMainWindow_Colors.cpp:103
+#: mainWindow/kpMainWindow_Colors.cpp:109
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "刪除最後列"
 
-#: mainWindow/kpMainWindow_Colors.cpp:116
+#: mainWindow/kpMainWindow_Colors.cpp:122
 #, kde-format
 msgid "Color Box"
 msgstr "顏色盒"
 
-#: mainWindow/kpMainWindow_Colors.cpp:205
+#: mainWindow/kpMainWindow_Colors.cpp:211
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr "調色盤 %1 已變更。您要儲存嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:227
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1333,7 +1333,7 @@ msgstr ""
 "KDE 調色盤 %1 已變更。\n"
 "您要儲存到檔案嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:234
+#: mainWindow/kpMainWindow_Colors.cpp:240
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1342,13 +1342,13 @@ msgstr ""
 "預設調色盤已變更。\n"
 "您要儲存到檔案嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:361
+#: mainWindow/kpMainWindow_Colors.cpp:367
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "開啟調色盤"
 
-#: mainWindow/kpMainWindow_Colors.cpp:390
+#: mainWindow/kpMainWindow_Colors.cpp:396
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1359,15 +1359,15 @@ msgstr ""
 "重新載入會遺失所有尚未儲存的變更。\n"
 "您確定要重新載入嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:395
-#: mainWindow/kpMainWindow_Colors.cpp:408
-#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_Colors.cpp:401
+#: mainWindow/kpMainWindow_Colors.cpp:414
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "重新載入(&R)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:403
+#: mainWindow/kpMainWindow_Colors.cpp:409
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1378,7 +1378,7 @@ msgstr ""
 "重新載入會遺失所有變更。\n"
 "您確定要重新載入嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:413
+#: mainWindow/kpMainWindow_Colors.cpp:419
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1389,7 +1389,7 @@ msgstr ""
 "重新載入會遺失所有變更。\n"
 "您確定要重新載入嗎？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:474
+#: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "另存調色盤"

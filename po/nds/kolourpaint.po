@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-17 00:44+0000\n"
+"POT-Creation-Date: 2023-02-09 00:58+0000\n"
 "PO-Revision-Date: 2014-02-21 15:59+0100\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-doc@kde.org>\n"
@@ -1088,126 +1088,126 @@ msgstr "As Bild fastleggen"
 msgid "Selection: Create"
 msgstr "Köör: Opstellen"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:55
 #, fuzzy, kde-format
 #| msgid "Paint Program for KDE"
 msgid "Paint Program by KDE"
 msgstr "Tekenprogramm för KDE"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "Projekt-Vader"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Hööftopsicht"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "Inlees- un Alphakanaal-Ünnerstütten, Pleger opstunns"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "Lüttbiller"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "Ingaavmetood-Ünnerstütten"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "Bildeffekten"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "Na KDE 4 porteert"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, fuzzy, kde-format
 #| msgid "KDE 4 Porting"
 msgid "KF 5 Porting"
 msgstr "Na KDE 4 porteert"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "Dank ok an all anner Lüüd, de dit Programm mööglich maakt hebbt."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgid "Image files to open, optionally"
 msgstr "Datei, de opmaakt warrn schall"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
@@ -1323,48 +1323,48 @@ msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "KDE-Klören"
 
-#: mainWindow/kpMainWindow_Colors.cpp:79
+#: mainWindow/kpMainWindow_Colors.cpp:85
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Opmaken..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:83
+#: mainWindow/kpMainWindow_Colors.cpp:89
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "&Nieg laden"
 
-#: mainWindow/kpMainWindow_Colors.cpp:88
+#: mainWindow/kpMainWindow_Colors.cpp:94
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Sekern"
 
-#: mainWindow/kpMainWindow_Colors.cpp:93
+#: mainWindow/kpMainWindow_Colors.cpp:99
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Sekern &as..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:98
+#: mainWindow/kpMainWindow_Colors.cpp:104
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Reeg tofögen"
 
-#: mainWindow/kpMainWindow_Colors.cpp:103
+#: mainWindow/kpMainWindow_Colors.cpp:109
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Lest Reeg wegdoon"
 
-#: mainWindow/kpMainWindow_Colors.cpp:116
+#: mainWindow/kpMainWindow_Colors.cpp:122
 #, kde-format
 msgid "Color Box"
 msgstr "Klörenkasten"
 
-#: mainWindow/kpMainWindow_Colors.cpp:205
+#: mainWindow/kpMainWindow_Colors.cpp:211
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1373,7 +1373,7 @@ msgstr ""
 "De Klörensett \"%1\" wöör ännert.\n"
 "Wullt Du em na en Datei sekern?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:227
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1382,7 +1382,7 @@ msgstr ""
 "De KDE-Klörensett \"%1\" wöör ännert.\n"
 "Wullt Du em na en Datei sekern?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:234
+#: mainWindow/kpMainWindow_Colors.cpp:240
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1391,13 +1391,13 @@ msgstr ""
 "De Standard-Klörensett wöör ännert.\n"
 "Wullt Du em na en Datei sekern?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:361
+#: mainWindow/kpMainWindow_Colors.cpp:367
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Klörensett opmaken"
 
-#: mainWindow/kpMainWindow_Colors.cpp:390
+#: mainWindow/kpMainWindow_Colors.cpp:396
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1408,15 +1408,15 @@ msgstr ""
 "Niegladen warrt all Ännern siet dat leste Sekern wegdoon.\n"
 "Büst Du seker?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:395
-#: mainWindow/kpMainWindow_Colors.cpp:408
-#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_Colors.cpp:401
+#: mainWindow/kpMainWindow_Colors.cpp:414
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "&Nieg laden"
 
-#: mainWindow/kpMainWindow_Colors.cpp:403
+#: mainWindow/kpMainWindow_Colors.cpp:409
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1427,7 +1427,7 @@ msgstr ""
 "Niegladen warrt all Ännern wegdoon.\n"
 "Büst Du seker?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:413
+#: mainWindow/kpMainWindow_Colors.cpp:419
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1438,7 +1438,7 @@ msgstr ""
 "Niegladen warrt all Ännern wegdoon.\n"
 "Büst Du seker?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:474
+#: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Klörensett sekern as"

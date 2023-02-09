@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-17 00:44+0000\n"
+"POT-Creation-Date: 2023-02-09 00:58+0000\n"
 "PO-Revision-Date: 2021-07-03 08:47+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -1081,123 +1081,123 @@ msgstr "Зробити зображенням"
 msgid "Selection: Create"
 msgstr "Вибране: створити"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "Програма малювання від KDE"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "Засновник проєкту"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Головний дослідник"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "Підтримка сканування, підтримка каналу прозорості, поточний супровід"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "Піктограми"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "Підтримка InputMethod"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "Ефекти зображень"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "Портування до KDE 4"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "Портування на KF 5"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "Подяка багатьом іншим, які допомогли зробити цю програму."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "Файли зображень, які слід відкрити, вказувати не обов’язково"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "Вивести список усіх типів MIME зображень, які може читати програма"
@@ -1313,48 +1313,48 @@ msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "Використовувати кольори KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:79
+#: mainWindow/kpMainWindow_Colors.cpp:85
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Відкрити..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:83
+#: mainWindow/kpMainWindow_Colors.cpp:89
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Перезаванта&жити"
 
-#: mainWindow/kpMainWindow_Colors.cpp:88
+#: mainWindow/kpMainWindow_Colors.cpp:94
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Зберегти"
 
-#: mainWindow/kpMainWindow_Colors.cpp:93
+#: mainWindow/kpMainWindow_Colors.cpp:99
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Зберегти &як..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:98
+#: mainWindow/kpMainWindow_Colors.cpp:104
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Додати ряд"
 
-#: mainWindow/kpMainWindow_Colors.cpp:103
+#: mainWindow/kpMainWindow_Colors.cpp:109
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Вилучити останній ряд"
 
-#: mainWindow/kpMainWindow_Colors.cpp:116
+#: mainWindow/kpMainWindow_Colors.cpp:122
 #, kde-format
 msgid "Color Box"
 msgstr "Пенал кольорів"
 
-#: mainWindow/kpMainWindow_Colors.cpp:205
+#: mainWindow/kpMainWindow_Colors.cpp:211
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1363,7 +1363,7 @@ msgstr ""
 "Палітру кольорів «%1» було змінено.\n"
 "Хочете її зберегти?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:227
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1372,7 +1372,7 @@ msgstr ""
 "Палітру кольорів KDE «%1» було змінено.\n"
 "Хочете її зберегти?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:234
+#: mainWindow/kpMainWindow_Colors.cpp:240
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1381,13 +1381,13 @@ msgstr ""
 "Типову палітру кольорів було змінено.\n"
 "Хочете її зберегти?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:361
+#: mainWindow/kpMainWindow_Colors.cpp:367
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Відкрити палітру кольорів"
 
-#: mainWindow/kpMainWindow_Colors.cpp:390
+#: mainWindow/kpMainWindow_Colors.cpp:396
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1399,15 +1399,15 @@ msgstr ""
 "збереження.\n"
 "Ви впевнені?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:395
-#: mainWindow/kpMainWindow_Colors.cpp:408
-#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_Colors.cpp:401
+#: mainWindow/kpMainWindow_Colors.cpp:414
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "&Перезавантажити"
 
-#: mainWindow/kpMainWindow_Colors.cpp:403
+#: mainWindow/kpMainWindow_Colors.cpp:409
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1418,7 +1418,7 @@ msgstr ""
 "Перезавантаження призведе до втрати всіх змін.\n"
 "Ви впевнені?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:413
+#: mainWindow/kpMainWindow_Colors.cpp:419
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1429,7 +1429,7 @@ msgstr ""
 "Перезавантаження призведе до втрати всіх змін.\n"
 "Ви впевнені?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:474
+#: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Зберегти палітру кольорів як"

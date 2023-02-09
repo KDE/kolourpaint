@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-17 00:44+0000\n"
+"POT-Creation-Date: 2023-02-09 00:58+0000\n"
 "PO-Revision-Date: 2012-01-12 17:21+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1097,126 +1097,126 @@ msgstr "تنظیم به عنوان تصویر"
 msgid "Selection: Create"
 msgstr "گزینش: ایجاد"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:55
 #, fuzzy, kde-format
 #| msgid "Paint Program for KDE"
 msgid "Paint Program by KDE"
 msgstr "برنامه نقاشی برای KDE"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr ""
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "بنیان‌گذار پروژه"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr ""
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "مأمور ارشد بررسی"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr ""
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr ""
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr ""
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "شمایلها"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr ""
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "پشتیبانی InputMethod"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr ""
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr ""
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr ""
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr ""
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "جلوه‌های تصویر"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr ""
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "انتقال به KDE 4"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, fuzzy, kde-format
 #| msgid "KDE 4 Porting"
 msgid "KF 5 Porting"
 msgstr "انتقال به KDE 4"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:87
 #, fuzzy, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "با تشکر از افراد زیادی که در ایجاد این برنامه کمک کردند."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgid "Image files to open, optionally"
 msgstr " پرونده تصویر برای باز کردن"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
@@ -1334,50 +1334,50 @@ msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "استفاده از KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:79
+#: mainWindow/kpMainWindow_Colors.cpp:85
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&باز کردن...‌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:83
+#: mainWindow/kpMainWindow_Colors.cpp:89
 #, fuzzy, kde-format
 #| msgid "Reloa&d"
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "&بارگذاری مجدد‌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:88
+#: mainWindow/kpMainWindow_Colors.cpp:94
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&ذخیره‌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:93
+#: mainWindow/kpMainWindow_Colors.cpp:99
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "ذخیره &به عنوان...‌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:98
+#: mainWindow/kpMainWindow_Colors.cpp:104
 #, fuzzy, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "&افزودن سطر‌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:103
+#: mainWindow/kpMainWindow_Colors.cpp:109
 #, fuzzy, kde-format
 #| msgid "Delete Last Row"
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "حذف سطر آخر"
 
-#: mainWindow/kpMainWindow_Colors.cpp:116
+#: mainWindow/kpMainWindow_Colors.cpp:122
 #, kde-format
 msgid "Color Box"
 msgstr "جعبه رنگ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:205
+#: mainWindow/kpMainWindow_Colors.cpp:211
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1386,7 +1386,7 @@ msgstr ""
 "پالت رنگ »%1« تغییر کرده است.\n"
 "می‌خواهید آن را ذخیره کنید؟"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:227
 #, fuzzy, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1395,7 +1395,7 @@ msgstr ""
 "پالت رنگ »%1« تغییر کرده است.\n"
 "می‌خواهید آن را در پرونده‌ای ذخیره کنید؟"
 
-#: mainWindow/kpMainWindow_Colors.cpp:234
+#: mainWindow/kpMainWindow_Colors.cpp:240
 #, fuzzy, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1404,14 +1404,14 @@ msgstr ""
 "پالت رنگ »%1« تغییر کرده است.\n"
 "می‌خواهید آن را در پرونده‌ای ذخیره کنید؟"
 
-#: mainWindow/kpMainWindow_Colors.cpp:361
+#: mainWindow/kpMainWindow_Colors.cpp:367
 #, fuzzy, kde-format
 #| msgid "Open Color Palette"
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "باز کردن پالت رنگ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:390
+#: mainWindow/kpMainWindow_Colors.cpp:396
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1423,15 +1423,15 @@ msgstr ""
 "کرده‌اید.\n"
 "مطمئن هستید؟"
 
-#: mainWindow/kpMainWindow_Colors.cpp:395
-#: mainWindow/kpMainWindow_Colors.cpp:408
-#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_Colors.cpp:401
+#: mainWindow/kpMainWindow_Colors.cpp:414
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "&بارگذاری مجدد‌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:403
+#: mainWindow/kpMainWindow_Colors.cpp:409
 #, fuzzy, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1442,7 +1442,7 @@ msgstr ""
 "بارگذاری مجدد باعث از دست رفتن تمام تغییرات می‌شود.\n"
 "مطمئن هستید؟"
 
-#: mainWindow/kpMainWindow_Colors.cpp:413
+#: mainWindow/kpMainWindow_Colors.cpp:419
 #, fuzzy, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1453,7 +1453,7 @@ msgstr ""
 "بارگذاری مجدد باعث از دست رفتن تمام تغییرات می‌شود.\n"
 "مطمئن هستید؟"
 
-#: mainWindow/kpMainWindow_Colors.cpp:474
+#: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "ذخیره پالت رنگ به عنوان"
