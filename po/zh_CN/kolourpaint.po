@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-09 00:58+0000\n"
-"PO-Revision-Date: 2023-02-07 11:02\n"
+"PO-Revision-Date: 2023-02-15 11:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -72,7 +72,7 @@ msgstr "颜色扁平化"
 #: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
 #, kde-format
 msgid "Reduce to Grayscale"
-msgstr "降为灰色"
+msgstr "降低为灰阶"
 
 #: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
@@ -94,22 +94,22 @@ msgstr "颜色反相"
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
 #, kde-format
 msgid "Reduce to Monochrome (Dithered)"
-msgstr "减少为单色(抖动)"
+msgstr "降低为单色 (抖动)"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
 #, kde-format
 msgid "Reduce to Monochrome"
-msgstr "减少为单色"
+msgstr "降低为单色"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
 #, kde-format
 msgid "Reduce to 256 Color (Dithered)"
-msgstr "减少为 256 色(抖动)"
+msgstr "降低为 256 色 (抖动)"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
 #, kde-format
 msgid "Reduce to 256 Color"
-msgstr "减少为 256 色"
+msgstr "降低为 256 色"
 
 #: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:41
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
