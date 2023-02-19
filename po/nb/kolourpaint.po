@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-17 00:44+0000\n"
+"POT-Creation-Date: 2023-02-09 00:58+0000\n"
 "PO-Revision-Date: 2012-09-03 14:23+0200\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -587,10 +587,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to resize the image?</p></qt>"
 msgstr ""
-"<qt><p> Det kan kreves en god del minne for å endre bildestørrelsen til %1x"
-"%2. Dette kan gå ut over systemets svartid og gi ressursproblemer for andre "
-"programmer. </p><p>Er du sikker på at du vil endre størrelsen på bildet?</"
-"p></qt>"
+"<qt><p> Det kan kreves en god del minne for å endre bildestørrelsen til "
+"%1x%2. Dette kan gå ut over systemets svartid og gi ressursproblemer for "
+"andre programmer. </p><p>Er du sikker på at du vil endre størrelsen på "
+"bildet?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
 #: mainWindow/kpMainWindow_Tools.cpp:662
@@ -658,9 +658,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the image?</"
 "p></qt>"
 msgstr ""
-"<qt><p> Det kan kreves en god del minne for å skalere bildet jevnt til %1x"
-"%2. Dette kan gå ut over systemets svartid og gi ressursproblemer for andre "
-"programmer. </p><p>Er du sikker på at du vil skalere bildet jevnt?</p></qt>"
+"<qt><p> Det kan kreves en god del minne for å skalere bildet jevnt til "
+"%1x%2. Dette kan gå ut over systemets svartid og gi ressursproblemer for "
+"andre programmer. </p><p>Er du sikker på at du vil skalere bildet jevnt?</"
+"p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
 #, kde-format
@@ -681,9 +682,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the selection?"
 "</p></qt>"
 msgstr ""
-"<qt><p> Det kan kreves en god del minne for å skalere utvalget jevnt til %1x"
-"%2. Dette kan gå ut over systemets svartid og gi ressursproblemer for andre "
-"programmer. </p><p>Er du sikker på at du vil skalere utvalget jevnt?</p></qt>"
+"<qt><p> Det kan kreves en god del minne for å skalere utvalget jevnt til "
+"%1x%2. Dette kan gå ut over systemets svartid og gi ressursproblemer for "
+"andre programmer. </p><p>Er du sikker på at du vil skalere utvalget jevnt?</"
+"p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
 #, kde-format
@@ -1055,124 +1057,124 @@ msgstr "Sett som bilde"
 msgid "Selection: Create"
 msgstr "Utvalg: Opprett"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr ""
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "Prosjektgrunnlegger"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Sjefsetterforsker"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "Støtte for skanning, alfa, gjeldende vedlikeholder"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "Ikoner"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "Støtte for inndata-metode"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "Bildeeffekter"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "KDE 4-porting"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "KF 5 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr ""
 "Takk til de mange andre som har hjulpet med å gjøre dette programmet mulig."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr ""
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
@@ -1288,48 +1290,48 @@ msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "Bruk KDEs"
 
-#: mainWindow/kpMainWindow_Colors.cpp:79
+#: mainWindow/kpMainWindow_Colors.cpp:85
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Åpne …"
 
-#: mainWindow/kpMainWindow_Colors.cpp:83
+#: mainWindow/kpMainWindow_Colors.cpp:89
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Las&t på nytt"
 
-#: mainWindow/kpMainWindow_Colors.cpp:88
+#: mainWindow/kpMainWindow_Colors.cpp:94
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Lagre"
 
-#: mainWindow/kpMainWindow_Colors.cpp:93
+#: mainWindow/kpMainWindow_Colors.cpp:99
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Lagre &som …"
 
-#: mainWindow/kpMainWindow_Colors.cpp:98
+#: mainWindow/kpMainWindow_Colors.cpp:104
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Legg til rad"
 
-#: mainWindow/kpMainWindow_Colors.cpp:103
+#: mainWindow/kpMainWindow_Colors.cpp:109
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Slett siste rad"
 
-#: mainWindow/kpMainWindow_Colors.cpp:116
+#: mainWindow/kpMainWindow_Colors.cpp:122
 #, kde-format
 msgid "Color Box"
 msgstr "Fargeskrin"
 
-#: mainWindow/kpMainWindow_Colors.cpp:205
+#: mainWindow/kpMainWindow_Colors.cpp:211
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1338,7 +1340,7 @@ msgstr ""
 "Fargepaletten «%1» er endret.\n"
 "Vil du lagre den?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:227
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1347,7 +1349,7 @@ msgstr ""
 "KDE-fargepaletten «%1» er endret.\n"
 "Vil du lagre den til en fil?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:234
+#: mainWindow/kpMainWindow_Colors.cpp:240
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1356,13 +1358,13 @@ msgstr ""
 "Standard fargepalett er endret.\n"
 "Vil du lagre den til en fil?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:361
+#: mainWindow/kpMainWindow_Colors.cpp:367
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Åpne fargepalett"
 
-#: mainWindow/kpMainWindow_Colors.cpp:390
+#: mainWindow/kpMainWindow_Colors.cpp:396
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1373,15 +1375,15 @@ msgstr ""
 "Om den lastes på nytt mistes alle endringer siden siste lagring.\n"
 "Er du sikker?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:395
-#: mainWindow/kpMainWindow_Colors.cpp:408
-#: mainWindow/kpMainWindow_Colors.cpp:417 mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_Colors.cpp:401
+#: mainWindow/kpMainWindow_Colors.cpp:414
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid "&Reload"
 msgstr "Last &inn på nytt"
 
-#: mainWindow/kpMainWindow_Colors.cpp:403
+#: mainWindow/kpMainWindow_Colors.cpp:409
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1392,7 +1394,7 @@ msgstr ""
 "Om den lastes på nytt mistes alle endringer.\n"
 "Er du sikker?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:413
+#: mainWindow/kpMainWindow_Colors.cpp:419
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1403,7 +1405,7 @@ msgstr ""
 "Om den lastes på nytt mistes alle endringer.\n"
 "Er du sikker?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:474
+#: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Lagre fargepalett som"
