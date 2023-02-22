@@ -61,6 +61,7 @@
 #include <KStandardShortcut>
 #include <KStandardAction>
 #include <KLocalizedString>
+#include <kwidgetsaddons_version.h>
 
 #include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"
@@ -76,7 +77,6 @@
 
 #if HAVE_KSANE
 #include "../scan/sanedialog.h"
-#include <kwidgetsaddons_version.h>
 #endif // HAVE_KSANE
 
 // private
