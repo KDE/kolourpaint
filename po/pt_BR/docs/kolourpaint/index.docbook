@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&kolourpaint;">
   <!ENTITY Clarence.Dang
 "<personname
 ><firstname
@@ -23,7 +22,6 @@
   <!ENTITY Thurston.Dang.mail "<email
 >thurston_dang@users.sourceforge.net</email
 >">
-  <!ENTITY package "kdegraphics">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Brazilian-Portuguese "INCLUDE">
 ]>
@@ -99,13 +97,13 @@
 &FDLNotice;
 </legalnotice>
 <date
->03/04/2011</date>
+>23/03/2018</date>
 <releaseinfo
->&kde; 4.7</releaseinfo>
+>Applications 18.04</releaseinfo>
 
 <abstract>
 <para
->O &kolourpaint; é um programa de desenho livre e fácil de usar para o &kde;. </para>
+>O &kolourpaint; é um programa de desenho livre e fácil de usar do &kde;. </para>
 </abstract>
 
 <keywordset>
@@ -121,7 +119,7 @@
 <title
 >Introdução</title>
 <para
->O &kolourpaint; é um programa de desenho livre e fácil de usar para o &kde;. Ele é perfeito para as tarefas do dia a dia, tais como:</para>
+>O &kolourpaint; é um programa de desenho livre e fácil de usar do &kde;. Ele é perfeito para as tarefas do dia a dia, tais como:</para>
 
 <itemizedlist>
 <listitem>
@@ -191,6 +189,11 @@
 <chapter id="tools-chapter">
 <title
 >Ferramentas</title>
+
+<para
+>Uma opção adicional no menu <guimenu
+>Configurações</guimenu
+> permite definir se as ferramentas desenham suavizado (padrão) ou não. </para>
 
 <sect1 id="acquiring-screenshots">
 <title
@@ -1530,7 +1533,7 @@ format="PNG"/>
 <para
 >Você poderá inserir as novas dimensões em pixels ou como uma porcentagem do tamanho original. Se você selecionar a opção <guilabel
 >Manter a proporção</guilabel
->, a largura e a altura serão escalonadas com o mesmo percentual.</para>
+>, a largura e a altura serão escalonadas com o mesmo porcentual.</para>
 
 <tip>
 <para
@@ -1742,8 +1745,7 @@ user selects the next page, the next page should be Autocrop / Remove Internal B
 >Revisão e atualização de André Marcelo Alvarenga <email
 >andrealvarenga@gmx.net</email
 ></para
-> 
-&underFDL; <para
+> &underFDL; <para
 >Este programa está licenciado da seguinte forma:</para>
 
 <para
@@ -1777,31 +1779,6 @@ OU OUTRA SITUAÇÃO) QUE LEVANTA-SE EM QUALQUER MANEIRA FORA DO USO DESTE SOFTWA
 MESMO SE ALERTADO DA POSSIBILIDADE DE TAIS DANOS.
 </literallayout>
 </chapter>
-
-<appendix id="installation">
-<title
->Instalação</title>
-<sect1 id="getting-kapp">
-<title
->Como obter o &kolourpaint;</title>
-&install.intro.documentation; <para
->As versões mais frequentes, com o suporte para as versões anteriores do &kde; estão disponíveis em <ulink url="http://kolourpaint.sourceforge.net/"
->http://kolourpaint.sourceforge.net/</ulink
->.</para>
-
-</sect1>
-
-<sect1 id="compilation">
-<title
->Compilação e instalação</title>
-
-<note>
-<para
->Se você está lendo esta ajuda no &khelpcenter;, então o &kolourpaint; já está instalado neste sistema e você não precisa seguir estas instruções genéricas. </para>
-</note
-> &install.compile.documentation; </sect1>
-
-</appendix>
 
 &documentation.index;
 </book>
