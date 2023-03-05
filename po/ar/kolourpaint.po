@@ -1076,7 +1076,7 @@ msgstr "الرسام"
 #: kolourpaint.cpp:53
 #, kde-format
 msgid "Paint Program by KDE"
-msgstr "برنامج الرسم بواسطة كدي"
+msgstr "برنامج الرسم بواسطة كِيدِي"
 
 #: kolourpaint.cpp:67
 #, kde-format
@@ -1161,7 +1161,7 @@ msgstr "لوران مونتال (Laurent Montel)"
 #: kolourpaint.cpp:82
 #, kde-format
 msgid "KDE 4 Porting"
-msgstr "النقل إلى كدي4"
+msgstr "النقل إلى كِيدِي4"
 
 #: kolourpaint.cpp:83
 #, kde-format
@@ -1275,7 +1275,7 @@ msgstr ""
 #: lgpl/generic/kpColorCollection.cpp:213
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
-msgstr "لا يمكن فتح لوحة الألوان كدي \"%1\"."
+msgstr "لا يمكن فتح لوحة الألوان كِيدِي \"%1\"."
 
 #: lgpl/generic/kpColorCollection.cpp:263
 #, kde-format
@@ -1297,7 +1297,7 @@ msgstr "استعمل افتراضات الرسام"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
-msgstr "استخدم الخاص بكدي"
+msgstr "استخدم الخاص بكِيدِي"
 
 #: mainWindow/kpMainWindow_Colors.cpp:79
 #, kde-format
@@ -1355,7 +1355,7 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"تم تعديل لوحة ألوان كدي  \"%1\". \n"
+"تم تعديل لوحة ألوان كِيدِي  \"%1\". \n"
 "هل تريد حفظها في ملف؟"
 
 #: mainWindow/kpMainWindow_Colors.cpp:234
@@ -1399,7 +1399,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"لوحة ألوان كدي  \"%1\" عدلت.\n"
+"لوحة ألوان كِيدِي  \"%1\" عدلت.\n"
 "إعادة تحميلها ستضيع كل التعديلات.\n"
 "هل أنت متأكد؟"
 
@@ -2793,10 +2793,10 @@ msgstr "معتم"
 #~ "KolourPaint.</blockquote></p><p>Alternatively, you may try the "
 #~ "application <a href=\"run ksnapshot\">KSnapshot</a>.</p>"
 #~ msgstr ""
-#~ "<p>يبدو أنك لا تستخدم كدي.</p><p>حلما تحمل كدي:<br><blockquote>للحصول على "
-#~ "لقطة شاشة ،اضغط<b>%1</b>. ستوضع لقطة الشاشة في الحافظة  ، و يمكنك إلصاقها "
-#~ "في كولور.بانت.</</blockquote>.</p><p>و يمكنك أيضا استخدام هذا التطبيق  <a "
-#~ "href=\"run ksnapshot\">ك.سناب شوت</a> كخيار بديل.</p>"
+#~ "<p>يبدو أنك لا تستخدم كِيدِي.</p><p>حلما تحمل كِيدِي:<br><blockquote>للحصول "
+#~ "على لقطة شاشة ،اضغط<b>%1</b>. ستوضع لقطة الشاشة في الحافظة  ، و يمكنك "
+#~ "إلصاقها في كولور.بانت.</</blockquote>.</p><p>و يمكنك أيضا استخدام هذا "
+#~ "التطبيق  <a href=\"run ksnapshot\">ك.سناب شوت</a> كخيار بديل.</p>"
 
 #~ msgid "Set as Wa&llpaper (Centered)"
 #~ msgstr "تعيين كورق جدا&ر (ممركز)"
