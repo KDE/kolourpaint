@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-09 00:58+0000\n"
-"PO-Revision-Date: 2007-12-06 18:56+0100\n"
-"Last-Translator: Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>\n"
+"PO-Revision-Date: 2023-03-25 16:19+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -383,16 +383,11 @@ msgid "The text value \"%1\" on line %2 requires a key."
 msgstr "La teksta valoro \"%1\" en linio %2 bezonas klavon."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
-#, fuzzy, kde-format
-#| msgid ""
-#| "All text keys must be unique.  The text key \"%1\" on lines %1 and %2 are "
-#| "identical."
+#, kde-format
 msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
-"Ĉiuj tekstaj klavoj devas esti unika. La teksta klavo \"%1\" ĉe linioj %1 "
-"kaj %2 estas samaj."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
 #, kde-format
@@ -687,10 +682,9 @@ msgid "Rotate Image"
 msgstr "Turni la bildon"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
-#, fuzzy, kde-format
-#| msgid "After Rotate:"
+#, kde-format
 msgid "After rotate:"
-msgstr "Post la turnado:"
+msgstr ""
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
 #, kde-format
@@ -741,22 +735,13 @@ msgid "degrees"
 msgstr "gradoj"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to rotate the selection?</p></"
-#| "qt>"
+#, kde-format
 msgid ""
 "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
 "resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>La turnado de la elektaĵo al %1x%2 eble prenos egan kvanton da "
-"memoro. Tio povas redukti la respondecon de la sistemo aŭ kaŭzi risurcajn "
-"problemojn ĉe alia programo.</p><p>Ĉu vi vere volas turni la elektaĵon?</p></"
-"qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
@@ -770,19 +755,12 @@ msgid "Rotat&e Selection"
 msgstr "Turni la &elektaĵon"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Rotating the image to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to rotate the image?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
 msgstr ""
-"<qt><p>La turnado de la bildo al %1x%2 eble prenos egan kvanton da memoro. "
-"Tio povas redukti la respondecon de la sistemo aŭ kaŭzi risurcajn problemojn "
-"ĉe alia programo.</p><p>Ĉu vi vere volas turni la bildon?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
@@ -808,10 +786,9 @@ msgid "Skew Image"
 msgstr "Klini la bildon"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
-#, fuzzy, kde-format
-#| msgid "After Skew:"
+#, kde-format
 msgid "After skew:"
-msgstr "Post la klinado:"
+msgstr ""
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
 #, kde-format
@@ -824,21 +801,13 @@ msgid "&Vertical:"
 msgstr "&Vertikale:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to skew the selection?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
 "resource problems.</p><p>Are you sure you want to skew the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>La klinado de la elektaĵo al %1x%2 eble prenos egan kvanton da "
-"memoro. Tio povas redukti la respondecon de la sistemo aŭ kaŭzi risurcajn "
-"problemojn ĉe alia programo.</p><p>Ĉu vi vere volas klini la elektaĵon?</p></"
-"qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
@@ -852,19 +821,12 @@ msgid "Sk&ew Selection"
 msgstr "Klini la &elektaĵon"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Skewing the image to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to skew the image?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
-"<qt><p>La klinado de la bildo al %1x%2 eble prenos egan kvanton da memoro. "
-"Tio povas redukti la respondecon de la sistemo aŭ kaŭzi risurcajn problemojn "
-"ĉe alia programo.</p><p>Ĉu vi vere volas klini la bildon?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
@@ -985,10 +947,9 @@ msgid "Could not save image - unable to create temporary file."
 msgstr ""
 
 #: document/kpDocument_Save.cpp:275
-#, fuzzy, kde-format
-#| msgid "Could not save as \"%1\"."
+#, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "Ne eblis konservi kiel \"%1\"."
+msgstr ""
 
 #: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
 #, kde-format
@@ -1060,16 +1021,14 @@ msgid "Selection: Create"
 msgstr "Elektado: Krei"
 
 #: kolourpaint.cpp:53
-#, fuzzy, kde-format
-#| msgid "KolourPaint BETA"
+#, kde-format
 msgid "KolourPaint"
-msgstr "KolourPaint BETA"
+msgstr ""
 
 #: kolourpaint.cpp:55
-#, fuzzy, kde-format
-#| msgid "Paint Program for KDE"
+#, kde-format
 msgid "Paint Program by KDE"
-msgstr "Pentrilo por KDE"
+msgstr ""
 
 #: kolourpaint.cpp:69
 #, kde-format
@@ -1162,10 +1121,9 @@ msgid "Christoph Feck"
 msgstr ""
 
 #: kolourpaint.cpp:85
-#, fuzzy, kde-format
-#| msgid "KDE 4 Porting"
+#, kde-format
 msgid "KF 5 Porting"
-msgstr "Portado al KDE 4"
+msgstr ""
 
 #: kolourpaint.cpp:87
 #, kde-format
@@ -1174,10 +1132,9 @@ msgid ""
 msgstr "Dankon al la multaj aliuloj kiuj helpis por ebligi ĉi tiun programon."
 
 #: kolourpaint.cpp:92
-#, fuzzy, kde-format
-#| msgid "Image file to open"
+#, kde-format
 msgid "Image files to open, optionally"
-msgstr "Malfermenda bilda dosiero"
+msgstr ""
 
 #: kolourpaint.cpp:95
 #, kde-format
@@ -1487,16 +1444,14 @@ msgid "Scan..."
 msgstr "Skani..."
 
 #: mainWindow/kpMainWindow_File.cpp:118
-#, fuzzy, kde-format
-#| msgid "Acquiring Screenshots"
+#, kde-format
 msgid "Acquire Screenshot"
-msgstr "Akiri ekranfotojn"
+msgstr ""
 
 #: mainWindow/kpMainWindow_File.cpp:122
-#, fuzzy, kde-format
-#| msgid "Document Properties"
+#, kde-format
 msgid "Properties"
-msgstr "Dokumentaj ecoj"
+msgstr ""
 
 #: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
@@ -1543,10 +1498,9 @@ msgid "No delay"
 msgstr ""
 
 #: mainWindow/kpMainWindow_File.cpp:670
-#, fuzzy, kde-format
-#| msgid "Paste in &New Window"
+#, kde-format
 msgid "Hide Main Window"
-msgstr "Alglui en &nova fenestro"
+msgstr ""
 
 #: mainWindow/kpMainWindow_File.cpp:724
 #, kde-format
@@ -1614,16 +1568,14 @@ msgid "Se&t as Image (Crop)"
 msgstr "Me&ti kiel bildon (stuce)"
 
 #: mainWindow/kpMainWindow_Image.cpp:133
-#, fuzzy, kde-format
-#| msgid "&Vertical (upside-down)"
+#, kde-format
 msgid "&Flip (upside down)"
-msgstr "&Vertikale"
+msgstr ""
 
 #: mainWindow/kpMainWindow_Image.cpp:138
-#, fuzzy, kde-format
-#| msgid "Flip horizontally"
+#, kde-format
 msgid "Mirror (horizontally)"
-msgstr "Renversi horizontale"
+msgstr ""
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
@@ -1820,11 +1772,10 @@ msgid "&Zoom"
 msgstr "&Zomi"
 
 #: scan/sanedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Entire Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr "Tuta bildo"
+msgstr ""
 
 #: scan/sanedialog.cpp:73
 #, kde-format
@@ -2630,95 +2581,3 @@ msgstr "Plenigi per la malfona koloro"
 #, kde-format
 msgid "Opaque"
 msgstr "Maldiafana"
-
-#~ msgctxt "<Tool Name> (<Single Accel Key>)"
-#~ msgid "%1 (%2)"
-#~ msgstr "%1 (%2)"
-
-#~ msgid ""
-#~ "A color palette called \"%1\" already exists.\n"
-#~ "Do you want to overwrite it?"
-#~ msgstr ""
-#~ "Kolora paletro kun la nomo \"%1\" jam ekzistas.\n"
-#~ "Ĉu vi volas anstataŭigi ĝin?"
-
-#~ msgid "Set Zoom Level to %1%"
-#~ msgstr "Agordi la zoman nivelon al %1%"
-
-#~ msgid "None"
-#~ msgstr "Neniu"
-
-#~ msgid "Overwrite"
-#~ msgstr "Anstataŭigi"
-
-#~ msgid "Could not open \"%1\" - unknown mimetype."
-#~ msgstr "Ne eblis malfermi \"%1\" - nekonata mime tipo."
-
-#~ msgid "Save Preview"
-#~ msgstr "Konservi la antaŭrigardon"
-
-#~ msgid "To obtain support, please visit the website."
-#~ msgstr "Por havi subtenon, bonvolu viziti la retejon."
-
-#~ msgid "No Scanning Support"
-#~ msgstr "Neniu skana subteno"
-
-#~ msgid "Scanning support is not installed."
-#~ msgstr "Skana subteno ne estas instalata."
-
-#~ msgid "Acquiring &Screenshots"
-#~ msgstr "Akiri ekran&fotojn"
-
-#~ msgid "Set as Wa&llpaper (Centered)"
-#~ msgstr "Meti kie&l ekrankurtenon (centre)"
-
-#~ msgid "Set as Wallpaper (&Tiled)"
-#~ msgstr "Meti kiel ekrankurtenon (kahele)"
-
-#~ msgid "Could not change wallpaper."
-#~ msgstr "Ne eblas ŝanĝi la ekrankurtenon."
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "Flip Selection"
-#~ msgstr "Renversi la elektaĵon"
-
-#~ msgid "Flip Image"
-#~ msgstr "Renversi la bildon"
-
-#~ msgid "&Vertical (upside-down)"
-#~ msgstr "&Vertikale"
-
-#~ msgid "&Horizontal"
-#~ msgstr "&Horizontale"
-
-#~ msgid "Loss of Color and Translucency Information"
-#~ msgstr "Perdado de kolora kaj travidebleca informo"
-
-#~ msgid "Loss of Color Information"
-#~ msgstr "Perdado de kolora informo"
-
-#~ msgid "Loss of Translucency Information"
-#~ msgstr "Perdado de travidebleca informo"
-
-#~ msgid "Unsupported Screen Mode"
-#~ msgstr "Nesubtenata ekrana moduso"
-
-#~ msgid "Cannot scan - out of graphics memory."
-#~ msgstr "Ne eblas skani - maltroo da grafika memoro."
-
-#~ msgid "Cannot Scan"
-#~ msgstr "Ne eblas skani"
-
-#~ msgid "&Flip..."
-#~ msgstr "&Renversi..."
-
-#~ msgid "<qt><p>There is nothing in the clipboard to paste.</p></qt>"
-#~ msgstr "<qt><p>Nenio estas algluebla en la poŝilo.</p></qt>"
-
-#~ msgid "Could not open \"%1\" - out of graphics memory."
-#~ msgstr "Ne eblis malfermi \"%1\" - maltroo da grafika memoro."
-
-#~ msgid "Scanning Support"
-#~ msgstr "Skana subteno"
