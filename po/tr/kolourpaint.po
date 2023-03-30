@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-09 00:58+0000\n"
-"PO-Revision-Date: 2023-03-07 20:42+0300\n"
+"PO-Revision-Date: 2023-03-29 23:48+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -83,7 +83,7 @@ msgstr "Düzleştir"
 #: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
 #, kde-format
 msgid "Reduce to Grayscale"
-msgstr "Gri Tona Dönüştür"
+msgstr "Gri Tona Düşür"
 
 #: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
@@ -105,22 +105,22 @@ msgstr "Ters Çevir"
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
 #, kde-format
 msgid "Reduce to Monochrome (Dithered)"
-msgstr "Monokroma Dönüştür (Titrek)"
+msgstr "Tek Renge Düşür (Titrek)"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
 #, kde-format
 msgid "Reduce to Monochrome"
-msgstr "Monokroma Dönüştür"
+msgstr "Tek Renge Düşür"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
 #, kde-format
 msgid "Reduce to 256 Color (Dithered)"
-msgstr "256 Renge Dönüştür (Titrek)"
+msgstr "256 Renge Düşür (Titrek)"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
 #, kde-format
 msgid "Reduce to 256 Color"
-msgstr "256 Renge Dönüştür"
+msgstr "256 Renge Düşür"
 
 #: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:41
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
@@ -173,12 +173,12 @@ msgstr "Yeniden Boyutlandır"
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:122
 #, kde-format
 msgid "Scale"
-msgstr "Büyüt"
+msgstr "Ölçekle"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:124
 #, kde-format
 msgid "Smooth Scale"
-msgstr "Yumuşak Büyüt"
+msgstr "Yumuşak Ölçekle"
 
 #: commands/imagelib/transforms/kpTransformRotateCommand.cpp:72
 #, kde-format
@@ -188,7 +188,7 @@ msgstr "Döndür"
 #: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
 #, kde-format
 msgid "Skew"
-msgstr "Eğ"
+msgstr "Bük"
 
 #: commands/kpCommandHistoryBase.cpp:437
 #, kde-format
@@ -273,7 +273,7 @@ msgstr "&Efekt:"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:118
 #, kde-format
 msgid "Reduce Colors"
-msgstr "Renkleri Dönüştür"
+msgstr "Renkleri Düşür"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
 #, kde-format
@@ -355,7 +355,7 @@ msgid ""
 "<b>Offset</b> feature. If the format you save in does not support it, the "
 "values specified here will not be saved.</p></qt>"
 msgstr ""
-"<qt><p><b>Göreli Konum</b>, diğer görsellerle karşılaştırılığında görselin "
+"<qt><p><b>Ofset</b>, diğer görsellerle karşılaştırılığında görselin "
 "yerleştirileceği göreceli konumdur.</p><p>Tüm görsel biçimleri <b>Göreli "
 "Konum</b> özelliğini desteklemez. Eğer kaydettiğiniz biçim bu özelliği "
 "desteklemiyorsa burada belirlediğiniz değerler kaydedilmeyecektir.</p></qt>"
@@ -412,7 +412,7 @@ msgstr "Değer"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
-msgstr "%2 satırındaki \"%1\" metin değeri bir anahtar gerektiriyor."
+msgstr "%2. satırdaki \"%1\" metin değeri bir anahtar gerektiriyor."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
 #, kde-format
@@ -420,7 +420,7 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
-"Tüm metin anahtarları eşsiz olmalıdır. %2 ve %3 satırlarındaki \"%1\" metin "
+"Tüm metin anahtarları eşsiz olmalıdır. %2. ve %3. satırlardaki \"%1\" metin "
 "anahtarı aynı."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
@@ -439,7 +439,7 @@ msgstr "Boyutlar"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:288
 #, kde-format
 msgid "Original:"
-msgstr "Orjinal:"
+msgstr "Özgün:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:143
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:251
@@ -504,12 +504,12 @@ msgid ""
 "as <i>Scale</i> except that it blends neighboring pixels to produce a "
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
-"<qt><ul><li><b>Yeniden boyutlandırma</b>: Resim sağda ve/veya aşşağıda yeni "
-"alanların oluşturulması(arka plan rengi ile doldurularak) ile büyütülecek "
+"<qt><ul><li><b>Yeniden boyutlandırma</b>: Resim sağda ve/veya aşağıda yeni "
+"alanların oluşturulması (arka plan rengi ile doldurularak) ile büyütülecek "
 "veya sağdan ve/veya aşağıdan kesilme ile küçültülecek.</li><li><b>Ölçek</b>: "
-"Resim beneklerin çoğaltılması ile genişletilecek veya azaltılması ile "
-"küçültülecek.</li><li><b>Yumuşak Ölçek</b>: Bu <i>Ölçek</i> ile aynıdır "
-"fakat bu sefer komşu beneklerin karıştırılması ile daha güzel gözüken bir "
+"Resim piksellerin çoğaltılması ile genişletilecek veya azaltılması ile "
+"küçültülecek.</li><li><b>Yumuşak Ölçekle</b>: Bu <i>Ölçekle</i> ile aynıdır; "
+"ancak bu kez komşu beneklerin karıştırılması ile daha güzel gözüken bir "
 "görsel yaratır.</li></ul></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
@@ -520,7 +520,7 @@ msgstr "Yeniden Boyutlandı&r"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
 #, kde-format
 msgid "&Scale"
-msgstr "Büyü&t"
+msgstr "Ölçe&kle"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
 #, kde-format
@@ -574,10 +574,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to resize the text box?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Metin kutusu %1x%2 çözünürlüğüne boyutlandırılıyor. Bu sistemin daha "
-"geç cevap vermesine ve diğer programların kaynak kullanımında soruna yol "
-"açabilir.</p><p>Metin kutusunu yeniden boyutlandırmak istediğinize emin "
-"misiniz?</p></qt>"
+"<qt><p>Metin kutusu %1 x %2 çözünürlüğüne boyutlandırılıyor. Bu sistemin "
+"daha geç yanıt vermesine ve diğer programların kaynak kullanımında soruna "
+"yol açabilir.</p><p>Metin kutusunu yeniden boyutlandırmak istediğinizden "
+"emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
 #, kde-format
@@ -598,10 +598,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to resize the image?</p></qt>"
 msgstr ""
-"<qt><p>Görsel, %1x%2 çözünürlüğüne göre yeniden boyutlandırılıyor, bu mevcut "
-"hafızaya göre uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir "
-"ve diğer programların kaynakları kullanmasında sorun çıkarabilir.</"
-"p><p>Görseli yeniden boyutlandırmaya emin misiniz?</p></qt>"
+"<qt><p>Görsel, %1 x %2 çözünürlüğüne göre yeniden boyutlandırılıyor, bu çok "
+"fazla bellek kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve "
+"diğer programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Görseli "
+"yeniden boyutlandırmak istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
 #: mainWindow/kpMainWindow_Tools.cpp:662
@@ -614,7 +614,7 @@ msgstr "Görsel Yeniden Boyutlandırılsın mı?"
 #: mainWindow/kpMainWindow_Tools.cpp:663
 #, kde-format
 msgid "R&esize Image"
-msgstr "Res&mi Yeniden Boyutlarndır"
+msgstr "Görs&eli Yeniden Boyutlandır"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:756
 #, kde-format
@@ -623,10 +623,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to scale the image?</p></qt>"
 msgstr ""
-"<qt><p>Görsel, %1x%2 çözünürlüğüne göre yeniden ölçekleniyor, bu mevcut "
-"hafızaya göre uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir "
-"ve diğer programların kaynakları kullanmasında sorun çıkarabilir.</"
-"p><p>Görseli ölçeklendirmeye emin misiniz?</p></qt>"
+"<qt><p>Görsel, %1 x %2 çözünürlüğüne göre yeniden ölçekleniyor, bu çok fazla "
+"bellek kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
+"programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Görseli "
+"ölçeklemek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
 #, kde-format
@@ -647,10 +647,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to scale the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Seçim %1x%2 çözünürlüğüne göre ölçeklendiriliyor, bu mevcut hafızaya "
-"göre uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
+"<qt><p>Seçim %1 x %2 çözünürlüğüne göre ölçeklendiriliyor, bu çok fazla "
+"bellek kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
 "programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Seçimi "
-"ölçeklendirmeye emin misiniz?</p></qt>"
+"ölçeklemek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
 #, kde-format
@@ -671,10 +671,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the image?</"
 "p></qt>"
 msgstr ""
-"<qt><p>Görsel, %1x%2 çözünürlüğüne göre yumuşak ölçeklendiriliyor, bu mevcut "
-"hafızaya göre uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir "
-"ve diğer programların kaynakları kullanmasında sorun çıkarabilir.</"
-"p><p>Görseli yumuşak ölçeklendirmeye emin misiniz?</p></qt>"
+"<qt><p>Görsel, %1 x %2 çözünürlüğüne göre yumuşak ölçeklendiriliyor, bu çok "
+"fazla bellek kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve "
+"diğer programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Görseli "
+"yumuşak ölçeklemek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
 #, kde-format
@@ -695,10 +695,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the selection?"
 "</p></qt>"
 msgstr ""
-"<qt><p>Seçim %1x%2 çözünürlüğüne göre yumuşak ölçeklendiriliyor, bu mevcut "
-"hafızaya göre uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir "
-"ve diğer programların kaynakları kullanmasında sorun çıkarabilir.</"
-"p><p>Seçimi yumuşak ölçeklendirmeye emin misiniz?</p></qt>"
+"<qt><p>Seçim %1 x %2 çözünürlüğüne göre yumuşak ölçeklendiriliyor, bu çok "
+"fazla bellek kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve "
+"diğer programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Seçimi "
+"yumuşak ölçeklemek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
 #, kde-format
@@ -784,10 +784,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Seçim %1x%2 çözünürlüğüne göre döndürülüyor, bu mevcut bellek için "
-"uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
+"<qt><p>Seçim %1 x %2 çözünürlüğüne göre döndürülüyor, bu çok fazla bellek "
+"kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
 "programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Seçimi "
-"döndürmek istediğinize emin misiniz?</p></qt>"
+"döndürmek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
@@ -807,10 +807,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
 msgstr ""
-"<qt><p>Görsel %1x%2 çözünürlüğüne göre döndürülüyor, bu mevcut bellek için "
-"uzun süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
+"<qt><p>Görsel %1 x %2 çözünürlüğüne göre döndürülüyor, bu çok fazla bellek "
+"kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
 "programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Görseli "
-"döndürmek istediğinize emin misiniz?</p></qt>"
+"döndürmek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
@@ -858,10 +858,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to skew the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Seçim %1x%2 çözünürlüğüne göre eğiliyor, bu mevcut bellek için uzun "
-"süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
-"programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Seçimi eğmek "
-"istediğize emin misiniz?</p></qt>"
+"<qt><p>Seçim %1 x %2 çözünürlüğüne göre bükülüyor, bu çok fazla bellek "
+"kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
+"programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Seçimi bükmek "
+"istediğizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
@@ -881,10 +881,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
-"<qt><p>Görsel, %1x%2 çözünürlüğüne göre eğiliyor, bu mevcut bellek için uzun "
-"süre alabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
-"programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Görseli eğmek "
-"istediğinize emin misiniz?</p></qt>"
+"<qt><p>Görsel, %1 x %2 çözünürlüğüne göre bükülüyor, bu çok fazla bellek "
+"kullanabilir. Bu sistemin yanıt vermesini yavaşlatabilir ve diğer "
+"programların kaynakları kullanmasında sorun çıkarabilir.</p><p>Görseli "
+"bükmek istediğinizden emin misiniz?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
@@ -895,7 +895,7 @@ msgstr "Görsel Bükülsün mü?"
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
 #, kde-format
 msgid "Sk&ew Image"
-msgstr "Görseli &Eğ"
+msgstr "Görseli &Bük"
 
 #: dialogs/kpColorSimilarityDialog.cpp:46
 #, kde-format
@@ -1026,12 +1026,12 @@ msgstr "Görsel kaydedilemedi - gönderim başarısız."
 #: imagelib/transforms/kpTransformAutoCrop.cpp:384
 #, kde-format
 msgid "Remove Internal B&order"
-msgstr "İç &Sınırı Kaldır"
+msgstr "İç &Kenarlığı Kaldır"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:387
 #, kde-format
 msgid "Remove Internal Border"
-msgstr "İç Sınırı Kaldır"
+msgstr "İç Kenarlığı Kaldır"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:391
 #, kde-format
@@ -1048,7 +1048,7 @@ msgstr "Otomatik Kırp"
 msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
 "located."
-msgstr "KolourPaint bulunamadığı için seçimin iç sınırını kaldıramadı."
+msgstr "KolourPaint bulunamadığı için seçimin iç kenarını kaldıramadı."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:625
 #, kde-format
@@ -1062,7 +1062,7 @@ msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr ""
-"KolourPaint sınırı bulunamadığı için otomatik olarak görseli kırpamadı."
+"KolourPaint'in kenarlığı bulunamadığı için otomatik olarak görseli kırpamadı."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:633
 #, kde-format
@@ -1111,7 +1111,7 @@ msgstr "Thurston Dang"
 #: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
-msgstr "Şef Denetleyici"
+msgstr "Baş Denetleyici"
 
 #: kolourpaint.cpp:74
 #, kde-format
@@ -1314,7 +1314,7 @@ msgstr "KolourPaint Öntanımlı Değerlerini Kullan"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
-msgstr "KDE'ninkileri Kullan"
+msgstr "Şu KDE Değerlerini Kullan"
 
 #: mainWindow/kpMainWindow_Colors.cpp:85
 #, kde-format
@@ -1538,7 +1538,7 @@ msgstr "Özellikler"
 #: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Reloa&d"
-msgstr "Y&eniden yükle"
+msgstr "Y&eniden Yükle"
 
 #: mainWindow/kpMainWindow_File.cpp:458
 #, kde-format
@@ -1661,7 +1661,7 @@ msgstr "Gö&rsel Olarak Ayarla (Kırp)"
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "Ters çevir (alt üst)"
+msgstr "Ters Çevir (Başaşağı)"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
@@ -1686,17 +1686,17 @@ msgstr "S&ağa Döndür"
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "S&kew..."
-msgstr "E&ğ..."
+msgstr "&Bük..."
 
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
-msgstr "Tek Ren&ge Düşür (Dithered)"
+msgstr "Tek Ren&ge Düşür (Titrek)"
 
 #: mainWindow/kpMainWindow_Image.cpp:171
 #, kde-format
 msgid "Reduce to &Grayscale"
-msgstr "&Gri Tona Dönüştür"
+msgstr "&Gri Tona Düşür"
 
 #: mainWindow/kpMainWindow_Image.cpp:175
 #, kde-format
@@ -1759,12 +1759,12 @@ msgstr "%1,%2 - %3,%4"
 #: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
 #, kde-format
 msgid "%1x%2"
-msgstr "%1x%2"
+msgstr "%1 x %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:264
 #, kde-format
 msgid "%1bpp"
-msgstr "%1bpp"
+msgstr "%1 bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
 #: mainWindow/kpMainWindow_View_Zoom.cpp:88
@@ -2073,7 +2073,7 @@ msgstr "Çokgenler çizer"
 #: tools/polygonal/kpToolPolygon.cpp:112 tools/polygonal/kpToolPolyline.cpp:60
 #, kde-format
 msgid "Drag to draw the first line."
-msgstr "İlk çizgiyi çizmek için sürükle."
+msgstr "İlk çizgiyi çizmek için sürükleyin."
 
 #: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
 #, kde-format
@@ -2396,7 +2396,7 @@ msgstr ""
 "ile kıyaslanabilir bir tarzda titrek görsel ve fotoğraflarla çok daha etkin "
 "bir şekilde çalışabilirsiniz.</p><p>Bu özelliklik şunlara uygulanır:</"
 "p><ul><li><b>Seçimler</b>: <b>Saydam</b> kipte, seçim içerisinde arka plan "
-"rengine <i>benzer</i> herhangi renk şeffaf yapılacaktır.</li><li><b>Akıcı "
+"rengine <i>benzer</i> herhangi renk saydam yapılacaktır.</li><li><b>Akıcı "
 "Doldur</b>: Benzer - ancak özdeş olmayan - renkli piksellere sahip bölgeler "
 "için, yüksek bir değerin daha çok pikseli doldurması olasıdır.</"
 "li><li><b>Renk Silici</b>: Rengi ön plan rengine <i>benzer</i> olan "
@@ -2416,7 +2416,7 @@ msgstr ""
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Renk Benzerliği: %%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
+"<p>Renk Benzerliği: %​%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
 "p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
@@ -2574,7 +2574,7 @@ msgstr "24 &bit renk"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:144
 #, kde-format
 msgid "Reduce To"
-msgstr "Dönüştür"
+msgstr "Şuna Düşür"
 
 #: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:54
 #, kde-format
@@ -2683,7 +2683,7 @@ msgstr "Renkler: %1 [değiştirilmiş]"
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
 #, kde-format
 msgid "1x1"
-msgstr "1x1"
+msgstr "1 x 1"
 
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:208
 #, kde-format
@@ -2708,7 +2708,7 @@ msgstr "Tersbölü"
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:227
 #, kde-format
 msgid "%1x%2 %3"
-msgstr "%1x%2 %3"
+msgstr "%1 x %2 %3"
 
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:117
 #, kde-format
