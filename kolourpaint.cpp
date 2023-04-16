@@ -31,6 +31,7 @@
 #include "kpVersion.h"
 #include "mainWindow/kpMainWindow.h"
 #include <kolourpaintlicense.h>
+#include <document/kpDocument.h>
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -93,6 +94,7 @@ int main(int argc, char *argv [])
 
   aboutData.setupCommandLine(&cmdLine);
   cmdLine.addOption(QCommandLineOption("mimetypes", i18n("List all readable image MIME types")));
+  cmdLine.addOption(QCommandLineOption("new", i18n("Start with new image using given size"), i18n("[width]x[height]")));
   cmdLine.process(app);
   aboutData.processCommandLine(&cmdLine);
 
@@ -131,7 +133,27 @@ int main(int argc, char *argv [])
     }
     else
     {
-      mainWindow = new kpMainWindow();
+      kpDocument *doc = nullptr;
+      QString sizeStr = cmdLine.value("new");
+
+      if ( !sizeStr.isEmpty() )
+      {
+        QStringList dimensions = sizeStr.split(QChar('x'));
+        if ( dimensions.count() == 2 )
+        {
+          unsigned int w = dimensions[0].toUInt();
+          unsigned int h = dimensions[1].toUInt();
+
+          if ( (w > 0) && (h > 0) )
+            doc = new kpDocument(w, h, nullptr);
+        }
+      }
+
+      if ( doc )
+        mainWindow = new kpMainWindow(doc);
+      else
+        mainWindow = new kpMainWindow();
+
       mainWindow->show();
     }
   }
