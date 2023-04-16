@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16.0 FATAL_ERROR)
 
 # KDE Application Version, managed by release script
 set(RELEASE_SERVICE_VERSION_MAJOR "23")
@@ -11,6 +11,7 @@ project(kolourpaint VERSION ${RELEASE_SERVICE_VERSION})
 set(QT_MIN_VERSION "5.15.2")
 set(KF5_MIN_VERSION "5.90.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.84.0")
+set(KSANE_MIN_VERSION "21.12.1")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -50,7 +51,7 @@ find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
-find_package(KF5Sane "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_VERSION_MINOR}")
+find_package(KF5Sane ${KSANE_MIN_VERSION})
 
 if(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=1)
