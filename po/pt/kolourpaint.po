@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2021-07-04 00:18+0100\n"
+"PO-Revision-Date: 2023-04-17 14:37+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -1210,12 +1210,12 @@ msgstr "Apresentar todos os tipos MIME de imagens legíveis"
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Iniciar com uma imagem com o tamanho indicado"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[largura]x[altura]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -2751,7 +2751,3 @@ msgstr "Preencher com a Cor Principal"
 #, kde-format
 msgid "Opaque"
 msgstr "Opaco"
-
-#~ msgctxt "<Tool Name> (<Single Accel Key>)"
-#~ msgid "%1 (%2)"
-#~ msgstr "%1 (%2)"

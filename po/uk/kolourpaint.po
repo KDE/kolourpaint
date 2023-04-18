@@ -6,13 +6,13 @@
 # Andriy Rysin <rysin@kde.org>, 2002, 2003, 2006.
 # Eugene Onischenko <oneugene@ukr.net>, 2004, 2005.
 # Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2004, 2005, 2007, 2008.
-# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2020, 2021.
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2020, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2021-07-03 08:47+0300\n"
+"PO-Revision-Date: 2023-04-17 09:22+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1205,12 +1205,12 @@ msgstr "Вивести список усіх типів MIME зображень,
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Почати з нового зображення вказаного розміру"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[ширина]x[висота]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
