@@ -1,12 +1,12 @@
 # translation of kolourpaint.po to
 # Ambalam <tamilpc@ambalam.com>, 2004.
-# Kishore G <kishore96@gmail.com>, 2021.
+# Kishore G <kishore96@gmail.com>, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-09 00:58+0000\n"
-"PO-Revision-Date: 2021-06-19 19:45+0530\n"
+"PO-Revision-Date: 2023-04-23 16:52+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.04.2\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -30,7 +30,7 @@ msgstr "velnet2004@yahoo.co.in"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
 #, kde-format
 msgid "Balance"
-msgstr "மீதி"
+msgstr "சமன்படுத்து"
 
 #: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:52
 #, kde-format
@@ -43,9 +43,9 @@ msgid "Sharpen"
 msgstr "கூறாக்குதல்"
 
 #: commands/imagelib/effects/kpEffectClearCommand.cpp:58
-#, fuzzy, kde-format
+#, kde-format
 msgid "Clear"
-msgstr "தெளிவு"
+msgstr "காலியாக்கு"
 
 #: commands/imagelib/effects/kpEffectClearCommand.cpp:60
 #: commands/imagelib/effects/kpEffectCommandBase.cpp:68
@@ -71,7 +71,7 @@ msgstr "ஒன்றுசேர்"
 #: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
 #, kde-format
 msgid "Reduce to Grayscale"
-msgstr "பழுப்பு நிறத்திற்கு குறை"
+msgstr "சாம்பல் நிறவகைக்கு மாற்று"
 
 #: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
@@ -82,13 +82,13 @@ msgstr ""
 #: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
 #, kde-format
 msgid "Invert Colors"
-msgstr "வண்ணத்தை மாற்று"
+msgstr "நிறங்களைப் புரட்டு"
 
 #: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:117
 #, kde-format
 msgid "Invert"
-msgstr "கவிழ்"
+msgstr "புரட்டு"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
 #, kde-format
