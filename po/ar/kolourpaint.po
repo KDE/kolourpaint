@@ -4,13 +4,13 @@
 # محمد سعد  Mohamed SAAD <metehyi@free.fr>, 2006.
 # محمد مجدى Mohamed Magdy <mohamed.m.k@gmail.com>, 2007.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
-# zayed <zayed.alsaidi@gmail.com>, 2008, 2021, 2022.
+# zayed <zayed.alsaidi@gmail.com>, 2008, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2022-01-04 17:29+0400\n"
+"PO-Revision-Date: 2023-04-27 11:53+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 21.07.70\n"
+"X-Generator: Lokalize 21.12.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #, kde-format
@@ -1192,12 +1192,12 @@ msgstr "تسرد جميع أنواع MIME للصور القابلة للقراء
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "ابدأ بصورة جديدة باستخدام الحجم المعطى"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[العرض]×[الارتفاع]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
