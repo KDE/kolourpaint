@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2023-03-14 23:30+0100\n"
+"PO-Revision-Date: 2023-04-29 23:39+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1204,12 +1204,12 @@ msgstr "Lista omne typos mIME de image legibile"
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Starta con none imagine usante grandor date"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[width]x[height]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1831,7 +1831,7 @@ msgstr "Proxime option de instrumento (Gruppo #2)"
 #: mainWindow/kpMainWindow_Tools.cpp:163
 #, kde-format
 msgid "&Draw Opaque"
-msgstr "&Designa opaque"
+msgstr "&Designa opac"
 
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
@@ -2153,7 +2153,7 @@ msgstr "Trahe a sinistra pro scalarr selection."
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
 #, kde-format
 msgid "Selection: Opaque"
-msgstr "Selection: Opaque"
+msgstr "Selection: Opac"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
 #, kde-format
@@ -2263,7 +2263,7 @@ msgstr "Pulsa a sinistra pro modificar le position de cursor."
 #: tools/selection/text/kpToolText_TextStyle.cpp:113
 #, kde-format
 msgid "Text: Opaque Background"
-msgstr "Texto: fundo opaque"
+msgstr "Texto: fundo opac"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:114
 #, kde-format
@@ -2740,7 +2740,7 @@ msgstr "Reimple con color de prime plano"
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:42
 #, kde-format
 msgid "Opaque"
-msgstr "Opaque"
+msgstr "Opac"
 
 #~ msgctxt "<Tool Name> (<Single Accel Key>)"
 #~ msgid "%1 (%2)"
