@@ -7,13 +7,13 @@
 # Ilpo Kantonen <ilpo@iki.fi>, 2004.
 # Mikko Piippo <piippo@cc.helsinki.fi>, 2007.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015.
-# Tommi Nieminen <translator@legisign.org>, 2011, 2016, 2018, 2021.
+# Tommi Nieminen <translator@legisign.org>, 2011, 2016, 2018, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-09 00:58+0000\n"
-"PO-Revision-Date: 2021-08-22 20:58+0300\n"
+"PO-Revision-Date: 2023-05-18 12:35+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2012-12-01 22:24:11+0000\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1118,7 +1118,7 @@ msgstr "Martin Koller"
 #: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
-msgstr "Skannaustuki, alfa-kanavan tuki, nykyinen ylläpitäjä"
+msgstr "Kuvanluku- ja alfakanavatuki, nykyinen ylläpitäjä"
 
 #: kolourpaint.cpp:77
 #, kde-format
@@ -1138,7 +1138,7 @@ msgstr "Tasuku Suzuki"
 #: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
-msgstr "InputMethod -tuki"
+msgstr "Syötemenetelmätuki"
 
 #: kolourpaint.cpp:79
 #, kde-format
@@ -1247,13 +1247,13 @@ msgstr "&Muokkaa"
 #, kde-format
 msgctxt "@title:window"
 msgid "Thumbnail"
-msgstr "Esikatselukuva"
+msgstr "Pienoiskuva"
 
 #: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
 #: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
 #, kde-format
 msgid "Left drag the handle to resize the image."
-msgstr "Vedä kahvasta asettaaksesi kuvan koon."
+msgstr "Aseta kuvan koko vetämällä kahvasta hiiren vasemmalla painikkeella."
 
 # Kaksoispisteen jälkeinen osuus ei minun, ja epäilen sen osuvuutta, mutten osaa kääntää paremminkaan
 #: kpViewScrollableContainer.cpp:194
@@ -1519,7 +1519,7 @@ msgstr "&Vie…"
 #: mainWindow/kpMainWindow_File.cpp:109
 #, kde-format
 msgid "Scan..."
-msgstr "Skannaa…."
+msgstr "Lue…"
 
 #: mainWindow/kpMainWindow_File.cpp:118
 #, kde-format
@@ -1550,13 +1550,13 @@ msgstr "Avaa kuva"
 #: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr "Skannausikkunan avaaminen epäonnistui"
+msgstr "Kuvanlukuikkunan avaaminen epäonnistui."
 
 #: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
-msgstr "Skannaus epäonnistui"
+msgstr "Luku epäonnistui"
 
 #: mainWindow/kpMainWindow_File.cpp:664
 #, kde-format
@@ -1604,9 +1604,8 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"Tiedostoa ”%1” on muutettu.\n"
-"Sen lataaminen uudestaan kadottaa kaikki viime tallennuksen jälkeen tehdyt "
-"muutokset.\n"
+"Tiedosto ”%1” on muuttunut.\n"
+"Sen lataaminen uudestaan kadottaa kaikki tallennuksen jälkeiset muutokset.\n"
 "Oletko varma?"
 
 #: mainWindow/kpMainWindow_File.cpp:1081
@@ -1616,7 +1615,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"Tiedostoa ”%1” on muutettu.\n"
+"Tiedosto ”%1” on muuttunut.\n"
 "Sen lataaminen uudestaan kadottaa kaikki muutokset.\n"
 "Oletko varma?"
 
@@ -1641,18 +1640,18 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"Tiedostoa ”%1” on muutettu.\n"
+"Tiedosto ”%1” on muuttunut.\n"
 "Haluatko tallentaa muutokset?"
 
 #: mainWindow/kpMainWindow_Image.cpp:117
 #, kde-format
 msgid "R&esize / Scale..."
-msgstr "Säädä k&oko / Skaalaa"
+msgstr "Säädä k&oko / skaalaa…"
 
 #: mainWindow/kpMainWindow_Image.cpp:123
 #, kde-format
 msgid "Se&t as Image (Crop)"
-msgstr "Aseta kuvaksi (crop)"
+msgstr "&Aseta kuvaksi (rajaa)"
 
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
@@ -1748,25 +1747,25 @@ msgstr "%1,%2"
 #: mainWindow/kpMainWindow_StatusBar.cpp:162
 #, kde-format
 msgid "%1,%2 - %3,%4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1,%2 – %3,%4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:205
 #: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
 #: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
 #, kde-format
 msgid "%1x%2"
-msgstr "%1x%2"
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:264
 #, kde-format
 msgid "%1bpp"
-msgstr "%1bpp"
+msgstr "%1 bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
 #: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: mainWindow/kpMainWindow_Text.cpp:56
 #, kde-format
@@ -1781,52 +1780,52 @@ msgstr "Fonttikoko"
 #: mainWindow/kpMainWindow_Text.cpp:69
 #, kde-format
 msgid "Bold"
-msgstr "Lihavoitu"
+msgstr "Lihavointi"
 
 #: mainWindow/kpMainWindow_Text.cpp:75
 #, kde-format
 msgid "Italic"
-msgstr "Kursivoitu"
+msgstr "Kursiivi"
 
 #: mainWindow/kpMainWindow_Text.cpp:81
 #, kde-format
 msgid "Underline"
-msgstr "Alleviivattu"
+msgstr "Alleviivaus"
 
 #: mainWindow/kpMainWindow_Text.cpp:87
 #, kde-format
 msgid "Strike Through"
-msgstr "Yliviivattu"
+msgstr "Yliviivaus"
 
 #: mainWindow/kpMainWindow_Tools.cpp:133
 #, kde-format
 msgid "Previous Tool Option (Group #1)"
-msgstr "Edellinen työkalun optio (ryhmä #1)"
+msgstr "Edellinen työkaluvalinta (ryhmä 1)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:139
 #, kde-format
 msgid "Next Tool Option (Group #1)"
-msgstr "Uusi työkalun optio (ryhmä #1)"
+msgstr "Uusi työkaluvalinta (ryhmä 1)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:145
 #, kde-format
 msgid "Previous Tool Option (Group #2)"
-msgstr "Edellinen työkalun optio (ryhmä #2)"
+msgstr "Edellinen työkaluvalinta (ryhmä 2)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:151
 #, kde-format
 msgid "Next Tool Option (Group #2)"
-msgstr "Seuraava työkalun optio (ryhmä #2)"
+msgstr "Seuraava työkaluvalinta (ryhmä 2)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:163
 #, kde-format
 msgid "&Draw Opaque"
-msgstr "&Piirrä läpinäkymättömänä"
+msgstr "&Piirrä peittävästi"
 
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
 msgid "Draw With Color Similarity..."
-msgstr "Samankaltaisilla väreillä piirtäminen…"
+msgstr "Piirrä samankaltaisilla väreillä…"
 
 #: mainWindow/kpMainWindow_Tools.cpp:179
 #, kde-format
@@ -1841,22 +1840,22 @@ msgstr "Näytä &ruudukko"
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
 #, kde-format
 msgid "Show T&humbnail"
-msgstr "Näytä es&ikatselukuva"
+msgstr "Näytä &pienoiskuvat"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
 #, kde-format
 msgid "Zoo&med Thumbnail Mode"
-msgstr "Zoomattu esikatselu"
+msgstr "&Lähennetty pienoiskuvatila"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
-msgstr "Käytä esikatselulaatikkoa"
+msgstr "Käytä pienoiskuvalaatikkoa"
 
 #: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
 msgid "&Zoom"
-msgstr "&Zoom"
+msgstr "&Lähennä"
 
 #: scan/sanedialog.cpp:41
 #, kde-format
@@ -1867,24 +1866,22 @@ msgstr "Lue kuva"
 #: scan/sanedialog.cpp:73
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr "Valitun skannerin avaaminen epäonnistui."
+msgstr "Valittua kuvanlukijaa ei saatu avattua."
 
 #: tools/flow/kpToolBrush.cpp:35
 #, kde-format
 msgid "Brush"
-msgstr "Pensseli"
+msgstr "Sivellin"
 
 #: tools/flow/kpToolBrush.cpp:36
 #, kde-format
 msgid "Draw using brushes of different shapes and sizes"
-msgstr "Piirrä käyttäen erimuotoisia pensseleitä ja eri kokoja"
+msgstr "Piirrä erimuotoisilla ja -kokoisilla siveltimillä"
 
 #: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
 #, kde-format
 msgid "Click to draw dots or drag to draw strokes."
-msgstr ""
-"Napsauta piirtääksesi pisteitä tai paina ja liikuta hiirtä piirtääksesi "
-"piirtoja."
+msgstr "Piirrä pisteitä napsauttamalla ja siveltimenvetoja vetämällä."
 
 #: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
 #, kde-format
@@ -1894,28 +1891,28 @@ msgstr "Värinpoistaja"
 #: tools/flow/kpToolColorEraser.cpp:50
 #, kde-format
 msgid "Replaces pixels of the foreground color with the background color"
-msgstr "Korvaa edustan värin taustan värin kanssa pikseleittäin"
+msgstr "Korvaa edustaväriset kuvapisteet taustan värillä"
 
 #: tools/flow/kpToolColorEraser.cpp:115
 #, kde-format
 msgid "Click or drag to erase pixels of the foreground color."
 msgstr ""
-"Napsauta tai paina ja liikuta hiirtä poistaaksesi piirrettyjä pikseleitä. "
+"Poista piirrettyjä edustavärisiä kuvapisteitä napsauttamalla ja vetämällä."
 
 #: tools/flow/kpToolEraser.cpp:42
 #, kde-format
 msgid "Eraser"
-msgstr "Kumi"
+msgstr "Pyyhekumi"
 
 #: tools/flow/kpToolEraser.cpp:43
 #, kde-format
 msgid "Lets you rub out mistakes"
-msgstr "Poista virheet kumilla"
+msgstr "Antaa pyyhkiä virheet"
 
 #: tools/flow/kpToolEraser.cpp:70
 #, kde-format
 msgid "Click or drag to erase."
-msgstr "Napsauta tai paina ja liikuta hiirtä poistaaksesi. "
+msgstr "Pyyhi napsauttamalla ja vetämällä."
 
 #: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
 #: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
@@ -1925,7 +1922,7 @@ msgstr "Napsauta tai paina ja liikuta hiirtä poistaaksesi. "
 #: tools/selection/kpAbstractSelectionTool.cpp:528
 #, kde-format
 msgid "Let go of all the mouse buttons."
-msgstr "Vapauta hiiripainikeet"
+msgstr "Vapauta hiiripainikkeet"
 
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
@@ -1935,32 +1932,32 @@ msgstr "Kynä"
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
 msgid "Draws dots and freehand strokes"
-msgstr "Piirrä pisteitä ja vapaalla kädellä siveltimenvetoja"
+msgstr "Piirrä pisteitä ja vapaan käden siveltimenvetoja"
 
 #: tools/flow/kpToolSpraycan.cpp:56
 #, kde-format
 msgid "Spraycan"
-msgstr "Spray-pullo"
+msgstr "Suihkepullo"
 
 #: tools/flow/kpToolSpraycan.cpp:56
 #, kde-format
 msgid "Sprays graffiti"
-msgstr "Spreijaa graffitia"
+msgstr "Suihkemaalaa"
 
 #: tools/flow/kpToolSpraycan.cpp:71
 #, kde-format
 msgid "Click or drag to spray graffiti."
-msgstr "Napsauta tai vedä maalataksesi spray graffitia."
+msgstr "Suihkemaalaa napsauttamalla ja vetämällä."
 
 #: tools/kpTool_UserNotifications.cpp:42
 #, kde-format
 msgid "Right click to cancel."
-msgstr "Hiiren oikea nappi keskeyttää."
+msgstr "Peru hiiren oikealla painikkeella."
 
 #: tools/kpTool_UserNotifications.cpp:45
 #, kde-format
 msgid "Left click to cancel."
-msgstr "Hiiren vasen nappi keskeyttää."
+msgstr "Peru hiiren vasemmalla painikkeella."
 
 #: tools/kpTool_UserNotifications.cpp:75
 #, kde-format
@@ -2168,12 +2165,12 @@ msgstr "Valinta: Läpinäkyvän värin samankaltaisuus"
 #: tools/selection/image/kpToolEllipticalSelection.cpp:42
 #, kde-format
 msgid "Selection (Elliptical)"
-msgstr "Valinta (elliptinen)"
+msgstr "Valinta (soikio)"
 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:43
 #, kde-format
 msgid "Makes an elliptical or circular selection"
-msgstr "Valitsee elliptillisesti tai ympyränä"
+msgstr "Tekee soikio- tai ympyrävalinnan"
 
 #: tools/selection/image/kpToolFreeFormSelection.cpp:45
 #, kde-format
@@ -2188,12 +2185,12 @@ msgstr "Tekee vapaamuotoisen valinnan"
 #: tools/selection/image/kpToolRectSelection.cpp:40
 #, kde-format
 msgid "Selection (Rectangular)"
-msgstr "Valinta (suorakaiteen muotoinen)"
+msgstr "Valinta (suorakaide)"
 
 #: tools/selection/image/kpToolRectSelection.cpp:41
 #, kde-format
 msgid "Makes a rectangular selection"
-msgstr "Tee suorakaidevalinta"
+msgstr "Tekee suorakaidevalinnan"
 
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:324
 #, kde-format
@@ -2203,7 +2200,7 @@ msgstr "Valinta: Siirto"
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:347
 #, kde-format
 msgid "%1: Smear"
-msgstr "%1: Voidemainen"
+msgstr "%1: Suttaa"
 
 #: tools/selection/text/kpToolText.cpp:55
 #, kde-format
@@ -2313,12 +2310,12 @@ msgstr "Teksti: Yliviivattu"
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
-msgstr "Todellinen koko–Esikatselukuva"
+msgstr "Todellinen koko – pienoiskuva"
 
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr "%1%–Esikatselukuva"
+msgstr "%1 % – pienoiskuva"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
 #, kde-format
