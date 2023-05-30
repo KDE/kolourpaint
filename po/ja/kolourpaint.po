@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
@@ -234,7 +234,6 @@ msgstr "%1: %2"
 msgid "%1 more item"
 msgid_plural "%1 more items"
 msgstr[0] "他 %1 項目"
-msgstr[1] "他 %1 項目"
 
 #: commands/tools/kpToolColorPickerCommand.cpp:59
 #: tools/kpToolColorPicker.cpp:45
@@ -935,8 +934,7 @@ msgstr "保存プレビュー"
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
-msgstr[0] "1 バイト (およそ %2%)"
-msgstr[1] "%1 バイト (およそ %2%)"
+msgstr[0] "%1 バイト (およそ %2%)"
 
 #: document/kpDocument_Open.cpp:114
 #, kde-format
@@ -1585,7 +1583,6 @@ msgstr ""
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " 秒"
-msgstr[1] " 秒"
 
 #: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
