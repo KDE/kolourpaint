@@ -14,6 +14,10 @@ Dependencies:
     'frameworks/ktextwidgets': '@latest-kf6'
     'frameworks/kjobwidgets': '@latest-kf6'
 
+- 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
+  'require':
+    'graphics/libksane': '@latest-kf6'
+
 - 'on': ['Linux/Qt5', 'FreeBSD/Qt5', 'Windows/Qt5']
   'require':
     'frameworks/extra-cmake-modules': '@stable'
@@ -25,3 +29,7 @@ Dependencies:
     'frameworks/kxmlgui': '@stable'
     'frameworks/ktextwidgets': '@stable'
     'frameworks/kjobwidgets': '@stable'
+
+- 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
+  'require':
+    'graphics/libksane': '@latest'
