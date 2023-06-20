@@ -1072,7 +1072,7 @@ msgstr "Non se pode recortar automaticamente"
 #: imagelib/transforms/kpTransformCrop.cpp:72
 #, kde-format
 msgid "Set as Image"
-msgstr "Estabelecer como imaxe"
+msgstr "Definir como imaxe"
 
 #: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:251
 #: mainWindow/kpMainWindow_Edit.cpp:365 mainWindow/kpMainWindow_Image.cpp:320
@@ -1735,7 +1735,7 @@ msgstr "Selecc&ión"
 #: mainWindow/kpMainWindow_Settings.cpp:66
 #, kde-format
 msgid "Show &Path"
-msgstr "Mostrar a &ruta"
+msgstr "Amosar a &ruta"
 
 #: mainWindow/kpMainWindow_Settings.cpp:71
 #, kde-format
@@ -1838,12 +1838,12 @@ msgstr "Caixa de texto"
 #: mainWindow/kpMainWindow_View.cpp:65
 #, kde-format
 msgid "Show &Grid"
-msgstr "Mostrar a &grade"
+msgstr "Amosar a &grade"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
 #, kde-format
 msgid "Show T&humbnail"
-msgstr "Mostrar a &miniatura"
+msgstr "Amosar a &miniatura"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
 #, kde-format
