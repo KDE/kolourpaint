@@ -56,7 +56,7 @@
 
 // public static
 const int kpView::MinZoomLevel = 1;
-const int kpView::MaxZoomLevel = 3200;
+const int kpView::MaxZoomLevel = 20000;
 
 //---------------------------------------------------------------------
 

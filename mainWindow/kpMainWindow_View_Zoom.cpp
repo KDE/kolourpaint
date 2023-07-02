@@ -126,6 +126,9 @@ void kpMainWindow::setupViewMenuZoomActions ()
     d->zoomList.append (200); d->zoomList.append (300);
     d->zoomList.append (400); d->zoomList.append (600); d->zoomList.append (800);
     d->zoomList.append (1000); d->zoomList.append (1200); d->zoomList.append (1600);
+    d->zoomList.append (2400); d->zoomList.append (3200); d->zoomList.append (4000);
+    d->zoomList.append (5000); d->zoomList.append (6000); d->zoomList.append (7000);
+    d->zoomList.append (10000); d->zoomList.append (15000); d->zoomList.append (20000);
 }
 
 //---------------------------------------------------------------------
