@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.2\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -229,10 +229,11 @@ msgid "%1: %2"
 msgstr ""
 
 #: commands/kpCommandHistoryBase.cpp:608
-#, kde-format
+#, fuzzy, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
 msgstr[0] "%1 فقره بیشتر"
+msgstr[1] ""
 
 #: commands/tools/kpToolColorPickerCommand.cpp:59
 #: tools/kpToolColorPicker.cpp:45
@@ -933,10 +934,11 @@ msgid "Save Preview"
 msgstr "ذخیره پیش‌‌‌نمایش"
 
 #: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:126
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
 msgstr[0] "%1 بایت )تقریباً %2٪("
+msgstr[1] ""
 
 #: document/kpDocument_Open.cpp:114
 #, kde-format
@@ -1595,6 +1597,7 @@ msgstr ""
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] "%1 ثانیه"
+msgstr[1] ""
 
 #: mainWindow/kpMainWindow_File.cpp:668
 #, kde-format
