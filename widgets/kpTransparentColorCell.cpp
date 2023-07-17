@@ -124,4 +124,4 @@ void kpTransparentColorCell::paintEvent (QPaintEvent *e)
 
 //---------------------------------------------------------------------
 
-
+#include "moc_kpTransparentColorCell.cpp"

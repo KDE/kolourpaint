@@ -326,4 +326,4 @@ void kpEffectBalanceWidget::resetAll ()
     emit settingsChanged ();
 }
 
-
+#include "moc_kpEffectBalanceWidget.cpp"

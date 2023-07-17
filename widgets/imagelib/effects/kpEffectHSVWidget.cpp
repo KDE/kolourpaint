@@ -117,4 +117,4 @@ kpEffectCommandBase *kpEffectHSVWidget::createCommand (
         cmdEnviron);
 }
 
-
+#include "moc_kpEffectHSVWidget.cpp"

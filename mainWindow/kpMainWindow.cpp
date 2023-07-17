@@ -919,3 +919,4 @@ void kpMainWindow::slotDocumentRestored ()
 
 //---------------------------------------------------------------------
 
+#include "moc_kpMainWindow.cpp"

@@ -369,4 +369,4 @@ void kpEffectsDialog::slotDelayedUpdate ()
     m_delayedUpdateTimer->start (400/*ms*/);
 }
 
-
+#include "moc_kpEffectsDialog.cpp"

@@ -711,4 +711,4 @@ void kpCommandHistoryBase::documentSaved ()
     m_documentRestoredPosition = 0;
 }
 
-
+#include "moc_kpCommandHistoryBase.cpp"

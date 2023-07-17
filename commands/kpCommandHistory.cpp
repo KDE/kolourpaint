@@ -128,4 +128,4 @@ void kpCommandHistory::redo ()
     }
 }
 
-
+#include "moc_kpCommandHistory.cpp"

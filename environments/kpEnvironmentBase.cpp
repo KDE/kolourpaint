@@ -117,4 +117,4 @@ kpMainWindow *kpEnvironmentBase::mainWindow () const
     return d->mainWindow;
 }
 
-
+#include "moc_kpEnvironmentBase.cpp"

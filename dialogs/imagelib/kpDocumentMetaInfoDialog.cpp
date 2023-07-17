@@ -750,4 +750,4 @@ void kpDocumentMetaInfoDialog::accept ()
     QDialog::accept ();
 }
 
-
+#include "moc_kpDocumentMetaInfoDialog.cpp"

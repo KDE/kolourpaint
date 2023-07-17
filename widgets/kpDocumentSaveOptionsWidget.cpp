@@ -747,4 +747,4 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
     }
 }
 
-
+#include "moc_kpDocumentSaveOptionsWidget.cpp"

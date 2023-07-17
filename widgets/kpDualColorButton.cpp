@@ -466,4 +466,4 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
                      nullptr/*never fill*/);
 }
 
-
+#include "moc_kpDualColorButton.cpp"

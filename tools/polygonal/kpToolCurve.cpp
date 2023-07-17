@@ -193,4 +193,4 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
     }
 }
 
-
+#include "moc_kpToolCurve.cpp"

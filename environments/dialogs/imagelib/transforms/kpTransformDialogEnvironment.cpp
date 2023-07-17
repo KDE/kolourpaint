@@ -40,3 +40,4 @@ kpTransformDialogEnvironment::kpTransformDialogEnvironment(kpMainWindow *mainWin
 
 //---------------------------------------------------------------------
 
+#include "moc_kpTransformDialogEnvironment.cpp"

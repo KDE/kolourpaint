@@ -81,3 +81,5 @@ void kpToolRectangle::drawRect(kpImage *image,
 }
 
 //---------------------------------------------------------------------
+
+#include "moc_kpToolRectangle.cpp"

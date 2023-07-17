@@ -749,3 +749,4 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
 //---------------------------------------------------------------------
 
+#include "moc_kpToolWidgetBase.cpp"

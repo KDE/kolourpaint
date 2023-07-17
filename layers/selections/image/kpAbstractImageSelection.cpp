@@ -586,4 +586,4 @@ void kpAbstractImageSelection::paintWithBaseImage (QImage *destImage,
 
 //---------------------------------------------------------------------
 
-
+#include "moc_kpAbstractImageSelection.cpp"

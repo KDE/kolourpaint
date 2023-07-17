@@ -179,5 +179,5 @@ void kpThumbnail::closeEvent (QCloseEvent *e)
 
     emit windowClosed ();
 }
-    
 
+#include "moc_kpThumbnail.cpp"

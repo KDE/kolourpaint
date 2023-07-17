@@ -45,4 +45,4 @@ QString kpEffectWidgetBase::caption () const
     return {};
 }
 
-
+#include "moc_kpEffectWidgetBase.cpp"

@@ -351,3 +351,4 @@ void kpViewManager::setInputMethodEnabled (bool inputMethodEnabled)
 
 //---------------------------------------------------------------------
 
+#include "moc_kpViewManager.cpp"

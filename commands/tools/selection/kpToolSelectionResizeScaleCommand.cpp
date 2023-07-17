@@ -253,4 +253,4 @@ void kpToolSelectionResizeScaleCommand::unexecute ()
     QApplication::restoreOverrideCursor ();
 }
 
-
+#include "moc_kpToolSelectionResizeScaleCommand.cpp"

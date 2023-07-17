@@ -138,3 +138,5 @@ void kpColorSimilarityDialog::slotWhatIsLabelClicked ()
 {
   QWhatsThis::showText(QCursor::pos(), m_colorSimilarityFrame->whatsThis(), this);
 }
+
+#include "moc_kpColorSimilarityDialog.cpp"

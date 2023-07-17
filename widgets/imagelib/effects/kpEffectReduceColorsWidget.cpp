@@ -173,3 +173,4 @@ kpEffectCommandBase *kpEffectReduceColorsWidget::createCommand (
 
 //---------------------------------------------------------------------
 
+#include "moc_kpEffectReduceColorsWidget.cpp"

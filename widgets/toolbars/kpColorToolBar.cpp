@@ -339,3 +339,4 @@ void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 
 //---------------------------------------------------------------------
 
+#include "moc_kpColorToolBar.cpp"

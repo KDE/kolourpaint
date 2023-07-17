@@ -252,4 +252,4 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
     }
 }
 
-
+#include "moc_kpToolZoom.cpp"

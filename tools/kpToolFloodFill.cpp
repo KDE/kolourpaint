@@ -167,3 +167,4 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
 
 //---------------------------------------------------------------------
 
+#include "moc_kpToolFloodFill.cpp"

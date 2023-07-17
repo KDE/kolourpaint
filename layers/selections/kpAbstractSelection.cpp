@@ -313,3 +313,4 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
     }
 }
 
+#include "moc_kpAbstractSelection.cpp"

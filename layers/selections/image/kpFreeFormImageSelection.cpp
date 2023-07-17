@@ -391,4 +391,4 @@ void kpFreeFormImageSelection::paintBorder (QImage *destPixmap, const QRect &doc
     }
 }
 
-
+#include "moc_kpFreeFormImageSelection.cpp"

@@ -146,4 +146,4 @@ void kpRectangularImageSelection::paintBorder (QImage *destPixmap, const QRect &
     paintRectangularBorder (destPixmap, docRect, selectionFinished);
 }
 
-
+#include "moc_kpRectangularImageSelection.cpp"

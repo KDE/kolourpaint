@@ -76,4 +76,4 @@ QString kpToolEraser::haventBegunDrawUserMessage () const
 
 // Logic is in kpToolFlowPixmapBase.
 
-
+#include "moc_kpToolEraser.cpp"

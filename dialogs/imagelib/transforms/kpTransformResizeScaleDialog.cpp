@@ -836,3 +836,4 @@ void kpTransformResizeScaleDialog::accept ()
 
 //---------------------------------------------------------------------
 
+#include "moc_kpTransformResizeScaleDialog.cpp"

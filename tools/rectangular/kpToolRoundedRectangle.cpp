@@ -87,3 +87,5 @@ void kpToolRoundedRectangle::drawRoundedRect(kpImage *image,
 }
 
 //---------------------------------------------------------------------
+
+#include "moc_kpToolRoundedRectangle.cpp"

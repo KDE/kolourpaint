@@ -179,4 +179,4 @@ bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
 
 //---------------------------------------------------------------------
 
-
+#include "moc_kpToolWidgetEraserSize.cpp"

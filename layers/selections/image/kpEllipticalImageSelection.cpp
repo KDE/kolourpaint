@@ -182,4 +182,4 @@ void kpEllipticalImageSelection::paintBorder (QImage *destPixmap, const QRect &d
         selectionFinished);
 }
 
-
+#include "moc_kpEllipticalImageSelection.cpp"

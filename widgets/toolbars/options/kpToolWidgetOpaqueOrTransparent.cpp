@@ -98,4 +98,4 @@ bool kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col, bool saveAs
     return ret;
 }
 
-
+#include "moc_kpToolWidgetOpaqueOrTransparent.cpp"

@@ -124,3 +124,4 @@ kpColorCells *kpColorPalette::colorCells () const
 
 //---------------------------------------------------------------------
 
+#include "moc_kpColorPalette.cpp"

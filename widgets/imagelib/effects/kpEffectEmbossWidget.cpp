@@ -103,4 +103,4 @@ int kpEffectEmbossWidget::strength () const
     return kpEffectEmboss::MaxStrength;
 }
 
-
+#include "moc_kpEffectEmbossWidget.cpp"

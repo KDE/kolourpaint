@@ -205,5 +205,4 @@ void kpEffectInvertWidget::slotAllCheckBoxToggled ()
     m_inSignalHandler = false;
 }
 
-
-
+#include "moc_kpEffectInvertWidget.cpp"

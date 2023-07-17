@@ -84,3 +84,5 @@ void kpToolEllipse::drawEllipse(kpImage *image,
 }
 
 //---------------------------------------------------------------------
+
+#include "moc_kpToolEllipse.cpp"

@@ -158,3 +158,5 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
 }
 
 //--------------------------------------------------------------------------------
+
+#include "moc_kpToolColorEraser.cpp"

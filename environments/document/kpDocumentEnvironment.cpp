@@ -208,4 +208,4 @@ void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &se
     }
 }
 
-
+#include "moc_kpDocumentEnvironment.cpp"

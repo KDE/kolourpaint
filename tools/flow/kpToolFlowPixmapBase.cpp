@@ -79,3 +79,4 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
 
 //---------------------------------------------------------------------
 
+#include "moc_kpToolFlowPixmapBase.cpp"

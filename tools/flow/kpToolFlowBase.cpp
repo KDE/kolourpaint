@@ -488,3 +488,4 @@ QRect kpToolFlowBase::hotRect () const
 
 //---------------------------------------------------------------------
 
+#include "moc_kpToolFlowBase.cpp"

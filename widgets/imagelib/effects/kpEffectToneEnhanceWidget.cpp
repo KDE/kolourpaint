@@ -135,4 +135,4 @@ kpEffectCommandBase *kpEffectToneEnhanceWidget::createCommand (
                                            cmdEnviron);
 }
 
-
+#include "moc_kpEffectToneEnhanceWidget.cpp"
