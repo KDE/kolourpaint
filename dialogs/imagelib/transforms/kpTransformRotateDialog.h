@@ -79,7 +79,6 @@ private:
     QRadioButton *m_antiClockwiseRadioButton,
                  *m_clockwiseRadioButton;
 
-    QButtonGroup *m_angleButtonGroup;
     QRadioButton *m_angle90RadioButton,
                  *m_angle180RadioButton,
                  *m_angle270RadioButton,
