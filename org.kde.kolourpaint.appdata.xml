@@ -14,7 +14,6 @@
   <name xml:lang="de">KolourPaint</name>
   <name xml:lang="el">KolourPaint</name>
   <name xml:lang="en-GB">KolourPaint</name>
-  <name xml:lang="eo">KolourPaint</name>
   <name xml:lang="es">KolourPaint</name>
   <name xml:lang="et">KolourPaint</name>
   <name xml:lang="eu">KolourPaint</name>
@@ -57,7 +56,6 @@
   <summary xml:lang="de">Mal- und Zeichenprogramm</summary>
   <summary xml:lang="el">Πρόγραμμα ζωγραφικής</summary>
   <summary xml:lang="en-GB">Paint Program</summary>
-  <summary xml:lang="eo">Pentrada programo</summary>
   <summary xml:lang="es">Programa de dibujo</summary>
   <summary xml:lang="et">Joonistamisrakendus</summary>
   <summary xml:lang="eu">Marrazteko programa</summary>
@@ -103,7 +101,6 @@
     <p xml:lang="de">KolourPaint ist ein einfach zu benutzendes Mal- und Zeichenprogramm um schnell Rasterbilder zu erstellen. Es kann für die Korrektur und einfache Bildbearbeitungsaufgaben benutzt werden.</p>
     <p xml:lang="el">Το KolourPaint είναι λενα απλό πρόγραμμα ζωραφικής για τη γρήγορη δημιουργία εικόνων χρωματικής περίπλεξης. Χρησιμεύει ως διορθωτικό και για απλές εργασίες επεξεργασίας εικόνων.</p>
     <p xml:lang="en-GB">KolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks.</p>
-    <p xml:lang="eo">KolourPaint estas simpla pentra programo por rapide krei rastrumajn bildojn. Ĝi estas utila kiel ilo por rafinado kaj simplaj bildredaktaj taskoj.</p>
     <p xml:lang="es">KolourPaint es un sencillo programa de dibujo que permite crear imágenes de mapas de bits de una forma rápida. Resulta útil como herramienta de retoque y para tareas de edición sencillas.</p>
     <p xml:lang="et">KolourPaint on lihtne joonistamisrakendus rasterpiltide kiireks loomiseks. Sellega on hõlpus luua visandeid ja täita lihtsamaid piltide töötlemise ülesandeid.</p>
     <p xml:lang="eu">KolourPaint margotzeko aplikazio xume bat da, «raster» irudiak azkar sortzeko balio duena. Baliagarria da berrukipen tresna gisa eta oinarrizko irudi editatzeko atazetarako.</p>
@@ -144,7 +141,6 @@
     <p xml:lang="de">Leistungsmerkmale:</p>
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
-    <p xml:lang="eo">Trajtoj:</p>
     <p xml:lang="es">Funcionalidades:</p>
     <p xml:lang="et">Omadused:</p>
     <p xml:lang="eu">Eginbideak:</p>
@@ -188,7 +184,6 @@
       <li xml:lang="de">Das Zeichnen verschiedener Objekte wie Linien, Rechtecke, abgerundete Rechtecke, Ellipsen und Polygone wird unterstützt.</li>
       <li xml:lang="el">Υποστήριξη για σχεδίαση διαφόρων σχημάτων - ευθείες, ορθογώνια παραλληλόγραμμα, στρογγυλεμένα ορθογώνια, ελλείψεις και πολύγωνα</li>
       <li xml:lang="en-GB">Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
-      <li xml:lang="eo">Subteno por desegni variajn formojn - liniojn, rektangulojn, ronditajn rektangulojn, ovalojn kaj plurlaterojn</li>
       <li xml:lang="es">Permite dibujar distintas formas (líneas, rectángulos, rectángulos de esquinas redondeadas, óvalos y polígonos)</li>
       <li xml:lang="et">Mitmesuguste kujundite joonistamise toetus: jooned, ristkülikud, ümarnurksed ristkülikud, ovaalid, hulknurgad</li>
       <li xml:lang="eu">Hainbat forma marraztu ditzake - lerroak, laukizuzenak, laukizuzen borobilduak, obaloak eta poligonoak</li>
@@ -229,7 +224,6 @@
       <li xml:lang="de">Kurven, Linien und Text</li>
       <li xml:lang="el">Καμπύλες, ευθείες και κείμενο</li>
       <li xml:lang="en-GB">Curves, lines and text</li>
-      <li xml:lang="eo">Kurboj, linioj kaj teksto</li>
       <li xml:lang="es">Curvas, líneas y texto</li>
       <li xml:lang="et">Kõverad, sirged ja tekst</li>
       <li xml:lang="eu">Kurbak, lerroak eta testua</li>
@@ -272,7 +266,6 @@
       <li xml:lang="de">Farbwähler</li>
       <li xml:lang="el">Επιλογέας χρωμάτων</li>
       <li xml:lang="en-GB">Colour picker</li>
-      <li xml:lang="eo">Kolorelektilo</li>
       <li xml:lang="es">Selección de color</li>
       <li xml:lang="et">Värvivalija</li>
       <li xml:lang="eu">Kolore hautatzailea</li>
@@ -315,7 +308,6 @@
       <li xml:lang="de">Mehre Auswahlarten</li>
       <li xml:lang="el">Επιλογές</li>
       <li xml:lang="en-GB">Selections</li>
-      <li xml:lang="eo">Elektoj</li>
       <li xml:lang="es">Selecciones</li>
       <li xml:lang="et">Valikud</li>
       <li xml:lang="eu">Hautapenak</li>
@@ -357,7 +349,6 @@
       <li xml:lang="de">Drehung, Umwandlung in Schwarzweiß und weitere Effekte können angewendet werden</li>
       <li xml:lang="el">Περιστροφή, μονοχρωμία και άλλα προηγμένα εφέ</li>
       <li xml:lang="en-GB">Rotation, monochrome and other advanced effects</li>
-      <li xml:lang="eo">Rotacio, monokromato kaj aliaj efektoj</li>
       <li xml:lang="es">Rotación, conversión a monocromo y otros efectos avanzados</li>
       <li xml:lang="et">Pööramine, ühevärvilisus ja veel mõned efektid</li>
       <li xml:lang="eu">Biraketa, monokromoa eta beste efektu aurreratu batzuk</li>
@@ -405,7 +396,6 @@
       <caption xml:lang="de">Malen mit KolourPaint</caption>
       <caption xml:lang="el">Ζωγραφική στο KolourPaint</caption>
       <caption xml:lang="en-GB">Painting in KolourPaint</caption>
-      <caption xml:lang="eo">Pentrante en KolourPaint</caption>
       <caption xml:lang="es">Dibujando con KolourPaint</caption>
       <caption xml:lang="et">Joonistamine KolourPaintis</caption>
       <caption xml:lang="eu">Margako KolourPaint erabiliz</caption>
