@@ -557,8 +557,8 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>텍스트 상자의 크기를 %1x%2(으)로 조정하는 것은 많은 양의 메모리를 사용"
-"합니다. 시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 "
-"수 있습니다.</p><p>텍스트 상자의 크기를 조정하시겠습니까?</p></qt>"
+"합니다. 시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습"
+"니다.</p><p>텍스트 상자의 크기를 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
 #, kde-format
@@ -580,8 +580,8 @@ msgid ""
 "problems.</p><p>Are you sure you want to resize the image?</p></qt>"
 msgstr ""
 "<qt><p>그림 크기를 %1x%2에 맞게 잘라내는 것은 많은 양의 메모리를 사용합니다. "
-"시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있습니"
-"다.</p><p>그림을 잘라내시겠습니까?</p></qt>"
+"시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다.</"
+"p><p>그림을 잘라내시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
 #: mainWindow/kpMainWindow_Tools.cpp:662
@@ -604,8 +604,8 @@ msgid ""
 "problems.</p><p>Are you sure you want to scale the image?</p></qt>"
 msgstr ""
 "<qt><p>그림 크기를 %1x%2(으)로 조정하는 것은 많은 양의 메모리를 사용합니다. "
-"시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있습니"
-"다.</p><p>그림 크기를 조정하시겠습니까?</p></qt>"
+"시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다.</"
+"p><p>그림 크기를 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
 #, kde-format
@@ -627,8 +627,8 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>선택 영역 크기를 %1x%2(으)로 조정하는 것은 많은 양의 메모리를 사용합니"
-"다. 시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있"
-"습니다.</p><p>선택 영역 크기를 조정하시겠습니까?</p></qt>"
+"다. 시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다."
+"</p><p>선택 영역 크기를 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
 #, kde-format
@@ -650,8 +650,8 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>그림 크기를 부드럽게 %1x%2(으)로 조정하는 것은 많은 양의 메모리를 사용"
-"합니다. 시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 "
-"수 있습니다.</p><p>그림 크기를 부드럽게 조정하시겠습니까?</p></qt>"
+"합니다. 시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습"
+"니다.</p><p>그림 크기를 부드럽게 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
 #, kde-format
@@ -673,8 +673,8 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt><p>선택 영역 크기를 부드럽게 %1x%2(으)로 조정하는 것은 많은 양의 메모리"
-"를 사용합니다. 시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가"
-"져올 수 있습니다.</p><p>선택 영역 크기를 부드럽게 조정하시겠습니까?</p></qt>"
+"를 사용합니다. 시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 "
+"수 있습니다.</p><p>선택 영역 크기를 부드럽게 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
 #, kde-format
@@ -761,8 +761,8 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>선택 영역을 %1x%2(으)로 회전하면 많은 양의 메모리를 사용합니다. 시스"
-"템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있습니다.</"
-"p><p>선택 영역을 회전하시겠습니까?</p></qt>"
+"템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다.</p><p>"
+"선택 영역을 회전하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
@@ -783,8 +783,8 @@ msgid ""
 "problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
 msgstr ""
 "<qt><p>그림을 %1x%2(으)로 회전하면 많은 양의 메모리를 사용합니다. 시스템 응"
-"답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있습니다.</p><p>"
-"그림을 회전하시겠습니까?</p></qt>"
+"답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다.</p><p>그림"
+"을 회전하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
@@ -833,8 +833,8 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>선택 영역 크기를 %1x%2(으)로 조정하면 많은 양의 메모리를 사용합니다. "
-"시스템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있습니"
-"다.</p><p>선택의 크기를 조정하시겠습니까?</p></qt>"
+"시스템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다.</"
+"p><p>선택의 크기를 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
@@ -855,8 +855,8 @@ msgid ""
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
 "<qt><p>그림 크기를 %1x%2(으)로 조정하면 많은 양의 메모리를 사용합니다. 시스"
-"템 응답 속도를 늦출 수 있고 다른 프로그램의 자원 문제를 가져올 수 있습니다.</"
-"p><p>그림의 크기를 조정하시겠습니까?</p></qt>"
+"템 응답 속도를 늦출 수 있고 다른 앱의 자원 문제를 가져올 수 있습니다.</p><p>"
+"그림의 크기를 조정하시겠습니까?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
@@ -1230,7 +1230,7 @@ msgstr "편집(&E)"
 #, kde-format
 msgctxt "@title:window"
 msgid "Thumbnail"
-msgstr "축소판"
+msgstr "섬네일"
 
 #: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
 #: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
@@ -1821,17 +1821,17 @@ msgstr "모눈 표시(&G)"
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
 #, kde-format
 msgid "Show T&humbnail"
-msgstr "축소판 표시(&H)"
+msgstr "섬네일 표시(&H)"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
 #, kde-format
 msgid "Zoo&med Thumbnail Mode"
-msgstr "크기 조정 축소판 모드(&M)"
+msgstr "크기 조정 섬네일 모드(&M)"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
-msgstr "축소판 사각형 사용(&R)"
+msgstr "섬네일 사각형 사용(&R)"
 
 #: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
@@ -2292,12 +2292,12 @@ msgstr "텍스트: 취소선"
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
-msgstr "크기 조정하지 않은 모드 - 축소판"
+msgstr "크기 조정하지 않은 모드 - 섬네일"
 
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr "%1% - 축소판"
+msgstr "%1% - 섬네일"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
 #, kde-format
@@ -2326,19 +2326,19 @@ msgid ""
 msgstr ""
 "<qt><p><b>색상 유사도</b>는 서로 다른 픽셀의 색상을 같은 것으로 취급하려면얼"
 "마나 <i>비슷해야</i> 하는가를 나타냅니다.</p><p>만약 <b>정확한 일치</b>가 아"
-"닌 값으로 설정했으면, 다른 그림 프로그램의 \"요술봉\" 기능처럼 디더링된 그림"
-"이나 사진에서 효과적으로 작업할 수 있습니다.</p><p>이 기능은 다음에 적용됩니"
-"다:</p><ul><li><b>선택 영역</b>: <b>투명</b> 모드에서는 배경색과 <i>비슷한</"
-"i> 색깔이 투명하게 처리됩니다.</li><li><b>채우기</b>: 선택 영역 중 배경색과 "
-"<i>비슷하지만</i> 배경색과는 다른 색깔이 채워집니다. 값이 높을수록 더 많은 픽"
-"셀을 채웁니다.</li> <li><b>색 지우개</b>: 전경색과 <i>비슷한</i> 색을 가진 픽"
-"셀이 배경색으로 지워집니다.</li><li><b>자동 잘라내기</b> 및 <b>내부 경계 지우"
-"기</b>: <i>비슷하지만</i> 같지 않은 색의 픽셀을 경계로 취급합니다. 값이 높을"
-"수록 더 많은 경계를 잘라냅니다.</li></ul><p>값이 높으면 더 많은 색을 <i>비슷"
-"한</i> 색으로 판단합니다. 필요한 만큼 색이 선택되지 않을 때에만 값을 증가시키"
-"십시오.</p><p><b>색 채우기</b> 도구가 너무 많은 색을 바꾸는 등 비슷하다고 생"
-"각하지 않는 색에 영향을 준다면 값을 감소시키십시오.</p> <p>설정하려면 육면체"
-"를 클릭하십시오.</p></qt>"
+"닌 값으로 설정했으면, 다른 그림 앱의 \"요술봉\" 기능처럼 디더링된 그림이나 사"
+"진에서 효과적으로 작업할 수 있습니다.</p><p>이 기능은 다음에 적용됩니다:</"
+"p><ul><li><b>선택 영역</b>: <b>투명</b> 모드에서는 배경색과 <i>비슷한</i> 색"
+"깔이 투명하게 처리됩니다.</li><li><b>채우기</b>: 선택 영역 중 배경색과 <i>비"
+"슷하지만</i> 배경색과는 다른 색깔이 채워집니다. 값이 높을수록 더 많은 픽셀을 "
+"채웁니다.</li> <li><b>색 지우개</b>: 전경색과 <i>비슷한</i> 색을 가진 픽셀이 "
+"배경색으로 지워집니다.</li><li><b>자동 잘라내기</b> 및 <b>내부 경계 지우기</"
+"b>: <i>비슷하지만</i> 같지 않은 색의 픽셀을 경계로 취급합니다. 값이 높을수록 "
+"더 많은 경계를 잘라냅니다.</li></ul><p>값이 높으면 더 많은 색을 <i>비슷한</"
+"i> 색으로 판단합니다. 필요한 만큼 색이 선택되지 않을 때에만 값을 증가시키십시"
+"오.</p><p><b>색 채우기</b> 도구가 너무 많은 색을 바꾸는 등 비슷하다고 생각하"
+"지 않는 색에 영향을 준다면 값을 감소시키십시오.</p> <p>설정하려면 육면체를 클"
+"릭하십시오.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
 #, kde-format
@@ -2367,18 +2367,18 @@ msgid ""
 msgstr ""
 "<qt><p><b>색상 유사도</b>는 서로 다른 픽셀의 색상을 같은 것으로 취급하려면얼"
 "마나 <i>비슷해야</i> 하는가를 나타냅니다.</p><p>만약 <b>정확한 일치</b>가 아"
-"닌 값으로 설정했으면, 다른 그림 프로그램의 \"요술봉\" 기능처럼 디더링된 그림"
-"이나 사진에서 효과적으로 작업할 수 있습니다.</p><p>이 기능은 다음에 적용됩니"
-"다:</p><ul><li><b>선택 영역</b>: <b>투명</b> 모드에서는 배경색과 <i>비슷한</"
-"i> 색깔이 투명하게 처리됩니다.</li><li><b>채우기</b>: 선택 영역 중 배경색과 "
-"<i>비슷하지만</i> 배경색과는 다른 색깔이 채워집니다. 값이 높을수록 더 많은 픽"
-"셀을 채웁니다.</li> <li><b>색 지우개</b>: 전경색과 <i>비슷한</i> 색을 가진 픽"
-"셀이 배경색으로 지워집니다.</li><li><b>자동 잘라내기</b> 및 <b>내부 경계 지우"
-"기</b>: <i>비슷하지만</i> 같지 않은 색의 픽셀을 경계로 취급합니다. 값이 높을"
-"수록 더 많은 경계를 잘라냅니다.</li></ul><p>값이 높으면 더 많은 색을 <i>비슷"
-"한</i> 색으로 판단합니다. 필요한 만큼 색이 선택되지 않을 때에만 값을 증가시키"
-"십시오.</p><p><b>색 채우기</b> 도구가 너무 많은 색을 바꾸는 등 비슷하다고 생"
-"각하지 않는 색에 영향을 준다면 값을 감소시키십시오.</p></qt>"
+"닌 값으로 설정했으면, 다른 그림 앱의 \"요술봉\" 기능처럼 디더링된 그림이나 사"
+"진에서 효과적으로 작업할 수 있습니다.</p><p>이 기능은 다음에 적용됩니다:</"
+"p><ul><li><b>선택 영역</b>: <b>투명</b> 모드에서는 배경색과 <i>비슷한</i> 색"
+"깔이 투명하게 처리됩니다.</li><li><b>채우기</b>: 선택 영역 중 배경색과 <i>비"
+"슷하지만</i> 배경색과는 다른 색깔이 채워집니다. 값이 높을수록 더 많은 픽셀을 "
+"채웁니다.</li> <li><b>색 지우개</b>: 전경색과 <i>비슷한</i> 색을 가진 픽셀이 "
+"배경색으로 지워집니다.</li><li><b>자동 잘라내기</b> 및 <b>내부 경계 지우기</"
+"b>: <i>비슷하지만</i> 같지 않은 색의 픽셀을 경계로 취급합니다. 값이 높을수록 "
+"더 많은 경계를 잘라냅니다.</li></ul><p>값이 높으면 더 많은 색을 <i>비슷한</"
+"i> 색으로 판단합니다. 필요한 만큼 색이 선택되지 않을 때에만 값을 증가시키십시"
+"오.</p><p><b>색 채우기</b> 도구가 너무 많은 색을 바꾸는 등 비슷하다고 생각하"
+"지 않는 색에 영향을 준다면 값을 감소시키십시오.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
 #, kde-format
