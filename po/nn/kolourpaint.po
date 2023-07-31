@@ -1,13 +1,13 @@
 # Translation of kolourpaint to Norwegian Nynorsk
 #
 # Eirik U. Birkeland <eirbir@gmail.com>, 2008, 2009.
-# Karl Ove Hufthammer <karl@huftis.org>, 2008, 2013, 2016, 2017, 2020, 2022.
+# Karl Ove Hufthammer <karl@huftis.org>, 2008, 2013, 2016, 2017, 2020, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2022-07-27 20:43+0200\n"
+"PO-Revision-Date: 2023-07-30 22:04+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1192,15 +1192,17 @@ msgstr "Biletfiler som skal opnast (valfritt)"
 msgid "List all readable image MIME types"
 msgstr "Vis MIME-typen til alle lesbare biletformat"
 
+# Kommandolinjeargument, og skal derfor slutta med punktum.
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Start med nytt bilete med valt storleik."
 
+# Skal ikkje ha mellomrom, ekte gongeteikn (×) e.l., då det er snakk om eit kommandolinjeargument.
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[breidd]x[høgd]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
