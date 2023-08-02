@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2023-06-04 01:21+0300\n"
+"PO-Revision-Date: 2023-08-02 01:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -246,7 +246,7 @@ msgstr[1] "Ek %1 öge"
 #: tools/kpToolColorPicker.cpp:45
 #, kde-format
 msgid "Color Picker"
-msgstr "Renk Seçici"
+msgstr "Renk Seçicisi"
 
 #: commands/tools/kpToolFloodFillCommand.cpp:77 tools/kpToolFloodFill.cpp:55
 #, kde-format
@@ -1048,7 +1048,7 @@ msgstr "Otomatik Kırp"
 msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
 "located."
-msgstr "KolourPaint bulunamadığı için seçimin iç kenarını kaldıramadı."
+msgstr "RenkliBoya bulunamadığı için seçimin iç kenarını kaldıramadı."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:625
 #, kde-format
@@ -1062,7 +1062,8 @@ msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr ""
-"KolourPaint'in kenarlığı bulunamadığı için otomatik olarak görseli kırpamadı."
+"RenkliBoya, görselin kenarlığı bulunamadığı için otomatik olarak görseli "
+"kırpamadı."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:633
 #, kde-format
@@ -1086,7 +1087,7 @@ msgstr "Seçim: Oluştur"
 #: kolourpaint.cpp:54
 #, kde-format
 msgid "KolourPaint"
-msgstr "KolourPaint"
+msgstr "RenkliBoya"
 
 #: kolourpaint.cpp:56
 #, kde-format
@@ -1176,7 +1177,7 @@ msgstr "Laurent Montel"
 #: kolourpaint.cpp:85
 #, kde-format
 msgid "KDE 4 Porting"
-msgstr "KDE4 geçişi"
+msgstr "KDE4 Geçişi"
 
 #: kolourpaint.cpp:86
 #, kde-format
@@ -1318,7 +1319,7 @@ msgstr "Başlıksız"
 #: mainWindow/kpMainWindow_Colors.cpp:62
 #, kde-format
 msgid "Use KolourPaint Defaults"
-msgstr "KolourPaint Öntanımlı Değerlerini Kullan"
+msgstr "RenkliBoya Öntanımlı Değerlerini Kullan"
 
 #: mainWindow/kpMainWindow_Colors.cpp:67
 #, kde-format
@@ -1484,7 +1485,7 @@ msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
-"<qt>KolourPaint pano içeriğini, bilinmeyen bir biçime sahip olduğu için "
+"<qt>RenkliBoya pano içeriğini, bilinmeyen bir biçime sahip olduğu için "
 "yapıştıramadı.</qt>"
 
 #: mainWindow/kpMainWindow_Edit.cpp:613
@@ -2676,7 +2677,7 @@ msgstr "Saydam"
 #: widgets/toolbars/kpColorToolBar.cpp:278
 #, kde-format
 msgid "KolourPaint Defaults"
-msgstr "KolourPaint Öntanımlı Değerleri"
+msgstr "RenkliBoya Öntanımlı Değerleri"
 
 #: widgets/toolbars/kpColorToolBar.cpp:293
 #, kde-format
