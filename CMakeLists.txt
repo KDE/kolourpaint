@@ -363,7 +363,6 @@ install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(PROGRAMS org.kde.kolourpaint.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.kolourpaint.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES kolourpaintui.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kolourpaint)
 
 ki18n_install(po)
 kdoctools_install(po)

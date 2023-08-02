@@ -16,4 +16,7 @@
       <file alias="tool_spraycan_29x29.png">pics/custom/tool_spraycan_29x29.png</file>
       <file alias="tool_spraycan_9x9.png">pics/custom/tool_spraycan_9x9.png</file>
     </qresource>
+    <qresource prefix="/kxmlgui5/kolourpaint">
+        <file>kolourpaintui.rc</file>
+    </qresource>
 </RCC>
