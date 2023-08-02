@@ -44,7 +44,7 @@
 #include "tools/kpTool.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 #include "lgpl/generic/kpUrlFormatter.h"
-
+#include <kio_version.h>
 
 #include "kpLogCategories.h"
 #include <KJobWidgets>
@@ -152,7 +152,11 @@ bool kpDocument::urlExists (const QUrl &url) const
     if (url.isEmpty()) {
         return false;
     }
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 240, 0)
+    KIO::StatJob *job = KIO::stat(url, KIO::StatJob::SourceSide, KIO::StatNoDetails);
+#else
     KIO::StatJob *job = KIO::statDetails(url, KIO::StatJob::SourceSide, KIO::StatNoDetails);
+#endif    
     KJobWidgets::setWindow (job, d->environ->dialogParent ());
     return job->exec();
 }
