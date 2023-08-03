@@ -41,7 +41,7 @@
   <name xml:lang="sl">KolourPaint</name>
   <name xml:lang="sv">KolourPaint</name>
   <name xml:lang="tok">ilo KolourPaint</name>
-  <name xml:lang="tr">KolourPaint</name>
+  <name xml:lang="tr">RenkliBoya</name>
   <name xml:lang="uk">KolourPaint</name>
   <name xml:lang="x-test">xxKolourPaintxx</name>
   <name xml:lang="zh-CN">KolourPaint 画图工具</name>
@@ -128,7 +128,7 @@
     <p xml:lang="sl">KolourPaint je preprost program za risanje in hitro ustvarjanje rastrskih slik. Uporaben je za izboljšave slik in preprosto urejanje slik.</p>
     <p xml:lang="sv">KolourPaint är ett enkelt ritprogram för att snabbt skapa punktavbildningar. Det är användbart som förbättringsverktyg och för enkla bildredigeringsuppgifter.</p>
     <p xml:lang="tok">ilo KolourPaint li ilo sitelen li sitelen e sitelen pona. ona li pona kepeken li mute ala.</p>
-    <p xml:lang="tr">KolourPaint hızlıca taramalı resimler oluşturabileceğiniz basit bir boyama programıdır. Bir rötuş aracı ve basit resim düzenleme görevleri için yararlıdır.</p>
+    <p xml:lang="tr">RenkliBoya hızlıca raster görseller oluşturabileceğiniz basit bir boyama programıdır. Bir rötuş aracı ve basit görsel düzenleme görevleri için kullanışlıdır.</p>
     <p xml:lang="uk">KolourPaint — проста програма для малювання, за допомогою якої можна швидко створювати растрові зображення. Ця програма може бути корисною для виконання простих завдань з редагування зображень.</p>
     <p xml:lang="x-test">xxKolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks.xx</p>
     <p xml:lang="zh-CN">KolourPaint 是一款简易画图程序，能够快速绘制栅格图像。您也可以将它作为简易修图工具使用。</p>
@@ -213,7 +213,7 @@
       <li xml:lang="sl">Podpora risanju različnih oblik - črt, pravokotnikov, zaobljenih pravokotnikov, ovalov in mnogokotnikov</li>
       <li xml:lang="sv">Stöd för att rita diverse former: linjer, rektanglar, rundade rektanglar, ovaler och polygoner</li>
       <li xml:lang="tok">ona li ken sitelen e ni: linja, sike, leko en sijelo ante</li>
-      <li xml:lang="tr">Çeşitli şekiller, çizgiler, dörtgenler, yuvarlatılmış dörtgenler, ovaller ve poligonlar desteği</li>
+      <li xml:lang="tr">Çeşitli şekiller, çizgiler, dörtgenler, yuvarlatılmış dörtgenler, ovaller ve çokgenler desteği</li>
       <li xml:lang="uk">Підтримка малювання різноманітних форм: прямих, прямокутників, прямокутників із заокругленими кутами, овалів та багатокутників.</li>
       <li xml:lang="x-test">xxSupport for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygonsxx</li>
       <li xml:lang="zh-CN">能够绘制各种几何图形 - 直线、矩形、圆角矩形、椭圆和多边形等</li>
@@ -299,7 +299,7 @@
       <li xml:lang="sl">Izbirnik barv</li>
       <li xml:lang="sv">Färgväljare</li>
       <li xml:lang="tok">ilo pi pana kule</li>
-      <li xml:lang="tr">Renk seçici</li>
+      <li xml:lang="tr">Renk seçicisi</li>
       <li xml:lang="uk">Піпетка для отримання кольору із зображення.</li>
       <li xml:lang="x-test">xxColour pickerxx</li>
       <li xml:lang="zh-CN">拾色器</li>
@@ -428,7 +428,7 @@
       <caption xml:lang="sl">Slikanje v KolourPaint</caption>
       <caption xml:lang="sv">Rita med KolourPaint</caption>
       <caption xml:lang="tok">sitelen lon ilo KolourPaint</caption>
-      <caption xml:lang="tr">KolourPaint'te Boyama</caption>
+      <caption xml:lang="tr">RenkliBoya'da Boyama</caption>
       <caption xml:lang="uk">Малювання у KolourPaint</caption>
       <caption xml:lang="x-test">xxPainting in KolourPaintxx</caption>
       <caption xml:lang="zh-CN">使用 KolourPaint 绘画</caption>
