@@ -103,6 +103,11 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionExport = ac->addAction(QStringLiteral("file_export"));
     d->actionExport->setText (i18n ("E&xport..."));
     d->actionExport->setIcon(QIcon::fromTheme(QStringLiteral("document-export")));
+    d->actionExport->setToolTip(i18nc("@info:tooltip", "Export to another file"));
+    d->actionExport->setWhatsThis(xi18nc("@info:whatsthis",
+                                         "This saves the document with a different name, similar to <interface>Save As</interface>, "
+                                         "but the current document is not changed.<nl/>"
+                                         "This way you can keep the last-used save folder independent from the folder of the current document."));
     connect (d->actionExport, &QAction::triggered, this, &kpMainWindow::slotExport);
 
     d->actionScan = ac->addAction(QStringLiteral("file_scan"));
