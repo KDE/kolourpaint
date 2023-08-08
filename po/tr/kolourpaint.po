@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-17 00:46+0000\n"
+"POT-Creation-Date: 2023-08-08 00:43+0000\n"
 "PO-Revision-Date: 2023-08-02 01:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1415,8 +1415,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid "&Reload"
 msgstr "Y&eniden Yükle"
@@ -1531,88 +1531,104 @@ msgstr "Dosyadan Yapıştır"
 msgid "E&xport..."
 msgstr "Ç&evir..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:106
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Export to another file"
+msgstr ""
+
+#: mainWindow/kpMainWindow_File.cpp:108
+#, kde-kuit-format
+msgctxt "@info:whatsthis"
+msgid ""
+"This saves the document with a different name, similar to <interface>Save "
+"As</interface>, but the current document is not changed.<nl/>This way you "
+"can keep the last-used save folder independent from the folder of the "
+"current document."
+msgstr ""
+
+#: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
 msgid "Scan..."
 msgstr "Tara..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Ekran Görüntüsü Kaydet"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Properties"
 msgstr "Özellikler"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:133
 #, kde-format
 msgid "Reloa&d"
 msgstr "Y&eniden Yükle"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Tüm Desteklenen Dosyalar (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Görsel Aç"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Tarama penceresi açma başarısız oldu."
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Tarama Başarısız Oldu"
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Ekran Görüntüsü Gecikmesi"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:672
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " saniye"
 msgstr[1] " saniye"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
 msgid "No delay"
 msgstr "Gecikme yok"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:675
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Ana Pencereyi Gizle"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:729
 #, kde-format
 msgid "Document Properties"
 msgstr "Belge Özellikleri"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:964
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Görseli Farklı Kaydet"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1012
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Dışa Aktar"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1076
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1624,7 +1640,7 @@ msgstr ""
 "kaybettirecek.\n"
 "Sürdürmek istiyor musunuz?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1635,13 +1651,13 @@ msgstr ""
 "Yeniden yüklemek tüm değişiklikleri kaybettirecek.\n"
 "Sürdürmek istiyor musunuz?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1334
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Görseli Yazdır"
 
-#: mainWindow/kpMainWindow_File.cpp:1413
+#: mainWindow/kpMainWindow_File.cpp:1418
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1650,7 +1666,7 @@ msgstr ""
 "Görseli göndermeden önce kaydetmelisiniz.\n"
 "Kaydetmek istiyor musunuz?"
 
-#: mainWindow/kpMainWindow_File.cpp:1459
+#: mainWindow/kpMainWindow_File.cpp:1464
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-17 00:46+0000\n"
+"POT-Creation-Date: 2023-08-08 00:43+0000\n"
 "PO-Revision-Date: 2023-04-22 00:38+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1382,8 +1382,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid "&Reload"
 msgstr "다시 읽기(&R)"
@@ -1498,87 +1498,103 @@ msgstr "파일에서 붙여넣기"
 msgid "E&xport..."
 msgstr "내보내기(&X)..."
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:106
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Export to another file"
+msgstr ""
+
+#: mainWindow/kpMainWindow_File.cpp:108
+#, kde-kuit-format
+msgctxt "@info:whatsthis"
+msgid ""
+"This saves the document with a different name, similar to <interface>Save "
+"As</interface>, but the current document is not changed.<nl/>This way you "
+"can keep the last-used save folder independent from the folder of the "
+"current document."
+msgstr ""
+
+#: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
 msgid "Scan..."
 msgstr "스캔..."
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "스크린샷 찍기"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Properties"
 msgstr "속성"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:133
 #, kde-format
 msgid "Reloa&d"
 msgstr "다시 읽기(&D)"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "모든 지원하는 파일 (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "그림 열기"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "스캔 대화 상자를 열 수 없습니다."
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "스캔 실패"
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "스크린샷 지연 시간"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:672
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] "초"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
 msgid "No delay"
 msgstr "지연 없음"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:675
 #, kde-format
 msgid "Hide Main Window"
 msgstr "주 창 숨기기"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:729
 #, kde-format
 msgid "Document Properties"
 msgstr "문서 속성"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:964
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "다른 이름으로 그림 저장"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1012
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "내보내기"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1076
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1589,7 +1605,7 @@ msgstr ""
 "문서를 다시 읽어오면 마지막으로 저장한 후의 변경 사항을 잃어버립니다.\n"
 "계속 진행하시겠습니까?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1600,13 +1616,13 @@ msgstr ""
 "문서를 다시 읽어오면 모든 변경 사항을 잃어버립니다.\n"
 "계속 진행하시겠습니까?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1334
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "그림 인쇄"
 
-#: mainWindow/kpMainWindow_File.cpp:1413
+#: mainWindow/kpMainWindow_File.cpp:1418
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1615,7 +1631,7 @@ msgstr ""
 "그림을 보내기 전에 저장해야 합니다.\n"
 "저장하시겠습니까?"
 
-#: mainWindow/kpMainWindow_File.cpp:1459
+#: mainWindow/kpMainWindow_File.cpp:1464
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

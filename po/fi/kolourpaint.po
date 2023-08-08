@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-17 00:46+0000\n"
+"POT-Creation-Date: 2023-08-08 00:43+0000\n"
 "PO-Revision-Date: 2023-05-18 12:35+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -1410,8 +1410,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid "&Reload"
 msgstr "Lataa &uudelleen"
@@ -1526,88 +1526,104 @@ msgstr "Liitä tiedostosta"
 msgid "E&xport..."
 msgstr "&Vie…"
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:106
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Export to another file"
+msgstr ""
+
+#: mainWindow/kpMainWindow_File.cpp:108
+#, kde-kuit-format
+msgctxt "@info:whatsthis"
+msgid ""
+"This saves the document with a different name, similar to <interface>Save "
+"As</interface>, but the current document is not changed.<nl/>This way you "
+"can keep the last-used save folder independent from the folder of the "
+"current document."
+msgstr ""
+
+#: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
 msgid "Scan..."
 msgstr "Lue…"
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Ota kuvankaappaus"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Properties"
 msgstr "Ominaisuudet"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:133
 #, kde-format
 msgid "Reloa&d"
 msgstr "Lataa &uudelleen"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Kaikki tuetut tiedostot (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Avaa kuva"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Kuvanlukuikkunan avaaminen epäonnistui."
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Luku epäonnistui"
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Kuvankaappauksen viive"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:672
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " sekunti"
 msgstr[1] " sekuntia"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
 msgid "No delay"
 msgstr "Ei viivettä"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:675
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Piilota pääikkuna"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:729
 #, kde-format
 msgid "Document Properties"
 msgstr "Tiedoston ominaisuudet"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:964
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Tallenna kuva nimellä"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1012
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Vie"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1076
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1618,7 +1634,7 @@ msgstr ""
 "Sen lataaminen uudestaan kadottaa kaikki tallennuksen jälkeiset muutokset.\n"
 "Oletko varma?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1629,13 +1645,13 @@ msgstr ""
 "Sen lataaminen uudestaan kadottaa kaikki muutokset.\n"
 "Oletko varma?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1334
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Tulosta kuva"
 
-#: mainWindow/kpMainWindow_File.cpp:1413
+#: mainWindow/kpMainWindow_File.cpp:1418
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1644,7 +1660,7 @@ msgstr ""
 "Kuva on tallennettava ennen sen lähettämistä.\n"
 "Haluatko tallentaa sen?"
 
-#: mainWindow/kpMainWindow_File.cpp:1459
+#: mainWindow/kpMainWindow_File.cpp:1464
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
