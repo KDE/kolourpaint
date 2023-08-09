@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-04-17 11:04+0200\n"
+"PO-Revision-Date: 2023-08-08 17:44+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1541,7 +1541,7 @@ msgstr "E&xporteren..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Naar een ander bestand exporteren"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1552,6 +1552,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Dit slaat het document met een andere naam op, gelijk aan <interface>Opslaan "
+"als</interface>, maar het huidige document wordt niet gewijzigd.<nl/>Op deze "
+"manier kunt u de laatst gebruikte opslagmap onafhankelijk houden van de map "
+"van het huidige document."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format

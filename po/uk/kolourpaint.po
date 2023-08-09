@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-04-17 09:22+0300\n"
+"PO-Revision-Date: 2023-08-08 09:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1531,7 +1531,7 @@ msgstr "Е&кспортувати..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Експортувати до іншого файла"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1542,6 +1542,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Зберігає документ до файла із іншою назвою, подібно до <interface>Зберегти "
+"як</interface>, але до поточного документа змін внесено не буде.<nl/>У такий "
+"спосіб ви можете зберігати останню використану теку для зберігання даних "
+"незалежно від теки поточного документа."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format

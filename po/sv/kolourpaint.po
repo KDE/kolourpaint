@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-07-31 10:02+0200\n"
+"PO-Revision-Date: 2023-08-08 08:15+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -1519,7 +1519,7 @@ msgstr "E&xportera..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Exportera till en annan fil"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1530,6 +1530,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Sparar dokumentet med ett annat namn, på liknande sätt som <interface>Spara "
+"som</interface>, men det aktuella dokumentet ändras inte.<nl/>På så sätt kan "
+"du hålla katalogen med de senast använda sparade filerna oberoende av det "
+"aktuella dokumentets katalog."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
