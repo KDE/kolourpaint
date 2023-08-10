@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-04-20 02:07+0200\n"
+"PO-Revision-Date: 2023-08-09 12:48+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -1539,7 +1539,7 @@ msgstr "Es&porta..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Esporta su un altro file"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1550,6 +1550,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Questo salva il documento con un nome diverso, simile a <interface>Salva "
+"come</interface>, ma il documento attuale non viene cambiato.<nl/>In questo "
+"modo è possibile tenere l'ultima cartella di salvataggio separata dalla "
+"cartella del documento attuale."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
