@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-08-02 01:02+0300\n"
+"PO-Revision-Date: 2023-08-10 22:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1535,7 +1535,7 @@ msgstr "Ç&evir..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Başka bir dosyaya dışa aktar"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1546,6 +1546,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Bu, dosyayı<interface>Farklı Kaydet</interface>'e benzer bir biçimde başka "
+"bir adla kaydeder; ancak belgenin kendisi değiştirilmez.<nl/>Böylece, son "
+"kullanılan kaydetme klasörünü geçerli belgenin klasöründen farklı olarak "
+"tutabilirsiniz."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format

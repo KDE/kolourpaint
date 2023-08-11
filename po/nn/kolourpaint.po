@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2023-07-30 22:04+0200\n"
+"POT-Creation-Date: 2023-08-08 00:43+0000\n"
+"PO-Revision-Date: 2023-08-10 18:41+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1402,8 +1402,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1076
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid "&Reload"
 msgstr "&Oppdater"
@@ -1518,88 +1518,108 @@ msgstr "Lim inn frå fil"
 msgid "E&xport..."
 msgstr "E&ksporter …"
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:106
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Export to another file"
+msgstr "Eksporter til ei anna fil"
+
+#: mainWindow/kpMainWindow_File.cpp:108
+#, kde-kuit-format
+msgctxt "@info:whatsthis"
+msgid ""
+"This saves the document with a different name, similar to <interface>Save "
+"As</interface>, but the current document is not changed.<nl/>This way you "
+"can keep the last-used save folder independent from the folder of the "
+"current document."
+msgstr ""
+"Lagrar dokumentet under eit anna namn. Liknar på <interface>Lagra som</"
+"interface>, men kva som er gjeldande dokument, vert ikkje endra.<nl/>Du kan "
+"såleis ha den sist brukte lagrings­mappa heilt uavhengig av mappa til "
+"gjeldande dokument."
+
+#: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
 msgid "Scan..."
 msgstr "Skann …"
 
-#: mainWindow/kpMainWindow_File.cpp:118
+#: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Hent skjermbilete"
 
-#: mainWindow/kpMainWindow_File.cpp:122
+#: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Properties"
 msgstr "Eigenskapar"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:133
 #, kde-format
 msgid "Reloa&d"
 msgstr "Las&t om att"
 
-#: mainWindow/kpMainWindow_File.cpp:458
+#: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Alle støtta filer (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:483
+#: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Opna bilete"
 
-#: mainWindow/kpMainWindow_File.cpp:546
+#: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Klarte ikkje opna skannevindauge."
 
-#: mainWindow/kpMainWindow_File.cpp:547
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Feil ved skanning"
 
-#: mainWindow/kpMainWindow_File.cpp:664
+#: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Forseinking på skjermbilete"
 
-#: mainWindow/kpMainWindow_File.cpp:667
+#: mainWindow/kpMainWindow_File.cpp:672
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] " sekund"
 msgstr[1] " sekund"
 
-#: mainWindow/kpMainWindow_File.cpp:668
+#: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
 msgid "No delay"
 msgstr "Inga forseinking"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:675
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Gøym hovudvindauget"
 
-#: mainWindow/kpMainWindow_File.cpp:724
+#: mainWindow/kpMainWindow_File.cpp:729
 #, kde-format
 msgid "Document Properties"
 msgstr "Dokumenteigenskapar"
 
-#: mainWindow/kpMainWindow_File.cpp:959
+#: mainWindow/kpMainWindow_File.cpp:964
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Lagra bilete som"
 
-#: mainWindow/kpMainWindow_File.cpp:1007
+#: mainWindow/kpMainWindow_File.cpp:1012
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Eksporter"
 
-#: mainWindow/kpMainWindow_File.cpp:1071
+#: mainWindow/kpMainWindow_File.cpp:1076
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1610,7 +1630,7 @@ msgstr ""
 "Ved å oppdatera vil du mista alle endringar sidan du sist lagra det.\n"
 "Er du sikker på at du vil det?"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1621,13 +1641,13 @@ msgstr ""
 "Ved å oppdatera vil du mista alle endringar.\n"
 "Er du sikker på at du vil det?"
 
-#: mainWindow/kpMainWindow_File.cpp:1329
+#: mainWindow/kpMainWindow_File.cpp:1334
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Skriv ut bilete"
 
-#: mainWindow/kpMainWindow_File.cpp:1413
+#: mainWindow/kpMainWindow_File.cpp:1418
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1636,7 +1656,7 @@ msgstr ""
 "Du må lagra dette biletet før du sender det.\n"
 "Vil du lagra det?"
 
-#: mainWindow/kpMainWindow_File.cpp:1459
+#: mainWindow/kpMainWindow_File.cpp:1464
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
