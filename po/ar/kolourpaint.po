@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-04-27 11:53+0400\n"
+"PO-Revision-Date: 2023-08-19 21:50+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #, kde-format
@@ -1516,7 +1516,7 @@ msgstr "ص&در..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "صدر إلى ملف أخر"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1527,6 +1527,9 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"يؤدي هذا إلى حفظ المستند باسم مختلف، مشابه لـ <interface> احفظ باسم </"
+"interface> ، ولكن المستند الحالي لم يتغير. <nl/> بهذه الطريقة يمكنك الاحتفاظ "
+"بآخر مجلد حفظ مستخدم مستقلًا عن مجلد الوثيقة الحالية."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
