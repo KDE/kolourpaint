@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2023-08-02 01:02+0300\n"
+"PO-Revision-Date: 2023-08-22 00:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -257,13 +257,13 @@ msgstr "Akıcı Doldur"
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects (Selection)"
-msgstr "Daha Fazla Görsel Efekti (Seçim)"
+msgstr "Ek Efektler (Seçim)"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects"
-msgstr "Daha Fazla Görsel Efekti"
+msgstr "Ek Efektler"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
 #, kde-format
@@ -1677,7 +1677,7 @@ msgstr "Ters Çevir (Başaşağı)"
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "Mirror (horizontally)"
-msgstr "Yansıla (yatay)"
+msgstr "Yansıt (Yatay)"
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
@@ -1902,7 +1902,7 @@ msgstr "Nokta çizmek için tıklayın veya serbest çizgi çizmek için sürük
 #: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
 #, kde-format
 msgid "Color Eraser"
-msgstr "Renk Silici"
+msgstr "Renk Silgisi"
 
 #: tools/flow/kpToolColorEraser.cpp:50
 #, kde-format
@@ -1912,7 +1912,7 @@ msgstr "Ön plan renklerini arka plan renkleri ile değiştirir"
 #: tools/flow/kpToolColorEraser.cpp:115
 #, kde-format
 msgid "Click or drag to erase pixels of the foreground color."
-msgstr "Ön plan renklerini silmek için tıkla veya sürükle."
+msgstr "Ön plan renklerini silmek için tıklayın veya sürükleyin."
 
 #: tools/flow/kpToolEraser.cpp:42
 #, kde-format
@@ -1927,7 +1927,7 @@ msgstr "Hataları silmenizi sağlar"
 #: tools/flow/kpToolEraser.cpp:70
 #, kde-format
 msgid "Click or drag to erase."
-msgstr "Silmek için tıkla veya sürükle."
+msgstr "Silmek için tıklayın veya sürükleyin."
 
 #: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
 #: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
@@ -2029,7 +2029,7 @@ msgstr "Eğriler çizer"
 #: tools/polygonal/kpToolCurve.cpp:118
 #, kde-format
 msgid "Drag out the start and end points."
-msgstr "Başlangıç ve bitiş noktaları arasında sürükle."
+msgstr "Başlangıç ve bitiş noktaları arasında sürükleyin."
 
 #: tools/polygonal/kpToolCurve.cpp:157
 #, kde-format
@@ -2069,7 +2069,7 @@ msgstr "Çizgi çizer"
 #: tools/rectangular/kpToolRectangularBase.cpp:119
 #, kde-format
 msgid "Drag to draw."
-msgstr "Çizmek için sürükle."
+msgstr "Çizmek için sürükleyin."
 
 #: tools/polygonal/kpToolPolygon.cpp:93
 #, kde-format
@@ -2139,17 +2139,17 @@ msgstr "Yuvarlatılmış köşeli dikdörtgenler ve kareler çizer"
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
 #, kde-format
 msgid "Left drag to create selection."
-msgstr "Seçimi oluşturmak için sol düğmeyle sürükle."
+msgstr "Seçimi oluşturmak için sol düğmeyle sürükleyin."
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
 #, kde-format
 msgid "Left drag to move selection."
-msgstr "Seçimi taşımak için sol düğmeyle sürükle."
+msgstr "Seçimi taşımak için sol düğmeyle sürükleyin."
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
 #, kde-format
 msgid "Left drag to scale selection."
-msgstr "Seçimi ölçekleme için sol sürükle."
+msgstr "Seçimi ölçekleme için sol sürükleyin."
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
 #, kde-format
@@ -2239,12 +2239,12 @@ msgstr "Metin: Yaz"
 #: tools/selection/text/kpToolText_Create.cpp:48
 #, kde-format
 msgid "Left drag to create text box."
-msgstr "Metin kutusu oluşturmak için sol düğmeyle sürükle."
+msgstr "Metin kutusu oluşturmak için sol düğmeyle sürükleyin."
 
 #: tools/selection/text/kpToolText_Move.cpp:42
 #, kde-format
 msgid "Left drag to move text box."
-msgstr "Metin kutusun taşımak için sol düğmeyle sürükle."
+msgstr "Metin kutusun taşımak için sol düğmeyle sürükleyin."
 
 #: tools/selection/text/kpToolText_Move.cpp:61
 #, kde-format
@@ -2254,12 +2254,12 @@ msgstr "Metin: Kutuyu Taşı"
 #: tools/selection/text/kpToolText_ResizeScale.cpp:42
 #, kde-format
 msgid "Left drag to resize text box."
-msgstr "Metin kutusunu yeniden boyutlandırmak için sol düğmeyle sürükle."
+msgstr "Metin kutusunu yeniden boyutlandırmak için sol düğmeyle sürükleyin."
 
 #: tools/selection/text/kpToolText_SelectText.cpp:57
 #, kde-format
 msgid "Left click to change cursor position."
-msgstr "İmleç yerini değiştirmek için sol tıkla."
+msgstr "İmleç yerini değiştirmek için sol tıklayın."
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:113
 #, kde-format
@@ -2361,7 +2361,7 @@ msgstr ""
 "rengine <i>benzer</i> herhangi renk saydam yapılacaktır.</li><li><b>Akıcı "
 "Doldur</b>: Benzer - ancak özdeş olmayan - renkli piksellere sahip bölgeler "
 "için, yüksek bir değerin daha çok pikseli doldurması olasıdır.</"
-"li><li><b>Renk Silici</b>: Rengi ön plan rengine <i>benzer</i> olan "
+"li><li><b>Renk Silgisi</b>: Rengi ön plan rengine <i>benzer</i> olan "
 "pikseller arka plan rengiyle yer değiştirilecektir.</li><li><b>Otomatik "
 "Kırp</b> ve <b>İç Sınırı Kaldır</b>: <i>Benzer</i> - ancak özdeş olmayan - "
 "renkli piksellere sahip sınırlar için, yüksek değerin tüm sınırı kırpması "
@@ -2410,7 +2410,7 @@ msgstr ""
 "rengine <i>benzer</i> herhangi renk saydam yapılacaktır.</li><li><b>Akıcı "
 "Doldur</b>: Benzer - ancak özdeş olmayan - renkli piksellere sahip bölgeler "
 "için, yüksek bir değerin daha çok pikseli doldurması olasıdır.</"
-"li><li><b>Renk Silici</b>: Rengi ön plan rengine <i>benzer</i> olan "
+"li><li><b>Renk Silgisi</b>: Rengi ön plan rengine <i>benzer</i> olan "
 "pikseller arka plan rengiyle yer değiştirilecektir.</li><li><b>Otomatik "
 "Kırp</b> ve <b>İç Sınırı Kaldır</b>: <i>Benzer</i> - ancak özdeş olmayan - "
 "renkli piksellere sahip sınırlar için, yüksek değerin tüm sınırı kırpması "
