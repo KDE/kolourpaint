@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2023-04-28 19:05+0200\n"
+"PO-Revision-Date: 2023-08-26 04:57+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -47,12 +47,12 @@ msgstr "Suavizar"
 #: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:53
 #, kde-format
 msgid "Sharpen"
-msgstr "Focalizar"
+msgstr "Enfocar"
 
 #: commands/imagelib/effects/kpEffectClearCommand.cpp:58
 #, kde-format
 msgid "Clear"
-msgstr "Limpar"
+msgstr "Baleirar"
 
 #: commands/imagelib/effects/kpEffectClearCommand.cpp:60
 #: commands/imagelib/effects/kpEffectCommandBase.cpp:68
@@ -183,7 +183,7 @@ msgstr "Rotar"
 #: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
 #, kde-format
 msgid "Skew"
-msgstr "Distorsionar"
+msgstr "Distorcer"
 
 #: commands/kpCommandHistoryBase.cpp:437
 #, kde-format
@@ -273,7 +273,7 @@ msgstr "Reducir as cores"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
 #, kde-format
 msgid "Soften & Sharpen"
-msgstr "Suavizar e afiar"
+msgstr "Suavizar e enfocar"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:121
 #, kde-format
@@ -290,7 +290,7 @@ msgstr "&Puntos por polgada (PPP)"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:159
 #, kde-format
 msgid "Unspecified"
-msgstr "Sen especificar"
+msgstr "Non indicado"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:151
 #, kde-format
@@ -329,12 +329,12 @@ msgstr ""
 "que se imprimirán nunha polgada (2.54 cm).</p><p>Canto maior sexan os PPP da "
 "imaxe, menor será a imaxe impresa. Lembre que é pouco probábel que a "
 "impresora produza impresos de alta calidade se aumenta isto ata máis de 300 "
-"ou 600 PPP, en función da impresora.</p> <p>Se desexa imprimir a imaxe de "
-"tal xeito que teña tamaño co que se ve na pantalla, poña a imaxe cos mesmos "
-"PPP que ten a pantalla.</p> <p>Se o valor dos PPP está <b>Non especificado</"
-"b>, a imaxe tamén se imprimirá co mesmo tamaño que na pantalla.</p> <p>Non "
-"todos os formatos de imaxe son compatíbeis cos valores de PPP. Se o formato "
-"no que garda non os admite, non se gardarán.</p></qt>"
+"ou 600 PPP, en función da impresora.</p> <p>Se quere imprimir a imaxe de tal "
+"xeito que teña tamaño co que se ve na pantalla, poña a imaxe cos mesmos PPP "
+"que ten a pantalla.</p> <p>Se o valor dos PPP está <b>Non indicado</b>, a "
+"imaxe tamén se imprimirá co mesmo tamaño que na pantalla.</p> <p>Non todos "
+"os formatos de imaxe son compatíbeis cos valores de PPP. Se o formato no que "
+"garda non os admite, non se gardarán.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
 #, kde-format
@@ -820,13 +820,13 @@ msgstr "Rotar a imax&e"
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection"
-msgstr "Distorsionar a selección"
+msgstr "Distorcer a selección"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image"
-msgstr "Distorsionar a imaxe"
+msgstr "Distorcer a imaxe"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
 #, kde-format
@@ -859,12 +859,12 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection?"
-msgstr "Distorsionar a selección?"
+msgstr "Distorcer a selección?"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
 #, kde-format
 msgid "Sk&ew Selection"
-msgstr "Distorsionar a s&elección"
+msgstr "Distorcer a s&elección"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
 #, kde-format
@@ -873,20 +873,20 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
-"<qt><p>Distorsionar a imaxe a %1x%2 pode requirir unha grande cantidade de "
+"<qt><p>Distorcer a imaxe a %1x%2 pode requirir unha grande cantidade de "
 "memoria. Isto pode facer máis lento o sistema e dar problemas de recursos a "
-"outras aplicacións.</p><p>Seguro que quere distorsionar a imaxe?</p></qt>"
+"outras aplicacións.</p><p>Seguro que quere distorcer a imaxe?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image?"
-msgstr "Distorsionar a imaxe?"
+msgstr "Distorcer a imaxe?"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
 #, kde-format
 msgid "Sk&ew Image"
-msgstr "Distorsionar a imax&e"
+msgstr "Distorcer a imax&e"
 
 #: dialogs/kpColorSimilarityDialog.cpp:46
 #, kde-format
@@ -935,7 +935,7 @@ msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
 "The file may be corrupt."
 msgstr ""
-"Non se puido abrir «%1» - non se admite este formato de imaxe.\n"
+"Non se puido abrir «%1», non se admite este formato de imaxe.\n"
 "O ficheiro podería estar corrompido."
 
 #: document/kpDocument_Save.cpp:74
@@ -970,9 +970,8 @@ msgid ""
 "color information.</p><p>Are you sure you want to save in this format?</p></"
 "qt>"
 msgstr ""
-"<qt><p>O formato <b>%1</b> podería non ser capaz de preservar toda a "
-"información de cor da imaxe.</p><p>Seguro que quere gardala neste formato?</"
-"p></qt>"
+"<qt><p>O formato <b>%1</b> quizais non poida preservar toda a información de "
+"cor da imaxe.</p><p>Seguro que quere gardala neste formato?</p></qt>"
 
 #: document/kpDocument_Save.cpp:123
 #, kde-format
@@ -1120,7 +1119,7 @@ msgstr "Martin Koller"
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr ""
-"Funcionalidade de dixitalización, funcionalidade de alfa, mantedor actual"
+"Funcionalidade de dixitalización, funcionalidade de alfa, mantemento actual."
 
 #: kolourpaint.cpp:78
 #, kde-format
@@ -1664,7 +1663,7 @@ msgstr "Cambiar o tamaño / &Cambiar de escala …"
 #: mainWindow/kpMainWindow_Image.cpp:123
 #, kde-format
 msgid "Se&t as Image (Crop)"
-msgstr "Es&tabelecer como imaxe (Recortar)"
+msgstr "De&finir como imaxe (recortar)"
 
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
@@ -1694,7 +1693,7 @@ msgstr "Rotar á &dereita"
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "S&kew..."
-msgstr "&Distorsionar…"
+msgstr "&Distorcer…"
 
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
@@ -1714,7 +1713,7 @@ msgstr "&Inverter as cores"
 #: mainWindow/kpMainWindow_Image.cpp:180
 #, kde-format
 msgid "C&lear"
-msgstr "&Limpar"
+msgstr "&Baleirar"
 
 #: mainWindow/kpMainWindow_Image.cpp:185
 #, kde-format
@@ -1760,7 +1759,7 @@ msgstr "%1,%2"
 #: mainWindow/kpMainWindow_StatusBar.cpp:162
 #, kde-format
 msgid "%1,%2 - %3,%4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1,%2 — %3,%4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:205
 #: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
@@ -2321,12 +2320,12 @@ msgstr "Texto: Riscado"
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
-msgstr "Modo sen ampliación - Miniatura"
+msgstr "Modo sen ampliación — Miniatura"
 
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr "%1% - Miniatura"
+msgstr "%1% — Miniatura"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
 #, kde-format
