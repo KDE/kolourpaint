@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-08-02 12:40\n"
+"PO-Revision-Date: 2023-08-27 03:40\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1491,7 +1491,7 @@ msgstr "导出(&X)..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "导出为新文件"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1502,6 +1502,9 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"这将把文件以另一个文件名保存，类似于<interface>另存为</interface>，不同之处在"
+"于导出后当前图像不会切换成导出后的图像。<nl/>导出的位置和当前图像的位置是分别"
+"记忆的，方便区分管理。"
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
