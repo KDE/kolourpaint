@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-17 00:46+0000\n"
-"PO-Revision-Date: 2023-08-26 04:57+0200\n"
+"PO-Revision-Date: 2023-09-03 13:04+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -2240,12 +2240,12 @@ msgstr "Texto: Escribir"
 #: tools/selection/text/kpToolText_Create.cpp:48
 #, kde-format
 msgid "Left drag to create text box."
-msgstr "Arrastre esquerdo para crear o texto."
+msgstr "Arrastre esquerdo para crear a caixa de texto."
 
 #: tools/selection/text/kpToolText_Move.cpp:42
 #, kde-format
 msgid "Left drag to move text box."
-msgstr "Arrastre esquerdo para mover o texto."
+msgstr "Arrastre esquerdo para mover a caixa de texto."
 
 #: tools/selection/text/kpToolText_Move.cpp:61
 #, kde-format
@@ -2255,7 +2255,7 @@ msgstr "Texto: Mover a caixa"
 #: tools/selection/text/kpToolText_ResizeScale.cpp:42
 #, kde-format
 msgid "Left drag to resize text box."
-msgstr "Arrastre esquerdo para cambiar o tamaño do texto."
+msgstr "Arrastre esquerdo para cambiar o tamaño da caixa de texto."
 
 #: tools/selection/text/kpToolText_SelectText.cpp:57
 #, kde-format
