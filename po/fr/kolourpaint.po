@@ -1,6 +1,7 @@
 # translation of kolourpaint.po to Français
 # traduction de kolourpaint.po en Français
 # traduction de kolourpaint.po en Français
+# SPDX-FileCopyrightText: 2020, 2021, 2023 Xavier Besnard <xavier.besnard@neuf.fr>
 # Cedric Pasteur <cedric.pasteur@free.fr>, 2004.
 # Matthieu Robin <kde@macolu.org>, 2004, 2005.
 # Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2004, 2005, 2008, 2009, 2010.
@@ -13,22 +14,21 @@
 # Sebastien Renard <renard@kde.org>, 2015.
 # Yoann Laissus <yoann.laissus@gmail.com>, 2018.
 # Simon Depiets <sdepiets@gmail.com>, 2019.
-# Xavier Besnard <xavier.besnard@neuf.fr>, 2020, 2021.
 # Xavier BESNARD <xavier.besnard@neuf.fr>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2023-04-18 07:06+0200\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
+"PO-Revision-Date: 2023-09-09 16:11+0200\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.0\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1562,7 +1562,7 @@ msgstr "E&xporter..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Exporter vers un autre fichier"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1573,6 +1573,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Ceci enregistre le document sous un nom différent, similaire à "
+"<interface>Enregistrer sous</interface>, mais le document actif n’est pas "
+"modifié. <nl/>De cette façon, vous pouvez conserver le dernier dossier "
+"d'enregistrement utilisé, indépendamment du dossier du document actif."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
