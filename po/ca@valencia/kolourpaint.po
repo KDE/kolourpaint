@@ -2397,7 +2397,7 @@ msgstr ""
 "i> i que siguen el mateix. Per tant, hauríeu d'augmentar el valor si les "
 "operacions mencionades no afecten els píxels amb colors que considereu que "
 "són prou similars.</p><p>Amb tot, si hi ha massa efecte i es canvien píxels "
-"amb colors que no considereu que siguen similars (p. ex. si <b>omplir</b> "
+"amb colors que no considereu que siguen similars (p. ex., si <b>omplir</b> "
 "canvia massa píxels), hauríeu de disminuir este valor.</p><p>Per a "
 "configurar-lo, cliqueu en el cub.</p></qt>"
 
@@ -2445,7 +2445,7 @@ msgstr ""
 "i> i que siguen el mateix. Per tant, hauríeu d'augmentar el valor si les "
 "operacions mencionades no afecten els píxels amb colors que considereu que "
 "són prou similars.</p><p>Amb tot, si hi ha massa efecte i es canvien píxels "
-"amb colors que no considereu que siguen similars (p. ex. si <b>omplir</b> "
+"amb colors que no considereu que siguen similars (p. ex., si <b>omplir</b> "
 "canvia massa píxels), hauríeu de disminuir este valor.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
