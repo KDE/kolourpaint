@@ -79,7 +79,7 @@ void kpPixmapFX::resize (QImage *destPtr, int w, int h,
     painter.end();
 
     // Replace pixmap with new one.
-    *destPtr = newImage;
+    *destPtr = std::move(newImage);
 }
 
 //---------------------------------------------------------------------

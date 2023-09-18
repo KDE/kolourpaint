@@ -174,8 +174,8 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
                         (previewPixmap.height () - s) / 2),
                 &pack);
 
-
-            addOption (QPixmap::fromImage(previewPixmap), brushName (shape, i)/*tooltip*/);
+            addOption(QPixmap::fromImage(std::move(previewPixmap)),
+                      brushName(shape, i) /*tooltip*/);
         }
 
         startNewOptionRow ();

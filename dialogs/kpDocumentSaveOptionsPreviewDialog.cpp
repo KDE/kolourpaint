@@ -180,8 +180,8 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
             (labelPixmap.height () - transformedPixmap.height ()) / 2,
             transformedPixmap);
 
-
-        m_filePixmapLabel->setPixmap (QPixmap::fromImage(labelPixmap));
+        m_filePixmapLabel->setPixmap(
+            QPixmap::fromImage(std::move(labelPixmap)));
     }
     else
     {

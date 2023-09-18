@@ -547,7 +547,7 @@ void kpAbstractImageSelection::flip (bool horiz, bool vert)
         qCDebug(kpLogLayers) << "\thave transparency mask - flipping that";
     #endif
         QImage image = d->transparencyMaskCache.toImage().mirrored(horiz, vert);
-        d->transparencyMaskCache = QBitmap::fromImage(image);
+        d->transparencyMaskCache = QBitmap::fromImage(std::move(image));
     }
 
     emit changed (boundingRect ());

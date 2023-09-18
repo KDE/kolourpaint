@@ -65,7 +65,7 @@ static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userDat
     auto *pack = static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
 
     const int size = ::EraserSizes [pack->selected];
-    
+
     // Would 1-pixel border on all sides completely cover the color of the
     // eraser?
     if (size <= 2) {
@@ -107,8 +107,8 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
                     (previewPixmap.height () - s) / 2),
             &pack);
 
-
-        addOption (QPixmap::fromImage(previewPixmap), i18n ("%1x%2", s, s)/*tooltip*/);
+        addOption(QPixmap::fromImage(std::move(previewPixmap)),
+                  i18n("%1x%2", s, s) /*tooltip*/);
     }
 
     finishConstruction (1, 0);
@@ -148,7 +148,7 @@ kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionDataForS
         const kpColor &color, int selectedIndex)
 {
     DrawPackage pack;
-    
+
     pack.selected = selectedIndex;
     pack.color = color;
 
@@ -166,7 +166,6 @@ kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionData (
 
 //---------------------------------------------------------------------
 
-    
 // protected slot virtual [base kpToolWidgetBase]
 bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
 {
