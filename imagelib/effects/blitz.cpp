@@ -1,6 +1,6 @@
 // functions taken from qimageblitz (no longer maintained)
 
-/* 
+/*
  Copyright (C) 1998, 1999, 2001, 2002, 2004, 2005, 2007
       Daniel M. Duley <daniel.duley@verizon.net>
  (C) 2004 Zack Rusin <zack@kde.org>
@@ -137,9 +137,8 @@ bool equalize(QImage &img)
     unsigned char r, g, b;
 
     if(img.depth() < 32){
-        img = img.convertToFormat(img.hasAlphaChannel() ?
-                                  QImage::Format_ARGB32 :
-                                  QImage::Format_RGB32);
+        img.convertTo(img.hasAlphaChannel() ? QImage::Format_ARGB32
+                                            : QImage::Format_RGB32);
     }
     count = img.width()*img.height();
 
@@ -245,7 +244,7 @@ QImage Blitz::blur(QImage &img, int radius)
     }
 
     if (img.depth() < 8) {
-        img = img.convertToFormat(QImage::Format_Indexed8);
+        img.convertTo(QImage::Format_Indexed8);
     }
 
     QVector<QRgb> colorTable;
@@ -437,12 +436,10 @@ QImage convolve(QImage &img, int matrix_size, float *matrix)
     }
 
     if(img.format() == QImage::Format_ARGB32_Premultiplied) {
-        img = img.convertToFormat(QImage::Format_ARGB32);
-    }
-    else if(img.depth() < 32){ 
-        img = img.convertToFormat(img.hasAlphaChannel() ?
-                                  QImage::Format_ARGB32 :
-                                  QImage::Format_RGB32);
+        img.convertTo(QImage::Format_ARGB32);
+    } else if (img.depth() < 32) {
+        img.convertTo(img.hasAlphaChannel() ? QImage::Format_ARGB32
+                                            : QImage::Format_RGB32);
     }
     QImage buffer(w, h, img.format());
 

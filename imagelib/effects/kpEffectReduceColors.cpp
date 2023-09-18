@@ -225,7 +225,7 @@ void kpEffectReduceColors::applyEffect (QImage *destPtr, int depth, bool dither)
     // this effect is just an "effect" in that it changes the image (the look) somehow
     // When one wants a different depth on the file, then he needs to save the image
     // in that depth
-    *destPtr = destPtr->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    destPtr->convertTo(QImage::Format_ARGB32_Premultiplied);
 }
 
 //---------------------------------------------------------------------

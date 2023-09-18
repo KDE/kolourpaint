@@ -165,7 +165,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     // make sure we always have Format_ARGB32_Premultiplied as this is the fastest to draw on
     // and Qt can not draw onto Format_Indexed8 (Qt-4.7)
     if ( image.format() != QImage::Format_ARGB32_Premultiplied ) {
-      image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        image.convertTo(QImage::Format_ARGB32_Premultiplied);
     }
 
     return image;
