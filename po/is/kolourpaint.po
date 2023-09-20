@@ -3,20 +3,20 @@
 # Þröstur Svanbergsson <throstur@bylur.net>, 2004.
 # Arnar Leosson <leosson@frisurf.no>, 2005.
 # Arnar Leósson <leosson@frisurf.no>, 2005.
-# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2011, 2013, 2015, 2016, 2017, 2021.
+# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2011, 2013, 2015, 2016, 2017, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:43+0000\n"
-"PO-Revision-Date: 2021-10-07 09:25+0000\n"
+"PO-Revision-Date: 2023-09-19 10:49+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 22.04.3\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -1203,12 +1203,12 @@ msgstr "Telja upp allar lesanlegar MIME-tegundir mynda"
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Byrja með nýja mynd með uppgefnum málum"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[breidd]x[hæð]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1528,7 +1528,7 @@ msgstr "&Flytja út..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Flytja út í aðra skrá"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1539,6 +1539,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Þetta vistar skjalið undir öðru heiti, svipað og <interface>Vista sem</"
+"interface>, nema að fyrirliggjandi skjal breytist ekki.<nl/>Þannig geturðu "
+"haft nýjasta vistaða skjalið í annarri möppu en skjalið sem þú ert að vinna "
+"í."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
