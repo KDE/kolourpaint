@@ -78,11 +78,18 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
     m_actionUndo->setEnabled (false);
     m_actionRedo->setEnabled (false);
 
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect (m_actionUndo->menu(), &QMenu::triggered,
+#else
+    connect (m_actionUndo->popupMenu(), &QMenu::triggered,
+#endif
              this, &kpCommandHistoryBase::undoUpToNumber);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect (m_actionRedo->menu(), &QMenu::triggered,
+#else
+    connect (m_actionRedo->popupMenu(), &QMenu::triggered,
+#endif
              this, &kpCommandHistoryBase::redoUpToNumber);
 
 
@@ -631,7 +638,11 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     QTime timer; timer.start ();
 #endif
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     populatePopupMenu (m_actionUndo->menu (),
+#else
+    populatePopupMenu (m_actionUndo->popupMenu (),
+#endif
                        i18n ("Undo"),
                        m_undoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
@@ -652,7 +663,11 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     timer.restart ();
 #endif
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     populatePopupMenu (m_actionRedo->menu (),
+#else
+    populatePopupMenu (m_actionRedo->popupMenu (),
+#endif
                        i18n ("Redo"),
                        m_redoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
