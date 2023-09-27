@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-08 00:43+0000\n"
+"POT-Creation-Date: 2023-09-27 00:41+0000\n"
 "PO-Revision-Date: 2023-08-08 09:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -185,52 +185,52 @@ msgstr "Обернути"
 msgid "Skew"
 msgstr "Перекосити"
 
-#: commands/kpCommandHistoryBase.cpp:437
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Вернути %1"
 
-#: commands/kpCommandHistoryBase.cpp:437
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Undo"
 msgstr "&Вернути"
 
-#: commands/kpCommandHistoryBase.cpp:445
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&Повторити %1"
 
-#: commands/kpCommandHistoryBase.cpp:445
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Redo"
 msgstr "&Повторити"
 
-#: commands/kpCommandHistoryBase.cpp:454
+#: commands/kpCommandHistoryBase.cpp:461
 #, kde-format
 msgid "Undo: %1"
 msgstr "Вернути: %1"
 
-#: commands/kpCommandHistoryBase.cpp:454 commands/kpCommandHistoryBase.cpp:635
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
 #, kde-format
 msgid "Undo"
 msgstr "Вернути"
 
-#: commands/kpCommandHistoryBase.cpp:462
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Redo: %1"
 msgstr "Повторити: %1"
 
-#: commands/kpCommandHistoryBase.cpp:462 commands/kpCommandHistoryBase.cpp:656
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
 #, kde-format
 msgid "Redo"
 msgstr "Повторити"
 
-#: commands/kpCommandHistoryBase.cpp:597
+#: commands/kpCommandHistoryBase.cpp:604
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:608
+#: commands/kpCommandHistoryBase.cpp:615
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"

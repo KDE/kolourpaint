@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-08 00:43+0000\n"
+"POT-Creation-Date: 2023-09-27 00:41+0000\n"
 "PO-Revision-Date: 2020-06-03 20:33+0300\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -179,52 +179,52 @@ msgstr "Pööra"
 msgid "Skew"
 msgstr "Pööra nurgeti"
 
-#: commands/kpCommandHistoryBase.cpp:437
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Võta tagasi: %1"
 
-#: commands/kpCommandHistoryBase.cpp:437
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Undo"
 msgstr "&Võta tagasi"
 
-#: commands/kpCommandHistoryBase.cpp:445
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&Tee uuesti: %1"
 
-#: commands/kpCommandHistoryBase.cpp:445
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Redo"
 msgstr "&Tee uuesti"
 
-#: commands/kpCommandHistoryBase.cpp:454
+#: commands/kpCommandHistoryBase.cpp:461
 #, kde-format
 msgid "Undo: %1"
 msgstr "Võta tagasi: %1"
 
-#: commands/kpCommandHistoryBase.cpp:454 commands/kpCommandHistoryBase.cpp:635
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
 #, kde-format
 msgid "Undo"
 msgstr "Võta tagasi"
 
-#: commands/kpCommandHistoryBase.cpp:462
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Redo: %1"
 msgstr "Tee uuesti: %1"
 
-#: commands/kpCommandHistoryBase.cpp:462 commands/kpCommandHistoryBase.cpp:656
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
 #, kde-format
 msgid "Redo"
 msgstr "Tee uuesti"
 
-#: commands/kpCommandHistoryBase.cpp:597
+#: commands/kpCommandHistoryBase.cpp:604
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:608
+#: commands/kpCommandHistoryBase.cpp:615
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"

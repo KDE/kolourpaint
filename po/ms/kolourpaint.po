@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mimos\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-08 00:43+0000\n"
+"POT-Creation-Date: 2023-09-27 00:41+0000\n"
 "PO-Revision-Date: 2005-11-06 05:51+0800\n"
 "Last-Translator: MIMOS <opensource@mimos.my>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -177,52 +177,52 @@ msgstr "Putar"
 msgid "Skew"
 msgstr "Senget"
 
-#: commands/kpCommandHistoryBase.cpp:437
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Batalkan: %1"
 
-#: commands/kpCommandHistoryBase.cpp:437
+#: commands/kpCommandHistoryBase.cpp:444
 #, fuzzy, kde-format
 msgid "&Undo"
 msgstr "&Batalkan: %1"
 
-#: commands/kpCommandHistoryBase.cpp:445
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&Buat semula: %1"
 
-#: commands/kpCommandHistoryBase.cpp:445
+#: commands/kpCommandHistoryBase.cpp:452
 #, fuzzy, kde-format
 msgid "&Redo"
 msgstr "&Merah"
 
-#: commands/kpCommandHistoryBase.cpp:454
+#: commands/kpCommandHistoryBase.cpp:461
 #, fuzzy, kde-format
 msgid "Undo: %1"
 msgstr "&Batalkan: %1"
 
-#: commands/kpCommandHistoryBase.cpp:454 commands/kpCommandHistoryBase.cpp:635
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
 #, fuzzy, kde-format
 msgid "Undo"
 msgstr "&Batalkan: %1"
 
-#: commands/kpCommandHistoryBase.cpp:462
+#: commands/kpCommandHistoryBase.cpp:469
 #, fuzzy, kde-format
 msgid "Redo: %1"
 msgstr "&Buat semula: %1"
 
-#: commands/kpCommandHistoryBase.cpp:462 commands/kpCommandHistoryBase.cpp:656
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
 #, fuzzy, kde-format
 msgid "Redo"
 msgstr "Merah"
 
-#: commands/kpCommandHistoryBase.cpp:597
+#: commands/kpCommandHistoryBase.cpp:604
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:608
+#: commands/kpCommandHistoryBase.cpp:615
 #, fuzzy, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
