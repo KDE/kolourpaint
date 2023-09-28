@@ -1,32 +1,33 @@
-# translation of kolourpaint4.po to esperanto
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# translation of kolourpaint.pot to esperanto
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kolourpaint package.
 # Pierre-Marie Pédrot <pedrotpmx@wanadoo.fr>, 2007.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: kolourpaint4\n"
+"Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-27 00:41+0000\n"
-"PO-Revision-Date: 2023-03-25 16:19+0100\n"
+"PO-Revision-Date: 2023-09-27 21:29+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pierre-Marie Pédrot"
+msgstr "Pierre-Marie Pédrot,Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pedrotpmx@wanadoo.fr"
+msgstr "pedrotpmx@wanadoo.fr,okellogg@users.sourceforge.net"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
@@ -320,6 +321,17 @@ msgid ""
 "the format you save in does not support them, they will not be saved.</p></"
 "qt>"
 msgstr ""
+"<qt><p><b>Punktoj Cole</b> (DPI) specifas la nombron da rastrumeroj de la "
+"bildo, kiu devus esti presita ene de unu colo (2,54 cm).</p><p>Ju pli alta "
+"la bildo de la bildo DPI, des pli malgranda estas la presita bildo. Notu, ke "
+"via presilo verŝajne ne produktos altkvalitajn presaĵojn se vi pliigas ĉi "
+"tion al pli ol 300 aŭ 600 DPI, depende de la presilo.</p><p>Se vi ŝatus "
+"presi la bildon tiel ke ĝi estu la sama grandeco. ĉar ĝi estas montrata sur "
+"la ekrano, agordu la DPI-valorojn de la bildo, ke ili estu la sama kiel tiu "
+"de la ekrano.</p><p>Se ĉiu DPI-valoro estas <b>Nespecifita</b>, la bildo "
+"ankaŭ estos presita por esti; la sama grandeco kiel sur la ekrano.</p><p>Ne "
+"ĉiuj bildformatoj subtenas DPI-valorojn. Se la formato en kiu vi konservas "
+"ne subtenas ilin, ili ne estos konservitaj.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
 #, kde-format
@@ -334,6 +346,10 @@ msgid ""
 "<b>Offset</b> feature. If the format you save in does not support it, the "
 "values specified here will not be saved.</p></qt>"
 msgstr ""
+"<qt><p>La <b>Ofenso</b> estas la relativa pozicio kie ĉi tiu bildo devus "
+"esti metita, kompare kun aliaj bildoj.</p><p>Ne ĉiuj bildformatoj subtenas "
+"la <b>Ofsezon</p> b> trajto. Se la formato en kiu vi konservas ne subtenas "
+"ĝin, la valoroj ĉi tie specifitaj ne estos konservitaj.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
 #, kde-format
@@ -366,6 +382,13 @@ msgid ""
 "unlikely.</p><p>Not all image formats support <b>Text Fields</b>. If the "
 "format you save in does not support them, they will not be saved.</p></qt>"
 msgstr ""
+"<qt><p><b>Tekstaj Kampoj</b> provizas kromajn informojn pri la bildo. Ĉi tio "
+"verŝajne estas komenta areo en kiu vi povas libere skribi ajnan tekston.</"
+"p><p>Tamen, ĉi tio estas formato-specifa do la kampoj teorie povus esti "
+"komputile interpretitaj datumoj - kiujn vi ne devus modifi - sed ĉi tio "
+"estas malprobabla .</p><p>Ne ĉiuj bildformatoj subtenas <b>Tekstaj Kampoj</"
+"b>. Se la formato en kiu vi konservas ne subtenas ilin, ili ne estos "
+"konservitaj.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
 #, kde-format
@@ -388,6 +411,8 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
+"Ĉiuj tekstaj klavoj devas esti unikaj. La tekstoklavo \"%1\" sur linioj %2 "
+"kaj %3 estas identaj."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
 #, kde-format
@@ -470,6 +495,13 @@ msgid ""
 "as <i>Scale</i> except that it blends neighboring pixels to produce a "
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
+"<qt><ul><li><b>Regrandigi</b>: La grandeco de la bildo estos pligrandigita "
+"kreante novajn areojn dekstren kaj/aŭ malsupre (plenigite per la fonkoloro) "
+"aŭ malpligrandiĝos per tranĉado de ĝi. dekstre kaj/aŭ malsupre.</"
+"li><li><b>Skalo</b>: La bildo estos pligrandigita per duobligo de "
+"rastrumeroj aŭ kunpremita per faligado de rastrumeroj.</li><li><b>Glata "
+"Skalo. </b>: Ĉi tio estas la sama kiel <i>Skalo</i> krom ke ĝi miksas "
+"najbarajn rastrumerojn por produkti pli glatan bildon.</li></ul></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
 #, kde-format
@@ -684,7 +716,7 @@ msgstr "Turni la bildon"
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
 #, kde-format
 msgid "After rotate:"
-msgstr ""
+msgstr "Post rotacio:"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
 #, kde-format
@@ -742,6 +774,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
 "qt>"
 msgstr ""
+"<qt><p>Rotacii la elekton al %1x%2 povas preni grandan kvanton da memoro. Ĉi "
+"tio povas redukti la respondecon de la sistemo kaj kaŭzi problemojn pri "
+"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas turni la elekton?</"
+"p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
@@ -761,6 +797,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
 msgstr ""
+"<qt><p>Rotacii la bildon al %1x%2 povas preni grandan kvanton da memoro. Ĉi "
+"tio povas redukti la respondecon de la sistemo kaj kaŭzi problemojn pri "
+"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas turni la bildon?</"
+"p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
@@ -788,7 +828,7 @@ msgstr "Klini la bildon"
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
 #, kde-format
 msgid "After skew:"
-msgstr ""
+msgstr "Post oblikvo:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
 #, kde-format
@@ -808,6 +848,10 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to skew the selection?</p></"
 "qt>"
 msgstr ""
+"<qt><p>Deklini la elekton al %1x%2 povas preni grandan kvanton da memoro. Ĉi "
+"tio povas redukti la respondecon de la sistemo kaj kaŭzi problemojn pri "
+"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas misformigi la "
+"elekton?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
@@ -827,6 +871,10 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
+"<qt><p>Deklini la bildon al %1x%2 povas preni grandan kvanton da memoro. Ĉi "
+"tio povas redukti la respondecon de la sistemo kaj kaŭzi problemojn pri "
+"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas misformigi la "
+"bildon?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
@@ -920,6 +968,9 @@ msgid ""
 "color information.</p><p>Are you sure you want to save in this format?</p></"
 "qt>"
 msgstr ""
+"<qt><p>La <b>%1</b> formato eble ne povas konservi ĉiujn kolorajn informojn "
+"de la bildo.</p><p>Ĉu vi certas, ke vi volas konservi en ĉi tiu formato?</ "
+"p></qt>"
 
 #: document/kpDocument_Save.cpp:123
 #, kde-format
@@ -934,6 +985,10 @@ msgid ""
 "loss of color information. Any transparency might also be removed.</p><p>Are "
 "you sure you want to save at this color depth?</p></qt>"
 msgstr ""
+"<qt><p>Konservado de la bildo ĉe la malalta kolorprofundo de %1-bito povas "
+"rezultigi la perdon de kolorinformoj. Iu ajn travidebleco ankaŭ povus esti "
+"forigita.</p><p>Ĉu vi certas, ke vi volas konservi ĉi tiun kolorprofundon?</"
+"p></qt>"
 
 #: document/kpDocument_Save.cpp:142
 #, kde-format
@@ -944,22 +999,22 @@ msgstr "Malalta kolorozo"
 #: document/kpDocument_Save.cpp:267
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
-msgstr ""
+msgstr "Ne eblis konservi bildon - ne eblas krei provizoran dosieron."
 
 #: document/kpDocument_Save.cpp:275
 #, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr ""
+msgstr "Ne eblis konservi kiel \"%1\": %2"
 
 #: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
 #, kde-format
 msgid "Error saving image"
-msgstr ""
+msgstr "Eraro dum konservado de bildo"
 
 #: document/kpDocument_Save.cpp:425
 #, kde-format
 msgid "Could not save image - failed to upload."
-msgstr ""
+msgstr "Ne eblis konservi bildon - malsukcesis alŝuti."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:384
 #, kde-format
@@ -987,6 +1042,8 @@ msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
 "located."
 msgstr ""
+"KolourPaint ne povas forigi la internan limon de la elekto ĉar ĝi ne povis "
+"troviĝi."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:625
 #, kde-format
@@ -1000,6 +1057,7 @@ msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr ""
+"KolourPaint ne povas aŭtomate tondi la bildon ĉar ĝia rando ne povis troviĝi."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:633
 #, kde-format
@@ -1023,12 +1081,12 @@ msgstr "Elektado: Krei"
 #: kolourpaint.cpp:54
 #, kde-format
 msgid "KolourPaint"
-msgstr ""
+msgstr "KolourPaint"
 
 #: kolourpaint.cpp:56
 #, kde-format
 msgid "Paint Program by KDE"
-msgstr ""
+msgstr "Pentra Programo de KDE"
 
 #: kolourpaint.cpp:70
 #, kde-format
@@ -1058,7 +1116,7 @@ msgstr "Martin Koller"
 #: kolourpaint.cpp:75
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
-msgstr ""
+msgstr "Skanado Subteno, Alpha Subteno, Nuna Prizorganto"
 
 #: kolourpaint.cpp:78
 #, kde-format
@@ -1073,7 +1131,7 @@ msgstr "Piktogramoj"
 #: kolourpaint.cpp:79
 #, kde-format
 msgid "Tasuku Suzuki"
-msgstr ""
+msgstr "Tasuku Suzuki"
 
 #: kolourpaint.cpp:79 kolourpaint.cpp:80
 #, kde-format
@@ -1118,12 +1176,12 @@ msgstr "Portado al KDE 4"
 #: kolourpaint.cpp:86
 #, kde-format
 msgid "Christoph Feck"
-msgstr ""
+msgstr "Christoph Feck"
 
 #: kolourpaint.cpp:86
 #, kde-format
 msgid "KF 5 Porting"
-msgstr ""
+msgstr "KF 5 Porting"
 
 #: kolourpaint.cpp:88
 #, kde-format
@@ -1134,22 +1192,22 @@ msgstr "Dankon al la multaj aliuloj kiuj helpis por ebligi ĉi tiun programon."
 #: kolourpaint.cpp:93
 #, kde-format
 msgid "Image files to open, optionally"
-msgstr ""
+msgstr "Bilddosieroj por malfermi, laŭvole"
 
 #: kolourpaint.cpp:96
 #, kde-format
 msgid "List all readable image MIME types"
-msgstr ""
+msgstr "Listigi ĉiujn legeblajn bildajn MIME-tipojn"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Komenci kun nova bildo uzante donitan grandecon"
 
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[larĝo]x[alteco]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1208,7 +1266,7 @@ msgstr "Dekstre ŝovi la traktilon por regrandigi la bildon."
 #: kpViewScrollableContainer.cpp:194
 #, kde-format
 msgid "Resize Image: Let go of all the mouse buttons."
-msgstr ""
+msgstr "Regrandigi Bildon: Forlasu ĉiujn musbutonojn."
 
 #: kpViewScrollableContainer.cpp:226
 #, kde-format
@@ -1309,6 +1367,8 @@ msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
+"La kolora paletro \"%1\" estas modifita.\n"
+"Ĉu vi volas konservi ĝin?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:227
 #, kde-format
@@ -1316,6 +1376,8 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
+"La KDE-kolora paletro \"%1\" estas modifita.\n"
+"Ĉu vi volas konservi ĝin en dosiero?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:240
 #, kde-format
@@ -1323,6 +1385,8 @@ msgid ""
 "The default color palette has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
+"La defaŭlta kolora paletro estas modifita.\n"
+"Ĉu vi volas konservi ĝin en dosiero?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:367
 #, kde-format
@@ -1337,6 +1401,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
+"La kolorpaletro \"%1\" estas modifita.\n"
+"Reŝargi perdos ĉiujn ŝanĝojn ekde kiam vi laste konservis ĝin.\n"
+"Ĉu vi certas?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
@@ -1353,6 +1420,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"La KDE-kolora paletro \"%1\" estas modifita.\n"
+"Reŝargi perdos ĉiujn ŝanĝojn.\n"
+"Ĉu vi certas?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:419
 #, kde-format
@@ -1361,6 +1431,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"La defaŭlta kolorpaletro estis modifita.\n"
+"Reŝargi perdos ĉiujn ŝanĝojn.\n"
+"Ĉu vi certas?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:480
 #, kde-format
@@ -1404,6 +1477,8 @@ msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
+"<qt>KolourPaint ne povas alglui la enhavon de la tondujo ĉar ĝi havas "
+"nekonatan formaton.</qt>"
 
 #: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
@@ -1452,7 +1527,7 @@ msgstr "E&ksporti..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Eksporti al alia dosiero"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1463,6 +1538,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Ĉi tio konservas la dokumenton kun malsama nomo, simile al "
+"<interface>Konservi kiel</interface>, sed la nuna dokumento ne estas ŝanĝita."
+"<nl/>Tiel vi povas konservi la laste uzatan konservan dosierujon sendependa "
+"de la dosierujo de la aktuala dokumento."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
@@ -1472,12 +1551,12 @@ msgstr "Skani..."
 #: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
 msgid "Acquire Screenshot"
-msgstr ""
+msgstr "Akiri Ekrankopion"
 
 #: mainWindow/kpMainWindow_File.cpp:127
 #, kde-format
 msgid "Properties"
-msgstr ""
+msgstr "Proprecoj"
 
 #: mainWindow/kpMainWindow_File.cpp:133
 #, kde-format
@@ -1487,7 +1566,7 @@ msgstr "Reŝar&gi"
 #: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
-msgstr ""
+msgstr "Ĉiuj Subtenataj Dosieroj (%1)"
 
 #: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
@@ -1498,35 +1577,35 @@ msgstr "Malfermi bildon"
 #: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr ""
+msgstr "Malsukcesis malfermi skanan dialogon."
 
 #: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
-msgstr ""
+msgstr "Skanado Malsukcesis"
 
 #: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
 msgid "Snapshot Delay"
-msgstr ""
+msgstr "Momentfoto Prokrasto"
 
 #: mainWindow/kpMainWindow_File.cpp:672
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " sekundo"
+msgstr[1] " sekundoj"
 
 #: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
 msgid "No delay"
-msgstr ""
+msgstr "Neniu prokrasto"
 
 #: mainWindow/kpMainWindow_File.cpp:675
 #, kde-format
 msgid "Hide Main Window"
-msgstr ""
+msgstr "Kaŝi Ĉefan Fenestron"
 
 #: mainWindow/kpMainWindow_File.cpp:729
 #, kde-format
@@ -1552,6 +1631,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
+"La dokumento \"%1\" estas modifita.\n"
+"Reŝargi perdos ĉiujn ŝanĝojn de kiam vi laste konservis ĝin.\n"
+"Ĉu vi certas?"
 
 #: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
@@ -1560,6 +1642,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"La dokumento \"%1\" estas modifita.\n"
+"Reŝargi perdos ĉiujn ŝanĝojn.\n"
+"Ĉu vi certas?"
 
 #: mainWindow/kpMainWindow_File.cpp:1334
 #, kde-format
@@ -1582,6 +1667,8 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
+"La dokumento \"%1\" estas modifita.\n"
+"Ĉu vi volas konservi ĝin?"
 
 #: mainWindow/kpMainWindow_Image.cpp:117
 #, kde-format
@@ -1596,12 +1683,12 @@ msgstr "Me&ti kiel bildon (stuce)"
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr ""
+msgstr "&Flip (vertikale inversa)"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "Mirror (horizontally)"
-msgstr ""
+msgstr "Speguli (horizontale)"
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
@@ -1646,7 +1733,7 @@ msgstr "For&viŝi"
 #: mainWindow/kpMainWindow_Image.cpp:185
 #, kde-format
 msgid "Make Confidential"
-msgstr ""
+msgstr "Igi Konfidenca"
 
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
@@ -1677,7 +1764,7 @@ msgstr "Montri la &vojon"
 #: mainWindow/kpMainWindow_Settings.cpp:71
 #, kde-format
 msgid "Draw Anti-Aliased"
-msgstr ""
+msgstr "Desegni Anti-Aliased"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:156
 #, kde-format
@@ -1740,32 +1827,32 @@ msgstr "Enstrekita"
 #: mainWindow/kpMainWindow_Tools.cpp:133
 #, kde-format
 msgid "Previous Tool Option (Group #1)"
-msgstr ""
+msgstr "Antaŭa Il-Opcio (Grupo #1)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:139
 #, kde-format
 msgid "Next Tool Option (Group #1)"
-msgstr ""
+msgstr "Sekva Il-Opcio (Grupo #1)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:145
 #, kde-format
 msgid "Previous Tool Option (Group #2)"
-msgstr ""
+msgstr "Antaŭa Il-Opcio (Grupo #2)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:151
 #, kde-format
 msgid "Next Tool Option (Group #2)"
-msgstr ""
+msgstr "Sekva Il-Opcio (Grupo #2)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:163
 #, kde-format
 msgid "&Draw Opaque"
-msgstr ""
+msgstr "&Desegni Maldiafane"
 
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
 msgid "Draw With Color Similarity..."
-msgstr ""
+msgstr "Desegni kun Kolora Simileco..."
 
 #: mainWindow/kpMainWindow_Tools.cpp:179
 #, kde-format
@@ -1790,7 +1877,7 @@ msgstr "Zo&ma miniatura moduso"
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
-msgstr ""
+msgstr "Ebligi Bildetan &Rektangulon"
 
 #: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
@@ -1801,12 +1888,12 @@ msgstr "&Zomi"
 #, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr ""
+msgstr "Akiri Bildon"
 
 #: scan/sanedialog.cpp:73
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr ""
+msgstr "Malfermo de la elektita skanilo malsukcesis."
 
 #: tools/flow/kpToolBrush.cpp:35
 #, kde-format
@@ -1861,7 +1948,7 @@ msgstr "Klaki aŭ ŝovi por forviŝi"
 #: tools/selection/kpAbstractSelectionTool.cpp:528
 #, kde-format
 msgid "Let go of all the mouse buttons."
-msgstr ""
+msgstr "Lasu ĉiujn musbutonojn."
 
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
@@ -2131,7 +2218,7 @@ msgstr "Elektado: Movi"
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:347
 #, kde-format
 msgid "%1: Smear"
-msgstr ""
+msgstr "%1: Ŝmiri"
 
 #: tools/selection/text/kpToolText.cpp:55
 #, kde-format
@@ -2273,6 +2360,27 @@ msgid ""
 "similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
 "decrease this setting.</p><p>To configure it, click on the cube.</p></qt>"
 msgstr ""
+"<qt><p><b>Kolorsimileco</b> estas kiom <i>similaj</i> devas esti la koloroj "
+"de malsamaj rastrumeroj, por ke operacioj konsideru ilin samaj.</p><p> Se vi "
+"agordas ĝin al io alia ol <b>Preciza kongruo</b>, vi povas labori pli efike "
+"kun malklarigitaj bildoj kaj fotoj, en komparebla maniero kun la funkcio "
+"\"Magia Bastono\" de aliaj farboprogramoj.</p><p>Ĉi tiu funkcio validas por:"
+"</p><ul><li><b>Selektoj</b>: En <b>Travidebla</b> reĝimo, ajna koloro en la "
+"elekto kiu estas <i>simila </i> al la fonkoloro fariĝos travidebla.</"
+"li><li><b>Inundo-plenigo</b>: Por regionoj kun <i>similaj</i> - sed ne "
+"identaj - koloraj rastrumeroj, a pli alta agordo verŝajne plenigos pli da "
+"bilderoj.</li><li><b>Kolora skrapgumo</b>: Ajna rastrumero kies koloro estas "
+"<i>simila</i> al la malfonokoloro estos anstataŭigita per la fonkoloro .</"
+"li><li><b>Autotond</b> kaj <b>Forigi Internan Bordon</b>: Por randoj kun "
+"<i>similaj</i> - sed ne identaj - koloraj rastrumeroj, pli alta agordo pli "
+"verŝajne tranĉos la tutan randon.</li></ul><p>Pli altaj agordoj signifas, ke "
+"operacioj konsideras pliigitan gamon da koloroj sufiĉe <i>simila</i> por "
+"esti la sama. Sekve, vi devus pliigi la agordon se la supraj operacioj ne "
+"influas rastrumerojn, kies kolorojn vi konsideras sufiĉe similaj.</"
+"p><p>Tamen, se ili havas tro da efiko kaj ŝanĝas rastrumerojn kies kolorojn "
+"vi faras. ne konsideru simila (ekz. se <b>Inundo-plenigo</b> ŝanĝas tro da "
+"bilderoj), vi devus malpliigi ĉi tiun agordon.</p><p>Por agordi ĝin, alklaku "
+"la kubon.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
 #, kde-format
@@ -2299,6 +2407,26 @@ msgid ""
 "similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
 "decrease this setting.</p></qt>"
 msgstr ""
+"<qt><p><b>Kolorsimileco</b> estas kiom <i>similaj</i> devas esti la koloroj "
+"de malsamaj rastrumeroj, por ke operacioj konsideru ilin samaj.</p><p> Se vi "
+"agordas ĝin al io alia ol <b>Preciza kongruo</b>, vi povas labori pli efike "
+"kun malklarigitaj bildoj kaj fotoj, en komparebla maniero kun la funkcio "
+"\"Magia Bastono\" de aliaj farboprogramoj.</p><p>Ĉi tiu funkcio validas por:"
+"</p><ul><li><b>Selektoj</b>: En <b>Travidebla</b> reĝimo, ajna koloro en la "
+"elekto kiu estas <i>simila </i> al la fonkoloro fariĝos travidebla.</"
+"li><li><b>Inundo-plenigo</b>: Por regionoj kun <i>similaj</i> - sed ne "
+"identaj - koloraj rastrumeroj, a pli alta agordo verŝajne plenigos pli da "
+"bilderoj.</li><li><b>Kolora skrapgumo</b>: Ajna rastrumero kies koloro estas "
+"<i>simila</i> al la malfonokoloro estos anstataŭigita per la fonkoloro .</"
+"li><li><b>Autotond</b> kaj <b>Forigi Internan Bordon</b>: Por randoj kun "
+"<i>similaj</i> - sed ne identaj - koloraj rastrumeroj, pli alta agordo pli "
+"verŝajne tranĉos la tutan randon.</li></ul><p>Pli altaj agordoj signifas, ke "
+"operacioj konsideras pliigitan gamon da koloroj sufiĉe <i>simila</i> por "
+"esti la sama. Sekve, vi devus pliigi la agordon se la supraj operacioj ne "
+"influas rastrumerojn, kies kolorojn vi konsideras sufiĉe similaj.</"
+"p><p>Tamen, se ili havas tro da efiko kaj ŝanĝas rastrumerojn kies kolorojn "
+"vi faras. ne konsideru kiel simila (ekz. se <b>Inundo-plenigo</b> ŝanĝas tro "
+"da bilderoj), vi devus malpliigi ĉi tiun agordon.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
 #, kde-format
@@ -2478,6 +2606,13 @@ msgid ""
 "destination cell's color will be overwritten, instead of being swapped with "
 "the color of the source cell.</p></qt>"
 msgstr ""
+"<qt><p>Por elekti la malfonokoloron kiun iloj uzas por desegni, maldekstre "
+"alklaku sur plenigitan kolorĉelon. Por elekti la fonkoloron, dekstre alklaku "
+"anstataŭe.</p><p>Por ŝanĝi la koloron de kolora ĉelo mem, duoble alklaku ĝin."
+"</p><p>Vi ankaŭ povas interŝanĝi la koloron de enplenigita ĉelo kun iu ajn "
+"alia ĉelo uzante treni kaj faligi. Ankaŭ, se vi tenas la klavon <b>Ctrl</b>, "
+"la koloro de la cela ĉelo estos anstataŭita, anstataŭ esti interŝanĝita kun "
+"la koloro de la fonta ĉelo.</p></qt>"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:85
 #, kde-format
@@ -2544,7 +2679,7 @@ msgstr "Travidebla"
 #: widgets/toolbars/kpColorToolBar.cpp:278
 #, kde-format
 msgid "KolourPaint Defaults"
-msgstr ""
+msgstr "KolourPaint Defaŭltoj"
 
 #: widgets/toolbars/kpColorToolBar.cpp:293
 #, kde-format
