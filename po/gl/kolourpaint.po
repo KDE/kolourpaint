@@ -927,7 +927,7 @@ msgstr[1] "%1 bytes (aprox.. %2%)"
 #: document/kpDocument_Open.cpp:114
 #, kde-format
 msgid "Could not open \"%1\"."
-msgstr "Non se puido abrir «%1»."
+msgstr "Non foi posíbel abrir «%1»."
 
 #: document/kpDocument_Open.cpp:150
 #, kde-format
@@ -935,13 +935,14 @@ msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
 "The file may be corrupt."
 msgstr ""
-"Non se puido abrir «%1», non se admite este formato de imaxe.\n"
+"Non foi posíbel abrir «%1», non se admite este formato de imaxe.\n"
 "O ficheiro podería estar corrompido."
 
 #: document/kpDocument_Save.cpp:74
 #, kde-format
 msgid "Could not save image - insufficient information."
-msgstr "Non se puido gardar a imaxe, porque a información dada é insuficiente."
+msgstr ""
+"Non foi posíbel gardar a imaxe, porque a información dada é insuficiente."
 
 #: document/kpDocument_Save.cpp:75
 #, kde-format
@@ -1000,12 +1001,12 @@ msgstr "Baixa profundidade de cor"
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr ""
-"Non se puido gardar a imaxe porque non se pode crear o ficheiro temporal."
+"Non foi posíbel gardar a imaxe porque non se pode crear o ficheiro temporal."
 
 #: document/kpDocument_Save.cpp:275
 #, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "Non se puido gardar como «%1»: %2"
+msgstr "Non foi posíbel gardar como «%1»: %2"
 
 #: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
 #, kde-format
@@ -1015,7 +1016,7 @@ msgstr "Produciuse un erro ao gardar a imaxe"
 #: document/kpDocument_Save.cpp:425
 #, kde-format
 msgid "Could not save image - failed to upload."
-msgstr "Non se puido gardar a imaxe porque fallou o envío."
+msgstr "Non foi posíbel gardar a imaxe porque fallou o envío."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:384
 #, kde-format
@@ -1050,7 +1051,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
-msgstr "Non se pode retirar o bordo interno"
+msgstr "Non é posíbel retirar o bordo interno"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:631
 #, kde-format
@@ -1065,7 +1066,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
-msgstr "Non se pode recortar automaticamente"
+msgstr "Non é posíbel recortar automaticamente"
 
 #: imagelib/transforms/kpTransformCrop.cpp:69
 #: imagelib/transforms/kpTransformCrop.cpp:72
@@ -1285,7 +1286,7 @@ msgstr "Texto"
 #: lgpl/generic/kpColorCollection.cpp:120
 #, kde-format
 msgid "Could not open color palette \"%1\"."
-msgstr "Non se puido abrir a paleta de cores «%1»."
+msgstr "Non foi posíbel abrir a paleta de cores «%1»."
 
 #: lgpl/generic/kpColorCollection.cpp:153
 #, kde-format
@@ -1293,18 +1294,19 @@ msgid ""
 "Could not open color palette \"%1\" - unsupported format.\n"
 "The file may be corrupt."
 msgstr ""
-"Non se puido abrir a paleta de cores «%1»; está nun formato non admitido.\n"
+"Non foi posíbel abrir a paleta de cores «%1»; está nun formato non "
+"admitido.\n"
 "O ficheiro podería estar corrompido."
 
 #: lgpl/generic/kpColorCollection.cpp:213
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
-msgstr "Non se puido abrir a paleta de cores de KDE «%1»."
+msgstr "Non foi posíbel abrir a paleta de cores de KDE «%1»."
 
 #: lgpl/generic/kpColorCollection.cpp:263
 #, kde-format
 msgid "Could not save color palette as \"%1\"."
-msgstr "Non se puido gardar a paleta de cores como «%1»."
+msgstr "Non foi posíbel gardar a paleta de cores como «%1»."
 
 #: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
 #: widgets/toolbars/kpColorToolBar.cpp:283
@@ -1487,7 +1489,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
 msgid "Cannot Paste"
-msgstr "Non se pode pegar"
+msgstr "Non é posíbel pegar"
 
 #: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
@@ -1561,7 +1563,7 @@ msgstr "Abrir unha imaxe"
 #: mainWindow/kpMainWindow_File.cpp:546
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr "Non se puido abrir o diálogo de dixitalización."
+msgstr "Non foi posíbel abrir o diálogo de dixitalización."
 
 #: mainWindow/kpMainWindow_File.cpp:547
 #, kde-format
