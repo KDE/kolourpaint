@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-27 00:41+0000\n"
-"PO-Revision-Date: 2023-09-27 21:29+0100\n"
+"PO-Revision-Date: 2023-10-10 21:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -174,7 +174,7 @@ msgstr "Glate skali"
 #: commands/imagelib/transforms/kpTransformRotateCommand.cpp:72
 #, kde-format
 msgid "Rotate"
-msgstr "Turni"
+msgstr "Rotacii"
 
 #: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
 #, kde-format
@@ -269,7 +269,7 @@ msgstr "Redukti la kolorojn"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
 #, kde-format
 msgid "Soften & Sharpen"
-msgstr "Glatigi kaj akrigi"
+msgstr "Glatigi & Akrigi"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:121
 #, kde-format
@@ -348,8 +348,8 @@ msgid ""
 msgstr ""
 "<qt><p>La <b>Ofenso</b> estas la relativa pozicio kie ĉi tiu bildo devus "
 "esti metita, kompare kun aliaj bildoj.</p><p>Ne ĉiuj bildformatoj subtenas "
-"la <b>Ofsezon</p> b> trajto. Se la formato en kiu vi konservas ne subtenas "
-"ĝin, la valoroj ĉi tie specifitaj ne estos konservitaj.</p></qt>"
+"la <b>Deŝovo</b>-trajton. Se la formato en kiu vi konservas ne subtenas ĝin, "
+"la valoroj ĉi tie specifitaj ne estos konservitaj.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
 #, kde-format
@@ -705,13 +705,13 @@ msgstr "Glate skali la &elektaĵon"
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection"
-msgstr "Turni la elektaĵon"
+msgstr "Rotacii la elektaĵon"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image"
-msgstr "Turni la bildon"
+msgstr "Rotacii la bildon"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
 #, kde-format
@@ -726,7 +726,7 @@ msgstr "Direkto"
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
 #, kde-format
 msgid "Cou&nterclockwise"
-msgstr "N&elaŭhorloĝe"
+msgstr "&Nelaŭhorloĝe"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:122
 #, kde-format
@@ -776,19 +776,19 @@ msgid ""
 msgstr ""
 "<qt><p>Rotacii la elekton al %1x%2 povas preni grandan kvanton da memoro. Ĉi "
 "tio povas redukti la respondecon de la sistemo kaj kaŭzi problemojn pri "
-"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas turni la elekton?</"
-"p></qt>"
+"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas rotacii la elekton?"
+"</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection?"
-msgstr "Ĉu turni la elektaĵon?"
+msgstr "Ĉu rotacii la elektaĵon?"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
 #, kde-format
 msgid "Rotat&e Selection"
-msgstr "Turni la &elektaĵon"
+msgstr "Rotacii la &elektaĵon"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
 #, kde-format
@@ -799,19 +799,19 @@ msgid ""
 msgstr ""
 "<qt><p>Rotacii la bildon al %1x%2 povas preni grandan kvanton da memoro. Ĉi "
 "tio povas redukti la respondecon de la sistemo kaj kaŭzi problemojn pri "
-"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas turni la bildon?</"
+"aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas rotacii la bildon?</"
 "p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image?"
-msgstr "Ĉu turni la bildon?"
+msgstr "Ĉu rotacii la bildon?"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
 #, kde-format
 msgid "Rotat&e Image"
-msgstr "Turni &la bildon"
+msgstr "Rotacii &la bildon"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
 #, kde-format
@@ -969,7 +969,7 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>La <b>%1</b> formato eble ne povas konservi ĉiujn kolorajn informojn "
-"de la bildo.</p><p>Ĉu vi certas, ke vi volas konservi en ĉi tiu formato?</ "
+"de la bildo.</p><p>Ĉu vi certas, ke vi volas konservi en ĉi tiu formato?</"
 "p></qt>"
 
 #: document/kpDocument_Save.cpp:123
@@ -1693,17 +1693,17 @@ msgstr "Speguli (horizontale)"
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
 msgid "&Rotate..."
-msgstr "&Turni..."
+msgstr "&Rotacii..."
 
 #: mainWindow/kpMainWindow_Image.cpp:149
 #, kde-format
 msgid "Rotate &Left"
-msgstr "Turni ma&ldekstren"
+msgstr "Rotacii ma&ldekstren"
 
 #: mainWindow/kpMainWindow_Image.cpp:155
 #, kde-format
 msgid "Rotate Righ&t"
-msgstr "Turni deks&tren"
+msgstr "Rotacii deks&tren"
 
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
