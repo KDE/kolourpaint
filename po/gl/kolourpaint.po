@@ -1409,7 +1409,7 @@ msgstr ""
 "Modificouse a paleta de cores «%1».\n"
 "Se a carga de novo perderá todos os cambios feitos desde a última\n"
 "vez que a gardou.\n"
-"Está seguro de que quere cargala de novo?"
+"Seguro que quere cargala de novo?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
@@ -1650,7 +1650,7 @@ msgid ""
 msgstr ""
 "Modificouse o documento «%1».\n"
 "Se o carga de novo perderá todos os cambios.\n"
-"Está seguro de que quere facelo?"
+"Seguro que quere facelo?"
 
 #: mainWindow/kpMainWindow_File.cpp:1334
 #, kde-format
