@@ -36,6 +36,8 @@
 #include <QButtonGroup>
 #include <QKeyEvent>
 #include <QToolButton>
+#include <QStyleOption>
+#include <QStylePainter>
 
 #include <KToggleAction>
 
@@ -412,6 +414,23 @@ bool kpToolToolBar::event(QEvent *ev)
         adjustSizeConstraint();
     }
     return KToolBar::event(ev);
+}
+
+void kpToolToolBar::paintEvent(class QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    if (opt.rect.height() <= contentsMargins().top() + contentsMargins().bottom() || opt.rect.width() <= contentsMargins().left() + contentsMargins().right()) {
+        return;
+    }
+
+    QStylePainter painter(this);
+
+    opt.rect.setX(opt.rect.width() - style()->pixelMetric(QStyle::PM_SplitterWidth));
+    opt.rect.setWidth(style()->pixelMetric(QStyle::PM_SplitterWidth));
+    opt.state = QStyle::State_Horizontal;
+
+    painter.drawPrimitive(QStyle::PE_IndicatorToolBarSeparator, opt);
 }
 
 //---------------------------------------------------------------------

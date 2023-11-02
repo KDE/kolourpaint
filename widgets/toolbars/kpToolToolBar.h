@@ -83,6 +83,7 @@ public:
 
 protected:
     bool event(QEvent *ev) override;
+    void paintEvent(QPaintEvent *) override;
 
 signals:
     void sigToolSelected (kpTool *tool);  // tool may be 0

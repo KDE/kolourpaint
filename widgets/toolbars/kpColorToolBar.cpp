@@ -26,6 +26,7 @@
 */
 
 
+#include <qdockwidget.h>
 #define DEBUG_KP_COLOR_TOOL_BAR 0
 
 
@@ -34,9 +35,11 @@
 #include <QBoxLayout>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
+#include <QMenu>
 
 #include <KColorMimeData>
 #include <KLocalizedString>
+#include <KDualAction>
 #include "kpLogCategories.h"
 
 #include "widgets/kpColorCells.h"
@@ -53,8 +56,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 {
     setWindowTitle (label);
 
-    // not closable, as it's not a KDE toolbar yet and can not be made shown easily again
-    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+    setFeatures(QDockWidget::NoDockWidgetFeatures);
 
     setAcceptDrops (true);
 
@@ -113,6 +115,33 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     adjustToOrientation (Qt::Horizontal);
 
     setWidget (base);
+
+    auto lockLayoutAction = new KDualAction(this);
+    lockLayoutAction->setActiveText(i18nc("@action:inmenu Panels", "Unlock Panels"));
+    lockLayoutAction->setActiveIcon(QIcon::fromTheme(QStringLiteral("object-unlocked")));
+    lockLayoutAction->setInactiveText(i18nc("@action:inmenu Panels", "Lock Panels"));
+    lockLayoutAction->setInactiveIcon(QIcon::fromTheme(QStringLiteral("object-locked")));
+    lockLayoutAction->setWhatsThis(xi18nc("@info:whatsthis",
+                                          "This "
+                                          "switches between having panels <emphasis>locked</emphasis> or "
+                                          "<emphasis>unlocked</emphasis>.<nl/>Unlocked panels can be "
+                                          "dragged to the other side of the window and have a close "
+                                          "button.<nl/>Locked panels are embedded more cleanly."));
+    lockLayoutAction->setActive(true);
+    connect(lockLayoutAction, &KDualAction::triggered, this, [this, lockLayoutAction]() {
+        setLocked(lockLayoutAction->isActive());
+    });
+    setCustomContextMenuActions({lockLayoutAction});
+}
+
+QList<QAction *> kpColorToolBar::customContextMenuActions() const
+{
+    return m_customContextMenuActions;
+}
+
+void kpColorToolBar::setCustomContextMenuActions(QList<QAction *> customContextMenuActions)
+{
+    m_customContextMenuActions = customContextMenuActions;
 }
 
 //---------------------------------------------------------------------
@@ -335,6 +364,35 @@ void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 #if DEBUG_KP_COLOR_TOOL_BAR
     qCDebug(kpLogWidgets) << "isAccepted=" << e->isAccepted ();
 #endif
+}
+
+void kpColorToolBar::contextMenuEvent(QContextMenuEvent *event)
+{
+    QMenu popup(this);
+    const auto actions = customContextMenuActions();
+    for (QAction *action : actions) {
+        popup.addAction(action);
+    }
+    popup.addSeparator();
+    popup.exec(event->globalPos());
+}
+
+void kpColorToolBar::setLocked(bool lock)
+{
+    if (lock != m_locked) {
+        m_locked = lock;
+
+        if (lock) {
+            setFeatures(QDockWidget::NoDockWidgetFeatures);
+        } else {
+            setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
+        }
+    }
+}
+
+bool kpColorToolBar::isLocked() const
+{
+    return m_locked;
 }
 
 //---------------------------------------------------------------------

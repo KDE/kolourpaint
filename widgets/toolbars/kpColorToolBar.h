@@ -96,6 +96,9 @@ public:
     // (only valid in slots connected to colorSimilarityChanged())
     double oldColorSimilarity () const;
 
+    QList<QAction *> customContextMenuActions() const;
+    void setCustomContextMenuActions(QList<QAction *> customContextMenuActions);
+
 public slots:
     void setForegroundColor (const kpColor &color);
     void setBackgroundColor (const kpColor &color);
@@ -111,14 +114,19 @@ protected:
     void dragMoveEvent (QDragMoveEvent *e) override;
 
     void closeEvent(QCloseEvent *event) override { event->ignore(); }
+    void contextMenuEvent(QContextMenuEvent *event) override;
 
 private:
     void adjustToOrientation (Qt::Orientation o);
+    bool isLocked() const;
+    void setLocked(bool lock);
 
     QBoxLayout *m_boxLayout;
+    QList<QAction *> m_customContextMenuActions;
     kpDualColorButton *m_dualColorButton;
     kpColorPalette *m_colorPalette;
     kpColorSimilarityToolBarItem *m_colorSimilarityToolBarItem;
+    bool m_locked = true;
 };
 
 
