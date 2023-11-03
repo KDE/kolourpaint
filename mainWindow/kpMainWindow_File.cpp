@@ -892,7 +892,11 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     fd.setCustomWidget (saveOptionsWidget);
     KFileWidget *fw = fd.fileWidget();
     fw->setConfirmOverwrite (true);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     fw->setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
+#else
+    fw->setFilters (KFileFilter::fromMimeTypes(mimeTypes), KFileFilter::fromMimeType(fdSaveOptions.mimeType ()));
+#endif
     if (localOnly) {
         fw->setMode (KFile::File | KFile::LocalOnly);
     }
@@ -900,7 +904,13 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     saveOptionsWidget->setVisualParent (&fd);
 
     connect (fw, &KFileWidget::filterChanged,
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
              saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
+#else
+             saveOptionsWidget, [saveOptionsWidget](const KFileFilter &filter) {
+                 saveOptionsWidget->setMimeType(filter.mimePatterns().first());
+            });
+#endif
 
     if ( fd.exec() == QDialog::Accepted )
     {
