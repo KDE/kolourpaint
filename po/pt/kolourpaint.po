@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:26+0000\n"
+"POT-Creation-Date: 2023-11-07 01:12+0000\n"
 "PO-Revision-Date: 2023-04-17 14:37+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -1313,7 +1313,7 @@ msgid "Could not save color palette as \"%1\"."
 msgstr "Não foi possível gravar a paleta de cores como \"%1\"."
 
 #: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
-#: widgets/toolbars/kpColorToolBar.cpp:283
+#: widgets/toolbars/kpColorToolBar.cpp:312
 #, kde-format
 msgid "Untitled"
 msgstr "Sem Título"
@@ -2701,18 +2701,40 @@ msgstr "Canto superior-es&querdo da página"
 msgid "Transparent"
 msgstr "Transparente"
 
-#: widgets/toolbars/kpColorToolBar.cpp:278
+#: widgets/toolbars/kpColorToolBar.cpp:120
+#, kde-format
+msgctxt "@action:inmenu Panels"
+msgid "Unlock Panels"
+msgstr ""
+
+#: widgets/toolbars/kpColorToolBar.cpp:122
+#, kde-format
+msgctxt "@action:inmenu Panels"
+msgid "Lock Panels"
+msgstr ""
+
+#: widgets/toolbars/kpColorToolBar.cpp:125
+#, kde-kuit-format
+msgctxt "@info:whatsthis"
+msgid ""
+"This switches between having panels <emphasis>locked</emphasis> or "
+"<emphasis>unlocked</emphasis>.<nl/>Unlocked panels can be dragged to the "
+"other side of the window and have a close button.<nl/>Locked panels are "
+"embedded more cleanly."
+msgstr ""
+
+#: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
 msgid "KolourPaint Defaults"
 msgstr "Predefinição do KolourPaint"
 
-#: widgets/toolbars/kpColorToolBar.cpp:293
+#: widgets/toolbars/kpColorToolBar.cpp:322
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette"
 msgid "Colors: %1"
 msgstr "Cores: %1"
 
-#: widgets/toolbars/kpColorToolBar.cpp:300
+#: widgets/toolbars/kpColorToolBar.cpp:329
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette [modified]"
 msgid "Colors: %1 [modified]"
