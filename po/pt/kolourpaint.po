@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-07 01:12+0000\n"
+"POT-Creation-Date: 2023-11-08 00:41+0000\n"
 "PO-Revision-Date: 2023-04-17 14:37+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -1417,8 +1417,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:401
 #: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1081
-#: mainWindow/kpMainWindow_File.cpp:1091
+#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1091
+#: mainWindow/kpMainWindow_File.cpp:1101
 #, kde-format
 msgid "&Reload"
 msgstr "&Recarregar"
@@ -1618,19 +1618,19 @@ msgstr "Esconder a Janela Principal"
 msgid "Document Properties"
 msgstr "Propriedades do Documento"
 
-#: mainWindow/kpMainWindow_File.cpp:964
+#: mainWindow/kpMainWindow_File.cpp:974
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Gravar a Imagem Como"
 
-#: mainWindow/kpMainWindow_File.cpp:1012
+#: mainWindow/kpMainWindow_File.cpp:1022
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportar"
 
-#: mainWindow/kpMainWindow_File.cpp:1076
+#: mainWindow/kpMainWindow_File.cpp:1086
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1642,7 +1642,7 @@ msgstr ""
 "gravou.\n"
 "Tem a certeza?"
 
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1096
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1653,13 +1653,13 @@ msgstr ""
 "Uma nova leitura do mesmo irá perder todas as alterações.\n"
 "Tem a certeza?"
 
-#: mainWindow/kpMainWindow_File.cpp:1334
+#: mainWindow/kpMainWindow_File.cpp:1344
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Imprimir a Imagem"
 
-#: mainWindow/kpMainWindow_File.cpp:1418
+#: mainWindow/kpMainWindow_File.cpp:1428
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1668,7 +1668,7 @@ msgstr ""
 "Deve gravar a imagem antes de a enviar.\n"
 "Deseja gravá-la?"
 
-#: mainWindow/kpMainWindow_File.cpp:1464
+#: mainWindow/kpMainWindow_File.cpp:1474
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
