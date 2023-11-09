@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-08 00:41+0000\n"
-"PO-Revision-Date: 2023-09-14 12:23+0200\n"
+"PO-Revision-Date: 2023-11-07 12:28+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1186,7 +1186,7 @@ msgstr "Christoph Feck"
 #: kolourpaint.cpp:86
 #, kde-format
 msgid "KF 5 Porting"
-msgstr "Adaptació al KF5"
+msgstr "Adaptació als KF5"
 
 #: kolourpaint.cpp:88
 #, kde-format
@@ -2703,13 +2703,13 @@ msgstr "Transparent"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Desbloqueja els quadros"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Bloqueja els quadros"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2720,6 +2720,10 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Canvia entre tindre quadros <emphasis>blocats</emphasis> o "
+"<emphasis>desblocats</emphasis>. <nl/>Els quadros desblocats es poden "
+"arrossegar cap a l'altra banda de la finestra i tenen un botó de tancament. "
+"<nl/>Els quadros blocats estan incrustats de manera més neta."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format

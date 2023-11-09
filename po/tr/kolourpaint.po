@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-08 00:41+0000\n"
-"PO-Revision-Date: 2023-08-22 00:58+0300\n"
+"PO-Revision-Date: 2023-11-08 21:47+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2698,13 +2698,13 @@ msgstr "Saydam"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Panellerin Kilidini Aç"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Panelleri Kilitle"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2715,6 +2715,10 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Bu, panellerin <emphasis>kilitli</emphasis> veya <emphasis>kilitleri açık</"
+"emphasis> durumları arasında geçiş yapar.<nl/>Kilidi açık paneller "
+"pencerenin başka taraflarına sürüklenebilirler ve bir kapatma düğmeleri olur."
+"<nl/>Kilitli paneller daha düzgünce pencereyle bütünleşirler."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
