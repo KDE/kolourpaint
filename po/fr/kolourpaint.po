@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-08 00:41+0000\n"
-"PO-Revision-Date: 2023-10-14 22:34+0200\n"
+"PO-Revision-Date: 2023-11-08 11:47+0100\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -2754,13 +2754,13 @@ msgstr "Transparent"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Déverrouiller les panneaux"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Verrouiller les panneaux"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2771,6 +2771,10 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Cela permet de passer d’un panneau <emphasis>verrouillé</emphasis> à un "
+"panneau <emphasis>déverrouillé</emphasis>. <nl/>Les panneaux déverrouillés "
+"peuvent être déplacés de l’autre côté de la fenêtre et avoir un bouton de "
+"fermeture. <nl/>Les panneaux verrouillés sont intégrés plus proprement."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
