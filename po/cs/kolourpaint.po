@@ -2620,13 +2620,13 @@ msgstr "Průhledné pozadí"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Odemknout panely"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Zamknout panely"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format

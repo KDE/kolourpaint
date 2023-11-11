@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-08 00:41+0000\n"
-"PO-Revision-Date: 2023-08-09 12:48+0200\n"
+"PO-Revision-Date: 2023-11-08 01:48+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2710,13 +2710,13 @@ msgstr "Trasparente"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Sblocca pannelli"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Blocca pannelli"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2727,6 +2727,10 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Passa dal <emphasis>blocco</emphasis> allo <emphasis>sblocco</emphasis> dei "
+"pannelli.<nl/>I pannelli sbloccati possono essere trascinati sull'altro lato "
+"della finestra e hanno un pulsante di chiusura.<nl/>I pannelli bloccati sono "
+"integrati in modo più pulito."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
