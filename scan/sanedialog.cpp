@@ -83,7 +83,7 @@ bool SaneDialog::setup()
         KConfigGroup group(configPtr, groupName);
         QStringList keys = group.keyList();
         for (int i = 0; i < keys.count(); i++) {
-            m_ksanew->setOptVal(keys[i], group.readEntry(keys[i]));
+            m_ksanew->setOptionValue(keys[i], group.readEntry(keys[i]));
         }
     }
 
@@ -99,7 +99,7 @@ SaneDialog::~SaneDialog()
         KWindowConfig::saveWindowSize(windowHandle(), group, KConfigGroup::Persistent);
         group = configPtr->group(m_openDev);
         QMap<QString, QString> opts;
-        m_ksanew->getOptVals(opts);
+        m_ksanew->getOptionValues(opts);
         QMap<QString, QString>::const_iterator i = opts.constBegin();
         for (; i != opts.constEnd(); ++i) {
             group.writeEntry(i.key(), i.value(), KConfigGroup::Persistent);
