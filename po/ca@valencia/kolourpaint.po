@@ -1186,7 +1186,7 @@ msgstr "Christoph Feck"
 #: kolourpaint.cpp:86
 #, kde-format
 msgid "KF 5 Porting"
-msgstr "Adaptació al KF5"
+msgstr "Adaptació als KF5"
 
 #: kolourpaint.cpp:88
 #, kde-format
