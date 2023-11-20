@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-08 00:41+0000\n"
-"PO-Revision-Date: 2023-10-21 13:54\n"
+"PO-Revision-Date: 2023-11-19 03:40\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -120,22 +120,22 @@ msgstr "颜色均化"
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
 #, kde-format
 msgid "Flip"
-msgstr "翻转"
+msgstr "翻转 (垂直)"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:69
 #, kde-format
 msgid "Flip horizontally and vertically"
-msgstr "水平和垂直翻转"
+msgstr "翻转 (水平/垂直)"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:71
 #, kde-format
 msgid "Flip horizontally"
-msgstr "水平翻转"
+msgstr "翻转 (水平)"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:73
 #, kde-format
 msgid "Flip vertically"
-msgstr "垂直翻转"
+msgstr "翻转 (垂直)"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:101
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
@@ -1645,12 +1645,12 @@ msgstr "裁剪图像到选区大小(&T)"
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "垂直翻转(&F)"
+msgstr "翻转 (垂直)(&F)"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "Mirror (horizontally)"
-msgstr "水平翻转"
+msgstr "翻转 (水平)"
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
@@ -1660,12 +1660,12 @@ msgstr "旋转(&R)..."
 #: mainWindow/kpMainWindow_Image.cpp:149
 #, kde-format
 msgid "Rotate &Left"
-msgstr "向左旋转(&L)"
+msgstr "旋转 (向左)(&L)"
 
 #: mainWindow/kpMainWindow_Image.cpp:155
 #, kde-format
 msgid "Rotate Righ&t"
-msgstr "向右旋转(&T)"
+msgstr "旋转 (向右)(&T)"
 
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
