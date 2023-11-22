@@ -171,7 +171,7 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
                 << d->configThumbnailGeometry;
 #endif
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupThumbnail));
 
     cfg.writeEntry (kpSettingThumbnailGeometry, d->configThumbnailGeometry);
     cfg.sync ();
@@ -186,7 +186,7 @@ void kpMainWindow::slotShowThumbnailToggled ()
 
     d->configThumbnailShown = d->actionShowThumbnail->isChecked ();
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupThumbnail));
 
     cfg.writeEntry (kpSettingThumbnailShown, d->configThumbnailShown);
     cfg.sync ();
@@ -221,7 +221,7 @@ void kpMainWindow::slotZoomedThumbnailToggled ()
 
     d->configZoomedThumbnail = d->actionZoomedThumbnail->isChecked ();
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupThumbnail));
 
     cfg.writeEntry (kpSettingThumbnailZoomed, d->configZoomedThumbnail);
     cfg.sync ();
@@ -239,7 +239,7 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
 
     d->configThumbnailShowRectangle = d->actionShowThumbnailRectangle->isChecked ();
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupThumbnail));
 
     cfg.writeEntry (kpSettingThumbnailShowRectangle, d->configThumbnailShowRectangle);
     cfg.sync ();

@@ -123,7 +123,7 @@ void kpMainWindow::slotShowPathToggled ()
     slotUpdateCaption ();
 
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
 
     cfg.writeEntry (kpSettingShowPath, d->configShowPath);
     cfg.sync ();
@@ -135,7 +135,7 @@ void kpMainWindow::slotDrawAntiAliasedToggled(bool on)
 {
     kpToolEnvironment::drawAntiAliased = on;
 
-    KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
+    KConfigGroup cfg(KSharedConfig::openConfig(), QStringLiteral(kpSettingsGroupGeneral));
 
     cfg.writeEntry(kpSettingDrawAntiAliased, kpToolEnvironment::drawAntiAliased);
     cfg.sync();

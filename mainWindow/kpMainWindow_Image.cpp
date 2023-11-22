@@ -613,7 +613,7 @@ void kpMainWindow::slotMoreEffects ()
     {
         d->moreEffectsDialogLastEffect = dialog.selectedEffect ();
 
-        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+        KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
 
         cfg.writeEntry (kpSettingMoreEffectsLastEffect,
                          d->moreEffectsDialogLastEffect);

@@ -63,7 +63,7 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
     connect (this, &kpColorSimilarityToolBarItem::clicked,
              this, &kpColorSimilarityToolBarItem::openDialog);
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
     setColorSimilarityInternal (cfg.readEntry (kpSettingColorSimilarity, 0.0),
         false/*don't write config*/);
 
@@ -102,7 +102,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarityInternal (double similarity
 
     if (writeConfig)
     {
-        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+        KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
         cfg.writeEntry (kpSettingColorSimilarity, colorSimilarity ());
         cfg.sync ();
     }

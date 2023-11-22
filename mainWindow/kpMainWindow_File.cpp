@@ -92,7 +92,7 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionOpenRecent = KStandardAction::openRecent(this, &kpMainWindow::slotOpenRecent, ac);
     connect(d->actionOpenRecent, &KRecentFilesAction::recentListCleared, this, &kpMainWindow::slotRecentListCleared);
-    d->actionOpenRecent->loadEntries (KSharedConfig::openConfig ()->group (kpSettingsGroupRecentFiles));
+    d->actionOpenRecent->loadEntries (KSharedConfig::openConfig ()->group (QStringLiteral(kpSettingsGroupRecentFiles)));
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
@@ -214,14 +214,14 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
 #endif
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
-    d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
+    d->actionOpenRecent->loadEntries (cfg->group (QStringLiteral(kpSettingsGroupRecentFiles)));
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tafter loading config=" << d->actionOpenRecent->items ();
 #endif
 
     d->actionOpenRecent->addUrl (url);
 
-    d->actionOpenRecent->saveEntries (cfg->group (kpSettingsGroupRecentFiles));
+    d->actionOpenRecent->saveEntries (cfg->group (QStringLiteral(kpSettingsGroupRecentFiles)));
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -252,7 +252,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
             // Avoid URL memory leak in KRecentFilesAction::loadEntries().
             mw->d->actionOpenRecent->clear ();
 
-            mw->d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
+            mw->d->actionOpenRecent->loadEntries (cfg->group (QStringLiteral(kpSettingsGroupRecentFiles)));
         #if DEBUG_KP_MAIN_WINDOW
             qCDebug(kpLogMainWindow) << "\t\t\tcheck recent URLs="
                         << mw->d->actionOpenRecent->items ();
@@ -296,7 +296,7 @@ QSize kpMainWindow::defaultDocSize () const
     // realize what other processes have done e.g. Settings / Show Path
     KSharedConfig::openConfig ()->reparseConfiguration ();
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
 
     QSize docSize = cfg.readEntry (kpSettingLastDocSize, QSize ());
 
@@ -324,7 +324,7 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
     qCDebug(kpLogMainWindow) << "\tCONFIG: saving Last Doc Size = " << size;
 #endif
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
 
     cfg.writeEntry (kpSettingLastDocSize, size);
     cfg.sync ();
@@ -524,7 +524,7 @@ void kpMainWindow::slotOpenRecent (const QUrl &url)
 
 void kpMainWindow::slotRecentListCleared()
 {
-  d->actionOpenRecent->saveEntries(KSharedConfig::openConfig()->group(kpSettingsGroupRecentFiles));
+  d->actionOpenRecent->saveEntries(KSharedConfig::openConfig()->group(QStringLiteral(kpSettingsGroupRecentFiles)));
 }
 
 //---------------------------------------------------------------------
@@ -1352,7 +1352,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
             // Save config option even if the dialog was cancelled.
             d->configPrintImageCenteredOnPage = optionsPage->printImageCenteredOnPage ();
 
-            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+            KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
             cfg.writeEntry (kpSettingPrintImageCenteredOnPage,
                            d->configPrintImageCenteredOnPage);
             cfg.sync ();

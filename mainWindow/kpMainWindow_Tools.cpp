@@ -514,7 +514,7 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 // private
 void kpMainWindow::readLastTool ()
 {
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupTools));
 
     d->lastToolNumber = cfg.readEntry (kpSettingLastTool, -1);
 }
@@ -540,7 +540,7 @@ void kpMainWindow::saveLastTool ()
     if ( (number < 0) || (number >= d->tools.count()) )
       return;
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupTools));
 
     cfg.writeEntry (kpSettingLastTool, number);
     cfg.sync ();

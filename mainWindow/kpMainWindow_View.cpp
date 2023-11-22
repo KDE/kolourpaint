@@ -124,7 +124,7 @@ void kpMainWindow::slotShowGridToggled ()
 
     updateMainViewGrid ();
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
 
     cfg.writeEntry (kpSettingShowGrid, d->configShowGrid = d->actionShowGrid->isChecked ());
     cfg.sync ();

@@ -54,7 +54,7 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 {
     if (!s_lastColor1.isValid () || !s_lastColor2.isValid ())
     {
-        KConfigGroup cfgGroupSaver (KSharedConfig::openConfig (), kpSettingsGroupFlattenEffect);
+        KConfigGroup cfgGroupSaver (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupFlattenEffect));
 
         s_lastColor1 = cfgGroupSaver.readEntry (kpSettingFlattenEffectColor1, QColor ());
         if (!s_lastColor1.isValid ()) {
@@ -99,7 +99,7 @@ kpEffectFlattenWidget::~kpEffectFlattenWidget ()
     s_lastColor2 = color2 ();
 
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupFlattenEffect);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupFlattenEffect));
 
     cfg.writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
     cfg.writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);

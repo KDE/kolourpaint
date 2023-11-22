@@ -102,7 +102,7 @@ void kpMainWindow::readGeneralSettings ()
     qCDebug(kpLogMainWindow) << "\tkpMainWindow(" << objectName () << ")::readGeneralSettings()";
 #endif
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupGeneral));
 
     d->configFirstTime = cfg.readEntry (kpSettingFirstTime, true);
     d->configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
@@ -150,7 +150,7 @@ void kpMainWindow::readThumbnailSettings ()
     qCDebug(kpLogMainWindow) << "\tkpMainWindow(" << objectName () << ")::readThumbnailSettings()";
 #endif
 
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupThumbnail));
 
     d->configThumbnailShown = cfg.readEntry (kpSettingThumbnailShown, false);
     d->configThumbnailGeometry = cfg.readEntry (kpSettingThumbnailGeometry, QRect ());
@@ -268,7 +268,7 @@ void kpMainWindow::init ()
     {
       d->toolToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
-      KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
+      KConfigGroup cfg(KSharedConfig::openConfig(), QStringLiteral(kpSettingsGroupGeneral));
 
       cfg.writeEntry(kpSettingFirstTime, d->configFirstTime = false);
       cfg.sync();

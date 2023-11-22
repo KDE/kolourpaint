@@ -226,7 +226,7 @@ void kpCommandHistoryBase::readConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::readConfig()";
 #endif
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupUndoRedo);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupUndoRedo));
 
     setUndoMinLimit (cfg.readEntry (kpSettingUndoMinLimit, undoMinLimit ()));
     setUndoMaxLimit (cfg.readEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
@@ -243,7 +243,7 @@ void kpCommandHistoryBase::writeConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpCommandHistoryBase::writeConfig()";
 #endif
-    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupUndoRedo);
+    KConfigGroup cfg (KSharedConfig::openConfig (), QStringLiteral(kpSettingsGroupUndoRedo));
 
     cfg.writeEntry (kpSettingUndoMinLimit, undoMinLimit ());
     cfg.writeEntry (kpSettingUndoMaxLimit, undoMaxLimit ());
