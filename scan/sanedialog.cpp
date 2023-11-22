@@ -77,7 +77,7 @@ bool SaneDialog::setup()
 
     // restore scan dialog size and all options for the selected device if available
     KSharedConfigPtr configPtr = KSharedConfig::openConfig(QStringLiteral("scannersettings"));
-    KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(configPtr, "ScanDialog"));
+    KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(configPtr, QStringLiteral("ScanDialog")));
     QString groupName = m_openDev;
     if (configPtr->hasGroup(groupName)) {
         KConfigGroup group(configPtr, groupName);
@@ -95,7 +95,7 @@ SaneDialog::~SaneDialog()
     if (m_ksanew && !m_openDev.isEmpty()) {
         // save scan dialog size and all options for the selected device if available
         KSharedConfigPtr configPtr = KSharedConfig::openConfig(QStringLiteral("scannersettings"));
-        KConfigGroup group(configPtr, "ScanDialog");
+        KConfigGroup group(configPtr, QStringLiteral("ScanDialog"));
         KWindowConfig::saveWindowSize(windowHandle(), group, KConfigGroup::Persistent);
         group = configPtr->group(m_openDev);
         QMap<QString, QString> opts;
