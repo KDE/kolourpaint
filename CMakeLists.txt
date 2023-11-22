@@ -12,6 +12,7 @@ set(QT_MIN_VERSION "5.15.2")
 set(KF5_MIN_VERSION "5.90.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.84.0")
 set(KSANE_MIN_VERSION "21.12.1")
+set(KSANEWIDGETS6_MIN_VERSION "24.01")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -51,14 +52,22 @@ find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
-find_package(KF5Sane ${KSANE_MIN_VERSION})
+if (QT_MAJOR_VERSION STREQUAL "6")
+    find_package(KSaneWidgets6 ${KSANEWIDGETS6_MIN_VERSION})
+    if(KSaneWidgets6_FOUND)
+        add_definitions(-DHAVE_KSANE=1)
+    else()
+        add_definitions(-DHAVE_KSANE=0)
+    endif()
+else()
+    find_package(KF5Sane ${KSANE_MIN_VERSION})
 
-if(KF5Sane_FOUND)
-    add_definitions(-DHAVE_KSANE=1)
-    set(KSANE_LIBRARIES KF5::Sane)
-else(KF5Sane_FOUND)
-    add_definitions(-DHAVE_KSANE=0)
-endif(KF5Sane_FOUND)
+    if(KF5Sane_FOUND)
+        add_definitions(-DHAVE_KSANE=1)
+    else()
+        add_definitions(-DHAVE_KSANE=0)
+    endif()
+endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -266,12 +275,12 @@ set(kolourpaint_lib2_SRCS
 )  # kolourpaint_lib2_SRCS
 
 
-if(KF5Sane_FOUND)
+if(TARGET KSaneWidgets6 OR TARGET KF5::Sane)
     set(kolourpaint_lib2_SRCS
         ${kolourpaint_lib2_SRCS}
         ${CMAKE_CURRENT_SOURCE_DIR}/scan/sanedialog.cpp
     )
-endif(KF5Sane_FOUND)
+endif()
 
 set(kolourpaint_app_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/views/kpThumbnailView.cpp
@@ -345,15 +354,18 @@ target_link_libraries(kolourpaint
     KF${KF_MAJOR_VERSION}::KIOFileWidgets
     KF${KF_MAJOR_VERSION}::TextWidgets
     Qt${QT_MAJOR_VERSION}::PrintSupport
-    ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )
 
-if(KSANE_FOUND)
-    target_link_libraries(kolourpaint
-        ${KSANE_LIBRARY}
-    )
-endif(KSANE_FOUND)
+if (QT_MAJOR_VERSION STREQUAL "6")
+    if(TARGET KSaneWidgets6)
+        target_link_libraries(kolourpaint KSaneWidgets6)
+    endif()
+else()
+    if(TARGET KF5::Sane)
+        target_link_libraries(kolourpaint KF5::Sane)
+    endif()
+endif()
 
 
 install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
