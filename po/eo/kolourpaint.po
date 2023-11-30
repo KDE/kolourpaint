@@ -1730,11 +1730,7 @@ msgid "&Image"
 msgstr "Bi&ldo"
 
 #: mainWindow/kpMainWindow_Image.cpp:234
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Image/Selection Menu caption - make sure that translation has the same "
-#| "accel ¦as the &Image translation"
-#| msgid "Select&ion"
+#, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure that translation has the same accel "
 "as the &Image translation"
