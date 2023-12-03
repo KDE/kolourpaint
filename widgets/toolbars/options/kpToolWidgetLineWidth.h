@@ -43,10 +43,10 @@ public:
 
     int lineWidth () const;
 
-signals:
+Q_SIGNALS:
     void lineWidthChanged (int width);
 
-protected slots:
+protected Q_SLOTS:
     bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 

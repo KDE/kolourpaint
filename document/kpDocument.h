@@ -307,12 +307,12 @@ public:
     void resize (int w, int h, const kpColor &backgroundColor);
 
 
-public slots:
+public Q_SLOTS:
     // these will emit signals!
     void slotContentsChanged (const QRect &rect);
     void slotSizeChanged (const QSize &newSize);
 
-signals:
+Q_SIGNALS:
     void documentOpened ();
     void documentSaved ();
 

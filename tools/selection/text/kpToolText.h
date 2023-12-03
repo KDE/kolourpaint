@@ -294,7 +294,7 @@ protected:
                           const kpTextStyle &newTextStyle,
                           const kpTextStyle &oldTextStyle);
 
-protected slots:
+protected Q_SLOTS:
     void slotIsOpaqueChanged (bool isOpaque) override;
 
 
@@ -307,7 +307,7 @@ protected:
      */
     bool careAboutColorsSwapped () const override { return true; }
 
-protected slots:
+protected Q_SLOTS:
     void slotColorsSwapped (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor) override;
 
@@ -315,7 +315,7 @@ protected slots:
     void slotBackgroundColorChanged (const kpColor &color) override;
     void slotColorSimilarityChanged (double, int) override;
 
-public slots:
+public Q_SLOTS:
     void slotFontFamilyChanged (const QString &fontFamily, const QString &oldFontFamily);
     void slotFontSizeChanged (int fontSize, int oldFontSize);
     void slotBoldChanged (bool isBold);

@@ -64,7 +64,7 @@ protected:
     int contrast () const;
     int gamma () const;
 
-protected slots:
+protected Q_SLOTS:
     void recalculateGammaLabel ();
 
     void resetBrightness ();

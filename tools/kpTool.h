@@ -119,7 +119,7 @@ private:
     // Only called by ctor to create action().
     void initAction ();
 
-public slots:
+public Q_SLOTS:
     // Call this when something below the mouse cursor may have changed
     // and/or if the view has moved relative to the cursor (as opposed to
     // the cursor moving relative to the view, which would trigger a
@@ -181,7 +181,7 @@ public:
     // already the current tool (used by the selection tools to deselect).
     virtual void reselect ();
 
-signals:
+Q_SIGNALS:
     // emitted after beginDraw() has been called
     void beganDraw (const QPoint &point);
 
@@ -198,7 +198,7 @@ signals:
     // emitted after cancelShape() has been called
     void cancelledShape (const QPoint &point);
 
-signals:
+Q_SIGNALS:
     // User clicked on the tool's action - i.e. select this tool
     void actionActivated();
 
@@ -256,14 +256,14 @@ protected:
     double colorSimilarity () const;
     int processedColorSimilarity () const;
 
-public slots:
+public Q_SLOTS:
     void slotColorsSwappedInternal (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor);
     void slotForegroundColorChangedInternal (const kpColor &color);
     void slotBackgroundColorChangedInternal (const kpColor &color);
     void slotColorSimilarityChangedInternal (double similarity, int processedSimilarity);
 
-protected slots:  // TODO: there is no reason why these should be slots
+protected Q_SLOTS:  // TODO: there is no reason why these should be slots
     virtual void slotColorsSwapped (const kpColor & /*newForegroundColor*/, const kpColor & /*newBackgroundColor*/) {}
     virtual void slotForegroundColorChanged (const kpColor & /*color*/) {}
     virtual void slotBackgroundColorChanged (const kpColor & /*color*/) {}
@@ -411,7 +411,7 @@ public:
     void setUserShapeSize (const QSize &size = KP_INVALID_SIZE);
     void setUserShapeSize (int width, int height);
 
-signals:
+Q_SIGNALS:
     void userMessageChanged (const QString &userMessage);
     void userShapePointsChanged (const QPoint &startPoint = KP_INVALID_POINT,
                                  const QPoint &endPoint = KP_INVALID_POINT);

@@ -75,7 +75,7 @@ void kpTool::setUserMessage (const QString &userMessage)
         d->userMessage.prepend (i18n ("%1: ", text ()));
     }
 
-    emit userMessageChanged (d->userMessage);
+    Q_EMIT userMessageChanged (d->userMessage);
 }
 
 //---------------------------------------------------------------------
@@ -103,7 +103,7 @@ void kpTool::setUserShapePoints (const QPoint &startPoint,
 {
     d->userShapeStartPoint = startPoint;
     d->userShapeEndPoint = endPoint;
-    emit userShapePointsChanged (d->userShapeStartPoint, d->userShapeEndPoint);
+    Q_EMIT userShapePointsChanged (d->userShapeStartPoint, d->userShapeEndPoint);
 
     if (setSize)
     {
@@ -151,7 +151,7 @@ void kpTool::setUserShapeSize (const QSize &size)
 {
     d->userShapeSize = size;
 
-    emit userShapeSizeChanged (d->userShapeSize);
+    Q_EMIT userShapeSizeChanged (d->userShapeSize);
 }
 
 //---------------------------------------------------------------------

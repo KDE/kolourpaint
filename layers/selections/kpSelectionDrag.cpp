@@ -65,7 +65,7 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
         QDataStream stream (&ba, QIODevice::WriteOnly);
         stream << sel;
     }
-    setData (kpSelectionDrag::SelectionMimeType, ba);
+    setData (QLatin1String(kpSelectionDrag::SelectionMimeType), ba);
 
     // Store as image (so that QMimeData::hasImage()) works).
     // OPT: an awful waste of memory storing image in both selection and QImage
@@ -93,12 +93,12 @@ bool kpSelectionDrag::canDecode(const QMimeData *mimeData)
 
 #if DEBUG_KP_SELECTION_DRAG
     qCDebug(kpLogLayers) << "kpSelectionDrag::canDecode()"
-             << "hasSel=" << mimeData->hasFormat(kpSelectionDrag::SelectionMimeType)
+             << "hasSel=" << mimeData->hasFormat(QLatin1String(kpSelectionDrag::SelectionMimeType))
              << "hasImage=" << mimeData->hasImage();
 #endif
 
     // mimeData->hasImage() would not check if the data is a valid image
-    return mimeData->hasFormat(kpSelectionDrag::SelectionMimeType) ||
+    return mimeData->hasFormat(QLatin1String(kpSelectionDrag::SelectionMimeType)) ||
            !qvariant_cast<QImage>(mimeData->imageData()).isNull();
 }
 
@@ -112,12 +112,12 @@ kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
 #endif
     Q_ASSERT (mimeData);
 
-    if (mimeData->hasFormat (kpSelectionDrag::SelectionMimeType))
+    if (mimeData->hasFormat (QLatin1String(kpSelectionDrag::SelectionMimeType)))
     {
     #if DEBUG_KP_SELECTION_DRAG
         qCDebug(kpLogLayers) << "\tmimeSource hasFormat selection - just return it in QByteArray";
     #endif
-        QByteArray data = mimeData->data (kpSelectionDrag::SelectionMimeType);
+        QByteArray data = mimeData->data (QLatin1String(kpSelectionDrag::SelectionMimeType));
         QDataStream stream (&data, QIODevice::ReadOnly);
 
         return kpSelectionFactory::FromStream (stream);

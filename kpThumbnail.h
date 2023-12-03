@@ -54,10 +54,10 @@ public:
     kpThumbnailView *view () const;
     void setView (kpThumbnailView *view);
 
-public slots:
+public Q_SLOTS:
     void updateCaption ();
 
-protected slots:
+protected Q_SLOTS:
     void slotViewDestroyed ();
 
 protected:
@@ -65,7 +65,7 @@ protected:
     void moveEvent (QMoveEvent *e) override;
     void closeEvent (QCloseEvent *e) override;
 
-signals:
+Q_SIGNALS:
     void windowClosed ();
 
 private:

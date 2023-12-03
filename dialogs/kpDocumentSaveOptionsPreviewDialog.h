@@ -56,12 +56,12 @@ public:
 protected:
     static const QSize s_pixmapLabelMinimumSize;
 
-signals:
+Q_SIGNALS:
     void moved ();
     void resized ();
     void finished ();
 
-public slots:
+public Q_SLOTS:
     void setFilePixmapAndSize (const QImage &filePixmap, qint64 fileSize);
     void updatePixmapPreview ();
 

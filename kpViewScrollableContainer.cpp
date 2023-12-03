@@ -173,7 +173,7 @@ void kpGrip::setUserMessage (const QString &message)
     // global sense (kpViewScrollableContainer::slotGripStatusMessageChanged()).
 
     m_userMessage = message;
-    emit statusMessageChanged (message);
+    Q_EMIT statusMessageChanged (message);
 }
 
 //---------------------------------------------------------------------
@@ -195,7 +195,7 @@ void kpGrip::cancel ()
     setCursor (Qt::ArrowCursor);
     m_shouldReleaseMouseButtons = true;
 
-    emit cancelledDraw ();
+    Q_EMIT cancelledDraw ();
 }
 
 //---------------------------------------------------------------------
@@ -220,7 +220,7 @@ void kpGrip::mousePressEvent (QMouseEvent *e)
     {
         m_startPoint = e->pos ();
         m_currentPoint = e->pos ();
-        emit beganDraw ();
+        Q_EMIT beganDraw ();
         setFocus();  // allow to receive keyboard events to be able to handle ESC
 
         setUserMessage (i18n ("Resize Image: Right click to cancel."));
@@ -263,7 +263,7 @@ void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
 
     m_currentPoint = point;
 
-    emit continuedDraw (((m_type & kpGrip::Right) ? point.x () - m_startPoint.x () : 0),
+    Q_EMIT continuedDraw (((m_type & kpGrip::Right) ? point.x () - m_startPoint.x () : 0),
                         ((m_type & kpGrip::Bottom) ? point.y () - m_startPoint.y () : 0),
                         dueToDragScroll);
 }
@@ -307,7 +307,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         m_currentPoint = KP_INVALID_POINT;
         m_startPoint = KP_INVALID_POINT;
 
-        emit endedDraw ((m_type & kpGrip::Right) ? dx : 0,
+        Q_EMIT endedDraw ((m_type & kpGrip::Right) ? dx : 0,
                         (m_type & kpGrip::Bottom) ? dy : 0);
     }
 
@@ -317,7 +317,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         setUserMessage(QString());
         setCursor (cursorForType (m_type));
 
-        emit releasedAllButtons ();
+        Q_EMIT releasedAllButtons ();
     }
 }
 
@@ -734,7 +734,7 @@ void kpViewScrollableContainer::slotGripBeganDraw ()
     updateResizeLines (m_view->width (), m_view->height (),
                        0/*viewDX*/, 0/*viewDY*/);
 
-    emit beganDocResize ();
+    Q_EMIT beganDocResize ();
 }
 
 //---------------------------------------------------------------------
@@ -775,7 +775,7 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
                        qMax (1, qMax (m_view->height () + viewDY, static_cast<int> (m_view->transformDocToViewY (1)))),
                        viewDX, viewDY);
 
-    emit continuedDocResize (newDocSize ());
+    Q_EMIT continuedDocResize (newDocSize ());
 }
 
 //---------------------------------------------------------------------
@@ -789,7 +789,7 @@ void kpViewScrollableContainer::slotGripCancelledDraw ()
 
     calculateDocResizingGrip ();
 
-    emit cancelledDocResize ();
+    Q_EMIT cancelledDocResize ();
 
     endDragScroll ();
 
@@ -820,7 +820,7 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
 
     calculateDocResizingGrip ();
 
-    emit endedDocResize (newSize);
+    Q_EMIT endedDocResize (newSize);
 
     endDragScroll ();
 
@@ -837,7 +837,7 @@ void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &str
     }
 
     m_gripStatusMessage = string;
-    emit statusMessageChanged (string);
+    Q_EMIT statusMessageChanged (string);
 }
 
 //---------------------------------------------------------------------
@@ -900,7 +900,7 @@ void kpViewScrollableContainer::slotContentsMoved ()
     m_overlay->move(viewport()->pos());
     m_overlay->update();
 
-    emit contentsMoved();
+    Q_EMIT contentsMoved();
 }
 
 //---------------------------------------------------------------------
@@ -1200,7 +1200,7 @@ void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
 {
     QScrollArea::resizeEvent (e);
 
-    emit resized ();
+    Q_EMIT resized ();
 }
 
 //---------------------------------------------------------------------

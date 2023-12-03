@@ -71,13 +71,13 @@ public:
     void endDraw (const QPoint &thisPoint,
         const QRect &normalizedRect) override;
 
-protected slots:
+protected Q_SLOTS:
     void timeoutDraw ();
 
 
 protected:
     int spraycanSize () const;
-protected slots:
+protected Q_SLOTS:
     void slotSpraycanSizeChanged (int size);
 
 

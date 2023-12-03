@@ -56,7 +56,7 @@ private:
 public:
     void setColorSimilarity (double similarity) override;
 
-signals:
+Q_SIGNALS:
     void colorSimilarityChanged (double similarity, int processedSimilarity);
 
 public:
@@ -64,11 +64,11 @@ public:
     double oldColorSimilarity () const;
 
 
-public slots:
+public Q_SLOTS:
     // Open configuration dialog for color similarity.
     void openDialog ();
 
-private slots:
+private Q_SLOTS:
     void slotFlashTimerTimeout ();
 
 public:

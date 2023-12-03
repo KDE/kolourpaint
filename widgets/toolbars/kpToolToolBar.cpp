@@ -339,7 +339,7 @@ void kpToolToolBar::slotToolButtonClicked ()
         m_currentTool->beginInternal ();
     }
 
-    emit sigToolSelected (m_currentTool);
+    Q_EMIT sigToolSelected (m_currentTool);
     m_baseLayout->activate();
     adjustSizeConstraint();
 }

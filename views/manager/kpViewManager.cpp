@@ -148,7 +148,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
     }
 
 
-    foreach (kpView *view, d->views)
+    for (kpView *view : std::as_const(d->views))
       if ( view->underMouse() )
         return view;
 
@@ -203,7 +203,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 // public
 bool kpViewManager::hasAViewWithFocus () const
 {
-    foreach (kpView *view, d->views)
+    for (kpView *view : std::as_const(d->views))
       if ( view->isActiveWindow() )
         return true;
 
@@ -215,7 +215,7 @@ bool kpViewManager::hasAViewWithFocus () const
 // public
 void kpViewManager::setCursor(const QCursor &cursor)
 {
-    foreach (kpView *view, d->views)
+    for (kpView *view : std::as_const(d->views))
       view->setCursor(cursor);
 
     d->cursor = cursor;
@@ -226,7 +226,7 @@ void kpViewManager::setCursor(const QCursor &cursor)
 // public
 void kpViewManager::unsetCursor()
 {
-    foreach (kpView *view, d->views)
+    for (kpView *view : std::as_const(d->views))
       view->unsetCursor();
 
     d->cursor = QCursor();

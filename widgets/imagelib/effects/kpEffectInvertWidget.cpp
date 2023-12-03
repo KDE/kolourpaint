@@ -180,7 +180,7 @@ void kpEffectInvertWidget::slotRGBCheckBoxToggled ()
                                m_greenCheckBox->isChecked ());
     //blockSignals (false);
 
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 
     m_inSignalHandler = false;
 }
@@ -200,7 +200,7 @@ void kpEffectInvertWidget::slotAllCheckBoxToggled ()
     m_blueCheckBox->setChecked (m_allCheckBox->isChecked ());
     //blockSignals (false);
 
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 
     m_inSignalHandler = false;
 }

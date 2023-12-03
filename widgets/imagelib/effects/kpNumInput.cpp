@@ -206,7 +206,7 @@ void kpIntNumInput::spinValueChanged(int val)
         priv->slider->setValue(val);
     }
 
-    emit valueChanged(val);
+    Q_EMIT valueChanged(val);
 }
 
 void kpIntNumInput::setRange(int lower, int upper, int singleStep)

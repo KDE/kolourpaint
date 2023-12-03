@@ -264,7 +264,7 @@ public:
         bool selectionFinished) const = 0;
 
 
-signals:
+Q_SIGNALS:
     // Signals that a view update is required in the document region <docRect>,
     // due to the selection changing.
     void changed (const QRect &docRect);

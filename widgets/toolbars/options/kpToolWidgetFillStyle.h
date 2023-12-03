@@ -67,10 +67,10 @@ public:
     kpColor drawingBackgroundColor (
         const kpColor &foregroundColor, const kpColor &backgroundColor) const;
 
-signals:
+Q_SIGNALS:
     void fillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
 
-protected slots:
+protected Q_SLOTS:
     bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 

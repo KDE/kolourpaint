@@ -47,7 +47,7 @@ public:
     kpEffectWidgetBase (bool actOnSelection, QWidget *parent);
     ~kpEffectWidgetBase () override;
 
-signals:
+Q_SIGNALS:
     void settingsChangedNoWaitCursor ();
 
     void settingsChanged ();

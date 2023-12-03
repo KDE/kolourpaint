@@ -165,7 +165,7 @@ bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret) {
-        emit fillStyleChanged (fillStyle ());
+        Q_EMIT fillStyleChanged (fillStyle ());
     }
     return ret;
 }

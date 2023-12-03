@@ -73,7 +73,7 @@ void kpToolTextBackspaceCommand::addBackspace ()
             int newCursorRow = m_row - 1;
             int newCursorCol = textLines [newCursorRow].length ();
 
-            m_deletedText.prepend ('\n');
+            m_deletedText.prepend (QLatin1Char('\n'));
 
             textLines [newCursorRow] += textLines [m_row];
 
@@ -123,7 +123,7 @@ void kpToolTextBackspaceCommand::unexecute ()
 
     for (auto && i : m_deletedText)
     {
-        if (i == '\n')
+        if (i == QLatin1Char('\n'))
         {
             const QString rightHalf = textLines [m_row].mid (m_col);
 

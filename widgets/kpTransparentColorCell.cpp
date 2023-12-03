@@ -91,13 +91,13 @@ void kpTransparentColorCell::mouseReleaseEvent (QMouseEvent *e)
     {
         if (e->button () == Qt::LeftButton)
         {
-            emit transparentColorSelected (0);
-            emit foregroundColorChanged (kpColor::Transparent);
+            Q_EMIT transparentColorSelected (0);
+            Q_EMIT foregroundColorChanged (kpColor::Transparent);
         }
         else if (e->button () == Qt::RightButton)
         {
-            emit transparentColorSelected (1);
-            emit backgroundColorChanged (kpColor::Transparent);
+            Q_EMIT transparentColorSelected (1);
+            Q_EMIT backgroundColorChanged (kpColor::Transparent);
         }
     }
 }

@@ -215,8 +215,8 @@ void kpAbstractSelection::moveBy (int dx, int dy)
     qCDebug(kpLogLayers) << "\tnewRect=" << d->rect;
 #endif
 
-    emit changed (oldRect);
-    emit changed (boundingRect ());
+    Q_EMIT changed (oldRect);
+    Q_EMIT changed (boundingRect ());
 }
 
 // public

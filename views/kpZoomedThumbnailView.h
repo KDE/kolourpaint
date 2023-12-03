@@ -74,7 +74,7 @@ public:
     QString caption () const override;
 
 
-public slots:
+public Q_SLOTS:
     /**
      * Changes its zoom level to accommodate the display of entire document
      * in the view.  It maintains aspect by changing the origin and mask.

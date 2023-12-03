@@ -148,7 +148,7 @@ void kpTransformPreviewDialog::createDimensionsGroupBox ()
          const QString minimumLengthString (QStringLiteral("100000 x 100000"));
          const int padLength = minimumLengthString.length ();
          for (int i = originalDimensions.length (); i < padLength; i++) {
-             originalDimensions += ' ';
+             originalDimensions += QLatin1Char(' ');
          }
     }
     auto *originalDimensionsLabel = new QLabel (originalDimensions, m_dimensionsGroupBox);

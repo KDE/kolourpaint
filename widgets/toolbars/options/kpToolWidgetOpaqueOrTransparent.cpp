@@ -93,7 +93,7 @@ bool kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col, bool saveAs
 #endif
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret) {
-        emit isOpaqueChanged (isOpaque ());
+        Q_EMIT isOpaqueChanged (isOpaque ());
     }
     return ret;
 }

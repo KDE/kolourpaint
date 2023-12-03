@@ -200,7 +200,7 @@ void kpDocument::openNew (const QUrl &url)
     *m_metaInfo = kpDocumentMetaInfo ();
     m_modified = false;
 
-    emit documentOpened ();
+    Q_EMIT documentOpened ();
 }
 
 //---------------------------------------------------------------------
@@ -229,7 +229,7 @@ bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
         *m_metaInfo = newMetaInfo;
         m_modified = false;
 
-        emit documentOpened ();
+        Q_EMIT documentOpened ();
         return true;
     }
 

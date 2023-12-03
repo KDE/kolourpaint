@@ -93,7 +93,7 @@ private:
 
     void enableFieldsDeleteRowButtonIfShould ();
 
-private slots:
+private Q_SLOTS:
     void setUIToOriginalMetaInfo ();
     void slotFieldsCurrentCellChanged (int row, int col, int oldRow, int oldCol);
 

@@ -251,7 +251,7 @@ void kpTool::beginDrawInternal ()
         beginDraw ();
 
         d->beganDraw = true;
-        emit beganDraw (d->currentPoint);
+        Q_EMIT beganDraw (d->currentPoint);
     }
 }
 
@@ -320,7 +320,7 @@ void kpTool::cancelShapeInternal ()
         cancelShape ();
         d->viewUnderStartPoint = nullptr;
 
-        emit cancelledShape (viewUnderCursor () ? d->currentPoint : KP_INVALID_POINT);
+        Q_EMIT cancelledShape (viewUnderCursor () ? d->currentPoint : KP_INVALID_POINT);
 
         if (viewUnderCursor ()) {
             hover (d->currentPoint);
@@ -388,7 +388,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     }
     d->viewUnderStartPoint = nullptr;
 
-    emit endedDraw (d->currentPoint);
+    Q_EMIT endedDraw (d->currentPoint);
     if (viewUnderCursor ()) {
         hover (d->currentPoint);
     }

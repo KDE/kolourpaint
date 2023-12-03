@@ -112,7 +112,7 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionScan = ac->addAction(QStringLiteral("file_scan"));
     d->actionScan->setText(i18n ("Scan..."));
-    d->actionScan->setIcon(QIcon::fromTheme("scanner"));
+    d->actionScan->setIcon(QIcon::fromTheme(QStringLiteral("scanner")));
 #if HAVE_KSANE
     connect (d->actionScan, &QAction::triggered, this, &kpMainWindow::slotScan);
 #else
@@ -976,7 +976,7 @@ bool kpMainWindow::saveAs (bool localOnly)
                                     d->document->imageWithSelection (),
                                     *d->document->saveOptions (),
                                     *d->document->metaInfo (),
-                                    kpSettingsGroupFileSaveAs,
+                                    QLatin1String(kpSettingsGroupFileSaveAs),
                                     localOnly,
                                     &chosenSaveOptions,
                                     !d->document->savedAtLeastOnceBefore (),
@@ -1024,7 +1024,7 @@ bool kpMainWindow::slotExport ()
                                     d->document->imageWithSelection (),
                                     d->lastExportSaveOptions,
                                     *d->document->metaInfo (),
-                                    kpSettingsGroupFileExport,
+                                    QLatin1String(kpSettingsGroupFileExport),
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
                                     d->exportFirstTime,
@@ -1154,7 +1154,7 @@ void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
         int dot;
 
         QString fileName = url.fileName ();
-        dot = fileName.lastIndexOf ('.');
+        dot = fileName.lastIndexOf (QLatin1Char('.'));
 
         // file.ext but not .hidden-file?
         if (dot > 0) {

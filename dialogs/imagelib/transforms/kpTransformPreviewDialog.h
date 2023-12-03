@@ -109,7 +109,7 @@ public:
 private:
     void updateShrunkenDocumentPixmap ();
 
-protected slots:
+protected Q_SLOTS:
     void updatePreview ();
 
     // Call this whenever a value (e.g. an angle) changes

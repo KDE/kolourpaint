@@ -287,7 +287,7 @@ bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret) {
-        emit brushChanged ();
+        Q_EMIT brushChanged ();
     }
     return ret;
 }

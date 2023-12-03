@@ -73,7 +73,7 @@ protected:
 
 public:
     QString mimeType () const;
-public slots:
+public Q_SLOTS:
     void setMimeType (const QString &string);
 
 public:
@@ -81,20 +81,20 @@ public:
     bool dither () const;
 protected:
     static int colorDepthComboItemFromColorDepthAndDither (int depth, bool dither);
-public slots:
+public Q_SLOTS:
     void setColorDepthDither (int depth,
                               bool dither = kpDocumentSaveOptions::initialDither ());
-protected slots:
+protected Q_SLOTS:
     void slotColorDepthSelected ();
 
 public:
     int quality () const;
-public slots:
+public Q_SLOTS:
     void setQuality (int newQuality);
 
 public:
     kpDocumentSaveOptions documentSaveOptions () const;
-public slots:
+public Q_SLOTS:
     void setDocumentSaveOptions (const kpDocumentSaveOptions &saveOptions);
 
 
@@ -113,11 +113,11 @@ protected:
     Mode mode () const;
     void setMode (Mode mode);
 
-protected slots:
+protected Q_SLOTS:
     void repaintLabels ();
 
 
-protected slots:
+protected Q_SLOTS:
     void showPreview (bool yes = true);
     void hidePreview ();
     void updatePreviewDelayed ();

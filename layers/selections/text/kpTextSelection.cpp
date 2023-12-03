@@ -288,7 +288,7 @@ void kpTextSelection::setTextLines (const QList <QString> &textLines_)
 {
     d->textLines = textLines_;
 
-    emit changed (boundingRect ());
+    Q_EMIT changed (boundingRect ());
 }
 
 //--------------------------------------------------------------------------------
@@ -330,7 +330,7 @@ void kpTextSelection::setTextStyle (const kpTextStyle &textStyle)
 {
     d->textStyle = textStyle;
 
-    emit changed (boundingRect ());
+    Q_EMIT changed (boundingRect ());
 }
 
 kpPreeditText kpTextSelection::preeditText () const
@@ -341,7 +341,7 @@ kpPreeditText kpTextSelection::preeditText () const
 void kpTextSelection::setPreeditText (const kpPreeditText &preeditText)
 {
     d->preeditText = preeditText;
-    emit changed (boundingRect ());
+    Q_EMIT changed (boundingRect ());
 }
 
 #include "moc_kpTextSelection.cpp"

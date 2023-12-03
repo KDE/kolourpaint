@@ -94,7 +94,7 @@ public:
     bool isModified () const;
     // (this emits isModifiedChanged() if the modified state changes)
     void setModified (bool yes);
-public slots:
+public Q_SLOTS:
     // (this emits isModifiedChanged() if the modified state changes)
     void setModified ();
 
@@ -138,7 +138,7 @@ public:
     void appendRow ();
     void deleteLastRow ();
 
-signals:
+Q_SIGNALS:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 
@@ -155,7 +155,7 @@ signals:
 protected:
     void contextMenuEvent (QContextMenuEvent *e) override;
 
-protected slots:
+protected Q_SLOTS:
     void slotColorSelected (int cell, const QColor &color, Qt::MouseButton button);
     void slotColorDoubleClicked (int cell, const QColor &color);
     void slotColorChanged (int cell, const QColor &color);

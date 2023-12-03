@@ -93,15 +93,16 @@ int main(int argc, char *argv [])
   cmdLine.addPositionalArgument(QStringLiteral("files"), i18n("Image files to open, optionally"), QStringLiteral("[files...]"));
 
   aboutData.setupCommandLine(&cmdLine);
-  cmdLine.addOption(QCommandLineOption("mimetypes", i18n("List all readable image MIME types")));
-  cmdLine.addOption(QCommandLineOption("new", i18n("Start with new image using given size"), i18n("[width]x[height]")));
+  cmdLine.addOption(QCommandLineOption(QStringLiteral("mimetypes"), i18n("List all readable image MIME types")));
+  cmdLine.addOption(QCommandLineOption(QStringLiteral("new"), i18n("Start with new image using given size"), i18n("[width]x[height]")));
   cmdLine.process(app);
   aboutData.processCommandLine(&cmdLine);
 
   // produce a list of MimeTypes which kolourpaint can handle (can be used inside the .desktop file)
-  if ( cmdLine.isSet("mimetypes") )
+  if ( cmdLine.isSet(QStringLiteral("mimetypes")) )
   {
-    foreach (const QByteArray &type, QImageReader::supportedMimeTypes())
+    const QList<QByteArray> types = QImageReader::supportedMimeTypes();
+    for (const QByteArray &type : types)
     {
       if ( !type.isEmpty() )
         printf("%s;", type.constData());
@@ -134,11 +135,11 @@ int main(int argc, char *argv [])
     else
     {
       kpDocument *doc = nullptr;
-      QString sizeStr = cmdLine.value("new");
+      QString sizeStr = cmdLine.value(QStringLiteral("new"));
 
       if ( !sizeStr.isEmpty() )
       {
-        QStringList dimensions = sizeStr.split(QChar('x'));
+        QStringList dimensions = sizeStr.split(QLatin1Char('x'));
         if ( dimensions.count() == 2 )
         {
           unsigned int w = dimensions[0].toUInt();

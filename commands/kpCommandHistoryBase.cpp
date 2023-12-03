@@ -65,12 +65,20 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
 {
     m_actionUndo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-undo")), undoActionText (), this);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    ac->addAction (QString::fromLatin1(KStandardAction::name (KStandardAction::Undo)), m_actionUndo);
+#else
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
+#endif
     ac->setDefaultShortcuts (m_actionUndo, KStandardShortcut::shortcut (KStandardShortcut::Undo));
     connect (m_actionUndo, &KToolBarPopupAction::triggered, this, &kpCommandHistoryBase::undo);
 
     m_actionRedo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-redo")), redoActionText (), this);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    ac->addAction (QString::fromLatin1(KStandardAction::name (KStandardAction::Redo)), m_actionRedo);
+#else
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
+#endif
     ac->setDefaultShortcuts (m_actionRedo, KStandardShortcut::shortcut (KStandardShortcut::Redo));
     connect (m_actionRedo, &KToolBarPopupAction::triggered, this, &kpCommandHistoryBase::redo );
 
@@ -331,7 +339,7 @@ void kpCommandHistoryBase::undoInternal ()
     {
         m_documentRestoredPosition++;
         if (m_documentRestoredPosition == 0)
-            emit documentRestored ();
+            Q_EMIT documentRestored ();
     #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition;
     #endif
@@ -365,7 +373,7 @@ void kpCommandHistoryBase::redoInternal ()
     {
         m_documentRestoredPosition--;
         if (m_documentRestoredPosition == 0) {
-            emit documentRestored ();
+            Q_EMIT documentRestored ();
         }
     #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition;

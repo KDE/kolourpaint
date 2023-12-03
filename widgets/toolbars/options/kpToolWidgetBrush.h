@@ -68,10 +68,10 @@ public:
         int row, int col);
     DrawPackage drawFunctionData (const kpColor &color) const;
 
-signals:
+Q_SIGNALS:
     void brushChanged ();
 
-protected slots:
+protected Q_SLOTS:
     bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 

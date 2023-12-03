@@ -107,7 +107,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarityInternal (double similarity
         cfg.sync ();
     }
 
-    emit colorSimilarityChanged (colorSimilarity (), m_processedColorSimilarity);
+    Q_EMIT colorSimilarityChanged (colorSimilarity (), m_processedColorSimilarity);
 }
 
 //---------------------------------------------------------------------

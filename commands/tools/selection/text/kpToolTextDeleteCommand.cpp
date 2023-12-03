@@ -69,7 +69,7 @@ void kpToolTextDeleteCommand::addDelete ()
     {
         if (m_row < static_cast<int> (textLines.size () - 1))
         {
-            m_deletedText.prepend ('\n');
+            m_deletedText.prepend (QLatin1Char('\n'));
 
             textLines [m_row] += textLines [m_row + 1];
             textLines.erase (textLines.begin () + m_row + 1);
@@ -115,7 +115,7 @@ void kpToolTextDeleteCommand::unexecute ()
 
     for (auto && i : m_deletedText)
     {
-        if (i == '\n')
+        if (i == QLatin1Char('\n'))
         {
             const QString rightHalf = textLines [m_row].mid (m_col);
 

@@ -351,8 +351,8 @@ static QRect WashLineHelper (QPainter *rgbPainter, void *data)
 
     bool didSomething = false;
 
-    QList <QPoint> points = kpPainter::interpolatePoints (pack->startPoint, pack->endPoint);
-    foreach (const QPoint &p, points)
+    const QList <QPoint> points = kpPainter::interpolatePoints (pack->startPoint, pack->endPoint);
+    for (const QPoint &p : points)
     {
         // OPT: This may be reading and possibly writing pixels that were
         //      visited on a previous iteration, since the pen is usually

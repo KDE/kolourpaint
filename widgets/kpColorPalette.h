@@ -51,7 +51,7 @@ public:
 
     kpColorCells *colorCells () const;
 
-signals:
+Q_SIGNALS:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 

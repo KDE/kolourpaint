@@ -66,10 +66,10 @@ protected:
 
 public:
     int selectedEffect () const;
-public slots:
+public Q_SLOTS:
     void selectEffect (int which);
 
-protected slots:
+protected Q_SLOTS:
     void slotUpdate () override;
     void slotUpdateWithWaitCursor () override;
 

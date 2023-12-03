@@ -52,10 +52,10 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     kpImage image = document ()->getImageAt (docRect);
 
 
-    QList <QPoint> points = kpPainter::interpolatePoints (lastPoint, thisPoint,
+    const QList <QPoint> points = kpPainter::interpolatePoints (lastPoint, thisPoint,
         brushIsDiagonalLine ());
 
-    foreach (const QPoint &p, points)
+    for (const QPoint &p : points)
     {
         const QPoint point =
             hotRectForMousePointAndBrushWidthHeight(p, brushWidth(), brushHeight())

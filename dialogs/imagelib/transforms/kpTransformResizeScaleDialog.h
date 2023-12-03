@@ -67,7 +67,7 @@ Q_OBJECT
 
     bool isNoOp () const;
 
-  public slots:
+  public Q_SLOTS:
     void slotActOnChanged ();
     void slotTypeChanged ();
 
@@ -95,7 +95,7 @@ Q_OBJECT
     int originalWidth () const;
     int originalHeight () const;
 
-  private slots:
+  private Q_SLOTS:
     void accept() override;
     void setKeepAspectRatio(bool on);
 

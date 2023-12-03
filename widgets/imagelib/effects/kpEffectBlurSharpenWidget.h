@@ -57,7 +57,7 @@ public:
     kpEffectCommandBase *createCommand (
         kpCommandEnvironment *cmdEnviron) const override;
 
-protected slots:
+protected Q_SLOTS:
     void slotUpdateTypeLabel ();
 
 protected:

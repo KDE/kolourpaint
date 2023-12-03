@@ -128,7 +128,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
                 slotContentsChanged (oldSelection->boundingRect ());
             }
             else {
-                emit contentsChanged (oldSelection->boundingRect ());
+                Q_EMIT contentsChanged (oldSelection->boundingRect ());
             }
 
             delete oldSelection;
@@ -139,16 +139,16 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
             slotContentsChanged (m_selection->boundingRect ());
         }
         else {
-            emit contentsChanged (m_selection->boundingRect ());
+            Q_EMIT contentsChanged (m_selection->boundingRect ());
         }
 
 
         if (!hadSelection) {
-            emit selectionEnabled (true);
+            Q_EMIT selectionEnabled (true);
         }
 
         if (isTextChanged) {
-            emit selectionIsTextChanged (textSelection ());
+            Q_EMIT selectionIsTextChanged (textSelection ());
         }
     }
     d->environ->restoreQueueViewUpdates ();
@@ -267,10 +267,10 @@ void kpDocument::selectionDelete ()
         slotContentsChanged (boundingRect);
     }
     else {
-        emit contentsChanged (boundingRect);
+        Q_EMIT contentsChanged (boundingRect);
     }
 
-    emit selectionEnabled (false);
+    Q_EMIT selectionEnabled (false);
 }
 
 //---------------------------------------------------------------------

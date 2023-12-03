@@ -73,7 +73,7 @@ public:
 
     static const int Size;
 
-signals:
+Q_SIGNALS:
     void beganDraw ();
     void continuedDraw (int viewDX, int viewDY, bool dueToDragScroll);
     void cancelledDraw ();
@@ -135,7 +135,7 @@ public:
 
     void drawResizeLines();  // public only for kpOverlay
 
-signals:
+Q_SIGNALS:
     void contentsMoved();
 
     void beganDocResize ();
@@ -148,7 +148,7 @@ signals:
 
     void resized ();
 
-public slots:
+public Q_SLOTS:
     void recalculateStatusMessage ();
 
     void updateGrips ();
@@ -187,7 +187,7 @@ private:
     void wheelEvent(QWheelEvent *e) override;
     void resizeEvent(QResizeEvent *e) override;
 
-private slots:
+private Q_SLOTS:
     void slotGripBeganDraw ();
     void slotGripContinuedDraw (int viewDX, int viewDY, bool dueToScrollView);
     void slotGripCancelledDraw ();

@@ -179,7 +179,7 @@ protected:
     //
     // Reimplemented in the Polygon tool for a fill.
     virtual kpColor drawingBackgroundColor () const;
-protected slots:
+protected Q_SLOTS:
     void updateShape ();
 public:
     void cancelShape () override;
@@ -188,7 +188,7 @@ public:
 
     bool hasBegunShape () const override;
 
-protected slots:
+protected Q_SLOTS:
     void slotForegroundColorChanged (const kpColor &) override;
     void slotBackgroundColorChanged (const kpColor &) override;
 

@@ -63,7 +63,7 @@ kpCommandSize::SizeType kpMacroCommand::size () const
 #if DEBUG_KP_COMMAND_HISTORY && 0
     qCDebug(kpLogCommands) << "\tcalculating:";
 #endif
-    foreach (kpCommand *cmd, m_commandList)
+    for (kpCommand *cmd : m_commandList)
     {
     #if DEBUG_KP_COMMAND_HISTORY && 0
         qCDebug(kpLogCommands) << "\t\tcurrentSize=" << s << " + "
@@ -89,7 +89,7 @@ void kpMacroCommand::execute ()
 
     viewManager()->setQueueUpdates();
 
-    foreach (kpCommand *command, m_commandList)
+    for (kpCommand *command : std::as_const(m_commandList))
     {
     #if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\texecuting " << command->name();

@@ -79,7 +79,7 @@ public:
     QString caption () const override;
 
 
-public slots:
+public Q_SLOTS:
     /**
      * Changes its origin according to the main view's scrollable container
      * so that the top-left most document pixel displayed in the scrollable

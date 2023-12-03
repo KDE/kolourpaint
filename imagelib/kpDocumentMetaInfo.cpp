@@ -144,7 +144,8 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                << " Y=" << dotsPerMeterY ()
                << " offset=" << offset ();
 
-    foreach (const QString &key, textKeys())
+    const QStringList keys = textKeys();
+    for (const QString &key : keys)
       qCDebug(kpLogImagelib) << "key=" << key << " text=" << text(key);
 
     qCDebug(kpLogImagelib) << usedPrefix << "ENDS";

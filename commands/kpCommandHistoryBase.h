@@ -85,13 +85,13 @@ public:
     void addCommand (kpCommand *command, bool execute = true);
     void clear ();
 
-protected slots:
+protected Q_SLOTS:
     // (same as undo() & redo() except they don't call
     //  trimCommandListsUpdateActions())
     void undoInternal ();
     void redoInternal ();
 
-public slots:
+public Q_SLOTS:
     virtual void undo ();
     virtual void redo ();
 
@@ -116,10 +116,10 @@ public:
 
     void setNextUndoCommand (kpCommand *command);
 
-public slots:
+public Q_SLOTS:
     virtual void documentSaved ();
 
-signals:
+Q_SIGNALS:
     void documentRestored ();
 
 protected:

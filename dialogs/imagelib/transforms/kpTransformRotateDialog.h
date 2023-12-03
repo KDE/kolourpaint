@@ -68,11 +68,11 @@ private:
     QImage transformPixmap (const QImage &pixmap,
                                     int targetWidth, int targetHeight) const override;
 
-private slots:
+private Q_SLOTS:
     void slotAngleCustomRadioButtonToggled (bool isChecked);
     void slotUpdate () override;
 
-private slots:
+private Q_SLOTS:
     void accept () override;
 
 private:

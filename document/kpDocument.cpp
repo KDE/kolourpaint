@@ -224,7 +224,7 @@ void kpDocument::setModified (bool yes)
     m_modified = yes;
 
     if (yes) {
-        emit documentModified ();
+        Q_EMIT documentModified ();
     }
 }
 
@@ -438,7 +438,7 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 void kpDocument::slotContentsChanged (const QRect &rect)
 {
     setModified ();
-    emit contentsChanged (rect);
+    Q_EMIT contentsChanged (rect);
 }
 
 //---------------------------------------------------------------------
@@ -446,8 +446,8 @@ void kpDocument::slotContentsChanged (const QRect &rect)
 void kpDocument::slotSizeChanged (const QSize &newSize)
 {
     setModified ();
-    emit sizeChanged (newSize.width(), newSize.height());
-    emit sizeChanged (newSize);
+    Q_EMIT sizeChanged (newSize.width(), newSize.height());
+    Q_EMIT sizeChanged (newSize);
 }
 
 //---------------------------------------------------------------------

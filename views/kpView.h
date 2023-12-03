@@ -233,7 +233,7 @@ protected:
      */
     QRect buddyViewScrollableContainerRectangle () const;
 
-protected slots:
+protected Q_SLOTS:
     /**
      * Updates the buddyViewScrollableContainerRectangle() and redraws
      * appropriately.
@@ -397,7 +397,7 @@ public:
 
     QVariant inputMethodQuery (Qt::InputMethodQuery query) const override;
 
-public slots:
+public Q_SLOTS:
     /**
      * Call this when the "environment" (e.g. document size) changes.  The
      * environment is defined by the caller and should be based on the type
@@ -421,7 +421,7 @@ public:
     QPoint mouseViewPoint (const QPoint &returnViewPoint = KP_INVALID_POINT) const;
 
 
-signals:
+Q_SIGNALS:
     /**
      * Emitted after all zooming code has been executed.
      *

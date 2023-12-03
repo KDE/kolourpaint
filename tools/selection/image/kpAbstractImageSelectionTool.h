@@ -96,7 +96,7 @@ protected:
         const kpImageSelectionTransparency &newTrans,
         const kpImageSelectionTransparency &oldTrans);
 
-protected slots:
+protected Q_SLOTS:
     void slotIsOpaqueChanged (bool isOpaque) override;
     void slotBackgroundColorChanged (const kpColor &color) override;
     void slotColorSimilarityChanged (double similarity, int) override;

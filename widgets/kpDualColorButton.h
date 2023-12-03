@@ -46,12 +46,12 @@ public:
     kpColor foregroundColor () const;
     kpColor backgroundColor () const;
 
-public slots:
+public Q_SLOTS:
     void setColor (int which, const kpColor &color);
     void setForegroundColor (const kpColor &color);
     void setBackgroundColor (const kpColor &color);
 
-signals:
+Q_SIGNALS:
     // If you connect to this signal, ignore the following
     // foregroundColorChanged() and backgroundColorChanged() signals
     void colorsSwapped (const kpColor &newForegroundColor,

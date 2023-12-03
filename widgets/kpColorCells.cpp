@@ -356,7 +356,7 @@ void kpColorCells::setModified (bool yes)
 
     d->isModified = yes;
 
-    emit isModifiedChanged (yes);
+    Q_EMIT isModifiedChanged (yes);
 }
 
 //---------------------------------------------------------------------
@@ -411,9 +411,9 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
 
     makeCellsMatchColorCollection ();
 
-    emit rowCountChanged (rowCount ());
-    emit urlChanged (d->url);
-    emit nameChanged (name ());
+    Q_EMIT rowCountChanged (rowCount ());
+    Q_EMIT urlChanged (d->url);
+    Q_EMIT nameChanged (name ());
 }
 
 //---------------------------------------------------------------------
@@ -431,9 +431,9 @@ bool kpColorCells::openColorCollection (const QUrl &url)
 
         makeCellsMatchColorCollection ();
 
-        emit rowCountChanged (rowCount ());
-        emit urlChanged (d->url);
-        emit nameChanged (name ());
+        Q_EMIT rowCountChanged (rowCount ());
+        Q_EMIT urlChanged (d->url);
+        Q_EMIT nameChanged (name ());
 
         return true;
     }
@@ -451,7 +451,7 @@ bool kpColorCells::saveColorCollectionAs (const QUrl &url)
         d->url = url;
         setModified (false);
 
-        emit urlChanged (d->url);
+        Q_EMIT urlChanged (d->url);
         return true;
     }
 
@@ -488,7 +488,7 @@ void kpColorCells::appendRow ()
 
     makeCellsMatchColorCollection ();
 
-    emit rowCountChanged (rowCount ());
+    Q_EMIT rowCountChanged (rowCount ());
 }
 
 //---------------------------------------------------------------------
@@ -512,7 +512,7 @@ void kpColorCells::deleteLastRow ()
 
     makeCellsMatchColorCollection ();
 
-    emit rowCountChanged (rowCount ());
+    Q_EMIT rowCountChanged (rowCount ());
 }
 
 //---------------------------------------------------------------------
@@ -541,11 +541,11 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
 
     if (button == Qt::LeftButton)
     {
-        emit foregroundColorChanged (kpColor (color.rgba()));
+        Q_EMIT foregroundColorChanged (kpColor (color.rgba()));
     }
     else if (button == Qt::RightButton)
     {
-        emit backgroundColorChanged (kpColor (color.rgba()));
+        Q_EMIT backgroundColorChanged (kpColor (color.rgba()));
     }
 
     // REFACTOR: Make selectedness configurable inside kpColorCellsBase?

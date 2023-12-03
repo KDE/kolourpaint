@@ -175,7 +175,7 @@ void kpEffectFlattenWidget::slotEnableChanged (bool enable)
     m_color1Button->setEnabled (enable);
     m_color2Button->setEnabled (enable);
 
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 }
 
 #include "moc_kpEffectFlattenWidget.cpp"

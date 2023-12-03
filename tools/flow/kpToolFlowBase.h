@@ -103,7 +103,7 @@ class kpToolFlowBase : public kpTool
     virtual kpColor color(int which);
     QRect hotRect() const;
 
-  protected slots:
+  protected Q_SLOTS:
     void updateBrushAndCursor();
 
     void slotForegroundColorChanged(const kpColor &col) override;

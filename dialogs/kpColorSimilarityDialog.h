@@ -53,7 +53,7 @@ public:
     double colorSimilarity () const;
     void setColorSimilarity (double similarity);
 
-private slots:
+private Q_SLOTS:
     void slotColorSimilarityValueChanged ();
 
     void slotWhatIsLabelClicked ();

@@ -69,10 +69,10 @@ public:
         int selectedIndex);
     DrawPackage drawFunctionData (const kpColor &color) const;
 
-signals:
+Q_SIGNALS:
     void eraserSizeChanged (int size);
 
-protected slots:
+protected Q_SLOTS:
     bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 

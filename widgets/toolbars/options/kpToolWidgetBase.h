@@ -83,7 +83,7 @@ public:
     bool hasPreviousOption (int *row = nullptr, int *col = nullptr) const;
     bool hasNextOption (int *row = nullptr, int *col = nullptr) const;
 
-public slots:
+public Q_SLOTS:
     // (returns whether <row> and <col> were in range)
     virtual bool setSelected (int row, int col, bool saveAsDefault);
     bool setSelected (int row, int col);
@@ -91,7 +91,7 @@ public slots:
     bool selectPreviousOption ();
     bool selectNextOption ();
 
-signals:
+Q_SIGNALS:
     void optionSelected (int row, int col);
 
 protected:

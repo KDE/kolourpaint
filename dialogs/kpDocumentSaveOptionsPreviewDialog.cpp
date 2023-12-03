@@ -199,7 +199,7 @@ void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
 
     QWidget::closeEvent (e);
 
-    emit finished ();
+    Q_EMIT finished ();
 }
 
 // protected virtual [base QWidget]
@@ -211,7 +211,7 @@ void kpDocumentSaveOptionsPreviewDialog::moveEvent (QMoveEvent *e)
 
     QWidget::moveEvent (e);
 
-    emit moved ();
+    Q_EMIT moved ();
 }
 
 // protected virtual [base QWidget]
@@ -223,7 +223,7 @@ void kpDocumentSaveOptionsPreviewDialog::resizeEvent (QResizeEvent *e)
 
     QWidget::resizeEvent (e);
 
-    emit resized ();
+    Q_EMIT resized ();
 }
 
 #include "moc_kpDocumentSaveOptionsPreviewDialog.cpp"

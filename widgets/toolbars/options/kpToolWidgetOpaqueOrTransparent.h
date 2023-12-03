@@ -46,10 +46,10 @@ public:
     void setOpaque (bool yes = true);
     void setTransparent (bool yes = true);
 
-signals:
+Q_SIGNALS:
     void isOpaqueChanged (bool isOpaque);
 
-protected slots:
+protected Q_SLOTS:
     bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 

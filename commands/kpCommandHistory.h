@@ -93,7 +93,7 @@ public:
     void addCreateSelectionCommand (kpToolSelectionCreateCommand *cmd,
         bool execute = true);
 
-public slots:
+public Q_SLOTS:
     void undo () override;
     void redo () override;
 

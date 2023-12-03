@@ -184,7 +184,7 @@ protected:
     //       !textCursorEnabled().  We should fix this.
     void updateTextCursor ();
 
-protected slots:
+protected Q_SLOTS:
     void slotTextCursorBlink ();
 
 
@@ -229,7 +229,7 @@ public:
     void setFastUpdates ();
     void restoreFastUpdates ();
 
-public slots:
+public Q_SLOTS:
     void updateView (kpView *v);
     void updateView (kpView *v, const QRect &viewRect);
     void updateView (kpView *v, int x, int y, int w, int h);
@@ -240,10 +240,10 @@ public slots:
     void updateViews (const QRect &docRect);
 
 
-public slots:
+public Q_SLOTS:
     void adjustViewsToEnvironment ();
 
-public slots:
+public Q_SLOTS:
     void setInputMethodEnabled (bool inputMethodEnabled);
 
 private:

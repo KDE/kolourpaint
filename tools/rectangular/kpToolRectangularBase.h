@@ -67,7 +67,7 @@ public:
 
     bool careAboutModifierState () const override { return true; }
 
-private slots:
+private Q_SLOTS:
     virtual void slotLineWidthChanged ();
     virtual void slotFillStyleChanged ();
 

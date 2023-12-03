@@ -171,7 +171,7 @@ bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret) {
-        emit eraserSizeChanged (eraserSize ());
+        Q_EMIT eraserSizeChanged (eraserSize ());
     }
     return ret;
 }

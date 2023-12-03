@@ -415,7 +415,7 @@ void kpMainWindow::pasteText (const QString &text,
 
     toolEndShape ();
 
-    QStringList textLines = text.split('\n');
+    const QStringList textLines = text.split(QLatin1Char('\n'));
 
     if (!forceNewTextSelection &&
         d->document && d->document->textSelection () &&
@@ -496,7 +496,7 @@ void kpMainWindow::pasteText (const QString &text,
         }
 
         int width = 0;
-        foreach (const QString &str, textLines)
+        for (const QString &str : textLines)
           width = std::max(width, fontMetrics.horizontalAdvance(str));
 
         // limit the size to avoid memory overflow
@@ -854,7 +854,7 @@ void kpMainWindow::slotCopyToFile ()
                                     imageToSave,
                                     d->lastCopyToSaveOptions,
                                     kpDocumentMetaInfo (),
-                                    kpSettingsGroupEditCopyTo,
+                                    QLatin1String(kpSettingsGroupEditCopyTo),
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
                                     d->copyToFirstTime,

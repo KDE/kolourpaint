@@ -55,7 +55,7 @@ private:
 
     void updateLastAngles ();
 
-private slots:
+private Q_SLOTS:
     void slotUpdate () override;
 
 public:
@@ -72,7 +72,7 @@ public:
 
     bool isNoOp () const override;
 
-private slots:
+private Q_SLOTS:
     void accept () override;
 
 private:

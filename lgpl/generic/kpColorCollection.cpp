@@ -164,14 +164,14 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
   while( !stream.atEnd() )
   {
      line = stream.readLine();
-     if ( !line.isEmpty() && (line[0] == '#') )
+     if ( !line.isEmpty() && (line[0] == QLatin1Char('#')) )
      {
         // This is a comment line
         line = line.mid(1); // Strip '#'
         line = line.trimmed(); // Strip remaining white space..
         if (!line.isEmpty())
         {
-            newDesc += line+'\n'; // Add comment to description
+            newDesc += line+QLatin1Char('\n'); // Add comment to description
         }
      }
      else
@@ -184,9 +184,9 @@ kpColorCollection::open(const QUrl &url, QWidget *parent)
         bool ok = false;
 
         if ( hasAlpha )
-          ok = (sscanf(line.toLatin1(), "%d %d %d %d%n", &r, &g, &b, &a, &pos) >= 4);
+          ok = (sscanf(line.toLatin1().constData(), "%d %d %d %d%n", &r, &g, &b, &a, &pos) >= 4);
         else
-          ok = (sscanf(line.toLatin1(), "%d %d %d%n", &r, &g, &b, &pos) >= 3);
+          ok = (sscanf(line.toLatin1().constData(), "%d %d %d%n", &r, &g, &b, &pos) >= 3);
 
         if ( ok )
         {
@@ -230,7 +230,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   }
 
   QString filename = QStandardPaths::locate(QStandardPaths::GenericConfigLocation,
-                                            "colors/" + name);
+                                            QStringLiteral("colors/") + name);
   if (filename.isEmpty())
   {
   #if DEBUG_KP_COLOR_COLLECTION
@@ -271,7 +271,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    QTextStream str (device);
 
    QString description = d->desc.trimmed();
-   description = '#' + description.split('\n', Qt::KeepEmptyParts).join(QLatin1String("\n#"));
+   description = QLatin1Char('#') + description.split(QLatin1Char('\n'), Qt::KeepEmptyParts).join(QLatin1String("\n#"));
 
    str << "KDE RGBA Palette\n";
    str << description << "\n";

@@ -266,7 +266,7 @@ void kpColorCellsBase::setColor( int column, const QColor &colorIn )
         delete tableItem;
     }
 
-    emit colorChanged (column, color);
+    Q_EMIT colorChanged (column, color);
 }
 
 void kpColorCellsBase::changeEvent( QEvent* event )
@@ -547,8 +547,8 @@ void kpColorCellsBase::mouseReleaseEvent( QMouseEvent *e )
     d->inMouse = false;
     if (cell != -1)
     {
-        emit colorSelected( cell , color(cell) );
-        emit colorSelectedWhitButton( cell , color(cell), e->button() );
+        Q_EMIT colorSelected( cell , color(cell) );
+        Q_EMIT colorSelectedWhitButton( cell , color(cell), e->button() );
     }
 }
 
@@ -557,7 +557,7 @@ void kpColorCellsBase::mouseDoubleClickEvent( QMouseEvent * /*e*/ )
   int cell = positionToCell(d->mousePos, false, true/*allow empty cell*/);
 
   if (cell != -1)
-    emit colorDoubleClicked( cell , color(cell) );
+    Q_EMIT colorDoubleClicked( cell , color(cell) );
 }
 
 #include "moc_kpColorCellsBase.cpp"

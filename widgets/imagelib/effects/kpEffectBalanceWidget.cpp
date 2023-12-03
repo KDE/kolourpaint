@@ -257,7 +257,7 @@ void kpEffectBalanceWidget::resetBrightness ()
     }
 
     // Immediate update (if signals aren't blocked)
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 }
 
 // protected slot
@@ -278,7 +278,7 @@ void kpEffectBalanceWidget::resetContrast ()
     }
 
     // Immediate update (if signals aren't blocked)
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 }
 
 // protected slot
@@ -300,7 +300,7 @@ void kpEffectBalanceWidget::resetGamma ()
     }
 
     // Immediate update (if signals aren't blocked)
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 }
 
 
@@ -323,7 +323,7 @@ void kpEffectBalanceWidget::resetAll ()
 
     blockSignals (false);
 
-    emit settingsChanged ();
+    Q_EMIT settingsChanged ();
 }
 
 #include "moc_kpEffectBalanceWidget.cpp"

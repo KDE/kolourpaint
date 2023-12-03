@@ -131,7 +131,7 @@ private:
     void dropEvent (QDropEvent *e) override;
     void moveEvent (QMoveEvent *e) override;
 
-private slots:
+private Q_SLOTS:
     void slotScrollViewAfterScroll ();
     void slotUpdateCaption ();
     void slotDocumentRestored ();
@@ -149,7 +149,7 @@ private:
     void createToolBox ();
     void enableToolsDocumentActions (bool enable = true);
 
-private slots:
+private Q_SLOTS:
     void updateToolOptionPrevNextActionsEnabled ();
     void updateActionDrawOpaqueChecked ();
 private:
@@ -245,7 +245,7 @@ public:
                                    bool forceColorChange = false);
     int settingImageSelectionTransparency () const;
 
-private slots:
+private Q_SLOTS:
     void slotToolSelected (kpTool *tool);
 
 private:
@@ -255,14 +255,14 @@ private:
 
 private:
     bool maybeDragScrollingMainView () const;
-private slots:
+private Q_SLOTS:
     bool slotDragScroll (const QPoint &docPoint,
                          const QPoint &docLastPoint,
                          int zoomLevel,
                          bool *didSomething);
     bool slotEndDragScroll ();
 
-private slots:
+private Q_SLOTS:
     void slotBeganDocResize ();
     void slotContinuedDocResize (const QSize &size);
     void slotCancelledDocResize ();
@@ -270,7 +270,7 @@ private slots:
 
     void slotDocResizeMessageChanged (const QString &string);
 
-private slots:
+private Q_SLOTS:
     void slotActionPrevToolOptionGroup1 ();
     void slotActionNextToolOptionGroup1 ();
     void slotActionPrevToolOptionGroup2 ();
@@ -279,7 +279,7 @@ private slots:
     void slotActionDrawOpaqueToggled ();
     void slotActionDrawColorSimilarity ();
 
-public slots:
+public Q_SLOTS:
     void slotToolRectSelection();
     void slotToolEllipticalSelection();
     void slotToolFreeFormSelection();
@@ -295,7 +295,7 @@ private:
 
     void addRecentURL (const QUrl &url);
 
-private slots:
+private Q_SLOTS:
     void slotNew ();
 
 private:
@@ -326,7 +326,7 @@ private:
     QList<QUrl> askForOpenURLs(const QString &caption,
                               bool allowMultipleURLs = true);
 
-private slots:
+private Q_SLOTS:
     void slotOpen ();
     void slotOpenRecent (const QUrl &url);
     void slotRecentListCleared();
@@ -356,7 +356,7 @@ private:
                         bool isSavingForFirstTime,
                         bool *allowLossyPrompt);
 
-private slots:
+private Q_SLOTS:
     bool saveAs (bool localOnly = false);
     bool slotSaveAs ();
 
@@ -371,7 +371,7 @@ private:
     void setPrinterPageOrientation(QPrinter *printer);
     void sendImageToPrinter(QPrinter *printer, bool showPrinterSetupDialog);
 
-private slots:
+private Q_SLOTS:
     void slotPrint ();
     void slotPrintPreview ();
 
@@ -395,7 +395,7 @@ private:
 public:
     QMenu *selectionToolRMBMenu ();
 
-private slots:
+private Q_SLOTS:
     void slotCut ();
     void slotCopy ();
     void slotEnablePaste ();
@@ -416,19 +416,19 @@ public:
                       // weird by being on top of a resize handle just after
                       // a paste).
                       bool allowNewTextSelectionPointShift = false);
-public slots:
+public Q_SLOTS:
     void slotPaste ();
-private slots:
+private Q_SLOTS:
     void slotPasteInNewWindow ();
-public slots:
+public Q_SLOTS:
     void slotDelete ();
 
     void slotSelectAll ();
 private:
     void addDeselectFirstCommand (kpCommand *cmd);
-public slots:
+public Q_SLOTS:
     void slotDeselect ();
-private slots:
+private Q_SLOTS:
     void slotCopyToFile ();
     void slotPasteFromFile ();
 
@@ -447,7 +447,7 @@ private:
     QRect mapToGlobal (const QRect &rect) const;
     QRect mapFromGlobal (const QRect &rect) const;
 
-private slots:
+private Q_SLOTS:
     void slotShowGridToggled ();
 
 
@@ -470,7 +470,7 @@ public:
         bool accountForGrips,
         bool careAboutWidth, bool careAboutHeight);
 
-public slots:
+public Q_SLOTS:
     void slotActualSize ();
     void slotFitToPage ();
     void slotFitToWidth ();
@@ -480,14 +480,14 @@ public:
     void zoomIn (bool centerUnderCursor = false);
     void zoomOut (bool centerUnderCursor = false);
 
-public slots:
+public Q_SLOTS:
     void slotZoomIn ();
     void slotZoomOut ();
 
 private:
     void zoomAccordingToZoomAction (bool centerUnderCursor = false);
 
-private slots:
+private Q_SLOTS:
     void slotZoom ();
 
 
@@ -499,7 +499,7 @@ private:
     void setupViewMenuThumbnailActions ();
     void enableViewMenuThumbnailDocumentActions (bool enable);
 
-private slots:
+private Q_SLOTS:
     void slotDestroyThumbnail ();
     void slotDestroyThumbnailInitatedByUser ();
     void slotCreateThumbnail ();
@@ -507,7 +507,7 @@ private slots:
 public:
     void notifyThumbnailGeometryChanged ();
 
-private slots:
+private Q_SLOTS:
     void slotSaveThumbnailGeometry ();
     void slotShowThumbnailToggled ();
     void updateThumbnailZoomed ();
@@ -538,7 +538,7 @@ private:
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
 
-private slots:
+private Q_SLOTS:
     void slotImageMenuUpdateDueToSelection ();
 
 public:
@@ -547,10 +547,10 @@ public:
                                      bool addSelCreateCmdIfSelAvail = true,
                                      bool addSelContentCmdIfSelAvail = true);
 
-public slots:
+public Q_SLOTS:
     void slotCrop ();
 
-private slots:
+private Q_SLOTS:
     void slotResizeScale ();
     void slotAutoCrop ();
     void slotFlip ();
@@ -577,7 +577,7 @@ private:
     void setupColorsMenuActions ();
     void createColorBox ();
     void enableColorsMenuDocumentActions (bool enable);
-private slots:
+private Q_SLOTS:
     void slotUpdateColorsDeleteRowActionEnabled ();
 
 private:
@@ -587,17 +587,17 @@ private:
 
 private:
     void openDefaultColors ();
-private slots:
+private Q_SLOTS:
     void slotColorsDefault ();
 
 private:
     bool openKDEColors (const QString &name);
-private slots:
+private Q_SLOTS:
     void slotColorsKDE ();
 
 private:
     bool openColors (const QUrl &url);
-private slots:
+private Q_SLOTS:
     void slotColorsOpen ();
 
     void slotColorsReload ();
@@ -617,7 +617,7 @@ private:
     void setupSettingsMenuActions ();
     void enableSettingsMenuDocumentActions (bool enable = true);
 
-private slots:
+private Q_SLOTS:
     void slotFullScreen ();
 
     void slotEnableSettingsShowPath ();
@@ -645,7 +645,7 @@ private:
 
     void setStatusBarDocDepth (int depth = 0);
 
-private slots:
+private Q_SLOTS:
     void setStatusBarMessage (const QString &message = QString());
     void setStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
                                   const QPoint &endPoint = KP_INVALID_POINT);
@@ -670,7 +670,7 @@ private:
 public:
     void enableTextToolBarActions (bool enable = true);
 
-private slots:
+private Q_SLOTS:
     void slotTextFontFamilyChanged ();
     void slotTextFontSizeChanged ();
     void slotTextBoldChanged ();

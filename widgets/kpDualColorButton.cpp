@@ -98,10 +98,10 @@ void kpDualColorButton::setColor (int which, const kpColor &color)
     update ();
 
     if (which == 0) {
-        emit foregroundColorChanged (color);
+        Q_EMIT foregroundColorChanged (color);
     }
     else {
-        emit backgroundColorChanged (color);
+        Q_EMIT backgroundColorChanged (color);
     }
 }
 
@@ -333,9 +333,9 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 
         update ();
 
-        emit colorsSwapped (m_color [0], m_color [1]);
-        emit foregroundColorChanged (m_color [0]);
-        emit backgroundColorChanged (m_color [1]);
+        Q_EMIT colorsSwapped (m_color [0], m_color [1]);
+        Q_EMIT foregroundColorChanged (m_color [0]);
+        Q_EMIT backgroundColorChanged (m_color [1]);
     }
 }
 

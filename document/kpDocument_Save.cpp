@@ -229,7 +229,8 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
     imageToSave.setDotsPerMeterY (metaInfo.dotsPerMeterY ());
     imageToSave.setOffset (metaInfo.offset ());
 
-    foreach (const QString &key, metaInfo.textKeys())
+    const QStringList keys = metaInfo.textKeys();
+    for (const QString &key : keys)
       imageToSave.setText(key, metaInfo.text(key));
 
     //
@@ -244,7 +245,7 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
 #if DEBUG_KP_DOCUMENT
     qCDebug(kpLogDocument) << "\tsaving";
 #endif
-    if (!imageToSave.save (device, type.toLatin1 (), quality))
+    if (!imageToSave.save (device, type.toLatin1 ().constData(), quality))
     {
     #if DEBUG_KP_DOCUMENT
         qCDebug(kpLogDocument) << "\tQImage::save() returned false";
@@ -454,7 +455,7 @@ bool kpDocument::saveAs (const QUrl &url,
 
         m_savedAtLeastOnceBefore = true;
 
-        emit documentSaved ();
+        Q_EMIT documentSaved ();
         return true;
     }
 

@@ -192,7 +192,7 @@ void kpView::setZoomLevel (int hzoom, int vzoom)
         viewManager ()->updateView (this);
     }
 
-    emit zoomLevelChanged (hzoom, vzoom);
+    Q_EMIT zoomLevelChanged (hzoom, vzoom);
 }
 
 
@@ -223,7 +223,7 @@ void kpView::setOrigin (const QPoint &origin)
         viewManager ()->updateView (this);
     }
 
-    emit originChanged (origin);
+    Q_EMIT originChanged (origin);
 }
 
 

@@ -345,7 +345,7 @@ void kpAbstractImageSelection::setBaseImage (const kpImage &baseImage)
 
     recalculateTransparencyMaskCache ();
 
-    emit changed (boundingRect ());
+    Q_EMIT changed (boundingRect ());
 }
 
 //---------------------------------------------------------------------
@@ -416,7 +416,7 @@ bool kpAbstractImageSelection::setTransparency (
 
 
     if (haveChanged) {
-        emit changed (boundingRect ());
+        Q_EMIT changed (boundingRect ());
     }
 
     return haveChanged;
@@ -550,7 +550,7 @@ void kpAbstractImageSelection::flip (bool horiz, bool vert)
         d->transparencyMaskCache = QBitmap::fromImage(std::move(image));
     }
 
-    emit changed (boundingRect ());
+    Q_EMIT changed (boundingRect ());
 }
 
 //---------------------------------------------------------------------

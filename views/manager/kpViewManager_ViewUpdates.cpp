@@ -74,7 +74,7 @@ void kpViewManager::restoreQueueUpdates ()
 
     if (d->queueUpdatesCounter == 0)
     {
-      foreach (kpView *view, d->views)
+      for (kpView *view : std::as_const(d->views))
         view->updateQueuedArea();
     }
 }
@@ -196,7 +196,7 @@ void kpViewManager::updateViews (const QRect &docRect)
     qCDebug(kpLogViews) << "kpViewManager::updateViews (" << docRect << ")";
 #endif
 
-    foreach (kpView *view, d->views)
+    for (kpView *view : std::as_const(d->views))
     {
     #if DEBUG_KP_VIEW_MANAGER && 0
         qCDebug(kpLogViews) << "\tupdating view " << view->name ();
@@ -238,7 +238,7 @@ void kpViewManager::adjustViewsToEnvironment ()
                << " numViews=" << d->views.count ()
                << endl;
 #endif
-    foreach (kpView *view, d->views)
+    for (kpView *view : std::as_const(d->views))
     {
     #if DEBUG_KP_VIEW_MANAGER && 1
         qCDebug(kpLogViews) << "\tview: " << view->name ()

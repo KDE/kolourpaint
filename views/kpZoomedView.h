@@ -75,7 +75,7 @@ public:
     void setZoomLevel (int hzoom, int vzoom) override;
 
 
-public slots:
+public Q_SLOTS:
     /**
      * Resizes itself so that the entire document in the zoom level fits
      * almost perfectly.

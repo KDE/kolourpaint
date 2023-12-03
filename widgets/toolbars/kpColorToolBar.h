@@ -77,7 +77,7 @@ public:
     void openColorSimilarityDialog ();
     void flashColorSimilarityToolBarItem ();
 
-signals:
+Q_SIGNALS:
     // If you connect to this signal, ignore the following
     // foregroundColorChanged() and backgroundColorChanged() signals
     void colorsSwapped (const kpColor &newForegroundColor,
@@ -99,11 +99,11 @@ public:
     QList<QAction *> customContextMenuActions() const;
     void setCustomContextMenuActions(QList<QAction *> customContextMenuActions);
 
-public slots:
+public Q_SLOTS:
     void setForegroundColor (const kpColor &color);
     void setBackgroundColor (const kpColor &color);
 
-private slots:
+private Q_SLOTS:
     void updateNameOrUrlLabel ();
 
 protected:

@@ -280,6 +280,6 @@ void kpView::resizeEvent (QResizeEvent *e)
 
     QWidget::resizeEvent (e);
 
-    emit sizeChanged (width (), height ());
-    emit sizeChanged (size ());
+    Q_EMIT sizeChanged (width (), height ());
+    Q_EMIT sizeChanged (size ());
 }

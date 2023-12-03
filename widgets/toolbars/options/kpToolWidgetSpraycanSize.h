@@ -43,10 +43,10 @@ public:
 
     int spraycanSize () const;
 
-signals:
+Q_SIGNALS:
     void spraycanSizeChanged (int size);
 
-protected slots:
+protected Q_SLOTS:
     bool setSelected (int row, int col, bool saveAsDefault) override;
 };
 

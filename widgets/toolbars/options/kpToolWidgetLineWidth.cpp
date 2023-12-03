@@ -77,7 +77,7 @@ bool kpToolWidgetLineWidth::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret) {
-        emit lineWidthChanged (lineWidth ());
+        Q_EMIT lineWidthChanged (lineWidth ());
     }
     return ret;
 }

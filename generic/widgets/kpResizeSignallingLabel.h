@@ -45,7 +45,7 @@ public:
     kpResizeSignallingLabel (QWidget *parent);
     ~kpResizeSignallingLabel () override;
 
-signals:
+Q_SIGNALS:
     void resized ();
 
 protected:

@@ -85,11 +85,11 @@ protected:
     bool event(QEvent *ev) override;
     void paintEvent(QPaintEvent *) override;
 
-signals:
+Q_SIGNALS:
     void sigToolSelected (kpTool *tool);  // tool may be 0
     void toolWidgetOptionSelected ();
 
-private slots:
+private Q_SLOTS:
     void slotToolButtonClicked ();
 
     void slotToolActionActivated ();

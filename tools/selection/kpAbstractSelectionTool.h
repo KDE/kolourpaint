@@ -429,7 +429,7 @@ protected:
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect) = 0;
     void drawCreate (const QPoint &thisPoint, const QRect &normalizedRect);
-private slots:
+private Q_SLOTS:
     void delayedDrawCreate ();
 
 
@@ -475,7 +475,7 @@ protected:
     virtual void setSelectionBorderForBeginDrawMove ();
 private:
     void beginDrawMove ();
-private slots:
+private Q_SLOTS:
     void slotRMBMoveUpdateGUI ();
 
 
@@ -578,7 +578,7 @@ private:
 // User Setting Selection Options
 //
 
-protected slots:
+protected Q_SLOTS:
     virtual void slotIsOpaqueChanged (bool isOpaque) = 0;
 
 

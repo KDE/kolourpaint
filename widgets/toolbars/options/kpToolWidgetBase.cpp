@@ -576,7 +576,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
         saveSelectedAsDefault ();
     }
 
-    emit optionSelected (row, col);
+    Q_EMIT optionSelected (row, col);
     return true;
 }
 

@@ -112,7 +112,7 @@ bool kpToolWidgetSpraycanSize::setSelected (int row, int col, bool saveAsDefault
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret) {
-        emit spraycanSizeChanged (spraycanSize ());
+        Q_EMIT spraycanSizeChanged (spraycanSize ());
     }
     return ret;
 }
