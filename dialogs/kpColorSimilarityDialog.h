@@ -47,7 +47,7 @@ class kpColorSimilarityDialog : public QDialog
 Q_OBJECT
 
 public:
-    kpColorSimilarityDialog (QWidget *parent);
+    explicit kpColorSimilarityDialog (QWidget *parent);
     ~kpColorSimilarityDialog () override;
 
     double colorSimilarity () const;
