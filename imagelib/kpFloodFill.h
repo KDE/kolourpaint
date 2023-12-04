@@ -48,6 +48,8 @@ public:
                  int processedColorSimilarity);
     ~kpFloodFill ();
 
+    kpFloodFill(const kpFloodFill &) = delete;
+    kpFloodFill &operator=(const kpFloodFill &) = delete;
 
     //
     // Spits back constructor arguments.

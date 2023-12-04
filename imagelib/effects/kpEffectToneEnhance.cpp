@@ -77,6 +77,9 @@ class kpEffectToneEnhanceApplier
     kpEffectToneEnhanceApplier ();
     ~kpEffectToneEnhanceApplier ();
 
+    kpEffectToneEnhanceApplier(const kpEffectToneEnhanceApplier &) = delete;
+    kpEffectToneEnhanceApplier &operator=(const kpEffectToneEnhanceApplier &) = delete;
+
     void BalanceImageTone(QImage* pImage, double granularity, double amount);
 
   protected:
