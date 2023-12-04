@@ -94,7 +94,7 @@ public:
      *
      * @return the preferred size necessary to show the control
      */
-    QSize sizeHint() const Q_DECL_OVERRIDE;
+    QSize sizeHint() const override;
 
 protected:
     /**
@@ -242,7 +242,7 @@ public:
      */
     void setSpecialValueText(const QString &text);
 
-    void setLabel(const QString &label, Qt::Alignment a = Qt::AlignLeft | Qt::AlignTop) Q_DECL_OVERRIDE;
+    void setLabel(const QString &label, Qt::Alignment a = Qt::AlignLeft | Qt::AlignTop) override;
 
     /**
      * This method returns the minimum size necessary to display the
@@ -251,7 +251,7 @@ public:
      *
      * @return the minimum size necessary to show the control
      */
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+    QSize minimumSizeHint() const override;
 
 public Q_SLOTS:
     /**
@@ -294,8 +294,8 @@ protected:
      */
     QSpinBox *spinBox() const;
 
-    void doLayout() Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
+    void doLayout() override;
+    void resizeEvent(QResizeEvent *) override;
 
 private:
     void initWidget(int value);
@@ -440,8 +440,8 @@ public:
      */
     void setSpecialValueText(const QString &text);
 
-    void setLabel(const QString &label, Qt::Alignment a = Qt::AlignLeft | Qt::AlignTop) Q_DECL_OVERRIDE;
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+    void setLabel(const QString &label, Qt::Alignment a = Qt::AlignLeft | Qt::AlignTop) override;
+    QSize minimumSizeHint() const override;
 
 public Q_SLOTS:
     /**
@@ -470,8 +470,8 @@ private Q_SLOTS:
     void spinBoxChanged(double);
 
 protected:
-    void doLayout() Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
+    void doLayout() override;
+    void resizeEvent(QResizeEvent *) override;
 
     friend class kpDoubleLine;
 private:
