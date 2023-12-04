@@ -546,7 +546,7 @@ void kpCommandHistoryBase::trimCommandList(QList<kpCommand *> &commandList)
                 qCDebug(kpLogCommands) << "\t\t\tkill";
             #endif
                 delete (*it);
-                it = m_undoCommandList.erase (it);
+                it = commandList.erase (it);
                 advanceIt = false;
             }
         }
