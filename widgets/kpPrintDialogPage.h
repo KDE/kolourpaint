@@ -38,7 +38,7 @@ class kpPrintDialogPage : public QWidget
 Q_OBJECT
 
 public:
-    kpPrintDialogPage (QWidget *parent);
+    explicit kpPrintDialogPage (QWidget *parent);
     ~kpPrintDialogPage () override;
 
     bool printImageCenteredOnPage ();

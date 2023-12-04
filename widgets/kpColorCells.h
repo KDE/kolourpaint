@@ -78,7 +78,7 @@ class kpColorCells : public kpColorCellsBase
 Q_OBJECT
 
 public:
-    kpColorCells (QWidget *parent,
+    explicit kpColorCells (QWidget *parent,
                   Qt::Orientation o = Qt::Horizontal);
     ~kpColorCells () override;
 

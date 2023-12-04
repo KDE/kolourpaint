@@ -73,7 +73,7 @@ public:
     // WARNING: Only call the <ctor> with imagePtr = 0 if you are going to use
     //          operator= to fill it in with a valid imagePtr immediately
     //          afterwards.
-    kpTransformAutoCropBorder (const kpImage *imagePtr = nullptr, int processedColorSimilarity = 0);
+    explicit kpTransformAutoCropBorder (const kpImage *imagePtr = nullptr, int processedColorSimilarity = 0);
 
     kpCommandSize::SizeType size () const;
 

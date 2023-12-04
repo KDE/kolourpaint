@@ -41,7 +41,7 @@ class kpSelectionDrag : public QMimeData
     static const char * const SelectionMimeType;
 
     // ASSUMPTION: <sel> has content (is not just a border).
-    kpSelectionDrag(const kpAbstractImageSelection &sel);
+    explicit kpSelectionDrag(const kpAbstractImageSelection &sel);
 
   public:
     static bool canDecode(const QMimeData *mimeData);

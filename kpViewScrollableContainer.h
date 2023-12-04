@@ -123,7 +123,7 @@ class kpViewScrollableContainer : public QScrollArea
 Q_OBJECT
 
 public:
-    kpViewScrollableContainer(QWidget *parent);
+    explicit kpViewScrollableContainer(QWidget *parent);
 
     QSize newDocSize () const;
     bool haveMovedFromOriginalDocSize () const;

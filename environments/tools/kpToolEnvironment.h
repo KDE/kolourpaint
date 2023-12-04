@@ -54,7 +54,7 @@ public:
     // Note: Our interface must never publicly leak <mainWindow> or any other
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
-    kpToolEnvironment (kpMainWindow *mainWindow);
+    explicit kpToolEnvironment (kpMainWindow *mainWindow);
     ~kpToolEnvironment () override;
 
 

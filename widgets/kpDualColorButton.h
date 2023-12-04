@@ -40,7 +40,7 @@ class kpDualColorButton : public QFrame
 Q_OBJECT
 
 public:
-    kpDualColorButton (QWidget *parent);
+    explicit kpDualColorButton (QWidget *parent);
 
     kpColor color (int which) const;
     kpColor foregroundColor () const;

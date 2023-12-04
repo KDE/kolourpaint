@@ -50,7 +50,7 @@
 class kpSubWindow : public QDialog
 {
   public:
-    kpSubWindow(QWidget *parent);
+    explicit kpSubWindow(QWidget *parent);
 };
 
 

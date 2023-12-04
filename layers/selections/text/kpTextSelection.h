@@ -96,7 +96,7 @@ Q_OBJECT
 //
 
 public:
-    kpTextSelection (const QRect &rect = QRect (),
+    explicit kpTextSelection (const QRect &rect = QRect (),
         const kpTextStyle &textStyle = kpTextStyle ());
     kpTextSelection (const QRect &rect, const QList <QString> &textLines,
         const kpTextStyle &textStyle);

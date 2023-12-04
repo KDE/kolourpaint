@@ -48,7 +48,7 @@ public:
     // Note: Our interface must never publicly leak <mainWindow> or any other
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
-    kpToolSelectionEnvironment (kpMainWindow *mainWindow);
+    explicit kpToolSelectionEnvironment (kpMainWindow *mainWindow);
     ~kpToolSelectionEnvironment () override;
 
     kpImageSelectionTransparency imageSelectionTransparency () const;

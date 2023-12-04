@@ -50,7 +50,7 @@
 class SetDocumentToSelectionImageCommand : public kpCommand
 {
 public:
-    SetDocumentToSelectionImageCommand (kpCommandEnvironment *environ);
+    explicit SetDocumentToSelectionImageCommand (kpCommandEnvironment *environ);
     ~SetDocumentToSelectionImageCommand () override;
 
     /* (uninteresting child of macro cmd) */

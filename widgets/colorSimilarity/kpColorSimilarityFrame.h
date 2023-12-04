@@ -37,7 +37,7 @@
 class kpColorSimilarityFrame : public QWidget, public kpColorSimilarityHolder
 {
 public:
-    kpColorSimilarityFrame(QWidget *parent);
+    explicit kpColorSimilarityFrame(QWidget *parent);
 
     void setColorSimilarity (double similarity) override;
 

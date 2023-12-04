@@ -84,12 +84,12 @@ public:
 
     // Opens a new window with the document specified by <url>
     // or creates a blank document if <url> could not be opened.
-    kpMainWindow (const QUrl &url);
+    explicit kpMainWindow (const QUrl &url);
 
     // Opens a new window with the document <newDoc>
     // (<newDoc> can be 0 although this would result in a new
     //  window without a document at all).
-    kpMainWindow (kpDocument *newDoc);
+    explicit kpMainWindow (kpDocument *newDoc);
 
     void finalizeGUI(KXMLGUIClient *client) override;
 

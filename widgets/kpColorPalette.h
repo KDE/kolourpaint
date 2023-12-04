@@ -42,7 +42,7 @@ class kpColorPalette : public QWidget
 Q_OBJECT
 
 public:
-    kpColorPalette (QWidget *parent,
+    explicit kpColorPalette (QWidget *parent,
                     Qt::Orientation o = Qt::Horizontal);
     ~kpColorPalette () override;
 

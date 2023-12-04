@@ -44,7 +44,7 @@ static inline int calcDiffByTen(int x, int y)
 class kpNumInputPrivate
 {
 public:
-    kpNumInputPrivate(kpNumInput *q) :
+    explicit kpNumInputPrivate(kpNumInput *q) :
         q(q),
         column1Width(0),
         column2Width(0),
@@ -161,7 +161,7 @@ public:
     QSpinBox     *intSpinBox;
     QSize        intSpinBoxSize;
 
-    kpIntNumInputPrivate(kpIntNumInput *q)
+    explicit kpIntNumInputPrivate(kpIntNumInput *q)
         : q(q) {}
 };
 

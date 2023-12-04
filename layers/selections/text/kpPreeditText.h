@@ -37,7 +37,7 @@ class kpPreeditText
 {
 public:
     kpPreeditText ();
-    kpPreeditText (const QInputMethodEvent *event);
+    explicit kpPreeditText (const QInputMethodEvent *event);
 
     bool isEmpty () const;
 

@@ -48,7 +48,7 @@ class kpViewManager : public QObject
 Q_OBJECT
 
 public:
-    kpViewManager (kpMainWindow *mainWindow);
+    explicit kpViewManager (kpMainWindow *mainWindow);
     ~kpViewManager () override;
 
 

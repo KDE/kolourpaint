@@ -47,7 +47,7 @@ class kpThumbnail : public kpSubWindow
 Q_OBJECT
 
 public:
-    kpThumbnail (kpMainWindow *parent);
+    explicit kpThumbnail (kpMainWindow *parent);
     ~kpThumbnail () override;
 
 public:

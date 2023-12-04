@@ -43,7 +43,7 @@
 class kpColorCellsBase::kpColorCellsBasePrivate
 {
 public:
-    kpColorCellsBasePrivate(kpColorCellsBase *q): q(q)
+    explicit kpColorCellsBasePrivate(kpColorCellsBase *q): q(q)
     {
         colors = nullptr;
         inMouse = false;

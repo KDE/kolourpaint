@@ -56,7 +56,7 @@ class kpColor
 public:
     kpColor ();
     kpColor (int red, int green, int blue, bool isTransparent = false);
-    kpColor (const QRgb &rgba);
+    explicit kpColor (const QRgb &rgba);
     kpColor (const kpColor &rhs);
     friend QDataStream &operator<< (QDataStream &stream, const kpColor &color);
     friend QDataStream &operator>> (QDataStream &stream, kpColor &color);

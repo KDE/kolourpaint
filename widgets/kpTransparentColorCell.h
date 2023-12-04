@@ -41,7 +41,7 @@ class kpTransparentColorCell : public QFrame
 Q_OBJECT
 
 public:
-    kpTransparentColorCell (QWidget *parent);
+    explicit kpTransparentColorCell (QWidget *parent);
 
     QSize sizeHint () const override;
 

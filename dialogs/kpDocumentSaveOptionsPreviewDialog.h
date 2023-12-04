@@ -48,7 +48,7 @@ class kpDocumentSaveOptionsPreviewDialog : public kpSubWindow
 Q_OBJECT
 
 public:
-    kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
+    explicit kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
     ~kpDocumentSaveOptionsPreviewDialog () override;
 
     QSize preferredMinimumSize () const;
