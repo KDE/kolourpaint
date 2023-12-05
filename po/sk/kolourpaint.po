@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
 "PO-Revision-Date: 2021-07-17 12:12+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -180,52 +180,52 @@ msgstr "Otočiť"
 msgid "Skew"
 msgstr "Skosiť"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Vrátiť späť: %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo"
 msgstr "&Undo"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&Opakovať vrátené: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo"
 msgstr "&Redo"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Undo: %1"
 msgstr "Undo: %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, kde-format
 msgid "Undo"
 msgstr "Undo"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, kde-format
 msgid "Redo: %1"
 msgstr "Redo: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, kde-format
 msgid "Redo"
 msgstr "Redo"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -982,22 +982,22 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "Nízka farebná hĺbka"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "Nepodarilo sa uložiť obrázok - nepodarilo sa vytvoriť dočasný súbor."
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, kde-format
 msgid "Could not save as \"%1\": %2"
 msgstr "Nepodarilo sa uložiť ako \"%1\": %2"
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr "Chyba pri ukladaní obrázku"
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "Nepodarilo sa uložiť obrázok - nepodarilo sa poslanie."

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kolourpaint.pot\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
 "Language-Team: br <LL@li.org>\n"
@@ -176,52 +176,52 @@ msgstr "Treiñ"
 msgid "Skew"
 msgstr ""
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Dizober : %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo"
 msgstr "&Dizober"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&Adober : %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo"
 msgstr "&Adober"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Undo: %1"
 msgstr "Dizober : %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, kde-format
 msgid "Undo"
 msgstr "Dizober"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, kde-format
 msgid "Redo: %1"
 msgstr "Adober : %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, kde-format
 msgid "Redo"
 msgstr "Adober"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1 : %2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, fuzzy, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -940,25 +940,25 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "Donder skramm izel"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr ""
 "Ne m'eus ket gallet enrollañ ar skeudenn - Ne m'eus ket gallet krouiñ ar "
 "restr padennek."
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, fuzzy, kde-format
 #| msgid "Could not save as \"%1\"."
 msgid "Could not save as \"%1\": %2"
 msgstr "N'hell ket bet enrollet evel « %1 »."
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr ""
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr ""

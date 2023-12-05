@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
 "PO-Revision-Date: 2023-11-07 22:35+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -186,52 +186,52 @@ msgstr "Biratu"
 msgid "Skew"
 msgstr "Okertu"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Desegin: %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo"
 msgstr "&Desegin"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "Be&rregin: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo"
 msgstr "Be&rregin"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Undo: %1"
 msgstr "Desegin: %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, kde-format
 msgid "Undo"
 msgstr "Desegin"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, kde-format
 msgid "Redo: %1"
 msgstr "Berregin: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, kde-format
 msgid "Redo"
 msgstr "Berregin"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -1001,22 +1001,22 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "Kolore-sakonera baxua"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "Ezin izan da irudia gorde - ezin da behin-behineko fitxategia sortu."
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, kde-format
 msgid "Could not save as \"%1\": %2"
 msgstr "Ezin izan da «%1» bezala gorde: %2"
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr "Errorea irudia gordetzean"
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "Ezin izan da irudia gorde - erroea kargatzean."

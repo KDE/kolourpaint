@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
 "PO-Revision-Date: 2023-09-12 01:56+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
@@ -183,52 +183,52 @@ msgstr "旋轉"
 msgid "Skew"
 msgstr "扭曲"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "復原(&U)：%1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo"
 msgstr "復原(&U)"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "重做(&R)：%1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo"
 msgstr "重做(&R)"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Undo: %1"
 msgstr "復原：%1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, kde-format
 msgid "Undo"
 msgstr "復原"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, kde-format
 msgid "Redo: %1"
 msgstr "重做：%1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, kde-format
 msgid "Redo"
 msgstr "重做"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1：%2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -965,22 +965,22 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "位元深度過低"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "無法儲存影像 - 無法建立暫存檔。"
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, kde-format
 msgid "Could not save as \"%1\": %2"
 msgstr "無法儲存為 %1：%2"
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr "儲存影像時發生錯誤"
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "無法儲存影像 - 上傳失敗。"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
 "PO-Revision-Date: 2006-01-10 02:28+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -177,52 +177,52 @@ msgstr "旋轉"
 msgid "Skew"
 msgstr "扭曲"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "復原(&U): %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, fuzzy, kde-format
 msgid "&Undo"
 msgstr "復原(&U): %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "取消復原(&R): %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, fuzzy, kde-format
 msgid "&Redo"
 msgstr "紅色(&R)"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, fuzzy, kde-format
 msgid "Undo: %1"
 msgstr "復原(&U): %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, fuzzy, kde-format
 msgid "Undo"
 msgstr "復原(&U): %1"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, fuzzy, kde-format
 msgid "Redo: %1"
 msgstr "取消復原(&R): %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, fuzzy, kde-format
 msgid "Redo"
 msgstr "紅色"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -994,23 +994,23 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "低色彩深度"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "無法儲存圖像 - 無法建立暫存檔。"
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, fuzzy, kde-format
 #| msgid "Could not save as \"%1\"."
 msgid "Could not save as \"%1\": %2"
 msgstr "無法儲存為「%1」。"
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr ""
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "無法儲存圖像 - 上載失敗。"

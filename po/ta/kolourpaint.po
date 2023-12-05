@@ -1,12 +1,12 @@
 # translation of kolourpaint.po to
 # Ambalam <tamilpc@ambalam.com>, 2004.
-# Kishore G <kishore96@gmail.com>, 2021, 2023.
+# SPDX-FileCopyrightText: 2021, 2023 Kishore G <kishore96@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
-"PO-Revision-Date: 2023-08-20 15:12+0530\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
+"PO-Revision-Date: 2023-12-04 20:50+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -178,52 +178,52 @@ msgstr "சுழற்று"
 msgid "Skew"
 msgstr "ஓராயம்"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&செய்யாதே: %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo"
 msgstr "&செயல்நீக்கு"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&திரும்பச் செய்: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo"
 msgstr "&மீளச்செய்"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, kde-format
 msgid "Undo: %1"
 msgstr "செயல்நீக்கு: %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, kde-format
 msgid "Undo"
 msgstr "செயல்நீக்கு"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, kde-format
 msgid "Redo: %1"
 msgstr "மீளச்செய்: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, kde-format
 msgid "Redo"
 msgstr "மீளச்செய்"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -345,19 +345,18 @@ msgstr "உரை: முடி"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:253
 #, kde-format
 msgid "&Add Row"
-msgstr ""
+msgstr "&வரிசையை சேர்"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:258
-#, fuzzy, kde-format
-#| msgid "&Delete Selection"
+#, kde-format
 msgid "&Delete Row"
-msgstr "தேர்ந்தெடுத்தவையை அழி"
+msgstr "வரிசையை &நீக்கு"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:263
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
 #, kde-format
 msgid "&Reset"
-msgstr "&திரும்ப அமை"
+msgstr "&மீட்டமை"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
 #, kde-format
@@ -376,10 +375,9 @@ msgid "Key"
 msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
-#, fuzzy, kde-format
-#| msgid "&Blue"
+#, kde-format
 msgid "Value"
-msgstr "&நீலம்"
+msgstr "மதிப்பு"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
 #, kde-format
@@ -394,11 +392,10 @@ msgid ""
 msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
-#, fuzzy, kde-format
-#| msgid "Text: Finish"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Text Fields"
-msgstr "உரை: முடி"
+msgstr "முறையற்ற உரைப் புலங்கள்"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
@@ -430,7 +427,7 @@ msgstr "முன்தோற்றம்"
 #: dialogs/kpColorSimilarityDialog.cpp:63
 #, kde-format
 msgid "&Update"
-msgstr ""
+msgstr "&புதுப்பி"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:90
 #, fuzzy, kde-format
@@ -447,7 +444,7 @@ msgstr "இல் செயல்:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
 #, kde-format
 msgid "Entire Image"
-msgstr "முழு பிம்பம்"
+msgstr "முழு படம்"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:168
 #: layers/selections/image/kpAbstractImageSelection.cpp:204
@@ -993,22 +990,22 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "குறைந்த வண்ண ஆழம்"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "படிமத்தை சேமிக்க முடியவில்லை - தற்காலிக கோப்பினை உருவாக்க முடியவில்லை"
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, kde-format
 msgid "Could not save as \"%1\": %2"
 msgstr "\"%1\" என சேமிக்க முடியவில்லை: %2"
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr "படத்தை சேமிப்பதில் சிக்கல்"
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "படிமத்தை சேமிக்க முடியவில்லை - மேல் ஏற்ற தோல்வியுற்றது."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 00:41+0000\n"
+"POT-Creation-Date: 2023-12-05 00:39+0000\n"
 "PO-Revision-Date: 2007-08-20 12:26+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -180,52 +180,52 @@ msgstr "घुमाउनुहोस्"
 msgid "Skew"
 msgstr "बाङ्गो"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, kde-format
 msgid "&Undo: %1"
 msgstr "पूर्वस्थितिमा फर्काउनुहोस्: %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:452
 #, fuzzy, kde-format
 msgid "&Undo"
 msgstr "पूर्वस्थितिमा फर्काउनुहोस्: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, kde-format
 msgid "&Redo: %1"
 msgstr "रिडू गर्नुहोस्: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:460
 #, fuzzy, kde-format
 msgid "&Redo"
 msgstr "रातो"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:469
 #, fuzzy, kde-format
 msgid "Undo: %1"
 msgstr "पूर्वस्थितिमा फर्काउनुहोस्: %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:646
+#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
 #, fuzzy, kde-format
 msgid "Undo"
 msgstr "पूर्वस्थितिमा फर्काउनुहोस्: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:477
 #, fuzzy, kde-format
 msgid "Redo: %1"
 msgstr "रिडू गर्नुहोस्: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:671
+#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
 #, fuzzy, kde-format
 msgid "Redo"
 msgstr "रातो"
 
-#: commands/kpCommandHistoryBase.cpp:604
+#: commands/kpCommandHistoryBase.cpp:612
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:615
+#: commands/kpCommandHistoryBase.cpp:623
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -1011,23 +1011,23 @@ msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "न्यून रङ गहिराइ"
 
-#: document/kpDocument_Save.cpp:267
+#: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "छवि बचत गर्न सकेन - अस्थायी फाइल सिर्जना गर्न अक्षम ।"
 
-#: document/kpDocument_Save.cpp:275
+#: document/kpDocument_Save.cpp:276
 #, fuzzy, kde-format
 #| msgid "Could not save as \"%1\"."
 msgid "Could not save as \"%1\": %2"
 msgstr "\"%1\" का रूपमा बचत गर्न सकेन ।"
 
-#: document/kpDocument_Save.cpp:347 document/kpDocument_Save.cpp:390
+#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
 msgstr ""
 
-#: document/kpDocument_Save.cpp:425
+#: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "छवि बचत गर्न सकेन - अनलोड गर्न असफल भयो ।"
