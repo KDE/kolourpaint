@@ -1721,8 +1721,7 @@ msgid "&More Effects..."
 msgstr "&Pliaj efektoj..."
 
 #: mainWindow/kpMainWindow_Image.cpp:230
-#, fuzzy, kde-format
-#| msgid "&Image"
+#, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure the translation has the same accel "
 "as the Select&ion translation"
@@ -2723,9 +2722,3 @@ msgstr "Plenigi per la malfona koloro"
 #, kde-format
 msgid "Opaque"
 msgstr "Maldiafana"
-
-#~ msgctxt ""
-#~ "Image/Selection Menu caption - make sure the translation has the same "
-#~ "accel ¦as the Select&ion translation"
-#~ msgid "&Image"
-#~ msgstr "Bi&ldo"
