@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-05 00:39+0000\n"
-"PO-Revision-Date: 2023-12-09 09:27\n"
+"PO-Revision-Date: 2023-12-17 11:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -277,7 +277,7 @@ msgstr "图像属性"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:141
 #, kde-format
 msgid "Dots &Per Inch (DPI)"
-msgstr "图像分辨率 (DPI)(&P)"
+msgstr "图像分辨率 (DPI) (&P)"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:148
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:159
@@ -1640,12 +1640,12 @@ msgstr "更改大小/缩放(&E)..."
 #: mainWindow/kpMainWindow_Image.cpp:123
 #, kde-format
 msgid "Se&t as Image (Crop)"
-msgstr "裁剪图像到选区大小(&T)"
+msgstr "裁剪图像到选区大小 (&T)"
 
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "翻转 (垂直)(&F)"
+msgstr "翻转 (垂直) (&F)"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
@@ -1660,12 +1660,12 @@ msgstr "旋转(&R)..."
 #: mainWindow/kpMainWindow_Image.cpp:149
 #, kde-format
 msgid "Rotate &Left"
-msgstr "旋转 (向左)(&L)"
+msgstr "旋转 (向左) (&L)"
 
 #: mainWindow/kpMainWindow_Image.cpp:155
 #, kde-format
 msgid "Rotate Righ&t"
-msgstr "旋转 (向右)(&T)"
+msgstr "旋转 (向右) (&T)"
 
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
@@ -1675,7 +1675,7 @@ msgstr "斜切变形(&K)..."
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
-msgstr "色彩降为单色 (抖动)(&N)"
+msgstr "色彩降为单色 (抖动) (&N)"
 
 #: mainWindow/kpMainWindow_Image.cpp:171
 #, kde-format
@@ -2510,7 +2510,7 @@ msgstr "单色(&M)"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
 #, kde-format
 msgid "Mo&nochrome (dithered)"
-msgstr "单色 (抖动)(&N)"
+msgstr "单色 (抖动) (&N)"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
 #, kde-format
@@ -2520,7 +2520,7 @@ msgstr "256 色(&L)"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:62
 #, kde-format
 msgid "256 colo&r (dithered)"
-msgstr "256 色 (抖动)(&R)"
+msgstr "256 色 (抖动) (&R)"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
 #, kde-format
