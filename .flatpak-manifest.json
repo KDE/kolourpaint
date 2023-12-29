@@ -1,0 +1,21 @@
+{
+    "id": "org.kde.kolourpaint",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-23.08",
+    "sdk": "org.kde.Sdk",
+    "command": "kolourpaint",
+    "tags": ["nightly"],
+    "desktop-file-name-suffix": " (Nightly)",
+    "finish-args": ["--share=ipc", "--socket=cups", "--socket=fallback-x11", "--socket=wayland", "--filesystem=host" ],
+
+    "modules": [
+        {
+            "name": "kolourpaint",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                { "type": "git", "url": "https://invent.kde.org/graphics/kolourpaint.git" }
+            ]
+        }
+    ]
+}
