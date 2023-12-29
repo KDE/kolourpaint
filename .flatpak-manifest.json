@@ -14,7 +14,7 @@
             "name": "kolourpaint",
             "buildsystem": "cmake-ninja",
             "sources": [
-                { "type": "git", "url": "https://invent.kde.org/graphics/kolourpaint.git" }
+                { "type": "dir", "path": "." }
             ]
         }
     ]
