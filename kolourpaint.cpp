@@ -33,14 +33,43 @@
 #include <kolourpaintlicense.h>
 #include <document/kpDocument.h>
 
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QImageReader>
-#include <QDir>
 #include <KLocalizedString>
 
-int main(int argc, char *argv [])
-{
+#include <QApplication>
+#include <QCommandLineParser>
+#include <QDir>
+#include <QImageReader>
+
+namespace {
+/*
+  The painter backend on wayland does memcpy for the whole drawing area all the
+  time regardless of checking the real damaged area, which makes the performance
+  significantly worse compared to xcb.
+
+  See
+  https://github.com/qt/qtwayland/blob/92ba57d7ceca3d9d072ee121ab44eff17637cbec/src/client/qwaylandshmbackingstore.cpp#L265
+*/
+void detectPlatform(int argc, char **argv) {
+  if (qEnvironmentVariableIsSet("QT_QPA_PLATFORM")) {
+    return;
+  }
+  for (int i = 0; i < argc; i++) {
+    if (qstrcmp(argv[i], "-platform") == 0 ||
+        qstrcmp(argv[i], "--platform") == 0 ||
+        QByteArray(argv[i]).startsWith("-platform=") ||
+        QByteArray(argv[i]).startsWith("--platform=")) {
+      return;
+    }
+  }
+  const QByteArray sessionType = qgetenv("XDG_SESSION_TYPE");
+  if (sessionType == "wayland") {
+    qputenv("QT_QPA_PLATFORM", "xcb");
+  }
+}
+} // namespace
+
+int main(int argc, char *argv[]) {
+  detectPlatform(argc, argv);
   QApplication app(argc, argv);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
