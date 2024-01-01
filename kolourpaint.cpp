@@ -33,12 +33,12 @@
 #include <kolourpaintlicense.h>
 #include <document/kpDocument.h>
 
-#include <KLocalizedString>
-
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QImageReader>
+
+#include <KLocalizedString>
 
 namespace {
 /*
@@ -49,7 +49,8 @@ namespace {
   See
   https://github.com/qt/qtwayland/blob/92ba57d7ceca3d9d072ee121ab44eff17637cbec/src/client/qwaylandshmbackingstore.cpp#L265
 */
-void detectPlatform(int argc, char **argv) {
+void detectPlatform(int argc, char **argv)
+{
   if (qEnvironmentVariableIsSet("QT_QPA_PLATFORM")) {
     return;
   }
@@ -68,7 +69,8 @@ void detectPlatform(int argc, char **argv) {
 }
 } // namespace
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   detectPlatform(argc, argv);
   QApplication app(argc, argv);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
