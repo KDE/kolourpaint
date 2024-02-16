@@ -1,14 +1,14 @@
 # Translation of kolourpaint to Korean.
 # Copyright (C) 2007-2008 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdegraphics package.
-# Shinjo Park <kde@peremen.name>, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2022, 2023, 2024 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-05 00:39+0000\n"
-"PO-Revision-Date: 2023-08-25 22:41+0200\n"
+"PO-Revision-Date: 2024-02-09 23:50+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2650,13 +2650,13 @@ msgstr "투명"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "패널 잠금 해제"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "패널 잠금"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2667,6 +2667,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"패널 <emphasis>잠금</emphasis>과 <emphasis>잠금 해제</emphasis> 사이를 전환합"
+"니다.<nl/>잠금 해제된 패널은 창의 다른 쪽으로 드래그할 수 있으며 닫기 단추가 "
+"표시됩니다.<nl/>잠긴 패널은 창에 더 깨끗하게 임베드됩니다."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format

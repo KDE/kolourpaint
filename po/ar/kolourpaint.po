@@ -4,13 +4,13 @@
 # محمد سعد  Mohamed SAAD <metehyi@free.fr>, 2006.
 # محمد مجدى Mohamed Magdy <mohamed.m.k@gmail.com>, 2007.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
-# zayed <zayed.alsaidi@gmail.com>, 2008, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2008, 2021, 2022, 2023, 2024 zayed <zayed.alsaidi@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-05 00:39+0000\n"
-"PO-Revision-Date: 2023-08-19 21:50+0400\n"
+"PO-Revision-Date: 2024-01-17 20:57+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #, kde-format
@@ -2658,13 +2658,13 @@ msgstr "شفاف"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "فكّ قُفْل اللوحات"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "اقفل اللوحات"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2675,6 +2675,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"هذا يبدل بين  اللوحات <emphasis> المقفلة </emphasis> و <emphasis> غير "
+"المقفلة </emphasis>. <nl /> يمكن سحب اللوحات غير المقفلة إلى الجانب الآخر من "
+"النافذة وسيكون لها زر إغلاق. <nl/> الألواح المقفلة تكون مضمنة وأكثر ترتيبا."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format

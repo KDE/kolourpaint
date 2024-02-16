@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-05 00:39+0000\n"
-"PO-Revision-Date: 2023-08-26 18:17+0300\n"
+"PO-Revision-Date: 2023-12-27 16:19+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -2698,13 +2698,13 @@ msgstr "Läpinäkyvä"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Avaa paneelien lukitus"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Lukitse paneelit"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2715,6 +2715,10 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"<emphasis>Lukitsee</emphasis> paneelit tai <emphasis>poistaa niiden "
+"lukituksen</emphasis>.<nl/>Jos paneeleja ei ole lukittu, ne voi vetää "
+"ikkunan toiseen laitaan, ja niissä on sulkemispainike.<nl/>Lukitut paneelit "
+"upotetaan ikkunaan kiinteämmin."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
