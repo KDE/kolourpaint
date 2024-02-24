@@ -344,6 +344,17 @@ endif()
 
 install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
+if(APPLE)
+    set_target_properties(kolourpaint PROPERTIES
+        MACOSX_BUNDLE_DISPLAY_NAME "KColourPaint"
+        MACOSX_BUNDLE_BUNDLE_NAME "KColourPaint"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "KColourPaint ${RELEASE_SERVICE_VERSION}"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_VERSION_MINOR}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${RELEASE_SERVICE_VERSION}"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.kolourpaint"
+        MACOSX_BUNDLE_COPYRIGHT "2003-2024 The KColourPaint Developers")
+endif()
+
 
 ########### install files ###############
 
