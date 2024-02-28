@@ -17,19 +17,3 @@ Dependencies:
 - 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
   'require':
     'graphics/libksane': '@same'
-
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5', 'Windows/Qt5']
-  'require':
-    'frameworks/extra-cmake-modules': '@stable'
-    'frameworks/kdoctools': '@stable'
-    'frameworks/ki18n': '@stable'
-    'frameworks/kguiaddons': '@stable'
-    'frameworks/kwidgetsaddons': '@stable'
-    'frameworks/kio': '@stable'
-    'frameworks/kxmlgui': '@stable'
-    'frameworks/ktextwidgets': '@stable'
-    'frameworks/kjobwidgets': '@stable'
-
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
-  'require':
-    'graphics/libksane': '@same'
