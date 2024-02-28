@@ -65,20 +65,12 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
 {
     m_actionUndo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-undo")), undoActionText (), this);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    ac->addAction (QString::fromLatin1(KStandardAction::name (KStandardAction::Undo)), m_actionUndo);
-#else
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
-#endif
     ac->setDefaultShortcuts (m_actionUndo, KStandardShortcut::shortcut (KStandardShortcut::Undo));
     connect (m_actionUndo, &KToolBarPopupAction::triggered, this, &kpCommandHistoryBase::undo);
 
     m_actionRedo = new KToolBarPopupAction(QIcon::fromTheme(QStringLiteral("edit-redo")), redoActionText (), this);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    ac->addAction (QString::fromLatin1(KStandardAction::name (KStandardAction::Redo)), m_actionRedo);
-#else
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
-#endif
     ac->setDefaultShortcuts (m_actionRedo, KStandardShortcut::shortcut (KStandardShortcut::Redo));
     connect (m_actionRedo, &KToolBarPopupAction::triggered, this, &kpCommandHistoryBase::redo );
 
@@ -86,18 +78,10 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
     m_actionUndo->setEnabled (false);
     m_actionRedo->setEnabled (false);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    connect (m_actionUndo->menu(), &QMenu::triggered,
-#else
     connect (m_actionUndo->popupMenu(), &QMenu::triggered,
-#endif
              this, &kpCommandHistoryBase::undoUpToNumber);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    connect (m_actionRedo->menu(), &QMenu::triggered,
-#else
     connect (m_actionRedo->popupMenu(), &QMenu::triggered,
-#endif
              this, &kpCommandHistoryBase::redoUpToNumber);
 
 
@@ -646,11 +630,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     QTime timer; timer.start ();
 #endif
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    populatePopupMenu (m_actionUndo->menu (),
-#else
     populatePopupMenu (m_actionUndo->popupMenu (),
-#endif
                        i18n ("Undo"),
                        m_undoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
@@ -671,11 +651,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     timer.restart ();
 #endif
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    populatePopupMenu (m_actionRedo->menu (),
-#else
     populatePopupMenu (m_actionRedo->popupMenu (),
-#endif
                        i18n ("Redo"),
                        m_redoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY

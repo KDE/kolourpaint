@@ -8,10 +8,9 @@ set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_
 
 project(kolourpaint VERSION ${RELEASE_SERVICE_VERSION})
 
-set(QT_MIN_VERSION "5.15.2")
-set(KF5_MIN_VERSION "5.90.0")
-set(KSANE_MIN_VERSION "21.12.1")
-set(KSANEWIDGETS6_MIN_VERSION "24.01")
+set(QT_MIN_VERSION "6.6.0")
+set(KF_MIN_VERSION "6.0.0")
+set(KSANEWIDGETS6_MIN_VERSION "24.02")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -25,20 +24,13 @@ include(ECMInstallIcons)
 include(ECMAddAppIcon)
 include(ECMSetupVersion)
 include(FeatureSummary)
-if (QT_MAJOR_VERSION STREQUAL "6")
-    set(QT_REQUIRED_VERSION "6.4.0")
-    set(KF_MIN_VERSION "5.240.0")
-    set(KF_MAJOR_VERSION "6")
-else()
-    set(KF_MAJOR_VERSION "5")
-endif()
-find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Widgets
     PrintSupport
 )
 
-find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} REQUIRED COMPONENTS
+find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     DocTools
     I18n
     GuiAddons
@@ -51,21 +43,11 @@ find_package(KF${KF_MAJOR_VERSION} ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 
-if (QT_MAJOR_VERSION STREQUAL "6")
-    find_package(KSaneWidgets6 ${KSANEWIDGETS6_MIN_VERSION})
-    if(KSaneWidgets6_FOUND)
-        add_definitions(-DHAVE_KSANE=1)
-    else()
-        add_definitions(-DHAVE_KSANE=0)
-    endif()
+find_package(KSaneWidgets6 ${KSANEWIDGETS6_MIN_VERSION})
+if(KSaneWidgets6_FOUND)
+    add_definitions(-DHAVE_KSANE=1)
 else()
-    find_package(KF5Sane ${KSANE_MIN_VERSION})
-
-    if(KF5Sane_FOUND)
-        add_definitions(-DHAVE_KSANE=1)
-    else()
-        add_definitions(-DHAVE_KSANE=0)
-    endif()
+    add_definitions(-DHAVE_KSANE=0)
 endif()
 
 include_directories(
@@ -274,7 +256,7 @@ set(kolourpaint_lib2_SRCS
 )  # kolourpaint_lib2_SRCS
 
 
-if(TARGET KSaneWidgets6 OR TARGET KF5::Sane)
+if(TARGET KSaneWidgets6)
     set(kolourpaint_lib2_SRCS
         ${kolourpaint_lib2_SRCS}
         ${CMAKE_CURRENT_SOURCE_DIR}/scan/sanedialog.cpp
@@ -349,23 +331,16 @@ ecm_add_app_icon(kolourpaint_SRCS ICONS
 add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
-    KF${KF_MAJOR_VERSION}::XmlGui
-    KF${KF_MAJOR_VERSION}::KIOFileWidgets
-    KF${KF_MAJOR_VERSION}::TextWidgets
-    Qt${QT_MAJOR_VERSION}::PrintSupport
+    KF6::XmlGui
+    KF6::KIOFileWidgets
+    KF6::TextWidgets
+    Qt6::PrintSupport
     kolourpaint_lgpl
 )
 
-if (QT_MAJOR_VERSION STREQUAL "6")
-    if(TARGET KSaneWidgets6)
-        target_link_libraries(kolourpaint KSaneWidgets6)
-    endif()
-else()
-    if(TARGET KF5::Sane)
-        target_link_libraries(kolourpaint KF5::Sane)
-    endif()
+if(TARGET KSaneWidgets6)
+    target_link_libraries(kolourpaint KSaneWidgets6)
 endif()
-
 
 install(TARGETS kolourpaint ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

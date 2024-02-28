@@ -41,7 +41,6 @@
 
 #include <QFileDialog>
 #include <QAction>
-#include <kwidgetsaddons_version.h>
 
 //---------------------------------------------------------------------
 
@@ -67,15 +66,9 @@ void kpMainWindow::setupColorsMenuActions ()
     d->actionColorsKDE->setText (i18nc ("@item:inmenu colors", "Use KDE's"));
     // TODO: Will this slot be called spuriously if there are no colors
     //       installed?
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    connect (d->actionColorsKDE,
-             static_cast<void (KSelectAction::*)(QAction*)>(&KSelectAction::triggered),
-             this, &kpMainWindow::slotColorsKDE);
-#else
     connect (d->actionColorsKDE,
              &KSelectAction::actionTriggered,
              this, &kpMainWindow::slotColorsKDE);
-#endif
 
     for (const auto &colName : ::KDEColorCollectionNames ()) {
         d->actionColorsKDE->addAction (colName);
@@ -203,11 +196,7 @@ bool kpMainWindow::queryCloseColors ()
 
     if (!colorCells ()->url ().isEmpty ())
     {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         result = KMessageBox::warningTwoActionsCancel(this,
-#else
-        result = KMessageBox::warningYesNoCancel (this,
-#endif
             i18n ("The color palette \"%1\" has been modified.\n"
                   "Do you want to save it?",
                   kpUrlFormatter::PrettyFilename (colorCells ()->url ())),
@@ -219,11 +208,7 @@ bool kpMainWindow::queryCloseColors ()
         const QString name = colorCells ()->colorCollection ()->name ();
         if (!name.isEmpty ())
         {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             result = KMessageBox::warningTwoActionsCancel(this,
-#else
-            result = KMessageBox::warningYesNoCancel (this,
-#endif
                 i18n ("The KDE color palette \"%1\" has been modified.\n"
                       "Do you want to save it to a file?",
                       name),
@@ -232,11 +217,7 @@ bool kpMainWindow::queryCloseColors ()
         }
         else
         {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             result = KMessageBox::warningTwoActionsCancel(this,
-#else
-            result = KMessageBox::warningYesNoCancel (this,
-#endif
                 i18n ("The default color palette has been modified.\n"
                       "Do you want to save it to a file?"),
                 QString ()/*caption*/,
@@ -246,17 +227,9 @@ bool kpMainWindow::queryCloseColors ()
 
     switch (result)
     {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     case KMessageBox::ButtonCode::PrimaryAction:
-#else
-    case KMessageBox::Yes:
-#endif
         return slotColorsSave ();  // close only if save succeeds
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     case KMessageBox::ButtonCode::SecondaryAction:
-#else
-    case KMessageBox::No:
-#endif
         return true;  // close without saving
     default:
         return false;  // don't close current doc
