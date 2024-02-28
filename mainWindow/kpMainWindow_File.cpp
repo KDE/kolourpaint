@@ -892,11 +892,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     fd.setCustomWidget (saveOptionsWidget);
     KFileWidget *fw = fd.fileWidget();
     fw->setConfirmOverwrite (true);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    fw->setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
-#else
     fw->setFilters (KFileFilter::fromMimeTypes(mimeTypes), KFileFilter::fromMimeType(fdSaveOptions.mimeType ()));
-#endif
     if (localOnly) {
         fw->setMode (KFile::File | KFile::LocalOnly);
     }
@@ -904,13 +900,9 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     saveOptionsWidget->setVisualParent (&fd);
 
     connect (fw, &KFileWidget::filterChanged,
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-             saveOptionsWidget, &kpDocumentSaveOptionsWidget::setMimeType);
-#else
              saveOptionsWidget, [saveOptionsWidget](const KFileFilter &filter) {
                  saveOptionsWidget->setMimeType(filter.mimePatterns().first());
             });
-#endif
 
     if ( fd.exec() == QDialog::Accepted )
     {
@@ -1420,21 +1412,13 @@ void kpMainWindow::slotMail ()
         !(d->document->isFromExistingURL () && d->document->urlExists (d->document->url ())) ||
         d->document->isModified ()/*needs to be saved*/)
     {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         int result = KMessageBox::questionTwoActions(this,
-#else
-        int result = KMessageBox::questionYesNo (this,
-#endif
                         i18n ("You must save this image before sending it.\n"
                               "Do you want to save it?"),
                         QString(),
                         KStandardGuiItem::save (), KStandardGuiItem::cancel ());
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         if (result == KMessageBox::ButtonCode::PrimaryAction)
-#else
-        if (result == KMessageBox::Yes)
-#endif
         {
             if (!save ())
             {
@@ -1466,11 +1450,7 @@ bool kpMainWindow::queryCloseDocument ()
         return true;  // ok to close current doc
     }
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     int result = KMessageBox::warningTwoActionsCancel(this,
-#else
-    int result = KMessageBox::warningYesNoCancel (this,
-#endif
                      i18n ("The document \"%1\" has been modified.\n"
                            "Do you want to save it?",
                            d->document->prettyFilename ()),
@@ -1479,17 +1459,9 @@ bool kpMainWindow::queryCloseDocument ()
 
     switch (result)
     {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     case KMessageBox::ButtonCode::PrimaryAction:
-#else
-    case KMessageBox::Yes:
-#endif
         return slotSave ();  // close only if save succeeds
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     case KMessageBox::ButtonCode::SecondaryAction:
-#else
-    case KMessageBox::No:
-#endif
         return true;  // close without saving
     default:
         return false;  // don't close current doc
