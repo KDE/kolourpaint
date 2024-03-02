@@ -2,12 +2,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # SPDX-FileCopyrightText: 2013, 2016, 2017, 2020, 2021, 2023 Giovanni Sora <g.sora@tiscali.it>
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-05 00:39+0000\n"
-"PO-Revision-Date: 2023-09-14 23:24+0200\n"
+"PO-Revision-Date: 2024-03-01 11:02+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1541,6 +1542,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Isto salveguarda le documento con un nomine differente, similar a "
+"<interface>Salveguarda Como</interface>, ma le documento currente non es "
+"cambiate.<nl/>In iste modo tu pote mantener le dossier de salveguardar "
+"ultime-usateindependente ab le dossier del documento currente."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
@@ -2695,13 +2700,13 @@ msgstr "Transparente"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Disbloca pannellos"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Bloca pannellos"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2712,6 +2717,10 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Isto commuta inter haber pannellos <emphasis>blocate</emphasis> o "
+"<emphasis>disblocate</emphasis>.<nl/>Pannellos disblocate essera trahite al "
+"altere latere de fenestra e haber un button de clauder.<nl/>Pannellos "
+"blocate es insertate plus purmente."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
