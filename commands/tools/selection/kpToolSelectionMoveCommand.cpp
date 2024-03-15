@@ -188,7 +188,7 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
     Q_ASSERT (doc);
 
     kpAbstractSelection *sel = doc->selection ();
-    // Must have content before we allow it be stamped onto the document,
+    // Must have content before we allow it to be stamped onto the document,
     // to be consistent with the requirement on other selection operations.
     Q_ASSERT (sel && sel->hasContent ());
 

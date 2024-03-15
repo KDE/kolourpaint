@@ -62,7 +62,7 @@ void kpTransformCrop (kpMainWindow *mainWindow)
     auto *textSel = dynamic_cast <kpTextSelection *> (sel);
     auto *imageSel = dynamic_cast <kpAbstractImageSelection *> (sel);
     // It's either a text selection or an image selection, but cannot be
-    // neither or both.
+    // neither and cannot be both.
     Q_ASSERT (!!textSel != !!imageSel);
 
     if (textSel) {

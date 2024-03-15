@@ -585,7 +585,7 @@ void kpView::paintEvent (QPaintEvent *e)
     // part of the view (which could be quite small inside a scrollview).
     const QRegion viewRegion = e->region ();
 
-    // Draw all of the requested regions of the document _before_ drawing
+    // Draw all the requested regions of the document _before_ drawing
     // the grid lines, buddy rectangle and selection resize handles.
     // This ordering is important since paintEventDrawDoc_Unclipped()
     // may draw outside of the view rectangle passed to it.

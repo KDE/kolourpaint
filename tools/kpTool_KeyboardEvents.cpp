@@ -71,7 +71,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
         //                      program and then release it over the view,
         //                      Qt reports it as the release of an unknown key
         //       Qt4 update: I don't think this happens anymore...
-        // --- fall thru and update all modifiers ---
+        // --- fall through and update all modifiers ---
 
     case Qt::Key_Alt:
     case Qt::Key_Shift:

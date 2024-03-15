@@ -229,7 +229,7 @@ void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
     auto *macroCmd = new kpMacroCommand (commandName, environ);
 
     // (must resize doc _before_ SetDocumentToSelectionImageCommand in case
-    //  doc needs to gets bigger - else selection image may not fit)
+    //  doc needs to get bigger - else selection image may not fit)
     macroCmd->addCommand (resizeDocCommand);
 
 #if DEBUG_KP_TOOL_CROP

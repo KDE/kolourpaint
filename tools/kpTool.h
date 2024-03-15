@@ -112,7 +112,7 @@ public:
     // If <zoomToDoc> is not set, then it returns an unzoomed view coordinate.
     //
     // Keep in mind that if viewUnderStartPoint(), this can return coordinates
-    // outside of the document/view.
+    // outside the document/view.
     QPoint calculateCurrentPoint (bool zoomToDoc = true) const;
 
 private:

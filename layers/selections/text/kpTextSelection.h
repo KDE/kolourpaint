@@ -147,7 +147,7 @@ public:
     // the given <textStyle>.
     //
     // This leaves enough room for the border on all 4 sides and also a
-    // text area big enough to fit a character in an extremely small font.
+    // text area big enough to fit a character in a tiny font.
     static int MinimumWidthForTextStyle (const kpTextStyle &textStyle);
     static int MinimumHeightForTextStyle (const kpTextStyle &textStyle);
     static QSize MinimumSizeForTextStyle (const kpTextStyle &textStyle);

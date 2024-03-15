@@ -57,8 +57,8 @@ public:
         void * /*userData*/);
 
     /*
-     * <isBrush>    Specifies that its visibility is dependent on whether or
-     *              not the mouse cursor is inside a view.  If false, the
+     * <isBrush>    Specifies that its visibility is dependent on whether
+     *              the mouse cursor is inside a view.  If false, the
      *              image is always displayed.
      *
      * <userFunction>   This is the only way of specifying the "UserFunction"

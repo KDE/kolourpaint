@@ -76,7 +76,7 @@ public:
     // points, such that these points become cardinally adjacent.  However, these
     // extra points are also created only with the specified <probability>.
     //
-    // For instance, <cardinalAdjacency> must be set if a diagonal line is to
+    // For instance, <cardinalAdjacency> must be set if a diagonal line is
     // drawn at each of the returned points, otherwise things won't look right:
     //
     //     .\.....

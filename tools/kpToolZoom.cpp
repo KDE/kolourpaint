@@ -235,7 +235,7 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
             environ ()->zoomIn (true/*center under cursor*/);
         }
         else {
-            environ ()->zoomOut (false/*don't center under cursor - as is
+            environ ()->zoomOut (false/*don't center under cursor - as it is
                                         confusing behaviour when zooming
                                         out*/);
         }

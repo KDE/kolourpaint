@@ -53,7 +53,7 @@
 // controls many how pixels are taken into account when determining the value
 // of the center pixel. This controls the quality [and speed] of the result but not
 // necessarily the strength. The sigma controls how those neighboring pixels
-// are weighted depending on how far the are from the center one. This is
+// are weighted depending on how far they are from the center one. This is
 // closer to strength, but not exactly >:)
 // </quote>
 //

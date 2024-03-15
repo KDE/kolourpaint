@@ -42,7 +42,7 @@ class kpAbstractSelection;
 
 
 // You could subclass kpToolResizeScaleCommand and/or
-// kpToolSelectionMoveCommand instead if want a disaster.
+// kpToolSelectionMoveCommand instead if you want a disaster.
 // This is different to kpToolResizeScaleCommand in that:
 //
 // 1. This only works for selections.

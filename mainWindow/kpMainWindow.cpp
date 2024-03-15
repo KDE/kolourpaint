@@ -374,7 +374,7 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
         //
         // Note that "kolourpaint doesexist.png" is considered to be from
         // a URL even if it was deleted in the background. This is because the user expects
-        // it to be from a URL, so when we session restore, we pop up a
+        // it to be from a URL, so when we restore the session, we pop up a
         // "cannot find file" dialog, instead of silently creating a new,
         // blank document.
         if (!d->document->isFromExistingURL ())

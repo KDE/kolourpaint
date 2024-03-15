@@ -906,7 +906,7 @@ void kpMainWindow::slotPasteFromFile ()
     QUrl url = urls.first ();
 
     kpImage image = kpDocument::getPixmapFromFile (url,
-        false/*show error message if doesn't exist*/,
+        false/*show error message if it doesn't exist*/,
         this);
 
     if (image.isNull ()) {

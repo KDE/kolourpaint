@@ -47,11 +47,11 @@
 //---------------------------------------------------------------------
 
 // HITODO: If you press a mouse button and move it out of the view _really_ fast
-//         and let go of the mouse button outside of the view, a mouseRelease
+//         and let go of the mouse button outside the view, a mouseRelease
 //         event will not be generated, so the tool will still be in drawing mode
-//         (this is especially noticeable with the spraycan).
+//         (this is especially noticeable with the spray can).
 //
-//         When you move the mouse back into the view, it will still continue
+//         When you move the mouse back into the view, it will still
 //         continue drawing even though no mouse button is held down.
 //
 //         It is somewhat hard to reproduce so the best way is to position the

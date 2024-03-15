@@ -173,7 +173,7 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
     //       there are a few pixels that don't look grabable but they are.
     //
     //       The real solution is to be able to partially render the
-    //       handles outside of the selection view rect.  If not possible,
+    //       handles outside the selection view rect.  If not possible,
     //       at least for text boxes, render text on top of handles.
     int normalAtomicLength = atomicLength;
     int vertEdgeAtomicLength = atomicLength;
