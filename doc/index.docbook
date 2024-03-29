@@ -376,6 +376,19 @@ writing text (as the single key shortcuts will be disabled). For example, to sel
 </link>
 <link linkend="tool-text">Text</link> (T)
 </member>
+
+<member>
+<link linkend="tool-zoom">
+<guiicon>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</guiicon>
+</link>
+<link linkend="tool-zoom">Zoom</link> (Z)
+</member>
 </simplelist>
 
 </sect1>
@@ -845,6 +858,24 @@ colors and a transparent background color.  The right picture shows the
 addition of text with a transparent foreground color and opaque background
 color.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title>Zoom
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para>The &LMB; zooms in. The &RMB; zooms out.</para>
+<para>Drag with &LMB; to zoom into a specific area.</para>
+
+<tip>
+<para>Double click on the Zoom tool icon to set zoom to "Fit to Page".</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">
