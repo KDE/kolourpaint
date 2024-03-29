@@ -78,7 +78,7 @@ kpToolZoom::kpToolZoom (kpToolEnvironment *environ, QWidget *parent)
       d (new kpToolZoomPrivate ())
 {
   // different from objectName()
-  action()->setIcon(QIcon::fromTheme(QStringLiteral("zoom-original")));
+  action()->setIcon(QIcon::fromTheme(QStringLiteral("zoom")));
 }
 
 //---------------------------------------------------------------------
@@ -116,7 +116,7 @@ bool kpToolZoom::returnToPreviousToolAfterEndDraw () const
 // private
 QString kpToolZoom::haventBegunDrawUserMessage () const
 {
-    return i18n ("Click to zoom in/out or left drag to zoom into a specific area.");
+    return xi18nc("@info", "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area.");
 }
 
 
