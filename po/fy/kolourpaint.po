@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-05 00:39+0000\n"
+"POT-Creation-Date: 2024-04-20 01:43+0000\n"
 "PO-Revision-Date: 2007-02-19 23:14+0100\n"
 "Last-Translator: Bram Schoenmakers <bramschoenmakers@kde.nl>\n"
 "Language-Team: Nederlands <kde-i18n-nl@kde.org>\n"
@@ -184,58 +184,58 @@ msgstr "Roteren"
 msgid "Skew"
 msgstr "Vlekken"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Ongedaan maken: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, fuzzy, kde-format
 #| msgid "&Undo: %1"
 msgid "&Undo"
 msgstr "&Ongedaan maken: %1"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo: %1"
 msgstr "O&pnieuw: %1"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, fuzzy, kde-format
 #| msgid "&Red"
 msgid "&Redo"
 msgstr "&Rood"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:453
 #, fuzzy, kde-format
 #| msgid "&Undo: %1"
 msgid "Undo: %1"
 msgstr "&Ongedaan maken: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
+#: commands/kpCommandHistoryBase.cpp:453 commands/kpCommandHistoryBase.cpp:634
 #, fuzzy, kde-format
 #| msgid "&Undo: %1"
 msgid "Undo"
 msgstr "&Ongedaan maken: %1"
 
-#: commands/kpCommandHistoryBase.cpp:477
+#: commands/kpCommandHistoryBase.cpp:461
 #, fuzzy, kde-format
 #| msgid "&Redo: %1"
 msgid "Redo: %1"
 msgstr "O&pnieuw: %1"
 
-#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
 #, fuzzy, kde-format
 #| msgid "Red"
 msgid "Redo"
 msgstr "Rood"
 
-#: commands/kpCommandHistoryBase.cpp:612
+#: commands/kpCommandHistoryBase.cpp:596
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:623
+#: commands/kpCommandHistoryBase.cpp:607
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -1124,138 +1124,138 @@ msgstr "Als afbeelding instellen"
 msgid "Selection: Create"
 msgstr "Selectie: aanmaken"
 
-#: kolourpaint.cpp:54
+#: kolourpaint.cpp:51
 #, fuzzy, kde-format
 #| msgid "KolourPaint"
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:56
+#: kolourpaint.cpp:53
 #, fuzzy, kde-format
 #| msgid "Paint Program for KDE"
 msgid "Paint Program by KDE"
 msgstr "Tekenprogramma voor KDE"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Clarence Dang"
 msgstr ""
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Project Founder"
 msgstr ""
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Thurston Dang"
 msgstr ""
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Hoofdonderzoeker"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, fuzzy, kde-format
 #| msgid "Maintainer"
 msgid "Martin Koller"
 msgstr "Onderhouder"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr ""
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:75
 #, kde-format
 msgid "Kristof Borrey"
 msgstr ""
 
-#: kolourpaint.cpp:78 kolourpaint.cpp:81 kolourpaint.cpp:82
+#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "Icons"
 msgstr "Pictogrammen"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:76
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr ""
 
-#: kolourpaint.cpp:79 kolourpaint.cpp:80
+#: kolourpaint.cpp:76 kolourpaint.cpp:77
 #, kde-format
 msgid "InputMethod Support"
 msgstr "Ondersteuning voor invoermethode"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr ""
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr ""
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Danny Allen"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Mike Gashler"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, fuzzy, kde-format
 #| msgid "More Image Effects"
 msgid "Image Effects"
 msgstr "Meer afbeeldingeffecten"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Laurent Montel"
 msgstr ""
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "KF 5 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:88
+#: kolourpaint.cpp:85
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr ""
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:90
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgid "Image files to open, optionally"
 msgstr "Afbeeldingbestand om te openen"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
 msgstr ""
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
 msgstr ""
@@ -1312,8 +1312,8 @@ msgctxt "@title:window"
 msgid "Thumbnail"
 msgstr "Miniatuur"
 
-#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
-#: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
+#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
+#: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
 #, kde-format
 msgid "Left drag the handle to resize the image."
 msgstr ""
@@ -1373,65 +1373,65 @@ msgstr "Afbeelding kan niet worden opgeslagen als \"%1\"."
 msgid "Untitled"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:62
+#: mainWindow/kpMainWindow_Colors.cpp:61
 #, fuzzy, kde-format
 #| msgid "KolourPaint"
 msgid "Use KolourPaint Defaults"
 msgstr "KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:67
+#: mainWindow/kpMainWindow_Colors.cpp:66
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:85
+#: mainWindow/kpMainWindow_Colors.cpp:78
 #, fuzzy, kde-format
 #| msgid "&Flip..."
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "Om&keren..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:89
+#: mainWindow/kpMainWindow_Colors.cpp:82
 #, fuzzy, kde-format
 #| msgid "Reloa&d"
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Herla&den"
 
-#: mainWindow/kpMainWindow_Colors.cpp:94
+#: mainWindow/kpMainWindow_Colors.cpp:87
 #, fuzzy, kde-format
 #| msgid "&Scale"
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Schalen"
 
-#: mainWindow/kpMainWindow_Colors.cpp:99
+#: mainWindow/kpMainWindow_Colors.cpp:92
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Afbeelding opslaan als"
 
-#: mainWindow/kpMainWindow_Colors.cpp:104
+#: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:109
+#: mainWindow/kpMainWindow_Colors.cpp:102
 #, fuzzy, kde-format
 #| msgid "&Delete Selection"
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Selectie verwij&deren"
 
-#: mainWindow/kpMainWindow_Colors.cpp:122
+#: mainWindow/kpMainWindow_Colors.cpp:115
 #, kde-format
 msgid "Color Box"
 msgstr "Kleurenpallet"
 
-#: mainWindow/kpMainWindow_Colors.cpp:211
+#: mainWindow/kpMainWindow_Colors.cpp:200
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1443,7 +1443,7 @@ msgstr ""
 "Het document \"%1\" is gewijzigd.\n"
 "Wilt u het opslaan?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:227
+#: mainWindow/kpMainWindow_Colors.cpp:212
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1455,7 +1455,7 @@ msgstr ""
 "Het document \"%1\" is gewijzigd.\n"
 "Wilt u het opslaan?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:240
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1467,14 +1467,14 @@ msgstr ""
 "Het document \"%1\" is gewijzigd.\n"
 "Wilt u het opslaan?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:367
+#: mainWindow/kpMainWindow_Colors.cpp:340
 #, fuzzy, kde-format
 #| msgid "Colors"
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Kleuren"
 
-#: mainWindow/kpMainWindow_Colors.cpp:396
+#: mainWindow/kpMainWindow_Colors.cpp:369
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1490,16 +1490,16 @@ msgstr ""
 "verloren.\n"
 "Wilt u dat werkelijk?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:401
-#: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1091
-#: mainWindow/kpMainWindow_File.cpp:1101
+#: mainWindow/kpMainWindow_Colors.cpp:374
+#: mainWindow/kpMainWindow_Colors.cpp:387
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
+#: mainWindow/kpMainWindow_File.cpp:1093
 #, fuzzy, kde-format
 #| msgid "Reloa&d"
 msgid "&Reload"
 msgstr "Herla&den"
 
-#: mainWindow/kpMainWindow_Colors.cpp:409
+#: mainWindow/kpMainWindow_Colors.cpp:382
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1514,7 +1514,7 @@ msgstr ""
 "Door het te herladen verliest u alle wijzigingen.\n"
 "Wilt u dat werkelijk?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:419
+#: mainWindow/kpMainWindow_Colors.cpp:392
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1529,7 +1529,7 @@ msgstr ""
 "Door het te herladen verliest u alle wijzigingen.\n"
 "Wilt u dat werkelijk?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:480
+#: mainWindow/kpMainWindow_Colors.cpp:453
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgid "Save Color Palette As"
@@ -1706,21 +1706,21 @@ msgstr "In &nieuw venster plakken"
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:974
+#: mainWindow/kpMainWindow_File.cpp:966
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Afbeelding opslaan als"
 
-#: mainWindow/kpMainWindow_File.cpp:1022
+#: mainWindow/kpMainWindow_File.cpp:1014
 #, fuzzy, kde-format
 #| msgid "E&xport..."
 msgctxt "@title:window"
 msgid "Export"
 msgstr "E&xporteren..."
 
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1078
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1732,7 +1732,7 @@ msgstr ""
 "verloren.\n"
 "Wilt u dat werkelijk?"
 
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1743,14 +1743,14 @@ msgstr ""
 "Door het te herladen verliest u alle wijzigingen.\n"
 "Wilt u dat werkelijk?"
 
-#: mainWindow/kpMainWindow_File.cpp:1344
+#: mainWindow/kpMainWindow_File.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Hele afbeelding"
 
-#: mainWindow/kpMainWindow_File.cpp:1428
+#: mainWindow/kpMainWindow_File.cpp:1416
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1759,7 +1759,7 @@ msgstr ""
 "Voordat deze afbeelding kan worden verzonden dient u deze op te slaan.\n"
 "Wilt u de afbeelding nu opslaan?"
 
-#: mainWindow/kpMainWindow_File.cpp:1474
+#: mainWindow/kpMainWindow_File.cpp:1454
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

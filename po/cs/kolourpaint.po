@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-05 00:39+0000\n"
+"POT-Creation-Date: 2024-04-20 01:43+0000\n"
 "PO-Revision-Date: 2023-08-10 14:45+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -181,52 +181,52 @@ msgstr "Natočit"
 msgid "Skew"
 msgstr "Zkosit"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Zpět: %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo"
 msgstr "&Zpět"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo: %1"
 msgstr "Zn&ovu: %1"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo"
 msgstr "Zn&ovu"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:453
 #, kde-format
 msgid "Undo: %1"
 msgstr "Zpět: %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
+#: commands/kpCommandHistoryBase.cpp:453 commands/kpCommandHistoryBase.cpp:634
 #, kde-format
 msgid "Undo"
 msgstr "Zpět"
 
-#: commands/kpCommandHistoryBase.cpp:477
+#: commands/kpCommandHistoryBase.cpp:461
 #, kde-format
 msgid "Redo: %1"
 msgstr "Znovu: %1"
 
-#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
 #, kde-format
 msgid "Redo"
 msgstr "Znovu"
 
-#: commands/kpCommandHistoryBase.cpp:612
+#: commands/kpCommandHistoryBase.cpp:596
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:623
+#: commands/kpCommandHistoryBase.cpp:607
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -1066,133 +1066,133 @@ msgstr "Nastavit jako obrázek"
 msgid "Selection: Create"
 msgstr "Výběr: Vytvořit"
 
-#: kolourpaint.cpp:54
+#: kolourpaint.cpp:51
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:56
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "Malování pro KDE"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Project Founder"
 msgstr "Zakladatel projektu"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Hlavní vyšetřovatel"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "Podpora skenování, podpora alpha, současný správce"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:75
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:78 kolourpaint.cpp:81 kolourpaint.cpp:82
+#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "Icons"
 msgstr "Ikony"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:76
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:79 kolourpaint.cpp:80
+#: kolourpaint.cpp:76 kolourpaint.cpp:77
 #, kde-format
 msgid "InputMethod Support"
 msgstr "Vstupní metody"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Image Effects"
 msgstr "Efekty obrázků"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "Portování na KDE 4"
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "Portování na KF 5"
 
-#: kolourpaint.cpp:88
+#: kolourpaint.cpp:85
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "Děkuji všem, kteří pomohli tento program vytvořit."
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:90
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "Soubory s obrázkem k otevření, volitelně"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "Vypsat všechny čitelné typy MIME obrázků"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
 msgstr ""
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[šířka]x[výška]"
@@ -1245,8 +1245,8 @@ msgctxt "@title:window"
 msgid "Thumbnail"
 msgstr "Náhled"
 
-#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
-#: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
+#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
+#: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
 #, kde-format
 msgid "Left drag the handle to resize the image."
 msgstr "Tažením změníte velikost obrázku."
@@ -1297,59 +1297,59 @@ msgstr "Barevnou paletu nelze uložit jako \"%1\"."
 msgid "Untitled"
 msgstr "Nepojmenovaný"
 
-#: mainWindow/kpMainWindow_Colors.cpp:62
+#: mainWindow/kpMainWindow_Colors.cpp:61
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "Použít výchozí nastavení KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:67
+#: mainWindow/kpMainWindow_Colors.cpp:66
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "Použít z KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:85
+#: mainWindow/kpMainWindow_Colors.cpp:78
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Otevřít..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:89
+#: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Znovu načís&t"
 
-#: mainWindow/kpMainWindow_Colors.cpp:94
+#: mainWindow/kpMainWindow_Colors.cpp:87
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "&Uložit"
 
-#: mainWindow/kpMainWindow_Colors.cpp:99
+#: mainWindow/kpMainWindow_Colors.cpp:92
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Uložit j&ako..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:104
+#: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Přidat řádek"
 
-#: mainWindow/kpMainWindow_Colors.cpp:109
+#: mainWindow/kpMainWindow_Colors.cpp:102
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Smazat poslední řádek"
 
-#: mainWindow/kpMainWindow_Colors.cpp:122
+#: mainWindow/kpMainWindow_Colors.cpp:115
 #, kde-format
 msgid "Color Box"
 msgstr "Box barev"
 
-#: mainWindow/kpMainWindow_Colors.cpp:211
+#: mainWindow/kpMainWindow_Colors.cpp:200
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1358,7 +1358,7 @@ msgstr ""
 "Barevná paleta \"%1\" byla změněna.\n"
 "Přejete si ji uložit?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:227
+#: mainWindow/kpMainWindow_Colors.cpp:212
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1367,7 +1367,7 @@ msgstr ""
 "Barevná paleta KDE \"%1\" byla změněna..\n"
 "Přejete si ji uložit?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:240
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1376,13 +1376,13 @@ msgstr ""
 "Výchozí barevná paleta byla změněna.\n"
 "Přejete si ji uložit do souboru?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:367
+#: mainWindow/kpMainWindow_Colors.cpp:340
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Otevřít paletu barev"
 
-#: mainWindow/kpMainWindow_Colors.cpp:396
+#: mainWindow/kpMainWindow_Colors.cpp:369
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1393,15 +1393,15 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn od posledního uložení.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:401
-#: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1091
-#: mainWindow/kpMainWindow_File.cpp:1101
+#: mainWindow/kpMainWindow_Colors.cpp:374
+#: mainWindow/kpMainWindow_Colors.cpp:387
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
+#: mainWindow/kpMainWindow_File.cpp:1093
 #, kde-format
 msgid "&Reload"
 msgstr "Znovu načís&t"
 
-#: mainWindow/kpMainWindow_Colors.cpp:409
+#: mainWindow/kpMainWindow_Colors.cpp:382
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1412,7 +1412,7 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:419
+#: mainWindow/kpMainWindow_Colors.cpp:392
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1423,7 +1423,7 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:480
+#: mainWindow/kpMainWindow_Colors.cpp:453
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Uložit paletu barev jako"
@@ -1595,19 +1595,19 @@ msgstr "Skrýt hlavní okno"
 msgid "Document Properties"
 msgstr "Vlastnosti dokumentu"
 
-#: mainWindow/kpMainWindow_File.cpp:974
+#: mainWindow/kpMainWindow_File.cpp:966
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Uložit obrázek jako"
 
-#: mainWindow/kpMainWindow_File.cpp:1022
+#: mainWindow/kpMainWindow_File.cpp:1014
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportovat"
 
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1078
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1618,7 +1618,7 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn od posledního uložení.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1629,13 +1629,13 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_File.cpp:1344
+#: mainWindow/kpMainWindow_File.cpp:1336
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Vytisknout obrázek"
 
-#: mainWindow/kpMainWindow_File.cpp:1428
+#: mainWindow/kpMainWindow_File.cpp:1416
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1644,7 +1644,7 @@ msgstr ""
 "Obrázek musíte před odesláním uložit.\n"
 "Přejete si obrázek uložit?"
 
-#: mainWindow/kpMainWindow_File.cpp:1474
+#: mainWindow/kpMainWindow_File.cpp:1454
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

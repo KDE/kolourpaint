@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-05 00:39+0000\n"
+"POT-Creation-Date: 2024-04-20 01:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -178,52 +178,52 @@ msgstr "旋转"
 msgid "Skew"
 msgstr "斜切变形"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo: %1"
 msgstr "撤销(&U)：%1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo"
 msgstr "撤销(&U)"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo: %1"
 msgstr "重做(&R)：%1"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo"
 msgstr "重做(&R)"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:453
 #, kde-format
 msgid "Undo: %1"
 msgstr "撤销：%1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
+#: commands/kpCommandHistoryBase.cpp:453 commands/kpCommandHistoryBase.cpp:634
 #, kde-format
 msgid "Undo"
 msgstr "撤销"
 
-#: commands/kpCommandHistoryBase.cpp:477
+#: commands/kpCommandHistoryBase.cpp:461
 #, kde-format
 msgid "Redo: %1"
 msgstr "重做：%1"
 
-#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
 #, kde-format
 msgid "Redo"
 msgstr "重做"
 
-#: commands/kpCommandHistoryBase.cpp:612
+#: commands/kpCommandHistoryBase.cpp:596
 #, kde-format
 msgid "%1: %2"
 msgstr "%1：%2"
 
-#: commands/kpCommandHistoryBase.cpp:623
+#: commands/kpCommandHistoryBase.cpp:607
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -1041,112 +1041,112 @@ msgstr "裁剪图像到选区大小"
 msgid "Selection: Create"
 msgstr "选区：创建"
 
-#: kolourpaint.cpp:54
+#: kolourpaint.cpp:51
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:56
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "KDE 社区开发的简易绘画程序"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Project Founder"
 msgstr "项目创立者"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Chief Investigator"
 msgstr "首席调查员"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "扫描支持、透明度通道支持、当前维护者"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:75
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:78 kolourpaint.cpp:81 kolourpaint.cpp:82
+#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "Icons"
 msgstr "图标"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:76
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:79 kolourpaint.cpp:80
+#: kolourpaint.cpp:76 kolourpaint.cpp:77
 #, kde-format
 msgid "InputMethod Support"
 msgstr "输入法支持"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Image Effects"
 msgstr "图像效果"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "KDE 4 移植"
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "KF5 移植"
 
-#: kolourpaint.cpp:88
+#: kolourpaint.cpp:85
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
@@ -1154,22 +1154,22 @@ msgstr ""
 "除了主要开发人员外，还有众多其他贡献者为 KolourPaint 的开发提供了帮助，让它从"
 "构想成为了现实。我们对此表示衷心的感谢。"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:90
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "要打开的图像文件，可选项"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "列出所有支持读取的图像 MIME 类型"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
 msgstr "启动时创建给定大小的新图像"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[宽度]x[长度]"
@@ -1222,8 +1222,8 @@ msgctxt "@title:window"
 msgid "Thumbnail"
 msgstr "总览图"
 
-#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
-#: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
+#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
+#: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
 #, kde-format
 msgid "Left drag the handle to resize the image."
 msgstr "左键拖动控制点，即可更改图像大小。"
@@ -1274,59 +1274,59 @@ msgstr "无法将色板另存为“%1”。"
 msgid "Untitled"
 msgstr "无标题"
 
-#: mainWindow/kpMainWindow_Colors.cpp:62
+#: mainWindow/kpMainWindow_Colors.cpp:61
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "加载默认色板"
 
-#: mainWindow/kpMainWindow_Colors.cpp:67
+#: mainWindow/kpMainWindow_Colors.cpp:66
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "加载预设色板"
 
-#: mainWindow/kpMainWindow_Colors.cpp:85
+#: mainWindow/kpMainWindow_Colors.cpp:78
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "打开色板(&O)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:89
+#: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "重新加载色板(&D)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:94
+#: mainWindow/kpMainWindow_Colors.cpp:87
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "保存色板(&S)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:99
+#: mainWindow/kpMainWindow_Colors.cpp:92
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "另存色板为(&A)..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:104
+#: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "色板：添加一行颜色"
 
-#: mainWindow/kpMainWindow_Colors.cpp:109
+#: mainWindow/kpMainWindow_Colors.cpp:102
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "色板：删除底部一行颜色"
 
-#: mainWindow/kpMainWindow_Colors.cpp:122
+#: mainWindow/kpMainWindow_Colors.cpp:115
 #, kde-format
 msgid "Color Box"
 msgstr "色块"
 
-#: mainWindow/kpMainWindow_Colors.cpp:211
+#: mainWindow/kpMainWindow_Colors.cpp:200
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1335,7 +1335,7 @@ msgstr ""
 "色板“%1”已被修改。\n"
 "您想要保存修改吗？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:227
+#: mainWindow/kpMainWindow_Colors.cpp:212
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1344,7 +1344,7 @@ msgstr ""
 "预设色板“%1”已被修改。\n"
 "您想要将它保存为文件吗？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:240
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1353,13 +1353,13 @@ msgstr ""
 "默认色板已被修改。\n"
 "您想要将它保存为文件吗？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:367
+#: mainWindow/kpMainWindow_Colors.cpp:340
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "打开色板"
 
-#: mainWindow/kpMainWindow_Colors.cpp:396
+#: mainWindow/kpMainWindow_Colors.cpp:369
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1370,15 +1370,15 @@ msgstr ""
 "重新加载将丢失所有修改过的颜色。\n"
 "您确定要重新加载色板吗？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:401
-#: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1091
-#: mainWindow/kpMainWindow_File.cpp:1101
+#: mainWindow/kpMainWindow_Colors.cpp:374
+#: mainWindow/kpMainWindow_Colors.cpp:387
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
+#: mainWindow/kpMainWindow_File.cpp:1093
 #, kde-format
 msgid "&Reload"
 msgstr "重新加载(&R)"
 
-#: mainWindow/kpMainWindow_Colors.cpp:409
+#: mainWindow/kpMainWindow_Colors.cpp:382
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1389,7 +1389,7 @@ msgstr ""
 "重新加载将丢失所有修改过的颜色。\n"
 "您确定要重新加载色板吗？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:419
+#: mainWindow/kpMainWindow_Colors.cpp:392
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1400,7 +1400,7 @@ msgstr ""
 "重新加载将丢失所有修改过的颜色。\n"
 "您确定要重新加载色板吗？"
 
-#: mainWindow/kpMainWindow_Colors.cpp:480
+#: mainWindow/kpMainWindow_Colors.cpp:453
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "另存色板为"
@@ -1573,19 +1573,19 @@ msgstr "隐藏主窗口"
 msgid "Document Properties"
 msgstr "图像属性"
 
-#: mainWindow/kpMainWindow_File.cpp:974
+#: mainWindow/kpMainWindow_File.cpp:966
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "图像另存为"
 
-#: mainWindow/kpMainWindow_File.cpp:1022
+#: mainWindow/kpMainWindow_File.cpp:1014
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "导出"
 
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1078
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1596,7 +1596,7 @@ msgstr ""
 "重新加载将使在上次保存之后的修改丢失。\n"
 "您确定要重新加载吗？"
 
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1607,13 +1607,13 @@ msgstr ""
 "重新加载将丢失打开后的所有修改。\n"
 "您确定要重新加载吗？"
 
-#: mainWindow/kpMainWindow_File.cpp:1344
+#: mainWindow/kpMainWindow_File.cpp:1336
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "打印图像"
 
-#: mainWindow/kpMainWindow_File.cpp:1428
+#: mainWindow/kpMainWindow_File.cpp:1416
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1622,7 +1622,7 @@ msgstr ""
 "您必须在发送之前保存此图像。\n"
 "您想要保存它吗？"
 
-#: mainWindow/kpMainWindow_File.cpp:1474
+#: mainWindow/kpMainWindow_File.cpp:1454
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

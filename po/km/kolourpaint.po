@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-05 00:39+0000\n"
+"POT-Creation-Date: 2024-04-20 01:43+0000\n"
 "PO-Revision-Date: 2012-06-11 14:07+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -181,52 +181,52 @@ msgstr "បង្វិល"
 msgid "Skew"
 msgstr "ឆៀង"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo: %1"
 msgstr "មិន​ធ្វើ​វិញ ៖ %1"
 
-#: commands/kpCommandHistoryBase.cpp:452
+#: commands/kpCommandHistoryBase.cpp:436
 #, kde-format
 msgid "&Undo"
 msgstr "មិន​ធ្វើ​វិញ"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo: %1"
 msgstr "ធ្វើ​វិញ ៖ %1"
 
-#: commands/kpCommandHistoryBase.cpp:460
+#: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo"
 msgstr "ធ្វើ​វិញ"
 
-#: commands/kpCommandHistoryBase.cpp:469
+#: commands/kpCommandHistoryBase.cpp:453
 #, kde-format
 msgid "Undo: %1"
 msgstr "មិនធ្វើ​វិញ ៖ %1"
 
-#: commands/kpCommandHistoryBase.cpp:469 commands/kpCommandHistoryBase.cpp:654
+#: commands/kpCommandHistoryBase.cpp:453 commands/kpCommandHistoryBase.cpp:634
 #, kde-format
 msgid "Undo"
 msgstr "មិន​ធ្វើ​វិញ"
 
-#: commands/kpCommandHistoryBase.cpp:477
+#: commands/kpCommandHistoryBase.cpp:461
 #, kde-format
 msgid "Redo: %1"
 msgstr "ធ្វើ​វិញ ៖ %1"
 
-#: commands/kpCommandHistoryBase.cpp:477 commands/kpCommandHistoryBase.cpp:679
+#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
 #, kde-format
 msgid "Redo"
 msgstr "ធ្វើ​វិញ"
 
-#: commands/kpCommandHistoryBase.cpp:612
+#: commands/kpCommandHistoryBase.cpp:596
 #, kde-format
 msgid "%1: %2"
 msgstr "%1 ៖ %2"
 
-#: commands/kpCommandHistoryBase.cpp:623
+#: commands/kpCommandHistoryBase.cpp:607
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
@@ -1071,136 +1071,136 @@ msgstr "កំណត់​ជា​រូបភាព"
 msgid "Selection: Create"
 msgstr "ជម្រើស ៖ បង្កើត"
 
-#: kolourpaint.cpp:54
+#: kolourpaint.cpp:51
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:56
+#: kolourpaint.cpp:53
 #, fuzzy, kde-format
 #| msgid "Paint Program for KDE"
 msgid "Paint Program by KDE"
 msgstr "កម្មវិធី​គំនូរ​របស់ KDE"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:67
 #, kde-format
 msgid "Project Founder"
 msgstr "អ្នក​បង្កើត​គម្រោង"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Chief Investigator"
 msgstr "ប្រធាន​អ្នក​បង្កើត"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "គាំទ្រ​ការ​ស្កេន គាំទ្រ​អាល់ហ្វា អ្នក​ថែទាំ​បច្ចុប្បន្ន"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:75
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:78 kolourpaint.cpp:81 kolourpaint.cpp:82
+#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "Icons"
 msgstr "រូបតំណាង"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:76
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:79 kolourpaint.cpp:80
+#: kolourpaint.cpp:76 kolourpaint.cpp:77
 #, kde-format
 msgid "InputMethod Support"
 msgstr "គាំទ្រ​វិធីសាស្ដ្រ​បញ្ចូល"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Image Effects"
 msgstr "បែបផែន​រូបភាព"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "រួមបញ្ចូល​ក្នុង KDE 4"
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:83
 #, fuzzy, kde-format
 #| msgid "KDE 4 Porting"
 msgid "KF 5 Porting"
 msgstr "រួមបញ្ចូល​ក្នុង KDE 4"
 
-#: kolourpaint.cpp:88
+#: kolourpaint.cpp:85
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "សូម​ថ្លែង​អំណរគុណ​ចំពោះ​អ្នក​ចូល​រួម​ផ្សេងទៀត ដែល​បាន​ជួយ​ធ្វើ​ឲ្យ​កម្មវិធី​នេះ​ដំណើរការ​បាន ។"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:90
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgid "Image files to open, optionally"
 msgstr "ឯកសារ​រូបភាព​ដែល​ត្រូវ​បើក"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
 msgstr ""
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
 msgstr ""
@@ -1253,8 +1253,8 @@ msgctxt "@title:window"
 msgid "Thumbnail"
 msgstr "រូបភាព​តូច"
 
-#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:867
-#: kpViewScrollableContainer.cpp:871 kpViewScrollableContainer.cpp:875
+#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
+#: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
 #, kde-format
 msgid "Left drag the handle to resize the image."
 msgstr "ចុច​អូស​កណ្ដុរ​ឆ្វេង​លើ​ចំណុច​ទាញ ដើម្បី​ប្ដូរ​ទំហំ​រូបភាព ។"
@@ -1305,59 +1305,59 @@ msgstr "មិនអាច​រក្សាទុក​ក្ដារ​លា
 msgid "Untitled"
 msgstr "គ្មាន​ចំណង​ជើង"
 
-#: mainWindow/kpMainWindow_Colors.cpp:62
+#: mainWindow/kpMainWindow_Colors.cpp:61
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "ប្រើ​លំនាំដើម​របស់ KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:67
+#: mainWindow/kpMainWindow_Colors.cpp:66
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "ប្រើ​របស់ KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:85
+#: mainWindow/kpMainWindow_Colors.cpp:78
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "បើក..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:89
+#: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:94
+#: mainWindow/kpMainWindow_Colors.cpp:87
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "រក្សាទុក"
 
-#: mainWindow/kpMainWindow_Colors.cpp:99
+#: mainWindow/kpMainWindow_Colors.cpp:92
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "រក្សាទុក​ជា..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:104
+#: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "បន្ថែម​ជួរ​ដេក"
 
-#: mainWindow/kpMainWindow_Colors.cpp:109
+#: mainWindow/kpMainWindow_Colors.cpp:102
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "លុប​ជួរដេក​ចុងក្រោយ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:122
+#: mainWindow/kpMainWindow_Colors.cpp:115
 #, kde-format
 msgid "Color Box"
 msgstr "ប្រអប់​ពណ៌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:211
+#: mainWindow/kpMainWindow_Colors.cpp:200
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1366,7 +1366,7 @@ msgstr ""
 "ក្ដារ​លាយ​ពណ៌ \"%1\" ត្រូវបាន​កែប្រែ ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:227
+#: mainWindow/kpMainWindow_Colors.cpp:212
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1375,7 +1375,7 @@ msgstr ""
 "ក្ដារលាយ​ពណ៌​ \"%1\" របស់ KDE ត្រូវបាន​កែប្រែ ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ទៅកាន់​ឯកសារ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:240
+#: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1384,13 +1384,13 @@ msgstr ""
 "ក្ដារ​លាយពណ៌​លំនាំដើម ត្រូវបាន​កែប្រែ ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ទៅ​ឯកសារ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:367
+#: mainWindow/kpMainWindow_Colors.cpp:340
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "បើក​ក្ដារ​លាយ​ពណ៌"
 
-#: mainWindow/kpMainWindow_Colors.cpp:396
+#: mainWindow/kpMainWindow_Colors.cpp:369
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1401,15 +1401,15 @@ msgstr ""
 "ការ​ផ្ទុកឡើងវិញ នឹង​បាត់បង់​រាល់ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ នៅពេល​ដែល​អ្នក​បាន​រក្សាទុកវា​ចុងក្រោយ ។\n"
 "តើ​អ្នក​ពិតជា​ចង់​ផ្ទុកឡើងវិញ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:401
-#: mainWindow/kpMainWindow_Colors.cpp:414
-#: mainWindow/kpMainWindow_Colors.cpp:423 mainWindow/kpMainWindow_File.cpp:1091
-#: mainWindow/kpMainWindow_File.cpp:1101
+#: mainWindow/kpMainWindow_Colors.cpp:374
+#: mainWindow/kpMainWindow_Colors.cpp:387
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
+#: mainWindow/kpMainWindow_File.cpp:1093
 #, kde-format
 msgid "&Reload"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_Colors.cpp:409
+#: mainWindow/kpMainWindow_Colors.cpp:382
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1420,7 +1420,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើងវិញ​នឹង​ធ្វើ​ឲ្យ​បាត់បង់​រាល់ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ពិតជា​ចង់​ផ្ទុក​ឡើងវិញ​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:419
+#: mainWindow/kpMainWindow_Colors.cpp:392
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1431,7 +1431,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​នឹង​ធ្វើ​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ពិតជា​ចង់ផ្ទុកឡើង​ឬ ?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:480
+#: mainWindow/kpMainWindow_Colors.cpp:453
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "រក្សាទុក​ក្ដារ​លាយ​ពណ៌​ជា"
@@ -1603,19 +1603,19 @@ msgstr "បិទភ្ជាប់​ក្នុង​បង្អួច​ថ
 msgid "Document Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:974
+#: mainWindow/kpMainWindow_File.cpp:966
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "រក្សាទុក​រូបភាព​ជា"
 
-#: mainWindow/kpMainWindow_File.cpp:1022
+#: mainWindow/kpMainWindow_File.cpp:1014
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "នាំចេញ"
 
-#: mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1078
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1626,7 +1626,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ដែល​អ្នក​បាន​រក្សាទុក​ចុងក្រោយ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1637,13 +1637,13 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1344
+#: mainWindow/kpMainWindow_File.cpp:1336
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "បោះពុម្ព​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:1428
+#: mainWindow/kpMainWindow_File.cpp:1416
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1652,7 +1652,7 @@ msgstr ""
 "អ្នក​ត្រូវ​តែ​រក្សាទុក​រូបភាព​នេះ​សិន មុន​នឹង​ផ្ញើ​វា ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ឬ​ទេ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1474
+#: mainWindow/kpMainWindow_File.cpp:1454
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
