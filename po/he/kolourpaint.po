@@ -20,7 +20,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.6\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -230,11 +231,13 @@ msgid "%1: %2"
 msgstr "%1: %2"
 
 #: commands/kpCommandHistoryBase.cpp:607
-#, kde-format
+#, fuzzy, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
 msgstr[0] "%1 עוד עצמים"
 msgstr[1] "עוד %1 עצמים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: commands/tools/kpToolColorPickerCommand.cpp:59
 #: tools/kpToolColorPicker.cpp:45
@@ -865,6 +868,8 @@ msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
 msgstr[0] "%1 בתים (בערך %2%)"
 msgstr[1] "%1 בתים (בערך %2%)"
+msgstr[2] ""
+msgstr[3] ""
 
 #: document/kpDocument_Open.cpp:114
 #, kde-format
@@ -1529,6 +1534,8 @@ msgid " second"
 msgid_plural " seconds"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
