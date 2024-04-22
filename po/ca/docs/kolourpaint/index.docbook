@@ -96,9 +96,7 @@
 <itemizedlist>
 <listitem>
 <para
->Pintura: dibuixar diagrames i <quote
->pintar amb els dits</quote
->.</para>
+>Pintura: dibuixar diagrames i «pintar amb els dits».</para>
 </listitem>
 <listitem>
 <para
@@ -172,9 +170,7 @@
 >Obtenir captures de pantalla</title>
 
 <para
->Una <quote
->captura de pantalla</quote
-> és una instantània del que hi ha a la pantalla del vostre ordinador. Pot ser útil per a explicar algunes de les accions que s'han de realitzar per a obtenir el resultat, o per a mostrar el problema que heu trobat. </para>
+>Una «captura de pantalla» és una instantània del que hi ha a la pantalla del vostre ordinador. Pot ser útil per a explicar algunes de les accions que s'han de realitzar per a obtenir el resultat, o per a mostrar el problema que heu trobat. </para>
 <para
 >Per a crear una captura de pantalla llesta per a la seva edició a la finestra del &kolourpaint; podeu utilitzar l'element <menuchoice
 ><guimenu
@@ -1073,9 +1069,7 @@ format="PNG"/>
 > permet seleccionar un color de la imatge. </para>
 
 <para
->La similitud dels colors permet treballar de manera més eficaç amb imatges i fotografies difuminades, de manera comparable a la característica <quote
->Vareta màgica</quote
-> d'altres programes de pintura. S'aplica a les seleccions transparents, així com les eines <link linkend="tool-flood-fill"
+>La similitud dels colors permet treballar de manera més eficaç amb imatges i fotografies difuminades, de manera comparable a la característica «Vareta màgica» d'altres programes de pintura. S'aplica a les seleccions transparents, així com les eines <link linkend="tool-flood-fill"
 >Omple</link
 >, <link linkend="tool-eraser-clr"
 >Eliminador del color</link
@@ -1338,9 +1332,7 @@ format="PNG"/>
 <para
 >Marqueu <guilabel
 >Habilita</guilabel
-> per a aplicar l'efecte de relleu. Això posarà en relleu les vores i donarà a la imatge o la selecció un <quote
->aspecte de gravat</quote
->. </para>
+> per a aplicar l'efecte de relleu. Això posarà en relleu les vores i donarà a la imatge o la selecció un «aspecte de gravat». </para>
 </sect1>
 
 <sect1 id="image-flatten">
