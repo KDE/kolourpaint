@@ -17,3 +17,6 @@ Dependencies:
 - 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
   'require':
     'graphics/libksane': '@same'
+
+Options:
+  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
