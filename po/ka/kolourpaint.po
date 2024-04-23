@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2023-01-20 09:11+0100\n"
+"PO-Revision-Date: 2024-04-22 11:27+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -388,6 +388,8 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
+"ყველა ტექსტური გასაღები უნიკალური უნდა იყოს. ტექსტური გასაღები \"%1\" "
+"ხაზებზე %2 და %3 ერთი და იგივეა."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
 #, kde-format
@@ -835,7 +837,7 @@ msgstr "ზუსტი დამთხვევა"
 #: dialogs/kpColorSimilarityDialog.cpp:87
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
-msgstr ""
+msgstr "<a href=\"dummy_to_make_link_clickable\">რა არის ფერის მსგავსება?</a>"
 
 #: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:58
 #, kde-format
@@ -861,6 +863,8 @@ msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
 "The file may be corrupt."
 msgstr ""
+"\"%1\" ვერ გავხსენი - მხარდაუჭერელი გამოსახულების ფორმატი.\n"
+"ფაილი შეიძლება, დაზიანებულია."
 
 #: document/kpDocument_Save.cpp:74
 #, kde-format
@@ -961,6 +965,8 @@ msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
 "located."
 msgstr ""
+"KolourPaint-ს არ შეუძლია წაშალოს მონიშნულის შიდა საზღვარი იმიტომ, რომ მისი "
+"მოძებნა შეუძლებელია."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:625
 #, kde-format
@@ -974,6 +980,8 @@ msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr ""
+"KolourPaint_ს არ შეუძლია ავტომატურად ამოჭრას გამოსახულება, რადგან მისი "
+"საზღვრის აღმოჩენა შეუძლებელია."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:633
 #, kde-format
@@ -1103,7 +1111,7 @@ msgstr "KF 5 პორტი"
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
-msgstr ""
+msgstr "მადლობა ბევრ სხვას, რომლებიც დაგვეხმარნენ, ეს პროგრამა შეგვექმნა."
 
 #: kolourpaint.cpp:90
 #, kde-format
@@ -1113,17 +1121,17 @@ msgstr "სურათის ფაილებს გახსნა. არ�
 #: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
-msgstr ""
+msgstr "ყველა წაკითხვადი გამოსახულების MIME ტიპების სია"
 
 #: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "მითითებული ზომის მქონე ახალი გამოსახულებით დაწყება"
 
 #: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[სიგანე]x[სიმაღლე]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1159,7 +1167,7 @@ msgstr "ტექსტის ხელსაწყოთა ზოლი"
 #: kolourpaintui.rc:172
 #, kde-format
 msgid "Selection Tool RMB Menu"
-msgstr ""
+msgstr "მონიშვნის ხელსაწყოს RMB მენიუ"
 
 #. i18n: ectx: Menu (edit)
 #: kolourpaintui.rc:174
@@ -1177,12 +1185,12 @@ msgstr "მინიატურა"
 #: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
 #, kde-format
 msgid "Left drag the handle to resize the image."
-msgstr ""
+msgstr "გადაათრიეთ მარცხენა სახელური გამოსახულების ზომის შესაცვლელად."
 
 #: kpViewScrollableContainer.cpp:194
 #, kde-format
 msgid "Resize Image: Let go of all the mouse buttons."
-msgstr ""
+msgstr "გამოსახულების ზომის შეცვლა: გაუშვით ყველა თაგუნას ღილაკს."
 
 #: kpViewScrollableContainer.cpp:226
 #, kde-format
@@ -1206,16 +1214,18 @@ msgid ""
 "Could not open color palette \"%1\" - unsupported format.\n"
 "The file may be corrupt."
 msgstr ""
+"ვერ გავხსენი ფერების პალიტრა \"%1\" - მხარდაუჭერელი ფორმატი.\n"
+"ფაილი შეიძლება, დაზიანებულია."
 
 #: lgpl/generic/kpColorCollection.cpp:213
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
-msgstr ""
+msgstr "ვერ გავხსენი KDE-ის ფერების პალიტრა \"%1\"."
 
 #: lgpl/generic/kpColorCollection.cpp:263
 #, kde-format
 msgid "Could not save color palette as \"%1\"."
-msgstr ""
+msgstr "ვერ შევინახე ფერების პალიტრა, როგორც \"%1\"."
 
 #: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
 #: widgets/toolbars/kpColorToolBar.cpp:312
@@ -1226,7 +1236,7 @@ msgstr "უსახელო"
 #: mainWindow/kpMainWindow_Colors.cpp:61
 #, kde-format
 msgid "Use KolourPaint Defaults"
-msgstr "KolourPaint -ის ნაგულისხმები პარამეტრების გამოყენება"
+msgstr "KolourPaint -ის ნაგულისხმევი პარამეტრების გამოყენება"
 
 #: mainWindow/kpMainWindow_Colors.cpp:66
 #, kde-format
@@ -1281,6 +1291,8 @@ msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
+"ფერების პალიტრა \"%1\" შეიცვალა.\n"
+"გნებავთ, შეინახოთ?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:212
 #, kde-format
@@ -1288,6 +1300,8 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
+"KDE-ის ფერების პალიტრა \"%1\" შეიცვალა.\n"
+"გნებავთ, შეინახოთ?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
@@ -1295,6 +1309,8 @@ msgid ""
 "The default color palette has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
+"ნაგულისხმევი ფერების პალიტრა შეიცვალა.\n"
+"გნებავთ, შეინახოთ?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:340
 #, kde-format
@@ -1309,6 +1325,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
+"ფერების პალიტრა \"%1\" შეიცვალა.\n"
+"თავიდან ჩატვირთვით ბოლო შენახვის შემდეგ შეტანილ ცვლილებებს დაკარგავთ.\n"
+"დარწმუნებული ბრძანდებით?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
@@ -1325,6 +1344,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"KDE-ის ფერების პალიტრა \"%1\" შეიცვალა.\n"
+"მისი თავიდან ჩატვირთვა ყველა ცვლილებას დაკარგავს.\n"
+"დარწმუნებული ბრძანდებით?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:392
 #, kde-format
@@ -1333,6 +1355,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"ნაგულისხმევი ფერების პალიტრა შეიცვალა.\n"
+"მისი თავიდან ჩატვირთვა ყველა ცვლილებას დაკარგავს.\n"
+"დარწმუნებული ბრძანდებით?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:453
 #, kde-format
@@ -1376,6 +1401,8 @@ msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
+"<qt>KolourPaint-ს ბუფერის შემცველობის ჩასმა არ შეუძლია, რადგან მისი ფორმატი "
+"უცნობია.</qt>"
 
 #: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
@@ -1424,7 +1451,7 @@ msgstr "გატანა..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "სხვა ფაილში გატანა"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1435,6 +1462,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"ეს დოკუმენტს სხვა სახელით შეინახავს. <interface>შენახვა, როგორც</interface>-"
+"ის მსგავსად, მაგრამ მიმდინარე დოკუმენტი არ შეიცვლება.<nl/>ამ გზით თქვენ "
+"შეგიძლიათ, ბოლოს გამოყენებული შესანახი საქაღალდე ცალკე შეინარჩუნოთ მიმდინარე "
+"დოკუმენტის საქაღალდისგან."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
@@ -1524,6 +1555,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
+"დოკუმენტი პალიტრა \"%1\" შეიცვალა.\n"
+"თავიდან ჩატვირთვით ბოლო შენახვის შემდეგ შეტანილ ცვლილებებს დაკარგავთ.\n"
+"დარწმუნებული ბრძანდებით?"
 
 #: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
@@ -1532,6 +1566,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"დოკუმენტი \"%1\" შეიცვალა.\n"
+"მისი თავიდან ჩატვირთვა ყველა ცვლილებას დაკარგავს.\n"
+"დარწმუნებული ბრძანდებით?"
 
 #: mainWindow/kpMainWindow_File.cpp:1336
 #, kde-format
@@ -1545,6 +1582,8 @@ msgid ""
 "You must save this image before sending it.\n"
 "Do you want to save it?"
 msgstr ""
+"გაგზავნამდე ეს გამოსახულება უნდა შეინახოთ.\n"
+"გნებავთ, შეინახოთ ის?"
 
 #: mainWindow/kpMainWindow_File.cpp:1454
 #, kde-format
@@ -1552,6 +1591,8 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
+"დოკუმენტი %1 შეიცვალა.\n"
+"გნებავთ, შეინახოთ ის?"
 
 #: mainWindow/kpMainWindow_Image.cpp:117
 #, kde-format
@@ -1596,12 +1637,12 @@ msgstr "&დახრა..."
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
-msgstr ""
+msgstr "შ&ავთეთრამდე შემცირება (დიზერინგით)"
 
 #: mainWindow/kpMainWindow_Image.cpp:171
 #, kde-format
 msgid "Reduce to &Grayscale"
-msgstr ""
+msgstr "შავთ&ეთრამდე შემცირება"
 
 #: mainWindow/kpMainWindow_Image.cpp:175
 #, kde-format
@@ -1710,22 +1751,22 @@ msgstr "გატარება"
 #: mainWindow/kpMainWindow_Tools.cpp:133
 #, kde-format
 msgid "Previous Tool Option (Group #1)"
-msgstr ""
+msgstr "წინა ხელსაწყოს პარამეტრი (ჯგუფი #1)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:139
 #, kde-format
 msgid "Next Tool Option (Group #1)"
-msgstr ""
+msgstr "შემდეგი ხელსაწყოს პარამეტრი (ჯგუფი #1)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:145
 #, kde-format
 msgid "Previous Tool Option (Group #2)"
-msgstr ""
+msgstr "წინა ხელსაწყოს პარამეტრი (ჯგუფი #2)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:151
 #, kde-format
 msgid "Next Tool Option (Group #2)"
-msgstr ""
+msgstr "შემდეგი ხელსაწყოს პარამეტრი (ჯგუფი #2)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:163
 #, kde-format
@@ -1735,7 +1776,7 @@ msgstr "გაუმჭვირვალედ &ხატვა"
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
 msgid "Draw With Color Similarity..."
-msgstr ""
+msgstr "დახატვა ფერების მსგავსებით..."
 
 #: mainWindow/kpMainWindow_Tools.cpp:179
 #, kde-format
@@ -1760,7 +1801,7 @@ msgstr "&გადიდებული მინიატურების რ
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
-msgstr ""
+msgstr "მინიატურის &მართკუთხედის ჩართვა"
 
 #: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
@@ -1786,12 +1827,13 @@ msgstr "ფუნჯი"
 #: tools/flow/kpToolBrush.cpp:36
 #, kde-format
 msgid "Draw using brushes of different shapes and sizes"
-msgstr ""
+msgstr "დახატეთ სხვადასხვა ზომისა და ფორმის ფუნჯებით"
 
 #: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
 #, kde-format
 msgid "Click to draw dots or drag to draw strokes."
 msgstr ""
+"დააწკაპუნეთ წერტილების დასახატად ან გადაათრიეთ სწორი ხაზების დასახატად."
 
 #: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
 #, kde-format
@@ -1801,12 +1843,13 @@ msgstr "ფერის საშლელი"
 #: tools/flow/kpToolColorEraser.cpp:50
 #, kde-format
 msgid "Replaces pixels of the foreground color with the background color"
-msgstr ""
+msgstr "ჩაანაცვლებს ფონის ფერის მქონე პიქსელებს ფონის ფერით"
 
 #: tools/flow/kpToolColorEraser.cpp:115
 #, kde-format
 msgid "Click or drag to erase pixels of the foreground color."
 msgstr ""
+"დააწკაპუნეთ ან გადაათრიეთ წინა პლანის ფერის მქონე პიქსელების წასაშლელად."
 
 #: tools/flow/kpToolEraser.cpp:42
 #, kde-format
@@ -1816,12 +1859,12 @@ msgstr "საშლელი"
 #: tools/flow/kpToolEraser.cpp:43
 #, kde-format
 msgid "Lets you rub out mistakes"
-msgstr ""
+msgstr "საშუალებას გაძლევთ, მოაცილოთ შეცდომები"
 
 #: tools/flow/kpToolEraser.cpp:70
 #, kde-format
 msgid "Click or drag to erase."
-msgstr ""
+msgstr "წასაშლელად დააწკაპუნეთ და გადაათრიეთ."
 
 #: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
 #: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
@@ -1831,7 +1874,7 @@ msgstr ""
 #: tools/selection/kpAbstractSelectionTool.cpp:528
 #, kde-format
 msgid "Let go of all the mouse buttons."
-msgstr ""
+msgstr "გაუშვით თაგუნას ყველა ღილაკს."
 
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
@@ -1841,7 +1884,7 @@ msgstr "ფანქარი"
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
 msgid "Draws dots and freehand strokes"
-msgstr ""
+msgstr "დახატეთ წერტილები და შემთხვევითი ხაზები"
 
 #: tools/flow/kpToolSpraycan.cpp:56
 #, kde-format
@@ -1876,7 +1919,7 @@ msgstr "%1: "
 #: tools/kpToolColorPicker.cpp:45
 #, kde-format
 msgid "Lets you select a color from the image"
-msgstr ""
+msgstr "საშუალებას გაძლევთ, ფერი სურათიდან აირჩოთ"
 
 #: tools/kpToolColorPicker.cpp:68
 #, kde-format
@@ -1907,6 +1950,8 @@ msgstr "ადიდებს და აპატარავებს გამ
 #, kde-format
 msgid "Click to zoom in/out or left drag to zoom into a specific area."
 msgstr ""
+"დააწკაპუნეთ გასადიდებლად/დასაპატარავებლად, ან გადაათრიეთ მარცხენა მხარეს "
+"მითითებული ადგილის გასადიდებლად."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
@@ -1921,27 +1966,35 @@ msgstr "მრუდების დახატვა"
 #: tools/polygonal/kpToolCurve.cpp:118
 #, kde-format
 msgid "Drag out the start and end points."
-msgstr ""
+msgstr "გადაათრიეთ საწყისი და საბოლოო წერტილები."
 
 #: tools/polygonal/kpToolCurve.cpp:157
 #, kde-format
 msgid "Left drag to set the first control point or right click to finish."
 msgstr ""
+"გადაათრიეთ მარცხენა ღილაკით, რომ დააყენოთ პირველი კონტროლის წერტილი ან "
+"მარჯვენა წკაპი დასასრულებლად."
 
 #: tools/polygonal/kpToolCurve.cpp:162
 #, kde-format
 msgid "Right drag to set the first control point or left click to finish."
 msgstr ""
+"გადაათრიეთ მარჯვენა ღილაკით, რომ დააყენოთ პირველი კონტროლის წერტილი ან "
+"მარცხენა წკაპი დასასრულებლად."
 
 #: tools/polygonal/kpToolCurve.cpp:172
 #, kde-format
 msgid "Left drag to set the last control point or right click to finish."
 msgstr ""
+"გადაათრიეთ მარცხენა ღილაკით, რომ დააყენოთ ბოლო კონტროლის წერტილი ან მარჯვენა "
+"წკაპი დასასრულებლად."
 
 #: tools/polygonal/kpToolCurve.cpp:177
 #, kde-format
 msgid "Right drag to set the last control point or left click to finish."
 msgstr ""
+"გადაათრიეთ მარჯვენა ღილაკით, რომ დააყენოთ ბოლო კონტროლის წერტილი ან მარცხენა "
+"წკაპი დასასრულებლად."
 
 #: tools/polygonal/kpToolLine.cpp:41
 #, kde-format
@@ -1977,12 +2030,12 @@ msgstr "პირველი ხაზის დასახატად გა
 #: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
 #, kde-format
 msgid "Left drag another line or right click to finish."
-msgstr ""
+msgstr "გადაათრიეთ მარცხენა ღილაკით სხვა ხაზი ან მარჯვენა წკაპი დასასრულებლად."
 
 #: tools/polygonal/kpToolPolygon.cpp:186 tools/polygonal/kpToolPolyline.cpp:121
 #, kde-format
 msgid "Right drag another line or left click to finish."
-msgstr ""
+msgstr "გადაათრიეთ მარჯვენა ღილაკით სხვა ხაზი ან მარცხენა წკაპი დასასრულებლად."
 
 #: tools/polygonal/kpToolPolyline.cpp:46
 #, kde-format
@@ -2022,7 +2075,7 @@ msgstr "მომრგვალებული მართკუთხედ�
 #: tools/rectangular/kpToolRoundedRectangle.cpp:43
 #, kde-format
 msgid "Draws rectangles and squares with rounded corners"
-msgstr ""
+msgstr "დახატავს მართკუთხედებს და კვადრატებს მომრგვალებული კუთხეებით"
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
 #, kde-format
@@ -2062,12 +2115,12 @@ msgstr "მონიშნული: გამჭვირვალობის 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:42
 #, kde-format
 msgid "Selection (Elliptical)"
-msgstr ""
+msgstr "მონიშნული (ოვალური)"
 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:43
 #, kde-format
 msgid "Makes an elliptical or circular selection"
-msgstr ""
+msgstr "მონიშნავს წრიულად ან ოვალურად"
 
 #: tools/selection/image/kpToolFreeFormSelection.cpp:45
 #, kde-format
@@ -2077,17 +2130,17 @@ msgstr "მონიშნული (ხელით)"
 #: tools/selection/image/kpToolFreeFormSelection.cpp:46
 #, kde-format
 msgid "Makes a free-form selection"
-msgstr ""
+msgstr "შექმნის სასურველ მონიშვნას ხელით"
 
 #: tools/selection/image/kpToolRectSelection.cpp:40
 #, kde-format
 msgid "Selection (Rectangular)"
-msgstr ""
+msgstr "მონიშნული (მართკუთხედი)"
 
 #: tools/selection/image/kpToolRectSelection.cpp:41
 #, kde-format
 msgid "Makes a rectangular selection"
-msgstr ""
+msgstr "შექმნის მართკუთხედ მონიშნულს"
 
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:324
 #, kde-format
@@ -2127,27 +2180,27 @@ msgstr "ტექსტი: დაწერა"
 #: tools/selection/text/kpToolText_Create.cpp:48
 #, kde-format
 msgid "Left drag to create text box."
-msgstr ""
+msgstr "გადაათრიეთ მარცხენა ღილაკით ტექსტური ალაგის შესაქმნელად."
 
 #: tools/selection/text/kpToolText_Move.cpp:42
 #, kde-format
 msgid "Left drag to move text box."
-msgstr ""
+msgstr "გადაათრიეთ მარცხენა ღილაკით ტექსტური ალაგის გადასაადგილებლად."
 
 #: tools/selection/text/kpToolText_Move.cpp:61
 #, kde-format
 msgid "Text: Move Box"
-msgstr ""
+msgstr "ტექსტი: ყუთის გადაადგილება"
 
 #: tools/selection/text/kpToolText_ResizeScale.cpp:42
 #, kde-format
 msgid "Left drag to resize text box."
-msgstr ""
+msgstr "გადაათრიეთ მარცხენა ღილაკით ტექსტური ალაგის ზომის შესაცვლელად."
 
 #: tools/selection/text/kpToolText_SelectText.cpp:57
 #, kde-format
 msgid "Left click to change cursor position."
-msgstr ""
+msgstr "მარცხენა წკაპი კურსორის მდებარეობის შესაცვლელად."
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:113
 #, kde-format
@@ -2207,7 +2260,7 @@ msgstr "ტექსტი: ხაზის გადასმა"
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
-msgstr ""
+msgstr "გაუდიდებელი რეჟიმი - მინიატურა"
 
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
@@ -2270,6 +2323,7 @@ msgstr ""
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
+"<p>ფერების მსგავსება: %1%</p><p align=\"center\">დააწკაპუნეთ მოსარგებად.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
 #, kde-format
@@ -2277,6 +2331,8 @@ msgid ""
 "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
+"<p>ფერების მსგავსება: ზუსტი დამთხვევა</p><p align=\"center\">დააწკაპუნეთ "
+"მოსარგებად.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
 #, kde-format
@@ -2286,7 +2342,7 @@ msgstr "&სიკაშკაშე:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
 #, kde-format
 msgid "Re&set"
-msgstr ""
+msgstr "ჩ&ამოყრა"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
 #, kde-format
@@ -2301,7 +2357,7 @@ msgstr "&გამა:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
 #, kde-format
 msgid "Rese&t"
-msgstr ""
+msgstr "ჩამოყ&რა"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
 #, kde-format
@@ -2331,7 +2387,7 @@ msgstr "ლურჯი"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
 #, kde-format
 msgid "Reset &All Values"
-msgstr ""
+msgstr "ყველ&ა მნიშვნელობის ჩამოყრა"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
 #, kde-format
@@ -2446,7 +2502,7 @@ msgstr ""
 #: widgets/kpDocumentSaveOptionsWidget.cpp:85
 #, kde-format
 msgid "Convert &to:"
-msgstr ""
+msgstr "&გარდაქმნა:"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:90
 #, kde-format
@@ -2466,7 +2522,7 @@ msgstr "შავთეთრი"
 #: widgets/kpDocumentSaveOptionsWidget.cpp:224
 #, kde-format
 msgid "Monochrome (Dithered)"
-msgstr ""
+msgstr "შავთეთრი (დიზერინგი)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:228
 #, kde-format
@@ -2476,7 +2532,7 @@ msgstr "256 ფერი"
 #: widgets/kpDocumentSaveOptionsWidget.cpp:229
 #, kde-format
 msgid "256 Color (Dithered)"
-msgstr ""
+msgstr "256 ფერი (დიზერინგი)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:234
 #, kde-format
@@ -2497,7 +2553,7 @@ msgstr "&გვერდის ცენტრი"
 #: widgets/kpPrintDialogPage.cpp:61
 #, kde-format
 msgid "Top-&left of the page"
-msgstr ""
+msgstr "გვერდის &ზედა-მარცხენა"
 
 #: widgets/kpTransparentColorCell.cpp:53
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44
@@ -2509,13 +2565,13 @@ msgstr "გამჭვირვალე"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "პანელების განბლოკვა"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "პანელების დაბლოკვა"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2526,11 +2582,15 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"ეს გადართავს პანელების <emphasis>დაბლოკვასა</emphasis> და "
+"<emphasis>განბლოკვას</emphasis> შორის.<nl/>განბლოკილი პანელები შეგიძლიათ "
+"ფანჯრის მეორე მხარეს გადაათრიოთ და შეუძლიათ, დახურვის ღილაკი ჰქონდეთ.<nl/> "
+"დაბლოკილი პანელები ინტერფეისში უფრო სუფთად ჩანს."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
 msgid "KolourPaint Defaults"
-msgstr ""
+msgstr "KolourPaint -ის ნაგულისხმევი"
 
 #: widgets/toolbars/kpColorToolBar.cpp:322
 #, kde-format
