@@ -7,37 +7,38 @@
 # Maris Nartiss <maris.kde@gmail.com>, 2007, 2008.
 # Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
 # Einars Sprugis <einars8@gmail.com>, 2011.
+# SPDX-FileCopyrightText: 2024 Toms Trasuns <toms.trasuns@posteo.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2011-07-27 19:42+0300\n"
-"Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
-"Language-Team: Latvian <locale@laka.lv>\n"
+"PO-Revision-Date: 2024-04-21 19:59+0300\n"
+"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Viesturs Zariņš"
+msgstr "Viesturs Zariņš, Toms Trasūns"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "viesturs.zarins@mi.lu.lv"
+msgstr "viesturs.zarins@mi.lu.lv, toms.trasuns@posteo.net"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
 #, kde-format
 msgid "Balance"
-msgstr "Balanss"
+msgstr "Līdzsvars"
 
 #: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:52
 #, kde-format
@@ -84,7 +85,7 @@ msgstr "Pārveidot uz pelēktoņu"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
 #, kde-format
 msgid "Hue, Saturation, Value"
-msgstr "Tonis, Piesātinājums, Vērtība"
+msgstr "Tonis, piesātinājums, vērtība"
 
 #: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
 #, kde-format
@@ -100,7 +101,7 @@ msgstr "Invertēt"
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
 #, kde-format
 msgid "Reduce to Monochrome (Dithered)"
-msgstr "Pārveidot uz melnbaltu (Tonēts)"
+msgstr "Pārveidot uz melnbaltu (tonēts)"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
 #, kde-format
@@ -110,7 +111,7 @@ msgstr "Pārveidot uz melnbaltu"
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
 #, kde-format
 msgid "Reduce to 256 Color (Dithered)"
-msgstr "Pārveidot uz 256 krāsām (Tonēts)"
+msgstr "Pārveidot uz 256 krāsām (tonēts)"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
 #, kde-format
@@ -121,7 +122,7 @@ msgstr "Pārveidot uz 256 krāsām"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
 #, kde-format
 msgid "Histogram Equalizer"
-msgstr "Histogrammas līdzinātājs"
+msgstr "Histogrammas ekvalaizers"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
 #, kde-format
@@ -147,18 +148,18 @@ msgstr "Apmest vertikāli"
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
 #, kde-format
 msgid "Text: Resize Box"
-msgstr "Teksts: Mainīt teksta lauka izmēru"
+msgstr "Teksts: mainīt tekstlodziņa izmēru"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:107
 #, kde-format
 msgid "Selection: Scale"
-msgstr "Iezīmētais: Mērogot"
+msgstr "Iezīmētais: mērogot"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:111
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:54
 #, kde-format
 msgid "Selection: Smooth Scale"
-msgstr "Iezīmētais: Gluda mērogošana"
+msgstr "Iezīmētais: gluda mērogošana"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:120
 #, kde-format
@@ -198,12 +199,12 @@ msgstr "&Atsaukt"
 #: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo: %1"
-msgstr "A&tkārtot: %1"
+msgstr "A&tatsaukt: %1"
 
 #: commands/kpCommandHistoryBase.cpp:444
 #, kde-format
 msgid "&Redo"
-msgstr "&Atkārtot"
+msgstr "&Atatsaukt"
 
 #: commands/kpCommandHistoryBase.cpp:453
 #, kde-format
@@ -218,12 +219,12 @@ msgstr "Atsaukt"
 #: commands/kpCommandHistoryBase.cpp:461
 #, kde-format
 msgid "Redo: %1"
-msgstr "Atkārtot: %1"
+msgstr "Atatsaukt: %1"
 
 #: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
 #, kde-format
 msgid "Redo"
-msgstr "Atkārtot"
+msgstr "Atatsaukt"
 
 #: commands/kpCommandHistoryBase.cpp:596
 #, kde-format
@@ -234,15 +235,15 @@ msgstr "%1: %2"
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
-msgstr[0] "Vēl %1 vienība"
-msgstr[1] "Vēl %1 vienības"
-msgstr[2] "Vēl %1 vienību"
+msgstr[0] "Vēl %1 vienums"
+msgstr[1] "Vēl %1 vienumi"
+msgstr[2] "Vēl %1 vienumu"
 
 #: commands/tools/kpToolColorPickerCommand.cpp:59
 #: tools/kpToolColorPicker.cpp:45
 #, kde-format
 msgid "Color Picker"
-msgstr "Krāsas noteicējs"
+msgstr "Krāsas atlasītājs"
 
 #: commands/tools/kpToolFloodFillCommand.cpp:77 tools/kpToolFloodFill.cpp:55
 #, kde-format
@@ -253,13 +254,13 @@ msgstr "Aizkrāsot"
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects (Selection)"
-msgstr "Vairāk attēlu efektu (iezīmētais)"
+msgstr "Vairāk attēla efektu (iezīmētais)"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects"
-msgstr "Vairāk attēlu efektu"
+msgstr "Vairāk attēla efektu"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
 #, kde-format
@@ -297,7 +298,7 @@ msgstr "Nenorādīts"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " x "
-msgstr "x"
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
@@ -312,19 +313,7 @@ msgid "Vertical:"
 msgstr "Vertikāli:"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p><b>Dots Per Inch</b> (DPI) specifies the number of pixels of the "
-#| "image that should be printed inside one inch (2.54cm).</p><p>The higher "
-#| "the image's DPI, the smaller the printed image. Note that your printer is "
-#| "unlikely to produce high quality prints if you increase this to more than "
-#| "300 or 600 DPI, depending on the printer.</p><p>If you would like to "
-#| "print the image so that it is the same size as it is displayed on the "
-#| "screen, set the image's DPI values to be the same as the screen's.</"
-#| "p><p>If either DPI value is <b>Unspecified</b>, the image will also be "
-#| "printed to be the same size as on the screen.</p><p>Not all image formats "
-#| "support DPI values.  If the format you save in does not support them, "
-#| "they will not be saved.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p><b>Dots Per Inch</b> (DPI) specifies the number of pixels of the "
 "image that should be printed inside one inch (2.54cm).</p><p>The higher the "
@@ -338,14 +327,14 @@ msgid ""
 "the format you save in does not support them, they will not be saved.</p></"
 "qt>"
 msgstr ""
-"<qt><p><b>Punkti uz collu</b> (DPI) norāda pikseļu skatitu, ko izdrukāt, "
-"vienā collā (2.54cm).</p><p>Jo augstāks attēla DPI, jo mazāks būs "
-"izdrukātais attēls. Ņemiet vērā ka jūsu dukas ierīce diez vai spēs "
-"nodrošināt augstas kvalitātes dukum ja palielināsiet šo uz vairāk par 300 "
-"vai 600 DPI, atkarībā no drukas ierīces.</p><p>Ja vēlaties izdrukāt attēlu "
-"tādā izmērā, kādā tas redzams uz ekrāna, uzstādiet attēla DPI tādu pašu kāds "
-"ir ekrānam.</p><p>Ja kāda no DPI vērtībām ir <b>Nenorādīts</b>, attēls arī "
-"tiks izdrukāts tādā pašā izmērā kā uz ekrāna.</p><p>Ne visi attēlu formāti "
+"<qt><p><b>Punkti uz collu</b> (DPI) norāda pikseļu skaitu, ko izdrukāt, "
+"vienā collā (2,54 cm).</p><p>Jo augstāks ir attēla DPI, jo mazāks būs "
+"izdrukātais attēls. Ņemiet vērā ka jūsu drukas ierīce var nespēt nodrošināt "
+"augstas kvalitātes druku, ja palielināsiet šo vērtību uz vairāk par 300 vai "
+"600 DPI, atkarībā no drukas ierīces.</p><p>Ja vēlaties izdrukāt attēlu tādā "
+"izmērā, kādā tas ir redzams ekrānā, attēla DPI norādiet tādu pašu, kāds ir "
+"ekrānam.</p><p>Ja kāda no DPI vērtībām ir <b>Nenorādīts</b>, attēls arī tiks "
+"izdrukāts tādā pašā izmērā, kāds tas ir ekrānā.</p><p>Ne visi attēlu formāti "
 "atbalsta DPI vērtības. Ja jūsu lietotais formāts tās neatbalsta, šeit "
 "norādītā vērtība netiks saglabāta.</p></qt>"
 
@@ -363,8 +352,8 @@ msgid ""
 "values specified here will not be saved.</p></qt>"
 msgstr ""
 "<qt><p><b>Nobīde</b> ir relatīvā pozīcija, kas norāda kā attēls būtu "
-"jānovieto attiecībā pret citien attēliem.</p><p>Ne visi attēlu formāti "
-"atbalsta <b>Nobīde</b> vērtību. Ja jūsu lietotais formāts to neatbalsta, "
+"jānovieto attiecībā pret citiem attēliem.</p><p>Ne visi attēlu formāti "
+"atbalsta <b>nobīdes</b> vērtību. Ja jūsu lietotais formāts to neatbalsta, "
 "šeit norādītā vērtība netiks saglabāta.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
@@ -386,17 +375,10 @@ msgstr "&Dzēst rindu"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
 #, kde-format
 msgid "&Reset"
-msgstr "A&tstatīt"
+msgstr "A&tiestatīt"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p><b>Text Fields</b> provide extra information about the image. This "
-#| "is probably a comment area that you can freely write any text in.</"
-#| "p><p>However, this is format-specific so the fields could theoretically "
-#| "be computer-interpreted data - that you should not modify - but this is "
-#| "unlikely.</p><p>Not all image formats support <b>Text Fields</b>.  If the "
-#| "format you save in does not support them, they will not be saved.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p><b>Text Fields</b> provide extra information about the image. This is "
 "probably a comment area that you can freely write any text in.</"
@@ -405,11 +387,11 @@ msgid ""
 "unlikely.</p><p>Not all image formats support <b>Text Fields</b>. If the "
 "format you save in does not support them, they will not be saved.</p></qt>"
 msgstr ""
-"<qt><p><b>Teksta lauki</b> glabā papildus informāciju par attēlu. Visticamāk "
-"ka tā ir vieta komentāriem, kur jūs varat rakstīt jebkādu tekstu.</"
-"p><p>Tomēr šis lauks var atšķirties katram formātam, tāpēc kāds lauks varbūt "
-"glabā datoram interpretējamu informāciju - tos jums nevajadzētu mainīt, bet "
-"tas ir maz ticams.</p><p>Ne visi attēlu formāti atbalsta <b>Teksta laukus</"
+"<qt><p><b>Teksta lauki</b> glabā papildu informāciju par attēlu. Visticamāk, "
+"ka tā ir vieta komentāriem, kur varat rakstīt jebkādu tekstu.</p><p>Tomēr "
+"šis lauks var atšķirties katram formātam, tāpēc teorētiski šis lauks var "
+"saglabāt datora apstrādātu informāciju, ko jums nevajadzētu mainīt, bet tie "
+"ir reti gadījumi.</p><p>Ne visi attēlu formāti atbalsta <b>teksta laukus</"
 "b>. Ja jūsu lietotais formāts tos neatbalsta, šeit norādītās vērtības netiks "
 "saglabātas.</p></qt>"
 
@@ -426,7 +408,7 @@ msgstr "Vērtība"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
-msgstr "Tejsta vārtībai \"%1\", %2 rindā nepieciešama atslēga."
+msgstr "Teksta vērtībai „%1“, %2. rindā nepieciešama atslēga."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
 #, kde-format
@@ -434,8 +416,8 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
-"Visām atslēgām ir jābūt unikālām. Teksta atslēga \"%1\" atkārtojas %2. un "
-"%3. rindā."
+"Visām atslēgām jābūt unikālām. Teksta atslēga „%1“ atkārtojas %2. un %3. "
+"rindā."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
 #, kde-format
@@ -453,7 +435,7 @@ msgstr "Izmērs"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:288
 #, kde-format
 msgid "Original:"
-msgstr "Šobrīdējais:"
+msgstr "Sākotnējais:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:143
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:251
@@ -461,7 +443,7 @@ msgstr "Šobrīdējais:"
 #: mainWindow/kpMainWindow_StatusBar.cpp:236
 #, kde-format
 msgid "%1 x %2"
-msgstr "%1 x %2"
+msgstr "%1 × %2"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:170
 #: dialogs/kpColorSimilarityDialog.cpp:58
@@ -479,12 +461,12 @@ msgstr "&Atjaunināt"
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
-msgstr "Mainīt izmēru / Mērogot"
+msgstr "Mainīt izmēru / mērogot"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
 #, kde-format
 msgid "Ac&t on:"
-msgstr "Veik&t ar:"
+msgstr "&Strādāt ar:"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
 #, kde-format
@@ -495,12 +477,12 @@ msgstr "Visu attēlu"
 #: layers/selections/image/kpAbstractImageSelection.cpp:204
 #, kde-format
 msgid "Selection"
-msgstr "Iezīmēto"
+msgstr "Iezīmēto lauku"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:171
 #, kde-format
 msgid "Text Box"
-msgstr "Teksta laukumu"
+msgstr "Teksta lauku"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:220
 #, kde-format
@@ -518,18 +500,18 @@ msgid ""
 "as <i>Scale</i> except that it blends neighboring pixels to produce a "
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
-"<qt><ul><li><b>Izmēra mainīšana</b>: Attēla izmērs tiks palielināts "
-"izveidojot tukšu laukumu attēla labajā pusē un/vai apakšā (aizpildot to ar "
-"fona krāsu), vai samazināts nogriežot nost no labās puses un/vai apakšas.</"
-"li><li><b>Mērogošana</b>: Attēls tiks palielināts dublējot pikseļus, vai "
-"saspiests izmetot pikseļus.</li><li><b>Gluda mērogošana</b>: Tāds pats kā "
-"<i>Mērogošana</i> tikai sapludina kaimiņu pikseļus un izveido gludāku attēlu."
-"</li></ul></qt>"
+"<qt><ul><li><b>Izmēra mainīšana</b>: attēla izmēru programma palielinās, "
+"izveidojot tukšu zonu attēla labajā pusē un/vai apakšā (aizpildot to ar fona "
+"krāsu), vai samazināts, nogriežot nost no labās puses un/vai apakšas.</"
+"li><li><b>Mērogošana</b>: attēlu programma palielinās, dublējot pikseļus, "
+"vai saspiests, pikseļus izmetot.</li><li><b>Gluda mērogošana</b>: notiek tas "
+"pats, kas <i>mērogošanas</i> gadījumā, bet sapludina kaimiņu pikseļus un "
+"izveido gludāku attēlu.</li></ul></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
 #, kde-format
 msgid "&Resize"
-msgstr "Mainīt izmē&ru"
+msgstr "&Mainīt izmēru"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
 #, kde-format
@@ -556,12 +538,12 @@ msgstr "Augstums:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:312
 #, kde-format
 msgid "x"
-msgstr "x"
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:297
 #, kde-format
 msgid "&New:"
-msgstr "&Jaunais:"
+msgstr "&Jauns:"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:304
 #, kde-format
@@ -588,21 +570,20 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to resize the text box?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Teksta laukuma izmēra mainīšana uz %1x%2 var aizņemt diezgan daudz "
-"atmiņas. Tas var padarīt sistēmu lēnu un radīt resursu problēmas citām "
-"programmām.</p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></"
-"qt>"
+"<qt><p>Teksta laukuma izmēra mainīšana uz %1×%2 var aizņemt daudz atmiņas. "
+"Tas var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
+"p><p>Vai tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
-msgstr "Mainīt teksta laukuma izmēru?"
+msgstr "Vai mainīt teksta lauka izmēru?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
 #, kde-format
 msgid "R&esize Text Box"
-msgstr "&Mainīt teksta laukuma izmēru"
+msgstr "&Mainīt teksta lauka izmēru"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:738
 #: mainWindow/kpMainWindow_Tools.cpp:652
@@ -612,16 +593,16 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to resize the image?</p></qt>"
 msgstr ""
-"<qt><p>Attēla izmēra mainīšana uz %1x%2 var aizņemt diezgan daudz atmiņas. "
-"Tas var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"<qt><p>Attēla izmēra mainīšana uz %1×%2 var aizņemt daudz atmiņas. Tas var "
+"padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai "
+"tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
 #: mainWindow/kpMainWindow_Tools.cpp:662
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
-msgstr "Mainīt attēla izmēru?"
+msgstr "Vai mainīt attēla izmēru?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
 #: mainWindow/kpMainWindow_Tools.cpp:663
@@ -636,15 +617,15 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to scale the image?</p></qt>"
 msgstr ""
-"<qt><p>Attēla mērogošana uz %1x%2 var aizņemt diezgan daudz atmiņas. Tas var "
-"padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai "
-"esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"<qt><p>Attēla mērogošana uz %1×%2 var aizņemt daudz atmiņas. Tas var padarīt "
+"sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai tiešām "
+"vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
-msgstr "Mērogot attēlu?"
+msgstr "Vai mērogot attēlu?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
 #, kde-format
@@ -659,15 +640,15 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to scale the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Iezīmētā mērogošana uz %1x%2 var aizņemt diezgan daudz atmiņas. Tas "
-"var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"<qt><p>Iezīmētā laika mērogošana uz %1×%2 var aizņemt daudz atmiņas. Tas var "
+"padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai "
+"tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
-msgstr "Mērogot iezīmēto?"
+msgstr "Vai mērogot iezīmēto?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
 #, kde-format
@@ -682,15 +663,15 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the image?</"
 "p></qt>"
 msgstr ""
-"<qt><p>Attēla gluda mērogošana uz %1x%2 var aizņemt diezgan daudz atmiņas. "
-"Tas var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"<qt><p>Attēla gludā mērogošana uz %1×%2 var aizņemt daudz atmiņas. Tas var "
+"padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai "
+"tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
-msgstr "Gludi mērogot attēlu?"
+msgstr "Vai gludi mērogot attēlu?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
 #, kde-format
@@ -705,15 +686,15 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the selection?"
 "</p></qt>"
 msgstr ""
-"<qt><p>Iezīmētā gluda mērogošana uz %1x%2 var aizņemt diezgan daudz atmiņas. "
+"<qt><p>Iezīmētā lauka gludā mērogošana uz %1×%2 var aizņemt daudz atmiņas. "
 "Tas var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"p><p>Vai tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
-msgstr "Gludi mērogot iezīmēto?"
+msgstr "Vai gludi mērogot iezīmēto?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
 #, kde-format
@@ -745,12 +726,12 @@ msgstr "Virziens"
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
 #, kde-format
 msgid "Cou&nterclockwise"
-msgstr "P&retēji pulkstenim"
+msgstr "P&retēji pulksteņrādītāja virzienam"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:122
 #, kde-format
 msgid "C&lockwise"
-msgstr "Pu&lksteņa virzienā"
+msgstr "Pu&lksteņrādītāja virzienā"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:146
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:97
@@ -761,17 +742,17 @@ msgstr "Leņķis"
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:150
 #, kde-format
 msgid "90 &degrees"
-msgstr "90 grā&di"
+msgstr "90 grā&du"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:151
 #, kde-format
 msgid "180 d&egrees"
-msgstr "180 g&rādi"
+msgstr "180 g&rādu"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:152
 #, kde-format
 msgid "270 de&grees"
-msgstr "270 &grādi"
+msgstr "270 &grādu"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:154
 #, kde-format
@@ -786,27 +767,22 @@ msgid "degrees"
 msgstr "grādi"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to rotate the selection?</p></"
-#| "qt>"
+#, kde-format
 msgid ""
 "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
 "resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Iezīmētā pagriešana uz %1x%2 var aizņemt diezgan daudz atmiņas. Tas "
-"var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"<qt><p>Iezīmētā lauka pagriešana uz %1×%2 var aizņemt daudz atmiņas. Tas var "
+"padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai "
+"tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection?"
-msgstr "Pagriezt iezīmēto?"
+msgstr "Vai pagriezt iezīmēto?"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
 #, kde-format
@@ -814,26 +790,21 @@ msgid "Rotat&e Selection"
 msgstr "Pagri&ezt iezīmēto"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Rotating the image to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to rotate the image?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
 msgstr ""
-"<qt><p>Attēla pagriešana sašķiebšana uz %1x%2 var aizņemt diezgan daudz "
-"atmiņas. Tas var padarīt sistēmu lēnu un radīt resursu problēmas citām "
-"programmām.</p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></"
-"qt>"
+"<qt><p>Attēla pagriešana uz %1×%2 var aizņemt daudz atmiņas. Tas var padarīt "
+"sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai tiešām "
+"vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image?"
-msgstr "Pagriezt attēlu?"
+msgstr "Vai pagriezt attēlu?"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
 #, kde-format
@@ -868,26 +839,22 @@ msgid "&Vertical:"
 msgstr "&Vertikāli:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to skew the selection?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
 "resource problems.</p><p>Are you sure you want to skew the selection?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Iezīmētā sašķiebšana uz %1x%2 var aizņemt diezgan daudz atmiņas. Tas "
+"<qt><p>Iezīmētā lauka sašķiebšana uz %1×%2 var aizņemt daudz atmiņas. Tas "
 "var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"p><p>Vai tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection?"
-msgstr "Sašķiebt iezīmēto?"
+msgstr "Vai sašķiebt iezīmēto?"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
 #, kde-format
@@ -895,25 +862,21 @@ msgid "Sk&ew Selection"
 msgstr "Sašķi&ebt iezīmēto"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Skewing the image to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to skew the image?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
-"<qt><p>Attēla sašķiebšana uz %1x%2 var aizņemt diezgan daudz atmiņas. Tas "
-"var padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</"
-"p><p>Vai esat pārliecināts, ka vēlaties veikt šo dabību?</p></qt>"
+"<qt><p>Attēla sašķiebšana uz %1×%2 var aizņemt daudz atmiņas. Tas var "
+"padarīt sistēmu lēnu un radīt resursu problēmas citām programmām.</p><p>Vai "
+"tiešām vēlaties turpināt?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image?"
-msgstr "Sašķiebt attēlu?"
+msgstr "Vai sašķiebt attēlu?"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
 #, kde-format
@@ -951,14 +914,14 @@ msgstr "Saglabāt priekšskatījumu"
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
-msgstr[0] "%1 baits (apm. %2%)"
-msgstr[1] "%1 baiti (apm. %2%)"
-msgstr[2] "%1 baitu (apm. %2%)"
+msgstr[0] "%1 baits (apm. %2 %)"
+msgstr[1] "%1 baiti (apm. %2 %)"
+msgstr[2] "%1 baitu (apm. %2 %)"
 
 #: document/kpDocument_Open.cpp:114
 #, kde-format
 msgid "Could not open \"%1\"."
-msgstr "Neizdevās atvērt \"%1\"."
+msgstr "Neizdevās atvērt „%1“."
 
 #: document/kpDocument_Open.cpp:150
 #, kde-format
@@ -966,13 +929,13 @@ msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
 "The file may be corrupt."
 msgstr ""
-"Neizdevās atvērt \"%1\" - neatbalstīts attēla formāts.\n"
-"Fails varētu būt bojāts."
+"Neizdevās atvērt „%1“ — neatbalstīts attēla formāts.\n"
+"Datne varētu būt bojāta."
 
 #: document/kpDocument_Save.cpp:74
 #, kde-format
 msgid "Could not save image - insufficient information."
-msgstr "Neizdevās saglabāt attēlu - nepietiek informācijas."
+msgstr "Neizdevās saglabāt attēlu — nepietiek informācijas."
 
 #: document/kpDocument_Save.cpp:75
 #, kde-format
@@ -992,7 +955,7 @@ msgstr "<tukšs>"
 #, kde-format
 msgctxt "@title:window"
 msgid "Internal Error"
-msgstr "Iekšēja kļūda"
+msgstr "Iekšējā kļūda"
 
 #: document/kpDocument_Save.cpp:116
 #, kde-format
@@ -1001,14 +964,14 @@ msgid ""
 "color information.</p><p>Are you sure you want to save in this format?</p></"
 "qt>"
 msgstr ""
-"<qt><p><b>%1</b> formāts nespēj saglabāt visas attēla krāsas.</p><p>Vai esat "
-"pārliecināts ka vēlaties saglabāt šajā formātā?</p></qt>"
+"<qt><p><b>%1</b> formāts var nespēt saglabāt visas attēla krāsas.</p><p>Vai "
+"tiešām vēlaties saglabāt šajā formātā?</p></qt>"
 
 #: document/kpDocument_Save.cpp:123
 #, kde-format
 msgctxt "@title:window"
 msgid "Lossy File Format"
-msgstr "Failu formāts ar zudumiem"
+msgstr "Datnes formāts ar zudumiem"
 
 #: document/kpDocument_Save.cpp:132
 #, kde-format
@@ -1017,10 +980,9 @@ msgid ""
 "loss of color information. Any transparency might also be removed.</p><p>Are "
 "you sure you want to save at this color depth?</p></qt>"
 msgstr ""
-"<qt><p>Attēla saglabāšana zemā krāsu dziļumā - %1-biti - var izraisīt krāsu "
-"informācijas zudumus. Tāpat var tikt aizvākta visa caurspīdīguma informācija."
-"</p><p>Vai esat pārliecināts ka vēlaties saglabāt šajā krāsu dziļumā?</p></"
-"qt>"
+"<qt><p>Attēla saglabāšana zemā krāsu dziļumā — %1 biti — var izraisīt krāsu "
+"informācijas zudumus. Tāpat var pazust visa caurspīdīguma informācija.</"
+"p><p>Vai tiešām vēlaties saglabāt šajā krāsu dziļumā?</p></qt>"
 
 #: document/kpDocument_Save.cpp:142
 #, kde-format
@@ -1031,43 +993,42 @@ msgstr "Zems krāsu dziļums"
 #: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
-msgstr "Neizdevās saglabāt attēlu - neizdevās izveidot pagaidu failu."
+msgstr "Neizdevās saglabāt attēlu — neizdevās izveidot pagaidu datni."
 
 #: document/kpDocument_Save.cpp:276
-#, fuzzy, kde-format
-#| msgid "Could not save as \"%1\"."
+#, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "Neizdevās saglabāt kā \"%1\"."
+msgstr "Neizdevās saglabāt kā „%1“: %2"
 
 #: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
-msgstr ""
+msgstr "Kļūda, saglabājot attēlu"
 
 #: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
-msgstr "Neizdevās saglabāt attēlu - neizdevās augšupielādēt."
+msgstr "Neizdevās saglabāt attēlu — neizdevās augšupielādēt."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:384
 #, kde-format
 msgid "Remove Internal B&order"
-msgstr "Noņemt iešējo r&obežu"
+msgstr "Noņemt iekšējo r&obežu"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:387
 #, kde-format
 msgid "Remove Internal Border"
-msgstr "Noņemt iešējo robežu"
+msgstr "Noņemt iekšējo robežu"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:391
 #, kde-format
 msgid "Autocr&op"
-msgstr "Aut&oapcirst"
+msgstr "Aut&omātiski kadrēt"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:393
 #, kde-format
 msgid "Autocrop"
-msgstr "Autoapcirst"
+msgstr "Automātiski kadrēt"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:623
 #, kde-format
@@ -1075,13 +1036,13 @@ msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
 "located."
 msgstr ""
-"KolourPaint nespēj noņemt iezīmētā iekšējo robežo, jo to neizdevās atrast."
+"„KolourPaint“ nevar noņemt iezīmētā iekšējo robežo, jo to neizdevās atrast."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:625
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
-msgstr "Neizdevās noņemt iešējo robežu"
+msgstr "Nevar noņemt iekšējo robežu"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:631
 #, kde-format
@@ -1089,26 +1050,26 @@ msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr ""
-"KolourPaint nespēj automātiski apcirst attēlu, jo neizdodas atrast tā robežu."
+"„KolourPaint“ nevar automātiski kadrēt attēlu, jo neizdodas atrast tā robežu."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:633
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
-msgstr "Neizdevās autoapcirst"
+msgstr "Neizdevās automātiski kadret"
 
 #: imagelib/transforms/kpTransformCrop.cpp:69
 #: imagelib/transforms/kpTransformCrop.cpp:72
 #, kde-format
 msgid "Set as Image"
-msgstr "Uzlikt par attēlu"
+msgstr "Uzlikt kā attēlu"
 
 #: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:251
 #: mainWindow/kpMainWindow_Edit.cpp:365 mainWindow/kpMainWindow_Image.cpp:320
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:74
 #, kde-format
 msgid "Selection: Create"
-msgstr "Iezīmēšana: Izveidot"
+msgstr "Iezīmēšana: izveidot"
 
 #: kolourpaint.cpp:51
 #, kde-format
@@ -1116,10 +1077,9 @@ msgid "KolourPaint"
 msgstr "KolourPaint"
 
 #: kolourpaint.cpp:53
-#, fuzzy, kde-format
-#| msgid "Paint Program for KDE"
+#, kde-format
 msgid "Paint Program by KDE"
-msgstr "Zīmēšanas programma priekš KDE"
+msgstr "KDE zīmēšanas programma"
 
 #: kolourpaint.cpp:67
 #, kde-format
@@ -1169,7 +1129,7 @@ msgstr "Tasuku Suzuki"
 #: kolourpaint.cpp:76 kolourpaint.cpp:77
 #, kde-format
 msgid "InputMethod Support"
-msgstr "InputMethod atbalsts"
+msgstr "„InputMethod“ atbalsts"
 
 #: kolourpaint.cpp:77
 #, kde-format
@@ -1209,13 +1169,12 @@ msgstr "KDE 4 portēšana"
 #: kolourpaint.cpp:83
 #, kde-format
 msgid "Christoph Feck"
-msgstr ""
+msgstr "Christoph Feck"
 
 #: kolourpaint.cpp:83
-#, fuzzy, kde-format
-#| msgid "KDE 4 Porting"
+#, kde-format
 msgid "KF 5 Porting"
-msgstr "KDE 4 portēšana"
+msgstr "KDE 5 portēšana"
 
 #: kolourpaint.cpp:85
 #, kde-format
@@ -1224,25 +1183,24 @@ msgid ""
 msgstr "Paldies daudziem citiem, kas palīdzēja tapt šai programmai."
 
 #: kolourpaint.cpp:90
-#, fuzzy, kde-format
-#| msgid "Image file to open"
+#, kde-format
 msgid "Image files to open, optionally"
-msgstr "Atveramais attēla fails"
+msgstr "Atveramā attēla datne (nav obligāti)"
 
 #: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
-msgstr ""
+msgstr "Uzskaitīt visus lasāmos MIMTE tipus"
 
 #: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Sākt ar attēlu, izmantojot doto izmēru"
 
 #: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[platums]×[augstums]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1296,17 +1254,17 @@ msgstr "Sīktēls"
 #: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
 #, kde-format
 msgid "Left drag the handle to resize the image."
-msgstr "Velciet rokturi ar kreiso, lai mainītu attēla izmēru."
+msgstr "Velciet rokturi ar kreiso peles pogu, lai mainītu attēla izmēru."
 
 #: kpViewScrollableContainer.cpp:194
 #, kde-format
 msgid "Resize Image: Let go of all the mouse buttons."
-msgstr "Izmēra mainīšana: Atlaidiet peles pogas."
+msgstr "Izmēra mainīšana: atlaidiet visas peles pogas."
 
 #: kpViewScrollableContainer.cpp:226
 #, kde-format
 msgid "Resize Image: Right click to cancel."
-msgstr "Izmēra mainīšana: Labais klikšķis lai atceltu."
+msgstr "Izmēra mainīšana: labais klikšķis, lai atceltu."
 
 #: layers/selections/text/kpTextSelection.cpp:136
 #: tools/selection/text/kpToolText.cpp:55
@@ -1317,7 +1275,7 @@ msgstr "Teksts"
 #: lgpl/generic/kpColorCollection.cpp:120
 #, kde-format
 msgid "Could not open color palette \"%1\"."
-msgstr "Neizdevās atvērt krāsu paleti \"%1\"."
+msgstr "Neizdevās atvērt krāsu paleti „%1“."
 
 #: lgpl/generic/kpColorCollection.cpp:153
 #, kde-format
@@ -1325,18 +1283,18 @@ msgid ""
 "Could not open color palette \"%1\" - unsupported format.\n"
 "The file may be corrupt."
 msgstr ""
-"Neizdevās atvērt krāsu paleti \"%1\" - neatbalstīts formāts.\n"
-"Fails varētu būt bojāts."
+"Neizdevās atvērt krāsu paleti „%1“ — neatbalstīts formāts.\n"
+"Datne varētu būt bojāta."
 
 #: lgpl/generic/kpColorCollection.cpp:213
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
-msgstr "Neizdevās atvērt KDE krāsu paleti \"%1\"."
+msgstr "Neizdevās atvērt KDE krāsu paleti „%1“."
 
 #: lgpl/generic/kpColorCollection.cpp:263
 #, kde-format
 msgid "Could not save color palette as \"%1\"."
-msgstr "Neizdevās saglabāt krāsu paleti kā \"%1\"."
+msgstr "Neizdevās saglabāt krāsu paleti kā „%1“."
 
 #: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
 #: widgets/toolbars/kpColorToolBar.cpp:312
@@ -1347,7 +1305,7 @@ msgstr "Nenosaukts"
 #: mainWindow/kpMainWindow_Colors.cpp:61
 #, kde-format
 msgid "Use KolourPaint Defaults"
-msgstr "Lietot KolourPaint noklusētās krāsas"
+msgstr "Lietot „KolourPaint“ noklusējumus"
 
 #: mainWindow/kpMainWindow_Colors.cpp:66
 #, kde-format
@@ -1365,7 +1323,7 @@ msgstr "&Atvērt..."
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
-msgstr "Pārielā&dēt"
+msgstr "Pārlā&dēt"
 
 #: mainWindow/kpMainWindow_Colors.cpp:87
 #, kde-format
@@ -1402,7 +1360,7 @@ msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"Krāsu palete \"%1\" ir mainīta.\n"
+"Krāsu palete „%1“ ir mainīta.\n"
 "Vai vēlaties to saglabāt?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:212
@@ -1411,8 +1369,8 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"KDE krāsu palete \"%1\" ir mainīta.\n"
-"Vai vēlaties to saglabāt?"
+"KDE krāsu palete „%1“ ir mainīta.\n"
+"Vai vēlaties to saglabāt datnē?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:221
 #, kde-format
@@ -1421,7 +1379,7 @@ msgid ""
 "Do you want to save it to a file?"
 msgstr ""
 "Noklusētā krāsu palete ir mainīta.\n"
-"Vai vēlaties to saglabāt?"
+"Vai vēlaties to saglabāt datnē?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:340
 #, kde-format
@@ -1436,9 +1394,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"Krāsu palete \"%1\" ir mainīta.\n"
-"Pārielādēšana iznīcinās visas izmaiņas kopš pēdējās saglabāšanas.\n"
-"Vai esat pārliecināts?"
+"Krāsu palete „%1“ ir mainīta.\n"
+"Pārlādēšana atcels visas izmaiņas kopš pēdējās saglabāšanas.\n"
+"Vai vēlaties turpināt?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
@@ -1446,7 +1404,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_File.cpp:1093
 #, kde-format
 msgid "&Reload"
-msgstr "&Pārielādēt"
+msgstr "&Pārlādēt"
 
 #: mainWindow/kpMainWindow_Colors.cpp:382
 #, kde-format
@@ -1455,9 +1413,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"KDE krāsu palete \"%1\" ir mainīta.\n"
-"Pārielādēšana iznīcinās visas izmaiņas.\n"
-"Vai esat pārliecināts?"
+"KDE krāsu palete „%1“ ir mainīta.\n"
+"Pārlādēšana atcels visas izmaiņas.\n"
+"Vai vēlaties turpināt?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:392
 #, kde-format
@@ -1467,8 +1425,8 @@ msgid ""
 "Are you sure?"
 msgstr ""
 "Noklusētā krāsu palete ir mainīta.\n"
-"Pārielādēšana iznīcinās visas izmaiņas.\n"
-"Vai esat pārliecināts?"
+"Pārlādēšana atcels visas izmaiņas.\n"
+"Vai vēlaties turpināt?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:453
 #, kde-format
@@ -1488,23 +1446,23 @@ msgstr "&Izdzēst iezīmēto"
 #: mainWindow/kpMainWindow_Edit.cpp:111
 #, kde-format
 msgid "C&opy to File..."
-msgstr "K&opēt uz failu..."
+msgstr "K&opēt uz datni..."
 
 #: mainWindow/kpMainWindow_Edit.cpp:115
 #, kde-format
 msgid "Paste &From File..."
-msgstr "Ielīmēt no &faila..."
+msgstr "Ielīmēt no &datnes..."
 
 #: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
 #: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
 #, kde-format
 msgid "Text: Create Box"
-msgstr "Teksts: Izveidot teksta lauku"
+msgstr "Teksts: izveidot tekstlodziņu"
 
 #: mainWindow/kpMainWindow_Edit.cpp:444
 #, kde-format
 msgid "Text: Paste"
-msgstr "Teksts: Ielīmēt"
+msgstr "Teksts: ielīmēt"
 
 #: mainWindow/kpMainWindow_Edit.cpp:611
 #, kde-format
@@ -1512,6 +1470,8 @@ msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
+"<qt>„KolourPaint“ nevar ielīmēt starpliktuves saturu, jo tas ir programmai "
+"nezināma formāta.</qt>"
 
 #: mainWindow/kpMainWindow_Edit.cpp:613
 #, kde-format
@@ -1521,35 +1481,35 @@ msgstr "Neizdodas ielīmēt"
 #: mainWindow/kpMainWindow_Edit.cpp:692
 #, kde-format
 msgid "Text: Delete Box"
-msgstr "Teksts: Izmest teksta lauku"
+msgstr "Teksts: dzēst tekstlodziņu"
 
 #. i18n ("Text: Delete")
 #: mainWindow/kpMainWindow_Edit.cpp:693
 #, kde-format
 msgid "Selection: Delete"
-msgstr "Iezīmētais: Izdzēst"
+msgstr "Iezīmētais: izdzēst"
 
 #: mainWindow/kpMainWindow_Edit.cpp:767
 #, kde-format
 msgid "Text: Finish"
-msgstr "Teksts: Pabeigt"
+msgstr "Teksts: pabeigt"
 
 #: mainWindow/kpMainWindow_Edit.cpp:768
 #, kde-format
 msgid "Selection: Deselect"
-msgstr "Iezīmētais: Novākt iezīmējumu"
+msgstr "Iezīmētais: Noņemt iezīmējumu"
 
 #: mainWindow/kpMainWindow_Edit.cpp:852
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
-msgstr "Kopēt uz failu"
+msgstr "Kopēt datnē"
 
 #: mainWindow/kpMainWindow_Edit.cpp:899
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
-msgstr "Ielīmēt no faila"
+msgstr "Ielīmēt no datnes"
 
 #: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
@@ -1560,7 +1520,7 @@ msgstr "E&ksportēt..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Eksportēt citā datnē"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1571,6 +1531,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Šī darbība saglabā dokumentu ar citu nosaukumu, līdzīgi kā "
+"<interface>Saglabāt kā</interface>, bet pašreizējais dokuments paliek bez "
+"izmaiņām.<nl/>Šādi varat paturēt pēdējo izmantoto saglabāšanas mapi "
+"neatkarīgu no pašreizējā dokumenta mapes."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
@@ -1590,12 +1554,12 @@ msgstr "Īpašības"
 #: mainWindow/kpMainWindow_File.cpp:133
 #, kde-format
 msgid "Reloa&d"
-msgstr "Pārielā&dēt"
+msgstr "Pārlā&dēt"
 
 #: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
-msgstr ""
+msgstr "Visas atbalstītās datne (%1)"
 
 #: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
@@ -1606,13 +1570,13 @@ msgstr "Atvērt attēlu"
 #: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr ""
+msgstr "Neizdevās atvērt skenēšanas lodziņu."
 
 #: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
-msgstr ""
+msgstr "Skenēšana nav izdevusies"
 
 #: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
@@ -1661,9 +1625,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"Dokuments \"%1\" ir mainīts.\n"
-"Pārielādēšana iznīcinās visas izmaiņas kopš pēdējās saglabāšanas reizes.\n"
-"Vai esat pārliecināts?"
+"Dokuments „%1“ ir mainīts.\n"
+"Pārlādēšana atcels visas izmaiņas kopš pēdējās saglabāšanas reizes.\n"
+"Vai vēlaties turpināt?"
 
 #: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
@@ -1672,9 +1636,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"Dokuments \"%1\" ir mainīts.\n"
-"Pārielādēšana iznīcinās visas izmaiņas.\n"
-"Vai esat pārliecināts?"
+"Dokuments „%1“ ir mainīts.\n"
+"Pārlādēšana atcels visas izmaiņas.\n"
+"Vai vēlaties turpināt?"
 
 #: mainWindow/kpMainWindow_File.cpp:1336
 #, kde-format
@@ -1697,18 +1661,18 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"Dokuments \"%1\" ir mainīts.\n"
+"Dokuments „%1“ ir mainīts.\n"
 "Vai vēlaties to saglabāt?"
 
 #: mainWindow/kpMainWindow_Image.cpp:117
 #, kde-format
 msgid "R&esize / Scale..."
-msgstr "&Mainīt izmēru / Mērogot..."
+msgstr "&Mainīt izmēru / mērogot..."
 
 #: mainWindow/kpMainWindow_Image.cpp:123
 #, kde-format
 msgid "Se&t as Image (Crop)"
-msgstr "Uzlik&t par attēlu (Apcirst)"
+msgstr "Uzlik&t par attēlu (kadrēt)"
 
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
@@ -1718,7 +1682,7 @@ msgstr "&Apmest (augšu uz leju)"
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "Mirror (horizontally)"
-msgstr "Spoguļattēls (horizontāls)"
+msgstr "Spoguļattēls (horizontāli)"
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
@@ -1743,7 +1707,7 @@ msgstr "Sašķie&bt..."
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
-msgstr "Pārveidot uz mel&nbaltu (Tonēts)"
+msgstr "Pārveidot uz mel&nbaltu (tonēts)"
 
 #: mainWindow/kpMainWindow_Image.cpp:171
 #, kde-format
@@ -1763,7 +1727,7 @@ msgstr "N&otīrīt"
 #: mainWindow/kpMainWindow_Image.cpp:185
 #, kde-format
 msgid "Make Confidential"
-msgstr ""
+msgstr "Padarīt konfidenciālu"
 
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
@@ -1794,7 +1758,7 @@ msgstr "&Rādīt ceļu"
 #: mainWindow/kpMainWindow_Settings.cpp:71
 #, kde-format
 msgid "Draw Anti-Aliased"
-msgstr ""
+msgstr "Zīmēt ar kropļojumnovērsi"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:156
 #, kde-format
@@ -1804,30 +1768,30 @@ msgstr "%1,%2"
 #: mainWindow/kpMainWindow_StatusBar.cpp:162
 #, kde-format
 msgid "%1,%2 - %3,%4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1,%2 — %3,%4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:205
 #: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
 #: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
 #, kde-format
 msgid "%1x%2"
-msgstr "%1x%2"
+msgstr "%1×%2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:264
 #, kde-format
 msgid "%1bpp"
-msgstr "%1bpp"
+msgstr "%1 bpp"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:290
 #: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: mainWindow/kpMainWindow_Text.cpp:56
 #, kde-format
 msgid "Font Family"
-msgstr "Fontu saime"
+msgstr "Fonta saime"
 
 #: mainWindow/kpMainWindow_Text.cpp:62
 #, kde-format
@@ -1837,7 +1801,7 @@ msgstr "Fonta izmērs"
 #: mainWindow/kpMainWindow_Text.cpp:69
 #, kde-format
 msgid "Bold"
-msgstr "Trekns"
+msgstr "Treknraksts"
 
 #: mainWindow/kpMainWindow_Text.cpp:75
 #, kde-format
@@ -1857,22 +1821,22 @@ msgstr "Pārsvītrots"
 #: mainWindow/kpMainWindow_Tools.cpp:133
 #, kde-format
 msgid "Previous Tool Option (Group #1)"
-msgstr "Iepriekšējā rīka iespēja (Grupa #1)"
+msgstr "Iepriekšējā rīka iespēja (1. grupa)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:139
 #, kde-format
 msgid "Next Tool Option (Group #1)"
-msgstr "Nākamā rīka iespēja (Grupa #1)"
+msgstr "Nākamā rīka iespēja (1. grupa)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:145
 #, kde-format
 msgid "Previous Tool Option (Group #2)"
-msgstr "Iepriekšējā rīka iespēja (Grupa #2)"
+msgstr "Iepriekšējā rīka iespēja (2. grupa)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:151
 #, kde-format
 msgid "Next Tool Option (Group #2)"
-msgstr "Nākamā rīka iespēja (Grupa #2)"
+msgstr "Nākamā rīka iespēja (2. grupa)"
 
 #: mainWindow/kpMainWindow_Tools.cpp:163
 #, kde-format
@@ -1915,16 +1879,15 @@ msgid "&Zoom"
 msgstr "&Mērogs"
 
 #: scan/sanedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Entire Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr "Visu attēlu"
+msgstr "Iegūt attēlu"
 
 #: scan/sanedialog.cpp:73
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr ""
+msgstr "Neizdevās atvērt atlasīto skeneri."
 
 #: tools/flow/kpToolBrush.cpp:35
 #, kde-format
@@ -1939,7 +1902,7 @@ msgstr "Zīmē ar dažādas formas un izmēra otām"
 #: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
 #, kde-format
 msgid "Click to draw dots or drag to draw strokes."
-msgstr "Noklikšķiniet lai uzzīmētu punktu vai velciet lai zīmētu līnijas."
+msgstr "Klikšķiniet, lai zīmētu punktus, vai velciet, lai zīmētu līnijas."
 
 #: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
 #, kde-format
@@ -1954,7 +1917,7 @@ msgstr "Aizstāj priekšplāna krāsas pikseļus ar fona krāsu"
 #: tools/flow/kpToolColorEraser.cpp:115
 #, kde-format
 msgid "Click or drag to erase pixels of the foreground color."
-msgstr "Nospiediet un velciet lai dzēstu priekšplāna krāsas pikseļus."
+msgstr "Nospiediet un velciet, lai dzēstu priekšplāna krāsas pikseļus."
 
 #: tools/flow/kpToolEraser.cpp:42
 #, kde-format
@@ -1964,12 +1927,12 @@ msgstr "Dzēšgumija"
 #: tools/flow/kpToolEraser.cpp:43
 #, kde-format
 msgid "Lets you rub out mistakes"
-msgstr "Ļauj jums izdzēst kļūdas"
+msgstr "Ļauj izdzēst kļūdas"
 
 #: tools/flow/kpToolEraser.cpp:70
 #, kde-format
 msgid "Click or drag to erase."
-msgstr "Nospiediet un velciet lai dzēstu."
+msgstr "Nospiediet un velciet, lai dzēstu."
 
 #: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
 #: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
@@ -1984,7 +1947,7 @@ msgstr "Atlaidiet visas peles pogas."
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
 msgid "Pen"
-msgstr "Spalva"
+msgstr "Pildspalva"
 
 #: tools/flow/kpToolPen.cpp:45
 #, kde-format
@@ -1999,22 +1962,22 @@ msgstr "Krāsas baloniņš"
 #: tools/flow/kpToolSpraycan.cpp:56
 #, kde-format
 msgid "Sprays graffiti"
-msgstr "Pūš graffiti"
+msgstr "Pūš grafiti"
 
 #: tools/flow/kpToolSpraycan.cpp:71
 #, kde-format
 msgid "Click or drag to spray graffiti."
-msgstr "Nospiediet un velciet lai pūstu graffiti."
+msgstr "Nospiediet un velciet, lai pūstu grafiti."
 
 #: tools/kpTool_UserNotifications.cpp:42
 #, kde-format
 msgid "Right click to cancel."
-msgstr "Labais klikšķis lai atceltu."
+msgstr "Atceliet ar labo klikšķi"
 
 #: tools/kpTool_UserNotifications.cpp:45
 #, kde-format
 msgid "Left click to cancel."
-msgstr "Kreisais klikšķis lai atceltu."
+msgstr "Atceliet ar kreiso klikšķi"
 
 #: tools/kpTool_UserNotifications.cpp:75
 #, kde-format
@@ -2024,12 +1987,12 @@ msgstr "%1: "
 #: tools/kpToolColorPicker.cpp:45
 #, kde-format
 msgid "Lets you select a color from the image"
-msgstr "Ļauj jums nolasīt krāsu no attēla"
+msgstr "Ļauj atlasītu krāsu no attēla"
 
 #: tools/kpToolColorPicker.cpp:68
 #, kde-format
 msgid "Click to select a color."
-msgstr "Nospiediet lai noteiktu krāsu."
+msgstr "Spiediet, lai atlasītu krāsu."
 
 #: tools/kpToolFloodFill.cpp:55
 #, kde-format
@@ -2039,24 +2002,24 @@ msgstr "Aizkrāso attēla reģionus"
 #: tools/kpToolFloodFill.cpp:75
 #, kde-format
 msgid "Click to fill a region."
-msgstr "Klikšķis lai aizkrāsotu reģionu."
+msgstr "Spiediet, lai aizkrāsotu reģionu."
 
 #: tools/kpToolZoom.cpp:75
 #, kde-format
 msgid "Zoom"
-msgstr "Mērogs"
+msgstr "Tuvinājums"
 
 #: tools/kpToolZoom.cpp:75
 #, kde-format
 msgid "Zooms in and out of the image"
-msgstr "Palielina un samazina mērogu"
+msgstr "Tuvina un tālina attēlu"
 
 #: tools/kpToolZoom.cpp:119
 #, kde-format
 msgid "Click to zoom in/out or left drag to zoom into a specific area."
 msgstr ""
-"Klikšķis lai palielinātu/samazinātu mērogu, vai apvelciet rajonu, lai "
-"palielinātu to."
+"Klikšķiniet, lai tuvinātu/tālinātu attēlu, vai apvelciet apgabalu, lai to "
+"palielinātu."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
@@ -2071,35 +2034,35 @@ msgstr "Zīmē līkas līnijas"
 #: tools/polygonal/kpToolCurve.cpp:118
 #, kde-format
 msgid "Drag out the start and end points."
-msgstr "Nvelciet līniju no sākuma līdz beigu punktam."
+msgstr "Novelciet līniju no sākuma līdz beigu punktam."
 
 #: tools/polygonal/kpToolCurve.cpp:157
 #, kde-format
 msgid "Left drag to set the first control point or right click to finish."
 msgstr ""
-"Velciet ar kreiso, lai uzliktu pirmo kontroles punktu, vai labais klikšķis "
-"lai pabeigtu."
+"Velciet ar kreiso peles pogu, lai uzliktu pirmo kontroles punktu, vai "
+"spiediet peles labo pogu, lai pabeigtu."
 
 #: tools/polygonal/kpToolCurve.cpp:162
 #, kde-format
 msgid "Right drag to set the first control point or left click to finish."
 msgstr ""
-"Velciet ar labo, lai uzliktu pirmo kontroles punktu, vai kreisais klikšķis "
-"lai pabeigtu."
+"Velciet ar peles labo pogu, lai uzliktu pirmo kontroles punktu, vai spiediet "
+"peles kreiso pogu, lai pabeigtu."
 
 #: tools/polygonal/kpToolCurve.cpp:172
 #, kde-format
 msgid "Left drag to set the last control point or right click to finish."
 msgstr ""
-"Velciet ar kreiso, lai uzliktu otro kontroles punktu, vai labais klikšķis "
-"lai pabeigtu."
+"Velciet ar peles kreiso pogu, lai uzliktu pēdējo kontroles punktu, vai "
+"spiediet peles labo pogu, lai pabeigtu."
 
 #: tools/polygonal/kpToolCurve.cpp:177
 #, kde-format
 msgid "Right drag to set the last control point or left click to finish."
 msgstr ""
-"Velciet ar labo, lai uzliktu otro kontroles punktu, vai labais klikšķis lai "
-"pabeigtu."
+"Velciet ar peles labo pogu, lai uzliktu pēdējo kontroles punktu, vai "
+"spiediet peles kreiso pogu, lai pabeigtu."
 
 #: tools/polygonal/kpToolLine.cpp:41
 #, kde-format
@@ -2115,7 +2078,7 @@ msgstr "Zīmē līnijas"
 #: tools/rectangular/kpToolRectangularBase.cpp:119
 #, kde-format
 msgid "Drag to draw."
-msgstr "Velciet lai zīmēru."
+msgstr "Velciet lai zīmētu."
 
 #: tools/polygonal/kpToolPolygon.cpp:93
 #, kde-format
@@ -2135,12 +2098,16 @@ msgstr "Velciet, lai uzzīmētu pirmo līniju."
 #: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
 #, kde-format
 msgid "Left drag another line or right click to finish."
-msgstr "Velciet ar kreiso lai pievienotu līniju, labais klikšķis - pabeigt."
+msgstr ""
+"Velciet ar peles kreiso pogu, lai zīmētu vēl vienu līniju,vai spiediet peles "
+"labo pogu, lai pabeigtu."
 
 #: tools/polygonal/kpToolPolygon.cpp:186 tools/polygonal/kpToolPolyline.cpp:121
 #, kde-format
 msgid "Right drag another line or left click to finish."
-msgstr "Velciet ar labo lai pievienotu līniju, kreisais klikšķis - pabeigt."
+msgstr ""
+"Velciet ar peles labo pogu, lai zīmētu vēl vienu līniju, vai spiediet peles "
+"kreiso pogu, lai pabeigtu."
 
 #: tools/polygonal/kpToolPolyline.cpp:46
 #, kde-format
@@ -2175,7 +2142,7 @@ msgstr "Zīmē taisnstūrus un kvadrātus"
 #: tools/rectangular/kpToolRoundedRectangle.cpp:42
 #, kde-format
 msgid "Rounded Rectangle"
-msgstr "Noapaļots taisnstrūris"
+msgstr "Noapaļots taisnstūris"
 
 #: tools/rectangular/kpToolRoundedRectangle.cpp:43
 #, kde-format
@@ -2185,42 +2152,42 @@ msgstr "Zīmē taisnstūrus un kvadrātus ar apaļiem stūriem"
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
 #, kde-format
 msgid "Left drag to create selection."
-msgstr "Velciet ar kreiso pogu, lai iezīmētu"
+msgstr "Velciet ar peles kreiso pogu, lai iezīmētu"
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
 #, kde-format
 msgid "Left drag to move selection."
-msgstr "Velciet ar kreiso pogu, lai pārvietotu iezīmēto"
+msgstr "Velciet ar peles kreiso pogu, lai pārvietotu iezīmēto."
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
 #, kde-format
 msgid "Left drag to scale selection."
-msgstr "Velciet ar kreiso pogu, lai mērogotu iezīmēto"
+msgstr "Velciet ar peles kreiso pogu, lai mērogotu iezīmēto"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
 #, kde-format
 msgid "Selection: Opaque"
-msgstr "Iezīmētais: Necaurspīdīgs"
+msgstr "Iezīmētais: necaurspīdīgs"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
 #, kde-format
 msgid "Selection: Transparent"
-msgstr "Iezīmētais: Caurspīdīgs"
+msgstr "Iezīmētais: caurspīdīgs"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:184
 #, kde-format
 msgid "Selection: Transparency Color"
-msgstr "Iezīmētais: Caurspīdīgā krāsa"
+msgstr "Iezīmētais: caurspīdīgā krāsa"
 
 #: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:205
 #, kde-format
 msgid "Selection: Transparency Color Similarity"
-msgstr "Iezīmētais: Caurspīdīguma krāsu līdzība"
+msgstr "Iezīmētais: caurspīdīguma krāsu līdzība"
 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:42
 #, kde-format
 msgid "Selection (Elliptical)"
-msgstr "Iezīmēšana (Elipse)"
+msgstr "Iezīmēšana (elipse)"
 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:43
 #, kde-format
@@ -2230,7 +2197,7 @@ msgstr "Ļauj iezīmēt eliptisku vai apaļu laukumu"
 #: tools/selection/image/kpToolFreeFormSelection.cpp:45
 #, kde-format
 msgid "Selection (Free-Form)"
-msgstr "Iezīmēšana (Brīvrokas)"
+msgstr "Iezīmēšana (brīvrokas)"
 
 #: tools/selection/image/kpToolFreeFormSelection.cpp:46
 #, kde-format
@@ -2240,17 +2207,17 @@ msgstr "Ļauj iezīmēt jebkādas formas laukumu"
 #: tools/selection/image/kpToolRectSelection.cpp:40
 #, kde-format
 msgid "Selection (Rectangular)"
-msgstr "Iezīmēšana (Taisnstūris)"
+msgstr "Iezīmēšana (taisnstūris)"
 
 #: tools/selection/image/kpToolRectSelection.cpp:41
 #, kde-format
 msgid "Makes a rectangular selection"
-msgstr "Ļauj iezīmēr taisnstūrainu laukumu"
+msgstr "Ļauj iezīmēt taisnstūraina formas laukumu"
 
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:324
 #, kde-format
 msgid "Selection: Move"
-msgstr "Iezīmētais: Pārvietot"
+msgstr "Iezīmētais: pārvietot"
 
 #: tools/selection/kpAbstractSelectionTool_Move.cpp:347
 #, kde-format
@@ -2265,138 +2232,115 @@ msgstr "Raksta tekstu"
 #: tools/selection/text/kpToolText_Commands.cpp:69
 #, kde-format
 msgid "Text: Backspace"
-msgstr "Teksts: Dzēst pēdējo"
+msgstr "Teksts: dzēst pēdējo"
 
 #: tools/selection/text/kpToolText_Commands.cpp:86
 #, kde-format
 msgid "Text: Delete"
-msgstr "Teksts: Dzēst"
+msgstr "Teksts: dzēst"
 
 #: tools/selection/text/kpToolText_Commands.cpp:103
 #, kde-format
 msgid "Text: New Line"
-msgstr "Teksts: Jauna rinda"
+msgstr "Teksts: jauna rinda"
 
 #: tools/selection/text/kpToolText_Commands.cpp:120
 #, kde-format
 msgid "Text: Write"
-msgstr "Teksts: Rakstīt"
+msgstr "Teksts: rakstīt"
 
 #: tools/selection/text/kpToolText_Create.cpp:48
 #, kde-format
 msgid "Left drag to create text box."
-msgstr "Velciet ar kreiso pogu, lai izveidotu teksta lauku."
+msgstr "Velciet ar peles kreiso pogu, lai izveidotu tekstlodziņu."
 
 #: tools/selection/text/kpToolText_Move.cpp:42
 #, kde-format
 msgid "Left drag to move text box."
-msgstr "Velciet ar kreiso pogu, lai pārvietotu teksta lauku"
+msgstr "Velciet ar peles kreiso pogu, lai pārvietotu tekstlodziņu"
 
 #: tools/selection/text/kpToolText_Move.cpp:61
 #, kde-format
 msgid "Text: Move Box"
-msgstr "Teksts: Pārvietot teksta lauku"
+msgstr "Teksts: pārvietot tekstlodziņu"
 
 #: tools/selection/text/kpToolText_ResizeScale.cpp:42
 #, kde-format
 msgid "Left drag to resize text box."
-msgstr "Velciet ar kreiso pogu lai mainītu teksta lauka izmēru."
+msgstr "Velciet ar peles kreiso pogu, lai mainītu tekstlodziņa izmēru."
 
 #: tools/selection/text/kpToolText_SelectText.cpp:57
 #, kde-format
 msgid "Left click to change cursor position."
-msgstr "Kreisais klikšķis lai mainītu kursora pozīciju"
+msgstr "Spiediet peles kreiso pogu, lai mainītu kursora pozīciju."
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:113
 #, kde-format
 msgid "Text: Opaque Background"
-msgstr "Teksts: Aizpildīts fons"
+msgstr "Teksts: necaurspīdīgs fons"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:114
 #, kde-format
 msgid "Text: Transparent Background"
-msgstr "Teksts: Caurspīdīgs fons"
+msgstr "Teksts: caurspīdīgs fons"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:137
 #, kde-format
 msgid "Text: Swap Colors"
-msgstr "Teksts: Samainīt krāsas"
+msgstr "Teksts: samainīt krāsas"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:158
 #, kde-format
 msgid "Text: Foreground Color"
-msgstr "Teksts: Teksta krāsa"
+msgstr "Teksts: teksta krāsa"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:179
 #, kde-format
 msgid "Text: Background Color"
-msgstr "Teksts: Fona krāsa"
+msgstr "Teksts: fona krāsa"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:215
 #, kde-format
 msgid "Text: Font"
-msgstr "Teksts: Fonts"
+msgstr "Teksts: fonts"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:242
 #, kde-format
 msgid "Text: Font Size"
-msgstr "Teksts: Fonta izmērs"
+msgstr "Teksts: fonta izmērs"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:265
 #, kde-format
 msgid "Text: Bold"
-msgstr "Teksts: Treknraksts"
+msgstr "Teksts: treknraksts"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:287
 #, kde-format
 msgid "Text: Italic"
-msgstr "Teksts: Slīpraksts"
+msgstr "Teksts: slīpraksts"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:309
 #, kde-format
 msgid "Text: Underline"
-msgstr "Teksts: Pasvītrots"
+msgstr "Teksts: pasvītrots"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:331
 #, kde-format
 msgid "Text: Strike Through"
-msgstr "Teks: Pārsvītrots"
+msgstr "Teksts: pārsvītrots"
 
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
-msgstr "Nemērogots režīms - Sīktēls"
+msgstr "Nemērogots režīms — sīktēls"
 
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr "%1% - Sīktēls"
+msgstr "%1 % — sīktēls"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of "
-#| "different pixels must be, for operations to consider them to be the same."
-#| "</p><p>If you set it to something other than <b>Exact Match</b>, you can "
-#| "work more effectively with dithered images and photos, in a comparable "
-#| "manner to the \"Magic Wand\" feature of other paint programs.</p><p>This "
-#| "feature applies to:</p><ul><li><b>Selections</b>: In <b>Transparent</b> "
-#| "mode, any color in the selection that is <i>similar</i> to the background "
-#| "color will be made transparent.</li><li><b>Flood Fill</b>: For regions "
-#| "with <i>similar</i> - but not identical - colored pixels, a higher "
-#| "setting is likely to fill more pixels.</li><li><b>Color Eraser</b>: Any "
-#| "pixel whose color is <i>similar</i> to the foreground color will be "
-#| "replaced with the background color.</li><li><b>Autocrop</b> and <b>Remove "
-#| "Internal Border</b>: For borders with <i>similar</i> - but not identical "
-#| "- colored pixels, a higher setting is more likely to crop the whole "
-#| "border.</li></ul><p>Higher settings mean that operations consider an "
-#| "increased range of colors to be sufficiently <i>similar</i> so as to be "
-#| "the same.  Therefore, you should increase the setting if the above "
-#| "operations are not affecting pixels whose colors you consider to be "
-#| "similar enough.</p><p>However, if they are having too much of an effect "
-#| "and are changing pixels whose colors you do not consider to be similar (e."
-#| "g. if <b>Flood Fill</b> is changing too many pixels), you should decrease "
-#| "this setting.</p><p>To configure it, click on the cube.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
 "pixels must be, for operations to consider them to be the same.</p><p>If you "
@@ -2420,52 +2364,30 @@ msgid ""
 "similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
 "decrease this setting.</p><p>To configure it, click on the cube.</p></qt>"
 msgstr ""
-"<qt><p><b>Krāsu līdzība</b> nosaka cik <i>līdzīgām</i> ir jābūt dažādu "
+"<qt><p><b>Krāsu līdzība</b> nosaka, cik <i>līdzīgām</i> ir jābūt dažādu "
 "pikseļu krāsām, lai darbības tās uzskatītu par vienādām.</p><p>Ja jūs to "
-"uztādīsiet uz jebko atšķirīgu no <b>Precīza sakritība</b>, jums būs vieglāk "
-"strādāt ar tonētiem attēliem un fotogrāfijām, līdzīgi kā izmantojot \"Burvju "
-"nūjiņas\" iespēju citās zīmēšanas programmās.</p><p>Šī iespēja darbojas ar:</"
-"p><ul><li><b>Iezīmēšanu</b>: <b>Caurspīdīgajā</b> režīmā visas krāsas "
-"iezīmētajā apgabalā, kas ir <i>līdzīgas</i> fona krāsai, tiks padarītas "
-"caurspīdīgas.</li><li><b>Aizkrāsošanu</b>: Rajoni, kas ir <i>līdzīgā</i>,bet "
-"ne vienādā krāsā - augstāka vērtība aizpildīs vairāk pikseļu, nekā zemāka.</"
-"li><li><b>Krāsu dzēšgumija</b>: Visas krāsas, kas ir <i>līdzīgas</i> "
-"priekšplāna krāsai, tiks aizstādas ar fona krāsu.</li><li><b>Autoapciršana</"
-"b> un <b>Iekšējās robežas noņemšana</b>: Robežām ar <i>līdzīgas</i>, bet ne "
-"vienādas krāsas pikseļiem - augstāka vērtība palielina iespēju ka tiks "
-"apcirsta visa robeža.</li></ul><p>Augstākas vērtības atzīs vairāk krāsu par "
-"pietiekami <i>līdzīgām</i> lai tās uzskatītu par vienādām. Līdz ar to būtu "
-"vēlams palielināt vērtību, ja minētās darbības neņem vērā pikseļus, kuri "
-"jūsuprāt ir gana līdzīgi.</p><p>Bet, ja tas izraisa pārāk lielu efektu un "
-"sāk mainīt pikseļus, kuri jūsuprāt nav līdzīgi (piem. ja <b>Aizkrāsošana</b> "
-"maina pārāk daudz pikseļu), jums vajadzētu samazināt šo vērtību.</p><p>Lai "
-"konfigurētu, nospiediet uz kuba.</p></qt>"
+"noteiksiet kā kaut ko atšķirīgu no <b>precīzas sakritības</b>, jums būs "
+"vieglāk strādāt ar tonētiem attēliem un fotogrāfijām, līdzīgi kā izmantojot "
+"„Burvju nūjiņas“ iespēju citās zīmēšanas programmās.</p><p>Šī iespēja "
+"darbojas ar:</p><ul><li><b>Iezīmēšanu</b>: <b>caurspīdīgajā</b> režīmā visas "
+"krāsas iezīmētajā apgabalā, kas ir <i>līdzīgas</i> fona krāsai, tiks "
+"padarītas caurspīdīgas.</li><li><b>Aizkrāsošanu</b>: rajoni, kas ir "
+"<i>līdzīgā</i>, bet ne vienādā krāsā — augstāka vērtība aizpildīs vairāk "
+"pikseļu nekā zemāka.</li><li><b>Krāsu dzēšgumija</b>: visas krāsas, kas ir "
+"<i>līdzīgas</i> priekšplāna krāsai, tiks aizstātas ar fona krāsu.</"
+"li><li><b>Automātiskā kadrēšana</b> un <b>iekšējās robežas noņemšana</b>: "
+"robežām ar <i>līdzīgas</i>, bet ne vienādas krāsas pikseļiem — augstāka "
+"vērtība palielina iespēju ka tiks kadrēta visa robeža.</li></ul><p>Augstākas "
+"vērtības atzīs vairāk krāsu par pietiekami <i>līdzīgām</i> lai tās uzskatītu "
+"par vienādām. Līdz ar to būtu vēlams palielināt vērtību, ja minētās darbības "
+"neņem vērā pikseļus, kuri jūsuprāt ir gana līdzīgi.</p><p>Bet, ja tas "
+"izraisa pārāk lielu efektu un sāk mainīt pikseļus, kuri, jūsuprāt, nav "
+"līdzīgi (piemēram, ja <b>aizkrāsošana</b> maina pārāk daudz pikseļu), jums "
+"vajadzētu samazināt šo vērtību.</p><p>Lai konfigurētu, nospiediet uz kuba.</"
+"p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of "
-#| "different pixels must be, for operations to consider them to be the same."
-#| "</p><p>If you set it to something other than <b>Exact Match</b>, you can "
-#| "work more effectively with dithered images and photos, in a comparable "
-#| "manner to the \"Magic Wand\" feature of other paint programs.</p><p>This "
-#| "feature applies to:</p><ul><li><b>Selections</b>: In <b>Transparent</b> "
-#| "mode, any color in the selection that is <i>similar</i> to the background "
-#| "color will be made transparent.</li><li><b>Flood Fill</b>: For regions "
-#| "with <i>similar</i> - but not identical - colored pixels, a higher "
-#| "setting is likely to fill more pixels.</li><li><b>Color Eraser</b>: Any "
-#| "pixel whose color is <i>similar</i> to the foreground color will be "
-#| "replaced with the background color.</li><li><b>Autocrop</b> and <b>Remove "
-#| "Internal Border</b>: For borders with <i>similar</i> - but not identical "
-#| "- colored pixels, a higher setting is more likely to crop the whole "
-#| "border.</li></ul><p>Higher settings mean that operations consider an "
-#| "increased range of colors to be sufficiently <i>similar</i> so as to be "
-#| "the same.  Therefore, you should increase the setting if the above "
-#| "operations are not affecting pixels whose colors you consider to be "
-#| "similar enough.</p><p>However, if they are having too much of an effect "
-#| "and are changing pixels whose colors you do not consider to be similar (e."
-#| "g. if <b>Flood Fill</b> is changing too many pixels), you should decrease "
-#| "this setting.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
 "pixels must be, for operations to consider them to be the same.</p><p>If you "
@@ -2489,31 +2411,33 @@ msgid ""
 "similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
 "decrease this setting.</p></qt>"
 msgstr ""
-"<qt><p><b>Krāsu līdzība</b> nosaka cik <i>līdzīgām</i> ir jābūt dažādu "
+"<qt><p><b>Krāsu līdzība</b> nosaka, cik <i>līdzīgām</i> ir jābūt dažādu "
 "pikseļu krāsām, lai darbības tās uzskatītu par vienādām.</p><p>Ja jūs to "
-"uztādīsiet uz jebko atšķirīgu no <b>Precīza sakritība</b>, jums būs vieglāk "
-"strādāt ar tonētiem attēliem un fotogrāfijām, līdzīgi kā izmantojot \"Burvju "
-"nūjuņas\" iespēju citās zīmēšanas programmās.</p><p>Šī iespēja darbojas ar:</"
-"p><ul><li><b>Iezīmēšanu</b>: <b>Caurspīdīgajā</b> režīmā visas krāsas "
-"iezīmētajā apgabalā, kas ir <i>līdzīgas</i> fona krāsai, tiks padarītas "
-"caurspīdīgas.</li><li><b>Aizkrāsošanu</b>: Rajoni, kas ir <i>līdzīgā</i>,bet "
-"ne vienādā krāsā - augstāka vērtība aizpildīs vairāk pikseļu, nekā zemāka.</"
-"li><li><b>Krāsu dzēšgumija</b>: Visas krāsas, kas ir <i>līdzīgas</i> "
-"priekšplāna krāsai, tiks aizstādas ar fona krāsu.</li><li><b>Autoapciršana</"
-"b> un <b>Iekšējās robežas noņemšana</b>: Robežām ar <i>līdzīgas</i>, bet ne "
-"vienādas krāsas pikseļiem - augstāka vērtība palielina iespēju ka tiks "
-"apcirsta visa robeža.</li></ul><p>Augstākas vērtības atzīs vairāk krāsu par "
-"pietiekami <i>līdzīgām</i> lai tās uzskatītu par vienādām. Līdz ar to būtu "
-"vēlams palielināt vērtību, ja minētās darbības neņem vērā pikseļus, kuri "
-"jūsuprāt ir gana līdzīgi.</p><p>Bet, ja tas izraisa pārāk lielu efektu un "
-"sāk mainīt pikseļus, kuri jūsuprāt nav līdzīgi (piem. ja <b>Aizkrāsošana</b> "
-"maina pārāk daudz pikseļu), jums vajadzētu samazināt šo vērtību.</p></qt>"
+"noteiksiet kā kaut ko atšķirīgu no <b>precīzas sakritības</b>, jums būs "
+"vieglāk strādāt ar tonētiem attēliem un fotogrāfijām, līdzīgi kā izmantojot "
+"„Burvju nūjiņas“ iespēju citās zīmēšanas programmās.</p><p>Šī iespēja "
+"darbojas ar:</p><ul><li><b>Iezīmēšanu</b>: <b>caurspīdīgajā</b> režīmā visas "
+"krāsas iezīmētajā apgabalā, kas ir <i>līdzīgas</i> fona krāsai, tiks "
+"padarītas caurspīdīgas.</li><li><b>Aizkrāsošanu</b>: rajoni, kas ir "
+"<i>līdzīgā</i>, bet ne vienādā krāsā — augstāka vērtība aizpildīs vairāk "
+"pikseļu nekā zemāka.</li><li><b>Krāsu dzēšgumija</b>: visas krāsas, kas ir "
+"<i>līdzīgas</i> priekšplāna krāsai, tiks aizstātas ar fona krāsu.</"
+"li><li><b>Automātiskā kadrēšana</b> un <b>iekšējās robežas noņemšana</b>: "
+"robežām ar <i>līdzīgas</i>, bet ne vienādas krāsas pikseļiem — augstāka "
+"vērtība palielina iespēju ka tiks kadrēta visa robeža.</li></ul><p>Augstākas "
+"vērtības atzīs vairāk krāsu par pietiekami <i>līdzīgām</i> lai tās uzskatītu "
+"par vienādām. Līdz ar to būtu vēlams palielināt vērtību, ja minētās darbības "
+"neņem vērā pikseļus, kuri jūsuprāt ir gana līdzīgi.</p><p>Bet, ja tas "
+"izraisa pārāk lielu efektu un sāk mainīt pikseļus, kuri, jūsuprāt, nav "
+"līdzīgi (piemēram, ja <b>aizkrāsošana</b> maina pārāk daudz pikseļu), jums "
+"vajadzētu samazināt šo vērtību.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Krāsu līdzība: %1%</p><p align=\"center\">Nospiediet lai konfigurētu.</p>"
+"<p>Krāsu līdzība: %1 %</p><p align=\"center\">Nospiediet, lai konfigurētu.</"
+"p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
 #, kde-format
@@ -2521,7 +2445,7 @@ msgid ""
 "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
-"<p>Krāsu līdzība: precīza sakritība</p><p align=\"center\">Nospiediet lai "
+"<p>Krāsu līdzība: precīza sakritība</p><p align=\"center\">Nospiediet, lai "
 "konfigurētu.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
@@ -2532,7 +2456,7 @@ msgstr "&Gaišums:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
 #, kde-format
 msgid "Re&set"
-msgstr "A&tstatīt"
+msgstr "A&tiestatīt"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
 #, kde-format
@@ -2547,7 +2471,7 @@ msgstr "&Gamma:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
 #, kde-format
 msgid "Rese&t"
-msgstr "A&tstatīt"
+msgstr "A&tiestatīt"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
 #, kde-format
@@ -2577,7 +2501,7 @@ msgstr "Zils"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
 #, kde-format
 msgid "Reset &All Values"
-msgstr "Atstatīt &visas vērtības"
+msgstr "Atiestatīt &visas vērtības"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
 #, kde-format
@@ -2650,7 +2574,7 @@ msgstr "&Melnbalts"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
 #, kde-format
 msgid "Mo&nochrome (dithered)"
-msgstr "M&elnbalts (Tonēts)"
+msgstr "M&elnbalts (tonēts)"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
 #, kde-format
@@ -2692,9 +2616,9 @@ msgstr ""
 "peles pogu uz aizpildītas krāsas šūnas. Lai izvēlētos fona krāsu, nospiediet "
 "ar labo peles pogu.</p><p>Lai nomainītu krāsu šūnas krāsu, veiciet "
 "dubultklikšķi uz tās.</p><p>Jūs varat arī samainīt šūnu krāsas vietām, "
-"velkot un nometot aizpildītu šūnu uz jebkuras citas šūnas. Un, ja "
-"pieturēsiet <b>Control</b> taustiņu, krāsa tiks tikai iekopēta mērķa šūnā, "
-"nevis tās samainītas vietām.</p></qt>"
+"velkot un nometot aizpildītu šūnu uz jebkuras citas šūnas. Ja pieturēsiet "
+"<b>„Ctrl“</b> taustiņu, krāsa tiks tikai iekopēta mērķa šūnā, bet ne tās "
+"samainītas vietām.</p></qt>"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:85
 #, kde-format
@@ -2719,7 +2643,7 @@ msgstr "Melnbalts"
 #: widgets/kpDocumentSaveOptionsWidget.cpp:224
 #, kde-format
 msgid "Monochrome (Dithered)"
-msgstr "Melnbalts (Tonēts)"
+msgstr "Melnbalts (tonēts)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:228
 #, kde-format
@@ -2750,7 +2674,7 @@ msgstr "Lapas &centrā"
 #: widgets/kpPrintDialogPage.cpp:61
 #, kde-format
 msgid "Top-&left of the page"
-msgstr "Lapas augšējā-&kreisajā stūrī"
+msgstr "Lapas augšējā &kreisajā stūrī"
 
 #: widgets/kpTransparentColorCell.cpp:53
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44
@@ -2762,13 +2686,13 @@ msgstr "Caurspīdīgs"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Atslēgt paneļus"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Slēgt paneļus"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2779,11 +2703,14 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Pārslēdzas starp paneļu<emphasis>slēgšanu</emphasis> un "
+"<emphasis>atslēgšanu</emphasis>.<nl/>Atslēgt paneli varat vilkt uz loga otru "
+"pusi un arī aizvērt.<nl/>Slēgti paneļi programmā ir iegulti daudz nemanāmāk."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
 msgid "KolourPaint Defaults"
-msgstr "KolourPaint noklusētās krāsas"
+msgstr "„KolourPaint“ noklusējumi"
 
 #: widgets/toolbars/kpColorToolBar.cpp:322
 #, kde-format
@@ -2800,7 +2727,7 @@ msgstr "Krāsas: %1 [mainītas]"
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
 #, kde-format
 msgid "1x1"
-msgstr "1x1"
+msgstr "1×1"
 
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:208
 #, kde-format
@@ -2820,27 +2747,27 @@ msgstr "Slīpsvītra"
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:219
 #, kde-format
 msgid "Backslash"
-msgstr "Otrāda slīpsvītra"
+msgstr "Apgriezta slīpsvītra"
 
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:227
 #, kde-format
 msgid "%1x%2 %3"
-msgstr "%1x%2 %3"
+msgstr "%1×%2 %3"
 
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:117
 #, kde-format
 msgid "No Fill"
-msgstr "Neaizpildīts"
+msgstr "Bez aizpildījuma"
 
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:120
 #, kde-format
 msgid "Fill with Background Color"
-msgstr "Aizpildīts ar fona krāsu"
+msgstr "Aizpildīt ar fona krāsu"
 
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:123
 #, kde-format
 msgid "Fill with Foreground Color"
-msgstr "Aizpildīts ar priekšplāna krāsu"
+msgstr "Aizpildīt ar priekšplāna krāsu"
 
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:42
 #, kde-format
