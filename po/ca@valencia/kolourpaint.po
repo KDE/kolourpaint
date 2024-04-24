@@ -1,8 +1,8 @@
 # Translation of kolourpaint.po to Catalan (Valencian)
-# Copyright (C) 2004-2023 This_file_is_part_of_KDE
+# Copyright (C) 2004-2024 This_file_is_part_of_KDE
 #
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005.
-# Josep M. Ferrer <txemaq@gmail.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2020, 2021, 2022, 2023.
+# Josep M. Ferrer <txemaq@gmail.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2020, 2021, 2022, 2023, 2024.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2016, 2017, 2020.
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2023-11-07 12:28+0100\n"
+"PO-Revision-Date: 2024-04-21 08:51+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1804,12 +1804,12 @@ msgstr "%1%"
 #: mainWindow/kpMainWindow_Text.cpp:56
 #, kde-format
 msgid "Font Family"
-msgstr "Família del tipus de lletra"
+msgstr "Família de la lletra"
 
 #: mainWindow/kpMainWindow_Text.cpp:62
 #, kde-format
 msgid "Font Size"
-msgstr "Mida del tipus de lletra"
+msgstr "Mida de la lletra"
 
 #: mainWindow/kpMainWindow_Text.cpp:69
 #, kde-format
@@ -2316,12 +2316,12 @@ msgstr "Text: color de fons"
 #: tools/selection/text/kpToolText_TextStyle.cpp:215
 #, kde-format
 msgid "Text: Font"
-msgstr "Text: tipus de lletra"
+msgstr "Text: lletra"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:242
 #, kde-format
 msgid "Text: Font Size"
-msgstr "Text: mida del tipus de lletra"
+msgstr "Text: mida de la lletra"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:265
 #, kde-format
