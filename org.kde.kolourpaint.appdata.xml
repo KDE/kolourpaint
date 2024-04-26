@@ -115,6 +115,7 @@
     <p xml:lang="id">KolourPaint adalah program melukis sederhana untuk membuat gambar raster dengan cepat. Ini berguna sebagai alat bantu dan tugas pengeditan gambar sederhana.</p>
     <p xml:lang="is">KolourPaint er einfalt myndmálunarforrit sem gefur kost á að útbúa rastamyndir í snatri. Það nýtist vel í einfaldar lagfæringar og minni háttar myndvinnsluaðgerðir.</p>
     <p xml:lang="it">KolourPaint è un semplice programma di disegno per la creazione rapida di immagini. È utile come strumento da usare «al volo» e per effettuare semplici modifiche alle immagini.</p>
+    <p xml:lang="ka">KolourPaint მარტივი სახატავი პროგრამაა რასტრული გამოსახულებების ადვილად შესაქმნელად. ის სასარგებლოა გამოსახულებების ჩასასწორებლად.</p>
     <p xml:lang="ko">KolourPaint는 래스터 그림을 빠르게 만드는 프로그램입니다. 간단한 보정 도구 및 편집 도구로 사용할 수 있습니다.</p>
     <p xml:lang="nb">KolourPaint er et enkelt maleprogram som kjapt kan lage rasterbilder. Det er et nyttig verktøy for retusjering og enkle redigeringsoppgaver.</p>
     <p xml:lang="nds">KolourPaint is en eenfach Maalprogramm, mit dat sik gau Pixelbiller opstellen laat. Dat is goot för lütte Utbetern un eenfache Bildbewerken.</p>
@@ -200,6 +201,7 @@
       <li xml:lang="id">Dukungan untuk menggambar berbagai bentuk - garis, persegi panjang, persegi panjang, bulat, oval dan poligon</li>
       <li xml:lang="is">Stuðningur við að teikna ýmis form - línur, rétthyrninga, rúnnaða rétthyrninga, sporöskjur og marghyrninga</li>
       <li xml:lang="it">Supporto per il disegno di varie forme - linee, rettangoli, rettangoli arrotondati, ovali e poligoni</li>
+      <li xml:lang="ka">სხვადასხვა ფიგურების დახატვის მხარდაჭერა - ხაზები, მართკუთხედები, მომრგვალებული მართკუთხედები, ოვალები და პოლიგონები</li>
       <li xml:lang="ko">다양한 도형 그리기 - 직선, 사각형, 둥근 사각형, 타원형, 다각형</li>
       <li xml:lang="nb">Støtte for å tegne mange former – linjer, rektangler, avrundede rektangler, ovaler og polygoner</li>
       <li xml:lang="nds">Ünnerstütt dat Teken vun en Reeg vun Formen - Lienen, Rechtecks, afrundt Rechtecks, Ovalen un Veelecks</li>
