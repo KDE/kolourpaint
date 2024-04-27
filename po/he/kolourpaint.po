@@ -7,31 +7,32 @@
 # Diego Iastrubni <elcuco@kde.org>, 2005, 2006, 2007, 2012.
 # tahmar1900 <tahmar1900@gmail.com>, 2007.
 # Elkana Bardugo <ttv200@gmail.com>, 2017. #zanata
+# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2017-05-16 07:02-0400\n"
-"Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
-"Language-Team: Hebrew <kde-i18n-he@kde.org>\n"
+"PO-Revision-Date: 2024-04-26 09:26+0300\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 3.9.6\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "גארי לכמן, Koala, ליעד ויינברגר"
+msgstr "גארי לכמן,Koala,ליעד ויינברגר,צוות התרגום של KDE ישראל"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "Garry@Nunex.co.il, koala@linux.net, weliad@gmail.com"
+msgstr "Garry@Nunex.co.il,koala@linux.net,weliad@gmail.com,kde-l10n-he@kde.org"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
@@ -78,7 +79,7 @@ msgstr ""
 #: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
 #, kde-format
 msgid "Reduce to Grayscale"
-msgstr "המרת הצבעים לגווניי אפור"
+msgstr "המרת הצבעים לגווני אפור"
 
 #: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
@@ -89,13 +90,13 @@ msgstr ""
 #: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
 #, kde-format
 msgid "Invert Colors"
-msgstr "הפוך צבעים"
+msgstr "היפוך צבעים"
 
 #: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:117
 #, kde-format
 msgid "Invert"
-msgstr "הפוך"
+msgstr "היפוך"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
 #, kde-format
@@ -124,22 +125,22 @@ msgid "Histogram Equalizer"
 msgstr ""
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
-#, kde-format
+#, fuzzy, kde-format
 msgid "Flip"
 msgstr "הפוך"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:69
-#, kde-format
+#, fuzzy, kde-format
 msgid "Flip horizontally and vertically"
 msgstr "הפוך אופקי ואנכי"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:71
-#, kde-format
+#, fuzzy, kde-format
 msgid "Flip horizontally"
 msgstr "הפוך אופקי"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:73
-#, kde-format
+#, fuzzy, kde-format
 msgid "Flip vertically"
 msgstr "הפוך אנכי"
 
@@ -147,7 +148,7 @@ msgstr "הפוך אנכי"
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
 #, kde-format
 msgid "Text: Resize Box"
-msgstr "טקסט: שינוי גודל קופסה"
+msgstr "טקסט: שינוי גודל תיבה"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:107
 #, kde-format
