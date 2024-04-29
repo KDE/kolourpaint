@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-04-28 02:03+0300\n"
+"PO-Revision-Date: 2024-04-28 23:03+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -68,7 +68,7 @@ msgstr "בחירה: %1"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:113
 #, kde-format
 msgid "Emboss"
-msgstr ""
+msgstr "הבלטה"
 
 #: commands/imagelib/effects/kpEffectFlattenCommand.cpp:43
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:114
@@ -592,7 +592,7 @@ msgstr "לשנות קנה מידה לתמונה?"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
 #, kde-format
 msgid "Scal&e Image"
-msgstr ""
+msgstr "שינוי קנה מידה ל&תמונה"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:770
 #, kde-format
@@ -612,7 +612,7 @@ msgstr "לשנות קנה מידה לבחירה?"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
 #, kde-format
 msgid "Scal&e Selection"
-msgstr ""
+msgstr "שינוי קנה המידה של ה&בחירה"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:788
 #, kde-format
@@ -720,16 +720,15 @@ msgid "degrees"
 msgstr "מעלות"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
 "resource problems.</p><p>Are you sure you want to rotate the selection?</p></"
 "qt>"
 msgstr ""
-"<qt> <p>שינוי גודל לתמונה לגודל של %1x%2 עלול לגרום לצריכת זיכרון גבוהה. דבר "
-"זה עלול לגרום למערכת להגיב באטיות ולגרום לתקלות בתכנות אחרות.</p> <p>האם "
-"ברצונך לשנות את גודל התמונה?</p></qt>"
+"<qt><p>סיבוב הבחירה לכדי %1×%2 יכול לצרוך זיכרון רב. יכול לצמצם את זמינות "
+"המערכת ולגרום לבעיות משאבים ביישומים אחרים.<p>לסובב את הבחירה?</p>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
@@ -743,15 +742,14 @@ msgid "Rotat&e Selection"
 msgstr "סיבוב &בחירה"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to rotate the image?</p></qt>"
 msgstr ""
-"<qt> <p>שינוי גודל לתמונה לגודל של %1x%2 עלול לגרום לצריכת זיכרון גבוהה. דבר "
-"זה עלול לגרום למערכת להגיב באטיות ולגרום לתקלות בתכנות אחרות.</p> <p>האם "
-"ברצונך לשנות את גודל התמונה?</p></qt>"
+"<qt><p>סיבוב התמונה לכדי %1×%2 יכול לצרוך זיכרון רב. יכול לצמצם את זמינות "
+"המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>לסובב את התמונה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
 #, kde-format
@@ -777,9 +775,9 @@ msgid "Skew Image"
 msgstr "הטיית תמונה"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
-#, fuzzy, kde-format
+#, kde-format
 msgid "After skew:"
-msgstr "אחרי הגדלה:"
+msgstr "אחרי הטייה:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
 #, kde-format
@@ -792,16 +790,15 @@ msgid "&Vertical:"
 msgstr "א&נכי:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
 "resource problems.</p><p>Are you sure you want to skew the selection?</p></"
 "qt>"
 msgstr ""
-"<qt> <p>שינוי גודל לתמונה לגודל של %1x%2 עלול לגרום לצריכת זיכרון גבוהה. דבר "
-"זה עלול לגרום למערכת להגיב באטיות ולגרום לתקלות בתכנות אחרות.</p> <p>האם "
-"ברצונך לשנות את גודל התמונה?</p></qt>"
+"<qt><p>הטיית הבחירה לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה לצמצם את זמינות "
+"המערכת ולגרום לבעיות משאבים ביישומים אחרים.<p>להטות את הבחירה?</p>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
@@ -815,15 +812,14 @@ msgid "Sk&ew Selection"
 msgstr "הטיית &בחירה"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to skew the image?</p></qt>"
 msgstr ""
-"<qt> <p>שינוי גודל לתמונה לגודל של %1x%2 עלול לגרום לצריכת זיכרון גבוהה. דבר "
-"זה עלול לגרום למערכת להגיב באטיות ולגרום לתקלות בתכנות אחרות.</p> <p>האם "
-"ברצונך לשנות את גודל התמונה?</p></qt>"
+"<qt><p>הטיית התמונה לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה לצמצם את זמינות "
+"המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>להטות את התמונה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
 #, kde-format
@@ -837,15 +833,15 @@ msgid "Sk&ew Image"
 msgstr "ה&טיית תמונה"
 
 #: dialogs/kpColorSimilarityDialog.cpp:46
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Color Similarity"
 msgstr "דמיון צבעים"
 
 #: dialogs/kpColorSimilarityDialog.cpp:75
-#, fuzzy, kde-format
+#, kde-format
 msgid "&RGB Color Cube Distance"
-msgstr "מרחק קוביית צבעי RGB"
+msgstr "מ&רחק מקוביית צבעי RGB"
 
 #: dialogs/kpColorSimilarityDialog.cpp:82
 #, kde-format
@@ -855,7 +851,7 @@ msgstr "התאמה מדויקת"
 #: dialogs/kpColorSimilarityDialog.cpp:87
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
-msgstr ""
+msgstr "<a href=\"dummy_to_make_link_clickable\">מה זה דמיון צבע?</a>"
 
 #: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:58
 #, kde-format
@@ -928,14 +924,14 @@ msgid "Lossy File Format"
 msgstr "תסדיר קובץ שעלול לאבד מידע"
 
 #: document/kpDocument_Save.cpp:132
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>Saving the image at the low color depth of %1-bit may result in the "
 "loss of color information. Any transparency might also be removed.</p><p>Are "
 "you sure you want to save at this color depth?</p></qt>"
 msgstr ""
-"<qt> <p>שמירת התמונה בעומק צבעים של %1 סיביות תגרום לאיבוד מידע של צבעים. כל "
-"שקיפות תוסר. </p> <p>האם ברצונך לשמור בעומק הזה?</p></qt>"
+"<qt><p>שמירת תמונה עם עומק צבעים שמתחת ל־%1 סיביות יכול לגרום לאובדן צבעים. "
+"גם שקיפות יכולה להימחק.</p><p>לשמור בעומק הצבעים האלה?</p></qt>"
 
 #: document/kpDocument_Save.cpp:142
 #, kde-format
@@ -1089,7 +1085,7 @@ msgstr "תמיכה בשיטת קלט"
 #: kolourpaint.cpp:77
 #, kde-format
 msgid "Kazuki Ohta"
-msgstr ""
+msgstr "קזוקי אוטה"
 
 #: kolourpaint.cpp:78
 #, kde-format
@@ -1145,7 +1141,7 @@ msgstr "קובצי תמונות לפתיחה, כרשות"
 #: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
-msgstr ""
+msgstr "הצגת כל סוגי תוכן (MIME) התמונות הקריאים"
 
 #: kolourpaint.cpp:94
 #, kde-format
@@ -1189,9 +1185,9 @@ msgstr "סרגל כלי טקסט"
 
 #. i18n: ectx: Menu (selectionToolRMBMenu)
 #: kolourpaintui.rc:172
-#, fuzzy, kde-format
+#, kde-format
 msgid "Selection Tool RMB Menu"
-msgstr "בחירה: הזזה"
+msgstr "תפריט כפתור ימני של כלי הבחירה"
 
 #. i18n: ectx: Menu (edit)
 #: kolourpaintui.rc:174
@@ -1343,15 +1339,15 @@ msgid "Open Color Palette"
 msgstr "פתיחת לוח צבעים"
 
 #: mainWindow/kpMainWindow_Colors.cpp:369
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"המסמך \"%1\" שונה.\n"
-"טעינה מחדש תגרום לאיבוד כל השינויים שנעשו עד השמירה האחרונה שלך.\n"
-"האם אתה בטוח?"
+"לוח הצבעים „%1” נערך.\n"
+"טעינה מחדש תגרום לאיבוד כל השינויים שנערכו עד השמירה האחרונה שלך.\n"
+"להמשיך?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
@@ -1882,7 +1878,7 @@ msgstr "מוחק"
 #: tools/flow/kpToolEraser.cpp:43
 #, kde-format
 msgid "Lets you rub out mistakes"
-msgstr ""
+msgstr "מאפשר לך למחוק טעויות"
 
 #: tools/flow/kpToolEraser.cpp:70
 #, kde-format
