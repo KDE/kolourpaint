@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-04-28 23:03+0300\n"
+"PO-Revision-Date: 2024-04-29 22:29+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -396,6 +396,8 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
+"כל מפתחות הטקסט חייבים להיות ייחודיים. מפתח הטקסט „%1” בשורות %2 ו־%3 הוא "
+"זהה."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
 #, kde-format
