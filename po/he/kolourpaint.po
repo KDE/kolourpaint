@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-04-29 22:29+0300\n"
+"PO-Revision-Date: 2024-05-03 16:29+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -563,6 +563,9 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to resize the image?</p></qt>"
 msgstr ""
+"<qt><p>שינוי גודל התמונה לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה לצמצם את "
+"זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>לשנות את גודל "
+"התמונה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
 #: mainWindow/kpMainWindow_Tools.cpp:662
@@ -584,6 +587,9 @@ msgid ""
 "This can reduce system responsiveness and cause other application resource "
 "problems.</p><p>Are you sure you want to scale the image?</p></qt>"
 msgstr ""
+"<qt><p>שינוי קנה מידה של התמונה לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה "
+"לצמצם את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>לשנות את "
+"קנה המידה של התמונה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
 #, kde-format
@@ -604,6 +610,9 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to scale the selection?</p></"
 "qt>"
 msgstr ""
+"<qt><p>שינוי קנה מידה של הבחירה לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה "
+"לצמצם את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>לשנות את "
+"קנה המידה של הבחירה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
 #, kde-format
@@ -624,6 +633,9 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the image?</"
 "p></qt>"
 msgstr ""
+"<qt><p>שינוי קנה מידה של התמונה בצורה חלקה לכדי %1×%2 יכולה לצרוך זיכרון רב. "
+"יכולה לצמצם את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.</"
+"p><p>לשנות את קנה המידה של התמונה בצורה חלקה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
 #, kde-format
@@ -644,6 +656,9 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to smooth scale the selection?"
 "</p></qt>"
 msgstr ""
+"<qt><p>שינוי קנה מידה של הבחירה בצורה חלקה לכדי %1×%2 יכולה לצרוך זיכרון רב. "
+"יכולה לצמצם את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.</"
+"p><p>לשנות את קנה המידה של הבחירה בצורה חלקה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
 #, kde-format
