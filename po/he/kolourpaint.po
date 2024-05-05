@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-05-03 16:29+0300\n"
+"PO-Revision-Date: 2024-05-04 07:14+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -480,6 +480,12 @@ msgid ""
 "as <i>Scale</i> except that it blends neighboring pixels to produce a "
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
+"<qt><ul><li><b>שינוי גודל</b>: גודל התמונה יגדל על ידי יצירת אזורים חדשים "
+"מימין ו/או מלמטה (במילוי צבע הרקע) או יקטן על ידי חיתוך מימין ו/או למטה.</"
+"li><li><b>שינוי קנה מידה</b>: התמונה תתרחב על ידי הכפלת פיקסלים או תימעך על "
+"ידי השמטת פיקסלים.</li><li><b>שינוי קנה מידה חלק</b>: דומה ל<i>שינוי קנה "
+"מידה</i> למעט היטמעות עם הפיקסלים הסמוכים כדי לייצר תמונה שנראית חלקה יותר.</"
+"li></ul></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
 #, kde-format
@@ -543,6 +549,9 @@ msgid ""
 "resource problems.</p><p>Are you sure you want to resize the text box?</p></"
 "qt>"
 msgstr ""
+"<qt><p>שינוי גודל תיבת הטקסט לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה לצמצם "
+"את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.<p>לשנות את גודל תיבת "
+"הטקסט?</p>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
 #, kde-format
@@ -2348,14 +2357,14 @@ msgstr ""
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
-msgstr ""
+msgstr "<p>דמיון צבע: %1%</p><p align=\"center\">לחיצה להגדרה.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
 #, kde-format
 msgid ""
 "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
 "p>"
-msgstr ""
+msgstr "<p>דמיון צבע: אחד לאחד</p><p align=\"center\">לחיצה להגדרה.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
 #, kde-format
@@ -2605,6 +2614,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"מחליף בין מצבי <emphasis>נעילה</emphasis> או <emphasis>שחרור</emphasis> של "
+"לוחות.<nl/>אפשר לגרור לוחות משוחררים לצד השני של החלון ויש להם כפתור סגירה."
+"<nl/>לוחות נעולים מוטמעים בצורה יותר נקייה."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
