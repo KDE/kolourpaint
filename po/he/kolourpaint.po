@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-05-04 07:14+0300\n"
+"PO-Revision-Date: 2024-05-05 10:21+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -342,6 +342,9 @@ msgid ""
 "<b>Offset</b> feature. If the format you save in does not support it, the "
 "values specified here will not be saved.</p></qt>"
 msgstr ""
+"<qt><p>ה<b>היסט</b> הוא המקום היחסי להצבת התמונה, ביחס לתמונות אחרות. </"
+"p><p>לא כל סוגי התמונות תומכים ביכולת ה <b>היסט</b>. אם הסוג בו בחרת לשמור "
+"לא תומך בזה, הערכים שצוינו כאן לא יישמרו.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
 #, kde-format
@@ -2530,6 +2533,11 @@ msgid ""
 "destination cell's color will be overwritten, instead of being swapped with "
 "the color of the source cell.</p></qt>"
 msgstr ""
+"<qt><p>כדי לבחור את צבע החזית בהם משתמשים כלים כדי לצייר, ללחוץ עם הכפתור "
+"השמאלי על תא צבע מלא. כדי לבחור את צבע הרקע, עם הכפתור הימני.</p><p>כדי "
+"לשנות את צבע תא הצבע בעצמו, יש ללחוץ עליו לחיצה כפולה.</p><p>אפשר להחליף את "
+"הצבע של תא צבוע בצבע של כל תא אחר באמצעות גרירה. בנוסף, החזקת מקש <b>Ctrl</"
+"b> תדרוס את צבע תא היעד, במקום להתחלף עם תא המקור.</p></qt>"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:85
 #, kde-format
