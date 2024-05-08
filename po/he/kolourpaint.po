@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-05-05 10:21+0300\n"
+"PO-Revision-Date: 2024-05-07 07:51+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -377,6 +377,11 @@ msgid ""
 "unlikely.</p><p>Not all image formats support <b>Text Fields</b>. If the "
 "format you save in does not support them, they will not be saved.</p></qt>"
 msgstr ""
+"<qt><p><b>שדות טקסט</b> מספקים מידע נוסף על התמונה. סביר להניח שזה אזור "
+"להערות שאפשר לכתוב בו באופן חופשי.</p><p>עם זאת, השדה הזה הוא תלוי סוג קובץ "
+"כך שיכול להיות שנתוני השדות מפוענחים על ידי מחשב - ואסור לשנותם - אך הסבירות "
+"לכך היא מאוד נמוכה.</p><p>לא כל סוגי התמונות תומכים ב<b>שדות טקסט</b>. אם "
+"סוג הקובץ ששמרת בו לא תומך בהם הם לא יישמרו.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
 #, kde-format
@@ -449,7 +454,7 @@ msgstr "שינוי גודל / קנה מידה"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
 #, kde-format
 msgid "Ac&t on:"
-msgstr ""
+msgstr "&פעולה על:"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
 #, kde-format
