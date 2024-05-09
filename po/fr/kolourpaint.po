@@ -1,7 +1,7 @@
 # translation of kolourpaint.po to Français
 # traduction de kolourpaint.po en Français
 # traduction de kolourpaint.po en Français
-# SPDX-FileCopyrightText: 2020, 2021, 2023 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2020, 2021, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
 # Cedric Pasteur <cedric.pasteur@free.fr>, 2004.
 # Matthieu Robin <kde@macolu.org>, 2004, 2005.
 # Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2004, 2005, 2008, 2009, 2010.
@@ -20,15 +20,15 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2023-11-08 11:47+0100\n"
+"PO-Revision-Date: 2024-05-06 16:21+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -2771,9 +2771,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
-"Cela permet de passer d’un panneau <emphasis>verrouillé</emphasis> à un "
+"Cela permet de passer d'un panneau <emphasis>verrouillé</emphasis> à un "
 "panneau <emphasis>déverrouillé</emphasis>. <nl/>Les panneaux déverrouillés "
-"peuvent être déplacés de l’autre côté de la fenêtre et avoir un bouton de "
+"peuvent être déplacés de l'autre côté de la fenêtre et avoir un bouton de "
 "fermeture. <nl/>Les panneaux verrouillés sont intégrés plus proprement."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
