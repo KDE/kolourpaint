@@ -1329,7 +1329,7 @@ msgstr "Utilitza la de KDE"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
-msgstr "O&bri..."
+msgstr "O&bri…"
 
 #: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
@@ -1347,7 +1347,7 @@ msgstr "Guar&da"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
-msgstr "Anomena i gu&arda..."
+msgstr "Anomena i gu&arda…"
 
 #: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
@@ -1459,12 +1459,12 @@ msgstr "Sup&rimix la selecció"
 #: mainWindow/kpMainWindow_Edit.cpp:111
 #, kde-format
 msgid "C&opy to File..."
-msgstr "C&opia a un fitxer..."
+msgstr "C&opia a un fitxer…"
 
 #: mainWindow/kpMainWindow_Edit.cpp:115
 #, kde-format
 msgid "Paste &From File..."
-msgstr "Apega des d'un fi&txer..."
+msgstr "Apega des d'un fi&txer…"
 
 #: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
 #: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
@@ -1527,7 +1527,7 @@ msgstr "Apegar des d'un fitxer"
 #: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
-msgstr "E&xporta..."
+msgstr "E&xporta…"
 
 #: mainWindow/kpMainWindow_File.cpp:106
 #, kde-format
@@ -1552,7 +1552,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
 msgid "Scan..."
-msgstr "Escaneja..."
+msgstr "Escaneja…"
 
 #: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
@@ -1680,7 +1680,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Image.cpp:117
 #, kde-format
 msgid "R&esize / Scale..."
-msgstr "R&edimensiona / Escala..."
+msgstr "R&edimensiona / Escala…"
 
 #: mainWindow/kpMainWindow_Image.cpp:123
 #, kde-format
@@ -1700,7 +1700,7 @@ msgstr "Espill (horitzontalment)"
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
 msgid "&Rotate..."
-msgstr "&Gira..."
+msgstr "&Gira…"
 
 #: mainWindow/kpMainWindow_Image.cpp:149
 #, kde-format
@@ -1715,7 +1715,7 @@ msgstr "Gira a la dre&ta"
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "S&kew..."
-msgstr "Es&biaixa..."
+msgstr "Es&biaixa…"
 
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
@@ -1745,7 +1745,7 @@ msgstr "Fes confidencial"
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
 msgid "&More Effects..."
-msgstr "&Més efectes..."
+msgstr "&Més efectes…"
 
 #: mainWindow/kpMainWindow_Image.cpp:230
 #, kde-format
@@ -1859,7 +1859,7 @@ msgstr "&Dibuix opac"
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
 msgid "Draw With Color Similarity..."
-msgstr "Dibuixa amb similitud del color..."
+msgstr "Dibuixa amb similitud del color…"
 
 #: mainWindow/kpMainWindow_Tools.cpp:179
 #, kde-format
