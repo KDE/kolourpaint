@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-05-13 14:52+0300\n"
+"PO-Revision-Date: 2024-05-14 08:03+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1860,12 +1860,12 @@ msgstr "הצגת &תמונות מוקטנות"
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
 #, kde-format
 msgid "Zoo&med Thumbnail Mode"
-msgstr ""
+msgstr "מצב תמונות ממוזערות מו&גדלות"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
-msgstr ""
+msgstr "הפעלת מ&רובע תמונה ממוזערת"
 
 #: mainWindow/kpMainWindow_View_Zoom.cpp:110
 #, kde-format
