@@ -1,29 +1,30 @@
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2010, 2011, 2012.
 # Balázs Úr <urbalazs@gmail.com>, 2012.
+# SPDX-FileCopyrightText: 2024 Kristof Kiszel <ulysses@fsf.hu>
 msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2012-08-21 09:05+0200\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"PO-Revision-Date: 2024-05-18 14:39+0200\n"
+"Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Szántó Tamás"
+msgstr "Kiszel Kristóf,Szántó Tamás"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "tszanto@interware.hu"
+msgstr "ulysses@fsf.hu,tszanto@interware.hu"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
@@ -760,12 +761,7 @@ msgid "degrees"
 msgstr "fok"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to rotate the selection?</p></"
-#| "qt>"
+#, kde-format
 msgid ""
 "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
@@ -789,11 +785,7 @@ msgid "Rotat&e Selection"
 msgstr "A kijelölt rész el&forgatása"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Rotating the image to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to rotate the image?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
@@ -843,11 +835,7 @@ msgid "&Vertical:"
 msgstr "&Függőleges:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to skew the selection?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
 "memory. This can reduce system responsiveness and cause other application "
@@ -871,11 +859,7 @@ msgid "Sk&ew Selection"
 msgstr "A kijelölt rész &döntése"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Skewing the image to %1x%2 may take a substantial amount of "
-#| "memory. This can reduce system responsiveness and cause other application "
-#| "resource problems.</p><p>Are you sure want to skew the image?</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
 "This can reduce system responsiveness and cause other application resource "
@@ -1013,15 +997,14 @@ msgstr ""
 "létrehozni."
 
 #: document/kpDocument_Save.cpp:276
-#, fuzzy, kde-format
-#| msgid "Could not save as \"%1\"."
+#, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "A képet nem sikerült \"%1\" néven elmenteni."
+msgstr "A képet nem sikerült „%1” néven elmenteni: %2"
 
 #: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
 msgid "Error saving image"
-msgstr ""
+msgstr "Hiba a kép mentésekor"
 
 #: document/kpDocument_Save.cpp:426
 #, kde-format
@@ -1097,10 +1080,9 @@ msgid "KolourPaint"
 msgstr "KolourPaint"
 
 #: kolourpaint.cpp:53
-#, fuzzy, kde-format
-#| msgid "Paint Program for KDE"
+#, kde-format
 msgid "Paint Program by KDE"
-msgstr "KDE-alapú rajzolóprogram"
+msgstr "Rajzprogram a KDE-től"
 
 #: kolourpaint.cpp:67
 #, kde-format
@@ -1190,13 +1172,12 @@ msgstr "Átirat KDE4-re"
 #: kolourpaint.cpp:83
 #, kde-format
 msgid "Christoph Feck"
-msgstr ""
+msgstr "Christoph Feck"
 
 #: kolourpaint.cpp:83
-#, fuzzy, kde-format
-#| msgid "KDE 4 Porting"
+#, kde-format
 msgid "KF 5 Porting"
-msgstr "Átirat KDE4-re"
+msgstr "Portolás KF 5-re"
 
 #: kolourpaint.cpp:85
 #, kde-format
@@ -1207,25 +1188,24 @@ msgstr ""
 "létrejöjjön."
 
 #: kolourpaint.cpp:90
-#, fuzzy, kde-format
-#| msgid "Image file to open"
+#, kde-format
 msgid "Image files to open, optionally"
-msgstr "A megnyitandó képfájl"
+msgstr "Megnyitandó képfájlok, opcionális"
 
 #: kolourpaint.cpp:93
 #, kde-format
 msgid "List all readable image MIME types"
-msgstr ""
+msgstr "Összes olvasható képfájltípus listázása"
 
 #: kolourpaint.cpp:94
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Új kép kezdése a megadott mérettel"
 
 #: kolourpaint.cpp:94
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[szélesség]x[magasság]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1546,7 +1526,7 @@ msgstr "E&xportálás..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Exportálás másik fájlba"
 
 #: mainWindow/kpMainWindow_File.cpp:108
 #, kde-kuit-format
@@ -1557,6 +1537,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Ez a dokumentumot más névvel menti el, hasonlóan a <interface>Mentés "
+"máskénthez</interface>, de a jelenlegi dokumentum nem változik meg.<nl/>Ily "
+"módon az utoljára használt mentési mappa független maradhat a jelenlegi "
+"dokumentum mappájától."
 
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
@@ -1581,7 +1565,7 @@ msgstr "Újr&atöltés"
 #: mainWindow/kpMainWindow_File.cpp:463
 #, kde-format
 msgid "All Supported Files (%1)"
-msgstr ""
+msgstr "Minden támogatott fájl (%1)"
 
 #: mainWindow/kpMainWindow_File.cpp:488
 #, kde-format
@@ -1592,13 +1576,13 @@ msgstr "Képfájl megnyitása"
 #: mainWindow/kpMainWindow_File.cpp:551
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr ""
+msgstr "Nem sikerült megnyitni a beolvasási párbeszédablakot."
 
 #: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
-msgstr ""
+msgstr "Sikertelen lapolvasás"
 
 #: mainWindow/kpMainWindow_File.cpp:669
 #, kde-format
@@ -1748,7 +1732,7 @@ msgstr "&Törlés"
 #: mainWindow/kpMainWindow_Image.cpp:185
 #, kde-format
 msgid "Make Confidential"
-msgstr ""
+msgstr "Legyen bizalmas"
 
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
@@ -1779,7 +1763,7 @@ msgstr "Az &elérési út megjelenítése"
 #: mainWindow/kpMainWindow_Settings.cpp:71
 #, kde-format
 msgid "Draw Anti-Aliased"
-msgstr ""
+msgstr "Élsimított rajzolás"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:156
 #, kde-format
@@ -1900,16 +1884,15 @@ msgid "&Zoom"
 msgstr "N&agyítás"
 
 #: scan/sanedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Entire Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr "Az egész kép"
+msgstr "Kép beszerzése"
 
 #: scan/sanedialog.cpp:73
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr ""
+msgstr "Nem sikerült megnyitni a kiválasztott szkennert."
 
 #: tools/flow/kpToolBrush.cpp:35
 #, kde-format
@@ -2699,13 +2682,13 @@ msgstr "Átlátszó"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Panelek feloldása"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Panelek zárolása"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2716,6 +2699,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Ezzel <emphasis>zárolhatja</emphasis> vagy <emphasis>oldhatja fel</emphasis> "
+"a paneleket.<nl/>A nem zárolt panelek az ablak másik oldalára húzhatók, és "
+"van bezárás gombjuk.<nl/>A zárolt panelek sokkal jobban beágyazódnak."
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
