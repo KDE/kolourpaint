@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-05-15 09:59+0300\n"
+"PO-Revision-Date: 2024-05-28 12:46+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -567,8 +567,8 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>שינוי גודל תיבת הטקסט לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה לצמצם "
-"את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.<p>לשנות את גודל תיבת "
-"הטקסט?</p>"
+"את זמינות המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>לשנות את גודל "
+"תיבת הטקסט?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
 #, kde-format
@@ -771,7 +771,7 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>סיבוב הבחירה לכדי %1×%2 יכול לצרוך זיכרון רב. יכול לצמצם את זמינות "
-"המערכת ולגרום לבעיות משאבים ביישומים אחרים.<p>לסובב את הבחירה?</p>"
+"המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>לסובב את הבחירה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
 #, kde-format
@@ -841,7 +841,7 @@ msgid ""
 "qt>"
 msgstr ""
 "<qt><p>הטיית הבחירה לכדי %1×%2 יכולה לצרוך זיכרון רב. יכולה לצמצם את זמינות "
-"המערכת ולגרום לבעיות משאבים ביישומים אחרים.<p>להטות את הבחירה?</p>"
+"המערכת ולגרום לבעיות משאבים ביישומים אחרים.</p><p>להטות את הבחירה?</p></qt>"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
 #, kde-format
@@ -1043,7 +1043,7 @@ msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr ""
-"KolourPaint לא הצליח לחתוך את התמונה אוטומטית כיוון שלא ניתן לאתר את המסגרת "
+"KolourPaint לא יכול לחתוך את התמונה אוטומטית כיוון שלא ניתן לאתר את המסגרת "
 "שלה."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:633
