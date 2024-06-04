@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-02-07 23:38+0900\n"
+"PO-Revision-Date: 2024-06-04 06:02+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.01.95\n"
+"X-Generator: Lokalize 24.04.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -364,7 +364,7 @@ msgstr "刪除列(&D)"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
 #, kde-format
 msgid "&Reset"
-msgstr "重置(&R)"
+msgstr "重設(&R)"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
 #, kde-format
@@ -2382,7 +2382,7 @@ msgstr "亮度(&B)："
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
 #, kde-format
 msgid "Re&set"
-msgstr "重置(&S)"
+msgstr "重設(&S)"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
 #, kde-format
@@ -2397,7 +2397,7 @@ msgstr "Gamma(&G)："
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
 #, kde-format
 msgid "Rese&t"
-msgstr "重置(&T)"
+msgstr "重設(&T)"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
 #, kde-format
@@ -2427,7 +2427,7 @@ msgstr "藍"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
 #, kde-format
 msgid "Reset &All Values"
-msgstr "重置所有設定值(&A)"
+msgstr "重設所有設定值(&A)"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
 #, kde-format
