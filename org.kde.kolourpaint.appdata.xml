@@ -275,7 +275,7 @@
       <li xml:lang="x-test">xxCurves, lines and textxx</li>
       <li xml:lang="zh-CN">曲线、直线和文本</li>
       <li xml:lang="zh-TW">曲線、線條與文字</li>
-      <li>Colour picker</li>
+      <li>Color picker</li>
       <li xml:lang="ar">منتق الألوان</li>
       <li xml:lang="bg">Избор на цвят</li>
       <li xml:lang="bs">Dobavljač boja</li>
@@ -317,7 +317,7 @@
       <li xml:lang="tok">ilo pi pana kule</li>
       <li xml:lang="tr">Renk seçicisi</li>
       <li xml:lang="uk">Піпетка для отримання кольору із зображення.</li>
-      <li xml:lang="x-test">xxColour pickerxx</li>
+      <li xml:lang="x-test">xxColor pickerxx</li>
       <li xml:lang="zh-CN">拾色器</li>
       <li xml:lang="zh-TW">顏色挑選器</li>
       <li>Selections</li>

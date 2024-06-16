@@ -101,7 +101,7 @@ public:
                                const QImage &srcPixmap);
 
     //
-    // Returns the colour of the pixel at <at> in <pm>.
+    // Returns the color of the pixel at <at> in <pm>.
     // If the pixel is transparent, a value is returned such that
     // kpTool::isColorTransparent(<return_value>) will return true.
     //

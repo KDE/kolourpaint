@@ -709,7 +709,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
                << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : nullptr);
 #endif
 
-    // In case e.g. the user pastes a solid, coloured-in rectangle,
+    // In case e.g. the user pastes a solid, colored-in rectangle,
     // we favor killing the bottom and right regions
     // (these regions probably contain the unwanted whitespace due
     //  to the doc being bigger than the pasted selection to start with).

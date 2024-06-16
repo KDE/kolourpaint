@@ -44,10 +44,10 @@ public:
     };
 
     //
-    // Inverts the colours of each pixel in the given image.
+    // Inverts the colors of each pixel in the given image.
     // These functions differ from QImage::invertPixels() in the following ways:
     //
-    // 1. for 8-bit images, it inverts the colours of the Colour Table
+    // 1. for 8-bit images, it inverts the colors of the Colour Table
     //    (this means that you would get visually similar results to inversion
     //     at higher bit depths - rather than a "random-looking" inversion
     //     depending on the contents of the Colour Table)

@@ -287,7 +287,7 @@ void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
 
     for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
     {
-        // At current position, right colour?
+        // At current position, right color?
         if (shouldGoTo (xnow, fillLine.m_y + dy))
         {
             // Find minimum and maximum x values

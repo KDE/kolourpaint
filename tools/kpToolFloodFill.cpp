@@ -109,7 +109,7 @@ void kpToolFloodFill::beginDraw ()
 
         if (document ()->url ().isEmpty () && !document ()->isModified ())
         {
-            // Collect the colour that gets changed before we change the pixels
+            // Collect the color that gets changed before we change the pixels
             // (execute() below).  Needed in unexecute().
             d->currentCommand->prepareColorToChange ();
 

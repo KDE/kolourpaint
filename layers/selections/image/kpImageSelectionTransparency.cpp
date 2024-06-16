@@ -90,10 +90,10 @@ bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparenc
     }
 
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-    qCDebug(kpLogLayers) << "\tcolours: lhs=" << (int *) m_transparentColor.toQRgb ()
+    qCDebug(kpLogLayers) << "\tcolors: lhs=" << (int *) m_transparentColor.toQRgb ()
                << " rhs=" << (int *) rhs.m_transparentColor.toQRgb ()
                << endl;
-    qCDebug(kpLogLayers) << "\tcolour similarity: lhs=" << m_colorSimilarity
+    qCDebug(kpLogLayers) << "\tcolor similarity: lhs=" << m_colorSimilarity
                << " rhs=" << rhs.m_colorSimilarity
                << endl;
 #endif

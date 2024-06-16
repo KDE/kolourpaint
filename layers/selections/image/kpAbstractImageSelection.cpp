@@ -480,7 +480,7 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
     if (!hasTransparent)
     {
     #if DEBUG_KP_SELECTION
-        qCDebug(kpLogLayers) << "\tcolour useless - completely opaque";
+        qCDebug(kpLogLayers) << "\tcolor useless - completely opaque";
     #endif
         d->transparencyMaskCache = QBitmap ();
         return;

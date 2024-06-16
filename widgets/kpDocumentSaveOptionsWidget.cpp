@@ -358,8 +358,8 @@ void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDit
     const int comboItem = colorDepthComboItemFromColorDepthAndDither (
                               newDepth, newDither);
     // TODO: Ignoring when comboItem >= m_colorDepthCombo->count() is wrong.
-    //       This happens if this mimeType has configurable colour depth
-    //       and an incorrect maximum colour depth (less than a QImage of
+    //       This happens if this mimeType has configurable color depth
+    //       and an incorrect maximum color depth (less than a QImage of
     //       this mimeType, opened by kpDocument).
     if (comboItem >= 0 && comboItem < m_colorDepthCombo->count ()) {
         m_colorDepthCombo->setCurrentIndex (comboItem);

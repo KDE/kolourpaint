@@ -119,7 +119,7 @@ bool kpDocument::lossyPromptContinue (const QImage &pixmap,
                       "<p>Are you sure you want to save in this format?</p></qt>",
                       db.mimeTypeForName(saveOptions.mimeType()).comment()),
                 // TODO: caption misleading for lossless formats that have
-                //       low maximum colour depth
+                //       low maximum color depth
                 i18nc ("@title:window", "Lossy File Format"),
                 KStandardGuiItem::save (),
                 KStandardGuiItem::cancel(),

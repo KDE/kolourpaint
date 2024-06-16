@@ -206,9 +206,9 @@ void kpToolFlowBase::beginDraw ()
 {
     d->currentCommand = new kpToolFlowCommand (text (), environ ()->commandEnvironment ());
 
-    // We normally show the brush cursor in the foreground colour but if the
+    // We normally show the brush cursor in the foreground color but if the
     // user starts drawing in the background color, we don't want to leave
-    // the brush cursor in the foreground colour -- just hide it in all cases
+    // the brush cursor in the foreground color -- just hide it in all cases
     // to avoid confusion.
     viewManager ()->invalidateTempImage ();
 

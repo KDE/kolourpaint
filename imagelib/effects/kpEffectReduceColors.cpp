@@ -102,7 +102,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
     // (with dithering off) which produces pathetic results with an image that
     // only has 2 colors - sometimes it just gives a completely black
     // result (try yellow and white as input).  Instead, we simply preserve
-    // the 2 colours.
+    // the 2 colors.
     //
     // One use case is resaving a "color monochrome" image (<= 2 colors but
     // not necessarily black & white).
@@ -191,7 +191,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
 #endif
 
 #if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
-    qCDebug(kpLogImagelib) << "After colour reduction:";
+    qCDebug(kpLogImagelib) << "After color reduction:";
     for (int y = 0; y < image.height (); y++)
     {
         for (int x = 0; x < image.width (); x++)

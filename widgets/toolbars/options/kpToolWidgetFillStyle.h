@@ -61,7 +61,7 @@ private:
 public:
     FillStyle fillStyle () const;
 
-    // Returns the actual fill colour.
+    // Returns the actual fill color.
     // e.g. "FillWithBackground" fillStyle() -> <backgroundColor>,
     //      "FillWithForeground" fillStyle() -> <foregroundColor>.
     kpColor drawingBackgroundColor (

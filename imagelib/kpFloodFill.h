@@ -66,7 +66,7 @@ public:
 
 
     //
-    // Step 1: Determines the colour that will be changed to color().
+    // Step 1: Determines the color that will be changed to color().
     //
     //         Very fast.
     //

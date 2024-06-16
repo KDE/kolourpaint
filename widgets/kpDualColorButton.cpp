@@ -397,7 +397,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     painter.translate (contentsRect ().x (), contentsRect ().y ());
 
 
-    // Draw "Swap Colours" button (top-right).
+    // Draw "Swap Colors" button (top-right).
     QPixmap swapPixmap = QStringLiteral(":/icons/colorbutton_swap_16x16");
     if (!isEnabled ())
     {
@@ -413,7 +413,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     painter.drawPixmap (swapPixmapRect ().topLeft (), swapPixmap);
 
 
-    // Draw background colour patch.
+    // Draw background color patch.
     QRect bgRect = backgroundRect ();
     QRect bgRectInside = QRect (bgRect.x () + 2, bgRect.y () + 2,
                                 bgRect.width () - 4, bgRect.height () - 4);
@@ -439,7 +439,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
 
 
-    // Draw foreground colour patch.
+    // Draw foreground color patch.
     // Must be drawn after background patch since we're on top.
     QRect fgRect = foregroundRect ();
     QRect fgRectInside = QRect (fgRect.x () + 2, fgRect.y () + 2,
