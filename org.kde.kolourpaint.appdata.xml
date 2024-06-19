@@ -3,6 +3,10 @@
   <id>org.kde.kolourpaint.desktop</id>
   <metadata_license>MIT</metadata_license>
   <project_license>BSD-2-Clause and LGPL-2.0+ and GFDL-1.2</project_license>
+  <developer id="org.kde">
+    <name translate="no">KDE</name>
+  </developer>
+  <launchable type="desktop-id">org.kde.kolourpaint.desktop</launchable>
   <name>KolourPaint</name>
   <name xml:lang="ar">الرسام</name>
   <name xml:lang="bg">KolourPaint</name>
