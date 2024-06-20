@@ -281,14 +281,19 @@
       <li xml:lang="zh-TW">曲線、線條與文字</li>
       <li>Color picker</li>
       <li xml:lang="ca">Selector de color</li>
+      <li xml:lang="ca-valencia">Selector de color</li>
       <li xml:lang="cs">Kapátko</li>
+      <li xml:lang="eo">Kolorelektilo</li>
       <li xml:lang="es">Selector de color</li>
+      <li xml:lang="he">בורר צבעים</li>
       <li xml:lang="ia">Selector de color</li>
       <li xml:lang="ka">ფერის ამრჩევი</li>
       <li xml:lang="sl">Pobiralnik barv</li>
+      <li xml:lang="sv">Färgväljare</li>
       <li xml:lang="tr">Renk seçicisi</li>
       <li xml:lang="uk">Піпетка</li>
       <li xml:lang="x-test">xxColor pickerxx</li>
+      <li xml:lang="zh-TW">取色工具</li>
       <li>Selections</li>
       <li xml:lang="ar">التّحديدات</li>
       <li xml:lang="bg">Селекции</li>
