@@ -285,8 +285,10 @@
       <li xml:lang="cs">Kapátko</li>
       <li xml:lang="eo">Kolorelektilo</li>
       <li xml:lang="es">Selector de color</li>
+      <li xml:lang="fr">Sélecteur de couleurs</li>
       <li xml:lang="he">בורר צבעים</li>
       <li xml:lang="ia">Selector de color</li>
+      <li xml:lang="it">Selettore del colore</li>
       <li xml:lang="ka">ფერის ამრჩევი</li>
       <li xml:lang="nl">Kleurkiezer</li>
       <li xml:lang="sl">Pobiralnik barv</li>
@@ -294,6 +296,7 @@
       <li xml:lang="tr">Renk seçicisi</li>
       <li xml:lang="uk">Піпетка</li>
       <li xml:lang="x-test">xxColor pickerxx</li>
+      <li xml:lang="zh-CN">拾色器</li>
       <li xml:lang="zh-TW">取色工具</li>
       <li>Selections</li>
       <li xml:lang="ar">التّحديدات</li>
