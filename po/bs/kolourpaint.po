@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 01:43+0000\n"
+"POT-Creation-Date: 2024-07-05 00:38+0000\n"
 "PO-Revision-Date: 2015-01-06 06:28+0000\n"
 "Last-Translator: Nejra Pašić <npasic1@etf.unsa.ba>\n"
 "Language-Team: <en@li.org>\n"
@@ -2030,8 +2030,11 @@ msgid "Zooms in and out of the image"
 msgstr "Zumira i umanjuje sliku"
 
 #: tools/kpToolZoom.cpp:119
-#, kde-format
-msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, fuzzy, kde-kuit-format
+#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+msgctxt "@info"
+msgid ""
+"Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
 "Kliknite da uvećate/umanjite ili vucite lijevom tipkom da uvećate određeno "
 "područje."

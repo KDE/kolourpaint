@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 01:43+0000\n"
+"POT-Creation-Date: 2024-07-05 00:38+0000\n"
 "PO-Revision-Date: 2014-02-21 15:59+0100\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-doc@kde.org>\n"
@@ -2032,8 +2032,11 @@ msgid "Zooms in and out of the image"
 msgstr "Maakt de Bildansicht grötter oder lütter"
 
 #: tools/kpToolZoom.cpp:119
-#, kde-format
-msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, fuzzy, kde-kuit-format
+#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+msgctxt "@info"
+msgid ""
+"Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
 "Klick, wenn Du en Ansicht grötter/lütter maken wullt, oder treck mit de "
 "linke Muustast, wenn Du en besünner Rebeet grötter maken wullt."

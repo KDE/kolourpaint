@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 01:43+0000\n"
+"POT-Creation-Date: 2024-07-05 00:38+0000\n"
 "PO-Revision-Date: 2013-03-04 11:29+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -2035,8 +2035,11 @@ msgid "Zooms in and out of the image"
 msgstr "प्रतिमेत आत व बाहेर करण्यासाठी झूम करतो"
 
 #: tools/kpToolZoom.cpp:119
-#, kde-format
-msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, fuzzy, kde-kuit-format
+#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+msgctxt "@info"
+msgid ""
+"Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
 "प्रतिमेच्या आत/बाहेर (लहान/मोठे) करण्यासाठी कळ दाबा अथवा विशिष्ट भागात झूम "
 "काटण्यासाठी माऊस डावीकडे ओढा/सरकवा"
