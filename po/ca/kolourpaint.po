@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 01:43+0000\n"
-"PO-Revision-Date: 2024-04-21 08:51+0200\n"
+"PO-Revision-Date: 2024-07-05 09:30+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2032,7 +2032,7 @@ msgstr "Apropa i allunya de la imatge"
 msgid "Click to zoom in/out or left drag to zoom into a specific area."
 msgstr ""
 "Cliqueu per a apropar/allunyar o arrossegueu amb el botó esquerre per a "
-"apropar en una àrea específica."
+"apropar una àrea específica."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
