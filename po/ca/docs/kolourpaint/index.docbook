@@ -447,6 +447,19 @@
 > <link linkend="tool-text"
 >Text</link
 > (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Zoom</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -948,6 +961,27 @@ format="PNG"/>
 <para
 >La imatge de l'esquerra mostra l'afegit de text amb colors de primer pla opacs i un color de fons transparent. La imatge de la dreta mostra l'afegit de text amb un color de primer pla transparent i un color de fons opac.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Zoom <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>El &BER; apropa. The &BDR; allunya.</para>
+<para
+>Arrossegueu amb el &BER; per a apropar una àrea específica.</para>
+
+<tip>
+<para
+>Feu doble clic sobre la icona de l'eina de zoom per a establir el zoom a «Ajusta a la pàgina».</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">

@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2024-05-30 20:40+0200\n"
+"PO-Revision-Date: 2024-07-05 15:49+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2023,12 +2023,13 @@ msgid "Zooms in and out of the image"
 msgstr "Увеличаване и намаляване на изображението"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
-msgstr "Щракнете с мишката за увеличаване или намаляване."
+msgstr ""
+"Щракнете, за да увеличите мащаба. Щракнете с десния бутон, за да го "
+"намалите. Плъзнете, за да увеличите конкретна област."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format

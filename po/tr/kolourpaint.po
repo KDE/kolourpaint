@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2024-03-22 16:18+0300\n"
+"PO-Revision-Date: 2024-07-05 14:03+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.02.1\n"
+"X-Generator: Lokalize 24.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -301,7 +301,7 @@ msgstr "Belirtilmemiş"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " x "
-msgstr " x "
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
@@ -333,8 +333,8 @@ msgstr ""
 "<qt><p><b>İnç başına Nokta</b> (DPI) bir inç (2,54 cm) içerisinde basılacak "
 "görselin piksel sayısını belirler.</p><p>Görselin DPI değerini ne kadar "
 "yüksek olursa görsel o kadar küçük basılacaktır. Yazıcınıza bağlı olarak, "
-"300 veya 600 DPI'dan yüksek bir değer belirlerseniz yazıcınızın yüksek "
-"kalite baskı üretmesinin pek mümkün olmadığını göz önünde bulundurun.</"
+"300 veya 600 DPI’den yüksek bir değer belirlerseniz yazıcınızın yüksek "
+"kalite baskı üretmesinin pek olanaklı olmadığını göz önünde bulundurun.</"
 "p><p>Bir görseli ekrandaki aynı boyutuyla yazdırmak istiyorsanız görseli DPI "
 "değerleri ile ekranın DPI değerlerini aynı belirleyin.</p><p>Eğer herhangi "
 "bir DPI değeri <b>Belirtilmemiş</b> ise görsel ekrandaki aynı boyutuyla "
@@ -394,9 +394,9 @@ msgstr ""
 "<qt><p><b>Metin Alanları</b> görsel hakkında ek bilgi sağlar. Bu, "
 "olasılıkla, herhangi bir metni özgürce yazabileceğini bir yorum alanıdır.</"
 "p><p>Yine de metin alanları biçim özelliklidir, böylece alanlar kuramsal "
-"olarak - düzenlememeniz gereken - bilgisayar yorumlu veri olabilirler - "
-"ancak bu pek mümkün değildir.</p><p>Tüm görsel biçimleri <b>Metin Alanları</"
-"b>nı desteklemez. Eğer kaydettiğiniz biçim metin alanlarını desteklemiyorsa "
+"olarak —düzenlememeniz gereken— bilgisayar yorumlu veri olabilirler — ancak "
+"bu pek olanaklı değildir.</p><p>Tüm görsel biçimleri <b>Metin Alanları</"
+"b>’nı desteklemez. Eğer kaydettiğiniz biçim metin alanlarını desteklemiyorsa "
 "bu alanlar kaydedilmeyecektir.</p></qt>"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
@@ -412,7 +412,7 @@ msgstr "Değer"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
-msgstr "%2. satırdaki \"%1\" metin değeri bir anahtar gerektiriyor."
+msgstr "%2. satırdaki “%1” metin değeri bir anahtar gerektiriyor."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
 #, kde-format
@@ -420,7 +420,7 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
-"Tüm metin anahtarları eşsiz olmalıdır. %2. ve %3. satırlardaki \"%1\" metin "
+"Tüm metin anahtarları eşsiz olmalıdır. %2. ve %3. satırlardaki “%1” metin "
 "anahtarı aynı."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
@@ -934,7 +934,7 @@ msgstr[1] "%1 bayt (en fazla %​%2)"
 #: document/kpDocument_Open.cpp:114
 #, kde-format
 msgid "Could not open \"%1\"."
-msgstr "\"%1\" açılamadı."
+msgstr "“%1” açılamadı."
 
 #: document/kpDocument_Open.cpp:150
 #, kde-format
@@ -942,13 +942,13 @@ msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
 "The file may be corrupt."
 msgstr ""
-"\"%1\" açılamadı - desteklenmeyen görsel biçimi.\n"
+"“%1” açılamadı — desteklenmeyen görsel biçimi.\n"
 "Dosya bozulmuş olabilir."
 
 #: document/kpDocument_Save.cpp:74
 #, kde-format
 msgid "Could not save image - insufficient information."
-msgstr "Görsel kaydedilemedi - yetersiz bilgi."
+msgstr "Görsel kaydedilemedi — yetersiz bilgi."
 
 #: document/kpDocument_Save.cpp:75
 #, kde-format
@@ -993,7 +993,7 @@ msgid ""
 "loss of color information. Any transparency might also be removed.</p><p>Are "
 "you sure you want to save at this color depth?</p></qt>"
 msgstr ""
-"<qt><p>Görseli %1-bit düşük renk derinliğinde kaydetmek renk bilgisinin "
+"<qt><p>Görseli %1 bit düşük renk derinliğinde kaydetmek renk bilgisinin "
 "kaybıyla sonuçlanabilir. Saydamlık kaldırılabilir.</p><p>Bu renk "
 "derinliğinde kaydetmek istediğinizden emin misiniz?</p></qt>"
 
@@ -1006,12 +1006,12 @@ msgstr "Düşük Renk Derinliği"
 #: document/kpDocument_Save.cpp:268
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
-msgstr "Görsel kaydedilemedi - geçici dosya oluşturulamadı."
+msgstr "Görsel kaydedilemedi — geçici dosya oluşturulamadı."
 
 #: document/kpDocument_Save.cpp:276
 #, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "\"%1\" olarak kaydedilemedi: %2"
+msgstr "“%1” olarak kaydedilemedi: %2"
 
 #: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
@@ -1021,7 +1021,7 @@ msgstr "Görsel kaydedilirken hata"
 #: document/kpDocument_Save.cpp:426
 #, kde-format
 msgid "Could not save image - failed to upload."
-msgstr "Görsel kaydedilemedi - gönderim başarısız."
+msgstr "Görsel kaydedilemedi — gönderim başarısız."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:384
 #, kde-format
@@ -1289,7 +1289,7 @@ msgstr "Metin"
 #: lgpl/generic/kpColorCollection.cpp:120
 #, kde-format
 msgid "Could not open color palette \"%1\"."
-msgstr "\"%1\"  renk paleti açılamadı."
+msgstr "“%1” renk paleti açılamadı."
 
 #: lgpl/generic/kpColorCollection.cpp:153
 #, kde-format
@@ -1297,18 +1297,18 @@ msgid ""
 "Could not open color palette \"%1\" - unsupported format.\n"
 "The file may be corrupt."
 msgstr ""
-"\"%1\"  renk paleti açılamadı - desteklenmeyen biçim.\n"
+"“%1” renk paleti açılamadı — desteklenmeyen biçim.\n"
 "Dosya bozulmuş olabilir."
 
 #: lgpl/generic/kpColorCollection.cpp:213
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
-msgstr "KDE renk paleti \"%1\" açılamadı."
+msgstr "“%1” KDE renk paleti açılamadı."
 
 #: lgpl/generic/kpColorCollection.cpp:263
 #, kde-format
 msgid "Could not save color palette as \"%1\"."
-msgstr "Renk paleti \"%1\" olarak kaydedilemedi."
+msgstr "Renk paleti “%1” olarak kaydedilemedi."
 
 #: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
 #: widgets/toolbars/kpColorToolBar.cpp:312
@@ -1331,7 +1331,7 @@ msgstr "Şu KDE Değerlerini Kullan"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
-msgstr "&Aç..."
+msgstr "&Aç…"
 
 #: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
@@ -1349,7 +1349,7 @@ msgstr "&Kaydet"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
-msgstr "&Farklı Kaydet..."
+msgstr "&Farklı Kaydet…"
 
 #: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
@@ -1374,7 +1374,7 @@ msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"\"%1\" renk paleti değiştirildi.\n"
+"“%1” renk paleti değiştirildi.\n"
 "Kaydetmek istiyor musunuz?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:212
@@ -1383,7 +1383,7 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"\"%1\" KDE renk paleti değiştirildi.\n"
+"“%1” KDE renk paleti değiştirildi.\n"
 "Kaydetmek istiyor musunuz?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:221
@@ -1408,7 +1408,7 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"Renk paleti \"%1\" değiştirildi.\n"
+"“%1” renk paleti değiştirildi.\n"
 "Yeniden yüklemek önceki kaydetmenizden bu yana yaptığınız tüm değişiklikleri "
 "kaybettirecek.\n"
 "Emin misiniz?"
@@ -1428,7 +1428,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"KDE renk paleti \"%1\" değiştirildi.\n"
+"“%1” KDE renk paleti değiştirildi.\n"
 "Yeniden yüklemek tüm değişiklikleri kaybettirecek.\n"
 "Emin misiniz?"
 
@@ -1461,12 +1461,12 @@ msgstr "S&eçimi Sil"
 #: mainWindow/kpMainWindow_Edit.cpp:111
 #, kde-format
 msgid "C&opy to File..."
-msgstr "Dosyaya Ko&pyala..."
+msgstr "Dosyaya Ko&pyala…"
 
 #: mainWindow/kpMainWindow_Edit.cpp:115
 #, kde-format
 msgid "Paste &From File..."
-msgstr "D&osyadan Yapıştır..."
+msgstr "D&osyadan Yapıştır…"
 
 #: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
 #: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
@@ -1529,7 +1529,7 @@ msgstr "Dosyadan Yapıştır"
 #: mainWindow/kpMainWindow_File.cpp:104
 #, kde-format
 msgid "E&xport..."
-msgstr "Ç&evir..."
+msgstr "Dışa &Aktar…"
 
 #: mainWindow/kpMainWindow_File.cpp:106
 #, kde-format
@@ -1546,7 +1546,7 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
-"Bu, dosyayı<interface>Farklı Kaydet</interface>'e benzer bir biçimde başka "
+"Bu, dosyayı<interface>Farklı Kaydet</interface>’e benzer bir biçimde başka "
 "bir adla kaydeder; ancak belgenin kendisi değiştirilmez.<nl/>Böylece, son "
 "kullanılan kaydetme klasörünü geçerli belgenin klasöründen farklı olarak "
 "tutabilirsiniz."
@@ -1554,7 +1554,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_File.cpp:114
 #, kde-format
 msgid "Scan..."
-msgstr "Tara..."
+msgstr "Tara…"
 
 #: mainWindow/kpMainWindow_File.cpp:123
 #, kde-format
@@ -1639,10 +1639,10 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"\"%1\" belgesi değiştirildi.\n"
+"“%1” belgesi değiştirildi.\n"
 "Yeniden yüklemek son kaydınızdan bu yana yaptığınız tüm değişiklikleri "
 "kaybettirecek.\n"
-"Sürdürmek istiyor musunuz?"
+"Emin misiniz?"
 
 #: mainWindow/kpMainWindow_File.cpp:1088
 #, kde-format
@@ -1651,9 +1651,9 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"\"%1\" belgesi değiştirildi.\n"
+"“%1” belgesi değiştirildi.\n"
 "Yeniden yüklemek tüm değişiklikleri kaybettirecek.\n"
-"Sürdürmek istiyor musunuz?"
+"Emin misiniz?"
 
 #: mainWindow/kpMainWindow_File.cpp:1336
 #, kde-format
@@ -1676,13 +1676,13 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"\"%1\" belgesi değiştirildi.\n"
-"Kaydedilmesini ister misiniz?"
+"“%1” belgesi değiştirildi.\n"
+"Kaydetmek istiyor musunuz?"
 
 #: mainWindow/kpMainWindow_Image.cpp:117
 #, kde-format
 msgid "R&esize / Scale..."
-msgstr "Boyutlan&dır/Büyüt..."
+msgstr "Boyutlan&dır/Ölçekle…"
 
 #: mainWindow/kpMainWindow_Image.cpp:123
 #, kde-format
@@ -1702,7 +1702,7 @@ msgstr "Yansıt (Yatay)"
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
 msgid "&Rotate..."
-msgstr "Ç&evir..."
+msgstr "&Döndür…"
 
 #: mainWindow/kpMainWindow_Image.cpp:149
 #, kde-format
@@ -1717,7 +1717,7 @@ msgstr "S&ağa Döndür"
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "S&kew..."
-msgstr "&Bük..."
+msgstr "&Bük…"
 
 #: mainWindow/kpMainWindow_Image.cpp:166
 #, kde-format
@@ -1747,7 +1747,7 @@ msgstr "Gizli Yap"
 #: mainWindow/kpMainWindow_Image.cpp:189
 #, kde-format
 msgid "&More Effects..."
-msgstr "Daha Faz&la Efekt..."
+msgstr "Daha Faz&la Efekt…"
 
 #: mainWindow/kpMainWindow_Image.cpp:230
 #, kde-format
@@ -1783,7 +1783,7 @@ msgstr "%1,%2"
 #: mainWindow/kpMainWindow_StatusBar.cpp:162
 #, kde-format
 msgid "%1,%2 - %3,%4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1,%2 — %3,%4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:205
 #: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
@@ -1861,7 +1861,7 @@ msgstr "&Mat Çiz"
 #: mainWindow/kpMainWindow_Tools.cpp:168
 #, kde-format
 msgid "Draw With Color Similarity..."
-msgstr "Renk Benzerliği ile Çiz..."
+msgstr "Renk Benzerliği ile Çiz…"
 
 #: mainWindow/kpMainWindow_Tools.cpp:179
 #, kde-format
@@ -2030,14 +2030,13 @@ msgid "Zooms in and out of the image"
 msgstr "Görseli yakınlaştır ve uzaklaştır"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Yakınlaştırmak/uzaklaştırmak için tıklayın veya belirli bir alanı "
-"yakınlaştırmak için sol düğme ile basılı tutarak sürükleyin."
+"Yakınlaştırmak için tıklayın. Uzaklaştırmak için sağ tıklayın. Belirli bir "
+"alanı yakınlaştırmak için sürükleyin."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
@@ -2342,12 +2341,12 @@ msgstr "Metin: Üzeri Çizili"
 #: views/kpUnzoomedThumbnailView.cpp:86
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
-msgstr "Yakınlaştırılmamış Kip - Küçük Görsel"
+msgstr "Yakınlaştırılmamış Kip — Küçük Görsel"
 
 #: views/kpZoomedThumbnailView.cpp:65
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr "%​%1 - Küçük Görsel"
+msgstr "%​%1 — Küçük Görsel"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
 #, kde-format
@@ -2377,16 +2376,16 @@ msgstr ""
 "<qt><p><b>Renk Benzerliği</b>, farklı piksel renklerini aynı olarak ele alan "
 "işlemler için bu piksel renklerinin ne kadar <i>benzer</i> olması "
 "gerektiğini ifade eder.</p><p>Eğer <b>Birebir Eşleştirme</b>den farklı bir "
-"değer belirlerseniz diğer boyama programlarının \"Sihirli Değnek\" özelliği "
+"değer belirlerseniz diğer boyama programlarının “Sihirli Değnek” özelliği "
 "ile kıyaslanabilir bir tarzda titrek görsel ve fotoğraflarla çok daha etkin "
 "bir şekilde çalışabilirsiniz.</p><p>Bu özelliklik şunlara uygulanır:</"
 "p><ul><li><b>Seçimler</b>: <b>Saydam</b> kipte, seçim içerisinde arka plan "
 "rengine <i>benzer</i> herhangi renk saydam yapılacaktır.</li><li><b>Akıcı "
-"Doldur</b>: Benzer - ancak özdeş olmayan - renkli piksellere sahip bölgeler "
+"Doldur</b>: Benzer —ancak özdeş olmayan— renkli piksellere sahip bölgeler "
 "için, yüksek bir değerin daha çok pikseli doldurması olasıdır.</"
-"li><li><b>Renk Silgisi</b>: Rengi ön plan rengine <i>benzer</i> olan "
+"ccli><li><b>Renk Silgisi</b>: Rengi ön plan rengine <i>benzer</i> olan "
 "pikseller arka plan rengiyle yer değiştirilecektir.</li><li><b>Otomatik "
-"Kırp</b> ve <b>İç Sınırı Kaldır</b>: <i>Benzer</i> - ancak özdeş olmayan - "
+"Kırp</b> ve <b>İç Sınırı Kaldır</b>: <i>Benzer</i> —ancak özdeş olmayan— "
 "renkli piksellere sahip sınırlar için, yüksek değerin tüm sınırı kırpması "
 "daha olasıdır.</li></ul><p>Yüksek değerler, işlemlerin artırılmış renk "
 "aralığının aynı olması amacıyla yeterince <i>benzer</i> olduğunu hesaba "
@@ -2426,16 +2425,16 @@ msgstr ""
 "<qt><p><b>Renk Benzerliği</b>, farklı piksel renklerini aynı olarak ele alan "
 "işlemler için bu piksel renklerinin ne kadar <i>benzer</i> olması "
 "gerektiğini ifade eder.</p><p>Eğer <b>Birebir Eşleştirme</b>den farklı bir "
-"değer belirlerseniz diğer boyama programlarının \"Sihirli Değnek\" özelliği "
+"değer belirlerseniz diğer boyama programlarının “Sihirli Değnek” özelliği "
 "ile kıyaslanabilir bir tarzda titrek görsel ve fotoğraflarla çok daha etkin "
 "bir şekilde çalışabilirsiniz.</p><p>Bu özelliklik şunlara uygulanır:</"
 "p><ul><li><b>Seçimler</b>: <b>Saydam</b> kipte, seçim içerisinde arka plan "
 "rengine <i>benzer</i> herhangi renk saydam yapılacaktır.</li><li><b>Akıcı "
-"Doldur</b>: Benzer - ancak özdeş olmayan - renkli piksellere sahip bölgeler "
+"Doldur</b>: Benzer —ancak özdeş olmayan— renkli piksellere sahip bölgeler "
 "için, yüksek bir değerin daha çok pikseli doldurması olasıdır.</"
 "li><li><b>Renk Silgisi</b>: Rengi ön plan rengine <i>benzer</i> olan "
 "pikseller arka plan rengiyle yer değiştirilecektir.</li><li><b>Otomatik "
-"Kırp</b> ve <b>İç Sınırı Kaldır</b>: <i>Benzer</i> - ancak özdeş olmayan - "
+"Kırp</b> ve <b>İç Sınırı Kaldır</b>: <i>Benzer</i> —ancak özdeş olmayan— "
 "renkli piksellere sahip sınırlar için, yüksek değerin tüm sınırı kırpması "
 "daha olasıdır.</li></ul><p>Yüksek değerler, işlemlerin artırılmış renk "
 "aralığının aynı olması amacıyla yeterince <i>benzer</i> olduğunu hesaba "
@@ -2450,7 +2449,7 @@ msgstr ""
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Renk Benzerliği: %​%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
+"<p>Renk benzerliği: %​%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
 "p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
@@ -2459,7 +2458,7 @@ msgid ""
 "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
-"<p>Renk Benzerliği: Birebir Eşleştirme</p><p align=\"center\">Yapılandırmak "
+"<p>Renk benzerliği: Birebir Eşleştirme</p><p align=\"center\">Yapılandırmak "
 "için tıklayın.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
@@ -2689,7 +2688,7 @@ msgstr "Say&fanın ortasına"
 #: widgets/kpPrintDialogPage.cpp:61
 #, kde-format
 msgid "Top-&left of the page"
-msgstr "Sayfanın sol-&üstüne"
+msgstr "Sayfanın sol &üstüne"
 
 #: widgets/kpTransparentColorCell.cpp:53
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44

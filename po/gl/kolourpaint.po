@@ -1,6 +1,6 @@
 # translation of kolourpaint.po to galician
 #
-# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
 # Xabier García Feal <xabigf@gmx.net>, 2004.
 # Xabi G. Feal <xabigf@gmx.net>, 2006.
 # mvillarino <mvillarino@users.sourceforge.net>, 2007, 2008, 2009.
@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2023-11-11 14:20+0100\n"
+"PO-Revision-Date: 2024-07-05 18:33+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2027,14 +2027,13 @@ msgid "Zooms in and out of the image"
 msgstr "Acerca e afasta a imaxe"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Prema para ampliar ou reducir ou arrastre co esquerdo para ampliar unha área "
-"concreta."
+"Prema para ampliar. Faga clic dereito para afastar. Arrastre para ampliar "
+"unha área concreta."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format

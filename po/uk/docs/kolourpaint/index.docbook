@@ -461,6 +461,19 @@
 > <link linkend="tool-text"
 >Текст</link
 > (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Масштабування</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -962,6 +975,27 @@ format="PNG"/>
 <para
 >На зображенні ліворуч показано додавання тексту з непрозорим кольором переднього плану і прозорим кольором тла. На зображенні, розташованому праворуч, показано додавання тексту з прозорим кольором переднього плану і непрозорим кольором тла.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Масштабування <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Клацання лівою кнопкою миші збільшує масштаб. Клацання правою кнопкою миші зменшує масштаб.</para>
+<para
+>Перетягніть вказівник миші із затисканням лівої кнопки, щоб виконати масштабування до вказаної області.</para>
+
+<tip>
+<para
+>Двічі клацніть на піктограмі інструмента «Масштабування», щоб встановити масштаб «Влаштувати в сторінку».</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">

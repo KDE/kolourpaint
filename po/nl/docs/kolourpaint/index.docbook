@@ -449,6 +449,19 @@
 > <link linkend="tool-text"
 >Tekst</link
 > (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Zoom</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -950,6 +963,27 @@ format="PNG"/>
 <para
 >De linker afbeelding toont de toevoeging van tekst met dekkende voorgrondkleuren en een transparante achtergrondkleur. De rechter afbeelding toont de toevoeging van tekst met een transparante voorgrondkleur en een dekkende achtergrondkleur.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Zoomen <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>De &LMB; zoomt in. De &RMB; zoomt uit.</para>
+<para
+>Sleep met &LMB; om in een specifiek gebied in te zoomen.</para>
+
+<tip>
+<para
+>Dubbelklik op het pictogram zoomhulpmiddel om zoomen in te stellen op "Op pagina laten passen.</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">

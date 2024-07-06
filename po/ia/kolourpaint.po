@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2013, 2016, 2017, 2020, 2021, 2023 Giovanni Sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2013, 2016, 2017, 2020, 2021, 2023, 2024 Giovanni Sora <g.sora@tiscali.it>
 # giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2024-03-01 11:02+0100\n"
+"PO-Revision-Date: 2024-07-05 15:56+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2026,14 +2026,13 @@ msgid "Zooms in and out of the image"
 msgstr "Aggrandi e diminue le imagine"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Pulsa pro aggrandi/diminuer o trahe a sinistra pro facer zoom in un specific "
-"area."
+"Pulsa pro aggrandi. Pulsa a dextera per diminuer. Trahe a pro facer zoom in "
+"un specific area."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format

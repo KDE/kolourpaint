@@ -1983,12 +1983,11 @@ msgid "Zooms in and out of the image"
 msgstr "放大或者缩小显示图像"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
-msgstr "左键点击放大画面，右键点击缩小画面，左键拖动可放大到选定的区域。"
+msgstr ""
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format

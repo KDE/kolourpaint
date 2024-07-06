@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2024-06-20 02:09+0900\n"
+"PO-Revision-Date: 2024-07-05 15:32+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -24,12 +24,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Frank Weng (a.k.a. Franklin), Jeff Huang"
+msgstr "Frank Weng (a.k.a. Franklin), Jeff Huang, Kisaragi Hiu"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "franklin@goodhorse.idv.tw, s8321414@gmail.com"
+msgstr "franklin@goodhorse.idv.tw, s8321414@gmail.com, mail@kisaragi-hiu.com"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
@@ -407,7 +407,7 @@ msgstr "所有的文字鍵值都要唯一。第 %2 行與第 %3 行的文字鍵�
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Text Fields"
-msgstr "不合法的文字欄位"
+msgstr "無效的文字欄位"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
@@ -542,7 +542,7 @@ msgstr "%"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:321
 #, kde-format
 msgid "Keep &aspect ratio"
-msgstr "保持長寬比例(&A)"
+msgstr "保持寬高比(&A)"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:724
 #, kde-format
@@ -1978,12 +1978,11 @@ msgid "Zooms in and out of the image"
 msgstr "縮放此影像"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
-msgstr "點選縮放，或按下滑鼠左鍵拖曳可以縮放特定區域。"
+msgstr "點擊以放大。右鍵點擊以縮小。拖曳來放大至特定區域。"
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
