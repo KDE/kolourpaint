@@ -491,6 +491,19 @@
 > <link linkend="tool-text"
 >Texto</link
 > (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Ampliación</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -992,6 +1005,27 @@ format="PNG"/>
 <para
 >El gráfico de la izquierda muestra el añadido de texto con un color de primer plano opaco y un color de fondo transparente. El gráfico de la derecha muestra el añadido de texto con un color de primer plano transparente y un fondo opaco.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Ampliación <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>El &LMB; amplía. El &RMB; reduce.</para>
+<para
+>Arrastre con el &LMB; para ampliar un área específica.</para>
+
+<tip>
+<para
+>Haga doble clic en el icono de la herramienta de ampliación para definir la ampliación a «Ajustar a la página».</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">

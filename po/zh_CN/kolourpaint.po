@@ -1987,7 +1987,7 @@ msgstr "放大或者缩小显示图像"
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
-msgstr ""
+msgstr "左键点击放大画面，右键点击缩小画面，左键拖动可放大到选定的区域。"
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
