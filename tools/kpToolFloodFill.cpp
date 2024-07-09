@@ -36,6 +36,8 @@
 #include "document/kpDocument.h"
 #include "environments/tools/kpToolEnvironment.h"
 #include "commands/tools/kpToolFloodFillCommand.h"
+#include "cursors/kpCursorProvider.h"
+#include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
@@ -80,6 +82,8 @@ QString kpToolFloodFill::haventBegunDrawUserMessage () const
 // public virtual [base kpTool]
 void kpToolFloodFill::begin ()
 {
+    viewManager ()->setCursor (kpCursorProvider::lightCrossWithIcon(objectName()));
+
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
@@ -150,6 +154,13 @@ void kpToolFloodFill::cancelShape ()
 void kpToolFloodFill::releasedAllButtons ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
+}
+
+//---------------------------------------------------------------------
+
+void kpToolFloodFill::end()
+{
+    viewManager ()->unsetCursor();
 }
 
 //---------------------------------------------------------------------

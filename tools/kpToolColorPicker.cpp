@@ -38,6 +38,8 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "commands/tools/kpToolColorPickerCommand.h"
 #include "environments/tools/kpToolEnvironment.h"
+#include "cursors/kpCursorProvider.h"
+#include "views/manager/kpViewManager.h"
 
 #include <KLocalizedString>
 
@@ -72,7 +74,14 @@ QString kpToolColorPicker::haventBegunDrawUserMessage () const
 // public virtual [base kpTool]
 void kpToolColorPicker::begin ()
 {
+    viewManager ()->setCursor (kpCursorProvider::lightCrossWithIcon(objectName()));
+
     setUserMessage (haventBegunDrawUserMessage ());
+}
+
+void kpToolColorPicker::end()
+{
+    viewManager ()->unsetCursor();
 }
 
 // public virtual [base kpTool]

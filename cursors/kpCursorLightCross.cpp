@@ -82,7 +82,7 @@ static void setPixel (unsigned char *colorBitmap,
 }
 
 
-const QCursor *kpCursorLightCrossCreate ()
+QCursor kpCursorLightCrossCreate ()
 {
 #if DEBUG_KP_CURSOR_LIGHT_CROSS
     qCDebug(kpLogMisc) << "kpCursorLightCrossCreate() ";
@@ -119,7 +119,7 @@ const QCursor *kpCursorLightCrossCreate ()
     }
 
     const QSize size (side, side);
-    QCursor *cursor = new QCursor (
+    QCursor cursor(
         QBitmap::fromData (size, colorBitmap, QImage::Format_MonoLSB),
         QBitmap::fromData (size, maskBitmap, QImage::Format_MonoLSB));
 

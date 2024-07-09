@@ -29,20 +29,32 @@
 #include "kpCursorProvider.h"
 
 #include "kpCursorLightCross.h"
+#include "kpCursorLightCrossWithIcon.h"
 
 #include <QCursor>
+#include <QMap>
 
-
-static const QCursor *TheLightCursor = nullptr;
-
-
-// public static
-QCursor kpCursorProvider::lightCross ()
+QCursor kpCursorProvider::lightCross()
 {
-    // TODO: don't leak (although it's cleaned up on exit by OS anyway)
-    if (!::TheLightCursor) {
-        ::TheLightCursor = kpCursorLightCrossCreate ();
-    }
+    static QCursor cursor;
 
-    return *::TheLightCursor;
+    if (cursor.shape() == Qt::ArrowCursor) {
+        cursor = kpCursorLightCrossCreate();
+    }
+    return cursor;
+}
+
+QCursor kpCursorProvider::lightCrossWithIcon(const QString &iconName)
+{
+    static QMap<QString, QCursor> cursors;
+
+    QCursor cursor;
+    auto it = cursors.find(iconName);
+    if (it == cursors.end()) {
+        cursor = kpCursorLightCrossWithIconCreate(iconName);
+        cursors.insert(iconName, cursor);
+    } else {
+        cursor = it.value();
+    }
+    return cursor;
 }

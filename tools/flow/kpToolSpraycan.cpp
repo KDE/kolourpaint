@@ -40,6 +40,7 @@
 #include "widgets/toolbars/options/kpToolWidgetSpraycanSize.h"
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
+#include "cursors/kpCursorProvider.h"
 
 #include <cstdlib>
 
@@ -83,6 +84,8 @@ void kpToolSpraycan::begin ()
     connect (m_toolWidgetSpraycanSize, &kpToolWidgetSpraycanSize::spraycanSizeChanged,
              this, &kpToolSpraycan::slotSpraycanSizeChanged);
     m_toolWidgetSpraycanSize->show ();
+
+    viewManager ()->setCursor (kpCursorProvider::lightCrossWithIcon(objectName()));
 
     kpToolFlowBase::begin ();
 }

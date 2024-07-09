@@ -1,6 +1,7 @@
 
 /*
-   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2020 Kirill Proshakov <kproshakov@astralinux.ru>
+   Copyright (c) 2024 Andrew Shark <ashark@linuxcomp.ru>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -26,14 +27,14 @@
 */
 
 
-#ifndef KP_CURSOR_LIGHT_CROSS_H
-#define KP_CURSOR_LIGHT_CROSS_H
+#ifndef KP_CURSOR_LIGHT_CROSS_WITH_ICON_H
+#define KP_CURSOR_LIGHT_CROSS_WITH_ICON_H
 
 
 class QCursor;
+class QString;
+
+QCursor kpCursorLightCrossWithIconCreate(const QString &iconName);
 
 
-QCursor kpCursorLightCrossCreate();
-
-
-#endif  // KP_CURSOR_LIGHT_CROSS_H
+#endif  // KP_CURSOR_LIGHT_CROSS_WITH_ICON_H

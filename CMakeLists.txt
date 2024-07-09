@@ -126,6 +126,7 @@ set(kolourpaint_lib1_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextGiveContentCommand.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextInsertCommand.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCross.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCrossWithIcon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorProvider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/effects/kpEffectsDialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/kpDocumentMetaInfoDialog.cpp

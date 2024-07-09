@@ -31,12 +31,14 @@
 
 
 class QCursor;
+class QString;
 
 
 class kpCursorProvider
 {
 public:
-    static QCursor lightCross ();
+    static QCursor lightCross();
+    static QCursor lightCrossWithIcon(const QString &iconName);
 };
 
 

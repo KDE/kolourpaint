@@ -61,6 +61,7 @@ public:
     void draw (const QPoint &thisPoint, const QPoint &, const QRect &) override;
     void cancelShape () override;
     void releasedAllButtons () override;
+    void end () override;
     void endDraw (const QPoint &thisPoint, const QRect &) override;
 
 private:
