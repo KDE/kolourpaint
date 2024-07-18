@@ -352,7 +352,7 @@ void kpFloodFill::prepare ()
 
     for (int i = 0; i < d->fillLines.count(); i++)
     {
-      kpFillLine &fl = d->fillLines[i];
+      kpFillLine fl = d->fillLines[i];
 
     #if DEBUG_KP_FLOOD_FILL && 0
         qCDebug(kpLogImagelib) << "Expanding from y=" << fl.m_y
