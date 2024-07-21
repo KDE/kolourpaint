@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2024-02-24 17:15+0100\n"
+"PO-Revision-Date: 2024-07-20 10:37+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -22,6 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2030,14 +2031,13 @@ msgid "Zooms in and out of the image"
 msgstr "Powiększa i oddala obraz"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Naciśnij, żeby zbliżyć lub oddalić obraz albo zaznacz myszką określony "
-"obszar."
+"Naciśnij lewym, aby powiększyć. Naciśnij prawym, aby pomniejszyć. "
+"Przeciągnij myszą, aby powiększyć dany obszar."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
