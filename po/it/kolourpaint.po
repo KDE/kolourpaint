@@ -3,13 +3,13 @@
 # Federico Cozzi <federicocozzi@federicocozzi.it>, 2004, 2005.
 # Luciano Montanaro <mikelima@cirulla.net>, 2004.
 # Federico Zenith <federico.zenith@member.fsf.org>, 2004, 2005.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2005, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2023.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2005, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2023-11-08 01:48+0100\n"
+"PO-Revision-Date: 2024-07-07 00:22+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2034,14 +2034,13 @@ msgid "Zooms in and out of the image"
 msgstr "Zoom avanti e indietro nell'immagine"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Fai clic per lo zoom o trascina col tasto sin. del mouse per lo zoom su "
-"un'area specifica."
+"Clic per ingrandire. Clic con il pulsante destro per restringere. Trascina "
+"per ingrandire un'area specifica."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
