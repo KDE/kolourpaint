@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2024-05-02 11:26+0400\n"
+"PO-Revision-Date: 2024-07-28 12:17+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2011,12 +2012,12 @@ msgid "Zooms in and out of the image"
 msgstr "يكبر ويصغر الصورة"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
-msgstr "انقر كبر/صغر أو اسحب يسارا لتكبر في المنطقة المحددة."
+msgstr ""
+"انقر للتكبير. انقر بزر الفأرة الأيمن للتصغير. اسحب للتكبير في منطقة معينة."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
