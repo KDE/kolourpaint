@@ -38,6 +38,7 @@
 #include <QImageReader>
 #include <QDir>
 #include <KLocalizedString>
+#include <KCrash>
 
 int main(int argc, char *argv [])
 {
@@ -86,6 +87,7 @@ int main(int argc, char *argv [])
 
   QCommandLineParser cmdLine;
   KAboutData::setApplicationData(aboutData);
+  KCrash::initialize();
   QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kolourpaint"), QApplication::windowIcon()));
   cmdLine.addPositionalArgument(QStringLiteral("files"), i18n("Image files to open, optionally"), QStringLiteral("[files...]"));
 

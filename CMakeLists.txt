@@ -39,6 +39,7 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     XmlGui
     TextWidgets
     JobWidgets
+    Crash
 )
 
 add_definitions(-DQT_USE_QSTRINGBUILDER)
@@ -334,6 +335,7 @@ target_link_libraries(kolourpaint
     KF6::XmlGui
     KF6::KIOFileWidgets
     KF6::TextWidgets
+    KF6::Crash
     Qt6::PrintSupport
     kolourpaint_lgpl
 )
