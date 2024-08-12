@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:38+0000\n"
+"POT-Creation-Date: 2024-08-12 00:38+0000\n"
 "PO-Revision-Date: 2024-07-05 08:00+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1065,133 +1065,133 @@ msgstr "הגדרה כתמונה"
 msgid "Selection: Create"
 msgstr "בחירה: יצירה"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:52
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:54
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "תוכנית ציור מבית KDE"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:68
 #, kde-format
 msgid "Clarence Dang"
 msgstr "קלרנס דנג"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:68
 #, kde-format
 msgid "Project Founder"
 msgstr "מייסד המיזם"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:70
 #, kde-format
 msgid "Thurston Dang"
 msgstr "טורסטון דנג"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:70
 #, kde-format
 msgid "Chief Investigator"
 msgstr "חוקר ראשי"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:73
 #, kde-format
 msgid "Martin Koller"
 msgstr "מרטין קולר"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:73
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "תמיכה בסריקה, תמיכה בשקיפות, מתחזק נוכחי"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:76
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "כריסטוף בורי"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:76 kolourpaint.cpp:79 kolourpaint.cpp:80
 #, kde-format
 msgid "Icons"
 msgstr "סמלים"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "טסוקו סוזוקי"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:77 kolourpaint.cpp:78
 #, kde-format
 msgid "InputMethod Support"
 msgstr "תמיכה בשיטת קלט"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "קזוקי אוטה"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "נונו פיניירו"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Danny Allen"
 msgstr "דני אלן"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Mike Gashler"
 msgstr "מייק גשלר"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Image Effects"
 msgstr "אפקטים על תמונות"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "Laurent Montel"
 msgstr "לורנט מונטל"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "הסבה ל־KDE 4"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Christoph Feck"
 msgstr "כריסטוף פק"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "הסבה ל־KF 5"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:86
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "והמון תודה לעוד המון אנשים שסייעו לי להפוך את התוכנית הזאת למציאות."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "קובצי תמונות לפתיחה, כרשות"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "הצגת כל סוגי תוכן (MIME) התמונות הקריאים"
 
-#: kolourpaint.cpp:94
+#: kolourpaint.cpp:96
 #, kde-format
 msgid "Start with new image using given size"
 msgstr "התחלה עם תמונה חדשה בגודל הנתון"
 
-#: kolourpaint.cpp:94
+#: kolourpaint.cpp:96
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[רוחב]×[גובה]"

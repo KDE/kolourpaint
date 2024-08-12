@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:38+0000\n"
+"POT-Creation-Date: 2024-08-12 00:38+0000\n"
 "PO-Revision-Date: 2024-07-27 21:50+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -1074,112 +1074,112 @@ msgstr "Beállítás képnek"
 msgid "Selection: Create"
 msgstr "Kijelölés: létrehozás"
 
-#: kolourpaint.cpp:51
+#: kolourpaint.cpp:52
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:54
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "Rajzprogram a KDE-től"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:68
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:67
+#: kolourpaint.cpp:68
 #, kde-format
 msgid "Project Founder"
 msgstr "Projektalapító"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:70
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:70
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Fő ellenőrző"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:73
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:72
+#: kolourpaint.cpp:73
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "Szkennelési és alfa támogatás, jelenlegi karbantartó"
 
-#: kolourpaint.cpp:75
+#: kolourpaint.cpp:76
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:75 kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:76 kolourpaint.cpp:79 kolourpaint.cpp:80
 #, kde-format
 msgid "Icons"
 msgstr "Ikonok"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:77
+#: kolourpaint.cpp:77 kolourpaint.cpp:78
 #, kde-format
 msgid "InputMethod Support"
 msgstr "InputMethod-támogatás"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Image Effects"
 msgstr "Képeffektusok"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:83
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "Átirat KDE4-re"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "Portolás KF 5-re"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:86
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
@@ -1187,22 +1187,22 @@ msgstr ""
 "Köszönetet szeretnék mondani mindenkinek, akik segítettek, hogy ez a program "
 "létrejöjjön."
 
-#: kolourpaint.cpp:90
+#: kolourpaint.cpp:92
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "Megnyitandó képfájlok, opcionális"
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:95
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "Összes olvasható képfájltípus listázása"
 
-#: kolourpaint.cpp:94
+#: kolourpaint.cpp:96
 #, kde-format
 msgid "Start with new image using given size"
 msgstr "Új kép kezdése a megadott mérettel"
 
-#: kolourpaint.cpp:94
+#: kolourpaint.cpp:96
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[szélesség]x[magasság]"
