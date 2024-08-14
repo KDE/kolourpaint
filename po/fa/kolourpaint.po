@@ -6,19 +6,20 @@
 # MaryamSadat Razavi <razavi@itland.ir>, 2006.
 # Tahereh Dadkhahfar <dadkhahfar@itland.ir>, 2006.
 # Mohammad Reza Mirdamadi <mohi@ubuntu.ir>, 2012.
+# SPDX-FileCopyrightText: 2024 Mohi Mirdamadi <mohi.pub@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:38+0000\n"
-"PO-Revision-Date: 2012-01-12 17:21+0330\n"
-"Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
-"Language-Team: Farsi (Persian) <>\n"
+"PO-Revision-Date: 2024-08-14 00:32+0330\n"
+"Last-Translator: Mohi Mirdamadi <mohi.pub@gmail.com>\n"
+"Language-Team: fa\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #, kde-format
@@ -29,7 +30,7 @@ msgstr "محمدرضا میردامادی , الناز پژوهی , نسیم د�
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "mohi@ubuntu.ir , seventhsky_2006@yahoo.com , daniarzadeh@itland.ir"
+msgstr "mohi.pub@gmail.com , seventhsky_2006@yahoo.com , daniarzadeh@itland.ir"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
