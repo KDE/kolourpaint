@@ -463,6 +463,19 @@
 > <link linkend="tool-text"
 >Testo</link
 > (T) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Ingrandimento</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -964,6 +977,27 @@ format="PNG"/>
 <para
 >La figura di sinistra mostra l'aggiunta di un testo con colore di primo piano opaco e colore di sfondo trasparente. La figura di destra mostra l'aggiunta di un testo con colore di primo piano trasparente e colore di sfondo opaco.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Ingrandimento <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Il &LMB; ingrandisce. Il &RMB; rimpicciolisce.</para>
+<para
+>Trascina con il &LMB; per ingrandire un'area specifica.</para>
+
+<tip>
+<para
+>Fai doppio clic sull'icona dello strumento ingrandimento per impostare l'ingrandimento a «Adatta alla pagina».</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">
