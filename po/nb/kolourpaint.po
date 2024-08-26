@@ -1996,7 +1996,6 @@ msgstr "Forstørrer/forminsker bildet"
 
 #: tools/kpToolZoom.cpp:119
 #, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
