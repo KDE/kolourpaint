@@ -901,7 +901,10 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
     connect (fw, &KFileWidget::filterChanged,
              saveOptionsWidget, [saveOptionsWidget](const KFileFilter &filter) {
-                 saveOptionsWidget->setMimeType(filter.mimePatterns().first());
+                 const QStringList patterns = filter.mimePatterns();
+                 if (!patterns.isEmpty()) {
+                     saveOptionsWidget->setMimeType(patterns.first());
+                 }
             });
 
     if ( fd.exec() == QDialog::Accepted )
