@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-12 00:38+0000\n"
+"POT-Creation-Date: 2024-09-16 00:38+0000\n"
 "PO-Revision-Date: 2007-08-20 12:26+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1452,8 +1452,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
-#: mainWindow/kpMainWindow_File.cpp:1093
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1096
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "रिलोड गर्नुहोस्"
@@ -1664,20 +1664,20 @@ msgstr "नयाँ सञ्झ्यालमा टाँस्नुहो�
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:966
+#: mainWindow/kpMainWindow_File.cpp:969
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "यस रूपमा छवि बचत गर्नुहोस्"
 
-#: mainWindow/kpMainWindow_File.cpp:1014
+#: mainWindow/kpMainWindow_File.cpp:1017
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "निर्यात..."
 
-#: mainWindow/kpMainWindow_File.cpp:1078
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1688,7 +1688,7 @@ msgstr ""
 "तपाईँले यसलाई अन्त्यमा बचत गरे देखि रिलोडिङले सबै परिवर्तनहरू हराउनेछ ।\n"
 "तपाईँ निश्चित हुनुहुन्छ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1088
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1699,14 +1699,14 @@ msgstr ""
 "रिलोडिङले सबै परिवर्तनहरू हराउनेछ ।\n"
 "तपाईँ निश्चित हुनुहुन्छ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1336
+#: mainWindow/kpMainWindow_File.cpp:1339
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "पूरै छवि"
 
-#: mainWindow/kpMainWindow_File.cpp:1416
+#: mainWindow/kpMainWindow_File.cpp:1419
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1715,7 +1715,7 @@ msgstr ""
 "तपाईँले छवि पठाउनु अघि यसलाई बचत गर्नुपर्नेछ ।\n"
 "तपाईँ यसलाई बचत गर्नुहुन्छ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1454
+#: mainWindow/kpMainWindow_File.cpp:1457
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

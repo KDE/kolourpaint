@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-12 00:38+0000\n"
+"POT-Creation-Date: 2024-09-16 00:38+0000\n"
 "PO-Revision-Date: 2007-02-11 00:24+0100\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -1368,8 +1368,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
-#: mainWindow/kpMainWindow_File.cpp:1093
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1096
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "&Qaytadan yuklash"
@@ -1575,20 +1575,20 @@ msgstr "Yangi &oynaga qoʻyish"
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:966
+#: mainWindow/kpMainWindow_File.cpp:969
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Rasmni saqlash"
 
-#: mainWindow/kpMainWindow_File.cpp:1014
+#: mainWindow/kpMainWindow_File.cpp:1017
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "&Eksport qilish"
 
-#: mainWindow/kpMainWindow_File.cpp:1078
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1596,7 +1596,7 @@ msgid ""
 "Are you sure?"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:1088
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1604,14 +1604,14 @@ msgid ""
 "Are you sure?"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:1336
+#: mainWindow/kpMainWindow_File.cpp:1339
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Butun rasm"
 
-#: mainWindow/kpMainWindow_File.cpp:1416
+#: mainWindow/kpMainWindow_File.cpp:1419
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1620,7 +1620,7 @@ msgstr ""
 "Rasmni joʻnatishdan oldin uni saqlash kerak.\n"
 "Uni saqlashni istaysizmi?"
 
-#: mainWindow/kpMainWindow_File.cpp:1454
+#: mainWindow/kpMainWindow_File.cpp:1457
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

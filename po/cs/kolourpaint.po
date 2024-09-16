@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-12 00:38+0000\n"
+"POT-Creation-Date: 2024-09-16 00:38+0000\n"
 "PO-Revision-Date: 2023-08-10 14:45+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1395,8 +1395,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
-#: mainWindow/kpMainWindow_File.cpp:1093
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1096
 #, kde-format
 msgid "&Reload"
 msgstr "Znovu načís&t"
@@ -1595,19 +1595,19 @@ msgstr "Skrýt hlavní okno"
 msgid "Document Properties"
 msgstr "Vlastnosti dokumentu"
 
-#: mainWindow/kpMainWindow_File.cpp:966
+#: mainWindow/kpMainWindow_File.cpp:969
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Uložit obrázek jako"
 
-#: mainWindow/kpMainWindow_File.cpp:1014
+#: mainWindow/kpMainWindow_File.cpp:1017
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportovat"
 
-#: mainWindow/kpMainWindow_File.cpp:1078
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1618,7 +1618,7 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn od posledního uložení.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_File.cpp:1088
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1629,13 +1629,13 @@ msgstr ""
 "Opětovné načtení způsobí ztrátu všech změn.\n"
 "Opravdu znovu načíst?"
 
-#: mainWindow/kpMainWindow_File.cpp:1336
+#: mainWindow/kpMainWindow_File.cpp:1339
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Vytisknout obrázek"
 
-#: mainWindow/kpMainWindow_File.cpp:1416
+#: mainWindow/kpMainWindow_File.cpp:1419
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1644,7 +1644,7 @@ msgstr ""
 "Obrázek musíte před odesláním uložit.\n"
 "Přejete si obrázek uložit?"
 
-#: mainWindow/kpMainWindow_File.cpp:1454
+#: mainWindow/kpMainWindow_File.cpp:1457
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

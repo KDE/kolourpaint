@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-12 00:38+0000\n"
+"POT-Creation-Date: 2024-09-16 00:38+0000\n"
 "PO-Revision-Date: 2006-01-10 02:28+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -1437,8 +1437,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1083
-#: mainWindow/kpMainWindow_File.cpp:1093
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
+#: mainWindow/kpMainWindow_File.cpp:1096
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "重新載入(&D)"
@@ -1649,20 +1649,20 @@ msgstr "貼上至新視窗(&N)"
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:966
+#: mainWindow/kpMainWindow_File.cpp:969
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "儲存圖像為"
 
-#: mainWindow/kpMainWindow_File.cpp:1014
+#: mainWindow/kpMainWindow_File.cpp:1017
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "匯出(&X)..."
 
-#: mainWindow/kpMainWindow_File.cpp:1078
+#: mainWindow/kpMainWindow_File.cpp:1081
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1673,7 +1673,7 @@ msgstr ""
 "重新載入會失去上次儲存之後的所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_File.cpp:1088
+#: mainWindow/kpMainWindow_File.cpp:1091
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1684,14 +1684,14 @@ msgstr ""
 "重新載入會失去所有更改。\n"
 "確定嗎？"
 
-#: mainWindow/kpMainWindow_File.cpp:1336
+#: mainWindow/kpMainWindow_File.cpp:1339
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "整個圖像"
 
-#: mainWindow/kpMainWindow_File.cpp:1416
+#: mainWindow/kpMainWindow_File.cpp:1419
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1700,7 +1700,7 @@ msgstr ""
 "傳送此圖像之前必須先儲存。\n"
 "要儲存嗎？"
 
-#: mainWindow/kpMainWindow_File.cpp:1454
+#: mainWindow/kpMainWindow_File.cpp:1457
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
