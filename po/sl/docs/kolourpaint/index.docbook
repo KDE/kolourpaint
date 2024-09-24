@@ -1,0 +1,1816 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>&kolourpaint; Priročnik</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>Matjaž</firstname
+><surname
+>Jeran</surname
+><affiliation
+><address
+><email
+>matjaz.jeran@amis.net</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>23.03.2018</date>
+<releaseinfo
+>Applications 18.04</releaseinfo>
+
+<abstract>
+<para
+>&kolourpaint; je prost program za barvanje &kde;, enostaven za uporabo. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>kolorpaint</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Uvod</title>
+<para
+>&kolourpaint; je prost program za barvanje &kde;, enostaven za uporabo. Popoln je za vsakodnevna opravila, kot so:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Slikanje - risanje diagramov in <quote
+>slikanje s prsti</quote
+></para>
+</listitem>
+<listitem>
+<para
+>Manipulacija s posnetki zaslona - pridobivanje in urejanje posnetkov zaslona</para>
+</listitem>
+<listitem>
+<para
+>Image Manipulation - urejanje fotografij in pridobljenih slik; nanašanje učinkov</para>
+</listitem>
+<listitem>
+<para
+>Urejanje ikon - risanje izrezkov in logotipov s prosojnostjo</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>Uporaba &kolourpaint;</title>
+
+<para
+>Kliknite naslednje povezave, da raziščete zmožnosti &kolourpaint;:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>Orodja</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>Delo z barvo</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>Ogled možnosti</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>Slikovni učinki</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>Orodja</title>
+
+<para
+>Dodatna možnost v meniju <guimenu
+>Nastavitve</guimenu
+> omogoča določitev, ali orodja rišejo z izravnavanjem (privzeto) ali ne. </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>Pridobivanje posnetkov zaslona</title>
+
+<para
+><quote
+>Posnetek zaslona</quote
+> je posnetek tega, kar je na zaslonu vašega računalnika. Koristno je lahko razložiti nekaj dejanj, ki jih je treba izvesti, da dobite rezultat, ali prikazati težavo, ki ste jo našli. </para>
+<para
+>Če želite posnetek zaslona pripraviti za urejanje v &kolourpaint; lahko uporabite element <menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Pridobi posnetek zaslona</guimenuitem
+></menuchoice
+> iz glavnega menija &kolourpaint;. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>V odprtem pogovornem oknu lahko spremenite <guilabel
+>Zakasnitev posnetka</guilabel
+> (v sekundah) in izberete <guilabel
+>Skrij glavno okno</guilabel
+> med snemanjem zaslona. Ko ste pripravljeni narediti posnetek zaslona, kliknite <guibutton
+>V redu</guibutton
+>. Posnetek zaslona bo postavljen neposredno v območje urejanja &kolourpaint;. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>Referenca orodja</title>
+
+<para
+>Hiter način za izbiro orodja v &kolourpaint; je, da pritisnete z njim povezano bližnjico z eno tipko, dokumentirano spodaj in v opisih orodij <interface
+>Škatla z orodjem</interface
+>. Med pritiskom tipke lahko tudi držite <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+>, kar je nujno, ko pišete besedilo (ker bodo bližnjice z eno tipko onemogočene). Če želite na primer izbrati čopič, pritisnite <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> ali samo B (ko ne pišete besedila). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link 
+> <link linkend="tool-brush"
+>Čopič</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>Barvna radirka</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>Izbirnik barv</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-polystar"
+>Povezane črte</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-curve"
+>Krivulja</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-ellipse"
+>Elipsa</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>Radirka</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>Zapolni</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-line"
+>Črta</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-pen"
+>Pero</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-polystar"
+>Mnogokotnik</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-rectangles"
+>Pravokotnik</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-rectangles"
+>Zaobljeni pravokotnik</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-selections"
+>Izbira (eliptična)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-selections"
+>Izbor (prosta oblika)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-selections"
+>Izbor (pravokoten)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-spraycan"
+>Pršilka</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link 
+> <link linkend="tool-text"
+>Besedilo</link
+> (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Zoom</link
+> (Z) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>Čopič <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>Kliknite ali kliknite in povlecite s čopičem za risanje. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>Kliknite na eno od oblik, da izberete obliko čopiča. Uporabite lahko okroglo, kvadratno, poševno ali poševno obliko čopiča.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše v barvi ozadja.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>Izbirnik barv <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Če želite nastaviti barvo ospredja, <mousebutton
+>levi</mousebutton
+> kliknite slikovno piko. Če želite nastaviti barvo ozadja, <mousebutton
+>desno</mousebutton
+> kliknite slikovno piko. &kolourpaint; se nato vrne na predhodno izbrano orodje.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>Povezane črte in mnogokotnik <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da narišete povezane črte. Orodje za poligon se uporablja na enak način, vendar sta začetna in končna točka samodejno povezani v poligon.</para>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše barvo ozadja in obrne tudi barvo polnila za poligone.</para>
+
+<para
+>Lahko <link linkend="tool-options"
+>nastavite širino črte</link
+>. Za poligone lahko tudi <link linkend="tool-options"
+>nastavite slog polnila</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>Krivulja <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da narišete črto - to nastavi začetno in končno točko. Z vlečenjem lahko nastavite do dve kontrolni točki. Če želite končati krivuljo brez uporabe obeh ali katere koli kontrolne točke, kliknite drugi gumb miške. Orodje za krivulje nariše Bezierovo kubično krivuljo.</para>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše v barvi ozadja.</para>
+
+<para
+>Prav tako lahko <link linkend="tool-options"
+>nastavite širino črte</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>Elipsa <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da narišete elipso.</para>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše barvo ozadja in obrne barvo polnila.</para>
+
+<para
+>Prav tako lahko <link linkend="tool-options"
+>nastavite širino črte in slog polnila</link
+>.</para>
+
+<para
+>Za dodatne funkcije uporabite modifikacijske tipke:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Držite &Shift; in povlecite, da narišete krog.</para>
+</listitem>
+<listitem>
+<para
+>Če želite narisati elipso s središčno točko po vaši izbiri, držite &Ctrl;, kliknite središčno točko in povlecite, dokler ni elipsa pravilne velikosti in oblike.</para>
+</listitem>
+<listitem>
+<para
+>Če želite narisati krog s središčem po vaši izbiri, držite &Ctrl; in &Shift;, kliknite središčno točko in povlecite, dokler krog ni pravilne velikosti.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>Radirke</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>Radirka <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite z radirko, da zbrišete napake.</para>
+
+<note>
+<para
+>Za razliko od drugih orodij radirke rišejo v barvi ozadja. Za risanje v barvi ospredja uporabite &RMB;.</para>
+</note>
+
+<para
+>Radirka ima samo <link linkend="tool-options"
+>kvadratne oblike</link
+>. Za risanje z drugimi oblikami, kot so krogi, uporabite <link linkend="tool-brush"
+>čopič</link
+> in &RMB;.</para>
+
+<tip>
+<para
+>Dvokliknite ikono radirke, da počistite celotno sliko. To je enakovredno uporabi možnosti <link linkend="image-clear"
+>Počisti</link
+> v meniju Slika.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>Barvna radirka <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da zamenjate slikovne pike barve ospredja z barvo ozadja. Če želite zamenjati vse slikovne pike, ki so podobne (vendar ne nujno popolnoma enake) barvi ospredja, na primer na slikah in fotografijah z mešanjem, uporabite nastavitev <link linkend="color-box"
+>Podobnost barv</link
+>, ki ni Natančna.</para>
+
+<note>
+<para
+>Za razliko od drugih orodij radirke rišejo v barvi ozadja. Če želite slikovne pike barve ozadja zamenjati z barvo ospredja, uporabite &RMB;.</para>
+</note>
+
+<para
+>Konfigurirate lahko <link linkend="tool-options"
+>velikost radirke</link
+>.</para>
+
+<tip>
+<para
+>Dvokliknite ikono barvne radirke, da jo uporabite za celotno sliko.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>Zapolnitev <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite za zapolnitev regije. Če želite zapolniti zamegljeno območje, uporabite nastavitev <link linkend="color-box"
+>Podobnost barv</link
+>, ki ni Natančno.</para>
+
+<para
+>&LMB; zapolni barvo ospredja. &RMB; zapolni barvo ozadja.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>Črta <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da narišete črto.</para>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše v barvi ozadja.</para>
+
+<para
+>Prav tako lahko <link linkend="tool-options"
+>nastavite širino črte</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Držite &Ctrl; za risanje črt pod kotom najbližjega večkratnika 30 stopinj - to so črte v rdečem diagramu.</para>
+</listitem>
+<listitem>
+<para
+>Držite &Shift; za risanje črt pod kotom najbližjega večkratnika 45 stopinj - to so črte v modrem diagramu.</para>
+</listitem>
+<listitem>
+<para
+>Držite &Ctrl; in &Shift; za risanje črt pod kotom najbližjega večkratnika 30 ali 45 stopinj - to so črte v zelenem diagramu.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>Pero <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite, da narišete piko, ali kliknite in povlecite, da narišete prostoročno črto.</para>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše v barvi ozadja. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>Pravokotniki <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da narišete pravokotnik. Zaobljeni pravokotnik je pravokotnik z zaobljenimi vogali.</para>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše barvo ozadja in obrne barvo polnila.</para>
+
+<para
+>Prav tako lahko <link linkend="tool-options"
+>nastavite širino črte in slog polnila</link
+>.</para>
+
+<para
+>Za dodatne funkcije uporabite modifikacijske tipke:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Držite &Shift; in povlecite, da narišete kvadrat.</para>
+</listitem>
+<listitem>
+<para
+>Če želite narisati pravokotnik s središčno točko po vaši izbiri, držite &Ctrl;, kliknite središčno točko in povlecite, dokler ni pravokotnik pravilne velikosti in oblike.</para>
+</listitem>
+<listitem>
+<para
+>Če želite narisati kvadrat s središčem po vaši izbiri, držite &Ctrl; in &Shift;, kliknite središčno točko in povlecite, dokler kvadrat ni pravilne velikosti.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>Izbire <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Uporabite orodja za izbor, da narišete mejo izbora.</para>
+
+<para
+>Če želite premakniti izbor, ga kliknite in povlecite. Glavni pogled se bo premikal po potrebi, da boste lahko premaknili izbor na del slike, ki trenutno ni prikazan.</para>
+
+<para
+>Lahko prosto oblikujete <link linkend="image-resize-scale"
+>Spremenite velikost</link
+> celotne slike ali <link linkend="image-resize-scale"
+>Gladko prilagodite</link
+> izbiro z uporabo ustreznih ročic . Držite &Shift; medtem ko v prosti obliki prilagajate izbor, da ohranite razmerje stranic. &RMB; prikliče kontekstni meni s pogostimi ukazi <guimenu
+>Uredi</guimenu
+> in <link linkend="image-effects-section"
+>učinki slike</link
+>. </para>
+
+<tip>
+<para
+>Med risanjem meje izbora ali med premikanjem lahko uporabljate smerne tipke.</para>
+</tip>
+
+<para
+>Če držite &Ctrl; preden premaknete izbor, boste premaknili njegovo kopijo. Izbor bo zamazan, ko ga premikate, medtem ko držite tipko &Shift;. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Obstajata dva načina izbire: neprosojen (privzeto) in prosojen. Če uporabljate način izbire Prosojen, bodo vse slikovne pike barve ozadja prosojne (odštevanje ozadja). To vam omogoča, da prilepite izbor brez ozadja. Če želite izvesti odštevanje ozadja na mehki sliki, uporabite nastavitev <link linkend="color-box"
+>Podobnost barv</link
+>, ki ni Natančno.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Za izbor lahko uporabite slikovne učinke – za več informacij glejte razdelek <link linkend="image-effects-section"
+>Slikovni učinki</link
+>.</para>
+
+<para
+>Izbor lahko shranite v datoteko z uporabo elementa <guimenuitem
+>Kopiraj v datoteko...</guimenuitem
+> iz kontekstnega menija za izbiro ali <menuchoice
+><guimenu
+>Uredi</guimenu
+><guimenuitem
+>Kopiraj v datoteko...</guimenuitem
+></menuchoice
+> v glavnem meniju. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>Pršilka <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite, da razpršite grafite. Držite tipko miške za bolj koncentrirano pršilo.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknite eno od oblik, da izberete velikost razpršila. Izbirate lahko med velikostmi pršil 9x9, 17x17 in 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>&LMB; riše v barvi ospredja. &RMB; nariše v barvi ozadja.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>Besedilo <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Kliknite in povlecite območje, v katerega želite napisati besedilo. Takoj ko se prikaže obroba, lahko začnete pisati besedilo. Kliknite in povlecite obrobo, da jo premaknete. Velikost besedilnega polja lahko spremenite tako, da povlečete ročice ali uporabite pogovorno okno <link linkend="image-resize-scale"
+>Spremeni velikost</link
+>. </para>
+
+<tip>
+<para
+>Če ste preklicali izbiro besedilnega polja, lahko uporabite <guimenuitem
+>Razveljavi</guimenuitem
+>, da znova uredite besedilo.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>Uporaba prosojne barve</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Leva slika prikazuje primer slike. Desna slika prikazuje dodajanje besedila z neprosojnimi barvami ospredja in ozadja. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Leva slika prikazuje dodajanje besedila z neprosojnimi barvami ospredja in prozorno barvo ozadja. Desna slika prikazuje dodajanje besedila s prosojno barvo ospredja in neprosojno barvo ozadja.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Zoom <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>&LMB; poveča. &RMB; pomanjša.</para>
+<para
+>Povlecite z &LMB; za povečavo določenega območja.</para>
+
+<tip>
+<para
+>Dvokliknite ikono orodja za povečavo, da nastavite povečavo na "Prilagodi strani".</para>
+</tip>
+
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>Skupne možnosti orodja</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknite na enega od kvadratkov, da izberete velikost radirke. Izbirate lahko med kvadrati s stranico 2, 3, 5, 9, 17 in 29 slikovnih pik.</para>
+
+<para
+>Nastavitev velikosti radirke vpliva na <link linkend="tool-erasers"
+>radirke</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknite na eno od vrstic, da izberete širino črte. Izbirate lahko med širinami črt 1, 2, 3, 5 in 8 slikovnih pik.</para>
+
+<para
+>Nastavitev širine črte vpliva na <link linkend="tool-polystar"
+>povezane črte</link
+>, <link linkend="tool-curve"
+>krivuljo</link
+>, <link linkend="tool-ellipse"
+>elipso </link
+>, <link linkend="tool-line"
+>črta</link
+>, <link linkend="tool-polystar"
+>mnogokotnik</link
+>, <link linkend="tool-rectangles"
+>pravokotnik</link
+> in orodji <link linkend="tool-rectangles"
+>Zaobljen pravokotnik</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>Kliknite na enega od pravokotnikov, da izberete slog polnila. Izbirate lahko med možnostmi Brez polnila, Polnilo z barvo ozadja in Polnilo z barvo ospredja.</para
+> <para
+>Nastavitev sloga polnila vpliva na <link linkend="tool-ellipse"
+>Elipso</link
+>, <link linkend="tool-polystar"
+>Mnogokotnik</link
+>, <link linkend="tool-rectangles"
+>Pravokotnik</link
+> in <link linkend="tool-rectangles"
+>zaobljen pravokotnik</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>Delo z barvo</title>
+
+<sect1 id="color-box">
+<title
+>Škatla z barvami</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Škatla z barvami</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Škatla z barvami polje ima 3 glavne razdelke: barvno tablico, barvno paleto in izbirnik podobnosti barv.</para>
+
+<para
+>Barvna tablica prikazuje trenutno barvo ospredja kot kvadrat na vrhu drugega kvadrata, ki predstavlja trenutno barvo ozadja. Pri risanju z &LMB; se uporablja barva ospredja, pri risanju z &RMB; uporabljena je barva ozadja (razen za <link linkend="tool-erasers"
+>radirke</link
+>). Če želite zamenjati barvo ospredja in ozadja, lahko kliknete puščico z dvojnim koncem. </para>
+
+<para
+>Barvna paleta prikazuje izbor barv, med katerimi lahko izbirate. Prosojna piramida predstavlja prozorno barvo. Z levim klikom na barvo nastavite barvo ospredja in z desnim klikom na barvo nastavite barvo ozadja. Prav tako lahko povlečete in spustite poljubno neprozorno barvo v kvadratke barvne tablice. Če želite urediti barvo v barvni tablici ali paleti, dvokliknite nanjo. Orodje <link linkend="tool-color-picker"
+>Izbirnik barv</link
+> omogoča izbiro barve s slike. </para>
+
+<para
+>Barvna podobnost vam omogoča učinkovitejše delo z mehkimi slikami in fotografijami, podobno kot funkcija <quote
+>Čarobna paličica</quote
+> drugih programov za slikanje. Velja za prosojne izbore, kot tudi za <link linkend="tool-flood-fill"
+>Poplavno polnilo</link
+>, <link linkend="tool-eraser-clr"
+>Barvno radirko</link
+> in <link linkend="image-autocrop"
+>Orodja za samodejno obrezovanje/Odstrani notranji rob</link
+>. Dvokliknite izbirnik podobnosti barv, da izberete, kako podobne morajo biti barve, da veljajo za enake. Pri uporabi izbir v prosojnem načinu bo prosojna tudi vsaka barva v izboru, ki je podobna barvi ozadja.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Leva slika prikazuje primer slike. Desne slike prikazujejo uporabo poplavnega polnila z nastavitvami barvne podobnosti 5 %, 15 % in 30 %. V tem primeru bi z nastavitvijo barvne podobnosti <guilabel
+>Natančno</guilabel
+> poplavno polnjenje pri (80, 100) zapolnilo samo eno slikovno piko, saj so okoliške slikovne pike podobne, vendar ne enake. Ko se poveča barvna podobnost, se več slikovnih pik, ki so podobne barve, šteje za enakih, zato se polnilo razširi. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>Možnosti pogleda</title>
+
+<sect1 id="view-options-section">
+<title
+>Oglejte si reference možnosti</title>
+
+<para
+><link linkend="view-zoom"
+>Povečava, ki vključuje mrežo</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>Sličica</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>Povečava, ki vključuje mrežo</title>
+<para
+>Povečajte stopnjo povečave, če želite natančneje urejati slike, ali jo zmanjšajte, če želite videti večji del slike.</para>
+
+<important>
+<para
+>Pri stopnjah povečave, ki niso večkratniki 100 %, se lahko zdi, da se deli slike premikajo, ko uporabnik z njimi komunicira. Pri takih stopnjah povečave se lahko pojavijo tudi druge manjše napake pri ponovnem risanju. </para>
+</important>
+
+<para
+>Pri stopnjah povečave 400 % ali več, ki so tudi večkratniki 100 %, lahko <guimenuitem
+>Pokaži mrežo</guimenuitem
+> za natančnejše urejanje posameznih slikovnih pik.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Prva slika prikazuje ikono orodja <link linkend="tool-text"
+>Besedilo</link
+>, druga pa jo prikazuje pri 600-odstotni povečavi z vklopljeno mrežo.</para>
+
+<tip>
+<para
+>Drug način povečave, ko ne rišete, je premikanje <mousebutton
+>kolesca</mousebutton
+>, medtem ko držite &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>Sličica</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Če je izbran <guimenuitem
+>Način povečane sličice</guimenuitem
+>, je prikazana celotna slika, po potrebi pomanjšana, da se prilega oknu s sličicami (slika zgoraj desno). </para>
+<para
+>V nasprotnem primeru sličica prikaže čim večji del slike, začenši od zgornjega levega kota glavnega pogleda (slika spodaj desno). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>Slikovni učinki</title>
+
+<sect1 id="image-effects-section">
+<title
+>Referenca slikovnih učinkov</title>
+<para
+><link linkend="image-autocrop"
+>Samodejno obrezovanje/Odstrani notranji rob</link
+></para>
+<para
+><link linkend="image-balance"
+>Uravnoteži</link
+></para>
+<para
+><link linkend="image-clear"
+>Počisti</link
+></para>
+<para
+><link linkend="image-emboss"
+>Vgraviraj</link
+></para>
+<para
+><link linkend="image-flatten"
+>Splošči</link
+></para>
+<para
+><link linkend="image-flip"
+>Obrni (na glavo)</link
+></para>
+<para
+><link linkend="image-invert"
+>Obrni</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>Zmanjšaj barve</link
+></para>
+<para
+><link linkend="image-grayscale"
+>Zmanjšaj v sivine</link
+></para>
+<para
+><link linkend="image-monochrome"
+>Zmanjšaj na enobarvno (zabrisano)</link
+></para>
+<para
+><link linkend="image-mirror"
+>Zrcaljenje (vodoravno)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>Spreminjanje velikosti / merilo</link
+></para>
+<para
+><link linkend="image-rotate"
+>Zavrti</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>Nastavi kot sliko (obreži)</link
+></para>
+<para
+><link linkend="image-skew"
+>Nagni</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>Zmehčaj &amp; Izostri</link
+></para>
+<para
+><link linkend="image-more-effects"
+>Več učinkov</link
+></para>
+<para
+><link linkend="image-notes"
+>Opombe</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>Samodejno obrezovanje / Odstrani notranjo obrobo</title>
+
+<para
+>To samodejno odstrani obrobo slike ali izbora. Uporabite samodejno obreži, če imate figuro, ki ne zapolni celotne slike ali izbora in želite odstraniti odvečni prazen prostor. Če želite uporabiti to funkcijo z mešano obrobo slike, boste morali uporabiti tudi <link linkend="color-box"
+>Podobnost barv</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>Uravnoteži</title>
+
+<para
+>Ta funkcija je dostopna v pogovornem oknu <link linkend="image-more-effects"
+>Več učinkov</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>To vam omogoča nastavitev svetlosti, kontrasta in gama slike ali izbora. </para>
+
+<note>
+<para
+>Pogostejša mera gama (decimalna številka od 0,10 do 10,00) se nahaja med vrtilnim poljem <guilabel
+>Gama</guilabel
+> in gumbom <guibutton
+>Ponastavi</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>Počisti</title>
+
+<para
+>To zapolni celotno sliko ali izbor z barvo ozadja.</para>
+
+<tip>
+<para
+>Dvokliknite ikono <link linkend="tool-eraser-std"
+>Radirke</link
+>, da počistite celotno sliko.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>Vgraviraj</title>
+
+<para
+>Ta funkcija je dostopna v pogovornem oknu <link linkend="image-more-effects"
+>Več učinkov</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Označite <guilabel
+>Omogoči</guilabel
+>, da uporabite učinek vgraviranja. To poudari robove in daje sliki ali izboru &quot;vgraviran videz&quot;. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>Splošči</title>
+
+<para
+>Ta funkcija je dostopna v pogovornem oknu <link linkend="image-more-effects"
+>Več učinkov</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>To prebarva sliko z različnimi odtenki dveh izbranih barv. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>Obrni (na glavo)</title>
+
+<para
+>To obrne celotno sliko ali izbor navpično.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>Obrni</title>
+
+<para
+>Ta funkcija je dostopna v pogovornem oknu <link linkend="image-more-effects"
+>Več učinkov</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>To vam omogoča, da obrnete enega ali več kanalov RGB na sliki ali izboru. Izberite <guilabel
+>Vse</guilabel
+>, da spremenite fotografijo v negativ in obratno. To je na splošno videti precej smešno.</para>
+
+<tip>
+<para
+>Če želite hitro obrniti vse kanale, vam ni treba uporabiti tega pogovornega okna. Namesto tega lahko dostopate do elementa <guimenuitem
+>Obrni barve</guimenuitem
+> v meniju <guimenu
+>Slika</guimenu
+> ali <guimenu
+>Izbira</guimenu
+>. Element <guimenu
+>Izbira</guimenu
+> je prikazan v menijski vrstici samo, če uporabljate eno od izbirnih orodij. Poleg tega lahko to dejanje dosežete iz kontekstnega menija, ki ga odprete z &RMB; kliknite v območju slike. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>Zrcalo (vodoravno)</title>
+
+<para
+>To vodoravno prezrcali celotno sliko ali izbor.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>Zmanjšaj barve</title>
+
+<para
+>Ta funkcija je dostopna v pogovornem oknu <link linkend="image-more-effects"
+>Več učinkov</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>To zmanjša število barv, ki jih uporablja slika ali izbor, z mehčanjem ali brez njega. </para>
+
+<para
+>Zmehčanje na splošno zagotavlja boljšo kakovost rezultatov, vendar ga boste morda želeli onemogočiti za umetniške učinke; &eg; uporaba <guilabel
+>Enobarvno</guilabel
+> namesto <guilabel
+>Enobarvno (Zmehčano)</guilabel
+> daje učinek silhuete. </para>
+
+<para
+>Druga pomembna razlika je, da medtem ko bo <guilabel
+>Enobarvno (zmehčano)</guilabel
+> celotno sliko ali izbor vedno zmanjšal na črno-belo, bo <guilabel
+>Enobarvno</guilabel
+> to storil le, če slika ali izbor vsebuje več kot 2 barvi. </para>
+
+<tip>
+<para
+>Za hitro mehčano enobarvno sliko ali izbor uporabite element <link linkend="image-monochrome"
+>Zmanjšaj v enobarvno (zmehčano)</link
+> v <guimenu
+>Slika</guimenu
+> ali <guimenu
+>Izbor</guimenu
+> meni. Element <guimenu
+>Izbira</guimenu
+> je prikazan v menijski vrstici samo, če uporabljate eno od izbirnih orodij. Poleg tega lahko to dejanje dosežete iz kontekstnega menija, ki ga odprete z &RMB; kliknite v območju slike. </para>
+</tip>
+
+<note>
+<para
+>Spreminjanje števila barv tukaj ne vpliva na barvno globino zapisa datoteke. Če želite spremeniti globino barve, jo izberite v pogovornih oknih za shranjevanje datotek. Upoštevajte, da sprememba globine barve spremeni tudi število barv, kar je zavajajoče. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>Zmanjšaj v sivine</title>
+
+<para
+>To zmanjša celotno sliko ali izbor na sivine.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>Zmanjšaj na enobarvno (zmehčano)</title>
+
+<para
+>To zmanjša celotno sliko ali izbor na črno-belo.</para>
+
+<tip>
+<para
+>Če ne želite, da je slika ali izbor mehča, uporabite pogovorno okno <link linkend="image-reduce-colors"
+> Zmanjšaj barve</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>Spreminjanje velikosti / merilo</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Spreminjanje velikosti slike spremeni dimenzije slike brez uporabe transformacije obstoječe vsebine. Povečanje velikosti slike bo raztegnilo obstoječo vsebino na nove dimenzije. <guibutton
+>Gladka skala</guibutton
+> na splošno zagotavlja boljšo kakovost rezultatov kot skaliranje z mešanjem sosednjih barv.</para>
+
+<para
+>Nove dimenzije lahko izrazite v slikovnih pikah ali kot odstotek prvotne velikosti. Če izberete <guilabel
+>Ohrani razmerje stranic</guilabel
+>, bosta širina in višina pomanjšani za enak odstotek.</para>
+
+<tip>
+<para
+>Lahko prosto oblikujete <guibutton
+>Spremeni velikost</guibutton
+> celotne slike ali <guibutton
+>Smooth Scale</guibutton
+> izbor z uporabo ustreznih ročic. </para>
+</tip>
+
+<note>
+<para
+>Za izbore je podprto samo spreminjanje velikosti, za besedilna polja pa samo spreminjanje velikosti. Glejte <link linkend="image-notes"
+>Opombe</link
+> za dodatne podrobnosti o uporabi teh učinkov.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>Zavrti</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>To obrne sliko. Določite lahko kot in smer vrtenja.</para>
+
+<tip>
+<para
+>Smer vrtenja lahko obrnete tako, da določite negativni kot po meri.</para>
+</tip>
+
+<note>
+<para
+>Glejte <link linkend="image-notes"
+>Opombe</link
+> za podrobnosti o uporabi tega učinka za izbor. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>Nastavi kot sliko (obreži)</title>
+
+<para
+>To bo nastavilo izbiro kot sliko.</para>
+
+<note>
+<para
+>To je na voljo le, če imate aktivno izbiro.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>Nagni</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>To nagne celotno sliko ali izbor vodoravno in/ali navpično.</para>
+
+<note>
+<para
+>Glejte <link linkend="image-notes"
+>Opombe</link
+> za podrobnosti o uporabi tega učinka za izbor.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>Zmehčaj &amp; Izostri</title>
+
+<para
+>Ta funkcija je dostopna v pogovornem oknu <link linkend="image-more-effects"
+>Več učinkov</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>S tem učinkom zmehčate ali izostrite sliko. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>Več učinkov</title>
+
+<para
+>To pogovorno okno vsebuje <link linkend="image-balance"
+>Ravnotežje</link
+>, <link linkend="image-emboss"
+>Emboss</link
+>, <link linkend="image-flatten"
+>Splošči</link 
+>, <link linkend="image-invert"
+>Obrni</link
+>, <link linkend="image-reduce-colors"
+>Zmanjšaj barve</link
+> in <link linkend="image-soften-sharpen"
+>Zmehčaj &amp; Izostri</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>Opombe</title>
+
+<para
+><link linkend="image-resize-scale"
+>Spreminjanje velikosti / lestvica</link
+>, <link linkend="image-rotate"
+>Vrtenje</link
+> in <link linkend="image-skew"
+>Poševno spreminjanje</link 
+> lahko spremeni dimenzije slike. Nove dimenzije si lahko ogledate v pogovornem oknu.</para>
+
+<para
+>Če te učinke uporabite na sliki, bo slika po potrebi spremenjena. Če pa te učinke uporabite za izbor, se velikost slike ne bo spremenila, tudi če se preoblikovani izbor ne prilega.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Leva slika je bila zasukana za 30 stopinj v smeri urinega kazalca, da se oblikuje desna slika. &kolourpaint; je samodejno povečal sliko, da se prilagodi večji vsebini. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>Levi <emphasis
+>izbor</emphasis
+> je bil zasukan za 30 stopinj v smeri urinega kazalca, da se oblikuje desni izbor. Velikost slike je ostala enaka, zato deli izbora ne bodo vidni, če <link linkend="image-resize-scale"
+>spremenite velikost</link
+> <emphasis
+>slike</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>Zasluge in licenca</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>Morda ni jedrnata dokumentacija; morda ni popolna dokumentacija; vendar je poštena dokumentacija. </para>
+</epigraph>
+
+<para
+>&kolourpaint; </para>
+<para
+>Avtorske pravice programa &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>Ikone, specifične za &kolourpaint; Copyright &copy; 2004, 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>, Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>, &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>Dokumentacija in dodatna dokumentacija umetniško delo Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>Deli reproducirani z dovoljenjem <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>Prevod: Matjaž Jeran<email
+>matjaz.jeran@amis.net</email
+></para
+> &underFDL; <para
+>Ta program je licenciran na naslednji način:</para>
+
+<para
+>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
