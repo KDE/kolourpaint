@@ -43,6 +43,7 @@
 int main(int argc, char *argv [])
 {
   QApplication app(argc, argv);
+  QImageReader::setAllocationLimit(0); // no explicit memory limit
 
   KLocalizedString::setApplicationDomain("kolourpaint");
 
