@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:38+0000\n"
+"POT-Creation-Date: 2024-09-26 00:38+0000\n"
 "PO-Revision-Date: 2024-04-22 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1042,112 +1042,112 @@ msgstr "裁剪图像到选区大小"
 msgid "Selection: Create"
 msgstr "选区：创建"
 
-#: kolourpaint.cpp:52
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:54
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "KDE 社区开发的简易绘画程序"
 
-#: kolourpaint.cpp:68
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:68
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr "项目创立者"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr "首席调查员"
 
-#: kolourpaint.cpp:73
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:73
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "扫描支持、透明度通道支持、当前维护者"
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:79 kolourpaint.cpp:80
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "图标"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:77 kolourpaint.cpp:78
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr "输入法支持"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr "图像效果"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "KDE 4 移植"
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "KF5 移植"
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
@@ -1155,22 +1155,22 @@ msgstr ""
 "除了主要开发人员外，还有众多其他贡献者为 KolourPaint 的开发提供了帮助，让它从"
 "构想成为了现实。我们对此表示衷心的感谢。"
 
-#: kolourpaint.cpp:92
+#: kolourpaint.cpp:93
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "要打开的图像文件，可选项"
 
-#: kolourpaint.cpp:95
+#: kolourpaint.cpp:96
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "列出所有支持读取的图像 MIME 类型"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
 msgstr "启动时创建给定大小的新图像"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[宽度]x[长度]"

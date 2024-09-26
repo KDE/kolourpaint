@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:38+0000\n"
+"POT-Creation-Date: 2024-09-26 00:38+0000\n"
 "PO-Revision-Date: 2007-06-25 11:12+0300\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -1012,134 +1012,134 @@ msgstr ""
 msgid "Selection: Create"
 msgstr ""
 
-#: kolourpaint.cpp:52
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "KolourPaint"
 msgstr ""
 
-#: kolourpaint.cpp:54
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr ""
 
-#: kolourpaint.cpp:68
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Clarence Dang"
 msgstr ""
 
-#: kolourpaint.cpp:68
+#: kolourpaint.cpp:69
 #, kde-format
 msgid "Project Founder"
 msgstr ""
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Thurston Dang"
 msgstr ""
 
-#: kolourpaint.cpp:70
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "Chief Investigator"
 msgstr ""
 
-#: kolourpaint.cpp:73
+#: kolourpaint.cpp:74
 #, fuzzy, kde-format
 #| msgid "Main Toolbar"
 msgid "Martin Koller"
 msgstr "Галоўная панель начыння"
 
-#: kolourpaint.cpp:73
+#: kolourpaint.cpp:74
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr ""
 
-#: kolourpaint.cpp:76
+#: kolourpaint.cpp:77
 #, kde-format
 msgid "Kristof Borrey"
 msgstr ""
 
-#: kolourpaint.cpp:76 kolourpaint.cpp:79 kolourpaint.cpp:80
+#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
 #, kde-format
 msgid "Icons"
 msgstr "Значкі"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:78
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr ""
 
-#: kolourpaint.cpp:77 kolourpaint.cpp:78
+#: kolourpaint.cpp:78 kolourpaint.cpp:79
 #, kde-format
 msgid "InputMethod Support"
 msgstr ""
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:79
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr ""
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:80
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr ""
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:81
 #, kde-format
 msgid "Danny Allen"
 msgstr ""
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Mike Gashler"
 msgstr ""
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:82
 #, kde-format
 msgid "Image Effects"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "Laurent Montel"
 msgstr ""
 
-#: kolourpaint.cpp:83
+#: kolourpaint.cpp:84
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:85
 #, kde-format
 msgid "KF 5 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:86
+#: kolourpaint.cpp:87
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr ""
 
-#: kolourpaint.cpp:92
+#: kolourpaint.cpp:93
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr ""
 
-#: kolourpaint.cpp:95
+#: kolourpaint.cpp:96
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr ""
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:97
 #, kde-format
 msgid "Start with new image using given size"
 msgstr ""
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
 msgstr ""
