@@ -9,7 +9,7 @@ set(RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE_
 project(kolourpaint VERSION ${RELEASE_SERVICE_VERSION})
 
 set(QT_MIN_VERSION "6.6.0")
-set(KF_MIN_VERSION "6.0.0")
+set(KF_MIN_VERSION "6.5.0")
 set(KSANEWIDGETS6_MIN_VERSION "24.02")
 
 find_package(ECM ${KF_MIN_VERSION} CONFIG REQUIRED)
@@ -334,7 +334,6 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 target_link_libraries(kolourpaint
     KF6::XmlGui
     KF6::KIOFileWidgets
-    KF6::TextWidgets
     KF6::Crash
     Qt6::PrintSupport
     kolourpaint_lgpl
