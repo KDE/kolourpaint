@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-26 00:38+0000\n"
+"POT-Creation-Date: 2024-10-07 00:38+0000\n"
 "PO-Revision-Date: 2024-07-05 09:29+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1413,8 +1413,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1087
+#: mainWindow/kpMainWindow_File.cpp:1097
 #, kde-format
 msgid "&Reload"
 msgstr "Torna a ca&rregar"
@@ -1524,18 +1524,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Apegar des d'un fitxer"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:105
 #, kde-format
 msgid "E&xport..."
 msgstr "E&xporta…"
 
-#: mainWindow/kpMainWindow_File.cpp:106
+#: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr "Exporta cap a un altre fitxer"
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1549,88 +1549,90 @@ msgstr ""
 "actual.<nl/>D'esta manera podeu mantindre la carpeta de guardat en l'últim "
 "ús independent de la carpeta del document actual."
 
-#: mainWindow/kpMainWindow_File.cpp:114
+#: mainWindow/kpMainWindow_File.cpp:115
 #, kde-format
 msgid "Scan..."
 msgstr "Escaneja…"
 
-#: mainWindow/kpMainWindow_File.cpp:123
+#: mainWindow/kpMainWindow_File.cpp:124
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Obtín una captura de pantalla"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Properties"
 msgstr "Propietats"
 
-#: mainWindow/kpMainWindow_File.cpp:133
+#: mainWindow/kpMainWindow_File.cpp:134
 #, kde-format
 msgid "Reloa&d"
 msgstr "Torna a ca&rregar"
 
-#: mainWindow/kpMainWindow_File.cpp:463
+#: mainWindow/kpMainWindow_File.cpp:464
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Tots els fitxers admesos (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:488
+#: mainWindow/kpMainWindow_File.cpp:489
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Obri una imatge"
 
-#: mainWindow/kpMainWindow_File.cpp:551
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "No s'ha pogut obrir el diàleg d'escaneig."
 
-#: mainWindow/kpMainWindow_File.cpp:552
+#: mainWindow/kpMainWindow_File.cpp:553
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "No s'ha pogut fer l'escaneig"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Retard de la captura de pantalla"
 
-#: mainWindow/kpMainWindow_File.cpp:672
-#, kde-format
-msgid " second"
-msgid_plural " seconds"
+#: mainWindow/kpMainWindow_File.cpp:673
+#, fuzzy, kde-format
+#| msgid " second"
+#| msgid_plural " seconds"
+msgid "%v second"
+msgid_plural "%v seconds"
 msgstr[0] " segon"
 msgstr[1] " segons"
 
-#: mainWindow/kpMainWindow_File.cpp:673
+#: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
 msgid "No delay"
 msgstr "Sense retard"
 
-#: mainWindow/kpMainWindow_File.cpp:675
+#: mainWindow/kpMainWindow_File.cpp:676
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Oculta la finestra principal"
 
-#: mainWindow/kpMainWindow_File.cpp:729
+#: mainWindow/kpMainWindow_File.cpp:730
 #, kde-format
 msgid "Document Properties"
 msgstr "Propietats del document"
 
-#: mainWindow/kpMainWindow_File.cpp:969
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Guardar la imatge com a"
 
-#: mainWindow/kpMainWindow_File.cpp:1017
+#: mainWindow/kpMainWindow_File.cpp:1018
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportació"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1082
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1642,7 +1644,7 @@ msgstr ""
 "vau guardar-lo.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_File.cpp:1091
+#: mainWindow/kpMainWindow_File.cpp:1092
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1653,13 +1655,13 @@ msgstr ""
 "En tornar a carregar es perdran tots els canvis.\n"
 "Esteu segur?"
 
-#: mainWindow/kpMainWindow_File.cpp:1339
+#: mainWindow/kpMainWindow_File.cpp:1340
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Imprimiu la imatge"
 
-#: mainWindow/kpMainWindow_File.cpp:1419
+#: mainWindow/kpMainWindow_File.cpp:1420
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1668,7 +1670,7 @@ msgstr ""
 "Heu de guardar la imatge abans d'enviar-la.\n"
 "Voleu guardar-la?"
 
-#: mainWindow/kpMainWindow_File.cpp:1457
+#: mainWindow/kpMainWindow_File.cpp:1458
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

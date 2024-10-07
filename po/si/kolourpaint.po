@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-26 00:38+0000\n"
+"POT-Creation-Date: 2024-10-07 00:38+0000\n"
 "PO-Revision-Date: 2011-08-19 07:37+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -1419,8 +1419,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1087
+#: mainWindow/kpMainWindow_File.cpp:1097
 #, kde-format
 msgid "&Reload"
 msgstr "ප්‍රතිපූර්ණය (&R)"
@@ -1528,18 +1528,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "ගොනුවෙන් පිටපත්"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:105
 #, kde-format
 msgid "E&xport..."
 msgstr "අපනයනය (&x)..."
 
-#: mainWindow/kpMainWindow_File.cpp:106
+#: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1549,88 +1549,90 @@ msgid ""
 "current document."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:114
+#: mainWindow/kpMainWindow_File.cpp:115
 #, kde-format
 msgid "Scan..."
 msgstr "පරිලෝකනය..."
 
-#: mainWindow/kpMainWindow_File.cpp:123
+#: mainWindow/kpMainWindow_File.cpp:124
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "තිරසටහන ලබාගන්න"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Properties"
 msgstr "වත්කම්"
 
-#: mainWindow/kpMainWindow_File.cpp:133
+#: mainWindow/kpMainWindow_File.cpp:134
 #, kde-format
 msgid "Reloa&d"
 msgstr "ප්‍රතිපූර්ණය (&d)"
 
-#: mainWindow/kpMainWindow_File.cpp:463
+#: mainWindow/kpMainWindow_File.cpp:464
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:488
+#: mainWindow/kpMainWindow_File.cpp:489
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "පිළිබිඹුව විවෘත"
 
-#: mainWindow/kpMainWindow_File.cpp:551
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:552
+#: mainWindow/kpMainWindow_File.cpp:553
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "සේයාරූ පමාව"
 
-#: mainWindow/kpMainWindow_File.cpp:672
-#, kde-format
-msgid " second"
-msgid_plural " seconds"
+#: mainWindow/kpMainWindow_File.cpp:673
+#, fuzzy, kde-format
+#| msgid " second"
+#| msgid_plural " seconds"
+msgid "%v second"
+msgid_plural "%v seconds"
 msgstr[0] " තත්පරය"
 msgstr[1] " තත්පර"
 
-#: mainWindow/kpMainWindow_File.cpp:673
+#: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
 msgid "No delay"
 msgstr "ප්‍රමාදය නොමැත"
 
-#: mainWindow/kpMainWindow_File.cpp:675
+#: mainWindow/kpMainWindow_File.cpp:676
 #, kde-format
 msgid "Hide Main Window"
 msgstr "සැඟවුනු ප්‍රධාන කවුළුව"
 
-#: mainWindow/kpMainWindow_File.cpp:729
+#: mainWindow/kpMainWindow_File.cpp:730
 #, kde-format
 msgid "Document Properties"
 msgstr "ලේඛන වත්කම්"
 
-#: mainWindow/kpMainWindow_File.cpp:969
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "ලෙස පිළිබිඹුව සුරකින්න"
 
-#: mainWindow/kpMainWindow_File.cpp:1017
+#: mainWindow/kpMainWindow_File.cpp:1018
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "අපනයනය"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1082
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1641,7 +1643,7 @@ msgstr ""
 "නැවත පූර්ණය අවසන් වර සුරැකීමේ සිට සියළු වෙනස්කම් ඉවතලයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_File.cpp:1091
+#: mainWindow/kpMainWindow_File.cpp:1092
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1652,13 +1654,13 @@ msgstr ""
 "නැවත පූර්ණය සියළු වෙනස්කම් ඉවතලයි.\n"
 "ඔබට විශ්වාසද?"
 
-#: mainWindow/kpMainWindow_File.cpp:1339
+#: mainWindow/kpMainWindow_File.cpp:1340
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "පිළිබිඹුව මුද්‍රණය"
 
-#: mainWindow/kpMainWindow_File.cpp:1419
+#: mainWindow/kpMainWindow_File.cpp:1420
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1667,7 +1669,7 @@ msgstr ""
 "මෙම පිළිබිඹුව යැවීමට පෙර සුරැකිය යුතුයි.\n"
 "ඔබට එය සුරැකීමට අවශ්‍යද?"
 
-#: mainWindow/kpMainWindow_File.cpp:1457
+#: mainWindow/kpMainWindow_File.cpp:1458
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

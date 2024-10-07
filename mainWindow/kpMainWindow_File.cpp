@@ -49,13 +49,14 @@
 #include <QMimeDatabase>
 #include <QPrintPreviewDialog>
 #include <QScreen>
+#include <QSpinBox>
 
 #include <KActionCollection>
 #include <KEMailClientLauncherJob>
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KFileCustomDialog>
-#include <KPluralHandlingSpinBox>
+#include <KLocalization>
 #include <KMessageBox>
 #include <KRecentFilesAction>
 #include <KStandardShortcut>
@@ -667,9 +668,9 @@ void kpMainWindow::slotScreenshot()
   connect (buttons, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
   auto *label = new QLabel(i18n("Snapshot Delay"));
-  auto *seconds = new KPluralHandlingSpinBox;
+  auto *seconds = new QSpinBox;
   seconds->setRange(0, 99);
-  seconds->setSuffix(ki18np(" second", " seconds"));
+  KLocalization::setupSpinBoxFormatString(seconds, ki18np("%v second", "%v seconds"));
   seconds->setSpecialValueText(i18n("No delay"));
 
   auto *hideWindow = new QCheckBox(i18n("Hide Main Window"));

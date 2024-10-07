@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-26 00:38+0000\n"
+"POT-Creation-Date: 2024-10-07 00:38+0000\n"
 "PO-Revision-Date: 2024-07-05 22:42+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1416,8 +1416,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1087
+#: mainWindow/kpMainWindow_File.cpp:1097
 #, kde-format
 msgid "&Reload"
 msgstr "&Birkargatu"
@@ -1527,18 +1527,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Itsatsi fitxategitik"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:105
 #, kde-format
 msgid "E&xport..."
 msgstr "E&sportatu..."
 
-#: mainWindow/kpMainWindow_File.cpp:106
+#: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr "Esportatu beste fitxategi batera"
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1552,88 +1552,90 @@ msgstr ""
 "gordetzeko erabilitako azken karpeta, uneko dokumentuaren karpetarekiko "
 "independente erabil dezakezu."
 
-#: mainWindow/kpMainWindow_File.cpp:114
+#: mainWindow/kpMainWindow_File.cpp:115
 #, kde-format
 msgid "Scan..."
 msgstr "Eskaneatu..."
 
-#: mainWindow/kpMainWindow_File.cpp:123
+#: mainWindow/kpMainWindow_File.cpp:124
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Egin pantaila-argazkia"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
 msgid "Properties"
 msgstr "Propietateak"
 
-#: mainWindow/kpMainWindow_File.cpp:133
+#: mainWindow/kpMainWindow_File.cpp:134
 #, kde-format
 msgid "Reloa&d"
 msgstr "Birkar&gatu"
 
-#: mainWindow/kpMainWindow_File.cpp:463
+#: mainWindow/kpMainWindow_File.cpp:464
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Onartutako fitxategi guztiak (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:488
+#: mainWindow/kpMainWindow_File.cpp:489
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Ireki irudia"
 
-#: mainWindow/kpMainWindow_File.cpp:551
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Huts egin du eskaneatzeko elkarrizketa-koadroa irekitzea."
 
-#: mainWindow/kpMainWindow_File.cpp:552
+#: mainWindow/kpMainWindow_File.cpp:553
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Ezkaneatzea huts egin du"
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Kapturaren atzerapena"
 
-#: mainWindow/kpMainWindow_File.cpp:672
-#, kde-format
-msgid " second"
-msgid_plural " seconds"
+#: mainWindow/kpMainWindow_File.cpp:673
+#, fuzzy, kde-format
+#| msgid " second"
+#| msgid_plural " seconds"
+msgid "%v second"
+msgid_plural "%v seconds"
 msgstr[0] " segundo"
 msgstr[1] " segundo"
 
-#: mainWindow/kpMainWindow_File.cpp:673
+#: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
 msgid "No delay"
 msgstr "Atzerapenik ez"
 
-#: mainWindow/kpMainWindow_File.cpp:675
+#: mainWindow/kpMainWindow_File.cpp:676
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Ezkutatu leiho nagusia"
 
-#: mainWindow/kpMainWindow_File.cpp:729
+#: mainWindow/kpMainWindow_File.cpp:730
 #, kde-format
 msgid "Document Properties"
 msgstr "Dokumentuaren propietateak"
 
-#: mainWindow/kpMainWindow_File.cpp:969
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Gorde irudia honela"
 
-#: mainWindow/kpMainWindow_File.cpp:1017
+#: mainWindow/kpMainWindow_File.cpp:1018
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Esportatu"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1082
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1645,7 +1647,7 @@ msgstr ""
 "dituzu.\n"
 "Ziur zaude?"
 
-#: mainWindow/kpMainWindow_File.cpp:1091
+#: mainWindow/kpMainWindow_File.cpp:1092
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1656,13 +1658,13 @@ msgstr ""
 "Birkargatzean aldaketa guztiak galduko dituzu.\n"
 "Ziur zaude?"
 
-#: mainWindow/kpMainWindow_File.cpp:1339
+#: mainWindow/kpMainWindow_File.cpp:1340
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Inprimatu irudia"
 
-#: mainWindow/kpMainWindow_File.cpp:1419
+#: mainWindow/kpMainWindow_File.cpp:1420
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1671,7 +1673,7 @@ msgstr ""
 "Bidali aurretik irudi hau gorde behar duzu.\n"
 "Gorde nahi duzu?"
 
-#: mainWindow/kpMainWindow_File.cpp:1457
+#: mainWindow/kpMainWindow_File.cpp:1458
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

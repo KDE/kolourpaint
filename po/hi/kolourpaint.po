@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-26 00:38+0000\n"
+"POT-Creation-Date: 2024-10-07 00:38+0000\n"
 "PO-Revision-Date: 2021-08-21 16:25+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -1410,8 +1410,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:374
 #: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1086
-#: mainWindow/kpMainWindow_File.cpp:1096
+#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1087
+#: mainWindow/kpMainWindow_File.cpp:1097
 #, kde-format
 msgid "&Reload"
 msgstr "फिर से लोड करें (&R)"
@@ -1521,18 +1521,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "फ़ाइल में से चिपकाएँ"
 
-#: mainWindow/kpMainWindow_File.cpp:104
+#: mainWindow/kpMainWindow_File.cpp:105
 #, kde-format
 msgid "E&xport..."
 msgstr "निर्यात... (&x)"
 
-#: mainWindow/kpMainWindow_File.cpp:106
+#: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:108
+#: mainWindow/kpMainWindow_File.cpp:109
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1542,94 +1542,94 @@ msgid ""
 "current document."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:114
+#: mainWindow/kpMainWindow_File.cpp:115
 #, kde-format
 msgid "Scan..."
 msgstr "स्कैन..."
 
-#: mainWindow/kpMainWindow_File.cpp:123
+#: mainWindow/kpMainWindow_File.cpp:124
 #, fuzzy, kde-format
 #| msgid "Acquiring Screenshots"
 msgid "Acquire Screenshot"
 msgstr "स्क्रीनशॉट लाया जा रहा है"
 
-#: mainWindow/kpMainWindow_File.cpp:127
+#: mainWindow/kpMainWindow_File.cpp:128
 #, fuzzy, kde-format
 #| msgid "Document Properties"
 msgid "Properties"
 msgstr "दस्तावेज़ गुण"
 
-#: mainWindow/kpMainWindow_File.cpp:133
+#: mainWindow/kpMainWindow_File.cpp:134
 #, kde-format
 msgid "Reloa&d"
 msgstr "फिर से लोड करें (&d)"
 
-#: mainWindow/kpMainWindow_File.cpp:463
+#: mainWindow/kpMainWindow_File.cpp:464
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:488
+#: mainWindow/kpMainWindow_File.cpp:489
 #, fuzzy, kde-format
 #| msgid "Open Image"
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "छवि खोलें"
 
-#: mainWindow/kpMainWindow_File.cpp:551
+#: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:552
+#: mainWindow/kpMainWindow_File.cpp:553
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:669
+#: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
 msgid "Snapshot Delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:672
+#: mainWindow/kpMainWindow_File.cpp:673
 #, kde-format
-msgid " second"
-msgid_plural " seconds"
+msgid "%v second"
+msgid_plural "%v seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mainWindow/kpMainWindow_File.cpp:673
+#: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
 msgid "No delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:675
+#: mainWindow/kpMainWindow_File.cpp:676
 #, fuzzy, kde-format
 #| msgid "Paste in &New Window"
 msgid "Hide Main Window"
 msgstr "नए विंडो में चिपकाएँ (&N)"
 
-#: mainWindow/kpMainWindow_File.cpp:729
+#: mainWindow/kpMainWindow_File.cpp:730
 #, kde-format
 msgid "Document Properties"
 msgstr "दस्तावेज़ गुण"
 
-#: mainWindow/kpMainWindow_File.cpp:969
+#: mainWindow/kpMainWindow_File.cpp:970
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "छवि ऐसे सहेजें"
 
-#: mainWindow/kpMainWindow_File.cpp:1017
+#: mainWindow/kpMainWindow_File.cpp:1018
 #, fuzzy, kde-format
 #| msgid "Export"
 msgctxt "@title:window"
 msgid "Export"
 msgstr "निर्यात"
 
-#: mainWindow/kpMainWindow_File.cpp:1081
+#: mainWindow/kpMainWindow_File.cpp:1082
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1640,7 +1640,7 @@ msgstr ""
 "इसको फिर से लोड करने पर पिछली दफा सहेजे जाने के बाद के सभी परिवर्तन गुम हो जाएंगे.\n"
 "क्या आप सुनिश्चित हैं?"
 
-#: mainWindow/kpMainWindow_File.cpp:1091
+#: mainWindow/kpMainWindow_File.cpp:1092
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1651,14 +1651,14 @@ msgstr ""
 "फिर से लोड करने पर सभी परिवर्तन मिट जाएंगे.\n"
 "क्या आप सुनिश्चित हैं?"
 
-#: mainWindow/kpMainWindow_File.cpp:1339
+#: mainWindow/kpMainWindow_File.cpp:1340
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "सम्पूर्ण छवि"
 
-#: mainWindow/kpMainWindow_File.cpp:1419
+#: mainWindow/kpMainWindow_File.cpp:1420
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1667,7 +1667,7 @@ msgstr ""
 "भेजने से पहले आपको छवि को सहेजना होगा.\n"
 "क्या आप इसे सहेजना चाहते हैं?"
 
-#: mainWindow/kpMainWindow_File.cpp:1457
+#: mainWindow/kpMainWindow_File.cpp:1458
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
