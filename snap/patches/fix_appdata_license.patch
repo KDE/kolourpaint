@@ -1,0 +1,13 @@
+diff --git a/org.kde.kolourpaint.appdata.xml b/org.kde.kolourpaint.appdata.xml
+index 0bd66f0d..899691b1 100644
+--- a/org.kde.kolourpaint.appdata.xml
++++ b/org.kde.kolourpaint.appdata.xml
+@@ -2,7 +2,7 @@
+ <component type="desktop">
+   <id>org.kde.kolourpaint.desktop</id>
+   <metadata_license>MIT</metadata_license>
+-  <project_license>BSD-2-Clause and LGPL-2.0+ and GFDL-1.2</project_license>
++  <project_license>BSD-2-Clause AND LGPL-2.0+ AND GFDL-1.2</project_license>
+   <developer id="org.kde">
+     <name translate="no">KDE</name>
+   </developer>

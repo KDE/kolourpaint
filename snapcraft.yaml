@@ -15,7 +15,7 @@ apps:
     desktop: usr/share/applications/org.kde.kolourpaint.desktop
     command: usr/bin/kolourpaint
     plugs:
-      - audio-record
+      - home
 slots:
   session-dbus-interface:
     interface: dbus
@@ -54,6 +54,11 @@ parts:
       - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - --log-level=STATUS
       - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+    override-pull: |
+        craftctl default
+        while read -r PATCHFILE ; do
+            patch -p1 < "$CRAFT_PROJECT_DIR/snap/patches/$PATCHFILE"
+        done < $CRAFT_PROJECT_DIR/snap/patches/series
     prime:
       - -usr/lib/*/cmake/*
       - -usr/include/*
