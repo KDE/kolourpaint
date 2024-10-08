@@ -2,7 +2,7 @@
 # Copyright (C) 2004-2024 This_file_is_part_of_KDE
 #
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005.
-# Josep M. Ferrer <txemaq@gmail.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2020, 2021, 2022, 2023, 2024.
+# SPDX-FileCopyrightText: 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 # Sebastià Pla i Sanz <sps@sastia.com>, 2005.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2016, 2017, 2020.
 msgid ""
@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-07-05 09:29+0200\n"
+"PO-Revision-Date: 2024-10-07 10:12+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -1597,13 +1597,11 @@ msgid "Snapshot Delay"
 msgstr "Retard de la captura de pantalla"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " segon"
-msgstr[1] " segons"
+msgstr[0] "%v segon"
+msgstr[1] "%v segons"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
