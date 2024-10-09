@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-07-05 11:36+0200\n"
+"PO-Revision-Date: 2024-10-08 11:37+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1605,13 +1605,11 @@ msgid "Snapshot Delay"
 msgstr "Vertraging voor schermafdruk"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " seconde"
-msgstr[1] " seconden"
+msgstr[0] "%v seconde"
+msgstr[1] "%v seconden"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
