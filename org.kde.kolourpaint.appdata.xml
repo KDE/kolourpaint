@@ -126,7 +126,7 @@
     <p xml:lang="it">KolourPaint è un semplice programma di disegno per la creazione rapida di immagini. È utile come strumento da usare «al volo» e per effettuare semplici modifiche alle immagini.</p>
     <p xml:lang="ka">KolourPaint მარტივი სახატავი პროგრამაა რასტრული გამოსახულებების ადვილად შესაქმნელად. ის სასარგებლოა გამოსახულებების ჩასასწორებლად.</p>
     <p xml:lang="ko">KolourPaint는 래스터 그림을 빠르게 만드는 프로그램입니다. 간단한 보정 도구 및 편집 도구로 사용할 수 있습니다.</p>
-    <p xml:lang="lv">„KolourPaint“ ir vienkārša zīmēšanas programma, lai ātri izveidotu rastra attēlus. Tā ir arī noderīgs attēla izmainīšanas rīks vienkāršiem rediģēšanas uzdevumiem.</p>
+    <p xml:lang="lv">„KolourPaint“ ir vienkārša zīmēšanas programma ātrai rastra attēlu izveidošanai. Tā ir arī noderīgs attēla izmainīšanas rīks vienkāršiem rediģēšanas uzdevumiem.</p>
     <p xml:lang="nb">KolourPaint er et enkelt maleprogram som kjapt kan lage rasterbilder. Det er et nyttig verktøy for retusjering og enkle redigeringsoppgaver.</p>
     <p xml:lang="nds">KolourPaint is en eenfach Maalprogramm, mit dat sik gau Pixelbiller opstellen laat. Dat is goot för lütte Utbetern un eenfache Bildbewerken.</p>
     <p xml:lang="nl">KolourPaint is een eenvoudig tekenprogramma om snel rasterafbeeldingen te maken. Het is nuttig als een hulpmiddel voor bijwerken en eenvoudige taken voor bewerking van afbeeldingen.</p>
@@ -297,6 +297,7 @@
       <li xml:lang="it">Selettore del colore</li>
       <li xml:lang="ka">ფერის ამრჩევი</li>
       <li xml:lang="ko">색상 선택기</li>
+      <li xml:lang="lv">Krāsu pipete</li>
       <li xml:lang="nl">Kleurkiezer</li>
       <li xml:lang="nn">Fargeveljar</li>
       <li xml:lang="pl">Wybierak barwy</li>
