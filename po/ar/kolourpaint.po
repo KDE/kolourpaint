@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-07-28 12:17+0400\n"
+"PO-Revision-Date: 2024-10-10 08:40+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1578,17 +1578,15 @@ msgid "Snapshot Delay"
 msgstr "تأخير اللقطة:"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " ثانية"
-msgstr[1] " ثانية واحدة"
-msgstr[2] " ثانيتين"
-msgstr[3] " ثواني"
-msgstr[4] "ثانية"
-msgstr[5] " ثانية"
+msgstr[0] "أقل من ثانية"
+msgstr[1] "ثانية واحدة"
+msgstr[2] "ثانيتين"
+msgstr[3] "%v ثواني"
+msgstr[4] "%v ثانية"
+msgstr[5] "%v ثانية"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format

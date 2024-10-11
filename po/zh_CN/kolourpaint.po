@@ -1554,12 +1554,10 @@ msgid "Snapshot Delay"
 msgstr "截图延迟时间"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " 秒"
+msgstr[0] "%v 秒"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
