@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-07-07 00:22+0200\n"
+"PO-Revision-Date: 2024-10-09 13:49+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -1603,13 +1603,11 @@ msgid "Snapshot Delay"
 msgstr "Ritardo della foto"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " secondo"
-msgstr[1] " secondi"
+msgstr[0] "%v secondo"
+msgstr[1] "%v secondi"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
