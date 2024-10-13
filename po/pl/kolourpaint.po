@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-07-20 10:37+0200\n"
+"PO-Revision-Date: 2024-10-12 10:21+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -1599,12 +1599,10 @@ msgid "Snapshot Delay"
 msgstr "Opóźnienie migawki"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " sekunda"
+msgstr[0] "%v sekundzie"
 msgstr[1] " sekundy"
 msgstr[2] " sekund"
 
