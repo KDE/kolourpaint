@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-07-28 00:34+0200\n"
+"PO-Revision-Date: 2024-10-27 14:47+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.11.70\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1585,13 +1585,11 @@ msgid "Snapshot Delay"
 msgstr "Forseinking på skjermbilete"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " sekund"
-msgstr[1] " sekund"
+msgstr[0] "%v sekund"
+msgstr[1] "%v sekund"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
