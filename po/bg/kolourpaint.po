@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-10-07 22:01+0200\n"
+"PO-Revision-Date: 2024-11-09 20:04+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.07.70\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -402,7 +402,7 @@ msgstr "Стойност"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
-msgstr "Стойност \"%1\" на ред %2 изисква ключ."
+msgstr "Стойност „%1“ на ред %2 изисква ключ."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
 #, kde-format
@@ -410,8 +410,8 @@ msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
-"Всички текстови ключове трябва да са уникални. Ключовете \"%1\" на редове %2 "
-"и %3 са еднакви."
+"Всички текстови ключове трябва да са уникални. Ключовете „%1“ на редове %2 и "
+"%3 са еднакви."
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
 #, kde-format
@@ -923,7 +923,7 @@ msgstr[1] "%1 байта (около %2%)"
 #: document/kpDocument_Open.cpp:114
 #, kde-format
 msgid "Could not open \"%1\"."
-msgstr "Грешка при отваряне на \"%1\"."
+msgstr "Грешка при отваряне на „%1“."
 
 #: document/kpDocument_Open.cpp:150
 #, kde-format
@@ -931,7 +931,7 @@ msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
 "The file may be corrupt."
 msgstr ""
-"Грешка при отваряне на \"%1\" - неподдържан формат на изображение.\n"
+"Грешка при отваряне на „%1“ - неподдържан формат на изображение.\n"
 "Файлът може да е повреден."
 
 #: document/kpDocument_Save.cpp:74
@@ -966,9 +966,9 @@ msgid ""
 "color information.</p><p>Are you sure you want to save in this format?</p></"
 "qt>"
 msgstr ""
-"<qt><p>Записът на изображението във формат \"%1\" може да доведе до загуба "
-"на качество.</p><p>Сигурни ли сте, че искате изображението да бъде записано "
-"в този формат?</p></qt>"
+"<qt><p>Записът на изображението във формат „%1“ може да доведе до загуба на "
+"качество.</p><p>Сигурни ли сте, че искате изображението да бъде записано в "
+"този формат?</p></qt>"
 
 #: document/kpDocument_Save.cpp:123
 #, kde-format
@@ -1003,7 +1003,7 @@ msgstr ""
 #: document/kpDocument_Save.cpp:276
 #, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "Грешка при запис като \"%1\": %2"
+msgstr "Грешка при запис като „%1“: %2"
 
 #: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
 #, kde-format
@@ -1283,7 +1283,7 @@ msgstr "Текст"
 #: lgpl/generic/kpColorCollection.cpp:120
 #, kde-format
 msgid "Could not open color palette \"%1\"."
-msgstr "Грешка при отваряне на палитра \"%1\"."
+msgstr "Грешка при отваряне на палитра „%1“."
 
 #: lgpl/generic/kpColorCollection.cpp:153
 #, kde-format
@@ -1291,18 +1291,18 @@ msgid ""
 "Could not open color palette \"%1\" - unsupported format.\n"
 "The file may be corrupt."
 msgstr ""
-"Грешка при отваряне на палитрата \"%1\" - неподдържан формат.\n"
+"Грешка при отваряне на палитрата „%1“ - неподдържан формат.\n"
 "Файлът може да е повреден."
 
 #: lgpl/generic/kpColorCollection.cpp:213
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
-msgstr "Грешка при отваряне на цветова палитра на KDE \"%1\"."
+msgstr "Грешка при отваряне на цветова палитра на KDE „%1“."
 
 #: lgpl/generic/kpColorCollection.cpp:263
 #, kde-format
 msgid "Could not save color palette as \"%1\"."
-msgstr "Грешка при запис на палитрата като \"%1\"."
+msgstr "Грешка при запис на палитрата като „%1“."
 
 #: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
 #: widgets/toolbars/kpColorToolBar.cpp:312
@@ -1368,7 +1368,7 @@ msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"Палитрата \"%1\" е променена.\n"
+"Палитрата „%1“ е променена.\n"
 "Искате ли да се запише?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:212
@@ -1377,7 +1377,7 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"Палитрата на KDE \"%1\" е променена.\n"
+"Палитрата на KDE „%1“ е променена.\n"
 "Искате ли да се запише във файл?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:221
@@ -1402,7 +1402,7 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"Цветовата палитра \"%1\" е променена.\n"
+"Цветовата палитра „%1“ е променена.\n"
 "При презареждане ще се загубят всички промени.\n"
 "Сигурни ли сте, че искате да продължите?"
 
@@ -1421,7 +1421,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"Цветовата палитра на KDE \"%1\" е променена.\n"
+"Цветовата палитра на KDE „%1“ е променена.\n"
 "При презареждане ще се загубят всички промени.\n"
 "Сигурни ли сте, че искате да продължител?"
 
@@ -1632,7 +1632,7 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"Документът \"%1\" е променен \n"
+"Документът „%1“ е променен \n"
 "При презареждане ще се загубят промените след последния запис.\n"
 "Сигурни ли сте, че искате да бъде презареден?"
 
@@ -1643,7 +1643,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"Документът \"%1\" е променен \n"
+"Документът „%1“ е променен \n"
 "При презареждане ще се загубят промените след последния запис.\n"
 "Сигурни ли сте, че искате документът да бъде презареден?"
 
@@ -1668,7 +1668,7 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"Документът \"%1\" е променен.\n"
+"Документът „%1“ е променен.\n"
 "Искате ли да се запише?"
 
 #: mainWindow/kpMainWindow_Image.cpp:117
