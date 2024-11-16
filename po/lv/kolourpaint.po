@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-04-21 19:59+0300\n"
+"PO-Revision-Date: 2024-11-12 20:49+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1584,14 +1584,12 @@ msgid "Snapshot Delay"
 msgstr "Momentuzņēmuma aizture"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " sekunde"
-msgstr[1] " sekundes"
-msgstr[2] " sekunžu"
+msgstr[0] "%v sekunde"
+msgstr[1] "%v sekundes"
+msgstr[2] "%v sekunžu"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
@@ -2017,14 +2015,13 @@ msgid "Zooms in and out of the image"
 msgstr "Tuvina un tālina attēlu"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Klikšķiniet, lai tuvinātu/tālinātu attēlu, vai apvelciet apgabalu, lai to "
-"palielinātu."
+"Klikšķiniet, lai tuvinātu. Veiciet labo klikšķi, lai tālinātu. Velciet, lai "
+"mērogotu noteiktā reģionā."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
