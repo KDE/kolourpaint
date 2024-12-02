@@ -3,17 +3,17 @@
 # Author: Artnay
 # Author: Karvjorm
 # Author: Lliehu
+# SPDX-FileCopyrightText: 2011, 2016, 2018, 2021, 2023, 2024 Tommi Nieminen <translator@legisign.org>
 # Kim Enkovaara <kim.enkovaara@iki.fi>, 2004, 2006.
 # Ilpo Kantonen <ilpo@iki.fi>, 2004.
 # Mikko Piippo <piippo@cc.helsinki.fi>, 2007.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015.
-# Tommi Nieminen <translator@legisign.org>, 2011, 2016, 2018, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2023-12-27 16:19+0200\n"
+"PO-Revision-Date: 2024-11-06 20:50+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -21,8 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-POT-Import-Date: 2012-12-01 22:24:11+0000\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1593,13 +1592,11 @@ msgid "Snapshot Delay"
 msgstr "Kuvankaappauksen viive"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " sekunti"
-msgstr[1] " sekuntia"
+msgstr[0] "%v sekunti"
+msgstr[1] "%v sekuntia"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
@@ -2026,12 +2023,13 @@ msgid "Zooms in and out of the image"
 msgstr "Loitonna ja lähennä kuvaa"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
-msgstr "Lähennä/loitonna napsauttamalla tai lähennä tietty alue vetämällä."
+msgstr ""
+"Lähennä napsauttamalla. Loitonna oikealla painikkeella. Lähennä tiettyyn "
+"alueeseen vetämällä."
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
