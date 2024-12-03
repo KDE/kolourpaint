@@ -1514,7 +1514,7 @@ msgstr "扫描图像..."
 #: mainWindow/kpMainWindow_File.cpp:124
 #, kde-format
 msgid "Acquire Screenshot"
-msgstr "捕获屏幕截图"
+msgstr "截取画面"
 
 #: mainWindow/kpMainWindow_File.cpp:128
 #, kde-format
