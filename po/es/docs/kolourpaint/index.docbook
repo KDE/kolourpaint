@@ -30,7 +30,7 @@
 
 <bookinfo>
 <title
->El manual de &kolourpaint;</title>
+>Manual de &kolourpaint;</title>
 
 <authorgroup>
 <author
@@ -216,9 +216,9 @@
 <para
 >Una <quote
 >captura de pantalla</quote
-> es una instantánea de lo que está en la pantalla de su equipo. Puede ser útil para explicar algunas acciones que deberían hacerse para obtener el resultado, o mostrar el problema que usted ha encontrado. </para>
+> es una instantánea de lo que está en la pantalla de su equipo. Puede ser útil para explicar algunas acciones que deberían hacerse para obtener el resultado, o mostrar el problema que ha encontrado. </para>
 <para
->Para que una captura de pantalla pueda editarse en la ventana de &kolourpaint; usted puede usar la opción <menuchoice
+>Para que una captura de pantalla pueda editarse en la ventana de &kolourpaint; puede usar la opción <menuchoice
 ><guimenu
 >Archivo</guimenu
 > <guimenuitem
@@ -233,11 +233,11 @@
 </inlinemediaobject>
 </para>
 <para
->Usando el diálogo abierto, usted puede cambiar el <guilabel
+>Usando el diálogo abierto, puede cambiar el <guilabel
 >Retraso en la captura de pantalla</guilabel
 > (en segundos) y elegir <guilabel
 >Ocultar la pantalla principal</guilabel
-> durante el proceso de captura. Cuando usted esté listo para tomar la captura de pantalla, solo pulse <guibutton
+> durante el proceso de captura. Cuando esté listo para tomar la captura de pantalla, solo pulse <guibutton
 >Aceptar</guibutton
 >. La captura de pantalla se situará directamente en el área de edición de &kolourpaint;. </para>
 </sect1>
@@ -247,11 +247,11 @@
 >Referencia de herramientas</title>
 
 <para
->Una forma rápida de seleccionar una herramienta en &kolourpaint; es pulsar la tecla de acceso rápido asociada con ella y que se documenta a continuación en los consejos emergentes de <interface
+>Una forma rápida de seleccionar una herramienta en &kolourpaint; es pulsar la tecla de atajo de teclado asociada con ella y que se documenta a continuación en los consejos emergentes de <interface
 >caja de herramientas</interface
->. Usted también puede mantener pulsadas <keycombo action="simul"
+>. También puede mantener pulsadas <keycombo action="simul"
 >&Alt;&Shift;</keycombo
-> mientras pulsa la tecla, lo que será necesario cuando esté escribiendo texto (los accesos rápidos de sola una tecla estarán desactivada). Por ejemplo, para seleccionar la brocha, pulse <keycombo action="simul"
+> mientras pulsa la tecla, lo que será necesario cuando esté escribiendo texto (los atajos de teclado de sola una tecla estarán desactivados). Por ejemplo, para seleccionar la brocha, pulse <keycombo action="simul"
 >&Alt;&Shift;<keycap
 >B</keycap
 ></keycombo
@@ -533,7 +533,7 @@
 
 <entry>
 <para
->Pulse en una de las formas para seleccionar la forma de la brocha. Usted puede utilizar una forma circular, cuadrada, de barra o de barra inversa para la brocha.</para>
+>Pulse en una de las formas para seleccionar la forma de la brocha. Puede utilizar una forma circular, cuadrada, de barra o de barra inversa para la brocha.</para>
 </entry>
 </row>
 </tbody>
@@ -580,7 +580,7 @@
 <para
 >Puede <link linkend="tool-options"
 >fijar el ancho de la línea</link
->. Para polígonos, usted también puede <link linkend="tool-options"
+>. Para polígonos, también puede <link linkend="tool-options"
 >establecer el valor de relleno</link
 >.</para>
 
@@ -596,13 +596,13 @@
 </title>
 
 <para
->Pulse y arrastre para dibujar una línea - esto establece los puntos de comienzo y final. Usted puede configurar hasta dos puntos de control arrastrando el ratón. Para finalizar la curva sin utilizar ambos o ninguno de los puntos de control, pulse el otro botón del ratón. La herramienta de curvas dibuja un Bezier cúbico.</para>
+>Pulse y arrastre para dibujar una línea - esto establece los puntos de comienzo y final. Puede configurar hasta dos puntos de control arrastrando el ratón. Para finalizar la curva sin utilizar ambos o ninguno de los puntos de control, pulse el otro botón del ratón. La herramienta de curvas dibuja un Bezier cúbico.</para>
 
 <para
 >El &LMB; dibuja en el color de primer plano, mientras que el &RMB; dibuja en el color de fondo.</para>
 
 <para
->Usted también puede <link linkend="tool-options"
+>También puede <link linkend="tool-options"
 >establecer el grosor de la línea</link
 >.</para>
 
@@ -624,7 +624,7 @@
 >El &LMB; dibuja en el color de primer plano. El &RMB; lo hace en el color de fondo e invertirá el color de relleno.</para>
 
 <para
->Usted puede también <link linkend="tool-options"
+>También puede <link linkend="tool-options"
 >fijar el grosor de la línea y el estilo de relleno</link
 >.</para>
 
@@ -706,7 +706,7 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 </note>
 
 <para
->Usted puede configurar el <link linkend="tool-options"
+>Puede configurar el <link linkend="tool-options"
 >tamaño del borrador</link
 >.</para>
 
@@ -752,7 +752,7 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 >El &LMB; dibuja en el color de primer plano, mientras que el &RMB; dibuja en el color de fondo.</para>
 
 <para
->Usted también puede <link linkend="tool-options"
+>También puede <link linkend="tool-options"
 >establecer el grosor de la línea</link
 >.</para>
 
@@ -824,7 +824,7 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 >El &LMB; dibuja en el color de primer plano. El &RMB; lo hace en el color de fondo e invertirá el color de relleno.</para>
 
 <para
->Usted puede también <link linkend="tool-options"
+>También puede <link linkend="tool-options"
 >fijar el grosor de la línea y el estilo de relleno</link
 >.</para>
 
@@ -864,7 +864,7 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 >Para mover la selección pulse y arrástrelo. La vista principal puede desplazarse siempre que sea preciso para permitirle mover la selección a la parte de la imagen que no se esté mostrando en ese momento.</para>
 
 <para
->Usted puede <link linkend="image-resize-scale"
+>Puede <link linkend="image-resize-scale"
 >Redimensionar</link
 > la imagen entera o <link linkend="image-resize-scale"
 >Escalar suavemente</link
@@ -876,11 +876,11 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 
 <tip>
 <para
->Usted puede utilizar los cursores para dibujar la frontera de la selección o para moverla.</para>
+>Puede utilizar los cursores para dibujar la frontera de la selección o para moverla.</para>
 </tip>
 
 <para
->Si usted mantiene pulsado &Ctrl; antes de mover la selección moverá una copia de ella. Si mantiene pulsado &Shift; antes de mover la selección, dejará un rastro tras ella. </para>
+>Si mantiene pulsada la tecla &Ctrl; antes de mover la selección moverá una copia de ella. Si mantiene pulsada la tecla &Shift; antes de mover la selección, dejará un rastro tras ella. </para>
 
 <informaltable>
 <tgroup cols="2">
@@ -906,7 +906,7 @@ format="PNG"/>
 </informaltable>
 
 <para
->Usted puede aplicar efectos de imagen a una selección. Vea la sección <link linkend="image-effects-section"
+>Puede aplicar efectos de imagen a una selección. Vea la sección <link linkend="image-effects-section"
 >Efectos de imagen</link
 > para más información.</para>
 
@@ -947,7 +947,7 @@ format="PNG"/>
 </entry>
 <entry>
 <para
->Pulse en uno de los cuadrados para seleccionar el tamaño aerógrafo. Usted puede seleccionar los siguientes tamaños: 9x9, 17x17 y 29x29.</para>
+>Pulse en uno de los cuadrados para seleccionar el tamaño aerógrafo. Puede seleccionar los siguientes tamaños: 9x9, 17x17 y 29x29.</para>
 </entry>
 </row>
 </tbody>
@@ -975,7 +975,7 @@ format="PNG"/>
 
 <tip>
 <para
->Si usted ha deseleccionado un área de texto, puede utilizar <guimenuitem
+>Si ha deseleccionado un área de texto, puede utilizar <guimenuitem
 >Deshacer</guimenuitem
 > para editar el texto de nuevo.</para>
 </tip>
@@ -1045,7 +1045,7 @@ format="PNG"/>
 </entry>
 <entry>
 <para
->Pulse en uno de los cuadrados para seleccionar el tamaño del borrador. Usted puede seleccionar cuadrados de lado 2, 3, 5, 9, 17 y 29 píxeles.</para>
+>Pulse en uno de los cuadrados para seleccionar el tamaño del borrador. Puede seleccionar cuadrados de lado 2, 3, 5, 9, 17 y 29 píxeles.</para>
 
 <para
 >El tamaño de borrado afecta a los <link linkend="tool-erasers"
@@ -1063,7 +1063,7 @@ format="PNG"/>
 </entry>
 <entry>
 <para
->Pulse en una de las líneas para seleccionar el grosor de la línea. Usted puede seleccionar entre anchuras de 1, 2, 3, 5 y 8 píxel(s).</para>
+>Pulse en una de las líneas para seleccionar el grosor de la línea. Puede seleccionar entre anchuras de 1, 2, 3, 5 y 8 píxel(s).</para>
 
 <para
 >La opción de grosor de línea afecta a las herramientas de <link linkend="tool-polystar"
@@ -1093,7 +1093,7 @@ format="PNG"/>
 </entry>
 <entry>
 <para
->Pulse en uno de los rectángulos para seleccionar el estilo de relleno. Usted puede seleccionarlo entre «Sin relleno», «Relleno con color de fondo» y «Relleno con color de primer plano».</para
+>Pulse en uno de los rectángulos para seleccionar el estilo de relleno. Puede seleccionarlo entre «Sin relleno», «Relleno con color de fondo» y «Relleno con color de primer plano».</para
 > <para
 >La opción de estilo de relleno afecta a las herramientas de <link linkend="tool-ellipse"
 >Elipse</link
@@ -1139,7 +1139,7 @@ format="PNG"/>
 <para
 >La Tableta de color muestra el color de primer plano actual como un cuadrado encima de otro cuadrado que representa el color de fondo. Cuando se dibuja con el &LMB; se emplea el color de primer plano, mientras que si lo hace con el &RMB; se utiliza el color de fondo (excepto para los <link linkend="tool-erasers"
 >Borradores</link
->). Usted puede pulsar en la línea con flechas a ambos lados para intercambiar el color de primer plano y el de fondo. </para>
+>). Puede pulsar en la línea con flechas a ambos lados para intercambiar el color de primer plano y el de fondo. </para>
 
 <para
 >La Paleta de color muestra una selección de colores para que elija. La pirámide traslúcida representa el color transparente. Pulse con el botón izquierdo del ratón en un color para seleccionarlo como color de primer plano y pulse con el botón derecho para seleccionarlo como color de fondo. Puede también arrastrar y soltar cualquier color opaco en los cuadrados de la Tableta de color. Para editar un color en la Tableta de color o la Paleta, pulse dos veces en ella. La herramienta <link linkend="tool-color-picker"
@@ -1342,7 +1342,7 @@ format="PNG"/>
 >Autorecorte / Eliminar borde interno</title>
 
 <para
->Elimina automáticamente el borde de una imagen o selección. Utilice Autorecorte si usted tiene una figura que no rellena la imagen completa y desea eliminar el espacio sobrante. Para usar esta característica con una imagen con un borde difuminado, usted necesitara emplear también <link linkend="color-box"
+>Elimina automáticamente el borde de una imagen o selección. Utilice Autorecorte si tiene una figura que no rellena la imagen completa y desea eliminar el espacio sobrante. Para usar esta característica con una imagen con un borde difuminado, necesitara emplear también <link linkend="color-box"
 >Similitud de colores</link
 >.</para>
 
@@ -1467,7 +1467,7 @@ format="PNG"/>
 
 <tip>
 <para
->Para invertir rápidamente todos los canales, usted no necesita utilizar este diálogo. Usted puede acceder al elemento <guimenuitem
+>Para invertir rápidamente todos los canales, no necesita utilizar este diálogo. Puede acceder al elemento <guimenuitem
 >Invertir colores</guimenuitem
 > en el menú <guimenu
 >Imagen</guimenu
@@ -1475,7 +1475,7 @@ format="PNG"/>
 >Selección</guimenu
 >. El elemento <guimenu
 >Selección</guimenu
-> solo se muestra en la barra de menú si usted utiliza una de las herramientas de selección. Además, usted puede acceder a esta acción desde el menú de contexto abierto con un &RMB; pulsando en el área de la imagen. </para>
+> solo se muestra en la barra de menú si utiliza una de las herramientas de selección. Además, puede acceder a esta acción desde el menú de contexto abierto con un &RMB; pulsando en el área de la imagen. </para>
 </tip>
 
 </sect1>
@@ -1509,7 +1509,7 @@ format="PNG"/>
 >Reduce el número de colores utilizados por la imagen o la selección, con o sin difuminado. </para>
 
 <para
->El difuminado, generalmente proporciona mejor calidad en los resultados, sin embargo, usted puede desactivar esto para obtener efectos artísticos, &eg; utilizando <guilabel
+>El difuminado, generalmente proporciona mejor calidad en los resultados, sin embargo, puede desactivar esto para obtener efectos artísticos, &eg; utilizando <guilabel
 >Monocromo</guilabel
 > en lugar de <guilabel
 >Monocromo (difuminado)</guilabel
@@ -1532,12 +1532,12 @@ format="PNG"/>
 >Selección</guimenu
 >. La opción <guimenu
 >Selección</guimenu
-> solo se muestra en la barra de menú si usted usa una de las herramientas de selección. Además, usted puede acceder a esta acción desde el menú de contexto abierto con un &RMB; pulsando en el área de la imagen. </para>
+> solo se muestra en la barra de menú si usa una de las herramientas de selección. Además, puede acceder a esta acción desde el menú de contexto abierto con un &RMB; pulsando en el área de la imagen. </para>
 </tip>
 
 <note>
 <para
->Cambiar el número de colores aquí no tendrá ningún efecto en la profundidad de color del formato de archivo. Si usted desea cambiar la profundidad de color, debería seleccionarla en el diálogo de guardado de archivos. Tenga en cuenta, que el cambio de la profundidad de color también afectará al número de colores. </para>
+>Cambiar el número de colores aquí no tendrá ningún efecto en la profundidad de color del formato de archivo. Si desea cambiar la profundidad de color, debería seleccionarla en el diálogo de guardado de archivos. Tenga en cuenta, que el cambio de la profundidad de color también afectará al número de colores. </para>
 </note>
 </sect1>
 
@@ -1559,7 +1559,7 @@ format="PNG"/>
 
 <tip>
 <para
->Si usted no desea difuminar la imagen o selección utilice el diálogo <link linkend="image-reduce-colors"
+>Si no desea difuminar la imagen o selección utilice el diálogo <link linkend="image-reduce-colors"
 >Reducir colores</link
 >. </para>
 </tip>
@@ -1583,13 +1583,13 @@ format="PNG"/>
 >, generalmente proporciona unos mejores resultados de calidad que utilizando Escalado, al mezclarse con los colores vecinos.</para>
 
 <para
->Usted puede expresar las nuevas dimensiones en píxeles, o como porcentaje del tamaño original. Si selecciona <guilabel
+>Puede expresar las nuevas dimensiones en píxeles, o como porcentaje del tamaño original. Si selecciona <guilabel
 >Mantener proporción</guilabel
 >, la anchura y altura serán escalados en el mismo porcentaje.</para>
 
 <tip>
 <para
->Usted puede <guibutton
+>Puede <guibutton
 >Redimensionar</guibutton
 > la imagen entera o <guibutton
 >Escalar suavemente</guibutton
@@ -1617,11 +1617,11 @@ format="PNG"/>
 </para>
 
 <para
->Rota la imagen. Usted puede especificar un ángulo y dirección de rotación.</para>
+>Rota la imagen. Puede especificar un ángulo y dirección de rotación.</para>
 
 <tip>
 <para
->Usted puede invertir la dirección de rotación si especifica un ángulo negativo.</para>
+>Puede invertir la dirección de rotación si especifica un ángulo negativo.</para>
 </tip>
 
 <note>
@@ -1641,7 +1641,7 @@ format="PNG"/>
 
 <note>
 <para
->Solo está disponible cuando usted tiene una selección activa.</para>
+>Solo está disponible cuando tiene una selección activa.</para>
 </note>
 </sect1>
 
@@ -1721,10 +1721,10 @@ user selects the next page, the next page should be Autocrop / Remove Internal B
 >Rotar</link
 > y <link linkend="image-skew"
 >Deformar</link
-> pueden cambiar las dimensiones de la imagen. Usted puede ver las nuevas dimensiones en el cuadro de diálogo.</para>
+> pueden cambiar las dimensiones de la imagen. Puede ver las nuevas dimensiones en el cuadro de diálogo.</para>
 
 <para
->Si usted aplica estos efectos a una imagen, la imagen se redimensionará si es necesario. Sin embargo, si aplica estos efectos a una selección, la imagen no será redimensionada, aun cuando la selección transformada no encaje.</para>
+>Si aplica estos efectos a una imagen, la imagen se redimensionará si es necesario. Sin embargo, si aplica estos efectos a una selección, la imagen no será redimensionada, aun cuando la selección transformada no encaje.</para>
 
 <para>
 <inlinemediaobject>
