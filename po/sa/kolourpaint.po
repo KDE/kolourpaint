@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-12-13 20:25+0530\n"
+"PO-Revision-Date: 2024-12-14 01:10+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -22,12 +22,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
@@ -230,8 +230,8 @@ msgstr "%1: %2"
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 अधिकं द्रव्यम्"
+msgstr[1] "%1 अधिकानि वस्तूनि"
 
 #: commands/tools/kpToolColorPickerCommand.cpp:59
 #: tools/kpToolColorPicker.cpp:45
@@ -248,13 +248,13 @@ msgstr "जलप्रलयः पूरयतु"
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects (Selection)"
-msgstr ""
+msgstr "अधिकानि चित्रप्रभावाः (चयनम्)"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects"
-msgstr ""
+msgstr "अधिकानि चित्रप्रभावाः"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
 #, kde-format
@@ -292,7 +292,7 @@ msgstr "अनिर्दिष्टम्"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " x "
-msgstr ""
+msgstr " x "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
@@ -415,7 +415,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Text Fields"
-msgstr ""
+msgstr "अमान्यपाठक्षेत्राणि"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
@@ -453,7 +453,7 @@ msgstr "&अद्यतन"
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
-msgstr ""
+msgstr "आकार परिवर्तन / स्केल"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
 #, kde-format
@@ -569,7 +569,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
-msgstr ""
+msgstr "पाठपेटिकायाः आकारं परिवर्तयतु?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
 #, kde-format
@@ -593,7 +593,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
-msgstr ""
+msgstr "चित्रस्य आकारं परिवर्तयतु?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
 #: mainWindow/kpMainWindow_Tools.cpp:663
@@ -616,7 +616,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
-msgstr ""
+msgstr "स्केल इमेज?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
 #, kde-format
@@ -639,7 +639,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
-msgstr ""
+msgstr "स्केल चयनम् ?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
 #, kde-format
@@ -662,7 +662,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
-msgstr ""
+msgstr "चिकनी स्केल इमेज?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
 #, kde-format
@@ -685,7 +685,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
-msgstr ""
+msgstr "स्मूथ स्केल चयन?"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
 #, kde-format
@@ -696,13 +696,13 @@ msgstr "चिकनी स्केल&e चयन"
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection"
-msgstr ""
+msgstr "चयनं परिभ्रमन्तु"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image"
-msgstr ""
+msgstr "चित्रं परिभ्रमन्तु"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
 #, kde-format
@@ -773,7 +773,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection?"
-msgstr ""
+msgstr "चयनं परिभ्रमन्तु ?"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
 #, kde-format
@@ -795,7 +795,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image?"
-msgstr ""
+msgstr "चित्रं परिभ्रमन्तु ?"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
 #, kde-format
@@ -806,13 +806,13 @@ msgstr "चित्रं परिभ्रमन्तु"
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection"
-msgstr ""
+msgstr "तिर्यक् चयनम्"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image"
-msgstr ""
+msgstr "तिर्यक् प्रतिमा"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
 #, kde-format
@@ -845,7 +845,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection?"
-msgstr ""
+msgstr "तिर्यक् चयनम् ?"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
 #, kde-format
@@ -867,7 +867,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image?"
-msgstr ""
+msgstr "तिर्यक् प्रतिमा ?"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
 #, kde-format
@@ -878,7 +878,7 @@ msgstr "Sk&ew इमेज"
 #, kde-format
 msgctxt "@title:window"
 msgid "Color Similarity"
-msgstr ""
+msgstr "वर्णसादृश्यम्"
 
 #: dialogs/kpColorSimilarityDialog.cpp:75
 #, kde-format
@@ -899,14 +899,14 @@ msgstr "<a href=\"dummy_to_make_link_clickable\">वर्णसादृश्�
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Preview"
-msgstr ""
+msgstr "पूर्वावलोकनं रक्षतु"
 
 #: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:126
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ बाइट् (लगभग %2%) २."
+msgstr[1] "%1 बाइट् (लगभग %2%) ."
 
 #: document/kpDocument_Open.cpp:114
 #, kde-format
@@ -945,7 +945,7 @@ msgstr "<रिक्त>"
 #, kde-format
 msgctxt "@title:window"
 msgid "Internal Error"
-msgstr ""
+msgstr "आन्तरिकदोषः"
 
 #: document/kpDocument_Save.cpp:116
 #, kde-format
@@ -961,7 +961,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Lossy File Format"
-msgstr ""
+msgstr "हानियुक्त सञ्चिका प्रारूप"
 
 #: document/kpDocument_Save.cpp:132
 #, kde-format
@@ -978,7 +978,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Low Color Depth"
-msgstr ""
+msgstr "न्यूनवर्णगहनता"
 
 #: document/kpDocument_Save.cpp:268
 #, kde-format
@@ -1032,7 +1032,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
-msgstr ""
+msgstr "आन्तरिकसीमाम् अपसारयितुं न शक्नोति"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:631
 #, kde-format
@@ -1046,7 +1046,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
-msgstr ""
+msgstr "Autocrop कर्तुं न शक्यते"
 
 #: imagelib/transforms/kpTransformCrop.cpp:69
 #: imagelib/transforms/kpTransformCrop.cpp:72
@@ -1238,7 +1238,7 @@ msgstr "&सम्पादन"
 #, kde-format
 msgctxt "@title:window"
 msgid "Thumbnail"
-msgstr ""
+msgstr "लघुचित्रम्"
 
 #: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
 #: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
@@ -1301,13 +1301,13 @@ msgstr "KolourPaint Defaults इत्यस्य उपयोगं कुर�
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
-msgstr ""
+msgstr "KDE इत्यस्य उपयोगं कुर्वन्तु"
 
 #: mainWindow/kpMainWindow_Colors.cpp:78
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
-msgstr ""
+msgstr "&उद्घाटित..."
 
 #: mainWindow/kpMainWindow_Colors.cpp:82
 #, kde-format
@@ -1319,25 +1319,25 @@ msgstr "रेलोआ&ड"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
-msgstr ""
+msgstr "&रक्ष्"
 
 #: mainWindow/kpMainWindow_Colors.cpp:92
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
-msgstr ""
+msgstr "Save &As..."
 
 #: mainWindow/kpMainWindow_Colors.cpp:97
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
-msgstr ""
+msgstr "पङ्क्तिं योजयतु"
 
 #: mainWindow/kpMainWindow_Colors.cpp:102
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
-msgstr ""
+msgstr "अन्तिमपङ्क्तिं विलोपयतु"
 
 #: mainWindow/kpMainWindow_Colors.cpp:115
 #, kde-format
@@ -1375,7 +1375,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
-msgstr ""
+msgstr "रङ्गपैलेट् उद्घाटयतु"
 
 #: mainWindow/kpMainWindow_Colors.cpp:369
 #, kde-format
@@ -1493,13 +1493,13 @@ msgstr "चयनम् : अचयनम्"
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
-msgstr ""
+msgstr "सञ्चिकायां प्रतिलिपिं कुर्वन्तु"
 
 #: mainWindow/kpMainWindow_Edit.cpp:899
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
-msgstr ""
+msgstr "सञ्चिकातः चिनोतु"
 
 #: mainWindow/kpMainWindow_File.cpp:105
 #, kde-format
@@ -1510,7 +1510,7 @@ msgstr "निर्यात..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "अन्यसञ्चिकायां निर्यातयन्तु"
 
 #: mainWindow/kpMainWindow_File.cpp:109
 #, kde-kuit-format
@@ -1521,6 +1521,9 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"एतेन दस्तावेजं भिन्ननाम्ना रक्षितं भवति, <interface>Save As</interface> इत्यस्य सदृशं, "
+"परन्तु वर्तमानदस्तावेजं परिवर्तनं न भवति ।<nl/>एवं भवन्तः अन्तिमप्रयुक्तं रक्षणपुटं स्वतन्त्रं "
+"स्थापयितुं शक्नुवन्ति वर्तमान दस्तावेज।"
 
 #: mainWindow/kpMainWindow_File.cpp:115
 #, kde-format
@@ -1551,7 +1554,7 @@ msgstr "सर्वाणि समर्थितसञ्चिकाः (%1)
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
-msgstr ""
+msgstr "चित्रं उद्घाटयतु"
 
 #: mainWindow/kpMainWindow_File.cpp:552
 #, kde-format
@@ -1562,7 +1565,7 @@ msgstr "स्कैनिङ्ग संवादं उद्घाटयि�
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
-msgstr ""
+msgstr "स्कैनिङ्ग विफलम्"
 
 #: mainWindow/kpMainWindow_File.cpp:670
 #, kde-format
@@ -1573,8 +1576,8 @@ msgstr "स्नैपशॉट विलम्ब"
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%v द्वितीयः"
+msgstr[1] "%v सेकण्ड्"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
@@ -1595,13 +1598,13 @@ msgstr "दस्तावेज गुणाः"
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
-msgstr ""
+msgstr "चित्रं यथा रक्षन्तु"
 
 #: mainWindow/kpMainWindow_File.cpp:1018
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
-msgstr ""
+msgstr "निर्यात"
 
 #: mainWindow/kpMainWindow_File.cpp:1082
 #, kde-format
@@ -1629,7 +1632,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
-msgstr ""
+msgstr "चित्रं मुद्रयन्तु"
 
 #: mainWindow/kpMainWindow_File.cpp:1420
 #, kde-format
@@ -1733,7 +1736,7 @@ msgctxt ""
 "Image/Selection Menu caption - make sure that translation has the same accel "
 "as the &Image translation"
 msgid "Select&ion"
-msgstr ""
+msgstr "चयन&आयन"
 
 #: mainWindow/kpMainWindow_Settings.cpp:66
 #, kde-format
@@ -1867,7 +1870,7 @@ msgstr "&ज़ूम"
 #, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr ""
+msgstr "प्रतिबिम्बं अधिगन्तुम्"
 
 #: scan/sanedialog.cpp:73
 #, kde-format
@@ -2005,6 +2008,7 @@ msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
+"जूम कर्तुं क्लिक् कुर्वन्तु जूम आउट् कर्तुं राइट्-क्लिक् कुर्वन्तु। विशिष्टक्षेत्रे जूम कर्तुं कर्षन्तु ।"
 
 #: tools/polygonal/kpToolCurve.cpp:103
 #, kde-format
@@ -2504,7 +2508,7 @@ msgstr "&संतृप्ति: १."
 #, kde-format
 msgctxt "The V of HSV"
 msgid "&Value:"
-msgstr ""
+msgstr "&मूल्यम्‌:"
 
 #: widgets/imagelib/effects/kpEffectInvertWidget.cpp:57
 #, kde-format
@@ -2628,7 +2632,7 @@ msgstr "२४-बिट् रङ्गः"
 #, kde-format
 msgctxt "@title:tab"
 msgid "I&mage Position"
-msgstr ""
+msgstr "I&mage स्थितिः"
 
 #: widgets/kpPrintDialogPage.cpp:59
 #, kde-format
@@ -2650,13 +2654,13 @@ msgstr "पारदर्शी"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Panels अनलॉक करें"
 
 #: widgets/toolbars/kpColorToolBar.cpp:122
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "ताला फलकम्"
 
 #: widgets/toolbars/kpColorToolBar.cpp:125
 #, kde-kuit-format
@@ -2667,6 +2671,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"एतत् पटलानां <emphasis>locked</emphasis> अथवा <emphasis>unlocked</emphasis> "
+"इति मध्ये स्विच् भवति ।<nl/>अनलॉक्ड् panels विण्डो इत्यस्य परे पार्श्वे कर्षितुं शक्यते तथा च "
+"close button भवति ।<nl/>Locked पटलाः अधिकं स्वच्छतया निहिताः भवन्ति।"
 
 #: widgets/toolbars/kpColorToolBar.cpp:307
 #, kde-format
@@ -2677,13 +2684,13 @@ msgstr "KolourPaint पूर्वनिर्धारित"
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette"
 msgid "Colors: %1"
-msgstr ""
+msgstr "वर्णाः %1"
 
 #: widgets/toolbars/kpColorToolBar.cpp:329
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette [modified]"
 msgid "Colors: %1 [modified]"
-msgstr ""
+msgstr "वर्णाः %1 [संशोधितम्] ।"
 
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
 #, kde-format
