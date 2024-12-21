@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2024-12-19 21:41+0530\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -458,7 +458,7 @@ msgstr "आकार परिवर्तन / स्केल"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
 #, kde-format
 msgid "Ac&t on:"
-msgstr "Ac&t on: १."
+msgstr "Ac&t on:"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
 #, kde-format
@@ -539,7 +539,7 @@ msgstr "&नूतनम्‌:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:304
 #, kde-format
 msgid "&Percent:"
-msgstr "&प्रतिशत : १."
+msgstr "&प्रतिशत :"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:310
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:319
@@ -707,7 +707,7 @@ msgstr "चित्रं परिभ्रमन्तु"
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
 #, kde-format
 msgid "After rotate:"
-msgstr "परिभ्रमणानन्तरं : १."
+msgstr "परिभ्रमणानन्तरं :"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
 #, kde-format
@@ -817,7 +817,7 @@ msgstr "तिर्यक् प्रतिमा"
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
 #, kde-format
 msgid "After skew:"
-msgstr "तिर्यक्करणस्य अनन्तरं : १."
+msgstr "तिर्यक्करणस्य अनन्तरं :"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
 #, kde-format
@@ -905,7 +905,7 @@ msgstr "पूर्वावलोकनं रक्षतु"
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
-msgstr[0] "१ बाइट् (लगभग %2%) २."
+msgstr[0] "१ बाइट् (लगभग %2%)"
 msgstr[1] "%1 बाइट् (लगभग %2%) ."
 
 #: document/kpDocument_Open.cpp:114
@@ -1190,7 +1190,7 @@ msgstr "दत्त आकारस्य उपयोगेन नूतनप
 #: kolourpaint.cpp:97
 #, kde-format
 msgid "[width]x[height]"
-msgstr "[विस्तार]x[उच्चता] २."
+msgstr "[विस्तार]x[उच्चता]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1665,12 +1665,12 @@ msgstr "Se&t as Image (Crop) इति ."
 #: mainWindow/kpMainWindow_Image.cpp:133
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "&फ्लिप (उल्टा) २."
+msgstr "&फ्लिप (उल्टा)"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "Mirror (horizontally)"
-msgstr "दर्पणः (क्षैतिजरूपेण) २."
+msgstr "दर्पणः (क्षैतिजरूपेण)"
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
@@ -1774,7 +1774,7 @@ msgstr "%1bpp"
 #: mainWindow/kpMainWindow_View_Zoom.cpp:88
 #, kde-format
 msgid "%1%"
-msgstr "%1% २."
+msgstr "%1%"
 
 #: mainWindow/kpMainWindow_Text.cpp:56
 #, kde-format
@@ -2164,7 +2164,7 @@ msgstr "चयनम् : पारदर्शिता वर्णसाद�
 #: tools/selection/image/kpToolEllipticalSelection.cpp:42
 #, kde-format
 msgid "Selection (Elliptical)"
-msgstr "चयनम् (अण्डाकारम्) २."
+msgstr "चयनम् (अण्डाकारम्)"
 
 #: tools/selection/image/kpToolEllipticalSelection.cpp:43
 #, kde-format
@@ -2174,7 +2174,7 @@ msgstr "अण्डाकारं वा वृत्ताकारं वा
 #: tools/selection/image/kpToolFreeFormSelection.cpp:45
 #, kde-format
 msgid "Selection (Free-Form)"
-msgstr "चयनम् (Free-Form) ९."
+msgstr "चयनम् (Free-Form)"
 
 #: tools/selection/image/kpToolFreeFormSelection.cpp:46
 #, kde-format
@@ -2184,7 +2184,7 @@ msgstr "मुक्तरूपचयनं करोति"
 #: tools/selection/image/kpToolRectSelection.cpp:40
 #, kde-format
 msgid "Selection (Rectangular)"
-msgstr "चयनम् (आयताकारम्) २."
+msgstr "चयनम् (आयताकारम्)"
 
 #: tools/selection/image/kpToolRectSelection.cpp:41
 #, kde-format
@@ -2420,7 +2420,7 @@ msgstr ""
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
 #, kde-format
 msgid "&Brightness:"
-msgstr "&कान्तिः : १."
+msgstr "&कान्तिः :"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
 #, kde-format
@@ -2435,7 +2435,7 @@ msgstr "विप्रकर्ष:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:70
 #, kde-format
 msgid "&Gamma:"
-msgstr "&गम्मा: १."
+msgstr "&गम्मा:"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
 #, kde-format
@@ -2445,7 +2445,7 @@ msgstr "Rese&t"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
 #, kde-format
 msgid "C&hannels:"
-msgstr "C& व्यापाराः : १."
+msgstr "C& व्यापाराः :"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:88
 #, kde-format
@@ -2497,12 +2497,12 @@ msgstr "वर्णाः"
 #: widgets/imagelib/effects/kpEffectHSVWidget.cpp:47
 #, kde-format
 msgid "&Hue:"
-msgstr "&हुए: १."
+msgstr "&हुए:"
 
 #: widgets/imagelib/effects/kpEffectHSVWidget.cpp:48
 #, kde-format
 msgid "&Saturation:"
-msgstr "&संतृप्ति: १."
+msgstr "&संतृप्ति:"
 
 #: widgets/imagelib/effects/kpEffectHSVWidget.cpp:49
 #, kde-format
@@ -2543,7 +2543,7 @@ msgstr "&एकवर्णीय"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
 #, kde-format
 msgid "Mo&nochrome (dithered)"
-msgstr "मो&नोक्रोम (डिथर) २."
+msgstr "मो&नोक्रोम (डिथर)"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
 #, kde-format
@@ -2553,7 +2553,7 @@ msgstr "२५६ सह&लोराः"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:62
 #, kde-format
 msgid "256 colo&r (dithered)"
-msgstr "२५६ वर्ण&र (डिथेर) २."
+msgstr "२५६ वर्ण&र (डिथेर)"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
 #, kde-format
@@ -2568,7 +2568,7 @@ msgstr "Reduce To इति"
 #: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:54
 #, kde-format
 msgid "&Granularity:"
-msgstr "&कणिकात्वम् : १."
+msgstr "&कणिकात्वम् :"
 
 #: widgets/kpColorCells.cpp:195
 #, kde-format
@@ -2611,7 +2611,7 @@ msgstr "एकवर्णीयः"
 #: widgets/kpDocumentSaveOptionsWidget.cpp:224
 #, kde-format
 msgid "Monochrome (Dithered)"
-msgstr "एकवर्णीय (Dithered) २."
+msgstr "एकवर्णीय (Dithered)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:228
 #, kde-format
@@ -2621,7 +2621,7 @@ msgstr "२५६ वर्णः"
 #: widgets/kpDocumentSaveOptionsWidget.cpp:229
 #, kde-format
 msgid "256 Color (Dithered)"
-msgstr "२५६ वर्ण (Dithered) २."
+msgstr "२५६ वर्ण (Dithered)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:234
 #, kde-format
