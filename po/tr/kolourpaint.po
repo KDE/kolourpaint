@@ -465,7 +465,7 @@ msgstr "Günce&lle"
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
-msgstr "Yeniden Boyutlandır / Ölçekle"
+msgstr "Yeniden Boyutlandır/Ölçekle"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
 #, kde-format
@@ -583,7 +583,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
-msgstr "Metin Kutusu Yeniden Boyutlandırılsın mı?"
+msgstr "Metin Kutusunu Yeniden Boyutlandır"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
 #, kde-format
@@ -608,7 +608,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
-msgstr "Görsel Yeniden Boyutlandırılsın mı?"
+msgstr "Görseli Yeniden Boyutlandır"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
 #: mainWindow/kpMainWindow_Tools.cpp:663
@@ -632,7 +632,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
-msgstr "Görsel Ölçeklensin mi?"
+msgstr "Görseli Ölçeklendir"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
 #, kde-format
@@ -656,7 +656,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
-msgstr "Seçim Ölçeklensin mi?"
+msgstr "Seçimi Ölçeklendir"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
 #, kde-format
@@ -680,7 +680,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
-msgstr "Görsel Yumuşak Ölçeklendirilsin mi?"
+msgstr "Görseli Pürüzsüzce Ölçeklendir"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
 #, kde-format
@@ -704,7 +704,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
-msgstr "Seçim Yumuşak şekilde Ölçeklensin mi?"
+msgstr "Seçimi Pürüzsüzce Ölçeklendir"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
 #, kde-format
@@ -793,7 +793,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection?"
-msgstr "Seçim Döndürülsün mü?"
+msgstr "Seçimi Döndür"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
 #, kde-format
@@ -816,7 +816,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image?"
-msgstr "Görsel Döndürülsün mü?"
+msgstr "Görseli Döndür"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
 #, kde-format
@@ -838,7 +838,7 @@ msgstr "Görseli Bük"
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
 #, kde-format
 msgid "After skew:"
-msgstr "Büktükten sonra:"
+msgstr "Büküldükten sonra:"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
 #, kde-format
@@ -867,7 +867,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection?"
-msgstr "Seçimi Bükülsün mü?"
+msgstr "Seçimi Bük"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
 #, kde-format
@@ -890,7 +890,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image?"
-msgstr "Görsel Bükülsün mü?"
+msgstr "Görseli Bük"
 
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
 #, kde-format
@@ -1054,7 +1054,7 @@ msgstr "RenkliBoya bulunamadığı için seçimin iç kenarını kaldıramadı."
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
-msgstr "İç Kenarlık Kaldırılamadı"
+msgstr "İç Kenarlık Kaldırılamıyor"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:631
 #, kde-format
@@ -1069,7 +1069,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
-msgstr "Otomatik olarak Kırpılamadı"
+msgstr "Kendiliğinden Kırpılamıyor"
 
 #: imagelib/transforms/kpTransformCrop.cpp:69
 #: imagelib/transforms/kpTransformCrop.cpp:72
@@ -1399,7 +1399,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
-msgstr "Renk Paletini Aç"
+msgstr "Renk Paleti Aç"
 
 #: mainWindow/kpMainWindow_Colors.cpp:369
 #, kde-format
