@@ -139,7 +139,7 @@ to explain some actions that should be done to obtain the result, or to show the
 </para>
 <para>
 Using the opened dialog you can change <guilabel>Screenshot Delay</guilabel> (in seconds), and choose
-to <guilabel>Hide Main Window</guilabel> during screenshoting. When you are ready to take screenshot 
+to <guilabel>Hide Main Window</guilabel> during screenshotting. When you are ready to take a screenshot
 just click <guibutton>OK</guibutton>. The screenshot taken will be placed directly into the &kolourpaint;
 editing area.
 </para>
