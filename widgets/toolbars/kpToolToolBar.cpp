@@ -148,6 +148,10 @@ void kpToolToolBar::registerTool (kpTool *tool)
         }
     }
 
+    if (tool->objectName() == QLatin1String("tool_eraser")) {
+        m_eraser = tool;
+    }
+
     auto *b = new kpToolButton(tool, m_baseWidget);
 
     b->setToolButtonStyle(toolButtonStyle());
@@ -193,6 +197,11 @@ void kpToolToolBar::unregisterTool(kpTool *tool)
 kpTool *kpToolToolBar::tool () const
 {
     return m_currentTool;
+}
+
+kpTool *kpToolToolBar::eraser () const
+{
+    return m_eraser;
 }
 
 //---------------------------------------------------------------------

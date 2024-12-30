@@ -43,6 +43,7 @@
 #include <QMouseEvent>
 
 #include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
 
 //---------------------------------------------------------------------
 
@@ -60,8 +61,12 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
     //       of the mainView.
     setHasMouse (rect ().contains (e->pos ()));
 
-    if (tool ()) {
-        tool ()->mouseMoveEvent (e);
+    if (e->pointerType() == QPointingDevice::PointerType::Eraser && toolToolBar()->eraser()) {
+        toolToolBar()->eraser()->mouseMoveEvent(e);
+    } else {
+        if (tool ()) {
+            tool ()->mouseMoveEvent (e);
+        }
     }
 
     e->accept ();
@@ -78,8 +83,18 @@ void kpView::mousePressEvent (QMouseEvent *e)
 
     setHasMouse (true);
 
-    if (tool ()) {
-        tool ()->mousePressEvent (e);
+    if (e->pointerType() == QPointingDevice::PointerType::Eraser && toolToolBar()->eraser()) {
+        toolToolBar()->eraser()->beginInternal();
+        toolToolBar()->eraser()->mousePressEvent(e);
+    } else {
+
+        if (toolToolBar()->eraser()) {
+            toolToolBar()->eraser()->endInternal();
+        }
+
+        if (tool ()) {
+            tool ()->mousePressEvent (e);
+        }
     }
 
     e->accept ();
@@ -98,8 +113,13 @@ void kpView::mouseReleaseEvent (QMouseEvent *e)
 
     setHasMouse (rect ().contains (e->pos ()));
 
-    if (tool ()) {
-        tool ()->mouseReleaseEvent (e);
+    if (e->pointerType() == QPointingDevice::PointerType::Eraser && toolToolBar()->eraser()) {
+        toolToolBar()->eraser()->mouseReleaseEvent(e);
+        toolToolBar()->eraser()->endInternal();
+    } else {
+        if (tool ()) {
+            tool ()->mouseReleaseEvent (e);
+        }
     }
 
     e->accept ();

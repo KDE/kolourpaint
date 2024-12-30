@@ -70,6 +70,8 @@ public:
     kpTool *previousTool () const;
     void selectPreviousTool ();
 
+    kpTool *eraser() const;
+
     void hideAllToolWidgets ();
     // could this be cleaner (the tools have to access them individually somehow)?
     kpToolWidgetBrush *toolWidgetBrush () const { return m_toolWidgetBrush; }
@@ -121,6 +123,7 @@ private:
     QList<kpToolButton *> m_toolButtons;
 
     kpTool *m_previousTool, *m_currentTool;
+    kpTool *m_eraser = nullptr;
 };
 
 
