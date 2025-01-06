@@ -1566,8 +1566,6 @@ msgstr "Bildeforsinkelse"
 
 #: mainWindow/kpMainWindow_File.cpp:673
 #, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
 msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] " sekund"
