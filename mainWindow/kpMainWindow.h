@@ -25,19 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_MAIN_WINDOW_H
 #define KP_MAIN_WINDOW_H
-
 
 #include <QUrl>
 
 #include <kxmlguiwindow.h>
 
+#include "imagelib/kpImage.h"
 #include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
-#include "imagelib/kpImage.h"
-
 
 class QAction;
 class QActionGroup;
@@ -76,93 +73,93 @@ class kpAbstractSelection;
 
 class kpMainWindow : public KXmlGuiWindow
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // Opens a new window with a blank document.
-    kpMainWindow ();
+    kpMainWindow();
 
     // Opens a new window with the document specified by <url>
     // or creates a blank document if <url> could not be opened.
-    explicit kpMainWindow (const QUrl &url);
+    explicit kpMainWindow(const QUrl &url);
 
     // Opens a new window with the document <newDoc>
     // (<newDoc> can be 0 although this would result in a new
     //  window without a document at all).
-    explicit kpMainWindow (kpDocument *newDoc);
+    explicit kpMainWindow(kpDocument *newDoc);
 
     void finalizeGUI(KXMLGUIClient *client) override;
 
 private:
-    void readGeneralSettings ();
-    void readThumbnailSettings ();
+    void readGeneralSettings();
+    void readThumbnailSettings();
 
-    void init ();
+    void init();
 
     // (only called for restoring a previous session e.g. starting KDE with
     //  a previously saved session; it's not called on normal KolourPaint
     //  startup)
-    void readProperties (const KConfigGroup &configGroup) override;
+    void readProperties(const KConfigGroup &configGroup) override;
     // (only called for saving the current session e.g. logging out of KDE
     //  with the KolourPaint window open; it's not called on normal KolourPaint
     //  exit)
-    void saveProperties (KConfigGroup &configGroup) override;
+    void saveProperties(KConfigGroup &configGroup) override;
 
 public:
-    ~kpMainWindow () override;
+    ~kpMainWindow() override;
 
 public:
-    kpDocument *document () const;
-    kpDocumentEnvironment *documentEnvironment ();
-    kpViewManager *viewManager () const;
-    kpColorToolBar *colorToolBar () const;
-    kpColorCells *colorCells () const;
-    kpToolToolBar *toolToolBar () const;
-    kpCommandHistory *commandHistory () const;
-    kpCommandEnvironment *commandEnvironment ();
+    kpDocument *document() const;
+    kpDocumentEnvironment *documentEnvironment();
+    kpViewManager *viewManager() const;
+    kpColorToolBar *colorToolBar() const;
+    kpColorCells *colorCells() const;
+    kpToolToolBar *toolToolBar() const;
+    kpCommandHistory *commandHistory() const;
+    kpCommandEnvironment *commandEnvironment();
 
 private:
-    void setupActions ();
-    void enableDocumentActions (bool enable = true);
+    void setupActions();
+    void enableDocumentActions(bool enable = true);
 
-    void setDocument (kpDocument *newDoc);
+    void setDocument(kpDocument *newDoc);
 
-    void dragEnterEvent (QDragEnterEvent *e) override;
-    void dropEvent (QDropEvent *e) override;
-    void moveEvent (QMoveEvent *e) override;
+    void dragEnterEvent(QDragEnterEvent *e) override;
+    void dropEvent(QDropEvent *e) override;
+    void moveEvent(QMoveEvent *e) override;
 
 private Q_SLOTS:
-    void slotScrollViewAfterScroll ();
-    void slotUpdateCaption ();
-    void slotDocumentRestored ();
+    void slotScrollViewAfterScroll();
+    void slotUpdateCaption();
+    void slotDocumentRestored();
 
-
-//
-// Tools
-//
+    //
+    // Tools
+    //
 
 private:
-    kpToolSelectionEnvironment *toolSelectionEnvironment ();
-    kpToolEnvironment *toolEnvironment ();
+    kpToolSelectionEnvironment *toolSelectionEnvironment();
+    kpToolEnvironment *toolEnvironment();
 
-    void setupToolActions ();
-    void createToolBox ();
-    void enableToolsDocumentActions (bool enable = true);
+    void setupToolActions();
+    void createToolBox();
+    void enableToolsDocumentActions(bool enable = true);
 
 private Q_SLOTS:
-    void updateToolOptionPrevNextActionsEnabled ();
-    void updateActionDrawOpaqueChecked ();
+    void updateToolOptionPrevNextActionsEnabled();
+    void updateActionDrawOpaqueChecked();
+
 private:
-    void updateActionDrawOpaqueEnabled ();
+    void updateActionDrawOpaqueEnabled();
 
 public:
-    QActionGroup *toolsActionGroup ();
+    QActionGroup *toolsActionGroup();
 
-    kpTool *tool () const;
+    kpTool *tool() const;
 
-    bool toolHasBegunShape () const;
-    bool toolIsASelectionTool (bool includingTextTool = true) const;
-    bool toolIsTextTool () const;
+    bool toolHasBegunShape() const;
+    bool toolIsASelectionTool(bool includingTextTool = true) const;
+    bool toolIsTextTool() const;
 
 private:
     // Ends the current shape.  If there is no shape currently being drawn,
@@ -213,10 +210,10 @@ private:
     //
     // TODO: Help / KolourPaint Handbook does not call this.  I'm sure there
     //       are a few other actions that don't call this but should.
-    void toolEndShape ();
+    void toolEndShape();
 
 public:
-    kpImageSelectionTransparency imageSelectionTransparency () const;
+    kpImageSelectionTransparency imageSelectionTransparency() const;
     // The drawing background color is set to <transparency>.transparentColor()
     // if the <transparency> is in Transparent mode or if <forceColorChange>
     // is true (not the default).  [x]
@@ -241,43 +238,39 @@ public:
     //
     // The other fields of <transparency> are copied into the main window
     // as expected.
-    void setImageSelectionTransparency (const kpImageSelectionTransparency &transparency,
-                                   bool forceColorChange = false);
-    int settingImageSelectionTransparency () const;
+    void setImageSelectionTransparency(const kpImageSelectionTransparency &transparency, bool forceColorChange = false);
+    int settingImageSelectionTransparency() const;
 
 private Q_SLOTS:
-    void slotToolSelected (kpTool *tool);
+    void slotToolSelected(kpTool *tool);
 
 private:
-    void readLastTool ();
-    int toolNumber () const;
-    void saveLastTool ();
+    void readLastTool();
+    int toolNumber() const;
+    void saveLastTool();
 
 private:
-    bool maybeDragScrollingMainView () const;
+    bool maybeDragScrollingMainView() const;
 private Q_SLOTS:
-    bool slotDragScroll (const QPoint &docPoint,
-                         const QPoint &docLastPoint,
-                         int zoomLevel,
-                         bool *didSomething);
-    bool slotEndDragScroll ();
+    bool slotDragScroll(const QPoint &docPoint, const QPoint &docLastPoint, int zoomLevel, bool *didSomething);
+    bool slotEndDragScroll();
 
 private Q_SLOTS:
-    void slotBeganDocResize ();
-    void slotContinuedDocResize (const QSize &size);
-    void slotCancelledDocResize ();
-    void slotEndedDocResize (const QSize &size);
+    void slotBeganDocResize();
+    void slotContinuedDocResize(const QSize &size);
+    void slotCancelledDocResize();
+    void slotEndedDocResize(const QSize &size);
 
-    void slotDocResizeMessageChanged (const QString &string);
+    void slotDocResizeMessageChanged(const QString &string);
 
 private Q_SLOTS:
-    void slotActionPrevToolOptionGroup1 ();
-    void slotActionNextToolOptionGroup1 ();
-    void slotActionPrevToolOptionGroup2 ();
-    void slotActionNextToolOptionGroup2 ();
+    void slotActionPrevToolOptionGroup1();
+    void slotActionNextToolOptionGroup1();
+    void slotActionPrevToolOptionGroup2();
+    void slotActionNextToolOptionGroup2();
 
-    void slotActionDrawOpaqueToggled ();
-    void slotActionDrawColorSimilarity ();
+    void slotActionDrawOpaqueToggled();
+    void slotActionDrawColorSimilarity();
 
 public Q_SLOTS:
     void slotToolRectSelection();
@@ -285,31 +278,29 @@ public Q_SLOTS:
     void slotToolFreeFormSelection();
     void slotToolText();
 
-//
-// File Menu
-//
+    //
+    // File Menu
+    //
 
 private:
-    void setupFileMenuActions ();
-    void enableFileMenuDocumentActions (bool enable = true);
+    void setupFileMenuActions();
+    void enableFileMenuDocumentActions(bool enable = true);
 
-    void addRecentURL (const QUrl &url);
+    void addRecentURL(const QUrl &url);
 
 private Q_SLOTS:
-    void slotNew ();
+    void slotNew();
 
 private:
-    QSize defaultDocSize () const;
-    void saveDefaultDocSize (const QSize &size);
+    QSize defaultDocSize() const;
+    void saveDefaultDocSize(const QSize &size);
 
 private:
-    bool shouldOpen ();
-    void setDocumentChoosingWindow (kpDocument *doc);
+    bool shouldOpen();
+    void setDocumentChoosingWindow(kpDocument *doc);
 
 private:
-    kpDocument *openInternal (const QUrl &url,
-        const QSize &fallbackDocSize,
-        bool newDocSameNameIfNotExist);
+    kpDocument *openInternal(const QUrl &url, const QSize &fallbackDocSize, bool newDocSameNameIfNotExist);
     // Same as above except that it:
     //
     // 1. Assumes a default fallback document size.
@@ -321,318 +312,306 @@ private:
     // to a user open request e.g. File / Open or "kolourpaint doesexist.png".
     // It should not be used for session restore - in that case, it does not
     // make sense to bubble the Recent Files list.
-    bool open (const QUrl &url, bool newDocSameNameIfNotExist = false);
+    bool open(const QUrl &url, bool newDocSameNameIfNotExist = false);
 
-    QList<QUrl> askForOpenURLs(const QString &caption,
-                              bool allowMultipleURLs = true);
+    QList<QUrl> askForOpenURLs(const QString &caption, bool allowMultipleURLs = true);
 
 private Q_SLOTS:
-    void slotOpen ();
-    void slotOpenRecent (const QUrl &url);
+    void slotOpen();
+    void slotOpenRecent(const QUrl &url);
     void slotRecentListCleared();
 
 #if HAVE_KSANE
-    void slotScan ();
-    void slotScanned (const QImage &image, int);
+    void slotScan();
+    void slotScanned(const QImage &image, int);
 #endif // HAVE_KSANE
 
     void slotScreenshot();
     void slotMakeScreenshot();
 
-    void slotProperties ();
+    void slotProperties();
 
-    bool save (bool localOnly = false);
-    bool slotSave ();
+    bool save(bool localOnly = false);
+    bool slotSave();
 
 private:
-    QUrl askForSaveURL (const QString &caption,
-                        const QString &startURL,
-                        const kpImage &imageToBeSaved,
-                        const kpDocumentSaveOptions &startSaveOptions,
-                        const kpDocumentMetaInfo &docMetaInfo,
-                        const QString &forcedSaveOptionsGroup,
-                        bool localOnly,
-                        kpDocumentSaveOptions *chosenSaveOptions,
-                        bool isSavingForFirstTime,
-                        bool *allowLossyPrompt);
+    QUrl askForSaveURL(const QString &caption,
+                       const QString &startURL,
+                       const kpImage &imageToBeSaved,
+                       const kpDocumentSaveOptions &startSaveOptions,
+                       const kpDocumentMetaInfo &docMetaInfo,
+                       const QString &forcedSaveOptionsGroup,
+                       bool localOnly,
+                       kpDocumentSaveOptions *chosenSaveOptions,
+                       bool isSavingForFirstTime,
+                       bool *allowLossyPrompt);
 
 private Q_SLOTS:
-    bool saveAs (bool localOnly = false);
-    bool slotSaveAs ();
+    bool saveAs(bool localOnly = false);
+    bool slotSaveAs();
 
-    bool slotExport ();
+    bool slotExport();
 
-    void slotEnableReload ();
-    bool slotReload ();
+    void slotEnableReload();
+    bool slotReload();
     void sendPreviewToPrinter(QPrinter *printer);
 
 private:
-    void sendDocumentNameToPrinter (QPrinter *printer);
+    void sendDocumentNameToPrinter(QPrinter *printer);
     void setPrinterPageOrientation(QPrinter *printer);
     void sendImageToPrinter(QPrinter *printer, bool showPrinterSetupDialog);
 
 private Q_SLOTS:
-    void slotPrint ();
-    void slotPrintPreview ();
+    void slotPrint();
+    void slotPrintPreview();
 
-    void slotMail ();
+    void slotMail();
 
-    bool queryCloseDocument ();
-    bool queryClose () override;
+    bool queryCloseDocument();
+    bool queryClose() override;
 
-    void slotClose ();
-    void slotQuit ();
+    void slotClose();
+    void slotQuit();
 
-
-//
-// Edit Menu
-//
+    //
+    // Edit Menu
+    //
 
 private:
-    void setupEditMenuActions ();
-    void enableEditMenuDocumentActions (bool enable = true);
+    void setupEditMenuActions();
+    void enableEditMenuDocumentActions(bool enable = true);
 
 public:
-    QMenu *selectionToolRMBMenu ();
+    QMenu *selectionToolRMBMenu();
 
 private Q_SLOTS:
-    void slotCut ();
-    void slotCopy ();
-    void slotEnablePaste ();
+    void slotCut();
+    void slotCopy();
+    void slotEnablePaste();
+
 private:
-    QRect calcUsefulPasteRect (int imageWidth, int imageHeight);
+    QRect calcUsefulPasteRect(int imageWidth, int imageHeight);
     // (it is possible to paste a selection border i.e. a selection with no content)
-    void paste (const kpAbstractSelection &sel,
-                bool forceTopLeft = false);
+    void paste(const kpAbstractSelection &sel, bool forceTopLeft = false);
+
 public:
     // (<forceNewTextSelection> is ignored if <text> is empty)
-    void pasteText (const QString &text,
-                    bool forceNewTextSelection = false,
-                    const QPoint &newTextSelectionTopLeft = KP_INVALID_POINT);
-    void pasteTextAt (const QString &text, const QPoint &point,
-                      // Allow tiny adjustment of <point> so that mouse
-                      // pointer is not exactly on top of the topLeft of
-                      // any new text selection (so that it doesn't look
-                      // weird by being on top of a resize handle just after
-                      // a paste).
-                      bool allowNewTextSelectionPointShift = false);
+    void pasteText(const QString &text, bool forceNewTextSelection = false, const QPoint &newTextSelectionTopLeft = KP_INVALID_POINT);
+    void pasteTextAt(const QString &text,
+                     const QPoint &point,
+                     // Allow tiny adjustment of <point> so that mouse
+                     // pointer is not exactly on top of the topLeft of
+                     // any new text selection (so that it doesn't look
+                     // weird by being on top of a resize handle just after
+                     // a paste).
+                     bool allowNewTextSelectionPointShift = false);
 public Q_SLOTS:
-    void slotPaste ();
+    void slotPaste();
 private Q_SLOTS:
-    void slotPasteInNewWindow ();
+    void slotPasteInNewWindow();
 public Q_SLOTS:
-    void slotDelete ();
+    void slotDelete();
 
-    void slotSelectAll ();
-private:
-    void addDeselectFirstCommand (kpCommand *cmd);
-public Q_SLOTS:
-    void slotDeselect ();
-private Q_SLOTS:
-    void slotCopyToFile ();
-    void slotPasteFromFile ();
-
-
-//
-// View Menu
-//
+    void slotSelectAll();
 
 private:
-    void setupViewMenuActions ();
-
-    bool viewMenuDocumentActionsEnabled () const;
-    void enableViewMenuDocumentActions (bool enable = true);
-    void actionShowGridUpdate ();
-    void updateMainViewGrid ();
-    QRect mapToGlobal (const QRect &rect) const;
-    QRect mapFromGlobal (const QRect &rect) const;
-
+    void addDeselectFirstCommand(kpCommand *cmd);
+public Q_SLOTS:
+    void slotDeselect();
 private Q_SLOTS:
-    void slotShowGridToggled ();
+    void slotCopyToFile();
+    void slotPasteFromFile();
 
-
-//
-// View Menu - Zoom
-//
+    //
+    // View Menu
+    //
 
 private:
-    void setupViewMenuZoomActions ();
-    void enableViewMenuZoomDocumentActions (bool enable);
+    void setupViewMenuActions();
 
-    void sendZoomListToActionZoom ();
+    bool viewMenuDocumentActionsEnabled() const;
+    void enableViewMenuDocumentActions(bool enable = true);
+    void actionShowGridUpdate();
+    void updateMainViewGrid();
+    QRect mapToGlobal(const QRect &rect) const;
+    QRect mapFromGlobal(const QRect &rect) const;
 
-    void zoomToPre (int zoomLevel);
-    void zoomToPost ();
+private Q_SLOTS:
+    void slotShowGridToggled();
+
+    //
+    // View Menu - Zoom
+    //
+
+private:
+    void setupViewMenuZoomActions();
+    void enableViewMenuZoomDocumentActions(bool enable);
+
+    void sendZoomListToActionZoom();
+
+    void zoomToPre(int zoomLevel);
+    void zoomToPost();
 
 public:
-    void zoomTo (int zoomLevel, bool centerUnderCursor = false);
-    void zoomToRect (const QRect &normalizedDocRect,
-        bool accountForGrips,
-        bool careAboutWidth, bool careAboutHeight);
+    void zoomTo(int zoomLevel, bool centerUnderCursor = false);
+    void zoomToRect(const QRect &normalizedDocRect, bool accountForGrips, bool careAboutWidth, bool careAboutHeight);
 
 public Q_SLOTS:
-    void slotActualSize ();
-    void slotFitToPage ();
-    void slotFitToWidth ();
-    void slotFitToHeight ();
+    void slotActualSize();
+    void slotFitToPage();
+    void slotFitToWidth();
+    void slotFitToHeight();
 
 public:
-    void zoomIn (bool centerUnderCursor = false);
-    void zoomOut (bool centerUnderCursor = false);
+    void zoomIn(bool centerUnderCursor = false);
+    void zoomOut(bool centerUnderCursor = false);
 
 public Q_SLOTS:
-    void slotZoomIn ();
-    void slotZoomOut ();
+    void slotZoomIn();
+    void slotZoomOut();
 
 private:
-    void zoomAccordingToZoomAction (bool centerUnderCursor = false);
+    void zoomAccordingToZoomAction(bool centerUnderCursor = false);
 
 private Q_SLOTS:
-    void slotZoom ();
+    void slotZoom();
 
-
-//
-// View Menu - Thumbnail
-//
+    //
+    // View Menu - Thumbnail
+    //
 
 private:
-    void setupViewMenuThumbnailActions ();
-    void enableViewMenuThumbnailDocumentActions (bool enable);
+    void setupViewMenuThumbnailActions();
+    void enableViewMenuThumbnailDocumentActions(bool enable);
 
 private Q_SLOTS:
-    void slotDestroyThumbnail ();
-    void slotDestroyThumbnailInitatedByUser ();
-    void slotCreateThumbnail ();
+    void slotDestroyThumbnail();
+    void slotDestroyThumbnailInitatedByUser();
+    void slotCreateThumbnail();
 
 public:
-    void notifyThumbnailGeometryChanged ();
+    void notifyThumbnailGeometryChanged();
 
 private Q_SLOTS:
-    void slotSaveThumbnailGeometry ();
-    void slotShowThumbnailToggled ();
-    void updateThumbnailZoomed ();
-    void slotZoomedThumbnailToggled ();
-    void slotThumbnailShowRectangleToggled ();
+    void slotSaveThumbnailGeometry();
+    void slotShowThumbnailToggled();
+    void updateThumbnailZoomed();
+    void slotZoomedThumbnailToggled();
+    void slotThumbnailShowRectangleToggled();
 
 private:
-    void enableViewZoomedThumbnail (bool enable = true);
-    void enableViewShowThumbnailRectangle (bool enable = true);
-    void enableThumbnailOptionActions (bool enable = true);
-    void createThumbnailView ();
-    void destroyThumbnailView ();
-    void updateThumbnail ();
+    void enableViewZoomedThumbnail(bool enable = true);
+    void enableViewShowThumbnailRectangle(bool enable = true);
+    void enableThumbnailOptionActions(bool enable = true);
+    void createThumbnailView();
+    void destroyThumbnailView();
+    void updateThumbnail();
 
-
-//
-// Image Menu
-//
+    //
+    // Image Menu
+    //
 
 private:
-    kpTransformDialogEnvironment *transformDialogEnvironment ();
+    kpTransformDialogEnvironment *transformDialogEnvironment();
 
-    bool isSelectionActive () const;
-    bool isTextSelection () const;
+    bool isSelectionActive() const;
+    bool isTextSelection() const;
 
-    QString autoCropText () const;
+    QString autoCropText() const;
 
-    void setupImageMenuActions ();
-    void enableImageMenuDocumentActions (bool enable = true);
+    void setupImageMenuActions();
+    void enableImageMenuDocumentActions(bool enable = true);
 
 private Q_SLOTS:
-    void slotImageMenuUpdateDueToSelection ();
+    void slotImageMenuUpdateDueToSelection();
 
 public:
-    kpColor backgroundColor (bool ofSelection = false) const;
-    void addImageOrSelectionCommand (kpCommand *cmd,
-                                     bool addSelCreateCmdIfSelAvail = true,
-                                     bool addSelContentCmdIfSelAvail = true);
+    kpColor backgroundColor(bool ofSelection = false) const;
+    void addImageOrSelectionCommand(kpCommand *cmd, bool addSelCreateCmdIfSelAvail = true, bool addSelContentCmdIfSelAvail = true);
 
 public Q_SLOTS:
-    void slotCrop ();
+    void slotCrop();
 
 private Q_SLOTS:
-    void slotResizeScale ();
-    void slotAutoCrop ();
-    void slotFlip ();
-    void slotMirror ();
+    void slotResizeScale();
+    void slotAutoCrop();
+    void slotFlip();
+    void slotMirror();
 
-    void slotRotate ();
-    void slotRotate270 ();
-    void slotRotate90 ();
+    void slotRotate();
+    void slotRotate270();
+    void slotRotate90();
 
-    void slotSkew ();
-    void slotConvertToBlackAndWhite ();
-    void slotConvertToGrayscale ();
-    void slotInvertColors ();
-    void slotClear ();
+    void slotSkew();
+    void slotConvertToBlackAndWhite();
+    void slotConvertToGrayscale();
+    void slotInvertColors();
+    void slotClear();
     void slotMakeConfidential();
-    void slotMoreEffects ();
+    void slotMoreEffects();
 
-
-//
-// Colors Menu
-//
+    //
+    // Colors Menu
+    //
 
 private:
-    void setupColorsMenuActions ();
-    void createColorBox ();
-    void enableColorsMenuDocumentActions (bool enable);
+    void setupColorsMenuActions();
+    void createColorBox();
+    void enableColorsMenuDocumentActions(bool enable);
 private Q_SLOTS:
-    void slotUpdateColorsDeleteRowActionEnabled ();
+    void slotUpdateColorsDeleteRowActionEnabled();
 
 private:
-    void deselectActionColorsKDE ();
+    void deselectActionColorsKDE();
 
-    bool queryCloseColors ();
+    bool queryCloseColors();
 
 private:
-    void openDefaultColors ();
+    void openDefaultColors();
 private Q_SLOTS:
-    void slotColorsDefault ();
+    void slotColorsDefault();
 
 private:
-    bool openKDEColors (const QString &name);
+    bool openKDEColors(const QString &name);
 private Q_SLOTS:
-    void slotColorsKDE ();
+    void slotColorsKDE();
 
 private:
-    bool openColors (const QUrl &url);
+    bool openColors(const QUrl &url);
 private Q_SLOTS:
-    void slotColorsOpen ();
+    void slotColorsOpen();
 
-    void slotColorsReload ();
+    void slotColorsReload();
 
-    bool slotColorsSave ();
-    bool slotColorsSaveAs ();
+    bool slotColorsSave();
+    bool slotColorsSaveAs();
 
-    void slotColorsAppendRow ();
-    void slotColorsDeleteRow ();
+    void slotColorsAppendRow();
+    void slotColorsDeleteRow();
 
-
-//
-// Settings Menu
-//
+    //
+    // Settings Menu
+    //
 
 private:
-    void setupSettingsMenuActions ();
-    void enableSettingsMenuDocumentActions (bool enable = true);
+    void setupSettingsMenuActions();
+    void enableSettingsMenuDocumentActions(bool enable = true);
 
 private Q_SLOTS:
-    void slotFullScreen ();
+    void slotFullScreen();
 
-    void slotEnableSettingsShowPath ();
-    void slotShowPathToggled ();
+    void slotEnableSettingsShowPath();
+    void slotShowPathToggled();
     void slotDrawAntiAliasedToggled(bool on);
 
-    void slotKeyBindings ();
+    void slotKeyBindings();
 
-//
-// Status Bar
-//
+    //
+    // Status Bar
+    //
 
 private:
-    enum
-    {
+    enum {
         StatusBarItemShapePoints,
         StatusBarItemShapeSize,
         StatusBarItemDocSize,
@@ -640,53 +619,51 @@ private:
         StatusBarItemZoom
     };
 
-    void addPermanentStatusBarItem (int id, int maxTextLen);
-    void createStatusBar ();
+    void addPermanentStatusBarItem(int id, int maxTextLen);
+    void createStatusBar();
 
-    void setStatusBarDocDepth (int depth = 0);
+    void setStatusBarDocDepth(int depth = 0);
 
 private Q_SLOTS:
-    void setStatusBarMessage (const QString &message = QString());
-    void setStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
-                                  const QPoint &endPoint = KP_INVALID_POINT);
-    void setStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);
-    void setStatusBarDocSize (const QSize &size = KP_INVALID_SIZE);
-    void setStatusBarZoom (int zoom = 0);
+    void setStatusBarMessage(const QString &message = QString());
+    void setStatusBarShapePoints(const QPoint &startPoint = KP_INVALID_POINT, const QPoint &endPoint = KP_INVALID_POINT);
+    void setStatusBarShapeSize(const QSize &size = KP_INVALID_SIZE);
+    void setStatusBarDocSize(const QSize &size = KP_INVALID_SIZE);
+    void setStatusBarZoom(int zoom = 0);
 
-    void recalculateStatusBarMessage ();
-    void recalculateStatusBarShape ();
+    void recalculateStatusBarMessage();
+    void recalculateStatusBarShape();
 
-    void recalculateStatusBar ();
+    void recalculateStatusBar();
 
-
-//
-// Text ToolBar
-//
+    //
+    // Text ToolBar
+    //
 
 private:
-    void setupTextToolBarActions ();
-    void readAndApplyTextSettings ();
+    void setupTextToolBarActions();
+    void readAndApplyTextSettings();
 
 public:
-    void enableTextToolBarActions (bool enable = true);
+    void enableTextToolBarActions(bool enable = true);
 
 private Q_SLOTS:
-    void slotTextFontFamilyChanged ();
-    void slotTextFontSizeChanged ();
-    void slotTextBoldChanged ();
-    void slotTextItalicChanged ();
-    void slotTextUnderlineChanged ();
-    void slotTextStrikeThruChanged ();
+    void slotTextFontFamilyChanged();
+    void slotTextFontSizeChanged();
+    void slotTextBoldChanged();
+    void slotTextItalicChanged();
+    void slotTextUnderlineChanged();
+    void slotTextStrikeThruChanged();
 
 public:
-    KToolBar *textToolBar ();
-    bool isTextStyleBackgroundOpaque () const;
-    kpTextStyle textStyle () const;
-    void setTextStyle (const kpTextStyle &textStyle_);
-    int settingTextStyle () const;
+    KToolBar *textToolBar();
+    bool isTextStyleBackgroundOpaque() const;
+    kpTextStyle textStyle() const;
+    void setTextStyle(const kpTextStyle &textStyle_);
+    int settingTextStyle() const;
 
 private:
     struct kpMainWindowPrivate *d;
 };
 
-#endif  // KP_MAIN_WINDOW_H
+#endif // KP_MAIN_WINDOW_H

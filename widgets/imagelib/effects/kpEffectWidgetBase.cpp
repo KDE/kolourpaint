@@ -25,22 +25,18 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpEffectWidgetBase.h"
 
-
-kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,
-                                        QWidget *parent)
-    : QWidget (parent),
-      m_actOnSelection (actOnSelection)
+kpEffectWidgetBase::kpEffectWidgetBase(bool actOnSelection, QWidget *parent)
+    : QWidget(parent)
+    , m_actOnSelection(actOnSelection)
 {
 }
 
-kpEffectWidgetBase::~kpEffectWidgetBase () = default;
-
+kpEffectWidgetBase::~kpEffectWidgetBase() = default;
 
 // public
-QString kpEffectWidgetBase::caption () const
+QString kpEffectWidgetBase::caption() const
 {
     return {};
 }

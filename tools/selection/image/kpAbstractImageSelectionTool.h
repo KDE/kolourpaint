@@ -25,16 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpAbstractImageSelectionTool_H
 #define kpAbstractImageSelectionTool_H
 
-
 #include "tools/selection/kpAbstractSelectionTool.h"
 
-
 class kpImageSelectionTransparency;
-
 
 // The only difference between the various subclasses of us is the kind of
 // selection that they create e.g. elliptical vs rectangular.
@@ -47,41 +43,40 @@ class kpImageSelectionTransparency;
 // kpDocumentEnvironment::switchToCompatibleTool()).
 class kpAbstractImageSelectionTool : public kpAbstractSelectionTool
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpAbstractImageSelectionTool (const QString &text, const QString &description,
-        int key,
-        kpToolSelectionEnvironment *environ, QObject *parent,
-        const QString &name);
+    kpAbstractImageSelectionTool(const QString &text,
+                                 const QString &description,
+                                 int key,
+                                 kpToolSelectionEnvironment *environ,
+                                 QObject *parent,
+                                 const QString &name);
 
-
-//
-// Drawing
-//
-
-protected:
-    kpAbstractSelectionContentCommand *newGiveContentCommand () const override;
-
-    QString nameOfCreateCommand () const override;
-
-
-//
-// Create, Move, Resize/Scale
-//
+    //
+    // Drawing
+    //
 
 protected:
-    QString haventBegunDrawUserMessageCreate () const override;
-    QString haventBegunDrawUserMessageMove () const override;
-    QString haventBegunDrawUserMessageResizeScale () const override;
+    kpAbstractSelectionContentCommand *newGiveContentCommand() const override;
 
+    QString nameOfCreateCommand() const override;
 
-//
-// User Changing Selection Transparency
-//
+    //
+    // Create, Move, Resize/Scale
+    //
 
 protected:
-    bool shouldChangeImageSelectionTransparency () const;
+    QString haventBegunDrawUserMessageCreate() const override;
+    QString haventBegunDrawUserMessageMove() const override;
+    QString haventBegunDrawUserMessageResizeScale() const override;
+
+    //
+    // User Changing Selection Transparency
+    //
+
+protected:
+    bool shouldChangeImageSelectionTransparency() const;
     // You must derive <oldTrans>, the old selection transparency, from the
     // one obtained from the user's current settings, as given by the
     // kpToolSelectionEnvironment.
@@ -91,16 +86,12 @@ protected:
     // "document()->imageSelection().transparency()".  The reason is that
     // transparency().transparentColor() might not be defined in Opaque
     // Mode.
-    void changeImageSelectionTransparency (
-        const QString &name,
-        const kpImageSelectionTransparency &newTrans,
-        const kpImageSelectionTransparency &oldTrans);
+    void changeImageSelectionTransparency(const QString &name, const kpImageSelectionTransparency &newTrans, const kpImageSelectionTransparency &oldTrans);
 
 protected Q_SLOTS:
-    void slotIsOpaqueChanged (bool isOpaque) override;
-    void slotBackgroundColorChanged (const kpColor &color) override;
-    void slotColorSimilarityChanged (double similarity, int) override;
+    void slotIsOpaqueChanged(bool isOpaque) override;
+    void slotBackgroundColorChanged(const kpColor &color) override;
+    void slotColorSimilarityChanged(double similarity, int) override;
 };
 
-
-#endif  // kpAbstractImageSelectionTool_H
+#endif // kpAbstractImageSelectionTool_H

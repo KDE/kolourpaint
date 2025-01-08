@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolEnvironment_H
 #define kpToolEnvironment_H
 
-
 #include "environments/kpEnvironmentBase.h"
-
 
 class QActionGroup;
 class QPoint;
@@ -44,40 +41,38 @@ class kpColor;
 class kpCommandHistory;
 class kpToolToolBar;
 
-
 // Facade for kpTool clients.
 class kpToolEnvironment : public kpEnvironmentBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // Note: Our interface must never publicly leak <mainWindow> or any other
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
-    explicit kpToolEnvironment (kpMainWindow *mainWindow);
-    ~kpToolEnvironment () override;
+    explicit kpToolEnvironment(kpMainWindow *mainWindow);
+    ~kpToolEnvironment() override;
 
+    KActionCollection *actionCollection() const;
 
-    KActionCollection *actionCollection () const;
+    kpCommandHistory *commandHistory() const;
 
-    kpCommandHistory *commandHistory () const;
+    QActionGroup *toolsActionGroup() const;
+    kpToolToolBar *toolToolBar() const;
+    void hideAllToolWidgets() const;
+    bool selectPreviousTool() const;
 
-    QActionGroup *toolsActionGroup () const;
-    kpToolToolBar *toolToolBar () const;
-    void hideAllToolWidgets () const;
-    bool selectPreviousTool () const;
-
-    kpColor color (int which) const;
-    double colorSimilarity () const;
-    int processedColorSimilarity () const;
+    kpColor color(int which) const;
+    double colorSimilarity() const;
+    int processedColorSimilarity() const;
 
     // (only valid in kpTool::slotForegroundColorChanged())
-    kpColor oldForegroundColor () const;
+    kpColor oldForegroundColor() const;
     // (only valid in kpTool::slotBackgroundColorChanged())
-    kpColor oldBackgroundColor () const;
+    kpColor oldBackgroundColor() const;
 
     // (only valid in kpTool::slotColorSimilarityChanged())
-    double oldColorSimilarity () const;
+    double oldColorSimilarity() const;
 
     // Flashes the Color Similarity Tool Bar Item to highlight to the user,
     // the existence of the Color Similarity feature.
@@ -129,35 +124,31 @@ public:
     //
     // We flash in tools but not commands as else it would be very distracting
     // Undo/Redo - this flashing in the tools is distracting enough already :)
-    void flashColorSimilarityToolBarItem () const;
+    void flashColorSimilarityToolBarItem() const;
 
-    void setColor (int which, const kpColor &color) const;
+    void setColor(int which, const kpColor &color) const;
 
-    void deleteSelection () const;
-    void pasteTextAt (const QString &text, const QPoint &point,
-                      // Allow tiny adjustment of <point> so that mouse
-                      // pointer is not exactly on top of the topLeft of
-                      // any new text selection (so that it doesn't look
-                      // weird by being on top of a resize handle just after
-                      // a paste).
-                      bool allowNewTextSelectionPointShift = false) const;
+    void deleteSelection() const;
+    void pasteTextAt(const QString &text,
+                     const QPoint &point,
+                     // Allow tiny adjustment of <point> so that mouse
+                     // pointer is not exactly on top of the topLeft of
+                     // any new text selection (so that it doesn't look
+                     // weird by being on top of a resize handle just after
+                     // a paste).
+                     bool allowNewTextSelectionPointShift = false) const;
 
-    void zoomIn (bool centerUnderCursor = false) const;
-    void zoomOut (bool centerUnderCursor = false) const;
+    void zoomIn(bool centerUnderCursor = false) const;
+    void zoomOut(bool centerUnderCursor = false) const;
 
-    void zoomToRect (const QRect &normalizedDocRect,
-        bool accountForGrips,
-        bool careAboutWidth, bool careAboutHeight) const;
+    void zoomToRect(const QRect &normalizedDocRect, bool accountForGrips, bool careAboutWidth, bool careAboutHeight) const;
 
-    void fitToPage () const;
+    void fitToPage() const;
 
     static bool drawAntiAliased;
 
-
 private:
-    struct kpToolEnvironmentPrivate * const d;
+    struct kpToolEnvironmentPrivate *const d;
 };
 
-
-#endif  // kpToolEnvironment_H
-
+#endif // kpToolEnvironment_H

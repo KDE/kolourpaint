@@ -25,49 +25,43 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectWidgetBase_H
 #define kpEffectWidgetBase_H
-
 
 #include <QWidget>
 
 #include "imagelib/kpImage.h"
 
-
 class kpCommandEnvironment;
 class kpEffectCommandBase;
 
-
 class kpEffectWidgetBase : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEffectWidgetBase (bool actOnSelection, QWidget *parent);
-    ~kpEffectWidgetBase () override;
+    kpEffectWidgetBase(bool actOnSelection, QWidget *parent);
+    ~kpEffectWidgetBase() override;
 
 Q_SIGNALS:
-    void settingsChangedNoWaitCursor ();
+    void settingsChangedNoWaitCursor();
 
-    void settingsChanged ();
+    void settingsChanged();
 
     // (same as settingsChanged() but preview doesn't update until there
     //  has been no activity for a while - used for sliders in slow effects)
-    void settingsChangedDelayed ();
+    void settingsChangedDelayed();
 
 public:
-    virtual QString caption () const;
+    virtual QString caption() const;
 
-    virtual bool isNoOp () const = 0;
-    virtual kpImage applyEffect (const kpImage &image) = 0;
+    virtual bool isNoOp() const = 0;
+    virtual kpImage applyEffect(const kpImage &image) = 0;
 
-    virtual kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const = 0;
+    virtual kpEffectCommandBase *createCommand(kpCommandEnvironment *cmdEnviron) const = 0;
 
 protected:
     bool m_actOnSelection;
 };
 
-
-#endif  // kpEffectWidgetBase_H
+#endif // kpEffectWidgetBase_H

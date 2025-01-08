@@ -25,16 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_UNZOOMED_THUMBNAIL_VIEW_H
 #define KP_UNZOOMED_THUMBNAIL_VIEW_H
 
-
 #include "views/kpThumbnailView.h"
 
-
 class kpViewScrollableContainer;
-
 
 /**
  * @short Unzoomed thumbnail view of a document.
@@ -54,30 +50,28 @@ class kpViewScrollableContainer;
  */
 /*sealed*/ class kpUnzoomedThumbnailView : public kpThumbnailView
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     /**
      * Constructs an unzoomed thumbnail view.
      */
-    kpUnzoomedThumbnailView (kpDocument *document,
-            kpToolToolBar *toolToolBar,
-            kpViewManager *viewManager,
-            kpView *buddyView,
-            kpViewScrollableContainer *scrollableContainer,
-            QWidget *parent);
+    kpUnzoomedThumbnailView(kpDocument *document,
+                            kpToolToolBar *toolToolBar,
+                            kpViewManager *viewManager,
+                            kpView *buddyView,
+                            kpViewScrollableContainer *scrollableContainer,
+                            QWidget *parent);
 
     /**
      * Destructs an unzoomed thumbnail view.
      */
-    ~kpUnzoomedThumbnailView () override;
-
+    ~kpUnzoomedThumbnailView() override;
 
     /**
      * Implements @ref kpThumbnailView.
      */
-    QString caption () const override;
-
+    QString caption() const override;
 
 public Q_SLOTS:
     /**
@@ -95,12 +89,10 @@ public Q_SLOTS:
      *
      * Implements @ref kpView.
      */
-    void adjustToEnvironment () override;
-
+    void adjustToEnvironment() override;
 
 private:
     struct kpUnzoomedThumbnailViewPrivate *d;
 };
 
-
-#endif  // KP_UNZOOMED_THUMBNAIL_VIEW_H
+#endif // KP_UNZOOMED_THUMBNAIL_VIEW_H

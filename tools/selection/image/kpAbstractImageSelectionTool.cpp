@@ -25,78 +25,76 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpAbstractImageSelectionTool.h"
 
 #include <KLocalizedString>
 
-#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "commands/tools/selection/kpToolSelectionPullFromDocumentCommand.h"
 #include "document/kpDocument.h"
 #include "environments/tools/selection/kpToolSelectionEnvironment.h"
-#include "commands/tools/selection/kpToolSelectionPullFromDocumentCommand.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
 
 //---------------------------------------------------------------------
 
-kpAbstractImageSelectionTool::kpAbstractImageSelectionTool (
-        const QString &text, const QString &description,
-        int key,
-        kpToolSelectionEnvironment *environ, QObject *parent,
-        const QString &name)
-    : kpAbstractSelectionTool (text, description,
-        key, environ, parent, name)
+kpAbstractImageSelectionTool::kpAbstractImageSelectionTool(const QString &text,
+                                                           const QString &description,
+                                                           int key,
+                                                           kpToolSelectionEnvironment *environ,
+                                                           QObject *parent,
+                                                           const QString &name)
+    : kpAbstractSelectionTool(text, description, key, environ, parent, name)
 {
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [kpAbstractSelectionTool]
-kpAbstractSelectionContentCommand *kpAbstractImageSelectionTool::newGiveContentCommand () const
+kpAbstractSelectionContentCommand *kpAbstractImageSelectionTool::newGiveContentCommand() const
 {
-    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
-    Q_ASSERT (imageSel && !imageSel->hasContent ());
+    kpAbstractImageSelection *imageSel = document()->imageSelection();
+    Q_ASSERT(imageSel && !imageSel->hasContent());
 
-    if (imageSel->transparency ().isTransparent ()) {
-        environ ()->flashColorSimilarityToolBarItem ();
+    if (imageSel->transparency().isTransparent()) {
+        environ()->flashColorSimilarityToolBarItem();
     }
 
-    return new kpToolSelectionPullFromDocumentCommand (
-            *imageSel,
-            environ ()->backgroundColor (),
-            QString()/*uninteresting child of macro cmd*/,
-            environ ()->commandEnvironment ());
+    return new kpToolSelectionPullFromDocumentCommand(*imageSel,
+                                                      environ()->backgroundColor(),
+                                                      QString() /*uninteresting child of macro cmd*/,
+                                                      environ()->commandEnvironment());
 }
 
 //---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
 
-QString kpAbstractImageSelectionTool::nameOfCreateCommand () const
+QString kpAbstractImageSelectionTool::nameOfCreateCommand() const
 {
-    return i18n ("Selection: Create");
+    return i18n("Selection: Create");
 }
 
 //---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
 
-QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageCreate () const
+QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageCreate() const
 {
     // TODO: This is wrong because you can still use RMB.
-    return i18n ("Left drag to create selection.");
+    return i18n("Left drag to create selection.");
 }
 
 //---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
 
-QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageMove () const
+QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageMove() const
 {
-    return i18n ("Left drag to move selection.");
+    return i18n("Left drag to move selection.");
 }
 
 //---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
 
-QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageResizeScale () const
+QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageResizeScale() const
 {
-    return i18n ("Left drag to scale selection.");
+    return i18n("Left drag to scale selection.");
 }
 
 //---------------------------------------------------------------------

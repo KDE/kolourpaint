@@ -25,48 +25,42 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectBlurSharpenWidget_H
 #define kpEffectBlurSharpenWidget_H
 
-
 #include "imagelib/kpColor.h"
 
-#include "kpEffectWidgetBase.h"
 #include "imagelib/effects/kpEffectBlurSharpen.h"
-
+#include "kpEffectWidgetBase.h"
 
 class QLabel;
 
 class kpIntNumInput;
 
-
 class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection, QWidget *parent);
-    ~kpEffectBlurSharpenWidget () override;
+    kpEffectBlurSharpenWidget(bool actOnSelection, QWidget *parent);
+    ~kpEffectBlurSharpenWidget() override;
 
-    QString caption () const override;
+    QString caption() const override;
 
-    bool isNoOp () const override;
-    kpImage applyEffect (const kpImage &image) override;
+    bool isNoOp() const override;
+    kpImage applyEffect(const kpImage &image) override;
 
-    kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const override;
+    kpEffectCommandBase *createCommand(kpCommandEnvironment *cmdEnviron) const override;
 
 protected Q_SLOTS:
-    void slotUpdateTypeLabel ();
+    void slotUpdateTypeLabel();
 
 protected:
-    kpEffectBlurSharpen::Type type () const;
-    int strength () const;
+    kpEffectBlurSharpen::Type type() const;
+    int strength() const;
 
     kpIntNumInput *m_amountInput;
     QLabel *m_typeLabel;
 };
 
-
-#endif  // kpEffectBlurSharpenWidget_H
+#endif // kpEffectBlurSharpenWidget_H

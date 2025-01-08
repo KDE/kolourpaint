@@ -24,19 +24,17 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_EFFECT_BALANCE 0
-
 
 #include "kpEffectBalanceWidget.h"
 
-#include "imagelib/effects/kpEffectBalance.h"
 #include "commands/imagelib/effects/kpEffectBalanceCommand.h"
+#include "imagelib/effects/kpEffectBalance.h"
 #include "pixmapfx/kpPixmapFX.h"
 
 #include "kpLogCategories.h"
-#include <KLocalizedString>
 #include "kpNumInput.h"
+#include <KLocalizedString>
 
 #include <cmath>
 
@@ -46,151 +44,124 @@
 #include <QPushButton>
 
 #if DEBUG_KP_EFFECT_BALANCE
-    #include <qdatetime.h>
+#include <qdatetime.h>
 #endif
 
-
-kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
-                                              QWidget *parent)
-    : kpEffectWidgetBase (actOnSelection, parent)
+kpEffectBalanceWidget::kpEffectBalanceWidget(bool actOnSelection, QWidget *parent)
+    : kpEffectWidgetBase(actOnSelection, parent)
 {
-    auto *lay = new QGridLayout (this);
+    auto *lay = new QGridLayout(this);
     lay->setContentsMargins(0, 0, 0, 0);
 
-    auto *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
-    m_brightnessInput = new kpIntNumInput (0/*value*/, this);
-    m_brightnessInput->setRange (-50, 50);
-    auto *brightnessResetPushButton = new QPushButton (i18n ("Re&set"), this);
+    auto *brightnessLabel = new QLabel(i18n("&Brightness:"), this);
+    m_brightnessInput = new kpIntNumInput(0 /*value*/, this);
+    m_brightnessInput->setRange(-50, 50);
+    auto *brightnessResetPushButton = new QPushButton(i18n("Re&set"), this);
 
-    auto *contrastLabel = new QLabel (i18n ("Co&ntrast:"), this);
-    m_contrastInput = new kpIntNumInput (0/*value*/, this);
-    m_contrastInput->setRange (-50, 50);
-     auto *contrastResetPushButton = new QPushButton (i18n ("&Reset"), this);
+    auto *contrastLabel = new QLabel(i18n("Co&ntrast:"), this);
+    m_contrastInput = new kpIntNumInput(0 /*value*/, this);
+    m_contrastInput->setRange(-50, 50);
+    auto *contrastResetPushButton = new QPushButton(i18n("&Reset"), this);
 
-    auto *gammaLabel = new QLabel (i18n ("&Gamma:"), this);
-    m_gammaInput = new kpIntNumInput (0/*value*/, this);
-    m_gammaInput->setRange (-50, 50);
+    auto *gammaLabel = new QLabel(i18n("&Gamma:"), this);
+    m_gammaInput = new kpIntNumInput(0 /*value*/, this);
+    m_gammaInput->setRange(-50, 50);
     // TODO: This is what should be shown in the m_gammaInput spinbox
-    m_gammaLabel = new QLabel (this);
+    m_gammaLabel = new QLabel(this);
     // TODO: This doesn't seem to be wide enough with some fonts so the
     //       whole layout moves when we drag the gamma slider.
     m_gammaLabel->setMinimumWidth(m_gammaLabel->fontMetrics().horizontalAdvance(QLatin1String(" 10.00 ")));
-    m_gammaLabel->setAlignment (m_gammaLabel->alignment () | Qt::AlignRight);
-    auto *gammaResetPushButton = new QPushButton (i18n ("Rese&t"), this);
+    m_gammaLabel->setAlignment(m_gammaLabel->alignment() | Qt::AlignRight);
+    auto *gammaResetPushButton = new QPushButton(i18n("Rese&t"), this);
 
+    auto *spaceWidget = new QLabel(this);
+    spaceWidget->setFixedSize(1, fontMetrics().height() / 4);
 
-    auto *spaceWidget = new QLabel (this);
-    spaceWidget->setFixedSize (1, fontMetrics ().height () / 4);
+    auto *channelLabel = new QLabel(i18n("C&hannels:"), this);
+    m_channelsComboBox = new QComboBox(this);
+    m_channelsComboBox->addItem(i18n("All"));
+    m_channelsComboBox->addItem(i18n("Red"));
+    m_channelsComboBox->addItem(i18n("Green"));
+    m_channelsComboBox->addItem(i18n("Blue"));
 
+    auto *resetPushButton = new QPushButton(i18n("Reset &All Values"), this);
 
-    auto *channelLabel = new QLabel (i18n ("C&hannels:"), this);
-    m_channelsComboBox = new QComboBox (this);
-    m_channelsComboBox->addItem (i18n ("All"));
-    m_channelsComboBox->addItem (i18n ("Red"));
-    m_channelsComboBox->addItem (i18n ("Green"));
-    m_channelsComboBox->addItem (i18n ("Blue"));
+    brightnessLabel->setBuddy(m_brightnessInput);
+    contrastLabel->setBuddy(m_contrastInput);
+    gammaLabel->setBuddy(m_gammaInput);
 
+    channelLabel->setBuddy(m_channelsComboBox);
 
-    auto *resetPushButton = new QPushButton (i18n ("Reset &All Values"), this);
+    lay->addWidget(brightnessLabel, 0, 0);
+    lay->addWidget(m_brightnessInput, 0, 1, 1, 2);
+    lay->addWidget(brightnessResetPushButton, 0, 4);
 
+    lay->addWidget(contrastLabel, 1, 0);
+    lay->addWidget(m_contrastInput, 1, 1, 1, 2);
+    lay->addWidget(contrastResetPushButton, 1, 4);
 
-    brightnessLabel->setBuddy (m_brightnessInput);
-    contrastLabel->setBuddy (m_contrastInput);
-    gammaLabel->setBuddy (m_gammaInput);
+    lay->addWidget(gammaLabel, 2, 0);
+    lay->addWidget(m_gammaInput, 2, 1, 1, 2);
+    lay->addWidget(m_gammaLabel, 2, 3);
+    lay->addWidget(gammaResetPushButton, 2, 4);
 
-    channelLabel->setBuddy (m_channelsComboBox);
+    lay->addWidget(spaceWidget, 3, 0, 1, 5);
+    lay->addWidget(resetPushButton, 4, 2, 1, 3, Qt::AlignRight);
 
+    lay->addWidget(channelLabel, 4, 0);
+    lay->addWidget(m_channelsComboBox, 4, 1, Qt::AlignLeft);
+    // lay->addWidget (resetPushButton, 4, 2, Qt::AlignRight);
 
-    lay->addWidget (brightnessLabel, 0, 0);
-    lay->addWidget (m_brightnessInput, 0, 1, 1, 2);
-    lay->addWidget (brightnessResetPushButton, 0, 4);
-
-    lay->addWidget (contrastLabel, 1, 0);
-    lay->addWidget (m_contrastInput, 1, 1, 1, 2);
-    lay->addWidget (contrastResetPushButton, 1, 4);
-
-    lay->addWidget (gammaLabel, 2, 0);
-    lay->addWidget (m_gammaInput, 2, 1, 1, 2);
-    lay->addWidget (m_gammaLabel, 2, 3);
-    lay->addWidget (gammaResetPushButton, 2, 4);
-
-    lay->addWidget (spaceWidget, 3, 0, 1, 5);
-    lay->addWidget (resetPushButton, 4, 2, 1, 3, Qt::AlignRight);
-
-    lay->addWidget (channelLabel, 4, 0);
-    lay->addWidget (m_channelsComboBox, 4, 1, Qt::AlignLeft);
-    //lay->addWidget (resetPushButton, 4, 2, Qt::AlignRight);
-
-    lay->setColumnStretch (1, 1);
-
+    lay->setColumnStretch(1, 1);
 
     // (no need for settingsChangedDelayed() since BCG effect is so fast :))
-    connect (m_brightnessInput, &kpIntNumInput::valueChanged,
-             this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
-    connect (m_contrastInput, &kpIntNumInput::valueChanged,
-             this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
+    connect(m_brightnessInput, &kpIntNumInput::valueChanged, this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
+    connect(m_contrastInput, &kpIntNumInput::valueChanged, this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
 
-    connect (m_gammaInput, &kpIntNumInput::valueChanged,
-             this, &kpEffectBalanceWidget::recalculateGammaLabel);
-    connect (m_gammaInput, &kpIntNumInput::valueChanged,
-             this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
+    connect(m_gammaInput, &kpIntNumInput::valueChanged, this, &kpEffectBalanceWidget::recalculateGammaLabel);
+    connect(m_gammaInput, &kpIntNumInput::valueChanged, this, &kpEffectBalanceWidget::settingsChangedNoWaitCursor);
 
-    connect (m_channelsComboBox,
-             static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
-             this, &kpEffectBalanceWidget::settingsChanged);
+    connect(m_channelsComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &kpEffectBalanceWidget::settingsChanged);
 
-    connect (brightnessResetPushButton, &QPushButton::clicked,
-             this, &kpEffectBalanceWidget::resetBrightness);
-    connect (contrastResetPushButton, &QPushButton::clicked,
-             this, &kpEffectBalanceWidget::resetContrast);
-    connect (gammaResetPushButton, &QPushButton::clicked,
-             this, &kpEffectBalanceWidget::resetGamma);
+    connect(brightnessResetPushButton, &QPushButton::clicked, this, &kpEffectBalanceWidget::resetBrightness);
+    connect(contrastResetPushButton, &QPushButton::clicked, this, &kpEffectBalanceWidget::resetContrast);
+    connect(gammaResetPushButton, &QPushButton::clicked, this, &kpEffectBalanceWidget::resetGamma);
 
-    connect (resetPushButton, &QPushButton::clicked,
-             this, &kpEffectBalanceWidget::resetAll);
+    connect(resetPushButton, &QPushButton::clicked, this, &kpEffectBalanceWidget::resetAll);
 
-    recalculateGammaLabel ();
+    recalculateGammaLabel();
 }
 
-kpEffectBalanceWidget::~kpEffectBalanceWidget () = default;
-
-
-// public virtual [base kpEffectWidgetBase]
-QString kpEffectBalanceWidget::caption () const
-{
-    return i18n ("Settings");
-}
-
+kpEffectBalanceWidget::~kpEffectBalanceWidget() = default;
 
 // public virtual [base kpEffectWidgetBase]
-bool kpEffectBalanceWidget::isNoOp () const
+QString kpEffectBalanceWidget::caption() const
 {
-    return (brightness () == 0 && contrast () == 0 && gamma () == 0);
+    return i18n("Settings");
 }
 
 // public virtual [base kpEffectWidgetBase]
-kpImage kpEffectBalanceWidget::applyEffect (const kpImage &image)
+bool kpEffectBalanceWidget::isNoOp() const
 {
-    return kpEffectBalance::applyEffect (image,
-        channels (), brightness (), contrast (), gamma ());
+    return (brightness() == 0 && contrast() == 0 && gamma() == 0);
 }
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectBalanceWidget::createCommand (
-        kpCommandEnvironment *cmdEnviron) const
+kpImage kpEffectBalanceWidget::applyEffect(const kpImage &image)
 {
-    return new kpEffectBalanceCommand (channels (),
-                                       brightness (), contrast (), gamma (),
-                                       m_actOnSelection,
-                                       cmdEnviron);
+    return kpEffectBalance::applyEffect(image, channels(), brightness(), contrast(), gamma());
 }
 
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectBalanceWidget::createCommand(kpCommandEnvironment *cmdEnviron) const
+{
+    return new kpEffectBalanceCommand(channels(), brightness(), contrast(), gamma(), m_actOnSelection, cmdEnviron);
+}
 
 // protected
-int kpEffectBalanceWidget::channels () const
+int kpEffectBalanceWidget::channels() const
 {
-    switch (m_channelsComboBox->currentIndex ())
-    {
+    switch (m_channelsComboBox->currentIndex()) {
     default:
     case 0:
         return kpEffectBalance::RGB;
@@ -206,124 +177,115 @@ int kpEffectBalanceWidget::channels () const
     }
 }
 
-
 // protected
-int kpEffectBalanceWidget::brightness () const
+int kpEffectBalanceWidget::brightness() const
 {
-    return m_brightnessInput->value ();
-}
-
-// protected
-int kpEffectBalanceWidget::contrast () const
-{
-    return m_contrastInput->value ();
+    return m_brightnessInput->value();
 }
 
 // protected
-int kpEffectBalanceWidget::gamma () const
+int kpEffectBalanceWidget::contrast() const
 {
-    return m_gammaInput->value ();
+    return m_contrastInput->value();
 }
 
-
-// protected slot
-void kpEffectBalanceWidget::recalculateGammaLabel ()
+// protected
+int kpEffectBalanceWidget::gamma() const
 {
-    m_gammaLabel->setText (
-        QLatin1String (" ") +
-        QString::number (std::pow (10, gamma () / 50.0),
-                         'f'/*[-]9.9*/,
-                         2/*precision*/) +
-        QLatin1String (" "));
-    m_gammaLabel->repaint ();
+    return m_gammaInput->value();
 }
 
+// protected slot
+void kpEffectBalanceWidget::recalculateGammaLabel()
+{
+    m_gammaLabel->setText(QLatin1String(" ") + QString::number(std::pow(10, gamma() / 50.0), 'f' /*[-]9.9*/, 2 /*precision*/) + QLatin1String(" "));
+    m_gammaLabel->repaint();
+}
 
 // protected slot
-void kpEffectBalanceWidget::resetBrightness ()
+void kpEffectBalanceWidget::resetBrightness()
 {
-    if (brightness () == 0) {
+    if (brightness() == 0) {
         return;
     }
 
-    bool sb = signalsBlocked ();
+    bool sb = signalsBlocked();
 
     if (!sb) {
-        blockSignals (true);
+        blockSignals(true);
     }
-    m_brightnessInput->setValue (0);
+    m_brightnessInput->setValue(0);
     if (!sb) {
-        blockSignals (false);
+        blockSignals(false);
     }
 
     // Immediate update (if signals aren't blocked)
-    Q_EMIT settingsChanged ();
+    Q_EMIT settingsChanged();
 }
 
 // protected slot
-void kpEffectBalanceWidget::resetContrast ()
+void kpEffectBalanceWidget::resetContrast()
 {
-    if (contrast () == 0) {
+    if (contrast() == 0) {
         return;
     }
 
-    bool sb = signalsBlocked ();
+    bool sb = signalsBlocked();
 
     if (!sb) {
-        blockSignals (true);
+        blockSignals(true);
     }
-    m_contrastInput->setValue (0);
+    m_contrastInput->setValue(0);
     if (!sb) {
-        blockSignals (false);
+        blockSignals(false);
     }
 
     // Immediate update (if signals aren't blocked)
-    Q_EMIT settingsChanged ();
+    Q_EMIT settingsChanged();
 }
 
 // protected slot
-void kpEffectBalanceWidget::resetGamma ()
+void kpEffectBalanceWidget::resetGamma()
 {
-    if (gamma () == 0) {
+    if (gamma() == 0) {
         return;
     }
 
-    bool sb = signalsBlocked ();
+    bool sb = signalsBlocked();
 
     if (!sb) {
-        blockSignals (true);
+        blockSignals(true);
     }
-    m_gammaInput->setValue (0);
-    recalculateGammaLabel ();
+    m_gammaInput->setValue(0);
+    recalculateGammaLabel();
     if (!sb) {
-        blockSignals (false);
+        blockSignals(false);
     }
 
     // Immediate update (if signals aren't blocked)
-    Q_EMIT settingsChanged ();
+    Q_EMIT settingsChanged();
 }
 
-
 // protected slot
-void kpEffectBalanceWidget::resetAll ()
+void kpEffectBalanceWidget::resetAll()
 {
-    if (isNoOp ()) {
+    if (isNoOp()) {
         return;
     }
 
     // Prevent multiple settingsChanged() which would normally result in
     // redundant, expensive preview repaints
-    blockSignals (true);
+    blockSignals(true);
 
-    resetBrightness ();
-    resetContrast ();
-    resetGamma ();
+    resetBrightness();
+    resetContrast();
+    resetGamma();
 
-    recalculateGammaLabel ();
+    recalculateGammaLabel();
 
-    blockSignals (false);
+    blockSignals(false);
 
-    Q_EMIT settingsChanged ();
+    Q_EMIT settingsChanged();
 }
 
 #include "moc_kpEffectBalanceWidget.cpp"

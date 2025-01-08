@@ -25,24 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpSelectionFactory_H
 #define kpSelectionFactory_H
 
-
 #include "pixmapfx/kpPixmapFX.h"
-
 
 class QDataStream;
 
 class kpAbstractImageSelection;
 
-
 class kpSelectionFactory
 {
 public:
-    static kpAbstractImageSelection *FromStream (QDataStream &stream);
+    static kpAbstractImageSelection *FromStream(QDataStream &stream);
 };
 
-
-#endif  // kpSelectionFactory_H
+#endif // kpSelectionFactory_H

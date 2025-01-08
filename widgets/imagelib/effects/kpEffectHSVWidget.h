@@ -25,32 +25,28 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectHSVWidget_H
 #define kpEffectHSVWidget_H
-
 
 #include "kpEffectWidgetBase.h"
 #include "kpNumInput.h"
 
 class kpDoubleNumInput;
 
-
 class kpEffectHSVWidget : public kpEffectWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEffectHSVWidget (bool actOnSelection, QWidget *parent);
-    ~kpEffectHSVWidget () override;
+    kpEffectHSVWidget(bool actOnSelection, QWidget *parent);
+    ~kpEffectHSVWidget() override;
 
-    QString caption () const override;
+    QString caption() const override;
 
-    bool isNoOp () const override;
-    kpImage applyEffect (const kpImage &image) override;
+    bool isNoOp() const override;
+    kpImage applyEffect(const kpImage &image) override;
 
-    kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const override;
+    kpEffectCommandBase *createCommand(kpCommandEnvironment *cmdEnviron) const override;
 
 protected:
     kpDoubleNumInput *m_hueInput;
@@ -58,5 +54,4 @@ protected:
     kpDoubleNumInput *m_valueInput;
 };
 
-
-#endif  // kpEffectHSVWidget_H
+#endif // kpEffectHSVWidget_H

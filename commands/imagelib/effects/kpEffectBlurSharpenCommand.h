@@ -25,33 +25,26 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectBlurSharpenCommand_H
 #define kpEffectBlurSharpenCommand_H
 
-
-#include "kpEffectCommandBase.h"
 #include "imagelib/effects/kpEffectBlurSharpen.h"
 #include "imagelib/kpImage.h"
-
+#include "kpEffectCommandBase.h"
 
 class kpEffectBlurSharpenCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
-                                int strength,
-                                bool actOnSelection,
-                                kpCommandEnvironment *environ);
+    kpEffectBlurSharpenCommand(kpEffectBlurSharpen::Type type, int strength, bool actOnSelection, kpCommandEnvironment *environ);
 
-    static QString nameForType (kpEffectBlurSharpen::Type type);
+    static QString nameForType(kpEffectBlurSharpen::Type type);
 
 protected:
-    kpImage applyEffect (const kpImage &image) override;
+    kpImage applyEffect(const kpImage &image) override;
 
 protected:
     kpEffectBlurSharpen::Type m_type;
     int m_strength;
 };
 
-
-#endif  // kpEffectBlurSharpenCommand_H
+#endif // kpEffectBlurSharpenCommand_H

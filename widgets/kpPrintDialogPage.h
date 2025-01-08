@@ -26,27 +26,24 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpPrintDialogPage_H
 #define kpPrintDialogPage_H
 
 #include <QWidget>
 
-
 class kpPrintDialogPage : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit kpPrintDialogPage (QWidget *parent);
-    ~kpPrintDialogPage () override;
+    explicit kpPrintDialogPage(QWidget *parent);
+    ~kpPrintDialogPage() override;
 
-    bool printImageCenteredOnPage ();
-    void setPrintImageCenteredOnPage (bool printCentered);
+    bool printImageCenteredOnPage();
+    void setPrintImageCenteredOnPage(bool printCentered);
 
 private:
-    struct kpPrintDialogPagePrivate * const d;
+    struct kpPrintDialogPagePrivate *const d;
 };
 
-
-#endif  // kpPrintDialogPage_H
+#endif // kpPrintDialogPage_H

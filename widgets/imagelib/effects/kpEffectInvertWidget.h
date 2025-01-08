@@ -25,53 +25,43 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectInvertWidget_H
 #define kpEffectInvertWidget_H
 
-
 #include "kpEffectWidgetBase.h"
-
 
 class QCheckBox;
 
-
 class kpEffectInvertWidget : public kpEffectWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEffectInvertWidget (bool actOnSelection,
-                          QWidget *parent);
-    ~kpEffectInvertWidget () override;
+    kpEffectInvertWidget(bool actOnSelection, QWidget *parent);
+    ~kpEffectInvertWidget() override;
 
-
-    int channels () const;
-
+    int channels() const;
 
     //
     // kpEffectWidgetBase interface
     //
 
-    QString caption () const override;
+    QString caption() const override;
 
-    bool isNoOp () const override;
-    kpImage applyEffect (const kpImage &image) override;
+    bool isNoOp() const override;
+    kpImage applyEffect(const kpImage &image) override;
 
-    kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const override;
+    kpEffectCommandBase *createCommand(kpCommandEnvironment *cmdEnviron) const override;
 
 protected Q_SLOTS:
-    void slotRGBCheckBoxToggled ();
-    void slotAllCheckBoxToggled ();
+    void slotRGBCheckBoxToggled();
+    void slotAllCheckBoxToggled();
 
 protected:
-    QCheckBox *m_redCheckBox, *m_greenCheckBox, *m_blueCheckBox,
-              *m_allCheckBox;
+    QCheckBox *m_redCheckBox, *m_greenCheckBox, *m_blueCheckBox, *m_allCheckBox;
 
     // blockSignals() didn't seem to work
     bool m_inSignalHandler;
 };
 
-
-#endif  // kpEffectInvertWidget_H
+#endif // kpEffectInvertWidget_H

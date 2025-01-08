@@ -25,41 +25,38 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpToolFlowPixmapBase.h"
 
-#include "imagelib/kpColor.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
 #include "document/kpDocument.h"
+#include "imagelib/kpColor.h"
 #include "imagelib/kpPainter.h"
 #include "pixmapfx/kpPixmapFX.h"
-#include "commands/tools/flow/kpToolFlowCommand.h"
 
 //---------------------------------------------------------------------
 
-kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &description,
-            int key,
-            kpToolEnvironment *environ, QObject *parent, const QString &name)
-    : kpToolFlowBase (text, description, key, environ, parent, name)
+kpToolFlowPixmapBase::kpToolFlowPixmapBase(const QString &text,
+                                           const QString &description,
+                                           int key,
+                                           kpToolEnvironment *environ,
+                                           QObject *parent,
+                                           const QString &name)
+    : kpToolFlowBase(text, description, key, environ, parent, name)
 {
 }
 
 //---------------------------------------------------------------------
 
-QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolFlowPixmapBase::drawLine(const QPoint &thisPoint, const QPoint &lastPoint)
 {
     QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
-    docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
-    kpImage image = document ()->getImageAt (docRect);
+    docRect = neededRect(docRect, qMax(brushWidth(), brushHeight()));
+    kpImage image = document()->getImageAt(docRect);
 
+    const QList<QPoint> points = kpPainter::interpolatePoints(lastPoint, thisPoint, brushIsDiagonalLine());
 
-    const QList <QPoint> points = kpPainter::interpolatePoints (lastPoint, thisPoint,
-        brushIsDiagonalLine ());
-
-    for (const QPoint &p : points)
-    {
-        const QPoint point =
-            hotRectForMousePointAndBrushWidthHeight(p, brushWidth(), brushHeight())
-                    .topLeft() - docRect.topLeft();
+    for (const QPoint &p : points) {
+        const QPoint point = hotRectForMousePointAndBrushWidthHeight(p, brushWidth(), brushHeight()).topLeft() - docRect.topLeft();
 
         // OPT: This may be redrawing pixels that were drawn on a previous
         //      iteration, since the brush is usually bigger than 1 pixel.
@@ -69,11 +66,10 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
         //      Try this at least for the easy case of the Eraser, which has
         //      square, simply-filled brushes.  Profiling needs to be done as
         //      QRegion is known to be a CPU hog.
-        brushDrawFunction () (&image, point, brushDrawFunctionData ());
+        brushDrawFunction()(&image, point, brushDrawFunctionData());
     }
 
-
-    document ()->setImageAt (image, docRect.topLeft ());
+    document()->setImageAt(image, docRect.topLeft());
     return docRect;
 }
 

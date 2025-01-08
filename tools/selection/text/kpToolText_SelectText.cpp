@@ -27,9 +27,8 @@
 
 #define DEBUG_KP_TOOL_TEXT 0
 
-
-#include "tools/selection/text/kpToolText.h"
 #include "kpToolTextPrivate.h"
+#include "tools/selection/text/kpToolText.h"
 
 #include "kpLogCategories.h"
 
@@ -38,81 +37,70 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-
 // private
-bool kpToolText::onSelectionToSelectText () const
+bool kpToolText::onSelectionToSelectText() const
 {
-    kpView *v = viewManager ()->viewUnderCursor ();
+    kpView *v = viewManager()->viewUnderCursor();
     if (!v) {
         return false;
     }
 
-    return v->mouseOnSelectionToSelectText (currentViewPoint ());
+    return v->mouseOnSelectionToSelectText(currentViewPoint());
 }
 
-
 // private
-QString kpToolText::haventBegunDrawUserMessageSelectText () const
+QString kpToolText::haventBegunDrawUserMessageSelectText() const
 {
-    return i18n ("Left click to change cursor position.");
+    return i18n("Left click to change cursor position.");
 }
 
 // private
-void kpToolText::setCursorSelectText ()
+void kpToolText::setCursorSelectText()
 {
-    viewManager ()->setCursor (Qt::IBeamCursor);
+    viewManager()->setCursor(Qt::IBeamCursor);
 }
 
-
 // private
-void kpToolText::beginDrawSelectText ()
+void kpToolText::beginDrawSelectText()
 {
 #if DEBUG_KP_TOOL_TEXT
     qCDebug(kpLogTools) << "\t\tis select cursor pos";
 #endif
-    kpTextSelection *textSel = document ()->textSelection ();
-    Q_ASSERT (textSel);
+    kpTextSelection *textSel = document()->textSelection();
+    Q_ASSERT(textSel);
 
     int newRow, newCol;
 
-    if (textSel->hasContent ())
-    {
-        newRow = textSel->closestTextRowForPoint (currentPoint ());
-        newCol = textSel->closestTextColForPoint (currentPoint ());
-    }
-    else
-    {
+    if (textSel->hasContent()) {
+        newRow = textSel->closestTextRowForPoint(currentPoint());
+        newCol = textSel->closestTextColForPoint(currentPoint());
+    } else {
         newRow = newCol = 0;
     }
 
 #if DEBUG_KP_TOOL_TEXT
-    qCDebug(kpLogTools) << "\t\t\told: row=" << viewManager ()->textCursorRow ()
-              << "col=" << viewManager ()->textCursorCol ();
+    qCDebug(kpLogTools) << "\t\t\told: row=" << viewManager()->textCursorRow() << "col=" << viewManager()->textCursorCol();
     qCDebug(kpLogTools) << "\t\t\tnew: row=" << newRow << "col=" << newCol;
 #endif
-    viewManager ()->setTextCursorPosition (newRow, newCol);
+    viewManager()->setTextCursorPosition(newRow, newCol);
 }
 
-
 // protected virtual
-QVariant kpToolText::selectTextOperation (Operation op,
-        const QVariant &data1, const QVariant &data2)
+QVariant kpToolText::selectTextOperation(Operation op, const QVariant &data1, const QVariant &data2)
 {
-    (void) data1;
-    (void) data2;
+    (void)data1;
+    (void)data2;
 
-    
-    switch (op)
-    {
+    switch (op) {
     case HaventBegunDrawUserMessage:
-        return haventBegunDrawUserMessageSelectText ();
+        return haventBegunDrawUserMessageSelectText();
 
     case SetCursor:
-        setCursorSelectText ();
+        setCursorSelectText();
         break;
 
     case BeginDraw:
-        beginDrawSelectText ();
+        beginDrawSelectText();
         break;
 
     case Draw:
@@ -128,10 +116,9 @@ QVariant kpToolText::selectTextOperation (Operation op,
         break;
 
     default:
-        Q_ASSERT (!"Unhandled operation");
+        Q_ASSERT(!"Unhandled operation");
         break;
     }
-
 
     return {};
 }

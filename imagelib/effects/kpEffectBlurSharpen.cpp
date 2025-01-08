@@ -24,9 +24,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
-
 
 #include "kpEffectBlurSharpen.h"
 #include "blitz.h"
@@ -35,11 +33,9 @@
 
 #include "pixmapfx/kpPixmapFX.h"
 
-
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    #include <QTime>
+#include <QTime>
 #endif
-
 
 //---------------------------------------------------------------------
 
@@ -58,7 +54,6 @@
 // </quote>
 //
 
-
 static QImage BlurQImage(const QImage &qimage, int strength)
 {
     if (strength == 0) {
@@ -73,14 +68,11 @@ static QImage BlurQImage(const QImage &qimage, int strength)
 
     const double RadiusMin = 1;
     const double RadiusMax = 10;
-    const double radius = RadiusMin +
-        (strength - 1) *
-        (RadiusMax - RadiusMin) /
-        (kpEffectBlurSharpen::MaxStrength - 1);
+    const double radius = RadiusMin + (strength - 1) * (RadiusMax - RadiusMin) / (kpEffectBlurSharpen::MaxStrength - 1);
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
-               << " radius=" << radius;
+                           << " radius=" << radius;
 #endif
 
     QImage img(qimage);
@@ -89,13 +81,12 @@ static QImage BlurQImage(const QImage &qimage, int strength)
 
 //---------------------------------------------------------------------
 
-static QImage SharpenQImage (const QImage &qimage_, int strength)
+static QImage SharpenQImage(const QImage &qimage_, int strength)
 {
     QImage qimage = qimage_;
     if (strength == 0) {
         return qimage;
     }
-
 
     // The numbers that follow were picked by experimentation to try to get
     // an effect linearly proportional to <strength> and at the same time,
@@ -105,47 +96,31 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
 
     const double RadiusMin = 0.1;
     const double RadiusMax = 2.5;
-    const double radius = RadiusMin +
-       (strength - 1) *
-       (RadiusMax - RadiusMin) /
-       (kpEffectBlurSharpen::MaxStrength - 1);
+    const double radius = RadiusMin + (strength - 1) * (RadiusMax - RadiusMin) / (kpEffectBlurSharpen::MaxStrength - 1);
 
     const double SigmaMin = 0.5;
     const double SigmaMax = 3.0;
-    const double sigma = SigmaMin +
-        (strength - 1) *
-        (SigmaMax - SigmaMin) /
-        (kpEffectBlurSharpen::MaxStrength - 1);
+    const double sigma = SigmaMin + (strength - 1) * (SigmaMax - SigmaMin) / (kpEffectBlurSharpen::MaxStrength - 1);
 
     const double RepeatMin = 1;
     const double RepeatMax = 2;
-    const double repeat = qRound (RepeatMin +
-        (strength - 1) *
-        (RepeatMax - RepeatMin) /
-        (kpEffectBlurSharpen::MaxStrength - 1));
-
+    const double repeat = qRound(RepeatMin + (strength - 1) * (RepeatMax - RepeatMin) / (kpEffectBlurSharpen::MaxStrength - 1));
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
     qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
-               << " radius=" << radius
-               << " sigma=" << sigma
-               << " repeat=" << repeat;
+                           << " radius=" << radius << " sigma=" << sigma << " repeat=" << repeat;
 #endif
 
-
-    for (int i = 0; i < repeat; i++)
-    {
-    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-        QTime timer; timer.start ();
-    #endif
-        qimage = Blitz::gaussianSharpen (qimage, static_cast<float> (radius),
-                                         static_cast<float> (sigma));
-    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-        qCDebug(kpLogImagelib) << "\titeration #" + QString::number (i)
-                  << ": " + QString::number (timer.elapsed ()) << "ms";
-    #endif
+    for (int i = 0; i < repeat; i++) {
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+        QTime timer;
+        timer.start();
+#endif
+        qimage = Blitz::gaussianSharpen(qimage, static_cast<float>(radius), static_cast<float>(sigma));
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+        qCDebug(kpLogImagelib) << "\titeration #" + QString::number(i) << ": " + QString::number(timer.elapsed()) << "ms";
+#endif
     }
-
 
     return qimage;
 }
@@ -153,24 +128,20 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
 //---------------------------------------------------------------------
 
 // public static
-kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
-        Type type, int strength)
+kpImage kpEffectBlurSharpen::applyEffect(const kpImage &image, Type type, int strength)
 {
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    qCDebug(kpLogImagelib) << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect ()
-              << ",type=" << int (type)
-              << ",strength=" << strength
-              << ")";
+    qCDebug(kpLogImagelib) << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect() << ",type=" << int(type) << ",strength=" << strength << ")";
 #endif
 
-    Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
+    Q_ASSERT(strength >= MinStrength && strength <= MaxStrength);
 
     if (type == Blur) {
-        return ::BlurQImage (image, strength);
+        return ::BlurQImage(image, strength);
     }
 
     if (type == Sharpen) {
-        return ::SharpenQImage (image, strength);
+        return ::SharpenQImage(image, strength);
     }
 
     if (type == MakeConfidential) {

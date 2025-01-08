@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_EFFECTS_DIALOG_H
 #define KP_EFFECTS_DIALOG_H
 
-
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
-
 
 class QComboBox;
 class QGroupBox;
@@ -42,38 +39,33 @@ class QVBoxLayout;
 class kpEffectCommandBase;
 class kpEffectWidgetBase;
 
-
 class kpEffectsDialog : public kpTransformPreviewDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // Specifying <defaultSelectedEffect> is more efficient than leaving it
     // as 0 and then calling selectEffect() afterwards.
-    kpEffectsDialog (bool actOnSelection,
-                     kpTransformDialogEnvironment *_env,
-                     QWidget *parent,
-                     int defaultSelectedEffect = 0);
-    ~kpEffectsDialog () override;
+    kpEffectsDialog(bool actOnSelection, kpTransformDialogEnvironment *_env, QWidget *parent, int defaultSelectedEffect = 0);
+    ~kpEffectsDialog() override;
 
-    bool isNoOp () const override;
-    kpEffectCommandBase *createCommand () const;
+    bool isNoOp() const override;
+    kpEffectCommandBase *createCommand() const;
 
 protected:
-    QSize newDimensions () const override;
-    QImage transformPixmap (const QImage &pixmap,
-                                     int targetWidth, int targetHeight) const override;
+    QSize newDimensions() const override;
+    QImage transformPixmap(const QImage &pixmap, int targetWidth, int targetHeight) const override;
 
 public:
-    int selectedEffect () const;
+    int selectedEffect() const;
 public Q_SLOTS:
-    void selectEffect (int which);
+    void selectEffect(int which);
 
 protected Q_SLOTS:
-    void slotUpdate () override;
-    void slotUpdateWithWaitCursor () override;
+    void slotUpdate() override;
+    void slotUpdateWithWaitCursor() override;
 
-    void slotDelayedUpdate ();
+    void slotDelayedUpdate();
 
 protected:
     static int s_lastWidth, s_lastHeight;
@@ -87,5 +79,4 @@ protected:
     kpEffectWidgetBase *m_effectWidget;
 };
 
-
-#endif  // KP_EFFECTS_DIALOG_H
+#endif // KP_EFFECTS_DIALOG_H

@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_SELECTION 0
-
 
 #include "layers/selections/image/kpFreeFormImageSelection.h"
 
@@ -35,9 +33,7 @@
 
 #include "imagelib/kpPainter.h"
 
-
-struct kpFreeFormImageSelectionPrivate
-{
+struct kpFreeFormImageSelectionPrivate {
     QPolygon orgPoints;
 
     // Various Qt methods that take a QPolygon interpolate points differently
@@ -65,43 +61,38 @@ struct kpFreeFormImageSelectionPrivate
     QPolygon cardPointsCache, cardPointsLoopCache;
 };
 
-
-kpFreeFormImageSelection::kpFreeFormImageSelection (
-        const kpImageSelectionTransparency &transparency)
-    : kpAbstractImageSelection (transparency),
-      d (new kpFreeFormImageSelectionPrivate ())
+kpFreeFormImageSelection::kpFreeFormImageSelection(const kpImageSelectionTransparency &transparency)
+    : kpAbstractImageSelection(transparency)
+    , d(new kpFreeFormImageSelectionPrivate())
 {
 }
 
-kpFreeFormImageSelection::kpFreeFormImageSelection (const QPolygon &points,
-        const kpImage &baseImage,
-        const kpImageSelectionTransparency &transparency)
-    : kpAbstractImageSelection (points.boundingRect (), baseImage, transparency),
-      d (new kpFreeFormImageSelectionPrivate ())
+kpFreeFormImageSelection::kpFreeFormImageSelection(const QPolygon &points, const kpImage &baseImage, const kpImageSelectionTransparency &transparency)
+    : kpAbstractImageSelection(points.boundingRect(), baseImage, transparency)
+    , d(new kpFreeFormImageSelectionPrivate())
 {
     d->orgPoints = points;
-    recalculateCardinallyAdjacentPoints ();
+    recalculateCardinallyAdjacentPoints();
 }
 
-kpFreeFormImageSelection::kpFreeFormImageSelection (const QPolygon &points,
-        const kpImageSelectionTransparency &transparency)
-    : kpAbstractImageSelection (points.boundingRect (), transparency),
-      d (new kpFreeFormImageSelectionPrivate ())
+kpFreeFormImageSelection::kpFreeFormImageSelection(const QPolygon &points, const kpImageSelectionTransparency &transparency)
+    : kpAbstractImageSelection(points.boundingRect(), transparency)
+    , d(new kpFreeFormImageSelectionPrivate())
 {
     d->orgPoints = points;
-    recalculateCardinallyAdjacentPoints ();
+    recalculateCardinallyAdjacentPoints();
 }
 
-kpFreeFormImageSelection::kpFreeFormImageSelection (const kpFreeFormImageSelection &rhs)
-    : kpAbstractImageSelection (),
-      d (new kpFreeFormImageSelectionPrivate ())
+kpFreeFormImageSelection::kpFreeFormImageSelection(const kpFreeFormImageSelection &rhs)
+    : kpAbstractImageSelection()
+    , d(new kpFreeFormImageSelectionPrivate())
 {
     *this = rhs;
 }
 
-kpFreeFormImageSelection &kpFreeFormImageSelection::operator= (const kpFreeFormImageSelection &rhs)
+kpFreeFormImageSelection &kpFreeFormImageSelection::operator=(const kpFreeFormImageSelection &rhs)
 {
-    kpAbstractImageSelection::operator= (rhs);
+    kpAbstractImageSelection::operator=(rhs);
 
     d->orgPoints = rhs.d->orgPoints;
     d->cardPointsCache = rhs.d->cardPointsCache;
@@ -111,70 +102,65 @@ kpFreeFormImageSelection &kpFreeFormImageSelection::operator= (const kpFreeFormI
 }
 
 // public virtual [kpAbstractSelection]
-kpFreeFormImageSelection *kpFreeFormImageSelection::clone () const
+kpFreeFormImageSelection *kpFreeFormImageSelection::clone() const
 {
-    kpFreeFormImageSelection *sel = new kpFreeFormImageSelection ();
+    kpFreeFormImageSelection *sel = new kpFreeFormImageSelection();
     *sel = *this;
     return sel;
 }
 
-kpFreeFormImageSelection::~kpFreeFormImageSelection ()
+kpFreeFormImageSelection::~kpFreeFormImageSelection()
 {
     delete d;
 }
 
-
 // public virtual [kpAbstractSelection]
-int kpFreeFormImageSelection::serialID () const
+int kpFreeFormImageSelection::serialID() const
 {
     return SerialID;
 }
 
 // public virtual [base kpAbstractImageSelection]
-bool kpFreeFormImageSelection::readFromStream (QDataStream &stream)
+bool kpFreeFormImageSelection::readFromStream(QDataStream &stream)
 {
-    if (!kpAbstractImageSelection::readFromStream (stream)) {
+    if (!kpAbstractImageSelection::readFromStream(stream)) {
         return false;
     }
 
     stream >> d->orgPoints;
-    recalculateCardinallyAdjacentPoints ();
+    recalculateCardinallyAdjacentPoints();
 
     return true;
 }
 
 // public virtual [base kpAbstractImageSelection]
-void kpFreeFormImageSelection::writeToStream (QDataStream &stream) const
+void kpFreeFormImageSelection::writeToStream(QDataStream &stream) const
 {
-    kpAbstractImageSelection::writeToStream (stream);
+    kpAbstractImageSelection::writeToStream(stream);
 
     stream << d->orgPoints;
 }
 
-
 // public virtual [base kpAbstractImageSelection]
-kpCommandSize::SizeType kpFreeFormImageSelection::size () const
+kpCommandSize::SizeType kpFreeFormImageSelection::size() const
 {
-    return kpAbstractImageSelection::size () +
-        (kpCommandSize::PolygonSize (d->orgPoints) +
-         kpCommandSize::PolygonSize (d->cardPointsCache) +
-         kpCommandSize::PolygonSize (d->cardPointsLoopCache));
+    return kpAbstractImageSelection::size()
+        + (kpCommandSize::PolygonSize(d->orgPoints) + kpCommandSize::PolygonSize(d->cardPointsCache) + kpCommandSize::PolygonSize(d->cardPointsLoopCache));
 }
 
 // public virtual [kpAbstractSelection]
-bool kpFreeFormImageSelection::isRectangular () const
+bool kpFreeFormImageSelection::isRectangular() const
 {
     return false;
 }
 
 // public
-QPolygon kpFreeFormImageSelection::originalPoints () const
+QPolygon kpFreeFormImageSelection::originalPoints() const
 {
     return d->orgPoints;
 }
 
-
-static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
+static QPolygon RecalculateCardinallyAdjacentPoints(const QPolygon &points)
 {
 #if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpFreeFormImageSelection.cpp:RecalculateCardinallyAdjacentPoints()";
@@ -183,13 +169,12 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 
     // Filter out duplicates.
     QPolygon noDups;
-    for (const auto &p : points)
-    {
-        if (!noDups.isEmpty () && p == noDups.last ()) {
+    for (const auto &p : points) {
+        if (!noDups.isEmpty() && p == noDups.last()) {
             continue;
         }
 
-        noDups.append (p);
+        noDups.append(p);
     }
 #if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "\twithout dups=" << noDups;
@@ -197,31 +182,21 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 
     // Interpolate to ensure cardinal adjacency.
     QPolygon cardPoints;
-    for (const auto &p : noDups)
-    {
-        if (!cardPoints.isEmpty () &&
-            !kpPainter::pointsAreCardinallyAdjacent (p, cardPoints.last ()))
-        {
-            const QPoint lastPoint = cardPoints.last ();
+    for (const auto &p : noDups) {
+        if (!cardPoints.isEmpty() && !kpPainter::pointsAreCardinallyAdjacent(p, cardPoints.last())) {
+            const QPoint lastPoint = cardPoints.last();
 
-            QList <QPoint> interpPoints = kpPainter::interpolatePoints (
-                lastPoint,
-                p,
-                true/*cardinal adjacency*/);
+            QList<QPoint> interpPoints = kpPainter::interpolatePoints(lastPoint, p, true /*cardinal adjacency*/);
 
-            Q_ASSERT (interpPoints.size () >= 2);
-            Q_ASSERT (interpPoints [0] == lastPoint);
-            Q_ASSERT (interpPoints.last () == p);
+            Q_ASSERT(interpPoints.size() >= 2);
+            Q_ASSERT(interpPoints[0] == lastPoint);
+            Q_ASSERT(interpPoints.last() == p);
 
-            for (int i = 1/*skip already existing point*/;
-                 i < interpPoints.size ();
-                 i++)
-            {
-                cardPoints.append (interpPoints [i]);
+            for (int i = 1 /*skip already existing point*/; i < interpPoints.size(); i++) {
+                cardPoints.append(interpPoints[i]);
             }
-        }
-        else {
-            cardPoints.append (p);
+        } else {
+            cardPoints.append(p);
         }
     }
 #if DEBUG_KP_SELECTION
@@ -232,46 +207,43 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 }
 
 // protected
-void kpFreeFormImageSelection::recalculateCardinallyAdjacentPoints ()
+void kpFreeFormImageSelection::recalculateCardinallyAdjacentPoints()
 {
-    d->cardPointsCache = ::RecalculateCardinallyAdjacentPoints (d->orgPoints);
-
+    d->cardPointsCache = ::RecalculateCardinallyAdjacentPoints(d->orgPoints);
 
     QPolygon pointsLoop = d->cardPointsCache;
-    if (!pointsLoop.isEmpty ()) {
-        pointsLoop.append (pointsLoop.first ());
+    if (!pointsLoop.isEmpty()) {
+        pointsLoop.append(pointsLoop.first());
     }
 
     // OPT: We know this method only needs to act on the last 2 points of
     //      "pointLoop", since the previous points are definitely cardinally
     //      adjacent.
-    d->cardPointsLoopCache = ::RecalculateCardinallyAdjacentPoints (pointsLoop);
+    d->cardPointsLoopCache = ::RecalculateCardinallyAdjacentPoints(pointsLoop);
 }
 
 // public
-QPolygon kpFreeFormImageSelection::cardinallyAdjacentPoints () const
+QPolygon kpFreeFormImageSelection::cardinallyAdjacentPoints() const
 {
     return d->cardPointsCache;
 }
 
 // public
-QPolygon kpFreeFormImageSelection::cardinallyAdjacentPointsLoop () const
+QPolygon kpFreeFormImageSelection::cardinallyAdjacentPointsLoop() const
 {
     return d->cardPointsLoopCache;
 }
-
 
 // public virtual [kpAbstractSelection]
-QPolygon kpFreeFormImageSelection::calculatePoints () const
+QPolygon kpFreeFormImageSelection::calculatePoints() const
 {
     return d->cardPointsLoopCache;
 }
 
-
 // protected virtual [kpAbstractSelection]
-QRegion kpFreeFormImageSelection::shapeRegion () const
+QRegion kpFreeFormImageSelection::shapeRegion() const
 {
-    const QRegion region = QRegion (d->cardPointsLoopCache, Qt::OddEvenFill);
+    const QRegion region = QRegion(d->cardPointsLoopCache, Qt::OddEvenFill);
 
     // In Qt4, while QPainter::drawRect() gives you rectangles 1 pixel
     // wider and higher, QRegion(QPolygon) gives you regions 1 pixel
@@ -293,101 +265,92 @@ QRegion kpFreeFormImageSelection::shapeRegion () const
     //    is dodgy.  Also, this would guarantee that shapeBitmap() and shapeRegion()
     //    are consistent and we wouldn't need cardinally adjacent points either
     //    (d->cardPointsCache and d->cardPointsLoopCache).
-    const QRegion regionX = region.translated (1, 0);
-    const QRegion regionY = region.translated (0, 1);
-    const QRegion regionXY = region.translated (1, 1);
+    const QRegion regionX = region.translated(1, 0);
+    const QRegion regionY = region.translated(0, 1);
+    const QRegion regionXY = region.translated(1, 1);
 
-    return region.united (regionX).united (regionY).united (regionXY);
+    return region.united(regionX).united(regionY).united(regionXY);
 }
 
-
 // public virtual [kpAbstractSelection]
-bool kpFreeFormImageSelection::contains (const QPoint &point) const
+bool kpFreeFormImageSelection::contains(const QPoint &point) const
 {
-    if (!boundingRect ().contains (point)) {
+    if (!boundingRect().contains(point)) {
         return false;
     }
 
     // We can't use the baseImage() (when non-null) and get the transparency of
     // the pixel at <point>, instead of this region test, as the pixel may be
     // transparent but still within the border.
-    return shapeRegion ().contains (point);
+    return shapeRegion().contains(point);
 }
 
-
 // public virtual [base kpAbstractSelection]
-void kpFreeFormImageSelection::moveBy (int dx, int dy)
+void kpFreeFormImageSelection::moveBy(int dx, int dy)
 {
-    d->orgPoints.translate (dx, dy);
+    d->orgPoints.translate(dx, dy);
 
-    d->cardPointsCache.translate (dx, dy);
-    d->cardPointsLoopCache.translate (dx, dy);
+    d->cardPointsCache.translate(dx, dy);
+    d->cardPointsLoopCache.translate(dx, dy);
 
     // Call base last since it fires the changed() signal and we only
     // want that to fire at the very end of this method, after all
     // the selection state has been changed.
-    kpAbstractImageSelection::moveBy (dx, dy);
+    kpAbstractImageSelection::moveBy(dx, dy);
 }
 
 //---------------------------------------------------------------------
 
-static void FlipPoints (QPolygon *points,
-        bool horiz, bool vert,
-        const QRect &oldRect)
+static void FlipPoints(QPolygon *points, bool horiz, bool vert, const QRect &oldRect)
 {
-    points->translate (-oldRect.x (), -oldRect.y ());
+    points->translate(-oldRect.x(), -oldRect.y());
 
-    const QTransform matrix (horiz ? -1 : +1,  // m11
-                          0,  // m12
-                          0,  // m21
-                          vert  ? -1 : +1,  // m22
-                          horiz ? (oldRect.width() - 1) : 0,  // dx
-                          vert  ? (oldRect.height() - 1) : 0);  // dy
+    const QTransform matrix(horiz ? -1 : +1, // m11
+                            0, // m12
+                            0, // m21
+                            vert ? -1 : +1, // m22
+                            horiz ? (oldRect.width() - 1) : 0, // dx
+                            vert ? (oldRect.height() - 1) : 0); // dy
 
-#if !defined (QT_NO_DEBUG) && !defined (NDEBUG)
+#if !defined(QT_NO_DEBUG) && !defined(NDEBUG)
     QPolygon oldPoints = *points;
 #endif
 
-    *points = matrix.map (*points);
+    *points = matrix.map(*points);
 
-#if !defined (QT_NO_DEBUG) && !defined (NDEBUG)
+#if !defined(QT_NO_DEBUG) && !defined(NDEBUG)
     // Sanity check: flipping the points twice gives us the original points.
-    Q_ASSERT (oldPoints == matrix.map (*points));
+    Q_ASSERT(oldPoints == matrix.map(*points));
 #endif
 
-    points->translate (oldRect.x (), oldRect.y ());
+    points->translate(oldRect.x(), oldRect.y());
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpAbstractImageSelection]
-void kpFreeFormImageSelection::flip (bool horiz, bool vert)
+void kpFreeFormImageSelection::flip(bool horiz, bool vert)
 {
-    ::FlipPoints (&d->orgPoints, horiz, vert, boundingRect ());
+    ::FlipPoints(&d->orgPoints, horiz, vert, boundingRect());
 
-    ::FlipPoints (&d->cardPointsCache, horiz, vert, boundingRect ());
-    ::FlipPoints (&d->cardPointsLoopCache, horiz, vert, boundingRect ());
-
+    ::FlipPoints(&d->cardPointsCache, horiz, vert, boundingRect());
+    ::FlipPoints(&d->cardPointsLoopCache, horiz, vert, boundingRect());
 
     // Call base last since it fires the changed() signal and we only
     // want that to fire at the very end of this method, after all
     // the selection state has been changed.
-    kpAbstractImageSelection::flip (horiz, vert);
+    kpAbstractImageSelection::flip(horiz, vert);
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-void kpFreeFormImageSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const
+void kpFreeFormImageSelection::paintBorder(QImage *destPixmap, const QRect &docRect, bool selectionFinished) const
 {
     if (selectionFinished) {
-        paintPolygonalBorder (cardinallyAdjacentPointsLoop (),
-            destPixmap, docRect, selectionFinished);
-    }
-    else {
-        paintPolygonalBorder (cardinallyAdjacentPoints (),
-            destPixmap, docRect, selectionFinished);
+        paintPolygonalBorder(cardinallyAdjacentPointsLoop(), destPixmap, docRect, selectionFinished);
+    } else {
+        paintPolygonalBorder(cardinallyAdjacentPoints(), destPixmap, docRect, selectionFinished);
     }
 }
 

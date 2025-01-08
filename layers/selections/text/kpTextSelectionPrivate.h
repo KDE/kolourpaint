@@ -25,23 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpTextSelectionPrivate_H
 #define kpTextSelectionPrivate_H
-
 
 #include <QList>
 
 #include "imagelib/kpImage.h"
-#include "layers/selections/text/kpTextStyle.h"
 #include "layers/selections/text/kpPreeditText.h"
+#include "layers/selections/text/kpTextStyle.h"
 
-struct kpTextSelectionPrivate
-{
-    QList <QString> textLines;
+struct kpTextSelectionPrivate {
+    QList<QString> textLines;
     kpTextStyle textStyle;
     kpPreeditText preeditText;
 };
 
-
-#endif  // kpTextSelectionPrivate_H
+#endif // kpTextSelectionPrivate_H

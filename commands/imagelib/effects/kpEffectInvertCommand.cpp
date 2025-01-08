@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpEffectInvertCommand.h"
 
 #include "imagelib/effects/kpEffectInvert.h"
@@ -34,33 +33,25 @@
 
 //--------------------------------------------------------------------------------
 
-kpEffectInvertCommand::kpEffectInvertCommand (int channels,
-        bool actOnSelection,
-        kpCommandEnvironment *environ)
-    : kpEffectCommandBase (channels == kpEffectInvert::RGB ?
-                                i18n ("Invert Colors") : i18n ("Invert"),
-                            actOnSelection, environ),
-      m_channels (channels)
+kpEffectInvertCommand::kpEffectInvertCommand(int channels, bool actOnSelection, kpCommandEnvironment *environ)
+    : kpEffectCommandBase(channels == kpEffectInvert::RGB ? i18n("Invert Colors") : i18n("Invert"), actOnSelection, environ)
+    , m_channels(channels)
 {
 }
 
-kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
-                                              kpCommandEnvironment *environ)
+kpEffectInvertCommand::kpEffectInvertCommand(bool actOnSelection, kpCommandEnvironment *environ)
     : kpEffectInvertCommand(kpEffectInvert::RGB, actOnSelection, environ)
 {
 }
 
-kpEffectInvertCommand::~kpEffectInvertCommand () = default;
-
+kpEffectInvertCommand::~kpEffectInvertCommand() = default;
 
 //
 // kpEffectInvertCommand implements kpEffectCommandBase interface
 //
 
 // protected virtual [base kpEffectCommandBase]
-kpImage kpEffectInvertCommand::applyEffect (const kpImage &image)
+kpImage kpEffectInvertCommand::applyEffect(const kpImage &image)
 {
-    return kpEffectInvert::applyEffect (image, m_channels);
+    return kpEffectInvert::applyEffect(image, m_channels);
 }
-
-

@@ -26,15 +26,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_TOOL_BAR_H
 #define KP_TOOL_TOOL_BAR_H
-
 
 #include <QList>
 
 #include <KToolBar>
-
 
 class QAbstractButton;
 class QBoxLayout;
@@ -55,51 +52,69 @@ class kpToolWidgetSpraycanSize;
 
 class kpToolToolBar : public KToolBar
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolToolBar (const QString &name, int colsOrRows, QMainWindow *parent);
-    ~kpToolToolBar () override;
+    kpToolToolBar(const QString &name, int colsOrRows, QMainWindow *parent);
+    ~kpToolToolBar() override;
 
     void registerTool(kpTool *tool);
     void unregisterTool(kpTool *tool);
 
-    kpTool *tool () const;
-    void selectTool (const kpTool *tool, bool reselectIfSameTool = false);
+    kpTool *tool() const;
+    void selectTool(const kpTool *tool, bool reselectIfSameTool = false);
 
-    kpTool *previousTool () const;
-    void selectPreviousTool ();
+    kpTool *previousTool() const;
+    void selectPreviousTool();
 
-    void hideAllToolWidgets ();
+    void hideAllToolWidgets();
     // could this be cleaner (the tools have to access them individually somehow)?
-    kpToolWidgetBrush *toolWidgetBrush () const { return m_toolWidgetBrush; }
-    kpToolWidgetEraserSize *toolWidgetEraserSize () const { return m_toolWidgetEraserSize; }
-    kpToolWidgetFillStyle *toolWidgetFillStyle () const { return m_toolWidgetFillStyle; }
-    kpToolWidgetLineWidth *toolWidgetLineWidth () const { return m_toolWidgetLineWidth; }
-    kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent () const { return m_toolWidgetOpaqueOrTransparent; }
-    kpToolWidgetSpraycanSize *toolWidgetSpraycanSize () const { return m_toolWidgetSpraycanSize; }
+    kpToolWidgetBrush *toolWidgetBrush() const
+    {
+        return m_toolWidgetBrush;
+    }
+    kpToolWidgetEraserSize *toolWidgetEraserSize() const
+    {
+        return m_toolWidgetEraserSize;
+    }
+    kpToolWidgetFillStyle *toolWidgetFillStyle() const
+    {
+        return m_toolWidgetFillStyle;
+    }
+    kpToolWidgetLineWidth *toolWidgetLineWidth() const
+    {
+        return m_toolWidgetLineWidth;
+    }
+    kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent() const
+    {
+        return m_toolWidgetOpaqueOrTransparent;
+    }
+    kpToolWidgetSpraycanSize *toolWidgetSpraycanSize() const
+    {
+        return m_toolWidgetSpraycanSize;
+    }
 
-    kpToolWidgetBase *shownToolWidget (int which) const;
+    kpToolWidgetBase *shownToolWidget(int which) const;
 
 protected:
     bool event(QEvent *ev) override;
     void paintEvent(QPaintEvent *) override;
 
 Q_SIGNALS:
-    void sigToolSelected (kpTool *tool);  // tool may be 0
-    void toolWidgetOptionSelected ();
+    void sigToolSelected(kpTool *tool); // tool may be 0
+    void toolWidgetOptionSelected();
 
 private Q_SLOTS:
-    void slotToolButtonClicked ();
+    void slotToolButtonClicked();
 
-    void slotToolActionActivated ();
+    void slotToolActionActivated();
 
     void adjustToOrientation(Qt::Orientation o);
     void slotIconSizeChanged(const QSize &);
     void slotToolButtonStyleChanged(Qt::ToolButtonStyle style);
 
 private:
-    void addButton (QAbstractButton *button, Qt::Orientation o, int num);
+    void addButton(QAbstractButton *button, Qt::Orientation o, int num);
     void adjustSizeConstraint();
 
     int m_vertCols;
@@ -123,5 +138,4 @@ private:
     kpTool *m_previousTool, *m_currentTool;
 };
 
-
-#endif  // KP_TOOL_TOOL_BAR_H
+#endif // KP_TOOL_TOOL_BAR_H

@@ -28,35 +28,35 @@
 // Tools' statusbar updates.
 //
 
-#include "tools/kpTool.h"
 #include "kpToolPrivate.h"
+#include "tools/kpTool.h"
 
 #include <KLocalizedString>
 
 //---------------------------------------------------------------------
 
 // public static
-QString kpTool::cancelUserMessage (int mouseButton)
+QString kpTool::cancelUserMessage(int mouseButton)
 {
     if (mouseButton == 0) {
-        return i18n ("Right click to cancel.");
+        return i18n("Right click to cancel.");
     }
 
-    return i18n ("Left click to cancel.");
+    return i18n("Left click to cancel.");
 }
 
 //---------------------------------------------------------------------
 
 // public
-QString kpTool::cancelUserMessage () const
+QString kpTool::cancelUserMessage() const
 {
-    return cancelUserMessage (d->mouseButton);
+    return cancelUserMessage(d->mouseButton);
 }
 
 //---------------------------------------------------------------------
 
 // public
-QString kpTool::userMessage () const
+QString kpTool::userMessage() const
 {
     return d->userMessage;
 }
@@ -64,24 +64,23 @@ QString kpTool::userMessage () const
 //---------------------------------------------------------------------
 
 // public
-void kpTool::setUserMessage (const QString &userMessage)
+void kpTool::setUserMessage(const QString &userMessage)
 {
     d->userMessage = userMessage;
 
-    if (d->userMessage.isEmpty ()) {
-        d->userMessage = text ();
-    }
-    else {
-        d->userMessage.prepend (i18n ("%1: ", text ()));
+    if (d->userMessage.isEmpty()) {
+        d->userMessage = text();
+    } else {
+        d->userMessage.prepend(i18n("%1: ", text()));
     }
 
-    Q_EMIT userMessageChanged (d->userMessage);
+    Q_EMIT userMessageChanged(d->userMessage);
 }
 
 //---------------------------------------------------------------------
 
 // public
-QPoint kpTool::userShapeStartPoint () const
+QPoint kpTool::userShapeStartPoint() const
 {
     return d->userShapeStartPoint;
 }
@@ -89,7 +88,7 @@ QPoint kpTool::userShapeStartPoint () const
 //---------------------------------------------------------------------
 
 // public
-QPoint kpTool::userShapeEndPoint () const
+QPoint kpTool::userShapeEndPoint() const
 {
     return d->userShapeEndPoint;
 }
@@ -97,25 +96,17 @@ QPoint kpTool::userShapeEndPoint () const
 //---------------------------------------------------------------------
 
 // public
-void kpTool::setUserShapePoints (const QPoint &startPoint,
-                                 const QPoint &endPoint,
-                                 bool setSize)
+void kpTool::setUserShapePoints(const QPoint &startPoint, const QPoint &endPoint, bool setSize)
 {
     d->userShapeStartPoint = startPoint;
     d->userShapeEndPoint = endPoint;
-    Q_EMIT userShapePointsChanged (d->userShapeStartPoint, d->userShapeEndPoint);
+    Q_EMIT userShapePointsChanged(d->userShapeStartPoint, d->userShapeEndPoint);
 
-    if (setSize)
-    {
-        if (startPoint != KP_INVALID_POINT &&
-            endPoint != KP_INVALID_POINT)
-        {
-            setUserShapeSize (calculateLength (startPoint.x (), endPoint.x ()),
-                              calculateLength (startPoint.y (), endPoint.y ()));
-        }
-        else
-        {
-            setUserShapeSize ();
+    if (setSize) {
+        if (startPoint != KP_INVALID_POINT && endPoint != KP_INVALID_POINT) {
+            setUserShapeSize(calculateLength(startPoint.x(), endPoint.x()), calculateLength(startPoint.y(), endPoint.y()));
+        } else {
+            setUserShapeSize();
         }
     }
 }
@@ -123,7 +114,7 @@ void kpTool::setUserShapePoints (const QPoint &startPoint,
 //---------------------------------------------------------------------
 
 // public
-QSize kpTool::userShapeSize () const
+QSize kpTool::userShapeSize() const
 {
     return d->userShapeSize;
 }
@@ -131,35 +122,35 @@ QSize kpTool::userShapeSize () const
 //---------------------------------------------------------------------
 
 // public
-int kpTool::userShapeWidth () const
+int kpTool::userShapeWidth() const
 {
-    return d->userShapeSize.width ();
+    return d->userShapeSize.width();
 }
 
 //---------------------------------------------------------------------
 
 // public
-int kpTool::userShapeHeight () const
+int kpTool::userShapeHeight() const
 {
-    return d->userShapeSize.height ();
+    return d->userShapeSize.height();
 }
 
 //---------------------------------------------------------------------
 
 // public
-void kpTool::setUserShapeSize (const QSize &size)
+void kpTool::setUserShapeSize(const QSize &size)
 {
     d->userShapeSize = size;
 
-    Q_EMIT userShapeSizeChanged (d->userShapeSize);
+    Q_EMIT userShapeSizeChanged(d->userShapeSize);
 }
 
 //---------------------------------------------------------------------
 
 // public
-void kpTool::setUserShapeSize (int width, int height)
+void kpTool::setUserShapeSize(int width, int height)
 {
-    setUserShapeSize (QSize (width, height));
+    setUserShapeSize(QSize(width, height));
 }
 
 //---------------------------------------------------------------------

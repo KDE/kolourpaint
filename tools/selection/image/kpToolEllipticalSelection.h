@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_ELLIPTICAL_SELECTION_H
 #define KP_TOOL_ELLIPTICAL_SELECTION_H
 
-
 #include "kpAbstractImageSelectionTool.h"
-
 
 class kpToolEllipticalSelection : public kpAbstractImageSelectionTool
 {
 public:
-    kpToolEllipticalSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    ~kpToolEllipticalSelection () override;
+    kpToolEllipticalSelection(kpToolSelectionEnvironment *environ, QObject *parent);
+    ~kpToolEllipticalSelection() override;
 
 protected:
-    bool drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragAccepted,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect) override;
+    bool drawCreateMoreSelectionAndUpdateStatusBar(bool dragAccepted, const QPoint &accidentalDragAdjustedPoint, const QRect &normalizedRect) override;
 };
 
-
-#endif  // KP_TOOL_ELLIPTICAL_SELECTION_H
+#endif // KP_TOOL_ELLIPTICAL_SELECTION_H

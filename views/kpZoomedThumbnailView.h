@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_ZOOMED_THUMBNAIL_VIEW_H
 #define KP_ZOOMED_THUMBNAIL_VIEW_H
 
-
 #include "kpThumbnailView.h"
-
 
 /**
  * @short Zoomed thumbnail view of a document.
@@ -49,30 +46,28 @@
  */
 /*sealed*/ class kpZoomedThumbnailView : public kpThumbnailView
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     /**
      * Constructs a zoomed thumbnail view.
      */
-    kpZoomedThumbnailView (kpDocument *document,
-            kpToolToolBar *toolToolBar,
-            kpViewManager *viewManager,
-            kpView *buddyView,
-            kpViewScrollableContainer *scrollableContainer,
-            QWidget *parent);
+    kpZoomedThumbnailView(kpDocument *document,
+                          kpToolToolBar *toolToolBar,
+                          kpViewManager *viewManager,
+                          kpView *buddyView,
+                          kpViewScrollableContainer *scrollableContainer,
+                          QWidget *parent);
 
     /**
      * Destructs a zoomed thumbnail view.
      */
-    ~kpZoomedThumbnailView () override;
-
+    ~kpZoomedThumbnailView() override;
 
     /**
      * Implements @ref kpThumbnailView.
      */
-    QString caption () const override;
-
+    QString caption() const override;
 
 public Q_SLOTS:
     /**
@@ -84,12 +79,10 @@ public Q_SLOTS:
      *
      * Implements @ref kpView.
      */
-    void adjustToEnvironment () override;
-
+    void adjustToEnvironment() override;
 
 private:
     struct kpZoomedThumbnailViewPrivate *d;
 };
 
-
-#endif  // KP_ZOOMED_THUMBNAIL_VIEW_H
+#endif // KP_ZOOMED_THUMBNAIL_VIEW_H

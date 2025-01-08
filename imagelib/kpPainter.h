@@ -25,16 +25,11 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_PAINTER_H
 #define KP_PAINTER_H
 
-
 #include "kpColor.h"
 #include "kpImage.h"
-
-
-
 
 //
 // Stateless painter with sane semantics that works on kpImage's i.e. it
@@ -56,16 +51,15 @@ class kpPainter
 public:
     // helper to make a correct QRect out of 2 QPoints regardless of their relative position
     // to each other
-    static QRect normalizedRect(const QPoint& p1, const QPoint& p2)
+    static QRect normalizedRect(const QPoint &p1, const QPoint &p2)
     {
-      return QRect(qMin(p1.x(), p2.x()), qMin(p1.y(), p2.y()),
-                   qAbs(p2.x() - p1.x()) + 1, qAbs(p2.y() - p1.y()) + 1);
+        return QRect(qMin(p1.x(), p2.x()), qMin(p1.y(), p2.y()), qAbs(p2.x() - p1.x()) + 1, qAbs(p2.y() - p1.y()) + 1);
     }
 
     // Returns whether the given points are cardinally adjacent (i.e. one point
     // is exactly 1 pixel north, east, south or west of the other).  Equal
     // points are not cardinally adjacent.
-    static bool pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q);
+    static bool pointsAreCardinallyAdjacent(const QPoint &p, const QPoint &q);
 
     // Returns a list of points representing a straight line from <startPoint>
     // to <endPoint> inclusive, using Bresenham's line algorithm.  Each point
@@ -92,14 +86,9 @@ public:
     // a point at 'c'.
     //
     // ASSUMPTION: <probability> is between 0.0 and 1.0 inclusive.
-    static QList <QPoint> interpolatePoints (const QPoint &startPoint,
-        const QPoint &endPoint,
-        bool cardinalAdjacency = false,
-        double probability = 1.0);
+    static QList<QPoint> interpolatePoints(const QPoint &startPoint, const QPoint &endPoint, bool cardinalAdjacency = false, double probability = 1.0);
 
-    static void fillRect (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &color);
+    static void fillRect(kpImage *image, int x, int y, int width, int height, const kpColor &color);
 
     // Replaces all pixels of <colorToReplace> on the line
     // from (x1,y1) to (x2,y2) of <image>, with a pen of <color> with
@@ -110,28 +99,26 @@ public:
     // those corners.
     //
     // Returns the dirty rectangle.
-    static QRect washLine (kpImage *image,
-        int x1, int y1, int x2, int y2,
-        const kpColor &color, int penWidth, int penHeight,
-        const kpColor &colorToReplace,
-        int processedColorSimilarity);
+    static QRect washLine(kpImage *image,
+                          int x1,
+                          int y1,
+                          int x2,
+                          int y2,
+                          const kpColor &color,
+                          int penWidth,
+                          int penHeight,
+                          const kpColor &colorToReplace,
+                          int processedColorSimilarity);
 
-    static QRect washRect (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &color,
-        const kpColor &colorToReplace,
-        int processedColorSimilarity);
+    static QRect
+    washRect(kpImage *image, int x, int y, int width, int height, const kpColor &color, const kpColor &colorToReplace, int processedColorSimilarity);
 
     // For each point in <points>, sprays a random pattern of 10 dots of <color>,
     // each within a circle of diameter <spraycanSize>, onto <image>.
     //
     // ASSUMPTION: spraycanSize > 0.
     // TODO: I think this diameter is 1 or 2 off.
-    static void sprayPoints (kpImage *image,
-        const QList <QPoint> &points,
-        const kpColor &color,
-        int spraycanSize);
+    static void sprayPoints(kpImage *image, const QList<QPoint> &points, const kpColor &color, int spraycanSize);
 };
 
-
-#endif  // KP_PAINTER_H
+#endif // KP_PAINTER_H

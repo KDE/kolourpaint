@@ -25,23 +25,18 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDocumentPrivate_H
 #define kpDocumentPrivate_H
 
-
 class kpDocumentEnvironment;
 
-
-struct kpDocumentPrivate
-{
-    kpDocumentPrivate ()
-      : environ(nullptr)
+struct kpDocumentPrivate {
+    kpDocumentPrivate()
+        : environ(nullptr)
     {
     }
 
     kpDocumentEnvironment *environ;
 };
 
-
-#endif  // kpDocumentPrivate_H
+#endif // kpDocumentPrivate_H

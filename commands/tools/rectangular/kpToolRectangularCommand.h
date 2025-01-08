@@ -25,38 +25,34 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_RECTANGULAR_COMMAND_H
 #define KP_TOOL_RECTANGULAR_COMMAND_H
-
 
 #include "commands/kpNamedCommand.h"
 #include "tools/rectangular/kpToolRectangularBase.h"
 
-
 class kpColor;
-
 
 class kpToolRectangularCommand : public kpNamedCommand
 {
 public:
-    kpToolRectangularCommand (const QString &name,
-        kpToolRectangularBase::DrawShapeFunc drawShapeFunc,
-        const QRect &rect,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor,
-        kpCommandEnvironment *environ);
-    ~kpToolRectangularCommand () override;
+    kpToolRectangularCommand(const QString &name,
+                             kpToolRectangularBase::DrawShapeFunc drawShapeFunc,
+                             const QRect &rect,
+                             const kpColor &fcolor,
+                             int penWidth,
+                             const kpColor &bcolor,
+                             kpCommandEnvironment *environ);
+    ~kpToolRectangularCommand() override;
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
-    struct kpToolRectangularCommandPrivate * const d;
-    kpToolRectangularCommand &operator= (const kpToolRectangularCommand &) const;
+    struct kpToolRectangularCommandPrivate *const d;
+    kpToolRectangularCommand &operator=(const kpToolRectangularCommand &) const;
 };
 
-
-#endif  // KP_TOOL_RECTANGULAR_COMMAND_H
+#endif // KP_TOOL_RECTANGULAR_COMMAND_H

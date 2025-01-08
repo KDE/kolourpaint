@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_COLOR 0
-
 
 #include "kpColor.h"
 
@@ -38,45 +36,38 @@
 //---------------------------------------------------------------------
 
 kpColor::kpColor()
-  : m_rgbaIsValid(false),
-    m_rgba(0),
-    m_colorCacheIsValid(false)
+    : m_rgbaIsValid(false)
+    , m_rgba(0)
+    , m_colorCacheIsValid(false)
 {
 }
 
 //---------------------------------------------------------------------
 
-kpColor::kpColor (int red, int green, int blue, bool isTransparent)
-  : m_rgba(0), m_colorCacheIsValid(false)
+kpColor::kpColor(int red, int green, int blue, bool isTransparent)
+    : m_rgba(0)
+    , m_colorCacheIsValid(false)
 {
 #if DEBUG_KP_COLOR
-    qCDebug(kpLogImagelib) << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue
-              << ",isTrans=" << isTransparent << ")";
+    qCDebug(kpLogImagelib) << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue << ",isTrans=" << isTransparent << ")";
 #endif
-    if (red < 0 || red > 255 ||
-        green < 0 || green > 255 ||
-        blue < 0 || blue > 255)
-    {
-        qCCritical(kpLogImagelib) << "kpColor::<ctor>(r=" << red
-                   << ",g=" << green
-                   << ",b=" << blue
-                   << ",t=" << isTransparent
-                   << ") passed out of range values";
+    if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
+        qCCritical(kpLogImagelib) << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue << ",t=" << isTransparent << ") passed out of range values";
         m_rgbaIsValid = false;
         return;
     }
 
-    m_rgba = qRgba (red, green, blue, isTransparent ? 0 : 255/*opaque*/);
+    m_rgba = qRgba(red, green, blue, isTransparent ? 0 : 255 /*opaque*/);
     m_rgbaIsValid = true;
 }
 
 //---------------------------------------------------------------------
 
-kpColor::kpColor (const QRgb &rgba)
-    : m_colorCacheIsValid (false)
+kpColor::kpColor(const QRgb &rgba)
+    : m_colorCacheIsValid(false)
 {
 #if DEBUG_KP_COLOR
-    qCDebug(kpLogImagelib) << "kpColor::<ctor>(rgba=" << (int *) rgba << ")";
+    qCDebug(kpLogImagelib) << "kpColor::<ctor>(rgba=" << (int *)rgba << ")";
 #endif
     m_rgba = rgba;
     m_rgbaIsValid = true;
@@ -84,11 +75,11 @@ kpColor::kpColor (const QRgb &rgba)
 
 //---------------------------------------------------------------------
 
-kpColor::kpColor (const kpColor &rhs)
-    :  m_rgbaIsValid (rhs.m_rgbaIsValid),
-       m_rgba (rhs.m_rgba),
-       m_colorCacheIsValid (rhs.m_colorCacheIsValid),
-       m_colorCache (rhs.m_colorCache)
+kpColor::kpColor(const kpColor &rhs)
+    : m_rgbaIsValid(rhs.m_rgbaIsValid)
+    , m_rgba(rhs.m_rgba)
+    , m_colorCacheIsValid(rhs.m_colorCacheIsValid)
+    , m_colorCache(rhs.m_colorCache)
 {
 #if DEBUG_KP_COLOR
     qCDebug(kpLogImagelib) << "kpColor::<copy_ctor>()";
@@ -98,9 +89,9 @@ kpColor::kpColor (const kpColor &rhs)
 //---------------------------------------------------------------------
 
 // friend
-QDataStream &operator<< (QDataStream &stream, const kpColor &color)
+QDataStream &operator<<(QDataStream &stream, const kpColor &color)
 {
-    stream << int (color.m_rgbaIsValid) << int (color.m_rgba);
+    stream << int(color.m_rgbaIsValid) << int(color.m_rgba);
 
     return stream;
 }
@@ -108,12 +99,12 @@ QDataStream &operator<< (QDataStream &stream, const kpColor &color)
 //---------------------------------------------------------------------
 
 // friend
-QDataStream &operator>> (QDataStream &stream, kpColor &color)
+QDataStream &operator>>(QDataStream &stream, kpColor &color)
 {
     int a, b;
     stream >> a >> b;
     color.m_rgbaIsValid = a;
-    color.m_rgba = static_cast<unsigned int> (b);
+    color.m_rgba = static_cast<unsigned int>(b);
 
     color.m_colorCacheIsValid = false;
 
@@ -122,7 +113,7 @@ QDataStream &operator>> (QDataStream &stream, kpColor &color)
 
 //---------------------------------------------------------------------
 
-kpColor &kpColor::operator= (const kpColor &rhs)
+kpColor &kpColor::operator=(const kpColor &rhs)
 {
     // (as soon as you add a ptr, you won't be complaining to me that this
     //  method was unnecessary :))
@@ -139,21 +130,20 @@ kpColor &kpColor::operator= (const kpColor &rhs)
     return *this;
 }
 
-bool kpColor::operator== (const kpColor &rhs) const
+bool kpColor::operator==(const kpColor &rhs) const
 {
-    return isSimilarTo (rhs, kpColor::Exact);
+    return isSimilarTo(rhs, kpColor::Exact);
 }
 
-bool kpColor::operator!= (const kpColor &rhs) const
+bool kpColor::operator!=(const kpColor &rhs) const
 {
     return !(*this == rhs);
 }
 
 //---------------------------------------------------------------------
 
-
-template <class dtype>
-inline dtype square (dtype val)
+template<class dtype>
+inline dtype square(dtype val)
 {
     return val * val;
 }
@@ -161,31 +151,30 @@ inline dtype square (dtype val)
 //---------------------------------------------------------------------
 
 // public static
-int kpColor::processSimilarity (double colorSimilarity)
+int kpColor::processSimilarity(double colorSimilarity)
 {
     // sqrt (dr ^ 2 + dg ^ 2 + db ^ 2) <= colorSimilarity       * sqrt (255 ^ 2 * 3)
     //       dr ^ 2 + dg ^ 2 + db ^ 2  <= (colorSimilarity ^ 2) * (255 ^ 2 * 3)
 
-    return int (square (colorSimilarity) * (square (255) * 3));
+    return int(square(colorSimilarity) * (square(255) * 3));
 }
 
 //---------------------------------------------------------------------
 
-bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
+bool kpColor::isSimilarTo(const kpColor &rhs, int processedSimilarity) const
 {
     // Are we the same?
     if (this == &rhs) {
         return true;
     }
 
-
     // Do we dither in terms of validity?
-    if (isValid () != rhs.isValid ()) {
+    if (isValid() != rhs.isValid()) {
         return false;
     }
 
     // Are both of us invalid?
-    if (!isValid ()) {
+    if (!isValid()) {
         return true;
     }
 
@@ -199,18 +188,14 @@ bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
         return false;
     }
 
-
-    return (square (qRed (m_rgba) - qRed (rhs.m_rgba)) +
-            square (qGreen (m_rgba) - qGreen (rhs.m_rgba)) +
-            square (qBlue (m_rgba) - qBlue (rhs.m_rgba))
+    return (square(qRed(m_rgba) - qRed(rhs.m_rgba)) + square(qGreen(m_rgba) - qGreen(rhs.m_rgba)) + square(qBlue(m_rgba) - qBlue(rhs.m_rgba))
             <= processedSimilarity);
-
 }
 
 //---------------------------------------------------------------------
 
 // public
-bool kpColor::isValid () const
+bool kpColor::isValid() const
 {
     return m_rgbaIsValid;
 }
@@ -218,74 +203,69 @@ bool kpColor::isValid () const
 //---------------------------------------------------------------------
 
 // public
-int kpColor::red () const
+int kpColor::red() const
 {
-    if (!m_rgbaIsValid)
-    {
+    if (!m_rgbaIsValid) {
         qCCritical(kpLogImagelib) << "kpColor::red() called with invalid kpColor";
         return 0;
     }
 
-    return qRed (m_rgba);
+    return qRed(m_rgba);
 }
 
 //---------------------------------------------------------------------
 
 // public
-int kpColor::green () const
+int kpColor::green() const
 {
-    if (!m_rgbaIsValid)
-    {
+    if (!m_rgbaIsValid) {
         qCCritical(kpLogImagelib) << "kpColor::green() called with invalid kpColor";
         return 0;
     }
 
-    return qGreen (m_rgba);
+    return qGreen(m_rgba);
 }
 
 //---------------------------------------------------------------------
 
 // public
-int kpColor::blue () const
+int kpColor::blue() const
 {
-    if (!m_rgbaIsValid)
-    {
+    if (!m_rgbaIsValid) {
         qCCritical(kpLogImagelib) << "kpColor::blue() called with invalid kpColor";
         return 0;
     }
 
-    return qBlue (m_rgba);
+    return qBlue(m_rgba);
 }
 
 //---------------------------------------------------------------------
 
 // public
-int kpColor::alpha () const
+int kpColor::alpha() const
 {
-    if (!m_rgbaIsValid)
-    {
+    if (!m_rgbaIsValid) {
         qCCritical(kpLogImagelib) << "kpColor::alpha() called with invalid kpColor";
         return 0;
     }
 
-    return qAlpha (m_rgba);
+    return qAlpha(m_rgba);
 }
 
 //---------------------------------------------------------------------
 
 // public
-bool kpColor::isTransparent () const
+bool kpColor::isTransparent() const
 {
-    return (alpha () == 0);
+    return (alpha() == 0);
 }
 
 //---------------------------------------------------------------------
 
 // public
-QRgb kpColor::toQRgb () const
+QRgb kpColor::toQRgb() const
 {
-    if (!m_rgbaIsValid)
-    {
+    if (!m_rgbaIsValid) {
         qCCritical(kpLogImagelib) << "kpColor::toQRgb() called with invalid kpColor";
         return 0;
     }
@@ -296,10 +276,9 @@ QRgb kpColor::toQRgb () const
 //---------------------------------------------------------------------
 
 // public
-QColor kpColor::toQColor () const
+QColor kpColor::toQColor() const
 {
-    if (!m_rgbaIsValid)
-    {
+    if (!m_rgbaIsValid) {
         qCCritical(kpLogImagelib) << "kpColor::toQColor() called with invalid kpColor";
         return Qt::black;
     }

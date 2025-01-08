@@ -25,19 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "generic/kpSetOverrideCursorSaver.h"
 
 #include <QApplication>
 
-
-kpSetOverrideCursorSaver::kpSetOverrideCursorSaver (const QCursor &cursor)
+kpSetOverrideCursorSaver::kpSetOverrideCursorSaver(const QCursor &cursor)
 {
-    QApplication::setOverrideCursor (cursor);
+    QApplication::setOverrideCursor(cursor);
 }
 
-kpSetOverrideCursorSaver::~kpSetOverrideCursorSaver ()
+kpSetOverrideCursorSaver::~kpSetOverrideCursorSaver()
 {
-    QApplication::restoreOverrideCursor ();
+    QApplication::restoreOverrideCursor();
 }
-

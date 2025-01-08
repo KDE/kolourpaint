@@ -25,10 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolPolygonalBase_H
 #define kpToolPolygonalBase_H
-
 
 #include <QPoint>
 #include <QRect>
@@ -38,13 +36,10 @@
 #include "tools/kpTool.h"
 #include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
 
-
 class QPolygon;
 class QString;
 
-
 class kpToolWidgetFillStyle;
-
 
 struct kpToolPolygonalBasePrivate;
 
@@ -83,37 +78,43 @@ struct kpToolPolygonalBasePrivate;
 //
 class kpToolPolygonalBase : public kpTool
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    typedef void (*DrawShapeFunc) (kpImage * /*image*/,
-        const QPolygon &/*points*/,
-        const kpColor &/*fcolor*/, int /*penWidth = 1*/,
-        const kpColor &/*bcolor = kpColor::Invalid*/,
-        bool /*isFinal*/);
+    typedef void (*DrawShapeFunc)(kpImage * /*image*/,
+                                  const QPolygon & /*points*/,
+                                  const kpColor & /*fcolor*/,
+                                  int /*penWidth = 1*/,
+                                  const kpColor & /*bcolor = kpColor::Invalid*/,
+                                  bool /*isFinal*/);
 
     // <drawShapeFunc>
-    kpToolPolygonalBase (const QString &text, const QString &description,
-        DrawShapeFunc drawShapeFunc,
-        int key,
-        kpToolEnvironment *environ, QObject *parent,
-        const QString &name);
-    ~kpToolPolygonalBase () override;
+    kpToolPolygonalBase(const QString &text,
+                        const QString &description,
+                        DrawShapeFunc drawShapeFunc,
+                        int key,
+                        kpToolEnvironment *environ,
+                        QObject *parent,
+                        const QString &name);
+    ~kpToolPolygonalBase() override;
 
-    bool careAboutModifierState () const override { return true; }
+    bool careAboutModifierState() const override
+    {
+        return true;
+    }
 
 protected:
     // The maximum number of points() we should allow (mainly, to ensure
     // good performance).  Enforced by implementors of endShape().
     static const int MaxPoints = 50;
 
-    virtual QString haventBegunShapeUserMessage () const = 0;
+    virtual QString haventBegunShapeUserMessage() const = 0;
 
 public:
-    void begin () override;
-    void end () override;
+    void begin() override;
+    void end() override;
 
-    void beginDraw () override;
+    void beginDraw() override;
 
 protected:
     // Adjusts the current line (end points given by the last 2 points of points())
@@ -134,14 +135,14 @@ protected:
     // it doesn't really make sense to call applyModifiers() (in a hypothetical
     // reimplementation of draw()) because you're not manipulating a line - but
     // you can still call applyModifiers() if you want.
-    void applyModifiers ();
+    void applyModifiers();
 
     // Returns the current points in the shape.  It is updated by beginDraw()
     // (see the class description).
     //
     // draw() sets the last point to the currentPoint().  If drawingALine(),
     // draw() then calls applyModifiers().
-    QPolygon *points () const;
+    QPolygon *points() const;
 
     // Returns the mouse button for the drag that created the initial line.
     // Use this - instead of mouseButton() - for determining whether you should
@@ -150,7 +151,7 @@ protected:
     // will return the wrong one, after the initial line).
     //
     // Only valid if kpTool::hasBegunShape() returns true.
-    int originatingMouseButton () const;
+    int originatingMouseButton() const;
 
     // Returns true if the current drag is visually a line from the 2nd last point
     // of points() to the last point of points() e.g. the initial line drag for
@@ -167,34 +168,40 @@ protected:
     // the initial drag.  However, for the following 2 control points, it returns
     // "false".  The Curve tool realizes it is an initial drag if points() only
     // returns 2 points.
-    virtual bool drawingALine () const { return true; }
+    virtual bool drawingALine() const
+    {
+        return true;
+    }
+
 public:
-    void draw (const QPoint &, const QPoint &, const QRect &) override;
+    void draw(const QPoint &, const QPoint &, const QRect &) override;
+
 private:
-    kpColor drawingForegroundColor () const;
+    kpColor drawingForegroundColor() const;
+
 protected:
     // This returns the invalid color so that there is never a fill.
     // This is in contrast to kpToolRectangularBase, which sometimes fills by
     // returning a valid color.
     //
     // Reimplemented in the Polygon tool for a fill.
-    virtual kpColor drawingBackgroundColor () const;
+    virtual kpColor drawingBackgroundColor() const;
 protected Q_SLOTS:
-    void updateShape ();
+    void updateShape();
+
 public:
-    void cancelShape () override;
-    void releasedAllButtons () override;
-    void endShape (const QPoint & = QPoint (), const QRect & = QRect ()) override;
+    void cancelShape() override;
+    void releasedAllButtons() override;
+    void endShape(const QPoint & = QPoint(), const QRect & = QRect()) override;
 
-    bool hasBegunShape () const override;
+    bool hasBegunShape() const override;
 
 protected Q_SLOTS:
-    void slotForegroundColorChanged (const kpColor &) override;
-    void slotBackgroundColorChanged (const kpColor &) override;
+    void slotForegroundColorChanged(const kpColor &) override;
+    void slotBackgroundColorChanged(const kpColor &) override;
 
 private:
-    kpToolPolygonalBasePrivate * const d;
+    kpToolPolygonalBasePrivate *const d;
 };
 
-
-#endif  // kpToolPolygonalBase_H
+#endif // kpToolPolygonalBase_H

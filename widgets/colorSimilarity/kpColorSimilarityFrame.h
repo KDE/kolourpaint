@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpColorSimilarityFrame_H
 #define kpColorSimilarityFrame_H
 
@@ -33,19 +32,17 @@
 
 #include <QWidget>
 
-
 class kpColorSimilarityFrame : public QWidget, public kpColorSimilarityHolder
 {
 public:
     explicit kpColorSimilarityFrame(QWidget *parent);
 
-    void setColorSimilarity (double similarity) override;
+    void setColorSimilarity(double similarity) override;
 
-    QSize sizeHint () const override;
+    QSize sizeHint() const override;
 
 protected:
-    void paintEvent (QPaintEvent *e) override;
+    void paintEvent(QPaintEvent *e) override;
 };
 
-
-#endif  // kpColorSimilarityFrame_H
+#endif // kpColorSimilarityFrame_H

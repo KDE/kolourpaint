@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_WIDGET_BRUSH 0
-
 
 #include "widgets/toolbars/options/kpToolWidgetBrush.h"
 
@@ -35,232 +33,199 @@
 
 #include <KLocalizedString>
 
-#include "kpLogCategories.h"
 #include "kpDefs.h"
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
 // LOREFACTOR: more OO, no arrays (use safer structs).
 /* sync: <brushes> */
-static int BrushSizes [][3] =
-{
-    {8, 4, 1/*like Pen*/},
-    {9, 5, 2},
-    {9, 5, 2},
-    {9, 5, 2}
-};
+static int BrushSizes[][3] = {{8, 4, 1 /*like Pen*/}, {9, 5, 2}, {9, 5, 2}, {9, 5, 2}};
 
-#define BRUSH_SIZE_NUM_COLS (int (sizeof (::BrushSizes [0]) / sizeof (::BrushSizes [0][0])))
-#define BRUSH_SIZE_NUM_ROWS (int (sizeof (::BrushSizes) / sizeof (::BrushSizes [0])))
-
+#define BRUSH_SIZE_NUM_COLS (int(sizeof(::BrushSizes[0]) / sizeof(::BrushSizes[0][0])))
+#define BRUSH_SIZE_NUM_ROWS (int(sizeof(::BrushSizes) / sizeof(::BrushSizes[0])))
 
 //---------------------------------------------------------------------
 
-static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
+static void Draw(kpImage *destImage, const QPoint &topLeft, void *userData)
 {
-    auto *pack = static_cast <kpToolWidgetBrush::DrawPackage *> (userData);
+    auto *pack = static_cast<kpToolWidgetBrush::DrawPackage *>(userData);
 
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
-    qCDebug(kpLogWidgets) << "kptoolwidgetbrush.cpp:Draw(destImage,topLeft="
-              << topLeft << " pack: row=" << pack->row << " col=" << pack->col
-              << " color=" << (int *) pack->color.toQRgb ();
+    qCDebug(kpLogWidgets) << "kptoolwidgetbrush.cpp:Draw(destImage,topLeft=" << topLeft << " pack: row=" << pack->row << " col=" << pack->col
+                          << " color=" << (int *)pack->color.toQRgb();
 #endif
-    const int size = ::BrushSizes [pack->row][pack->col];
+    const int size = ::BrushSizes[pack->row][pack->col];
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
     qCDebug(kpLogWidgets) << "\tsize=" << size;
 #endif
 
     QPainter painter(destImage);
 
-    if ( size == 1 )
-    {
-      painter.setPen(pack->color.toQColor());
-      painter.drawPoint(topLeft);
-      return;
+    if (size == 1) {
+        painter.setPen(pack->color.toQColor());
+        painter.drawPoint(topLeft);
+        return;
     }
 
     // sync: <brushes>
-    switch (pack->row/*shape*/)
-    {
-      case 0:
-      {
+    switch (pack->row /*shape*/) {
+    case 0: {
         // work around ugly circle when using QPainter on QImage
-        if ( size == 4 )
+        if (size == 4) {
+            // do not draw a pixel twice, as with an alpha color it will become darker
+            painter.setPen(Qt::NoPen);
+            painter.setBrush(pack->color.toQColor());
+            painter.drawRect(topLeft.x() + 1, topLeft.y(), 2, size);
+            painter.setPen(pack->color.toQColor());
+            painter.drawLine(topLeft.x(), topLeft.y() + 1, topLeft.x(), topLeft.y() + 2);
+            painter.drawLine(topLeft.x() + 3, topLeft.y() + 1, topLeft.x() + 3, topLeft.y() + 2);
+        } else if (size == 8) // size defined in BrushSizes above
         {
-          // do not draw a pixel twice, as with an alpha color it will become darker
-          painter.setPen(Qt::NoPen);
-          painter.setBrush(pack->color.toQColor());
-          painter.drawRect(topLeft.x() + 1, topLeft.y(), 2, size);
-          painter.setPen(pack->color.toQColor());
-          painter.drawLine(topLeft.x(), topLeft.y() + 1, topLeft.x(), topLeft.y() + 2);
-          painter.drawLine(topLeft.x() + 3, topLeft.y() + 1, topLeft.x() + 3, topLeft.y() + 2);
-        }
-        else if ( size == 8 )  // size defined in BrushSizes above
-        {
-          // do not draw a pixel twice, as with an alpha color it will become darker
-          painter.setPen(Qt::NoPen);
-          painter.setBrush(pack->color.toQColor());
-          painter.drawRect(topLeft.x() + 2, topLeft.y(), 4, size);
-          painter.drawRect(topLeft.x(), topLeft.y() + 2, 2, 4);
-          painter.drawRect(topLeft.x() + 6, topLeft.y() + 2, 2, 4);
-          painter.setPen(pack->color.toQColor());
-          painter.drawPoint(topLeft.x() + 1, topLeft.y() + 1);
-          painter.drawPoint(topLeft.x() + 6, topLeft.y() + 1);
-          painter.drawPoint(topLeft.x() + 1, topLeft.y() + 6);
-          painter.drawPoint(topLeft.x() + 6, topLeft.y() + 6);
-        }
-        else
-        {
-          Q_ASSERT(!"illegal size");
+            // do not draw a pixel twice, as with an alpha color it will become darker
+            painter.setPen(Qt::NoPen);
+            painter.setBrush(pack->color.toQColor());
+            painter.drawRect(topLeft.x() + 2, topLeft.y(), 4, size);
+            painter.drawRect(topLeft.x(), topLeft.y() + 2, 2, 4);
+            painter.drawRect(topLeft.x() + 6, topLeft.y() + 2, 2, 4);
+            painter.setPen(pack->color.toQColor());
+            painter.drawPoint(topLeft.x() + 1, topLeft.y() + 1);
+            painter.drawPoint(topLeft.x() + 6, topLeft.y() + 1);
+            painter.drawPoint(topLeft.x() + 1, topLeft.y() + 6);
+            painter.drawPoint(topLeft.x() + 6, topLeft.y() + 6);
+        } else {
+            Q_ASSERT(!"illegal size");
         }
         break;
-      }
+    }
 
-      case 1:
-      {
+    case 1: {
         // only paint filling so that a color with an alpha channel does not
         // create a darker border due to drawing some pixels twice with composition
         painter.setPen(Qt::NoPen);
         painter.setBrush(pack->color.toQColor());
         painter.drawRect(topLeft.x(), topLeft.y(), size, size);
         break;
-      }
+    }
 
-      case 2:
-      {
+    case 2: {
         painter.setPen(pack->color.toQColor());
-        painter.drawLine(topLeft.x() + size - 1, topLeft.y(),
-                         topLeft.x(), topLeft.y() + size - 1);
+        painter.drawLine(topLeft.x() + size - 1, topLeft.y(), topLeft.x(), topLeft.y() + size - 1);
         break;
-      }
+    }
 
-      case 3:
-      {
+    case 3: {
         painter.setPen(pack->color.toQColor());
-        painter.drawLine(topLeft.x(), topLeft.y(),
-                         topLeft.x() + size - 1, topLeft.y() + size - 1);
+        painter.drawLine(topLeft.x(), topLeft.y(), topLeft.x() + size - 1, topLeft.y() + size - 1);
         break;
-      }
+    }
 
     default:
-        Q_ASSERT (!"Unknown row");
+        Q_ASSERT(!"Unknown row");
         break;
     }
 }
 
 //---------------------------------------------------------------------
 
-kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
-    : kpToolWidgetBase (parent, name)
+kpToolWidgetBrush::kpToolWidgetBrush(QWidget *parent, const QString &name)
+    : kpToolWidgetBase(parent, name)
 {
-    for (int shape = 0; shape < BRUSH_SIZE_NUM_ROWS; shape++)
-    {
-        for (int i = 0; i < BRUSH_SIZE_NUM_COLS; i++)
-        {
-            const int s = ::BrushSizes [shape][i];
+    for (int shape = 0; shape < BRUSH_SIZE_NUM_ROWS; shape++) {
+        for (int i = 0; i < BRUSH_SIZE_NUM_COLS; i++) {
+            const int s = ::BrushSizes[shape][i];
 
-
-            const int w = (width () - 2/*margin*/ - 2/*spacing*/)
-                / BRUSH_SIZE_NUM_COLS;
-            const int h = (height () - 2/*margin*/ - 3/*spacing*/)
-                / BRUSH_SIZE_NUM_ROWS;
-            Q_ASSERT (w >= s && h >= s);
-            QImage previewPixmap (w, h, QImage::Format_ARGB32_Premultiplied);
+            const int w = (width() - 2 /*margin*/ - 2 /*spacing*/) / BRUSH_SIZE_NUM_COLS;
+            const int h = (height() - 2 /*margin*/ - 3 /*spacing*/) / BRUSH_SIZE_NUM_ROWS;
+            Q_ASSERT(w >= s && h >= s);
+            QImage previewPixmap(w, h, QImage::Format_ARGB32_Premultiplied);
             previewPixmap.fill(0);
 
-            DrawPackage pack = drawFunctionDataForRowCol (kpColor::Black, shape, i);
-            ::Draw (&previewPixmap,
-                QPoint ((previewPixmap.width () - s) / 2,
-                        (previewPixmap.height () - s) / 2),
-                &pack);
+            DrawPackage pack = drawFunctionDataForRowCol(kpColor::Black, shape, i);
+            ::Draw(&previewPixmap, QPoint((previewPixmap.width() - s) / 2, (previewPixmap.height() - s) / 2), &pack);
 
-            addOption(QPixmap::fromImage(std::move(previewPixmap)),
-                      brushName(shape, i) /*tooltip*/);
+            addOption(QPixmap::fromImage(std::move(previewPixmap)), brushName(shape, i) /*tooltip*/);
         }
 
-        startNewOptionRow ();
+        startNewOptionRow();
     }
 
-    finishConstruction (0, 0);
+    finishConstruction(0, 0);
 }
 
 //---------------------------------------------------------------------
 
-kpToolWidgetBrush::~kpToolWidgetBrush () = default;
+kpToolWidgetBrush::~kpToolWidgetBrush() = default;
 
 //---------------------------------------------------------------------
 
 // private
-QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
+QString kpToolWidgetBrush::brushName(int shape, int whichSize) const
 {
-    int s = ::BrushSizes [shape][whichSize];
+    int s = ::BrushSizes[shape][whichSize];
 
     if (s == 1) {
-        return i18n ("1x1");
+        return i18n("1x1");
     }
 
     QString shapeName;
 
     // sync: <brushes>
-    switch (shape)
-    {
+    switch (shape) {
     case 0:
-        shapeName = i18n ("Circle");
+        shapeName = i18n("Circle");
         break;
     case 1:
-        shapeName = i18n ("Square");
+        shapeName = i18n("Square");
         break;
     case 2:
         // TODO: is this really the name of a shape? :)
-        shapeName = i18n ("Slash");
+        shapeName = i18n("Slash");
         break;
     case 3:
         // TODO: is this really the name of a shape? :)
-        shapeName = i18n ("Backslash");
+        shapeName = i18n("Backslash");
         break;
     }
 
-    if (shapeName.isEmpty ()) {
+    if (shapeName.isEmpty()) {
         return {};
     }
 
-    return i18n ("%1x%2 %3", s, s, shapeName);
+    return i18n("%1x%2 %3", s, s, shapeName);
 }
 
 //---------------------------------------------------------------------
 
 // public
-int kpToolWidgetBrush::brushSize () const
+int kpToolWidgetBrush::brushSize() const
 {
-    return ::BrushSizes [selectedRow ()][selectedCol ()];
+    return ::BrushSizes[selectedRow()][selectedCol()];
 }
 
 //---------------------------------------------------------------------
 
 // public
-bool kpToolWidgetBrush::brushIsDiagonalLine () const
+bool kpToolWidgetBrush::brushIsDiagonalLine() const
 {
     // sync: <brushes>
-    return (selectedRow () >= 2);
+    return (selectedRow() >= 2);
 }
 
 //---------------------------------------------------------------------
 
-
 // public
-kpTempImage::UserFunctionType kpToolWidgetBrush::drawFunction () const
+kpTempImage::UserFunctionType kpToolWidgetBrush::drawFunction() const
 {
     return &::Draw;
 }
 
 //---------------------------------------------------------------------
 
-
 // public static
-kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionDataForRowCol (
-        const kpColor &color, int row, int col)
+kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionDataForRowCol(const kpColor &color, int row, int col)
 {
-    Q_ASSERT (row >= 0 && col >= 0);
+    Q_ASSERT(row >= 0 && col >= 0);
 
     DrawPackage pack;
 
@@ -274,20 +239,19 @@ kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionDataForRowCol (
 //---------------------------------------------------------------------
 
 // public
-kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
-        const kpColor &color) const
+kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData(const kpColor &color) const
 {
-    return drawFunctionDataForRowCol (color, selectedRow (), selectedCol ());
+    return drawFunctionDataForRowCol(color, selectedRow(), selectedCol());
 }
 
 //---------------------------------------------------------------------
 
 // protected slot virtual [base kpToolWidgetBase]
-bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
+bool kpToolWidgetBrush::setSelected(int row, int col, bool saveAsDefault)
 {
-    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    const bool ret = kpToolWidgetBase::setSelected(row, col, saveAsDefault);
     if (ret) {
-        Q_EMIT brushChanged ();
+        Q_EMIT brushChanged();
     }
     return ret;
 }

@@ -25,27 +25,24 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpColorSimilarityHolder_H
 #define kpColorSimilarityHolder_H
 
-
 class QString;
-
 
 class kpColorSimilarityHolder
 {
 public:
-    kpColorSimilarityHolder ();
-    virtual ~kpColorSimilarityHolder ();
+    kpColorSimilarityHolder();
+    virtual ~kpColorSimilarityHolder();
 
     static const double ColorCubeDiagonalDistance;
     static const double MaxColorSimilarity;
 
-    static QString WhatsThisWithClickInstructions ();
-    static QString WhatsThis ();
+    static QString WhatsThisWithClickInstructions();
+    static QString WhatsThis();
 
-    double colorSimilarity () const;
+    double colorSimilarity() const;
 
     // This automatically restricts the given <similarity> to the range
     // 0 .. MaxColorSimilarity inclusive.
@@ -55,11 +52,10 @@ public:
     //
     // WARNING: The base constructor does not call this as virtual method
     //          calls in constructors do not invoke overrides anyway.
-    virtual void setColorSimilarity (double similarity);
+    virtual void setColorSimilarity(double similarity);
 
 private:
     double m_colorSimilarity;
 };
 
-
-#endif  // kpColorSimilarityHolder_H
+#endif // kpColorSimilarityHolder_H

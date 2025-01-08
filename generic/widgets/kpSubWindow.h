@@ -25,10 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpSubWindow_H
 #define kpSubWindow_H
-
 
 #include <QDialog>
 
@@ -49,9 +47,8 @@
 //
 class kpSubWindow : public QDialog
 {
-  public:
+public:
     explicit kpSubWindow(QWidget *parent);
 };
 
-
-#endif  // kpSubWindow_H
+#endif // kpSubWindow_H

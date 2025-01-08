@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_ROUNDED_RECTANGLE_H
 #define KP_TOOL_ROUNDED_RECTANGLE_H
 
-
 #include "tools/rectangular/kpToolRectangularBase.h"
-
 
 class kpToolRoundedRectangle : public kpToolRectangularBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolRoundedRectangle (kpToolEnvironment *environ, QObject *parent);
+    kpToolRoundedRectangle(kpToolEnvironment *environ, QObject *parent);
 
-    static void drawRoundedRect(kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor);
+    static void drawRoundedRect(kpImage *image, int x, int y, int width, int height, const kpColor &fcolor, int penWidth, const kpColor &bcolor);
 };
 
-
-#endif  // KP_TOOL_ROUNDED_RECTANGLE_H
+#endif // KP_TOOL_ROUNDED_RECTANGLE_H

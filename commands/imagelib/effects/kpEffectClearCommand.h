@@ -25,31 +25,26 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectClearCommand_H
 #define kpEffectClearCommand_H
-
 
 #include "commands/kpCommand.h"
 
 #include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"
 
-
 class kpEffectClearCommand : public kpCommand
 {
 public:
-    kpEffectClearCommand (bool actOnSelection,
-        const kpColor &newColor,
-        kpCommandEnvironment *environ);
-    ~kpEffectClearCommand () override;
+    kpEffectClearCommand(bool actOnSelection, const kpColor &newColor, kpCommandEnvironment *environ);
+    ~kpEffectClearCommand() override;
 
-    QString name () const override;
+    QString name() const override;
 
-    SizeType size () const override;
+    SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     bool m_actOnSelection;
@@ -58,5 +53,4 @@ private:
     kpImage *m_oldImagePtr;
 };
 
-
-#endif  // kpEffectClearCommand_H
+#endif // kpEffectClearCommand_H

@@ -36,7 +36,7 @@
 static inline int calcDiffByTen(int x, int y)
 {
     // calculate ( x - y ) / 10 without overflowing ints:
-    return (x / 10) - (y / 10)  + (x % 10 - y % 10) / 10;
+    return (x / 10) - (y / 10) + (x % 10 - y % 10) / 10;
 }
 
 // ----------------------------------------------------------------------------
@@ -44,13 +44,13 @@ static inline int calcDiffByTen(int x, int y)
 class kpNumInputPrivate
 {
 public:
-    explicit kpNumInputPrivate(kpNumInput *q) :
-        q(q),
-        column1Width(0),
-        column2Width(0),
-        label(nullptr),
-        slider(nullptr),
-        labelAlignment()
+    explicit kpNumInputPrivate(kpNumInput *q)
+        : q(q)
+        , column1Width(0)
+        , column2Width(0)
+        , label(nullptr)
+        , slider(nullptr)
+        , labelAlignment()
     {
     }
 
@@ -62,9 +62,9 @@ public:
     kpNumInput *q;
     int column1Width, column2Width;
 
-    QLabel  *label;
+    QLabel *label;
     QSlider *slider;
-    QSize    sliderSize, labelSize;
+    QSize sliderSize, labelSize;
 
     Qt::Alignment labelAlignment;
 };
@@ -72,7 +72,8 @@ public:
 #define K_USING_kpNumInput_P(_d) kpNumInputPrivate *_d = kpNumInputPrivate::get(this)
 
 kpNumInput::kpNumInput(QWidget *parent)
-    : QWidget(parent), d(new kpNumInputPrivate(this))
+    : QWidget(parent)
+    , d(new kpNumInputPrivate(this))
 {
     setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     setFocusPolicy(Qt::StrongFocus);
@@ -136,7 +137,6 @@ void kpNumInput::layout()
     d->sliderSize = (d->slider ? d->slider->sizeHint() : QSize(0, 0));
 
     doLayout();
-
 }
 
 QSize kpNumInput::sizeHint() const
@@ -158,11 +158,13 @@ class kpIntNumInput::kpIntNumInputPrivate
 {
 public:
     kpIntNumInput *q;
-    QSpinBox     *intSpinBox;
-    QSize        intSpinBoxSize;
+    QSpinBox *intSpinBox;
+    QSize intSpinBoxSize;
 
     explicit kpIntNumInputPrivate(kpIntNumInput *q)
-        : q(q) {}
+        : q(q)
+    {
+    }
 };
 
 kpIntNumInput::kpIntNumInput(QWidget *parent)
@@ -228,8 +230,7 @@ void kpIntNumInput::setRange(int lower, int upper, int singleStep)
     K_USING_kpNumInput_P(priv);
     if (!priv->slider) {
         priv->slider = new QSlider(Qt::Horizontal, this);
-        connect(priv->slider, &QSlider::valueChanged,
-                d->intSpinBox, &QSpinBox::setValue);
+        connect(priv->slider, &QSlider::valueChanged, d->intSpinBox, &QSpinBox::setValue);
         priv->slider->setTickPosition(QSlider::TicksBelow);
         layout();
     }
@@ -290,8 +291,7 @@ QString kpIntNumInput::suffix() const
 
 void kpIntNumInput::setEditFocus(bool mark)
 {
-    if (mark)
-    {
+    if (mark) {
         d->intSpinBox->setFocus();
     }
 }
@@ -342,7 +342,7 @@ void kpIntNumInput::resizeEvent(QResizeEvent *e)
 
     int w = priv->column1Width;
     int h = 0;
-    const int spacingHint = 0;//style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    const int spacingHint = 0; // style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     if (priv->label && (priv->labelAlignment & Qt::AlignTop)) {
         priv->label->setGeometry(0, 0, e->size().width(), priv->labelSize.height());
@@ -418,7 +418,9 @@ class kpDoubleNumInput::kpDoubleNumInputPrivate
 {
 public:
     kpDoubleNumInputPrivate()
-        : spin(nullptr) {}
+        : spin(nullptr)
+    {
+    }
     QDoubleSpinBox *spin;
     QSize editSize;
     QString specialValue;
@@ -432,8 +434,7 @@ kpDoubleNumInput::kpDoubleNumInput(QWidget *parent)
     initWidget(0.0, 0.0, 9999.0, 0.01, 2);
 }
 
-kpDoubleNumInput::kpDoubleNumInput(double lower, double upper, double value, QWidget *parent,
-                                 double singleStep, int precision)
+kpDoubleNumInput::kpDoubleNumInput(double lower, double upper, double value, QWidget *parent, double singleStep, int precision)
     : kpNumInput(parent)
     , d(new kpDoubleNumInputPrivate())
 {
@@ -450,8 +451,7 @@ QString kpDoubleNumInput::specialValueText() const
     return d->specialValue;
 }
 
-void kpDoubleNumInput::initWidget(double value, double lower, double upper,
-                                 double singleStep, int precision)
+void kpDoubleNumInput::initWidget(double value, double lower, double upper, double singleStep, int precision)
 {
     d->spin = new QDoubleSpinBox(this);
     d->spin->setRange(lower, upper);
@@ -461,8 +461,7 @@ void kpDoubleNumInput::initWidget(double value, double lower, double upper,
 
     d->spin->setObjectName(QStringLiteral("kpDoubleNumInput::QDoubleSpinBox"));
     setFocusProxy(d->spin);
-    connect(d->spin, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-            this, &kpDoubleNumInput::valueChanged);
+    connect(d->spin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &kpDoubleNumInput::valueChanged);
 
     layout();
 }
@@ -522,7 +521,7 @@ QSize kpDoubleNumInput::minimumSizeHint() const
         h = qMax(h, priv->labelSize.height() + 2);
     }
 
-    const int spacingHint = 0;//style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    const int spacingHint = 0; // style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
     w = priv->slider ? priv->slider->sizeHint().width() + spacingHint : 0;
     w += priv->column1Width + priv->column2Width;
 
@@ -539,7 +538,7 @@ void kpDoubleNumInput::resizeEvent(QResizeEvent *e)
 
     int w = priv->column1Width;
     int h = 0;
-    const int spacingHint = 0;//style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+    const int spacingHint = 0; // style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
 
     if (priv->label && (priv->labelAlignment & Qt::AlignTop)) {
         priv->label->setGeometry(0, 0, e->size().width(), priv->labelSize.height());
@@ -551,19 +550,15 @@ void kpDoubleNumInput::resizeEvent(QResizeEvent *e)
     }
 
     if (qApp->layoutDirection() == Qt::RightToLeft) {
-        d->spin->setGeometry(w, h, priv->slider ? priv->column2Width
-                             : e->size().width() - w, d->editSize.height());
+        d->spin->setGeometry(w, h, priv->slider ? priv->column2Width : e->size().width() - w, d->editSize.height());
         w += priv->column2Width + spacingHint;
 
         if (priv->slider) {
             priv->slider->setGeometry(w, h, e->size().width() - w, d->editSize.height() + spacingHint);
         }
     } else if (priv->slider) {
-        priv->slider->setGeometry(w, h, e->size().width() -
-                                  (priv->column1Width + priv->column2Width + spacingHint),
-                                  d->editSize.height() + spacingHint);
-        d->spin->setGeometry(w + priv->slider->width() + spacingHint, h,
-                             priv->column2Width, d->editSize.height());
+        priv->slider->setGeometry(w, h, e->size().width() - (priv->column1Width + priv->column2Width + spacingHint), d->editSize.height() + spacingHint);
+        d->spin->setGeometry(w + priv->slider->width() + spacingHint, h, priv->column2Width, d->editSize.height());
     } else {
         d->spin->setGeometry(w, h, e->size().width() - w, d->editSize.height());
     }
@@ -603,11 +598,10 @@ void kpDoubleNumInput::setRange(double lower, double upper, double singleStep)
         priv->slider = new QSlider(Qt::Horizontal, this);
         priv->slider->setTickPosition(QSlider::TicksBelow);
         // feedback line: when one moves, the other moves, too:
-        connect(priv->slider, &QSlider::valueChanged,
-                this, &kpDoubleNumInput::sliderMoved);
+        connect(priv->slider, &QSlider::valueChanged, this, &kpDoubleNumInput::sliderMoved);
         layout();
     }
-    if (steps > 1000 ) {
+    if (steps > 1000) {
         priv->slider->setRange(0, 1000);
         priv->slider->setSingleStep(1);
         priv->slider->setPageStep(50);

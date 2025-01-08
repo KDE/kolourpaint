@@ -25,18 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDocumentMetaInfoDialog_H
 #define kpDocumentMetaInfoDialog_H
 
-
 #include <QDialog>
-
 
 class QTableWidgetItem;
 
 class kpDocumentMetaInfo;
-
 
 // Dialog for editing document meta information (see kpDocumentMetaInfo).
 // It contains:
@@ -50,17 +46,16 @@ class kpDocumentMetaInfo;
 // to add new rows without pressing any pushbuttons.
 class kpDocumentMetaInfoDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *docMetaInfo,
-                              QWidget *parent);
-    ~kpDocumentMetaInfoDialog () override;
+    kpDocumentMetaInfoDialog(const kpDocumentMetaInfo *docMetaInfo, QWidget *parent);
+    ~kpDocumentMetaInfoDialog() override;
 
 public:
-    bool isNoOp () const;
+    bool isNoOp() const;
 
-    kpDocumentMetaInfo originalMetaInfo () const;
+    kpDocumentMetaInfo originalMetaInfo() const;
 
     // Returns the meta information gathered from all the UI.
     //
@@ -79,36 +74,35 @@ public:
     //
     // This is a slow method as it recalculates the meta information each
     // time it's called.
-    kpDocumentMetaInfo metaInfo (QString *errorMessage = nullptr) const;
+    kpDocumentMetaInfo metaInfo(QString *errorMessage = nullptr) const;
 
 private:
-    void editCell (int r, int c);
-    void fieldsUpdateVerticalHeader ();
+    void editCell(int r, int c);
+    void fieldsUpdateVerticalHeader();
 
-    void fieldsAddEmptyRow (int atRow);
-    void fieldsAppendEmptyRow ();
+    void fieldsAddEmptyRow(int atRow);
+    void fieldsAppendEmptyRow();
 
-    bool isFieldsRowDeleteable (int row) const;
-    void fieldsDeleteRow (int r);
+    bool isFieldsRowDeleteable(int row) const;
+    void fieldsDeleteRow(int r);
 
-    void enableFieldsDeleteRowButtonIfShould ();
+    void enableFieldsDeleteRowButtonIfShould();
 
 private Q_SLOTS:
-    void setUIToOriginalMetaInfo ();
-    void slotFieldsCurrentCellChanged (int row, int col, int oldRow, int oldCol);
+    void setUIToOriginalMetaInfo();
+    void slotFieldsCurrentCellChanged(int row, int col, int oldRow, int oldCol);
 
     // Allows the user to add a row without pressing any pushbuttons:
     // Appends a new, blank row when text has been added to the last row.
-    void slotFieldsItemChanged (QTableWidgetItem *item);
+    void slotFieldsItemChanged(QTableWidgetItem *item);
 
-    void slotFieldsAddRowButtonClicked ();
-    void slotFieldsDeleteRowButtonClicked ();
+    void slotFieldsAddRowButtonClicked();
+    void slotFieldsDeleteRowButtonClicked();
 
-    void accept () override;
+    void accept() override;
 
 private:
-    struct kpDocumentMetaInfoDialogPrivate * const d;
+    struct kpDocumentMetaInfoDialogPrivate *const d;
 };
 
-
-#endif  // kpDocumentMetaInfoDialog_H
+#endif // kpDocumentMetaInfoDialog_H

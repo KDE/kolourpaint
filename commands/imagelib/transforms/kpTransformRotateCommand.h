@@ -25,33 +25,29 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpTransformRotateCommand_H
 #define kpTransformRotateCommand_H
 
-
-#include "imagelib/kpColor.h"
 #include "commands/kpCommand.h"
+#include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"
 
-
 class kpAbstractImageSelection;
-
 
 class kpTransformRotateCommand : public kpCommand
 {
 public:
-    kpTransformRotateCommand (bool actOnSelection,
-        double angle,  // 0 <= angle < 360 (clockwise)
-        kpCommandEnvironment *environ);
-    ~kpTransformRotateCommand () override;
+    kpTransformRotateCommand(bool actOnSelection,
+                             double angle, // 0 <= angle < 360 (clockwise)
+                             kpCommandEnvironment *environ);
+    ~kpTransformRotateCommand() override;
 
-    QString name () const override;
+    QString name() const override;
 
-    SizeType size () const override;
+    SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     bool m_actOnSelection;
@@ -64,5 +60,4 @@ private:
     kpAbstractImageSelection *m_oldSelectionPtr;
 };
 
-
-#endif  // kpTransformRotateCommand_H
+#endif // kpTransformRotateCommand_H

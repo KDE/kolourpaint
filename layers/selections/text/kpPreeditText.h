@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpPreeditText_H
 #define kpPreeditText_H
 
@@ -36,21 +35,21 @@
 class kpPreeditText
 {
 public:
-    kpPreeditText ();
-    explicit kpPreeditText (const QInputMethodEvent *event);
+    kpPreeditText();
+    explicit kpPreeditText(const QInputMethodEvent *event);
 
-    bool isEmpty () const;
+    bool isEmpty() const;
 
-    const QString &preeditString () const;
-    int cursorPosition () const;
-    bool cursorVisible () const;
-    const QColor &cursorColor () const;
-    int selectionStart () const;
-    int selectionLength () const;
-    const QList<QInputMethodEvent::Attribute> &textFormatList () const;
+    const QString &preeditString() const;
+    int cursorPosition() const;
+    bool cursorVisible() const;
+    const QColor &cursorColor() const;
+    int selectionStart() const;
+    int selectionLength() const;
+    const QList<QInputMethodEvent::Attribute> &textFormatList() const;
 
-    const QPoint &position () const;
-    void setPosition (const QPoint &position);
+    const QPoint &position() const;
+    void setPosition(const QPoint &position);
 
 private:
     QString m_preeditString;
@@ -62,4 +61,4 @@ private:
     QPoint m_position;
 };
 
-#endif  // kpPreeditText_H
+#endif // kpPreeditText_H

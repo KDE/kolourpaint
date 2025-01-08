@@ -25,29 +25,24 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolColorPickerCommand_H
 #define kpToolColorPickerCommand_H
 
-
-#include "imagelib/kpColor.h"
 #include "commands/kpCommand.h"
-
+#include "imagelib/kpColor.h"
 
 class kpToolColorPickerCommand : public kpCommand
 {
 public:
-    kpToolColorPickerCommand (int mouseButton,
-                              const kpColor &newColor, const kpColor &oldColor,
-                              kpCommandEnvironment *environ);
-    ~kpToolColorPickerCommand () override;
+    kpToolColorPickerCommand(int mouseButton, const kpColor &newColor, const kpColor &oldColor, kpCommandEnvironment *environ);
+    ~kpToolColorPickerCommand() override;
 
-    QString name () const override;
+    QString name() const override;
 
-    SizeType size () const override;
+    SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     int m_mouseButton;
@@ -55,5 +50,4 @@ private:
     kpColor m_oldColor;
 };
 
-
-#endif  // kpToolColorPickerCommand_H
+#endif // kpToolColorPickerCommand_H

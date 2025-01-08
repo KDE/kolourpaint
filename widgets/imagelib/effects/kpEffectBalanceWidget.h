@@ -25,61 +25,52 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectBalanceWidget_H
 #define kpEffectBalanceWidget_H
 
-
-#include "kpEffectWidgetBase.h"
 #include "imagelib/kpImage.h"
-
+#include "kpEffectWidgetBase.h"
 
 class QLabel;
 
 class QComboBox;
 class kpIntNumInput;
 
-
-
 class kpEffectBalanceWidget : public kpEffectWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEffectBalanceWidget (bool actOnSelection, QWidget *parent);
-    ~kpEffectBalanceWidget () override;
+    kpEffectBalanceWidget(bool actOnSelection, QWidget *parent);
+    ~kpEffectBalanceWidget() override;
 
-    QString caption () const override;
+    QString caption() const override;
 
-    bool isNoOp () const override;
-    kpImage applyEffect (const kpImage &image) override;
+    bool isNoOp() const override;
+    kpImage applyEffect(const kpImage &image) override;
 
-    kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const override;
+    kpEffectCommandBase *createCommand(kpCommandEnvironment *cmdEnviron) const override;
 
 protected:
-    int channels () const;
+    int channels() const;
 
-    int brightness () const;
-    int contrast () const;
-    int gamma () const;
+    int brightness() const;
+    int contrast() const;
+    int gamma() const;
 
 protected Q_SLOTS:
-    void recalculateGammaLabel ();
+    void recalculateGammaLabel();
 
-    void resetBrightness ();
-    void resetContrast ();
-    void resetGamma ();
+    void resetBrightness();
+    void resetContrast();
+    void resetGamma();
 
-    void resetAll ();
+    void resetAll();
 
 protected:
-    kpIntNumInput *m_brightnessInput,
-                 *m_contrastInput,
-                 *m_gammaInput;
+    kpIntNumInput *m_brightnessInput, *m_contrastInput, *m_gammaInput;
     QLabel *m_gammaLabel;
     QComboBox *m_channelsComboBox;
 };
 
-
-#endif  // kpEffectBalanceWidget_H
+#endif // kpEffectBalanceWidget_H

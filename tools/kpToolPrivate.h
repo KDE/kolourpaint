@@ -25,24 +25,23 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolPrivate_H
 #define kpToolPrivate_H
-
 
 #include <QPoint>
 
 #include <QSize>
 #ifdef Q_OS_WIN
-  #include <stdlib.h>
-  #undef environ  // macro on win32
+#include <stdlib.h>
+#undef environ // macro on win32
 #endif
+
+#include "views/kpView.h"
 
 class kpToolEnvironment;
 class KToggleAction;
 
-struct kpToolPrivate
-{
+struct kpToolPrivate {
     // Initialisation / properties.
     QString text;
     QString description;
@@ -52,15 +51,12 @@ struct kpToolPrivate
 
     // Drawing state.
     bool began;
-    bool beganDraw;  // set after beginDraw() is called, unset before endDraw() is called
-    int mouseButton;  /* 0 = left, 1 = right */
-    bool shiftPressed, controlPressed, altPressed;  // m_altPressed is unreliable
-    QPoint startPoint,
-           currentPoint, currentViewPoint,
-           lastPoint;
+    bool beganDraw; // set after beginDraw() is called, unset before endDraw() is called
+    int mouseButton; /* 0 = left, 1 = right */
+    bool shiftPressed, controlPressed, altPressed; // m_altPressed is unreliable
+    QPoint startPoint, currentPoint, currentViewPoint, lastPoint;
 
     kpView *viewUnderStartPoint;
-
 
     // Set to 2 when the user swaps the foreground and background color.
     //
@@ -77,5 +73,4 @@ struct kpToolPrivate
     kpToolEnvironment *environ;
 };
 
-
-#endif  // kpToolPrivate_H
+#endif // kpToolPrivate_H

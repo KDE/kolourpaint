@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpTransformPreviewDialog_H
 #define kpTransformPreviewDialog_H
 
-
 #include <QDialog>
-
 
 class QLabel;
 class QGridLayout;
@@ -41,53 +38,51 @@ class kpDocument;
 class kpResizeSignallingLabel;
 class kpTransformDialogEnvironment;
 
-
 class kpTransformPreviewDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    enum Features
-    {
-        Dimensions = 1, Preview = 2,
+    enum Features {
+        Dimensions = 1,
+        Preview = 2,
         AllFeatures = Dimensions | Preview
     };
 
     // You must call slotUpdate() in your constructor
-    kpTransformPreviewDialog (Features features,
-        bool reserveTopRow,
-        // e.g. "Skew (Image|Selection)"
-        const QString &caption,
-        // (in the Dimensions Group Box) e.g. "After Skew:"
-        const QString &afterActionText,
-        bool actOnSelection,
-        kpTransformDialogEnvironment *_env,
-        QWidget *parent);
-    ~kpTransformPreviewDialog () override;
+    kpTransformPreviewDialog(Features features,
+                             bool reserveTopRow,
+                             // e.g. "Skew (Image|Selection)"
+                             const QString &caption,
+                             // (in the Dimensions Group Box) e.g. "After Skew:"
+                             const QString &afterActionText,
+                             bool actOnSelection,
+                             kpTransformDialogEnvironment *_env,
+                             QWidget *parent);
+    ~kpTransformPreviewDialog() override;
 
 private:
-    void createDimensionsGroupBox ();
-    void createPreviewGroupBox ();
+    void createDimensionsGroupBox();
+    void createPreviewGroupBox();
 
 public:
-    virtual bool isNoOp () const = 0;
+    virtual bool isNoOp() const = 0;
 
 protected:
-    kpDocument *document () const;
+    kpDocument *document() const;
 
-    QWidget *mainWidget () const;
+    QWidget *mainWidget() const;
 
     // All widgets must have mainWidget() as their parent
-    void addCustomWidgetToFront (QWidget *w);  // see <reserveTopRow> in ctor
-    void addCustomWidget (QWidget *w);
-    void addCustomWidgetToBack (QWidget *w)
+    void addCustomWidgetToFront(QWidget *w); // see <reserveTopRow> in ctor
+    void addCustomWidget(QWidget *w);
+    void addCustomWidgetToBack(QWidget *w)
     {
-        addCustomWidget (w);
+        addCustomWidget(w);
     }
 
-    virtual QSize newDimensions () const = 0;
-    virtual QImage transformPixmap (const QImage &pixmap,
-                                    int targetWidth, int targetHeight) const = 0;
+    virtual QSize newDimensions() const = 0;
+    virtual QImage transformPixmap(const QImage &pixmap, int targetWidth, int targetHeight) const = 0;
 
 public:
     // Use to avoid excessive, expensive preview pixmap label recalcuations,
@@ -96,27 +91,26 @@ public:
     // Setting <enable> to true automatically calls slotUpdateWithWaitCursor().
     //
     // WARNING: This overrides a non-virtual method in QWidget.
-    void setUpdatesEnabled (bool enable);
+    void setUpdatesEnabled(bool enable);
 
 private:
-    void updateDimensions ();
+    void updateDimensions();
 
 public:
-    static double aspectScale (int newWidth, int newHeight,
-                               int oldWidth, int oldHeight);
-    static int scaleDimension (int dimension, double scale, int min, int max);
+    static double aspectScale(int newWidth, int newHeight, int oldWidth, int oldHeight);
+    static int scaleDimension(int dimension, double scale, int min, int max);
 
 private:
-    void updateShrunkenDocumentPixmap ();
+    void updateShrunkenDocumentPixmap();
 
 protected Q_SLOTS:
-    void updatePreview ();
+    void updatePreview();
 
     // Call this whenever a value (e.g. an angle) changes
     // and the Dimensions & Preview need to be updated
-    virtual void slotUpdate ();
+    virtual void slotUpdate();
 
-    virtual void slotUpdateWithWaitCursor ();
+    virtual void slotUpdateWithWaitCursor();
 
 protected:
     // REFACTOR: Use d-ptr
@@ -140,5 +134,4 @@ protected:
     kpTransformDialogEnvironment *m_environ;
 };
 
-
-#endif  // kpTransformPreviewDialog_H
+#endif // kpTransformPreviewDialog_H

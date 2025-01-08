@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_COMMAND_HISTORY 0
-
 
 #include "commands/kpMacroCommand.h"
 #include "views/manager/kpViewManager.h"
@@ -38,14 +36,14 @@
 
 //---------------------------------------------------------------------
 
-kpMacroCommand::kpMacroCommand (const QString &name, kpCommandEnvironment *environ)
-    : kpNamedCommand (name, environ)
+kpMacroCommand::kpMacroCommand(const QString &name, kpCommandEnvironment *environ)
+    : kpNamedCommand(name, environ)
 {
 }
 
 //---------------------------------------------------------------------
 
-kpMacroCommand::~kpMacroCommand ()
+kpMacroCommand::~kpMacroCommand()
 {
     qDeleteAll(m_commandList);
 }
@@ -53,7 +51,7 @@ kpMacroCommand::~kpMacroCommand ()
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-kpCommandSize::SizeType kpMacroCommand::size () const
+kpCommandSize::SizeType kpMacroCommand::size() const
 {
 #if DEBUG_KP_COMMAND_HISTORY && 0
     qCDebug(kpLogCommands) << "kpMacroCommand::size()";
@@ -63,13 +61,11 @@ kpCommandSize::SizeType kpMacroCommand::size () const
 #if DEBUG_KP_COMMAND_HISTORY && 0
     qCDebug(kpLogCommands) << "\tcalculating:";
 #endif
-    for (kpCommand *cmd : m_commandList)
-    {
-    #if DEBUG_KP_COMMAND_HISTORY && 0
-        qCDebug(kpLogCommands) << "\t\tcurrentSize=" << s << " + "
-                   << cmd->name () << ".size=" << cmd->size ();
-    #endif
-        s += cmd->size ();
+    for (kpCommand *cmd : m_commandList) {
+#if DEBUG_KP_COMMAND_HISTORY && 0
+        qCDebug(kpLogCommands) << "\t\tcurrentSize=" << s << " + " << cmd->name() << ".size=" << cmd->size();
+#endif
+        s += cmd->size();
     }
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
@@ -81,7 +77,7 @@ kpCommandSize::SizeType kpMacroCommand::size () const
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-void kpMacroCommand::execute ()
+void kpMacroCommand::execute()
 {
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpMacroCommand::execute()";
@@ -89,11 +85,10 @@ void kpMacroCommand::execute ()
 
     viewManager()->setQueueUpdates();
 
-    for (kpCommand *command : std::as_const(m_commandList))
-    {
-    #if DEBUG_KP_COMMAND_HISTORY
+    for (kpCommand *command : std::as_const(m_commandList)) {
+#if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\texecuting " << command->name();
-    #endif
+#endif
         command->execute();
     }
 
@@ -103,7 +98,7 @@ void kpMacroCommand::execute ()
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-void kpMacroCommand::unexecute ()
+void kpMacroCommand::unexecute()
 {
 #if DEBUG_KP_COMMAND_HISTORY
     qCDebug(kpLogCommands) << "kpMacroCommand::unexecute()";
@@ -111,11 +106,10 @@ void kpMacroCommand::unexecute ()
 
     viewManager()->setQueueUpdates();
 
-    for (int i = m_commandList.count() - 1; i >= 0; i--)
-    {
-    #if DEBUG_KP_COMMAND_HISTORY
+    for (int i = m_commandList.count() - 1; i >= 0; i--) {
+#if DEBUG_KP_COMMAND_HISTORY
         qCDebug(kpLogCommands) << "\tunexecuting " << m_commandList[i]->name();
-    #endif
+#endif
         m_commandList[i]->unexecute();
     }
 

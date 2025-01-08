@@ -25,23 +25,17 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectFlatten_H
 #define kpEffectFlatten_H
-
 
 class QColor;
 class QImage;
 
-
 class kpEffectFlatten
 {
 public:
-    static void applyEffect (QImage *destImagePtr,
-        const QColor &color1, const QColor &color2);
-    static QImage applyEffect (const QImage &img,
-        const QColor &color1, const QColor &color2);
+    static void applyEffect(QImage *destImagePtr, const QColor &color1, const QColor &color2);
+    static QImage applyEffect(const QImage &img, const QColor &color1, const QColor &color2);
 };
 
-
-#endif  // kpEffectFlatten_H
+#endif // kpEffectFlatten_H

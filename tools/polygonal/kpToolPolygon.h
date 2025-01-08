@@ -25,38 +25,34 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_POLYGON_H
 #define KP_TOOL_POLYGON_H
 
-
 #include "kpToolPolygonalBase.h"
-
 
 class kpToolPolygon : public kpToolPolygonalBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolPolygon (kpToolEnvironment *environ, QObject *parent);
-    ~kpToolPolygon () override;
+    kpToolPolygon(kpToolEnvironment *environ, QObject *parent);
+    ~kpToolPolygon() override;
 
 private:
-    QString haventBegunShapeUserMessage () const override;
+    QString haventBegunShapeUserMessage() const override;
 
 public:
-    void begin () override;
-    void end () override;
+    void begin() override;
+    void end() override;
 
 protected:
-    kpColor drawingBackgroundColor () const override;
+    kpColor drawingBackgroundColor() const override;
 
 public:
-    void endDraw (const QPoint &, const QRect &) override;
+    void endDraw(const QPoint &, const QRect &) override;
 
 private:
     struct kpToolPolygonPrivate *d;
 };
 
-
-#endif  // KP_TOOL_POLYGON_H
+#endif // KP_TOOL_POLYGON_H

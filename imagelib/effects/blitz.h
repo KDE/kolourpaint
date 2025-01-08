@@ -33,10 +33,10 @@
 
 namespace Blitz
 {
-  QImage blur(QImage &img, int radius);
-  QImage gaussianSharpen(QImage &img, float radius, float sigma);
-  QImage emboss(QImage &img, float radius, float sigma);
-  QImage &flatten(QImage &img, const QColor &ca, const QColor &cb);
+QImage blur(QImage &img, int radius);
+QImage gaussianSharpen(QImage &img, float radius, float sigma);
+QImage emboss(QImage &img, float radius, float sigma);
+QImage &flatten(QImage &img, const QColor &ca, const QColor &cb);
 };
 
 #endif

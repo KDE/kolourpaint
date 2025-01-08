@@ -27,13 +27,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_FLOW_PIXMAP_BASE_H
 #define KP_TOOL_FLOW_PIXMAP_BASE_H
 
-
 #include "kpToolFlowBase.h"
-
 
 /**
  * @short Abstract base call for all continuous tools that draw pixmaps
@@ -43,16 +40,13 @@
  */
 class kpToolFlowPixmapBase : public kpToolFlowBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolFlowPixmapBase (const QString &text, const QString &description,
-               int key,
-               kpToolEnvironment *environ, QObject *parent, const QString &name);
+    kpToolFlowPixmapBase(const QString &text, const QString &description, int key, kpToolEnvironment *environ, QObject *parent, const QString &name);
 
 protected:
-    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) override;
+    QRect drawLine(const QPoint &thisPoint, const QPoint &lastPoint) override;
 };
 
-
-#endif  // KP_TOOL_FLOW_PIXMAP_BASE_H
+#endif // KP_TOOL_FLOW_PIXMAP_BASE_H

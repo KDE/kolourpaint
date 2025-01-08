@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_ZOOMED_VIEW_H
 #define KP_ZOOMED_VIEW_H
 
-
 #include "views/kpView.h"
-
 
 /**
  * @short Zoomed view of a document.  Suitable as an ordinary editing view.
@@ -50,30 +47,28 @@
  */
 /*sealed*/ class kpZoomedView : public kpView
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     /**
      * Constructs a zoomed view.
      */
-    kpZoomedView (kpDocument *document,
-                  kpToolToolBar *toolToolBar,
-                  kpViewManager *viewManager,
-                  kpView *buddyView,
-                  kpViewScrollableContainer *scrollableContainer,
-                  QWidget *parent);
+    kpZoomedView(kpDocument *document,
+                 kpToolToolBar *toolToolBar,
+                 kpViewManager *viewManager,
+                 kpView *buddyView,
+                 kpViewScrollableContainer *scrollableContainer,
+                 QWidget *parent);
 
     /**
      * Destructs an unzoomed view.
      */
-    ~kpZoomedView () override;
-
+    ~kpZoomedView() override;
 
     /**
      * Extends @kpView.  Calls adjustToEnvironment().
      */
-    void setZoomLevel (int hzoom, int vzoom) override;
-
+    void setZoomLevel(int hzoom, int vzoom) override;
 
 public Q_SLOTS:
     /**
@@ -85,12 +80,10 @@ public Q_SLOTS:
      *
      * Implements @ref kpView.
      */
-    void adjustToEnvironment () override;
-
+    void adjustToEnvironment() override;
 
 private:
     struct kpZoomedViewPrivate *d;
 };
 
-
-#endif  // KP_ZOOMED_VIEW_H
+#endif // KP_ZOOMED_VIEW_H

@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolTextPrivate_H
 #define kpToolTextPrivate_H
-
-
-
 
 class kpToolTextInsertCommand;
 class kpToolTextEnterCommand;
 class kpToolTextBackspaceCommand;
 class kpToolTextDeleteCommand;
 
-
-struct kpToolTextPrivate
-{
+struct kpToolTextPrivate {
     kpToolTextInsertCommand *insertCommand;
     kpToolTextEnterCommand *enterCommand;
     kpToolTextBackspaceCommand *backspaceCommand, *backspaceWordCommand;
     kpToolTextDeleteCommand *deleteCommand, *deleteWordCommand;
 };
 
-
-#endif  // kpToolTextPrivate_H
+#endif // kpToolTextPrivate_H

@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TRANSFORM_CROP_H
 #define KP_TRANSFORM_CROP_H
 
-
 class kpMainWindow;
-
 
 //
 // ASSUMPTION: There is a current selection.
@@ -77,7 +74,6 @@ class kpMainWindow;
 //    For user convenience, this border is created by a undoable
 //    create-selection-border command added to the undo history.
 //
-void kpTransformCrop (kpMainWindow *mainWindow);
+void kpTransformCrop(kpMainWindow *mainWindow);
 
-
-#endif  // KP_TRANSFORM_CROP_H
+#endif // KP_TRANSFORM_CROP_H

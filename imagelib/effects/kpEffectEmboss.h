@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectEmboss_H
 #define kpEffectEmboss_H
 
-
 #include "imagelib/kpImage.h"
-
 
 class kpEffectEmboss
 {
@@ -45,8 +42,7 @@ public:
     //              (must be between MinStrength and MaxStrength inclusive)
     //
     //              Currently, all non-zero strengths are the same.
-    static kpImage applyEffect (const kpImage &image, int strength);
+    static kpImage applyEffect(const kpImage &image, int strength);
 };
 
-
-#endif  // kpEffectEmboss_H
+#endif // kpEffectEmboss_H

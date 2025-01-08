@@ -25,26 +25,22 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_PEN_H
 #define KP_TOOL_PEN_H
 
-
 #include "kpToolFlowBase.h"
-
 
 // Pen = draws pixels, "interpolates" by "sweeping" pixels along a line (no brushes)
 class kpToolPen : public kpToolFlowBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolPen (kpToolEnvironment *environ, QObject *parent);
+    kpToolPen(kpToolEnvironment *environ, QObject *parent);
 
 protected:
-    QString haventBegunDrawUserMessage () const override;
-    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) override;
+    QString haventBegunDrawUserMessage() const override;
+    QRect drawLine(const QPoint &thisPoint, const QPoint &lastPoint) override;
 };
 
-
-#endif  // KP_TOOL_PEN_H
+#endif // KP_TOOL_PEN_H

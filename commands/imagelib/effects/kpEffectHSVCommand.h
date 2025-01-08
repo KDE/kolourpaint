@@ -25,27 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectHSVCommand_H
 #define kpEffectHSVCommand_H
 
-
 #include "kpEffectCommandBase.h"
-
 
 class kpEffectHSVCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectHSVCommand (double hue, double saturation, double value,
-            bool actOnSelection,
-            kpCommandEnvironment *environ);
+    kpEffectHSVCommand(double hue, double saturation, double value, bool actOnSelection, kpCommandEnvironment *environ);
 
 protected:
-    kpImage applyEffect (const kpImage &image) override;
+    kpImage applyEffect(const kpImage &image) override;
 
 protected:
     double m_hue, m_saturation, m_value;
 };
 
-
-#endif  // kpEffectHSVCommand_H
+#endif // kpEffectHSVCommand_H

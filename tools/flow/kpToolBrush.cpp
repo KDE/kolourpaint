@@ -31,20 +31,17 @@
 
 //---------------------------------------------------------------------
 
-kpToolBrush::kpToolBrush (kpToolEnvironment *environ, QObject *parent)
-    : kpToolFlowPixmapBase (i18n ("Brush"),
-        i18n ("Draw using brushes of different shapes and sizes"),
-        Qt::Key_B,
-        environ, parent, QStringLiteral("tool_brush"))
+kpToolBrush::kpToolBrush(kpToolEnvironment *environ, QObject *parent)
+    : kpToolFlowPixmapBase(i18n("Brush"), i18n("Draw using brushes of different shapes and sizes"), Qt::Key_B, environ, parent, QStringLiteral("tool_brush"))
 {
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
-QString kpToolBrush::haventBegunDrawUserMessage () const
+QString kpToolBrush::haventBegunDrawUserMessage() const
 {
-    return i18n ("Click to draw dots or drag to draw strokes.");
+    return i18n("Click to draw dots or drag to draw strokes.");
 }
 
 //---------------------------------------------------------------------

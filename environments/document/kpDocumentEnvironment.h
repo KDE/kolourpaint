@@ -25,47 +25,39 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDocumentEnvironment_H
 #define kpDocumentEnvironment_H
 
-
 #include "environments/kpEnvironmentBase.h"
-
 
 class QWidget;
 
 class kpAbstractSelection;
 
-
 // Facade for kpDocument clients.
 class kpDocumentEnvironment : public kpEnvironmentBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // Note: Our interface must never publicly leak <mainWindow> or any other
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
-    kpDocumentEnvironment (kpMainWindow *mainWindow);
-    ~kpDocumentEnvironment () override;
+    kpDocumentEnvironment(kpMainWindow *mainWindow);
+    ~kpDocumentEnvironment() override;
 
+    QWidget *dialogParent() const;
 
-    QWidget *dialogParent () const;
+    void setQueueViewUpdates() const;
+    void restoreQueueViewUpdates() const;
 
-    void setQueueViewUpdates () const;
-    void restoreQueueViewUpdates () const;
-
-    void switchToCompatibleTool (const kpAbstractSelection &selection,
-    // REFACTOR: This is horrible API and terribly named.
-            bool *isTextChanged) const;
-    void assertMatchingUIState (const kpAbstractSelection &selection) const;
-
+    void switchToCompatibleTool(const kpAbstractSelection &selection,
+                                // REFACTOR: This is horrible API and terribly named.
+                                bool *isTextChanged) const;
+    void assertMatchingUIState(const kpAbstractSelection &selection) const;
 
 private:
-    struct kpDocumentEnvironmentPrivate * const d;
+    struct kpDocumentEnvironmentPrivate *const d;
 };
 
-
-#endif  // kpDocumentEnvironment_H
-
+#endif // kpDocumentEnvironment_H

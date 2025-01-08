@@ -25,12 +25,11 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpToolEnvironment.h"
 
 #include "imagelib/kpColor.h"
-#include "widgets/toolbars/kpColorToolBar.h"
 #include "mainWindow/kpMainWindow.h"
+#include "widgets/toolbars/kpColorToolBar.h"
 #include "widgets/toolbars/kpToolToolBar.h"
 
 #include <KActionCollection>
@@ -45,173 +44,157 @@ bool kpToolEnvironment::drawAntiAliased = true;
 
 //--------------------------------------------------------------------------------
 
-struct kpToolEnvironmentPrivate
-{
+struct kpToolEnvironmentPrivate {
 };
 
-kpToolEnvironment::kpToolEnvironment (kpMainWindow *mainWindow)
-    : kpEnvironmentBase (mainWindow),
-      d (new kpToolEnvironmentPrivate ())
+kpToolEnvironment::kpToolEnvironment(kpMainWindow *mainWindow)
+    : kpEnvironmentBase(mainWindow)
+    , d(new kpToolEnvironmentPrivate())
 {
 }
 
-kpToolEnvironment::~kpToolEnvironment ()
+kpToolEnvironment::~kpToolEnvironment()
 {
     delete d;
 }
 
-
 // public
-KActionCollection *kpToolEnvironment::actionCollection () const
+KActionCollection *kpToolEnvironment::actionCollection() const
 {
-    return mainWindow ()->actionCollection ();
+    return mainWindow()->actionCollection();
 }
 
 // public
-kpCommandHistory *kpToolEnvironment::commandHistory () const
+kpCommandHistory *kpToolEnvironment::commandHistory() const
 {
-    return mainWindow ()->commandHistory ();
-}
-
-
-// public
-QActionGroup *kpToolEnvironment::toolsActionGroup () const
-{
-    return mainWindow ()->toolsActionGroup ();
+    return mainWindow()->commandHistory();
 }
 
 // public
-kpToolToolBar *kpToolEnvironment::toolToolBar () const
+QActionGroup *kpToolEnvironment::toolsActionGroup() const
 {
-    return mainWindow ()->toolToolBar ();
+    return mainWindow()->toolsActionGroup();
 }
 
 // public
-void kpToolEnvironment::hideAllToolWidgets () const
+kpToolToolBar *kpToolEnvironment::toolToolBar() const
 {
-    toolToolBar ()->hideAllToolWidgets ();
+    return mainWindow()->toolToolBar();
 }
 
 // public
-bool kpToolEnvironment::selectPreviousTool () const
+void kpToolEnvironment::hideAllToolWidgets() const
 {
-    kpToolToolBar *tb = toolToolBar ();
+    toolToolBar()->hideAllToolWidgets();
+}
+
+// public
+bool kpToolEnvironment::selectPreviousTool() const
+{
+    kpToolToolBar *tb = toolToolBar();
 
     // (don't end up with no tool selected)
-    if (!tb->previousTool ()) {
+    if (!tb->previousTool()) {
         return false;
     }
 
     // endInternal() will be called by kpMainWindow (thanks to this line)
     // so we won't have the view anymore
     // TODO: Update comment.
-    tb->selectPreviousTool ();
+    tb->selectPreviousTool();
     return true;
 }
 
-
-static kpColorToolBar *ColorToolBar (kpMainWindow *mw)
+static kpColorToolBar *ColorToolBar(kpMainWindow *mw)
 {
-    return mw->colorToolBar ();
+    return mw->colorToolBar();
 }
 
 // public
-kpColor kpToolEnvironment::color (int which) const
+kpColor kpToolEnvironment::color(int which) const
 {
-    return ::ColorToolBar (mainWindow ())->color (which);
+    return ::ColorToolBar(mainWindow())->color(which);
 }
 
 // public
-double kpToolEnvironment::colorSimilarity () const
+double kpToolEnvironment::colorSimilarity() const
 {
-    return ::ColorToolBar (mainWindow ())->colorSimilarity ();
+    return ::ColorToolBar(mainWindow())->colorSimilarity();
 }
 
 // public
-int kpToolEnvironment::processedColorSimilarity () const
+int kpToolEnvironment::processedColorSimilarity() const
 {
-    return ::ColorToolBar (mainWindow ())->processedColorSimilarity ();
+    return ::ColorToolBar(mainWindow())->processedColorSimilarity();
 }
 
 // public
-kpColor kpToolEnvironment::oldForegroundColor () const
+kpColor kpToolEnvironment::oldForegroundColor() const
 {
-    return ::ColorToolBar (mainWindow ())->oldForegroundColor ();
+    return ::ColorToolBar(mainWindow())->oldForegroundColor();
 }
 
 // public
-kpColor kpToolEnvironment::oldBackgroundColor () const
+kpColor kpToolEnvironment::oldBackgroundColor() const
 {
-    return ::ColorToolBar (mainWindow ())->oldBackgroundColor ();
+    return ::ColorToolBar(mainWindow())->oldBackgroundColor();
 }
 
 // public
-double kpToolEnvironment::oldColorSimilarity () const
+double kpToolEnvironment::oldColorSimilarity() const
 {
-    return ::ColorToolBar (mainWindow ())->oldColorSimilarity ();
-}
-
-
-// public
-void kpToolEnvironment::flashColorSimilarityToolBarItem () const
-{
-    ::ColorToolBar (mainWindow ())->flashColorSimilarityToolBarItem ();
-}
-
-
-// public
-void kpToolEnvironment::setColor (int which, const kpColor &color) const
-{
-    kpColorToolBar *toolBar = mainWindow ()->colorToolBar ();
-    Q_ASSERT (toolBar);
-
-    toolBar->setColor (which, color);
-}
-
-
-// public
-void kpToolEnvironment::deleteSelection () const
-{
-    mainWindow ()->slotDelete ();
+    return ::ColorToolBar(mainWindow())->oldColorSimilarity();
 }
 
 // public
-void kpToolEnvironment::pasteTextAt (const QString &text, const QPoint &point,
-                    bool allowNewTextSelectionPointShift) const
+void kpToolEnvironment::flashColorSimilarityToolBarItem() const
 {
-    mainWindow ()->pasteTextAt (text, point, allowNewTextSelectionPointShift);
-}
-
-
-// public
-void kpToolEnvironment::zoomIn (bool centerUnderCursor) const
-{
-    mainWindow ()->zoomIn (centerUnderCursor);
+    ::ColorToolBar(mainWindow())->flashColorSimilarityToolBarItem();
 }
 
 // public
-void kpToolEnvironment::zoomOut (bool centerUnderCursor) const
+void kpToolEnvironment::setColor(int which, const kpColor &color) const
 {
-    mainWindow ()->zoomOut (centerUnderCursor);
-}
+    kpColorToolBar *toolBar = mainWindow()->colorToolBar();
+    Q_ASSERT(toolBar);
 
-
-// public
-void kpToolEnvironment::zoomToRect (
-        const QRect &normalizedDocRect,
-        bool accountForGrips,
-        bool careAboutWidth, bool careAboutHeight) const
-{
-    mainWindow ()->zoomToRect (
-        normalizedDocRect,
-        accountForGrips,
-        careAboutWidth, careAboutHeight);
+    toolBar->setColor(which, color);
 }
 
 // public
-void kpToolEnvironment::fitToPage () const
+void kpToolEnvironment::deleteSelection() const
 {
-    mainWindow ()->slotFitToPage ();
+    mainWindow()->slotDelete();
+}
+
+// public
+void kpToolEnvironment::pasteTextAt(const QString &text, const QPoint &point, bool allowNewTextSelectionPointShift) const
+{
+    mainWindow()->pasteTextAt(text, point, allowNewTextSelectionPointShift);
+}
+
+// public
+void kpToolEnvironment::zoomIn(bool centerUnderCursor) const
+{
+    mainWindow()->zoomIn(centerUnderCursor);
+}
+
+// public
+void kpToolEnvironment::zoomOut(bool centerUnderCursor) const
+{
+    mainWindow()->zoomOut(centerUnderCursor);
+}
+
+// public
+void kpToolEnvironment::zoomToRect(const QRect &normalizedDocRect, bool accountForGrips, bool careAboutWidth, bool careAboutHeight) const
+{
+    mainWindow()->zoomToRect(normalizedDocRect, accountForGrips, careAboutWidth, careAboutHeight);
+}
+
+// public
+void kpToolEnvironment::fitToPage() const
+{
+    mainWindow()->slotFitToPage();
 }
 
 #include "moc_kpToolEnvironment.cpp"

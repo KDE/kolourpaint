@@ -25,29 +25,24 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolSelectionDestroyCommand_H
 #define kpToolSelectionDestroyCommand_H
 
-
-#include "imagelib/kpImage.h"
 #include "commands/kpNamedCommand.h"
-
+#include "imagelib/kpImage.h"
 
 class kpAbstractSelection;
-
 
 class kpToolSelectionDestroyCommand : public kpNamedCommand
 {
 public:
-    kpToolSelectionDestroyCommand (const QString &name, bool pushOntoDocument,
-                                   kpCommandEnvironment *environ);
-    ~kpToolSelectionDestroyCommand () override;
+    kpToolSelectionDestroyCommand(const QString &name, bool pushOntoDocument, kpCommandEnvironment *environ);
+    ~kpToolSelectionDestroyCommand() override;
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     bool m_pushOntoDocument;
@@ -57,5 +52,4 @@ private:
     int m_textRow, m_textCol;
 };
 
-
-#endif  // kpToolSelectionDestroyCommand_H
+#endif // kpToolSelectionDestroyCommand_H

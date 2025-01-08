@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_SELECTION 0
-
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
 
@@ -42,77 +40,69 @@
 // In other words, this is the precondition for <sel>.setBaseImage(<baseImage).
 //
 // This checks that they have compatible relative dimensions.
-static bool CanSetBaseImageTo (kpAbstractImageSelection *sel, const kpImage &baseImage)
+static bool CanSetBaseImageTo(kpAbstractImageSelection *sel, const kpImage &baseImage)
 {
-    if (baseImage.isNull ())
-    {
+    if (baseImage.isNull()) {
         // Always allowed to wipe out selection content, changing it into a
         // border.
         return true;
     }
 
-    return (baseImage.width () == sel->width () &&
-            baseImage.height () == sel->height ());
+    return (baseImage.width() == sel->width() && baseImage.height() == sel->height());
 }
 
 //---------------------------------------------------------------------
 
-struct kpAbstractImageSelectionPrivate
-{
+struct kpAbstractImageSelectionPrivate {
     kpImage baseImage;
 
     kpImageSelectionTransparency transparency;
 
     // The mask for the image, after selection transparency (a.k.a. background
     // subtraction) is applied.
-    QBitmap transparencyMaskCache;  // OPT: calculate lazily i.e. on-demand only
+    QBitmap transparencyMaskCache; // OPT: calculate lazily i.e. on-demand only
 };
 
 //---------------------------------------------------------------------
 
 // protected
-kpAbstractImageSelection::kpAbstractImageSelection (
-        const kpImageSelectionTransparency &transparency)
-    : kpAbstractSelection (),
-      d (new kpAbstractImageSelectionPrivate ())
+kpAbstractImageSelection::kpAbstractImageSelection(const kpImageSelectionTransparency &transparency)
+    : kpAbstractSelection()
+    , d(new kpAbstractImageSelectionPrivate())
 {
-    setTransparency (transparency);
+    setTransparency(transparency);
 }
 
 //---------------------------------------------------------------------
 
 // protected
-kpAbstractImageSelection::kpAbstractImageSelection (const QRect &rect,
-        const kpImage &baseImage,
-        const kpImageSelectionTransparency &transparency)
-    : kpAbstractSelection (rect),
-      d (new kpAbstractImageSelectionPrivate ())
+kpAbstractImageSelection::kpAbstractImageSelection(const QRect &rect, const kpImage &baseImage, const kpImageSelectionTransparency &transparency)
+    : kpAbstractSelection(rect)
+    , d(new kpAbstractImageSelectionPrivate())
 {
     // This also checks that <rect> and <baseImage> have compatible
     // relative dimensions.
-    setBaseImage (baseImage);
+    setBaseImage(baseImage);
 
-    setTransparency (transparency);
+    setTransparency(transparency);
 }
 
 //---------------------------------------------------------------------
 
 // protected
-kpAbstractImageSelection::kpAbstractImageSelection (const QRect &rect,
-        const kpImageSelectionTransparency &transparency)
-    : kpAbstractSelection (rect),
-      d (new kpAbstractImageSelectionPrivate ())
+kpAbstractImageSelection::kpAbstractImageSelection(const QRect &rect, const kpImageSelectionTransparency &transparency)
+    : kpAbstractSelection(rect)
+    , d(new kpAbstractImageSelectionPrivate())
 {
-    setTransparency (transparency);
+    setTransparency(transparency);
 }
 
 //---------------------------------------------------------------------
 
 // protected
-kpAbstractImageSelection &kpAbstractImageSelection::operator= (
-        const kpAbstractImageSelection &rhs)
+kpAbstractImageSelection &kpAbstractImageSelection::operator=(const kpAbstractImageSelection &rhs)
 {
-    kpAbstractSelection::operator= (rhs);
+    kpAbstractSelection::operator=(rhs);
 
     d->baseImage = rhs.d->baseImage;
 
@@ -125,7 +115,7 @@ kpAbstractImageSelection &kpAbstractImageSelection::operator= (
 //---------------------------------------------------------------------
 
 // protected
-kpAbstractImageSelection::~kpAbstractImageSelection ()
+kpAbstractImageSelection::~kpAbstractImageSelection()
 {
     delete d;
 }
@@ -133,26 +123,23 @@ kpAbstractImageSelection::~kpAbstractImageSelection ()
 //---------------------------------------------------------------------
 
 // public virtual [base kpAbstractSelection]
-bool kpAbstractImageSelection::readFromStream (QDataStream &stream)
+bool kpAbstractImageSelection::readFromStream(QDataStream &stream)
 {
-    if (!kpAbstractSelection::readFromStream (stream )) {
+    if (!kpAbstractSelection::readFromStream(stream)) {
         return false;
     }
 
     QImage qimage;
     stream >> qimage;
 #if DEBUG_KP_SELECTION && 1
-    qCDebug(kpLogLayers) << "\timage: w=" << qimage.width () << " h=" << qimage.height ()
-               << " depth=" << qimage.depth ();
+    qCDebug(kpLogLayers) << "\timage: w=" << qimage.width() << " h=" << qimage.height() << " depth=" << qimage.depth();
 #endif
 
-    if (!qimage.isNull ())
-    {
+    if (!qimage.isNull()) {
         // Image size does not match the selection's dimensions?
         // This call only accesses our superclass' fields, which have already
         // been read in.
-        if (!::CanSetBaseImageTo (this, qimage))
-        {
+        if (!::CanSetBaseImageTo(this, qimage)) {
             return false;
         }
 
@@ -161,7 +148,7 @@ bool kpAbstractImageSelection::readFromStream (QDataStream &stream)
     // (was just a selection border in the clipboard, even though KolourPaint's
     //  GUI doesn't allow you to copy such a thing into the clipboard)
     else {
-        d->baseImage = kpImage ();
+        d->baseImage = kpImage();
     }
 
     // TODO: Reset transparency mask?
@@ -175,57 +162,52 @@ bool kpAbstractImageSelection::readFromStream (QDataStream &stream)
 //---------------------------------------------------------------------
 
 // public virtual [base kpAbstractSelection]
-void kpAbstractImageSelection::writeToStream (QDataStream &stream) const
+void kpAbstractImageSelection::writeToStream(QDataStream &stream) const
 {
-    kpAbstractSelection::writeToStream (stream);
+    kpAbstractSelection::writeToStream(stream);
 
-    if (!d->baseImage.isNull ())
-    {
+    if (!d->baseImage.isNull()) {
         const QImage image = d->baseImage;
-    #if DEBUG_KP_SELECTION && 1
-        qCDebug(kpLogLayers) << "\twrote image rect=" << image.rect ();
-    #endif
+#if DEBUG_KP_SELECTION && 1
+        qCDebug(kpLogLayers) << "\twrote image rect=" << image.rect();
+#endif
         stream << image;
-    }
-    else
-    {
-    #if DEBUG_KP_SELECTION && 1
+    } else {
+#if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\twrote no image because no pixmap";
-    #endif
-        stream << QImage ();
+#endif
+        stream << QImage();
     }
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-QString kpAbstractImageSelection::name () const
+QString kpAbstractImageSelection::name() const
 {
-    return i18n ("Selection");
+    return i18n("Selection");
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpAbstractSelection]
-kpCommandSize::SizeType kpAbstractImageSelection::size () const
+kpCommandSize::SizeType kpAbstractImageSelection::size() const
 {
-    return kpAbstractSelection::size () +
-        kpCommandSize::ImageSize (d->baseImage) +
-        (d->transparencyMaskCache.width() * d->transparencyMaskCache.height()) / 8;
+    return kpAbstractSelection::size() + kpCommandSize::ImageSize(d->baseImage) + (d->transparencyMaskCache.width() * d->transparencyMaskCache.height()) / 8;
 }
 
 //---------------------------------------------------------------------
 
 // public
-kpCommandSize::SizeType kpAbstractImageSelection::sizeWithoutImage () const
+kpCommandSize::SizeType kpAbstractImageSelection::sizeWithoutImage() const
 {
-    return (size () - kpCommandSize::ImageSize (d->baseImage));
+    return (size() - kpCommandSize::ImageSize(d->baseImage));
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-int kpAbstractImageSelection::minimumWidth () const
+int kpAbstractImageSelection::minimumWidth() const
 {
     return 1;
 }
@@ -233,35 +215,35 @@ int kpAbstractImageSelection::minimumWidth () const
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-int kpAbstractImageSelection::minimumHeight () const
+int kpAbstractImageSelection::minimumHeight() const
 {
     return 1;
 }
 
 //---------------------------------------------------------------------
 // public virtual
-QBitmap kpAbstractImageSelection::shapeBitmap (bool nullForRectangular) const
+QBitmap kpAbstractImageSelection::shapeBitmap(bool nullForRectangular) const
 {
-    (void) nullForRectangular;
+    (void)nullForRectangular;
 
-    Q_ASSERT (boundingRect ().isValid ());
+    Q_ASSERT(boundingRect().isValid());
 
-    QBitmap maskBitmap (width (), height ());
-    maskBitmap.fill (Qt::color0/*transparent*/);
+    QBitmap maskBitmap(width(), height());
+    maskBitmap.fill(Qt::color0 /*transparent*/);
 
     {
         QPainter painter(&maskBitmap);
 
-        painter.setPen (Qt::color1/*opaque*/);
-        painter.setBrush (Qt::color1/*opaque*/);
+        painter.setPen(Qt::color1 /*opaque*/);
+        painter.setBrush(Qt::color1 /*opaque*/);
 
-        QPolygon points = calculatePoints ();
-        points.translate (-x (), -y ());
+        QPolygon points = calculatePoints();
+        points.translate(-x(), -y());
 
         // Unlike QPainter::drawRect(), this draws the points literally
         // without being 1 pixel wider and higher.  This requires a QPen
         // or it will draw 1 pixel narrower and shorter.
-        painter.drawPolygon (points, Qt::OddEvenFill);
+        painter.drawPolygon(points, Qt::OddEvenFill);
     }
 
     return maskBitmap;
@@ -270,30 +252,26 @@ QBitmap kpAbstractImageSelection::shapeBitmap (bool nullForRectangular) const
 //---------------------------------------------------------------------
 
 // public
-kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image) const
+kpImage kpAbstractImageSelection::givenImageMaskedByShape(const kpImage &image) const
 {
 #if DEBUG_KP_SELECTION
-    qCDebug(kpLogLayers) << "kpAbstractImageSelection::givenImageMaskedByShape() boundingRect="
-              << boundingRect () << endl;
+    qCDebug(kpLogLayers) << "kpAbstractImageSelection::givenImageMaskedByShape() boundingRect=" << boundingRect() << endl;
 #endif
-    Q_ASSERT (image.width () == width () && image.height () == height ());
+    Q_ASSERT(image.width() == width() && image.height() == height());
 
-    if (isRectangular ()) {
+    if (isRectangular()) {
         return image;
     }
 
-    const QRegion mRegion = shapeRegion ().translated (-topLeft ());
+    const QRegion mRegion = shapeRegion().translated(-topLeft());
 
 #if DEBUG_KP_SELECTION
-    qCDebug(kpLogLayers) << "\tshapeRegion=" << shapeRegion ()
-              << " [rect=" << shapeRegion ().boundingRect () << "]"
-              << " calculatePoints=" << calculatePoints ()
-              << " [rect=" << calculatePoints ().boundingRect () << "]"
-              << endl;
+    qCDebug(kpLogLayers) << "\tshapeRegion=" << shapeRegion() << " [rect=" << shapeRegion().boundingRect() << "]"
+                         << " calculatePoints=" << calculatePoints() << " [rect=" << calculatePoints().boundingRect() << "]" << endl;
 #endif
 
-    kpImage retImage(width (), height (), QImage::Format_ARGB32_Premultiplied);
-    retImage.fill(0);  // transparent
+    kpImage retImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
+    retImage.fill(0); // transparent
 
     QPainter painter(&retImage);
     painter.setClipRegion(mRegion);
@@ -306,28 +284,27 @@ kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image)
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-bool kpAbstractImageSelection::hasContent () const
+bool kpAbstractImageSelection::hasContent() const
 {
-    return !d->baseImage.isNull ();
+    return !d->baseImage.isNull();
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-void kpAbstractImageSelection::deleteContent ()
+void kpAbstractImageSelection::deleteContent()
 {
-    if (!hasContent ()) {
+    if (!hasContent()) {
         return;
     }
 
-    setBaseImage (kpImage ());
+    setBaseImage(kpImage());
 }
 
 //---------------------------------------------------------------------
 
-
 // public
-kpImage kpAbstractImageSelection::baseImage () const
+kpImage kpAbstractImageSelection::baseImage() const
 {
     return d->baseImage;
 }
@@ -335,23 +312,23 @@ kpImage kpAbstractImageSelection::baseImage () const
 //---------------------------------------------------------------------
 
 // public
-void kpAbstractImageSelection::setBaseImage (const kpImage &baseImage)
+void kpAbstractImageSelection::setBaseImage(const kpImage &baseImage)
 {
-    Q_ASSERT (::CanSetBaseImageTo (this, baseImage));
+    Q_ASSERT(::CanSetBaseImageTo(this, baseImage));
 
     // qt doc: the image format must be set to Format_ARGB32Premultiplied or Format_ARGB32
     // for the composition modes to have any effect
     d->baseImage = baseImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
-    recalculateTransparencyMaskCache ();
+    recalculateTransparencyMaskCache();
 
-    Q_EMIT changed (boundingRect ());
+    Q_EMIT changed(boundingRect());
 }
 
 //---------------------------------------------------------------------
 
 // public
-kpImageSelectionTransparency kpAbstractImageSelection::transparency () const
+kpImageSelectionTransparency kpAbstractImageSelection::transparency() const
 {
     return d->transparency;
 }
@@ -359,9 +336,7 @@ kpImageSelectionTransparency kpAbstractImageSelection::transparency () const
 //---------------------------------------------------------------------
 
 // public
-bool kpAbstractImageSelection::setTransparency (
-        const kpImageSelectionTransparency &transparency,
-        bool checkTransparentPixmapChanged)
+bool kpAbstractImageSelection::setTransparency(const kpImageSelectionTransparency &transparency, bool checkTransparentPixmapChanged)
 {
     if (d->transparency == transparency) {
         return false;
@@ -372,36 +347,27 @@ bool kpAbstractImageSelection::setTransparency (
     bool haveChanged = true;
 
     QBitmap oldTransparencyMaskCache = d->transparencyMaskCache;
-    recalculateTransparencyMaskCache ();
+    recalculateTransparencyMaskCache();
 
-    if ( oldTransparencyMaskCache.size() == d->transparencyMaskCache.size() )
-    {
-        if (d->transparencyMaskCache.isNull ())
-        {
-        #if DEBUG_KP_SELECTION
+    if (oldTransparencyMaskCache.size() == d->transparencyMaskCache.size()) {
+        if (d->transparencyMaskCache.isNull()) {
+#if DEBUG_KP_SELECTION
             qCDebug(kpLogLayers) << "\tboth old and new pixmaps are null - nothing changed";
-        #endif
+#endif
             haveChanged = false;
-        }
-        else if (checkTransparentPixmapChanged)
-        {
+        } else if (checkTransparentPixmapChanged) {
             QImage oldTransparencyMaskImage = oldTransparencyMaskCache.toImage();
             QImage newTransparencyMaskImage = d->transparencyMaskCache.toImage();
 
             bool changed = false;
-            for (int y = 0; y < oldTransparencyMaskImage.height () && !changed; y++)
-            {
-                for (int x = 0; x < oldTransparencyMaskImage.width () && !changed; x++)
-                {
-                    if (kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y) !=
-                        kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y))
-                    {
-                    #if DEBUG_KP_SELECTION
-                        qCDebug(kpLogLayers) << "\tdiffer at " << QPoint (x, y)
-                                   << " old=" << kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y).toQRgb ()
-                                   << " new=" << kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ()
-                                   << endl;
-                    #endif
+            for (int y = 0; y < oldTransparencyMaskImage.height() && !changed; y++) {
+                for (int x = 0; x < oldTransparencyMaskImage.width() && !changed; x++) {
+                    if (kpPixmapFX::getColorAtPixel(oldTransparencyMaskImage, x, y) != kpPixmapFX::getColorAtPixel(newTransparencyMaskImage, x, y)) {
+#if DEBUG_KP_SELECTION
+                        qCDebug(kpLogLayers) << "\tdiffer at " << QPoint(x, y)
+                                             << " old=" << kpPixmapFX::getColorAtPixel(oldTransparencyMaskImage, x, y).toQRgb()
+                                             << " new=" << kpPixmapFX::getColorAtPixel(newTransparencyMaskImage, x, y).toQRgb() << endl;
+#endif
                         changed = true;
                         break;
                     }
@@ -414,9 +380,8 @@ bool kpAbstractImageSelection::setTransparency (
         }
     }
 
-
     if (haveChanged) {
-        Q_EMIT changed (boundingRect ());
+        Q_EMIT changed(boundingRect());
     }
 
     return haveChanged;
@@ -425,64 +390,54 @@ bool kpAbstractImageSelection::setTransparency (
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
+void kpAbstractImageSelection::recalculateTransparencyMaskCache()
 {
 #if DEBUG_KP_SELECTION
     qCDebug(kpLogLayers) << "kpAbstractImageSelection::recalculateTransparencyMaskCache()";
 #endif
 
-    if (d->baseImage.isNull ())
-    {
-    #if DEBUG_KP_SELECTION
+    if (d->baseImage.isNull()) {
+#if DEBUG_KP_SELECTION
         qCDebug(kpLogLayers) << "\tno image - no need for transparency mask";
-    #endif
-        d->transparencyMaskCache = QBitmap ();
+#endif
+        d->transparencyMaskCache = QBitmap();
         return;
     }
 
-    if (d->transparency.isOpaque ())
-    {
-    #if DEBUG_KP_SELECTION
+    if (d->transparency.isOpaque()) {
+#if DEBUG_KP_SELECTION
         qCDebug(kpLogLayers) << "\topaque - no need for transparency mask";
-    #endif
-        d->transparencyMaskCache = QBitmap ();
+#endif
+        d->transparencyMaskCache = QBitmap();
         return;
     }
 
     d->transparencyMaskCache = QBitmap(d->baseImage.size());
 
-    QPainter transparencyMaskPainter (&d->transparencyMaskCache);
+    QPainter transparencyMaskPainter(&d->transparencyMaskCache);
 
     bool hasTransparent = false;
-    for (int y = 0; y < d->baseImage.height (); y++)
-    {
-        for (int x = 0; x < d->baseImage.width (); x++)
-        {
-            const kpColor pixelCol = kpPixmapFX::getColorAtPixel (d->baseImage, x, y);
-            if (pixelCol == kpColor::Transparent ||
-                pixelCol.isSimilarTo (d->transparency.transparentColor (),
-                                      d->transparency.processedColorSimilarity ()))
-            {
-                transparencyMaskPainter.setPen (Qt::color1/*transparent*/);
+    for (int y = 0; y < d->baseImage.height(); y++) {
+        for (int x = 0; x < d->baseImage.width(); x++) {
+            const kpColor pixelCol = kpPixmapFX::getColorAtPixel(d->baseImage, x, y);
+            if (pixelCol == kpColor::Transparent || pixelCol.isSimilarTo(d->transparency.transparentColor(), d->transparency.processedColorSimilarity())) {
+                transparencyMaskPainter.setPen(Qt::color1 /*transparent*/);
                 hasTransparent = true;
-            }
-            else
-            {
-                transparencyMaskPainter.setPen (Qt::color0/*opaque*/);
+            } else {
+                transparencyMaskPainter.setPen(Qt::color0 /*opaque*/);
             }
 
-            transparencyMaskPainter.drawPoint (x, y);
+            transparencyMaskPainter.drawPoint(x, y);
         }
     }
 
-    transparencyMaskPainter.end ();
+    transparencyMaskPainter.end();
 
-    if (!hasTransparent)
-    {
-    #if DEBUG_KP_SELECTION
+    if (!hasTransparent) {
+#if DEBUG_KP_SELECTION
         qCDebug(kpLogLayers) << "\tcolor useless - completely opaque";
-    #endif
-        d->transparencyMaskCache = QBitmap ();
+#endif
+        d->transparencyMaskCache = QBitmap();
         return;
     }
 }
@@ -490,15 +445,14 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
 //---------------------------------------------------------------------
 
 // public
-kpImage kpAbstractImageSelection::transparentImage () const
+kpImage kpAbstractImageSelection::transparentImage() const
 {
-    kpImage image = baseImage ();
+    kpImage image = baseImage();
 
-    if (!d->transparencyMaskCache.isNull ())
-    {
-      QPainter painter(&image);
-      painter.setCompositionMode(QPainter::CompositionMode_Clear);
-      painter.drawPixmap(0, 0, d->transparencyMaskCache);
+    if (!d->transparencyMaskCache.isNull()) {
+        QPainter painter(&image);
+        painter.setCompositionMode(QPainter::CompositionMode_Clear);
+        painter.drawPixmap(0, 0, d->transparencyMaskCache);
     }
 
     return image;
@@ -507,81 +461,71 @@ kpImage kpAbstractImageSelection::transparentImage () const
 //---------------------------------------------------------------------
 
 // public
-void kpAbstractImageSelection::fill (const kpColor &color)
+void kpAbstractImageSelection::fill(const kpColor &color)
 {
     QImage newImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
     newImage.fill(color.toQRgb());
 
     // LOTODO: Maybe disable Image/Clear menu item if transparent color
-    if ( !color.isTransparent() )
-    {
-      QPainter painter(&newImage);
-      painter.setCompositionMode(QPainter::CompositionMode_Clear);
-      painter.drawPixmap(0, 0, shapeBitmap());
+    if (!color.isTransparent()) {
+        QPainter painter(&newImage);
+        painter.setCompositionMode(QPainter::CompositionMode_Clear);
+        painter.drawPixmap(0, 0, shapeBitmap());
     }
 
-    setBaseImage (newImage);
+    setBaseImage(newImage);
 }
 
 //---------------------------------------------------------------------
 
 // public virtual
-void kpAbstractImageSelection::flip (bool horiz, bool vert)
+void kpAbstractImageSelection::flip(bool horiz, bool vert)
 {
 #if DEBUG_KP_SELECTION && 1
-    qCDebug(kpLogLayers) << "kpAbstractImageSelection::flip(horiz=" << horiz
-               << ",vert=" << vert << ")";
+    qCDebug(kpLogLayers) << "kpAbstractImageSelection::flip(horiz=" << horiz << ",vert=" << vert << ")";
 #endif
 
-    if (!d->baseImage.isNull ())
-    {
-    #if DEBUG_KP_SELECTION && 1
+    if (!d->baseImage.isNull()) {
+#if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\thave pixmap - flipping that";
-    #endif
+#endif
         d->baseImage = d->baseImage.mirrored(horiz, vert);
     }
 
-    if (!d->transparencyMaskCache.isNull ())
-    {
-    #if DEBUG_KP_SELECTION && 1
+    if (!d->transparencyMaskCache.isNull()) {
+#if DEBUG_KP_SELECTION && 1
         qCDebug(kpLogLayers) << "\thave transparency mask - flipping that";
-    #endif
+#endif
         QImage image = d->transparencyMaskCache.toImage().mirrored(horiz, vert);
         d->transparencyMaskCache = QBitmap::fromImage(std::move(image));
     }
 
-    Q_EMIT changed (boundingRect ());
+    Q_EMIT changed(boundingRect());
 }
 
 //---------------------------------------------------------------------
 
-static void Paint (const kpAbstractImageSelection *sel, const kpImage &srcImage,
-                   QImage *destImage, const QRect &docRect)
+static void Paint(const kpAbstractImageSelection *sel, const kpImage &srcImage, QImage *destImage, const QRect &docRect)
 {
-    if (!srcImage.isNull ())
-    {
-        kpPixmapFX::paintPixmapAt (destImage,
-                                   sel->topLeft () - docRect.topLeft (),
-                                   srcImage);
+    if (!srcImage.isNull()) {
+        kpPixmapFX::paintPixmapAt(destImage, sel->topLeft() - docRect.topLeft(), srcImage);
     }
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-void kpAbstractImageSelection::paint (QImage *destImage,
-        const QRect &docRect) const
+void kpAbstractImageSelection::paint(QImage *destImage, const QRect &docRect) const
 {
-    ::Paint (this, transparentImage (), destImage, docRect);
+    ::Paint(this, transparentImage(), destImage, docRect);
 }
 
 //---------------------------------------------------------------------
 
 // public
-void kpAbstractImageSelection::paintWithBaseImage (QImage *destImage,
-        const QRect &docRect) const
+void kpAbstractImageSelection::paintWithBaseImage(QImage *destImage, const QRect &docRect) const
 {
-    ::Paint (this, baseImage (), destImage, docRect);
+    ::Paint(this, baseImage(), destImage, docRect);
 }
 
 //---------------------------------------------------------------------

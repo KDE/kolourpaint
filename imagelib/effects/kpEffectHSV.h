@@ -25,20 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectHSV_H
 #define kpEffectHSV_H
 
-
 #include "imagelib/kpImage.h"
-
 
 class kpEffectHSV
 {
 public:
-    static kpImage applyEffect (const kpImage &image,
-        double hue, double saturation, double value);
+    static kpImage applyEffect(const kpImage &image, double hue, double saturation, double value);
 };
 
-
-#endif  // kpEffectHSV_H
+#endif // kpEffectHSV_H

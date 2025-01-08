@@ -25,34 +25,26 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_POLYLINE_H
 #define KP_TOOL_POLYLINE_H
 
-
 #include "kpToolPolygonalBase.h"
-
 
 class kpToolPolyline : public kpToolPolygonalBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolPolyline (kpToolEnvironment *environ, QObject *parent);
+    kpToolPolyline(kpToolEnvironment *environ, QObject *parent);
 
 private:
-    QString haventBegunShapeUserMessage () const override;
+    QString haventBegunShapeUserMessage() const override;
 
 public:
     // (used by kpToolLine)
-    static void drawShape(kpImage *image,
-        const QPolygon &points,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor,
-        bool isFinal);
+    static void drawShape(kpImage *image, const QPolygon &points, const kpColor &fcolor, int penWidth, const kpColor &bcolor, bool isFinal);
 
-    void endDraw (const QPoint &, const QRect &) override;
+    void endDraw(const QPoint &, const QRect &) override;
 };
 
-
-#endif  // KP_TOOL_POLYLINE_H
+#endif // KP_TOOL_POLYLINE_H

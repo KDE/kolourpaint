@@ -25,15 +25,13 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpTextSelection_H
 #define kpTextSelection_H
 
-
-#include "layers/selections/kpAbstractSelection.h"
 #include "imagelib/kpImage.h"
-#include "layers/selections/text/kpTextStyle.h"
+#include "layers/selections/kpAbstractSelection.h"
 #include "layers/selections/text/kpPreeditText.h"
+#include "layers/selections/text/kpTextStyle.h"
 
 //
 // A rectangular text box containing lines of text, rendered in a given text
@@ -89,58 +87,53 @@
 //
 class kpTextSelection : public kpAbstractSelection
 {
-Q_OBJECT
+    Q_OBJECT
 
-//
-// Initialization
-//
+    //
+    // Initialization
+    //
 
 public:
-    explicit kpTextSelection (const QRect &rect = QRect (),
-        const kpTextStyle &textStyle = kpTextStyle ());
-    kpTextSelection (const QRect &rect, const QList <QString> &textLines,
-        const kpTextStyle &textStyle);
-    kpTextSelection (const kpTextSelection &rhs);
+    explicit kpTextSelection(const QRect &rect = QRect(), const kpTextStyle &textStyle = kpTextStyle());
+    kpTextSelection(const QRect &rect, const QList<QString> &textLines, const kpTextStyle &textStyle);
+    kpTextSelection(const kpTextSelection &rhs);
 
-    kpTextSelection &operator= (const kpTextSelection &rhs);
+    kpTextSelection &operator=(const kpTextSelection &rhs);
 
-    kpTextSelection *clone () const override;
+    kpTextSelection *clone() const override;
 
     // Returns a copy of the text selection but with new dimensions
     // <newWidth> x <newHeight>.
-    kpTextSelection *resized (int newWidth, int newHeight) const;
+    kpTextSelection *resized(int newWidth, int newHeight) const;
 
-    ~kpTextSelection () override;
+    ~kpTextSelection() override;
 
-
-//
-// Marshalling
-//
-
-public:
-    int serialID () const override;
-
-    bool readFromStream (QDataStream &stream) override;
-
-    void writeToStream (QDataStream &stream) const override;
-
-
-//
-// General Queries
-//
+    //
+    // Marshalling
+    //
 
 public:
-    QString name () const override;
+    int serialID() const override;
 
-    kpCommandSize::SizeType size () const override;
+    bool readFromStream(QDataStream &stream) override;
+
+    void writeToStream(QDataStream &stream) const override;
+
+    //
+    // General Queries
+    //
 
 public:
-    bool isRectangular () const override;
+    QString name() const override;
 
+    kpCommandSize::SizeType size() const override;
 
-//
-// Position & Dimensions
-//
+public:
+    bool isRectangular() const override;
+
+    //
+    // Position & Dimensions
+    //
 
 public:
     // Returns the absolute minimum size that a textbox must be if it is of
@@ -148,17 +141,17 @@ public:
     //
     // This leaves enough room for the border on all 4 sides and also a
     // text area big enough to fit a character in a tiny font.
-    static int MinimumWidthForTextStyle (const kpTextStyle &textStyle);
-    static int MinimumHeightForTextStyle (const kpTextStyle &textStyle);
-    static QSize MinimumSizeForTextStyle (const kpTextStyle &textStyle);
+    static int MinimumWidthForTextStyle(const kpTextStyle &textStyle);
+    static int MinimumHeightForTextStyle(const kpTextStyle &textStyle);
+    static QSize MinimumSizeForTextStyle(const kpTextStyle &textStyle);
 
     // REFACTOR: Enforce in kpTextSelection, not just in kpToolSelection &
     //           when pasting (in kpMainWindow).
     //
     //           Otherwise, if enforcement fails, e.g. textAreaRect() will
     //           not work.
-    int minimumWidth () const override;
-    int minimumHeight () const override;
+    int minimumWidth() const override;
+    int minimumHeight() const override;
 
 public:
     // Returns the suggested minimum size that a textbox should be if it is of
@@ -166,87 +159,83 @@ public:
     //
     // This leaves enough room for the border on all 4 sides and also for
     // a small line of the text in the given text style.
-    static int PreferredMinimumWidthForTextStyle (const kpTextStyle &textStyle);
-    static int PreferredMinimumHeightForTextStyle (const kpTextStyle &textStyle);
-    static QSize PreferredMinimumSizeForTextStyle (const kpTextStyle &textStyle);
+    static int PreferredMinimumWidthForTextStyle(const kpTextStyle &textStyle);
+    static int PreferredMinimumHeightForTextStyle(const kpTextStyle &textStyle);
+    static QSize PreferredMinimumSizeForTextStyle(const kpTextStyle &textStyle);
 
 public:
     // Returns the size of the text border.  Constant.
-    static int TextBorderSize ();
+    static int TextBorderSize();
 
     // Returns the rectangle that text lines are drawn on top of.
     // This will be a sub-rectangle of boundingRect() and is therefore,
     // in document coordinates like everything else in this class.
-    QRect textAreaRect () const;
+    QRect textAreaRect() const;
 
 public:
-    QPolygon calculatePoints () const override;
+    QPolygon calculatePoints() const override;
 
-
-//
-// Point Testing
-//
-
-public:
-    bool contains (const QPoint &point) const override;
+    //
+    // Point Testing
+    //
 
 public:
-    bool pointIsInTextBorderArea (const QPoint &point) const;
-    bool pointIsInTextArea (const QPoint &point) const;
+    bool contains(const QPoint &point) const override;
 
+public:
+    bool pointIsInTextBorderArea(const QPoint &point) const;
+    bool pointIsInTextArea(const QPoint &point) const;
 
-//
-// Content
-//
+    //
+    // Content
+    //
 
 public:
     // (see class header comment)
-    bool hasContent () const override;
+    bool hasContent() const override;
 
-    void deleteContent () override;
+    void deleteContent() override;
 
 public:
-    QList <QString> textLines () const;
-    void setTextLines (const QList <QString> &textLines);
+    QList<QString> textLines() const;
+    void setTextLines(const QList<QString> &textLines);
 
-    static QString textForTextLines (const QList <QString> &textLines);
+    static QString textForTextLines(const QList<QString> &textLines);
     // Returns textLines() as one long newline-separated string.
     // If the last text line is not empty, there is no trailing newline.
-    QString text () const;
+    QString text() const;
 
-
-//
-// Text Style
-//
-
-public:
-    kpTextStyle textStyle () const;
-    void setTextStyle (const kpTextStyle &textStyle);
-
-
-//
-// Preedit Text
-//
+    //
+    // Text Style
+    //
 
 public:
-    kpPreeditText preeditText () const;
-    void setPreeditText (const kpPreeditText &preeditText);
+    kpTextStyle textStyle() const;
+    void setTextStyle(const kpTextStyle &textStyle);
 
-//
-// Cursor
-//
-// A text cursor position is the row and column of a character in
-// textLines(), that it is to the left of.  As a result, a column value
-// of 1 character past the last character of a text line is allowed.
-//
+    //
+    // Preedit Text
+    //
+
+public:
+    kpPreeditText preeditText() const;
+    void setPreeditText(const kpPreeditText &preeditText);
+
+    //
+    // Cursor
+    //
+    // A text cursor position is the row and column of a character in
+    // textLines(), that it is to the left of.  As a result, a column value
+    // of 1 character past the last character of a text line is allowed.
+    //
 
 public:
     // If the given point is in the text area, it returns the closest
     // row/column (in textLines()) for the point.
     //
     // If the given point is not in the text area, it returns -1.
-    int closestTextRowForPoint (const QPoint &point) const;
-    int closestTextColForPoint (const QPoint &point) const;
+    int closestTextRowForPoint(const QPoint &point) const;
+    int closestTextColForPoint(const QPoint &point) const;
 
     // Given a valid row and column in textLines(), returns the top-left
     // point of where the text cursor should be rendered.
@@ -255,12 +244,11 @@ public:
     //
     // If the row and column is not inside textLines(), it returns
     // KP_INVALID_POINT.
-    QPoint pointForTextRowCol (int row, int col) const;
+    QPoint pointForTextRowCol(int row, int col) const;
 
-
-//
-// Rendering
-//
+    //
+    // Rendering
+    //
 
 private:
     void drawPreeditString(QPainter &painter, int &x, int y, const kpPreeditText &preeditText) const;
@@ -268,8 +256,7 @@ private:
 public:
     void paint(QImage *destPixmap, const QRect &docRect) const override;
 
-    void paintBorder(QImage *destPixmap, const QRect &docRect,
-                             bool selectionFinished) const override;
+    void paintBorder(QImage *destPixmap, const QRect &docRect, bool selectionFinished) const override;
 
 public:
     // Returns an image that contains the painted text (without a border).
@@ -283,12 +270,10 @@ public:
     // like stamping this text selection onto the document image (the latter
     // is achieved via kpDocument::selectionPushOntoDocument(), antialiases
     // and is more correct).
-    kpImage approximateImage () const;
-
+    kpImage approximateImage() const;
 
 private:
-    struct kpTextSelectionPrivate * const d;
+    struct kpTextSelectionPrivate *const d;
 };
 
-
-#endif  // kpTextSelection_H
+#endif // kpTextSelection_H

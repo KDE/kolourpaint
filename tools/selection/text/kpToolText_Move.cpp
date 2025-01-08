@@ -27,37 +27,32 @@
 
 #define DEBUG_KP_TOOL_TEXT 0
 
-
-#include "tools/selection/text/kpToolText.h"
 #include "kpToolTextPrivate.h"
+#include "tools/selection/text/kpToolText.h"
 
 #include <KLocalizedString>
 
 #include "views/manager/kpViewManager.h"
 
-
 // protected virtual [kpAbstractSelectionTool]
-QString kpToolText::haventBegunDrawUserMessageMove () const
+QString kpToolText::haventBegunDrawUserMessageMove() const
 {
-    return i18n ("Left drag to move text box.");
+    return i18n("Left drag to move text box.");
 }
-
 
 // protected virtual [base kpAbstractSelectionTool]
-void kpToolText::setSelectionBorderForBeginDrawMove ()
+void kpToolText::setSelectionBorderForBeginDrawMove()
 {
-    viewManager ()->setQueueUpdates ();
+    viewManager()->setQueueUpdates();
     {
-        kpAbstractSelectionTool::setSelectionBorderForBeginDrawMove ();
-        viewManager ()->setTextCursorEnabled (false);
+        kpAbstractSelectionTool::setSelectionBorderForBeginDrawMove();
+        viewManager()->setTextCursorEnabled(false);
     }
-    viewManager ()->restoreQueueUpdates ();
+    viewManager()->restoreQueueUpdates();
 }
-
 
 // protected virtual [kpAbstractSelectionTool]
-QString kpToolText::nonSmearMoveCommandName () const
+QString kpToolText::nonSmearMoveCommandName() const
 {
-    return i18n ("Text: Move Box");
+    return i18n("Text: Move Box");
 }
-

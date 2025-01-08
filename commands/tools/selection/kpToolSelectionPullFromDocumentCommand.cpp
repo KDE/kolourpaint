@@ -25,50 +25,44 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_SELECTION 0
-
 
 #include "kpToolSelectionPullFromDocumentCommand.h"
 
-#include "layers/selections/image/kpAbstractImageSelection.h"
-#include "environments/commands/kpCommandEnvironment.h"
 #include "document/kpDocument.h"
-#include "views/manager/kpViewManager.h"
+#include "environments/commands/kpCommandEnvironment.h"
 #include "kpLogCategories.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "views/manager/kpViewManager.h"
 
-
-kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
-        const kpAbstractImageSelection &originalSelBorder,
-        const kpColor &backgroundColor,
-        const QString &name,
-        kpCommandEnvironment *environ)
-    : kpAbstractSelectionContentCommand (originalSelBorder, name, environ),
-      m_backgroundColor (backgroundColor)
+kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand(const kpAbstractImageSelection &originalSelBorder,
+                                                                               const kpColor &backgroundColor,
+                                                                               const QString &name,
+                                                                               kpCommandEnvironment *environ)
+    : kpAbstractSelectionContentCommand(originalSelBorder, name, environ)
+    , m_backgroundColor(backgroundColor)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
-               << environ;
+    qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ=" << environ;
 #endif
 }
 
-kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand () = default;
-
+kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand() = default;
 
 // public virtual [base kpCommand]
-void kpToolSelectionPullFromDocumentCommand::execute ()
+void kpToolSelectionPullFromDocumentCommand::execute()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::execute()";
 #endif
 
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
-    kpViewManager *vm = viewManager ();
-    Q_ASSERT (vm);
+    kpViewManager *vm = viewManager();
+    Q_ASSERT(vm);
 
-    vm->setQueueUpdates ();
+    vm->setQueueUpdates();
     {
         //
         // Recreate border
@@ -94,47 +88,41 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
         // 2. Later calls:
         //    a) no image selection (due to deselection)
         //    b) image selection with no content, at an arbitrary location
-        Q_ASSERT (!imageSelection () || !imageSelection ()->hasContent ());
+        Q_ASSERT(!imageSelection() || !imageSelection()->hasContent());
 
-        const auto *originalImageSel = dynamic_cast <const kpAbstractImageSelection *>
-                (originalSelection ());
+        const auto *originalImageSel = dynamic_cast<const kpAbstractImageSelection *>(originalSelection());
 
-        if (originalImageSel->transparency () !=
-            environ ()->imageSelectionTransparency ())
-        {
-            environ ()->setImageSelectionTransparency (originalImageSel->transparency ());
+        if (originalImageSel->transparency() != environ()->imageSelectionTransparency()) {
+            environ()->setImageSelectionTransparency(originalImageSel->transparency());
         }
 
-        doc->setSelection (*originalSelection ());
-
+        doc->setSelection(*originalSelection());
 
         //
         // Add content
         //
 
-        doc->imageSelectionPullFromDocument (m_backgroundColor);
+        doc->imageSelectionPullFromDocument(m_backgroundColor);
     }
-    vm->restoreQueueUpdates ();
+    vm->restoreQueueUpdates();
 }
 
 // public virtual [base kpCommand]
-void kpToolSelectionPullFromDocumentCommand::unexecute ()
+void kpToolSelectionPullFromDocumentCommand::unexecute()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::unexecute()";
 #endif
 
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
     // Must have selection image content.
-    Q_ASSERT (doc->imageSelection () && doc->imageSelection ()->hasContent ());
-
+    Q_ASSERT(doc->imageSelection() && doc->imageSelection()->hasContent());
 
     // We can have faith that this is the state of the selection after
     // execute(), rather than after the user tried to throw us off by
     // simply selecting another region as to do that, a destroy command
     // must have been used.
-    doc->selectionCopyOntoDocument (false/*use opaque pixmap*/);
-    doc->imageSelection ()->deleteContent ();
+    doc->selectionCopyOntoDocument(false /*use opaque pixmap*/);
+    doc->imageSelection()->deleteContent();
 }
-

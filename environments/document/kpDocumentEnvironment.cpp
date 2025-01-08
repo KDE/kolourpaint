@@ -25,89 +25,76 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_DOCUMENT_ENVIRONMENT 0
-
 
 #include "environments/document/kpDocumentEnvironment.h"
 
 #include "kpLogCategories.h"
 
-#include "mainWindow/kpMainWindow.h"
-#include "layers/selections/kpAbstractSelection.h"
 #include "document/kpDocument.h"
 #include "layers/selections/image/kpEllipticalImageSelection.h"
 #include "layers/selections/image/kpFreeFormImageSelection.h"
 #include "layers/selections/image/kpImageSelectionTransparency.h"
 #include "layers/selections/image/kpRectangularImageSelection.h"
+#include "layers/selections/kpAbstractSelection.h"
 #include "layers/selections/text/kpTextSelection.h"
 #include "layers/selections/text/kpTextStyle.h"
+#include "mainWindow/kpMainWindow.h"
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    #include "tools/kpTool.h"
+#include "tools/kpTool.h"
 #endif
 #include "views/manager/kpViewManager.h"
 
-
-struct kpDocumentEnvironmentPrivate
-{
+struct kpDocumentEnvironmentPrivate {
 };
 
-kpDocumentEnvironment::kpDocumentEnvironment (kpMainWindow *mainWindow)
-    : kpEnvironmentBase (mainWindow),
-      d (new kpDocumentEnvironmentPrivate ())
+kpDocumentEnvironment::kpDocumentEnvironment(kpMainWindow *mainWindow)
+    : kpEnvironmentBase(mainWindow)
+    , d(new kpDocumentEnvironmentPrivate())
 {
 }
 
-kpDocumentEnvironment::~kpDocumentEnvironment ()
+kpDocumentEnvironment::~kpDocumentEnvironment()
 {
     delete d;
 }
 
-
 // public
-QWidget *kpDocumentEnvironment::dialogParent () const
+QWidget *kpDocumentEnvironment::dialogParent() const
 {
-    return mainWindow ();
+    return mainWindow();
 }
 
-
-static kpViewManager *ViewManager (kpMainWindow *mw)
+static kpViewManager *ViewManager(kpMainWindow *mw)
 {
-    return mw->viewManager ();
-}
-
-// public
-void kpDocumentEnvironment::setQueueViewUpdates () const
-{
-    ::ViewManager (mainWindow ())->setQueueUpdates ();
+    return mw->viewManager();
 }
 
 // public
-void kpDocumentEnvironment::restoreQueueViewUpdates () const
+void kpDocumentEnvironment::setQueueViewUpdates() const
 {
-    ::ViewManager (mainWindow ())->restoreQueueUpdates ();
+    ::ViewManager(mainWindow())->setQueueUpdates();
+}
+
+// public
+void kpDocumentEnvironment::restoreQueueViewUpdates() const
+{
+    ::ViewManager(mainWindow())->restoreQueueUpdates();
 }
 
 //---------------------------------------------------------------------
 
 // public
-void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &selection,
-        bool *isTextChanged) const
+void kpDocumentEnvironment::switchToCompatibleTool(const kpAbstractSelection &selection, bool *isTextChanged) const
 {
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool("
-              << &selection << ")"
-              << " mainwindow.tool="
-              << (mainWindow ()->tool () ? mainWindow ()->tool ()->objectName () : nullptr)
-              << " mainWindow.toolIsTextTool=" << mainWindow ()->toolIsTextTool ()
-              << " current selection="
-              << document ()->selection ()
-              << " new selection is text="
-              << dynamic_cast <const kpTextSelection *> (&selection);
+    qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ")"
+                               << " mainwindow.tool=" << (mainWindow()->tool() ? mainWindow()->tool()->objectName() : nullptr)
+                               << " mainWindow.toolIsTextTool=" << mainWindow()->toolIsTextTool() << " current selection=" << document()->selection()
+                               << " new selection is text=" << dynamic_cast<const kpTextSelection *>(&selection);
 #endif
 
-    *isTextChanged = (mainWindow ()->toolIsTextTool () !=
-                     (dynamic_cast <const kpTextSelection *> (&selection) != nullptr));
+    *isTextChanged = (mainWindow()->toolIsTextTool() != (dynamic_cast<const kpTextSelection *>(&selection) != nullptr));
 
     // We don't change the Selection Tool if the new selection's
     // shape is merely different to the current tool's (e.g. rectangular
@@ -121,44 +108,35 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     //    a differently shaped tool, the borders drawn after the paste would
     //    be using a new shape rather than the shape before the paste.  This
     //    could get irritating so we don't do the switch.
-    if (!mainWindow ()->toolIsASelectionTool () || *isTextChanged)
-    {
+    if (!mainWindow()->toolIsASelectionTool() || *isTextChanged) {
         // See kpDocument::setSelection() APIDoc for this assumption.
-        Q_ASSERT (!document ()->selection ());
+        Q_ASSERT(!document()->selection());
 
         // Switch to the appropriately shaped selection tool
         // _before_ we change the selection
         // (all selection tool's ::end() functions nuke the current selection)
-        if (dynamic_cast <const kpRectangularImageSelection *> (&selection))
-        {
-        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
+        if (dynamic_cast<const kpRectangularImageSelection *>(&selection)) {
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to rect selection tool";
-        #endif
-            mainWindow ()->slotToolRectSelection ();
-        }
-        else if (dynamic_cast <const kpEllipticalImageSelection *> (&selection))
-        {
-        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
+#endif
+            mainWindow()->slotToolRectSelection();
+        } else if (dynamic_cast<const kpEllipticalImageSelection *>(&selection)) {
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to elliptical selection tool";
-        #endif
-            mainWindow ()->slotToolEllipticalSelection ();
-        }
-        else if (dynamic_cast <const kpFreeFormImageSelection *> (&selection))
-        {
-        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
+#endif
+            mainWindow()->slotToolEllipticalSelection();
+        } else if (dynamic_cast<const kpFreeFormImageSelection *>(&selection)) {
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to free form selection tool";
-        #endif
-            mainWindow ()->slotToolFreeFormSelection ();
-        }
-        else if (dynamic_cast <const kpTextSelection *> (&selection))
-        {
-        #if DEBUG_KP_DOCUMENT_ENVIRONMENT
+#endif
+            mainWindow()->slotToolFreeFormSelection();
+        } else if (dynamic_cast<const kpTextSelection *>(&selection)) {
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
             qCDebug(kpLogEnvironments) << "\tswitch to text selection tool";
-        #endif
-            mainWindow ()->slotToolText ();
-        }
-        else {
-            Q_ASSERT (!"Unknown selection type");
+#endif
+            mainWindow()->slotToolText();
+        } else {
+            Q_ASSERT(!"Unknown selection type");
         }
     }
 
@@ -170,41 +148,34 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
 //---------------------------------------------------------------------
 
 // public
-void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &selection) const
+void kpDocumentEnvironment::assertMatchingUIState(const kpAbstractSelection &selection) const
 {
     // Trap and try to recover from bugs.
     // TODO: See kpDocument::setSelection() API comment and determine best fix.
-    const auto *imageSelection = dynamic_cast <const kpAbstractImageSelection *> (&selection);
-    const auto *textSelection = dynamic_cast <const kpTextSelection *> (&selection);
+    const auto *imageSelection = dynamic_cast<const kpAbstractImageSelection *>(&selection);
+    const auto *textSelection = dynamic_cast<const kpTextSelection *>(&selection);
 
-    if (imageSelection)
-    {
-        if (imageSelection->transparency () != mainWindow ()->imageSelectionTransparency ())
-        {
+    if (imageSelection) {
+        if (imageSelection->transparency() != mainWindow()->imageSelectionTransparency()) {
             qCCritical(kpLogEnvironments) << "kpDocument::setSelection() sel's transparency differs "
-                          "from mainWindow's transparency - setting mainWindow's transparency "
-                          "to sel";
+                                             "from mainWindow's transparency - setting mainWindow's transparency "
+                                             "to sel";
 
-            qCCritical(kpLogEnvironments) << "\tisOpaque: sel=" << imageSelection->transparency ().isOpaque ()
-                       << " mainWindow=" << mainWindow ()->imageSelectionTransparency ().isOpaque ();
+            qCCritical(kpLogEnvironments) << "\tisOpaque: sel=" << imageSelection->transparency().isOpaque()
+                                          << " mainWindow=" << mainWindow()->imageSelectionTransparency().isOpaque();
 
-            mainWindow ()->setImageSelectionTransparency (imageSelection->transparency ());
+            mainWindow()->setImageSelectionTransparency(imageSelection->transparency());
         }
-    }
-    else if (textSelection)
-    {
-        if (textSelection->textStyle () != mainWindow ()->textStyle ())
-        {
+    } else if (textSelection) {
+        if (textSelection->textStyle() != mainWindow()->textStyle()) {
             qCCritical(kpLogEnvironments) << "kpDocument::setSelection() sel's textStyle differs "
-                          "from mainWindow's textStyle - setting mainWindow's textStyle "
-                          "to sel";
+                                             "from mainWindow's textStyle - setting mainWindow's textStyle "
+                                             "to sel";
 
-            mainWindow ()->setTextStyle (textSelection->textStyle ());
+            mainWindow()->setTextStyle(textSelection->textStyle());
         }
-    }
-    else
-    {
-        Q_ASSERT (!"Unknown selection type");
+    } else {
+        Q_ASSERT(!"Unknown selection type");
     }
 }
 

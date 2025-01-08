@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpAbstractSelectionContentCommand_H
 #define kpAbstractSelectionContentCommand_H
 
-
 #include "commands/kpNamedCommand.h"
-
 
 // Converts a selection border to a selection with content.
 // This must be executed before any manipulations can be made
@@ -46,26 +43,22 @@
 // resizing).
 class kpAbstractSelectionContentCommand : public kpNamedCommand
 {
-// LOREFACTOR: Pull up more methods into here?  Looking at the code, not
-//             much could be dragged up without unnecessarily complicated
-//             abstraction.
+    // LOREFACTOR: Pull up more methods into here?  Looking at the code, not
+    //             much could be dragged up without unnecessarily complicated
+    //             abstraction.
 public:
     // <originalSelBorder> must be a border i.e. have no content.
-    kpAbstractSelectionContentCommand (
-        const kpAbstractSelection &originalSelBorder,
-        const QString &name,
-        kpCommandEnvironment *environ);
-    ~kpAbstractSelectionContentCommand () override;
+    kpAbstractSelectionContentCommand(const kpAbstractSelection &originalSelBorder, const QString &name, kpCommandEnvironment *environ);
+    ~kpAbstractSelectionContentCommand() override;
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
     // Note: Returned pointer is only valid for as long as this command is
     //       alive.
-    const kpAbstractSelection *originalSelection () const;
+    const kpAbstractSelection *originalSelection() const;
 
 private:
-    struct kpAbstractSelectionContentCommandPrivate * const d;
+    struct kpAbstractSelectionContentCommandPrivate *const d;
 };
 
-
-#endif  // kpAbstractSelectionContentCommand_H
+#endif // kpAbstractSelectionContentCommand_H

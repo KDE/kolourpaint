@@ -25,48 +25,42 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolSelectionEnvironment_H
 #define kpToolSelectionEnvironment_H
 
-
 #include "environments/tools/kpToolEnvironment.h"
-
 
 class QMenu;
 
 class kpImageSelectionTransparency;
 class kpTextStyle;
 
-
 // Facade for kpToolSelection clients.
 class kpToolSelectionEnvironment : public kpToolEnvironment
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // Note: Our interface must never publicly leak <mainWindow> or any other
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
-    explicit kpToolSelectionEnvironment (kpMainWindow *mainWindow);
-    ~kpToolSelectionEnvironment () override;
+    explicit kpToolSelectionEnvironment(kpMainWindow *mainWindow);
+    ~kpToolSelectionEnvironment() override;
 
-    kpImageSelectionTransparency imageSelectionTransparency () const;
-    int settingImageSelectionTransparency () const;
+    kpImageSelectionTransparency imageSelectionTransparency() const;
+    int settingImageSelectionTransparency() const;
 
-    void deselectSelection () const;
+    void deselectSelection() const;
 
-    QMenu *selectionToolRMBMenu () const;
+    QMenu *selectionToolRMBMenu() const;
 
-    void enableTextToolBarActions (bool enable = true) const;
+    void enableTextToolBarActions(bool enable = true) const;
 
-    kpTextStyle textStyle () const;
-    int settingTextStyle () const;
+    kpTextStyle textStyle() const;
+    int settingTextStyle() const;
 
 private:
-    struct kpToolSelectionEnvironmentPrivate * const d;
+    struct kpToolSelectionEnvironmentPrivate *const d;
 };
 
-
-#endif  // kpToolSelectionEnvironment_H
-
+#endif // kpToolSelectionEnvironment_H

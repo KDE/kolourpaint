@@ -25,30 +25,27 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_PIXMAP_FX 0
-
 
 #include "kpPixmapFX.h"
 
 #include <QtMath>
 
-#include <QPainter>
 #include <QImage>
+#include <QPainter>
 #include <QPoint>
 #include <QRect>
 
 #include "kpLogCategories.h"
 
-#include "layers/selections/kpAbstractSelection.h"
 #include "imagelib/kpColor.h"
 #include "kpDefs.h"
+#include "layers/selections/kpAbstractSelection.h"
 
 //---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::resize (QImage *destPtr, int w, int h,
-                         const kpColor &backgroundColor)
+void kpPixmapFX::resize(QImage *destPtr, int w, int h, const kpColor &backgroundColor)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
     qCDebug(kpLogPixmapfx) << "kpPixmapFX::resize()";
@@ -58,18 +55,18 @@ void kpPixmapFX::resize (QImage *destPtr, int w, int h,
         return;
     }
 
-    const int oldWidth = destPtr->width ();
-    const int oldHeight = destPtr->height ();
+    const int oldWidth = destPtr->width();
+    const int oldHeight = destPtr->height();
 
     if (w == oldWidth && h == oldHeight) {
         return;
     }
 
-    QImage newImage (w, h, QImage::Format_ARGB32_Premultiplied);
+    QImage newImage(w, h, QImage::Format_ARGB32_Premultiplied);
 
     // Would have new undefined areas?
     if (w > oldWidth || h > oldHeight) {
-        newImage.fill (backgroundColor.toQRgb ());
+        newImage.fill(backgroundColor.toQRgb());
     }
 
     // Copy over old pixmap.
@@ -85,83 +82,76 @@ void kpPixmapFX::resize (QImage *destPtr, int w, int h,
 //---------------------------------------------------------------------
 
 // public static
-QImage kpPixmapFX::resize (const QImage &image, int w, int h,
-                           const kpColor &backgroundColor)
+QImage kpPixmapFX::resize(const QImage &image, int w, int h, const kpColor &backgroundColor)
 {
     QImage ret = image;
-    kpPixmapFX::resize (&ret, w, h, backgroundColor);
+    kpPixmapFX::resize(&ret, w, h, backgroundColor);
     return ret;
 }
 
 //---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::scale (QImage *destPtr, int w, int h, bool pretty)
+void kpPixmapFX::scale(QImage *destPtr, int w, int h, bool pretty)
 {
     if (!destPtr) {
         return;
     }
 
-    *destPtr = kpPixmapFX::scale (*destPtr, w, h, pretty);
+    *destPtr = kpPixmapFX::scale(*destPtr, w, h, pretty);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-QImage kpPixmapFX::scale (const QImage &image, int w, int h, bool pretty)
+QImage kpPixmapFX::scale(const QImage &image, int w, int h, bool pretty)
 {
 #if DEBUG_KP_PIXMAP_FX && 0
-    qCDebug(kpLogPixmapfx) << "kpPixmapFX::scale(oldRect=" << image.rect ()
-               << ",w=" << w
-               << ",h=" << h
-               << ",pretty=" << pretty
-               << ")";
+    qCDebug(kpLogPixmapfx) << "kpPixmapFX::scale(oldRect=" << image.rect() << ",w=" << w << ",h=" << h << ",pretty=" << pretty << ")";
 #endif
 
-    if (w == image.width () && h == image.height ()) {
+    if (w == image.width() && h == image.height()) {
         return image;
     }
 
-    return image.scaled(w, h, Qt::IgnoreAspectRatio,
-                        pretty ? Qt::SmoothTransformation : Qt::FastTransformation);
+    return image.scaled(w, h, Qt::IgnoreAspectRatio, pretty ? Qt::SmoothTransformation : Qt::FastTransformation);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-const double kpPixmapFX::AngleInDegreesEpsilon =
-    qRadiansToDegrees (std::tan (1.0 / 10000.0))
-        / (2.0/*max error allowed*/ * 2.0/*for good measure*/);
+const double kpPixmapFX::AngleInDegreesEpsilon = qRadiansToDegrees(std::tan(1.0 / 10000.0)) / (2.0 /*max error allowed*/ * 2.0 /*for good measure*/);
 
-
-static void MatrixDebug (const QString& matrixName, const QTransform &matrix,
-        int srcPixmapWidth = -1, int srcPixmapHeight = -1)
+static void MatrixDebug(const QString &matrixName, const QTransform &matrix, int srcPixmapWidth = -1, int srcPixmapHeight = -1)
 {
 #if DEBUG_KP_PIXMAP_FX
     const int w = srcPixmapWidth, h = srcPixmapHeight;
 
     qCDebug(kpLogPixmapfx) << matrixName << "=" << matrix;
     // Sometimes this precision lets us see unexpected rounding errors.
-    fprintf (stderr, "m11=%.24f m12=%.24f m21=%.24f m22=%.24f dx=%.24f dy=%.24f\n",
-             matrix.m11 (), matrix.m12 (),
-             matrix.m21 (), matrix.m22 (),
-             matrix.dx (), matrix.dy ());
-    if (w > 0 && h > 0)
-    {
-        qCDebug(kpLogPixmapfx) << "(0,0) ->" << matrix.map (QPoint (0, 0));
-        qCDebug(kpLogPixmapfx) << "(w-1,0) ->" << matrix.map (QPoint (w - 1, 0));
-        qCDebug(kpLogPixmapfx) << "(0,h-1) ->" << matrix.map (QPoint (0, h - 1));
-        qCDebug(kpLogPixmapfx) << "(w-1,h-1) ->" << matrix.map (QPoint (w - 1, h - 1));
+    fprintf(stderr,
+            "m11=%.24f m12=%.24f m21=%.24f m22=%.24f dx=%.24f dy=%.24f\n",
+            matrix.m11(),
+            matrix.m12(),
+            matrix.m21(),
+            matrix.m22(),
+            matrix.dx(),
+            matrix.dy());
+    if (w > 0 && h > 0) {
+        qCDebug(kpLogPixmapfx) << "(0,0) ->" << matrix.map(QPoint(0, 0));
+        qCDebug(kpLogPixmapfx) << "(w-1,0) ->" << matrix.map(QPoint(w - 1, 0));
+        qCDebug(kpLogPixmapfx) << "(0,h-1) ->" << matrix.map(QPoint(0, h - 1));
+        qCDebug(kpLogPixmapfx) << "(w-1,h-1) ->" << matrix.map(QPoint(w - 1, h - 1));
     }
 
 #else
 
-    Q_UNUSED (matrixName);
-    Q_UNUSED (matrix);
-    Q_UNUSED (srcPixmapWidth);
-    Q_UNUSED (srcPixmapHeight);
+    Q_UNUSED(matrixName);
+    Q_UNUSED(matrix);
+    Q_UNUSED(srcPixmapWidth);
+    Q_UNUSED(srcPixmapHeight);
 
-#endif  // DEBUG_KP_PIXMAP_FX
+#endif // DEBUG_KP_PIXMAP_FX
 }
 
 //---------------------------------------------------------------------
@@ -180,34 +170,27 @@ static void MatrixDebug (const QString& matrixName, const QTransform &matrix,
 //       the output is the same as QPixmap::trueMatrix(): <dy> is one off
 //       (dy=27 instead of 26).
 //       SYNC: I bet this is a Qt4 bug.
-static QTransform MatrixWithZeroOrigin (const QTransform &matrix, int width, int height)
+static QTransform MatrixWithZeroOrigin(const QTransform &matrix, int width, int height)
 {
 #if DEBUG_KP_PIXMAP_FX
     qCDebug(kpLogPixmapfx) << "matrixWithZeroOrigin(w=" << width << ",h=" << height << ")";
-    qCDebug(kpLogPixmapfx) << "\tmatrix: m11=" << matrix.m11 ()
-               << "m12=" << matrix.m12 ()
-               << "m21=" << matrix.m21 ()
-               << "m22=" << matrix.m22 ()
-               << "dx=" << matrix.dx ()
-               << "dy=" << matrix.dy ();
+    qCDebug(kpLogPixmapfx) << "\tmatrix: m11=" << matrix.m11() << "m12=" << matrix.m12() << "m21=" << matrix.m21() << "m22=" << matrix.m22()
+                           << "dx=" << matrix.dx() << "dy=" << matrix.dy();
 #endif
 
-    QRect mappedRect = matrix.mapRect (QRect (0, 0, width, height));
+    QRect mappedRect = matrix.mapRect(QRect(0, 0, width, height));
 #if DEBUG_KP_PIXMAP_FX
     qCDebug(kpLogPixmapfx) << "\tmappedRect=" << mappedRect;
 #endif
 
-    QTransform translatedMatrix (
-        matrix.m11 (), matrix.m12 (),
-        matrix.m21 (), matrix.m22 (),
-        matrix.dx () - mappedRect.left (), matrix.dy () - mappedRect.top ());
+    QTransform translatedMatrix(matrix.m11(), matrix.m12(), matrix.m21(), matrix.m22(), matrix.dx() - mappedRect.left(), matrix.dy() - mappedRect.top());
 
 #if DEBUG_KP_PIXMAP_FX
     qCDebug(kpLogPixmapfx) << "\treturning" << translatedMatrix;
-    qCDebug(kpLogPixmapfx) << "(0,0) ->" << translatedMatrix.map (QPoint (0, 0));
-    qCDebug(kpLogPixmapfx) << "(w-1,0) ->" << translatedMatrix.map (QPoint (width - 1, 0));
-    qCDebug(kpLogPixmapfx) << "(0,h-1) ->" << translatedMatrix.map (QPoint (0, height - 1));
-    qCDebug(kpLogPixmapfx) << "(w-1,h-1) ->" << translatedMatrix.map (QPoint (width - 1, height - 1));
+    qCDebug(kpLogPixmapfx) << "(0,0) ->" << translatedMatrix.map(QPoint(0, 0));
+    qCDebug(kpLogPixmapfx) << "(w-1,0) ->" << translatedMatrix.map(QPoint(width - 1, 0));
+    qCDebug(kpLogPixmapfx) << "(0,h-1) ->" << translatedMatrix.map(QPoint(0, height - 1));
+    qCDebug(kpLogPixmapfx) << "(w-1,h-1) ->" << translatedMatrix.map(QPoint(width - 1, height - 1));
 #endif
 
     return translatedMatrix;
@@ -225,10 +208,10 @@ static double TrueMatrixEpsilon = 0.000001;
 // that follow.  But it was worth a try and might still help us given the
 // sometimes excessive aliasing QPainter::draw{Pixmap,Image}() gives us, when
 // QPainter::SmoothPixmapTransform is disabled.
-static double TrueMatrixFixInts (double x)
+static double TrueMatrixFixInts(double x)
 {
-    if (std::fabs (x - qRound (x)) < TrueMatrixEpsilon) {
-        return qRound (x);
+    if (std::fabs(x - qRound(x)) < TrueMatrixEpsilon) {
+        return qRound(x);
     }
 
     return x;
@@ -236,21 +219,20 @@ static double TrueMatrixFixInts (double x)
 
 //---------------------------------------------------------------------
 
-static QTransform TrueMatrix (const QTransform &matrix, int srcPixmapWidth, int srcPixmapHeight)
+static QTransform TrueMatrix(const QTransform &matrix, int srcPixmapWidth, int srcPixmapHeight)
 {
-    ::MatrixDebug (QStringLiteral("TrueMatrix(): org"), matrix);
+    ::MatrixDebug(QStringLiteral("TrueMatrix(): org"), matrix);
 
-    const QTransform truMat = QPixmap::trueMatrix (matrix, srcPixmapWidth, srcPixmapHeight);
-    ::MatrixDebug (QStringLiteral("TrueMatrix(): passed through QPixmap::trueMatrix()"), truMat);
+    const QTransform truMat = QPixmap::trueMatrix(matrix, srcPixmapWidth, srcPixmapHeight);
+    ::MatrixDebug(QStringLiteral("TrueMatrix(): passed through QPixmap::trueMatrix()"), truMat);
 
-    const QTransform retMat (
-        ::TrueMatrixFixInts (truMat.m11 ()),
-        ::TrueMatrixFixInts (truMat.m12 ()),
-        ::TrueMatrixFixInts (truMat.m21 ()),
-        ::TrueMatrixFixInts (truMat.m22 ()),
-        ::TrueMatrixFixInts (truMat.dx ()),
-        ::TrueMatrixFixInts (truMat.dy ()));
-    ::MatrixDebug (QStringLiteral("TrueMatrix(): fixed ints"), retMat);
+    const QTransform retMat(::TrueMatrixFixInts(truMat.m11()),
+                            ::TrueMatrixFixInts(truMat.m12()),
+                            ::TrueMatrixFixInts(truMat.m21()),
+                            ::TrueMatrixFixInts(truMat.m22()),
+                            ::TrueMatrixFixInts(truMat.dx()),
+                            ::TrueMatrixFixInts(truMat.dy()));
+    ::MatrixDebug(QStringLiteral("TrueMatrix(): fixed ints"), retMat);
 
     return retMat;
 }
@@ -268,106 +250,76 @@ static QTransform TrueMatrix (const QTransform &matrix, int srcPixmapWidth, int 
 //
 // Use <targetWidth> and <targetHeight> to specify the intended output size
 // of the pixmap.  -1 if don't care.
-static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatrix_,
-        const kpColor &backgroundColor,
-        int targetWidth, int targetHeight)
+static QImage TransformPixmap(const QImage &pm, const QTransform &transformMatrix_, const kpColor &backgroundColor, int targetWidth, int targetHeight)
 {
     QTransform transformMatrix = transformMatrix_;
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    qCDebug(kpLogPixmapfx) << "kppixmapfx.cpp: TransformPixmap(pm.size=" << pm.size ()
-               << ",targetWidth=" << targetWidth
-               << ",targetHeight=" << targetHeight
-               << ")";
+    qCDebug(kpLogPixmapfx) << "kppixmapfx.cpp: TransformPixmap(pm.size=" << pm.size() << ",targetWidth=" << targetWidth << ",targetHeight=" << targetHeight
+                           << ")";
 #endif
 
-    QRect newRect = transformMatrix.mapRect (pm.rect ());
+    QRect newRect = transformMatrix.mapRect(pm.rect());
 #if DEBUG_KP_PIXMAP_FX && 1
     qCDebug(kpLogPixmapfx) << "\tmappedRect=" << newRect;
 
 #endif
 
     QTransform scaleMatrix;
-    if (targetWidth > 0 && targetWidth != newRect.width ())
-    {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    if (targetWidth > 0 && targetWidth != newRect.width()) {
+#if DEBUG_KP_PIXMAP_FX && 1
         qCDebug(kpLogPixmapfx) << "\tadjusting for targetWidth";
-    #endif
-        scaleMatrix.scale (double (targetWidth) / double (newRect.width ()), 1);
+#endif
+        scaleMatrix.scale(double(targetWidth) / double(newRect.width()), 1);
     }
 
-    if (targetHeight > 0 && targetHeight != newRect.height ())
-    {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    if (targetHeight > 0 && targetHeight != newRect.height()) {
+#if DEBUG_KP_PIXMAP_FX && 1
         qCDebug(kpLogPixmapfx) << "\tadjusting for targetHeight";
-    #endif
-        scaleMatrix.scale (1, double (targetHeight) / double (newRect.height ()));
+#endif
+        scaleMatrix.scale(1, double(targetHeight) / double(newRect.height()));
     }
 
-    if (!scaleMatrix.isIdentity ())
-    {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    if (!scaleMatrix.isIdentity()) {
+#if DEBUG_KP_PIXMAP_FX && 1
         // TODO: What is going on here???  Why isn't matrix * working properly?
         QTransform wrongMatrix = transformMatrix * scaleMatrix;
         QTransform oldHat = transformMatrix;
 
-        if (targetWidth > 0 && targetWidth != newRect.width ()) {
-            oldHat.scale (double (targetWidth) / double (newRect.width ()), 1);
+        if (targetWidth > 0 && targetWidth != newRect.width()) {
+            oldHat.scale(double(targetWidth) / double(newRect.width()), 1);
         }
-        if (targetHeight > 0 && targetHeight != newRect.height ()) {
-            oldHat.scale (1, double (targetHeight) / double (newRect.height ()));
+        if (targetHeight > 0 && targetHeight != newRect.height()) {
+            oldHat.scale(1, double(targetHeight) / double(newRect.height()));
         }
 
         QTransform altHat = transformMatrix;
 
-        altHat.scale ((targetWidth > 0 && targetWidth != newRect.width ()) ? double (targetWidth) / double (newRect.width ()) : 1,
-                      (targetHeight > 0 && targetHeight != newRect.height ()) ? double (targetHeight) / double (newRect.height ()) : 1);
+        altHat.scale((targetWidth > 0 && targetWidth != newRect.width()) ? double(targetWidth) / double(newRect.width()) : 1,
+                     (targetHeight > 0 && targetHeight != newRect.height()) ? double(targetHeight) / double(newRect.height()) : 1);
         QTransform correctMatrix = scaleMatrix * transformMatrix;
 
-        qCDebug(kpLogPixmapfx) << "\tsupposedlyWrongMatrix: m11=" << wrongMatrix.m11 ()  // <<<---- this is the correct matrix???
-                   << " m12=" << wrongMatrix.m12 ()
-                   << " m21=" << wrongMatrix.m21 ()
-                   << " m22=" << wrongMatrix.m22 ()
-                   << " dx=" << wrongMatrix.dx ()
-                   << " dy=" << wrongMatrix.dy ()
-                   << " rect=" << wrongMatrix.mapRect (pm.rect ())
-                   << "\n"
-                   << "\ti_used_to_use_thisMatrix: m11=" << oldHat.m11 ()
-                   << " m12=" << oldHat.m12 ()
-                   << " m21=" << oldHat.m21 ()
-                   << " m22=" << oldHat.m22 ()
-                   << " dx=" << oldHat.dx ()
-                   << " dy=" << oldHat.dy ()
-                   << " rect=" << oldHat.mapRect (pm.rect ())
-                   << "\n"
-                   << "\tabove but scaled at the same time: m11=" << altHat.m11 ()
-                   << " m12=" << altHat.m12 ()
-                   << " m21=" << altHat.m21 ()
-                   << " m22=" << altHat.m22 ()
-                   << " dx=" << altHat.dx ()
-                   << " dy=" << altHat.dy ()
-                   << " rect=" << altHat.mapRect (pm.rect ())
-                   << "\n"
-                   << "\tsupposedlyCorrectMatrix: m11=" << correctMatrix.m11 ()
-                   << " m12=" << correctMatrix.m12 ()
-                   << " m21=" << correctMatrix.m21 ()
-                   << " m22=" << correctMatrix.m22 ()
-                   << " dx=" << correctMatrix.dx ()
-                   << " dy=" << correctMatrix.dy ()
-                   << " rect=" << correctMatrix.mapRect (pm.rect ());
-    #endif
+        qCDebug(kpLogPixmapfx) << "\tsupposedlyWrongMatrix: m11=" << wrongMatrix.m11() // <<<---- this is the correct matrix???
+                               << " m12=" << wrongMatrix.m12() << " m21=" << wrongMatrix.m21() << " m22=" << wrongMatrix.m22() << " dx=" << wrongMatrix.dx()
+                               << " dy=" << wrongMatrix.dy() << " rect=" << wrongMatrix.mapRect(pm.rect()) << "\n"
+                               << "\ti_used_to_use_thisMatrix: m11=" << oldHat.m11() << " m12=" << oldHat.m12() << " m21=" << oldHat.m21()
+                               << " m22=" << oldHat.m22() << " dx=" << oldHat.dx() << " dy=" << oldHat.dy() << " rect=" << oldHat.mapRect(pm.rect()) << "\n"
+                               << "\tabove but scaled at the same time: m11=" << altHat.m11() << " m12=" << altHat.m12() << " m21=" << altHat.m21()
+                               << " m22=" << altHat.m22() << " dx=" << altHat.dx() << " dy=" << altHat.dy() << " rect=" << altHat.mapRect(pm.rect()) << "\n"
+                               << "\tsupposedlyCorrectMatrix: m11=" << correctMatrix.m11() << " m12=" << correctMatrix.m12() << " m21=" << correctMatrix.m21()
+                               << " m22=" << correctMatrix.m22() << " dx=" << correctMatrix.dx() << " dy=" << correctMatrix.dy()
+                               << " rect=" << correctMatrix.mapRect(pm.rect());
+#endif
 
         transformMatrix = transformMatrix * scaleMatrix;
 
-        newRect = transformMatrix.mapRect (pm.rect ());
-    #if DEBUG_KP_PIXMAP_FX && 1
+        newRect = transformMatrix.mapRect(pm.rect());
+#if DEBUG_KP_PIXMAP_FX && 1
         qCDebug(kpLogPixmapfx) << "\tnewRect after targetWidth,targetHeight adjust=" << newRect;
-    #endif
+#endif
     }
 
-
-    ::MatrixDebug (QStringLiteral("TransformPixmap(): before trueMatrix"), transformMatrix,
-                   pm.width (), pm.height ());
+    ::MatrixDebug(QStringLiteral("TransformPixmap(): before trueMatrix"), transformMatrix, pm.width(), pm.height());
 #if DEBUG_KP_PIXMAP_FX && 1
     QMatrix oldMatrix = transformMatrix;
 #endif
@@ -391,44 +343,28 @@ static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatr
     //         Also, if you skew a rectangular selection, the skewed selection
     //         border does not line up with the skewed image data.
     // TODO: do we need to pass <newRect> through this new matrix?
-    transformMatrix = ::TrueMatrix (transformMatrix,
-        pm.width (), pm.height ());
+    transformMatrix = ::TrueMatrix(transformMatrix, pm.width(), pm.height());
 
 #if DEBUG_KP_PIXMAP_FX && 1
     qCDebug(kpLogPixmapfx) << "trueMatrix changed matrix?" << (oldMatrix == transformMatrix);
 #endif
-    ::MatrixDebug (QStringLiteral("TransformPixmap(): after trueMatrix"), transformMatrix,
-                   pm.width (), pm.height ());
+    ::MatrixDebug(QStringLiteral("TransformPixmap(): after trueMatrix"), transformMatrix, pm.width(), pm.height());
 
+    QImage newQImage(targetWidth > 0 ? targetWidth : newRect.width(), targetHeight > 0 ? targetHeight : newRect.height(), QImage::Format_ARGB32_Premultiplied);
 
-    QImage newQImage (targetWidth > 0 ? targetWidth : newRect.width (),
-                      targetHeight > 0 ? targetHeight : newRect.height (),
-                      QImage::Format_ARGB32_Premultiplied);
-
-    if ((targetWidth > 0 && targetWidth != newRect.width ()) ||
-        (targetHeight > 0 && targetHeight != newRect.height ()))
-    {
-    #if DEBUG_KP_PIXMAP_FX && 1
-        qCDebug(kpLogPixmapfx) << "kppixmapfx.cpp: TransformPixmap(pm.size=" << pm.size ()
-                   << ",targetWidth=" << targetWidth
-                   << ",targetHeight=" << targetHeight
-                   << ") newRect=" << newRect
-                   << " (you are a victim of rounding error)";
-    #endif
+    if ((targetWidth > 0 && targetWidth != newRect.width()) || (targetHeight > 0 && targetHeight != newRect.height())) {
+#if DEBUG_KP_PIXMAP_FX && 1
+        qCDebug(kpLogPixmapfx) << "kppixmapfx.cpp: TransformPixmap(pm.size=" << pm.size() << ",targetWidth=" << targetWidth << ",targetHeight=" << targetHeight
+                               << ") newRect=" << newRect << " (you are a victim of rounding error)";
+#endif
     }
 
-
 #if DEBUG_KP_PIXMAP_FX && 0
-    qCDebug(kpLogPixmapfx) << "\ttranslate top=" << painter.xForm (QPoint (0, 0));
-    qCDebug(kpLogPixmapfx) << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
-               << " m12=" << painter.worldMatrix ().m12 ()
-               << " m21=" << painter.worldMatrix ().m21 ()
-               << " m22=" << painter.worldMatrix ().m22 ()
-               << " dx=" << painter.worldMatrix ().dx ()
-               << " dy=" << painter.worldMatrix ().dy ()
-               << endl;
+    qCDebug(kpLogPixmapfx) << "\ttranslate top=" << painter.xForm(QPoint(0, 0));
+    qCDebug(kpLogPixmapfx) << "\tmatrix: m11=" << painter.worldMatrix().m11() << " m12=" << painter.worldMatrix().m12()
+                           << " m21=" << painter.worldMatrix().m21() << " m22=" << painter.worldMatrix().m22() << " dx=" << painter.worldMatrix().dx()
+                           << " dy=" << painter.worldMatrix().dy() << endl;
 #endif
-
 
     // Note: Do _not_ use "p.setRenderHints (QPainter::SmoothPixmapTransform);"
     //       as the user does not want their image to get blurier every
@@ -437,21 +373,20 @@ static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatr
     //       pixel-based program, we generally like to preserve RGB values
     //       and avoid unnecessary blurs -- in the worst case, we'd rather
     //       drop pixels, than blur.
-    QPainter p (&newQImage);
+    QPainter p(&newQImage);
     {
         // Make sure transparent pixels are drawn into the destination image.
-        p.setCompositionMode (QPainter::CompositionMode_Source);
+        p.setCompositionMode(QPainter::CompositionMode_Source);
 
         // Fill the entire new image with the background color.
-        if (backgroundColor.isValid ())
-        {
-            p.fillRect (newQImage.rect (), backgroundColor.toQColor ());
+        if (backgroundColor.isValid()) {
+            p.fillRect(newQImage.rect(), backgroundColor.toQColor());
         }
 
-        p.setWorldTransform (transformMatrix);
-        p.drawImage (QPoint (0, 0), pm);
+        p.setWorldTransform(transformMatrix);
+        p.drawImage(QPoint(0, 0), pm);
     }
-    p.end ();
+    p.end();
 
 #if DEBUG_KP_PIXMAP_FX && 1
     qCDebug(kpLogPixmapfx) << "Done";
@@ -463,14 +398,11 @@ static QImage TransformPixmap (const QImage &pm, const QTransform &transformMatr
 //---------------------------------------------------------------------
 
 // public static
-QTransform kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
+QTransform kpPixmapFX::skewMatrix(int width, int height, double hangle, double vangle)
 {
-    if (std::fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
-        std::fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
-    {
-        return  {};
+    if (std::fabs(hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon && std::fabs(vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon) {
+        return {};
     }
-
 
     /* Diagram for completeness :)
      *
@@ -500,107 +432,87 @@ QTransform kpPixmapFX::skewMatrix (int width, int height, double hangle, double 
      *
      */
 
-    //QTransform matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
-    // I think this is clearer than above :)
+    // QTransform matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
+    //  I think this is clearer than above :)
     QTransform matrix;
-    matrix.shear (std::tan (qDegreesToRadians (hangle)),
-                  std::tan (qDegreesToRadians (vangle)));
+    matrix.shear(std::tan(qDegreesToRadians(hangle)), std::tan(qDegreesToRadians(vangle)));
 
-    return ::MatrixWithZeroOrigin (matrix, width, height);
+    return ::MatrixWithZeroOrigin(matrix, width, height);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-QTransform kpPixmapFX::skewMatrix (const QImage &pixmap, double hangle, double vangle)
+QTransform kpPixmapFX::skewMatrix(const QImage &pixmap, double hangle, double vangle)
 {
-    return kpPixmapFX::skewMatrix (pixmap.width (), pixmap.height (), hangle, vangle);
+    return kpPixmapFX::skewMatrix(pixmap.width(), pixmap.height(), hangle, vangle);
 }
 
 //---------------------------------------------------------------------
 
-
 // public static
-void kpPixmapFX::skew (QImage *destPtr, double hangle, double vangle,
-                       const kpColor &backgroundColor,
-                       int targetWidth, int targetHeight)
+void kpPixmapFX::skew(QImage *destPtr, double hangle, double vangle, const kpColor &backgroundColor, int targetWidth, int targetHeight)
 {
     if (!destPtr) {
         return;
     }
 
-    *destPtr = kpPixmapFX::skew (*destPtr, hangle, vangle,
-                                       backgroundColor,
-                                       targetWidth, targetHeight);
+    *destPtr = kpPixmapFX::skew(*destPtr, hangle, vangle, backgroundColor, targetWidth, targetHeight);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-QImage kpPixmapFX::skew (const QImage &pm, double hangle, double vangle,
-                          const kpColor &backgroundColor,
-                          int targetWidth, int targetHeight)
+QImage kpPixmapFX::skew(const QImage &pm, double hangle, double vangle, const kpColor &backgroundColor, int targetWidth, int targetHeight)
 {
 #if DEBUG_KP_PIXMAP_FX
-    qCDebug(kpLogPixmapfx) << "kpPixmapFX::skew() pm.width=" << pm.width ()
-               << " pm.height=" << pm.height ()
-               << " hangle=" << hangle
-               << " vangle=" << vangle
-               << " targetWidth=" << targetWidth
-               << " targetHeight=" << targetHeight;
+    qCDebug(kpLogPixmapfx) << "kpPixmapFX::skew() pm.width=" << pm.width() << " pm.height=" << pm.height() << " hangle=" << hangle << " vangle=" << vangle
+                           << " targetWidth=" << targetWidth << " targetHeight=" << targetHeight;
 #endif
 
-    if (std::fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
-        std::fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
-        (targetWidth <= 0 && targetHeight <= 0)/*don't want to scale?*/)
-    {
+    if (std::fabs(hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon && std::fabs(vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon
+        && (targetWidth <= 0 && targetHeight <= 0) /*don't want to scale?*/) {
         return pm;
     }
 
-    if (std::fabs (hangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon ||
-        std::fabs (vangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon)
-    {
+    if (std::fabs(hangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon || std::fabs(vangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon) {
         qCCritical(kpLogPixmapfx) << "kpPixmapFX::skew() passed hangle and/or vangle out of range (-90 < x < 90)";
         return pm;
     }
 
+    QTransform matrix = skewMatrix(pm, hangle, vangle);
 
-    QTransform matrix = skewMatrix (pm, hangle, vangle);
-
-    return ::TransformPixmap (pm, matrix, backgroundColor, targetWidth, targetHeight);
+    return ::TransformPixmap(pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
 //---------------------------------------------------------------------
 
-
 // public static
-QTransform kpPixmapFX::rotateMatrix (int width, int height, double angle)
+QTransform kpPixmapFX::rotateMatrix(int width, int height, double angle)
 {
-    if (std::fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
-    {
-        return  {};
+    if (std::fabs(angle - 0) < kpPixmapFX::AngleInDegreesEpsilon) {
+        return {};
     }
 
     QTransform matrix;
-    matrix.translate (width / 2, height / 2);
-    matrix.rotate (angle);
+    matrix.translate(width / 2, height / 2);
+    matrix.rotate(angle);
 
-    return ::MatrixWithZeroOrigin (matrix, width, height);
+    return ::MatrixWithZeroOrigin(matrix, width, height);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-QTransform kpPixmapFX::rotateMatrix (const QImage &pixmap, double angle)
+QTransform kpPixmapFX::rotateMatrix(const QImage &pixmap, double angle)
 {
-    return kpPixmapFX::rotateMatrix (pixmap.width (), pixmap.height (), angle);
+    return kpPixmapFX::rotateMatrix(pixmap.width(), pixmap.height(), angle);
 }
 
 //---------------------------------------------------------------------
 
-
 // public static
-bool kpPixmapFX::isLosslessRotation (double angle)
+bool kpPixmapFX::isLosslessRotation(double angle)
 {
     const double angleIn = angle;
 
@@ -610,60 +522,46 @@ bool kpPixmapFX::isLosslessRotation (double angle)
     }
 
     // Remove multiples of 90 to make sure 0 <= angle <= 90
-    angle -= (static_cast<int> (angle)) / 90 * 90;
+    angle -= (static_cast<int>(angle)) / 90 * 90;
 
     // "Impossible" situation?
-    if (angle < 0 || angle > 90)
-    {
-        qCCritical(kpLogPixmapfx) << "kpPixmapFX::isLosslessRotation(" << angleIn
-                   << ") result=" << angle;
-        return false;  // better safe than sorry
+    if (angle < 0 || angle > 90) {
+        qCCritical(kpLogPixmapfx) << "kpPixmapFX::isLosslessRotation(" << angleIn << ") result=" << angle;
+        return false; // better safe than sorry
     }
 
-    const bool ret = (angle < kpPixmapFX::AngleInDegreesEpsilon ||
-                      90 - angle < kpPixmapFX::AngleInDegreesEpsilon);
+    const bool ret = (angle < kpPixmapFX::AngleInDegreesEpsilon || 90 - angle < kpPixmapFX::AngleInDegreesEpsilon);
 #if DEBUG_KP_PIXMAP_FX
     qCDebug(kpLogPixmapfx) << "kpPixmapFX::isLosslessRotation(" << angleIn << ")"
-               << "  residual angle=" << angle
-               << "  returning " << ret;
+                           << "  residual angle=" << angle << "  returning " << ret;
 #endif
     return ret;
 }
 
 //---------------------------------------------------------------------
 
-
 // public static
-void kpPixmapFX::rotate (QImage *destPtr, double angle,
-                         const kpColor &backgroundColor,
-                         int targetWidth, int targetHeight)
+void kpPixmapFX::rotate(QImage *destPtr, double angle, const kpColor &backgroundColor, int targetWidth, int targetHeight)
 {
     if (!destPtr) {
         return;
     }
 
-    *destPtr = kpPixmapFX::rotate (*destPtr, angle,
-                                         backgroundColor,
-                                         targetWidth, targetHeight);
+    *destPtr = kpPixmapFX::rotate(*destPtr, angle, backgroundColor, targetWidth, targetHeight);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-QImage kpPixmapFX::rotate (const QImage &pm, double angle,
-                            const kpColor &backgroundColor,
-                            int targetWidth, int targetHeight)
+QImage kpPixmapFX::rotate(const QImage &pm, double angle, const kpColor &backgroundColor, int targetWidth, int targetHeight)
 {
-    if (std::fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
-        (targetWidth <= 0 && targetHeight <= 0)/*don't want to scale?*/)
-    {
+    if (std::fabs(angle - 0) < kpPixmapFX::AngleInDegreesEpsilon && (targetWidth <= 0 && targetHeight <= 0) /*don't want to scale?*/) {
         return pm;
     }
 
+    QTransform matrix = rotateMatrix(pm, angle);
 
-    QTransform matrix = rotateMatrix (pm, angle);
-
-    return ::TransformPixmap (pm, matrix, backgroundColor, targetWidth, targetHeight);
+    return ::TransformPixmap(pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
 //---------------------------------------------------------------------

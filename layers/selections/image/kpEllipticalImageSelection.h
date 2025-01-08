@@ -25,94 +25,77 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEllipticalImageSelection_H
 #define kpEllipticalImageSelection_H
 
-
 #include "layers/selections/image/kpAbstractImageSelection.h"
-
 
 class kpEllipticalImageSelection : public kpAbstractImageSelection
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEllipticalImageSelection (const kpImageSelectionTransparency &transparency =
-        kpImageSelectionTransparency ());
+    kpEllipticalImageSelection(const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpEllipticalImageSelection (const QRect &rect,
-        const kpImage &baseImage = kpImage (),
-        const kpImageSelectionTransparency &transparency =
-            kpImageSelectionTransparency ());
+    kpEllipticalImageSelection(const QRect &rect,
+                               const kpImage &baseImage = kpImage(),
+                               const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpEllipticalImageSelection (const QRect &rect,
-        const kpImageSelectionTransparency &transparency =
-            kpImageSelectionTransparency ());
+    kpEllipticalImageSelection(const QRect &rect, const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpEllipticalImageSelection (const kpEllipticalImageSelection &rhs);
+    kpEllipticalImageSelection(const kpEllipticalImageSelection &rhs);
 
-    kpEllipticalImageSelection &operator= (const kpEllipticalImageSelection &rhs);
+    kpEllipticalImageSelection &operator=(const kpEllipticalImageSelection &rhs);
 
-    kpEllipticalImageSelection *clone () const override;
+    kpEllipticalImageSelection *clone() const override;
 
-    ~kpEllipticalImageSelection () override;
+    ~kpEllipticalImageSelection() override;
 
-
-//
-// Marshalling
-//
+    //
+    // Marshalling
+    //
 
 public:
     static const int SerialID = 1;
-    int serialID () const override;
+    int serialID() const override;
 
-
-//
-// General Queries
-//
-
-public:
-    bool isRectangular () const override;
-
-
-//
-// Position & Dimensions
-//
+    //
+    // General Queries
+    //
 
 public:
-   QPolygon calculatePoints () const override;
+    bool isRectangular() const override;
 
-
-//
-// Shape Mask
-//
-
-public:
-    QRegion shapeRegion () const override;
-
-
-//
-// Point Testing
-//
+    //
+    // Position & Dimensions
+    //
 
 public:
-    bool contains (const QPoint &point) const override;
+    QPolygon calculatePoints() const override;
 
-
-//
-// Rendering
-//
+    //
+    // Shape Mask
+    //
 
 public:
-    void paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const override;
+    QRegion shapeRegion() const override;
 
+    //
+    // Point Testing
+    //
+
+public:
+    bool contains(const QPoint &point) const override;
+
+    //
+    // Rendering
+    //
+
+public:
+    void paintBorder(QImage *destPixmap, const QRect &docRect, bool selectionFinished) const override;
 
 private:
-    struct kpEllipticalImageSelectionPrivate * const d;
+    struct kpEllipticalImageSelectionPrivate *const d;
 };
 
-
-
-#endif  // kpEllipticalImageSelection_H
+#endif // kpEllipticalImageSelection_H

@@ -25,33 +25,30 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectGrayscaleCommand_H
 #define kpEffectGrayscaleCommand_H
 
-
-#include "kpEffectCommandBase.h"
 #include "imagelib/kpImage.h"
-
+#include "kpEffectCommandBase.h"
 
 class kpEffectGrayscaleCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectGrayscaleCommand (bool actOnSelection,
-                              kpCommandEnvironment *environ);
-    ~kpEffectGrayscaleCommand () override;
-
+    kpEffectGrayscaleCommand(bool actOnSelection, kpCommandEnvironment *environ);
+    ~kpEffectGrayscaleCommand() override;
 
     //
     // kpEffectCommandBase interface
     //
 
 public:
-    bool isInvertible () const override { return false; }
+    bool isInvertible() const override
+    {
+        return false;
+    }
 
 protected:
-    kpImage applyEffect (const kpImage &image) override;
+    kpImage applyEffect(const kpImage &image) override;
 };
 
-
-#endif  // kpEffectGrayscaleCommand_H
+#endif // kpEffectGrayscaleCommand_H

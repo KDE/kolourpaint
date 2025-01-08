@@ -25,17 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_THUMBNAIL 0
-
 
 #include "kpThumbnail.h"
 
-#include "kpDefs.h"
 #include "document/kpDocument.h"
+#include "kpDefs.h"
 #include "mainWindow/kpMainWindow.h"
-#include "views/kpThumbnailView.h"
 #include "tools/kpTool.h"
+#include "views/kpThumbnailView.h"
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
@@ -43,45 +41,40 @@
 #include <QAction>
 #include <QLayout>
 
-
-struct kpThumbnailPrivate
-{
+struct kpThumbnailPrivate {
     kpMainWindow *mainWindow;
     kpThumbnailView *view;
     QHBoxLayout *lay;
 };
 
-kpThumbnail::kpThumbnail (kpMainWindow *parent)
-    : kpSubWindow (parent),
-      d (new kpThumbnailPrivate ())
+kpThumbnail::kpThumbnail(kpMainWindow *parent)
+    : kpSubWindow(parent)
+    , d(new kpThumbnailPrivate())
 {
-    Q_ASSERT (parent);
+    Q_ASSERT(parent);
 
     d->mainWindow = parent;
     d->view = nullptr;
-    d->lay = new QHBoxLayout (this);
+    d->lay = new QHBoxLayout(this);
 
+    setMinimumSize(64, 64);
 
-    setMinimumSize (64, 64);
-
-
-    updateCaption ();
+    updateCaption();
 }
 
-kpThumbnail::~kpThumbnail ()
+kpThumbnail::~kpThumbnail()
 {
     delete d;
 }
 
-
 // public
-kpThumbnailView *kpThumbnail::view () const
+kpThumbnailView *kpThumbnail::view() const
 {
     return d->view;
 }
 
 // public
-void kpThumbnail::setView (kpThumbnailView *view)
+void kpThumbnail::setView(kpThumbnailView *view)
 {
 #if DEBUG_KP_THUMBNAIL
     qCDebug(kpLogMisc) << "kpThumbnail::setView(" << view << ")";
@@ -91,93 +84,81 @@ void kpThumbnail::setView (kpThumbnailView *view)
         return;
     }
 
+    if (d->view) {
+        disconnect(d->view, &kpThumbnailView::destroyed, this, &kpThumbnail::slotViewDestroyed);
 
-    if (d->view)
-    {
-        disconnect (d->view, &kpThumbnailView::destroyed,
-                    this, &kpThumbnail::slotViewDestroyed);
+        disconnect(d->view, &kpThumbnailView::zoomLevelChanged, this, &kpThumbnail::updateCaption);
 
-        disconnect (d->view, &kpThumbnailView::zoomLevelChanged,
-                    this, &kpThumbnail::updateCaption);
-
-        d->lay->removeWidget (d->view);
+        d->lay->removeWidget(d->view);
     }
 
     d->view = view;
 
-    if (d->view)
-    {
-        connect (d->view, &kpThumbnailView::destroyed,
-                 this, &kpThumbnail::slotViewDestroyed);
+    if (d->view) {
+        connect(d->view, &kpThumbnailView::destroyed, this, &kpThumbnail::slotViewDestroyed);
 
-        connect (d->view, &kpThumbnailView::zoomLevelChanged,
-                 this, &kpThumbnail::updateCaption);
+        connect(d->view, &kpThumbnailView::zoomLevelChanged, this, &kpThumbnail::updateCaption);
 
-        Q_ASSERT (d->view->parent () == this);
-        d->lay->addWidget (d->view, Qt::AlignCenter);
-        
-        d->view->show ();
+        Q_ASSERT(d->view->parent() == this);
+        d->lay->addWidget(d->view, Qt::AlignCenter);
+
+        d->view->show();
     }
-    
-    updateCaption ();
-}
 
+    updateCaption();
+}
 
 // public slot
-void kpThumbnail::updateCaption ()
+void kpThumbnail::updateCaption()
 {
-    setWindowTitle (view () ? view ()->caption () : i18nc ("@title:window", "Thumbnail"));
+    setWindowTitle(view() ? view()->caption() : i18nc("@title:window", "Thumbnail"));
 }
 
-
 // protected slot
-void kpThumbnail::slotViewDestroyed ()
+void kpThumbnail::slotViewDestroyed()
 {
 #if DEBUG_KP_THUMBNAIL
     qCDebug(kpLogMisc) << "kpThumbnail::slotViewDestroyed()";
 #endif
 
     d->view = nullptr;
-    updateCaption ();
+    updateCaption();
 }
 
-
 // protected virtual [base QWidget]
-void kpThumbnail::resizeEvent (QResizeEvent *e)
+void kpThumbnail::resizeEvent(QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL
-    qCDebug(kpLogMisc) << "kpThumbnail::resizeEvent(" << width ()
-               << "," << height () << ")";
+    qCDebug(kpLogMisc) << "kpThumbnail::resizeEvent(" << width() << "," << height() << ")";
 #endif
 
-    QWidget::resizeEvent (e);
+    QWidget::resizeEvent(e);
 
     // updateVariableZoom ();  TODO: is below a good idea since this commented out?
 
-    if (d->mainWindow)
-    {
-        d->mainWindow->notifyThumbnailGeometryChanged ();
+    if (d->mainWindow) {
+        d->mainWindow->notifyThumbnailGeometryChanged();
 
-        if (d->mainWindow->tool ()) {
-            d->mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        if (d->mainWindow->tool()) {
+            d->mainWindow->tool()->somethingBelowTheCursorChanged();
         }
     }
 }
 
 // protected virtual [base QWidget]
-void kpThumbnail::moveEvent (QMoveEvent * /*e*/)
+void kpThumbnail::moveEvent(QMoveEvent * /*e*/)
 {
     if (d->mainWindow) {
-        d->mainWindow->notifyThumbnailGeometryChanged ();
+        d->mainWindow->notifyThumbnailGeometryChanged();
     }
 }
 
 // protected virtual [base QWidget]
-void kpThumbnail::closeEvent (QCloseEvent *e)
+void kpThumbnail::closeEvent(QCloseEvent *e)
 {
-    QWidget::closeEvent (e);
+    QWidget::closeEvent(e);
 
-    Q_EMIT windowClosed ();
+    Q_EMIT windowClosed();
 }
 
 #include "moc_kpThumbnail.cpp"

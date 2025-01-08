@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_THUMBNAIL_H
 #define KP_THUMBNAIL_H
 
-
 #include "generic/widgets/kpSubWindow.h"
-
 
 class QMoveEvent;
 class QResizeEvent;
@@ -39,38 +36,36 @@ class QResizeEvent;
 class kpMainWindow;
 class kpThumbnailView;
 
-
 struct kpThumbnailPrivate;
 
 class kpThumbnail : public kpSubWindow
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit kpThumbnail (kpMainWindow *parent);
-    ~kpThumbnail () override;
+    explicit kpThumbnail(kpMainWindow *parent);
+    ~kpThumbnail() override;
 
 public:
-    kpThumbnailView *view () const;
-    void setView (kpThumbnailView *view);
+    kpThumbnailView *view() const;
+    void setView(kpThumbnailView *view);
 
 public Q_SLOTS:
-    void updateCaption ();
+    void updateCaption();
 
 protected Q_SLOTS:
-    void slotViewDestroyed ();
+    void slotViewDestroyed();
 
 protected:
-    void resizeEvent (QResizeEvent *e) override;
-    void moveEvent (QMoveEvent *e) override;
-    void closeEvent (QCloseEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
+    void moveEvent(QMoveEvent *e) override;
+    void closeEvent(QCloseEvent *e) override;
 
 Q_SIGNALS:
-    void windowClosed ();
+    void windowClosed();
 
 private:
-    kpThumbnailPrivate * const d;
+    kpThumbnailPrivate *const d;
 };
 
-
-#endif  // KP_THUMBNAIL_H
+#endif // KP_THUMBNAIL_H

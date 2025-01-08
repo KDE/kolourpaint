@@ -33,13 +33,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEnvironmentBase_H
 #define kpEnvironmentBase_H
 
-
 #include <QObject>
-
 
 class kpAbstractImageSelection;
 class kpAbstractSelection;
@@ -49,7 +46,6 @@ class kpDocument;
 class kpMainWindow;
 class kpTextSelection;
 class kpViewManager;
-
 
 // Abstract facade bridging kpMainWindow and other suppliers (e.g. kpTool,
 // kpToolToolBar, kpColorToolBar) to clients.
@@ -64,36 +60,34 @@ class kpViewManager;
 // a new class.
 class kpEnvironmentBase : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
-// (must derive from)
+    // (must derive from)
 protected:
     // Note: Our interface must never publicly leak <mainWindow> or any other
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
-    kpEnvironmentBase (kpMainWindow *mainWindow);
-    ~kpEnvironmentBase () override;
+    kpEnvironmentBase(kpMainWindow *mainWindow);
+    ~kpEnvironmentBase() override;
 
 public:
-    kpDocument *document () const;
+    kpDocument *document() const;
 
-    kpAbstractSelection *selection () const;
-    kpAbstractImageSelection *imageSelection () const;
-    kpTextSelection *textSelection () const;
+    kpAbstractSelection *selection() const;
+    kpAbstractImageSelection *imageSelection() const;
+    kpTextSelection *textSelection() const;
 
-    kpViewManager *viewManager () const;
+    kpViewManager *viewManager() const;
 
-    kpCommandEnvironment *commandEnvironment () const;
+    kpCommandEnvironment *commandEnvironment() const;
 
-    kpColor backgroundColor (bool ofSelection = false) const;
+    kpColor backgroundColor(bool ofSelection = false) const;
 
 protected:
-    kpMainWindow *mainWindow () const;
+    kpMainWindow *mainWindow() const;
 
 private:
-    struct kpEnvironmentBasePrivate * const d;
+    struct kpEnvironmentBasePrivate *const d;
 };
 
-
-#endif  // kpEnvironmentBase_H
-
+#endif // kpEnvironmentBase_H

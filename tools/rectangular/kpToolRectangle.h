@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_RECTANGLE_H
 #define KP_TOOL_RECTANGLE_H
 
-
 #include "tools/rectangular/kpToolRectangularBase.h"
-
 
 class kpToolRectangle : public kpToolRectangularBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolRectangle (kpToolEnvironment *environ, QObject *parent);
+    kpToolRectangle(kpToolEnvironment *environ, QObject *parent);
 
-    static void drawRect(kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor);
+    static void drawRect(kpImage *image, int x, int y, int width, int height, const kpColor &fcolor, int penWidth, const kpColor &bcolor);
 };
 
-
-#endif  // KP_TOOL_RECTANGLE_H
+#endif // KP_TOOL_RECTANGLE_H

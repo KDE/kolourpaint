@@ -25,20 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpCommandSize_H
 #define kpCommandSize_H
 
-
 #include "imagelib/kpImage.h"
-
 
 class QImage;
 class QPolygon;
 class QString;
 
 class kpAbstractSelection;
-
 
 //
 // Estimates the size of the object being pointed to, in bytes.
@@ -64,24 +60,23 @@ public:
     //       implementations of kpCommand::size()).
     typedef qlonglong SizeType;
 
-    static SizeType PixmapSize (const QImage &image);
-    static SizeType PixmapSize (const QImage *image);
-    static SizeType PixmapSize (int width, int height, int depth);
+    static SizeType PixmapSize(const QImage &image);
+    static SizeType PixmapSize(const QImage *image);
+    static SizeType PixmapSize(int width, int height, int depth);
 
-    static SizeType QImageSize (const QImage &image);
-    static SizeType QImageSize (const QImage *image);
-    static SizeType QImageSize (int width, int height, int depth);
+    static SizeType QImageSize(const QImage &image);
+    static SizeType QImageSize(const QImage *image);
+    static SizeType QImageSize(int width, int height, int depth);
 
-    static SizeType ImageSize (const kpImage &image);
-    static SizeType ImageSize (const kpImage *image);
+    static SizeType ImageSize(const kpImage &image);
+    static SizeType ImageSize(const kpImage *image);
 
-    static SizeType SelectionSize (const kpAbstractSelection &sel);
-    static SizeType SelectionSize (const kpAbstractSelection *sel);
+    static SizeType SelectionSize(const kpAbstractSelection &sel);
+    static SizeType SelectionSize(const kpAbstractSelection *sel);
 
-    static SizeType StringSize (const QString &string);
+    static SizeType StringSize(const QString &string);
 
-    static SizeType PolygonSize (const QPolygon &points);
+    static SizeType PolygonSize(const QPolygon &points);
 };
 
-
-#endif  // kpCommandSize_H
+#endif // kpCommandSize_H

@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_TEXT_H
 #define KP_TOOL_TEXT_H
 
-
 #include "tools/selection/kpAbstractSelectionTool.h"
-
 
 class QKeyEvent;
 
@@ -42,7 +39,6 @@ class kpToolTextInsertCommand;
 class kpToolTextEnterCommand;
 class kpToolTextBackspaceCommand;
 class kpToolTextDeleteCommand;
-
 
 //
 // kpAbstractSelectionTool considers a drawing operation to be a mouse
@@ -76,16 +72,15 @@ class kpToolTextDeleteCommand;
 //
 class kpToolText : public kpAbstractSelectionTool
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolText (kpToolSelectionEnvironment *environ, QObject *parent);
-    ~kpToolText () override;
+    kpToolText(kpToolSelectionEnvironment *environ, QObject *parent);
+    ~kpToolText() override;
 
-
-//
-// Text Command Handling
-//
+    //
+    // Text Command Handling
+    //
 
 private:
     /**
@@ -103,8 +98,7 @@ private:
      * might be split into 10 text insertion commands, each containing 1
      * character.
      */
-    void endTypingCommands ();
-
+    void endTypingCommands();
 
     /**
      * Ends the current text editing command by eventually calling
@@ -115,7 +109,7 @@ private:
      *            On function return, the pointed-to d->backspace.*Command
      *            pointer will point to a new kpToolTextBackspaceCommand.
      */
-    void addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd);
+    void addNewBackspaceCommand(kpToolTextBackspaceCommand **cmd);
 
     /**
      * Ends the current text editing command by eventually calling
@@ -126,73 +120,61 @@ private:
      *            function return, the pointed-to d->delete.*Command pointer
      *            will point to a new kpToolTextDeleteCommand.
      */
-    void addNewDeleteCommand (kpToolTextDeleteCommand **cmd);
+    void addNewDeleteCommand(kpToolTextDeleteCommand **cmd);
 
-    void addNewEnterCommand (kpToolTextEnterCommand **cmd);
+    void addNewEnterCommand(kpToolTextEnterCommand **cmd);
 
-    void addNewInsertCommand (kpToolTextInsertCommand **cmd);
+    void addNewInsertCommand(kpToolTextInsertCommand **cmd);
 
-
-//
-// Drawing
-//
-
-protected:
-    kpAbstractSelectionContentCommand *newGiveContentCommand () const override;
-
-    QString nameOfCreateCommand () const override;
-
+    //
+    // Drawing
+    //
 
 protected:
-    void setSelectionBorderForHaventBegunDraw () override;
+    kpAbstractSelectionContentCommand *newGiveContentCommand() const override;
 
+    QString nameOfCreateCommand() const override;
+
+protected:
+    void setSelectionBorderForHaventBegunDraw() override;
 
 public:
-    void begin () override;
-    void end () override;
-
-
-public:
-    bool hasBegunText () const;
-    bool hasBegunShape () const override;
-
-
-//
-// Drawing - Beginning a Drag
-//
-
-protected:
-    DrawType calculateDrawTypeInsideSelection () const override;
-
+    void begin() override;
+    void end() override;
 
 public:
-    void cancelShape () override;
+    bool hasBegunText() const;
+    bool hasBegunShape() const override;
 
+    //
+    // Drawing - Beginning a Drag
+    //
+
+protected:
+    DrawType calculateDrawTypeInsideSelection() const override;
 
 public:
-    void endShape (const QPoint &thisPoint, const QRect &normalizedRect) override;
+    void cancelShape() override;
 
+public:
+    void endShape(const QPoint &thisPoint, const QRect &normalizedRect) override;
 
-//
-// Drawing - Operation Dispatching
-//
-
-protected:
-    QVariant operation (DrawType drawType, Operation op,
-        const QVariant &data1 = QVariant (), const QVariant &data2 = QVariant ()) override;
-
-
-//
-// Create
-//
+    //
+    // Drawing - Operation Dispatching
+    //
 
 protected:
-    QString haventBegunDrawUserMessageCreate () const override;
+    QVariant operation(DrawType drawType, Operation op, const QVariant &data1 = QVariant(), const QVariant &data2 = QVariant()) override;
 
+    //
+    // Create
+    //
 
 protected:
-    void setSelectionBorderForBeginDrawCreate () override;
+    QString haventBegunDrawUserMessageCreate() const override;
 
+protected:
+    void setSelectionBorderForBeginDrawCreate() override;
 
 private:
     // Returns the suggested width/height of a click-created text box:
@@ -204,79 +186,64 @@ private:
     // <smallestMin> = the legal minimum width/height of the selection
     //
     // <docSize> = the width/height of the document
-    int calcClickCreateDimension (int mouseStart, int mouseEnd,
-        int preferredMin, int smallestMin,
-        int docSize);
-    bool shouldCreate (
-        bool drawAcceptedAsDrag,
-        const QPoint &accidentalDragAdjustedPoint,
-        const kpTextStyle &textStyle,
-        int *minimumWidthOut, int *minimumHeightOut,
-        bool *newDragHasBegun);
-protected:
-    bool drawCreateMoreSelectionAndUpdateStatusBar (
-        bool drawAcceptedAsDrag,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRectIn) override;
-
-
-//
-// Move
-//
+    int calcClickCreateDimension(int mouseStart, int mouseEnd, int preferredMin, int smallestMin, int docSize);
+    bool shouldCreate(bool drawAcceptedAsDrag,
+                      const QPoint &accidentalDragAdjustedPoint,
+                      const kpTextStyle &textStyle,
+                      int *minimumWidthOut,
+                      int *minimumHeightOut,
+                      bool *newDragHasBegun);
 
 protected:
-    QString haventBegunDrawUserMessageMove () const override;
+    bool drawCreateMoreSelectionAndUpdateStatusBar(bool drawAcceptedAsDrag, const QPoint &accidentalDragAdjustedPoint, const QRect &normalizedRectIn) override;
 
-
-protected:
-    void setSelectionBorderForBeginDrawMove () override;
-
-
-protected:
-    QString nonSmearMoveCommandName () const override;
-
-
-//
-// Resize/Scale
-//
+    //
+    // Move
+    //
 
 protected:
-    QString haventBegunDrawUserMessageResizeScale () const override;
-
+    QString haventBegunDrawUserMessageMove() const override;
 
 protected:
-    void setSelectionBorderForBeginDrawResizeScale () override;
+    void setSelectionBorderForBeginDrawMove() override;
 
+protected:
+    QString nonSmearMoveCommandName() const override;
 
-//
-// Select Text
-//
+    //
+    // Resize/Scale
+    //
+
+protected:
+    QString haventBegunDrawUserMessageResizeScale() const override;
+
+protected:
+    void setSelectionBorderForBeginDrawResizeScale() override;
+
+    //
+    // Select Text
+    //
 
 private:
-    bool onSelectionToSelectText () const;
-
-
-private:
-    QString haventBegunDrawUserMessageSelectText () const;
-
-    void setCursorSelectText ();
-
+    bool onSelectionToSelectText() const;
 
 private:
-    void beginDrawSelectText ();
+    QString haventBegunDrawUserMessageSelectText() const;
 
+    void setCursorSelectText();
 
-protected:
-    virtual QVariant selectTextOperation (Operation op,
-        const QVariant &data1 = QVariant (), const QVariant &data2 = QVariant ());
-
-
-//
-// User Changing Text Style Elements
-//
+private:
+    void beginDrawSelectText();
 
 protected:
-    bool shouldChangeTextStyle () const;
+    virtual QVariant selectTextOperation(Operation op, const QVariant &data1 = QVariant(), const QVariant &data2 = QVariant());
+
+    //
+    // User Changing Text Style Elements
+    //
+
+protected:
+    bool shouldChangeTextStyle() const;
 
     /**
      * Adds a kpToolTextChangeStyleCommand to commandHistory().
@@ -290,13 +257,10 @@ protected:
      *
      * You should only call this if shouldChangeTextStyle() returns true.
      */
-    void changeTextStyle (const QString &name,
-                          const kpTextStyle &newTextStyle,
-                          const kpTextStyle &oldTextStyle);
+    void changeTextStyle(const QString &name, const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle);
 
 protected Q_SLOTS:
-    void slotIsOpaqueChanged (bool isOpaque) override;
-
+    void slotIsOpaqueChanged(bool isOpaque) override;
 
 protected:
     /**
@@ -305,28 +269,29 @@ protected:
      *
      * Re-implemented from kpTool.
      */
-    bool careAboutColorsSwapped () const override { return true; }
+    bool careAboutColorsSwapped() const override
+    {
+        return true;
+    }
 
 protected Q_SLOTS:
-    void slotColorsSwapped (const kpColor &newForegroundColor,
-                                    const kpColor &newBackgroundColor) override;
+    void slotColorsSwapped(const kpColor &newForegroundColor, const kpColor &newBackgroundColor) override;
 
-    void slotForegroundColorChanged (const kpColor &color) override;
-    void slotBackgroundColorChanged (const kpColor &color) override;
-    void slotColorSimilarityChanged (double, int) override;
+    void slotForegroundColorChanged(const kpColor &color) override;
+    void slotBackgroundColorChanged(const kpColor &color) override;
+    void slotColorSimilarityChanged(double, int) override;
 
 public Q_SLOTS:
-    void slotFontFamilyChanged (const QString &fontFamily, const QString &oldFontFamily);
-    void slotFontSizeChanged (int fontSize, int oldFontSize);
-    void slotBoldChanged (bool isBold);
-    void slotItalicChanged (bool isItalic);
-    void slotUnderlineChanged (bool isUnderline);
-    void slotStrikeThruChanged (bool isStrikeThru);
+    void slotFontFamilyChanged(const QString &fontFamily, const QString &oldFontFamily);
+    void slotFontSizeChanged(int fontSize, int oldFontSize);
+    void slotBoldChanged(bool isBold);
+    void slotItalicChanged(bool isItalic);
+    void slotUnderlineChanged(bool isUnderline);
+    void slotStrikeThruChanged(bool isStrikeThru);
 
-
-//
-// Text Cursor Calculations (all static, no mutations)
-//
+    //
+    // Text Cursor Calculations (all static, no mutations)
+    //
 
 protected:
     /**
@@ -337,9 +302,7 @@ protected:
      * @returns whether the cursor is currently on a word character
      *          (not a space).
      */
-    static bool CursorIsOnWordChar (const QList <QString> &textLines,
-        int cursorRow, int cursorCol);
-
+    static bool CursorIsOnWordChar(const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * @param textLines One or more lines of text.
@@ -350,8 +313,7 @@ protected:
      *          textLines (on the first character of the first line)
      *          i.e. when moveCursorLeft() won't do anything.
      */
-    static bool CursorIsAtStart (const QList <QString> &textLines,
-        int cursorRow, int cursorCol);
+    static bool CursorIsAtStart(const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * @param textLines One or more lines of text.
@@ -362,9 +324,7 @@ protected:
      *          textLines (after the last character of the last line)
      *          i.e. when moveCursorRight() won't do anything.
      */
-    static bool CursorIsAtEnd (const QList <QString> &textLines,
-        int cursorRow, int cursorCol);
-
+    static bool CursorIsAtEnd(const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Moves the given cursor position one character to the left, if
@@ -379,8 +339,7 @@ protected:
      *                  the current column of the cursor and modified on
      *                  return to indicate the new column.
      */
-    static void MoveCursorLeft (const QList <QString> &textLines,
-        int *cursorRow, int *cursorCol);
+    static void MoveCursorLeft(const QList<QString> &textLines, int *cursorRow, int *cursorCol);
 
     /**
      * Moves the given cursor position one character to the right, if
@@ -395,9 +354,7 @@ protected:
      *                  the current column of the cursor and modified on
      *                  return to indicate the new column.
      */
-    static void MoveCursorRight (const QList <QString> &textLines,
-        int *cursorRow, int *cursorCol);
-
+    static void MoveCursorRight(const QList<QString> &textLines, int *cursorRow, int *cursorCol);
 
     /**
      * Moves the row and column values, representing the current cursor
@@ -418,8 +375,7 @@ protected:
      *          Note: Attempting to moving left when cursorIsAtStart()
      *                may still be counted as a move.
      */
-    static int MoveCursorToWordStart (const QList <QString> &textLines,
-        int *cursorRow, int *cursorCol);
+    static int MoveCursorToWordStart(const QList<QString> &textLines, int *cursorRow, int *cursorCol);
 
     /**
      * Moves the row and column values, representing the current cursor
@@ -440,30 +396,28 @@ protected:
      *          Note: Attempting to moving right when cursorIsAtEnd()
      *                may still be counted as a move.
      */
-    static int MoveCursorToNextWordStart (const QList <QString> &textLines,
-        int *cursorRow, int *cursorCol);
+    static int MoveCursorToNextWordStart(const QList<QString> &textLines, int *cursorRow, int *cursorCol);
 
-
-//
-// Keyboard Events - Handling Arrow Keys
-//
-// These methods always:
-//
-// 1. Before doing anything, end the current shape (e.g. a text editing command or
-//    selection move command).  This is done for 2 reasons:
-//
-//    a) The user has interrupted the current command e.g. if I were to
-//       type some text, press an arrow key and then type text again, the two
-//       periods of text typing should be separate commands due to the arrow
-//       key interruption.
-//
-//    b) To simplify the code by avoiding interference with the current command
-//       esp. since commands do not expect the cursor to move in the middle.
-//
-// 2. Accept the event as it is always intended for the method.  This is even
-//    if the operation could not complete e.g. an attempt to move the cursor
-//    left when it is already at column 0.
-//
+    //
+    // Keyboard Events - Handling Arrow Keys
+    //
+    // These methods always:
+    //
+    // 1. Before doing anything, end the current shape (e.g. a text editing command or
+    //    selection move command).  This is done for 2 reasons:
+    //
+    //    a) The user has interrupted the current command e.g. if I were to
+    //       type some text, press an arrow key and then type text again, the two
+    //       periods of text typing should be separate commands due to the arrow
+    //       key interruption.
+    //
+    //    b) To simplify the code by avoiding interference with the current command
+    //       esp. since commands do not expect the cursor to move in the middle.
+    //
+    // 2. Accept the event as it is always intended for the method.  This is even
+    //    if the operation could not complete e.g. an attempt to move the cursor
+    //    left when it is already at column 0.
+    //
 protected:
     /**
      * Moves the text cursor up one character.  Accepts the key event @p e.
@@ -477,8 +431,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleUpKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleUpKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Moves the text cursor down one character.  Accepts the key event @p e.
@@ -492,8 +445,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleDownKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleDownKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Moves the text cursor left one character or if CTRL is held, one
@@ -508,8 +460,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleLeftKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleLeftKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Moves the text cursor right one character or if CTRL is held, one
@@ -524,9 +475,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleRightKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
-
+    void handleRightKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Moves the text cursor to the start of the line and if CTRL is held,
@@ -541,8 +490,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleHomeKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleHomeKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Moves the text cursor to after the last character of the current
@@ -558,32 +506,30 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleEndKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleEndKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
-
-//
-// Keyboard Events - Handling Typing Keys
-//
-// For each method, if the respective event was actually intended for the
-// method:
-//
-// 1. If the event will not be a NOP:
-//
-//        If the current command is not the same as what this method would produce,
-//        it starts a new one, ending the current one (using the addNew*Command()
-//        methods).  If the current command is the same, it simply extends the
-//        current command e.g. if the current command was a kpToolTextInsertCommand
-//        and the user typed another character of text, that character would just be
-//        added to that command.
-//
-// 2. Accept the event.  This is even if the operation could not complete e.g.
-//    an attempt backspace when the cursor is at column 0.
-//
-// If the event was not intended for the method (e.g. pressing CTRL, Caps Lock
-// or any other key that does not produce text, in handleTextTyped()), nothing
-// happens.
-//
+    //
+    // Keyboard Events - Handling Typing Keys
+    //
+    // For each method, if the respective event was actually intended for the
+    // method:
+    //
+    // 1. If the event will not be a NOP:
+    //
+    //        If the current command is not the same as what this method would produce,
+    //        it starts a new one, ending the current one (using the addNew*Command()
+    //        methods).  If the current command is the same, it simply extends the
+    //        current command e.g. if the current command was a kpToolTextInsertCommand
+    //        and the user typed another character of text, that character would just be
+    //        added to that command.
+    //
+    // 2. Accept the event.  This is even if the operation could not complete e.g.
+    //    an attempt backspace when the cursor is at column 0.
+    //
+    // If the event was not intended for the method (e.g. pressing CTRL, Caps Lock
+    // or any other key that does not produce text, in handleTextTyped()), nothing
+    // happens.
+    //
 protected:
     /**
      * Backspaces and if the active text editing command is not
@@ -607,8 +553,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleBackspaceKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleBackspaceKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Deletes and if the active text editing command is not
@@ -632,9 +577,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleDeleteKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
-
+    void handleDeleteKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Enters and if the active text editing command is not
@@ -650,9 +593,7 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleEnterKeyPress (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
-
+    void handleEnterKeyPress(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
     /**
      * Inserts the printable characters of e->text() and accepts the key
@@ -673,20 +614,18 @@ protected:
      *
      * Called by keyPressEvent().
      */
-    void handleTextTyped (QKeyEvent *e,
-        const QList <QString> &textLines, int cursorRow, int cursorCol);
+    void handleTextTyped(QKeyEvent *e, const QList<QString> &textLines, int cursorRow, int cursorCol);
 
-
-//
-// Keyboard Events
-//
+    //
+    // Keyboard Events
+    //
 
 protected:
     // Prevents actions with single letter/number shortcuts from eating
     // keystrokes while a text selection is active.  This is important
     // because the Tool Box actions default to single letter/number
     // shortcuts.
-    bool viewEvent (QEvent *e) override;
+    bool viewEvent(QEvent *e) override;
 
     /**
      * Handles key press events.
@@ -706,20 +645,17 @@ protected:
      * Re-implemented from kpAbstractSelectionTool.
      */
 
-    void keyPressEvent (QKeyEvent *e) override;
+    void keyPressEvent(QKeyEvent *e) override;
 
-
-//
-// Input Method Text Entry
-//
+    //
+    // Input Method Text Entry
+    //
 
 protected:
-    void inputMethodEvent (QInputMethodEvent *e) override;
-
+    void inputMethodEvent(QInputMethodEvent *e) override;
 
 private:
-    struct kpToolTextPrivate * const d;
+    struct kpToolTextPrivate *const d;
 };
 
-
-#endif  // KP_TOOL_TEXT_H
+#endif // KP_TOOL_TEXT_H

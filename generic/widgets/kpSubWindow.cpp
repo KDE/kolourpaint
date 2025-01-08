@@ -25,11 +25,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpSubWindow.h"
 
-
-kpSubWindow::kpSubWindow (QWidget *parent)
-    : QDialog (parent)
+kpSubWindow::kpSubWindow(QWidget *parent)
+    : QDialog(parent)
 {
 }

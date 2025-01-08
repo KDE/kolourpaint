@@ -25,24 +25,20 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_WIDGET_MAPPER_H
 #define KP_WIDGET_MAPPER_H
-
 
 class QWidget;
 class QPoint;
 class QRect;
 
-
 namespace kpWidgetMapper
 {
-    QPoint fromGlobal (const QWidget *widget, const QPoint &point);
-    QRect fromGlobal (const QWidget *widget, const QRect &rect);
+QPoint fromGlobal(const QWidget *widget, const QPoint &point);
+QRect fromGlobal(const QWidget *widget, const QRect &rect);
 
-    QPoint toGlobal (const QWidget *widget, const QPoint &point);
-    QRect toGlobal (const QWidget *widget, const QRect &rect);
+QPoint toGlobal(const QWidget *widget, const QPoint &point);
+QRect toGlobal(const QWidget *widget, const QRect &rect);
 }
 
-
-#endif  // KP_WIDGET_MAPPER_H
+#endif // KP_WIDGET_MAPPER_H

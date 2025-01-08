@@ -25,29 +25,24 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectBalance_H
 #define kpEffectBalance_H
 
-
 #include "imagelib/kpImage.h"
-
 
 class kpEffectBalance
 {
 public:
-    enum Channel
-    {
+    enum Channel {
         None = 0,
-        Red = 1, Green = 2, Blue = 4,
+        Red = 1,
+        Green = 2,
+        Blue = 4,
         RGB = Red | Green | Blue
     };
 
     // (<brightness>, <contrast> & <gamma> are from -50 to 50)
-    static kpImage applyEffect (const kpImage &image,
-        int channels,
-        int brightness, int contrast, int gamma);
+    static kpImage applyEffect(const kpImage &image, int channels, int brightness, int contrast, int gamma);
 };
 
-
-#endif  // kpEffectBalance_H
+#endif // kpEffectBalance_H

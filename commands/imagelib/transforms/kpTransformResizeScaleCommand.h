@@ -25,21 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpTransformResizeScaleCommand_H
 #define kpTransformResizeScaleCommand_H
 
-
-
-#include "imagelib/kpColor.h"
 #include "commands/kpCommand.h"
+#include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"
-
 
 class QSize;
 
 class kpAbstractSelection;
-
 
 // REFACTOR: Split into multiple classes, each doing a different thing
 //           e.g. resize, scale and smooth scale.
@@ -47,39 +42,37 @@ class kpAbstractSelection;
 class kpTransformResizeScaleCommand : public kpCommand
 {
 public:
-    enum Type
-    {
-        Resize, Scale, SmoothScale
+    enum Type {
+        Resize,
+        Scale,
+        SmoothScale
     };
 
-    kpTransformResizeScaleCommand (bool actOnSelection,
-        int newWidth, int newHeight,
-        Type type,
-        kpCommandEnvironment *environ);
-    ~kpTransformResizeScaleCommand () override;
+    kpTransformResizeScaleCommand(bool actOnSelection, int newWidth, int newHeight, Type type, kpCommandEnvironment *environ);
+    ~kpTransformResizeScaleCommand() override;
 
-    QString name () const override;
-    SizeType size () const override;
+    QString name() const override;
+    SizeType size() const override;
 
 public:
-    int newWidth () const;
-    void setNewWidth (int width);
+    int newWidth() const;
+    void setNewWidth(int width);
 
-    int newHeight () const;
-    void setNewHeight (int height);
+    int newHeight() const;
+    void setNewHeight(int height);
 
-    QSize newSize () const;
-    virtual void resize (int width, int height);
+    QSize newSize() const;
+    virtual void resize(int width, int height);
 
 public:
-    bool scaleSelectionWithImage () const;
+    bool scaleSelectionWithImage() const;
 
 private:
-    void scaleSelectionRegionWithDocument ();
+    void scaleSelectionRegionWithDocument();
 
 public:
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 protected:
     bool m_actOnSelection;
@@ -95,5 +88,4 @@ protected:
     kpAbstractSelection *m_oldSelectionPtr;
 };
 
-
-#endif  // kpTransformResizeScaleCommand_H
+#endif // kpTransformResizeScaleCommand_H

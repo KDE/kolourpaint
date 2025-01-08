@@ -25,49 +25,44 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_SELECTION 0
-
 
 #include "kpAbstractImageSelectionTool.h"
 
-#include "layers/selections/image/kpAbstractImageSelection.h"
-#include "layers/selections/kpAbstractSelection.h"
 #include "commands/kpCommandHistory.h"
-#include "kpDefs.h"
-#include "document/kpDocument.h"
 #include "commands/kpMacroCommand.h"
-#include "generic/kpSetOverrideCursorSaver.h"
-#include "layers/selections/text/kpTextSelection.h"
+#include "commands/tools/selection/kpToolImageSelectionTransparencyCommand.h"
 #include "commands/tools/selection/kpToolSelectionCreateCommand.h"
 #include "commands/tools/selection/kpToolSelectionDestroyCommand.h"
-#include "environments/tools/selection/kpToolSelectionEnvironment.h"
 #include "commands/tools/selection/kpToolSelectionMoveCommand.h"
 #include "commands/tools/selection/kpToolSelectionResizeScaleCommand.h"
-#include "commands/tools/selection/kpToolImageSelectionTransparencyCommand.h"
 #include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
-#include "widgets/toolbars/kpToolToolBar.h"
-#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "document/kpDocument.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "generic/kpSetOverrideCursorSaver.h"
+#include "kpDefs.h"
+#include "kpLogCategories.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "layers/selections/text/kpTextSelection.h"
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
-#include "kpLogCategories.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 
 #include <KLocalizedString>
 
-
 // protected
-bool kpAbstractImageSelectionTool::shouldChangeImageSelectionTransparency () const
+bool kpAbstractImageSelectionTool::shouldChangeImageSelectionTransparency() const
 {
-    if (environ ()->settingImageSelectionTransparency ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        qCDebug(kpLogTools) << "\trecursion - abort setting selection transparency: "
-                   << environ ()->settingImageSelectionTransparency ();
-    #endif
+    if (environ()->settingImageSelectionTransparency()) {
+#if DEBUG_KP_TOOL_SELECTION
+        qCDebug(kpLogTools) << "\trecursion - abort setting selection transparency: " << environ()->settingImageSelectionTransparency();
+#endif
         return false;
     }
 
-    if (!document ()->imageSelection ()) {
+    if (!document()->imageSelection()) {
         return false;
     }
 
@@ -79,28 +74,27 @@ bool kpAbstractImageSelectionTool::shouldChangeImageSelectionTransparency () con
 }
 
 // protected
-void kpAbstractImageSelectionTool::changeImageSelectionTransparency (
-        const QString &name,
-        const kpImageSelectionTransparency &newTrans,
-        const kpImageSelectionTransparency &oldTrans)
+void kpAbstractImageSelectionTool::changeImageSelectionTransparency(const QString &name,
+                                                                    const kpImageSelectionTransparency &newTrans,
+                                                                    const kpImageSelectionTransparency &oldTrans)
 {
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "CALL(" << name << ")";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+    kpSetOverrideCursorSaver cursorSaver(Qt::WaitCursor);
 
-    if (hasBegunShape ()) {
-        endShapeInternal ();
+    if (hasBegunShape()) {
+        endShapeInternal();
     }
 
-    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
+    kpAbstractImageSelection *imageSel = document()->imageSelection();
 
-    if (imageSel->hasContent () && newTrans.isTransparent ()) {
-        environ ()->flashColorSimilarityToolBarItem ();
+    if (imageSel->hasContent() && newTrans.isTransparent()) {
+        environ()->flashColorSimilarityToolBarItem();
     }
 
-    imageSel->setTransparency (newTrans);
+    imageSel->setTransparency(newTrans);
 
     // We _must_ add the command even if kpAbstractImageSelection::setTransparency()
     // above did not change the selection transparency mask at all.
@@ -133,75 +127,62 @@ void kpAbstractImageSelectionTool::changeImageSelectionTransparency (
     // has moved us to an incorrect state.
     //
     // KDE3: Copy this comment into the KDE 3 branch.
-    commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
-        name,
-        newTrans, oldTrans,
-        environ ()->commandEnvironment ()),
-        false/*no exec*/);
+    commandHistory()->addCommand(new kpToolImageSelectionTransparencyCommand(name, newTrans, oldTrans, environ()->commandEnvironment()), false /*no exec*/);
 }
 
-
 // protected slot virtual [kpAbstractSelectionTool]
-void kpAbstractImageSelectionTool::slotIsOpaqueChanged (bool /*isOpaque*/)
+void kpAbstractImageSelectionTool::slotIsOpaqueChanged(bool /*isOpaque*/)
 {
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "kpAbstractImageSelectionTool::slotIsOpaqueChanged()";
 #endif
 
-    if (!shouldChangeImageSelectionTransparency ()) {
+    if (!shouldChangeImageSelectionTransparency()) {
         return;
     }
 
-    kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
+    kpImageSelectionTransparency st = environ()->imageSelectionTransparency();
 
     kpImageSelectionTransparency oldST = st;
-    oldST.setOpaque (!oldST.isOpaque ());
+    oldST.setOpaque(!oldST.isOpaque());
 
-    changeImageSelectionTransparency (
-        st.isOpaque () ?
-            i18n ("Selection: Opaque") :
-            i18n ("Selection: Transparent"),
-        st, oldST);
+    changeImageSelectionTransparency(st.isOpaque() ? i18n("Selection: Opaque") : i18n("Selection: Transparent"), st, oldST);
 }
 
 // protected slot virtual [base kpTool]
-void kpAbstractImageSelectionTool::slotBackgroundColorChanged (const kpColor &)
+void kpAbstractImageSelectionTool::slotBackgroundColorChanged(const kpColor &)
 {
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "kpAbstractImageSelectionTool::slotBackgroundColorChanged()";
 #endif
 
-    if (!shouldChangeImageSelectionTransparency ()) {
+    if (!shouldChangeImageSelectionTransparency()) {
         return;
     }
 
-    kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
+    kpImageSelectionTransparency st = environ()->imageSelectionTransparency();
 
     kpImageSelectionTransparency oldST = st;
-    oldST.setTransparentColor (oldBackgroundColor ());
+    oldST.setTransparentColor(oldBackgroundColor());
 
-    changeImageSelectionTransparency (
-        i18n ("Selection: Transparency Color"),
-        st, oldST);
+    changeImageSelectionTransparency(i18n("Selection: Transparency Color"), st, oldST);
 }
 
 // protected slot virtual [base kpTool]
-void kpAbstractImageSelectionTool::slotColorSimilarityChanged (double, int)
+void kpAbstractImageSelectionTool::slotColorSimilarityChanged(double, int)
 {
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "kpAbstractImageSelectionTool::slotColorSimilarityChanged()";
 #endif
 
-    if (!shouldChangeImageSelectionTransparency ()) {
+    if (!shouldChangeImageSelectionTransparency()) {
         return;
     }
 
-    kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
+    kpImageSelectionTransparency st = environ()->imageSelectionTransparency();
 
     kpImageSelectionTransparency oldST = st;
-    oldST.setColorSimilarity (oldColorSimilarity ());
+    oldST.setColorSimilarity(oldColorSimilarity());
 
-    changeImageSelectionTransparency (
-        i18n ("Selection: Transparency Color Similarity"),
-        st, oldST);
+    changeImageSelectionTransparency(i18n("Selection: Transparency Color Similarity"), st, oldST);
 }

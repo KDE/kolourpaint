@@ -25,31 +25,25 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_TEXT_CHANGE_STYLE_COMMAND_H
 #define KP_TOOL_TEXT_CHANGE_STYLE_COMMAND_H
-
 
 #include "commands/kpNamedCommand.h"
 #include "layers/selections/text/kpTextStyle.h"
 
-
 class kpToolTextChangeStyleCommand : public kpNamedCommand
 {
 public:
-    kpToolTextChangeStyleCommand (const QString &name,
-        const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
-        kpCommandEnvironment *environ);
-    ~kpToolTextChangeStyleCommand () override;
+    kpToolTextChangeStyleCommand(const QString &name, const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle, kpCommandEnvironment *environ);
+    ~kpToolTextChangeStyleCommand() override;
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 protected:
     kpTextStyle m_newTextStyle, m_oldTextStyle;
 };
 
-
-#endif  // KP_TOOL_TEXT_CHANGE_STYLE_COMMAND_H
+#endif // KP_TOOL_TEXT_CHANGE_STYLE_COMMAND_H

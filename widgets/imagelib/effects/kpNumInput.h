@@ -22,8 +22,8 @@
 #ifndef kpNumInput_H
 #define kpNumInput_H
 
-#include <QWidget>
 #include <QSpinBox>
+#include <QWidget>
 
 class QSlider;
 
@@ -283,7 +283,6 @@ Q_SIGNALS:
      */
     void valueChanged(int);
 
-
 private Q_SLOTS:
     void spinValueChanged(int);
 
@@ -361,8 +360,7 @@ public:
      * @param precision number of digits after the decimal point
      * @param parent parent QWidget
      */
-    kpDoubleNumInput(double lower, double upper, double value, QWidget *parent = nullptr, double singleStep = 0.01,
-                    int precision = 2);
+    kpDoubleNumInput(double lower, double upper, double value, QWidget *parent = nullptr, double singleStep = 0.01, int precision = 2);
 
     /**
      * destructor
@@ -393,11 +391,11 @@ public:
     QString specialValueText() const;
 
     /**
-    * @param min  minimum value
-    * @param max  maximum value
-    * @param singleStep step size for the QSlider
-    * @param slider whether the slider is created or not
-    */
+     * @param min  minimum value
+     * @param max  maximum value
+     * @param singleStep step size for the QSlider
+     * @param slider whether the slider is created or not
+     */
     void setRange(double min, double max, double singleStep = 1);
 
     /**
@@ -474,9 +472,9 @@ protected:
     void resizeEvent(QResizeEvent *) override;
 
     friend class kpDoubleLine;
+
 private:
-    void initWidget(double value, double lower, double upper,
-                    double singleStep, int precision);
+    void initWidget(double value, double lower, double upper, double singleStep, int precision);
     double mapSliderToSpin(int) const;
 
 private:
@@ -486,6 +484,5 @@ private:
 
     Q_DISABLE_COPY(kpDoubleNumInput)
 };
-
 
 #endif // kpNumInput_H

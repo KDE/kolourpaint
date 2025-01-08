@@ -25,72 +25,66 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpToolSelectionEnvironment.h"
 
-#include "mainWindow/kpMainWindow.h"
 #include "layers/selections/image/kpImageSelectionTransparency.h"
 #include "layers/selections/text/kpTextStyle.h"
+#include "mainWindow/kpMainWindow.h"
 
-
-struct kpToolSelectionEnvironmentPrivate
-{
+struct kpToolSelectionEnvironmentPrivate {
 };
 
-kpToolSelectionEnvironment::kpToolSelectionEnvironment (kpMainWindow *mainWindow)
-    : kpToolEnvironment (mainWindow),
-      d (new kpToolSelectionEnvironmentPrivate ())
+kpToolSelectionEnvironment::kpToolSelectionEnvironment(kpMainWindow *mainWindow)
+    : kpToolEnvironment(mainWindow)
+    , d(new kpToolSelectionEnvironmentPrivate())
 {
 }
 
-kpToolSelectionEnvironment::~kpToolSelectionEnvironment ()
+kpToolSelectionEnvironment::~kpToolSelectionEnvironment()
 {
     delete d;
 }
 
-
 // public
-kpImageSelectionTransparency kpToolSelectionEnvironment::imageSelectionTransparency () const
+kpImageSelectionTransparency kpToolSelectionEnvironment::imageSelectionTransparency() const
 {
-    return mainWindow ()->imageSelectionTransparency ();
+    return mainWindow()->imageSelectionTransparency();
 }
 
 // public
-int kpToolSelectionEnvironment::settingImageSelectionTransparency () const
+int kpToolSelectionEnvironment::settingImageSelectionTransparency() const
 {
-    return mainWindow ()->settingImageSelectionTransparency ();
-}
-
-
-// public
-void kpToolSelectionEnvironment::deselectSelection () const
-{
-    mainWindow ()->slotDeselect ();
+    return mainWindow()->settingImageSelectionTransparency();
 }
 
 // public
-QMenu *kpToolSelectionEnvironment::selectionToolRMBMenu () const
+void kpToolSelectionEnvironment::deselectSelection() const
 {
-    return mainWindow ()->selectionToolRMBMenu ();
-}
-
-
-// public
-void kpToolSelectionEnvironment::enableTextToolBarActions (bool enable) const
-{
-    mainWindow ()->enableTextToolBarActions (enable);
+    mainWindow()->slotDeselect();
 }
 
 // public
-kpTextStyle kpToolSelectionEnvironment::textStyle () const
+QMenu *kpToolSelectionEnvironment::selectionToolRMBMenu() const
 {
-    return mainWindow ()->textStyle ();
+    return mainWindow()->selectionToolRMBMenu();
 }
 
 // public
-int kpToolSelectionEnvironment::settingTextStyle () const
+void kpToolSelectionEnvironment::enableTextToolBarActions(bool enable) const
 {
-    return mainWindow ()->settingTextStyle ();
+    mainWindow()->enableTextToolBarActions(enable);
+}
+
+// public
+kpTextStyle kpToolSelectionEnvironment::textStyle() const
+{
+    return mainWindow()->textStyle();
+}
+
+// public
+int kpToolSelectionEnvironment::settingTextStyle() const
+{
+    return mainWindow()->settingTextStyle();
 }
 
 #include "moc_kpToolSelectionEnvironment.cpp"

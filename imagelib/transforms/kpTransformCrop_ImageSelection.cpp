@@ -25,24 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_CROP 0
-
 
 #include "kpTransformCrop.h"
 #include "kpTransformCropPrivate.h"
 
-#include "layers/selections/image/kpAbstractImageSelection.h"
-#include "environments/commands/kpCommandEnvironment.h"
 #include "commands/kpCommandHistory.h"
-#include "document/kpDocument.h"
-#include "imagelib/kpImage.h"
 #include "commands/kpMacroCommand.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "document/kpDocument.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "imagelib/kpImage.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
 #include "mainWindow/kpMainWindow.h"
 #include "pixmapfx/kpPixmapFX.h"
-#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
 #include "views/manager/kpViewManager.h"
-
 
 // See the "image selection" part of the kpTransformCrop() API Doc.
 //
@@ -50,23 +47,24 @@
 class SetDocumentToSelectionImageCommand : public kpCommand
 {
 public:
-    explicit SetDocumentToSelectionImageCommand (kpCommandEnvironment *environ);
-    ~SetDocumentToSelectionImageCommand () override;
+    explicit SetDocumentToSelectionImageCommand(kpCommandEnvironment *environ);
+    ~SetDocumentToSelectionImageCommand() override;
 
     /* (uninteresting child of macro cmd) */
-    QString name () const override { return {}; }
-
-    kpCommandSize::SizeType size () const override
+    QString name() const override
     {
-        return ImageSize (m_oldImage) +
-               SelectionSize (m_fromSelectionPtr) +
-               ImageSize (m_imageIfFromSelectionDoesntHaveOne);
+        return {};
+    }
+
+    kpCommandSize::SizeType size() const override
+    {
+        return ImageSize(m_oldImage) + SelectionSize(m_fromSelectionPtr) + ImageSize(m_imageIfFromSelectionDoesntHaveOne);
     }
 
     // ASSUMPTION: Document has been resized to be the same size as the
     //             selection.
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 protected:
     kpColor m_backgroundColor;
@@ -75,28 +73,22 @@ protected:
     kpImage m_imageIfFromSelectionDoesntHaveOne;
 };
 
-
-SetDocumentToSelectionImageCommand::SetDocumentToSelectionImageCommand (kpCommandEnvironment *environ)
-    : kpCommand (environ),
-      m_backgroundColor (environ->backgroundColor ()),
-      m_fromSelectionPtr (
-        dynamic_cast <kpAbstractImageSelection *> (
-            environ->document ()->selection ()->clone ()))
+SetDocumentToSelectionImageCommand::SetDocumentToSelectionImageCommand(kpCommandEnvironment *environ)
+    : kpCommand(environ)
+    , m_backgroundColor(environ->backgroundColor())
+    , m_fromSelectionPtr(dynamic_cast<kpAbstractImageSelection *>(environ->document()->selection()->clone()))
 {
-    Q_ASSERT (m_fromSelectionPtr);
+    Q_ASSERT(m_fromSelectionPtr);
 
-    if ( m_fromSelectionPtr )  // make coverity happy
+    if (m_fromSelectionPtr) // make coverity happy
     {
-      m_imageIfFromSelectionDoesntHaveOne =
-        m_fromSelectionPtr->hasContent () ?
-            kpImage () :
-            document ()->getSelectedBaseImage ();
+        m_imageIfFromSelectionDoesntHaveOne = m_fromSelectionPtr->hasContent() ? kpImage() : document()->getSelectedBaseImage();
     }
 }
 
 //---------------------------------------------------------------------
 
-SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand ()
+SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand()
 {
     delete m_fromSelectionPtr;
 }
@@ -104,21 +96,20 @@ SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand ()
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-void SetDocumentToSelectionImageCommand::execute ()
+void SetDocumentToSelectionImageCommand::execute()
 {
 #if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "SetDocumentToSelectionImageCommand::execute()";
 #endif
 
-    viewManager ()->setQueueUpdates ();
+    viewManager()->setQueueUpdates();
     {
         // kpTransformCrop_ImageSelection's <resizeDocCommand> has
         // executed, resizing the document to be the size of the selection
         // bounding rectangle.
-        Q_ASSERT (document ()->width () == m_fromSelectionPtr->width ());
-        Q_ASSERT (document ()->height () == m_fromSelectionPtr->height ());
-        m_oldImage = document ()->image ();
-
+        Q_ASSERT(document()->width() == m_fromSelectionPtr->width());
+        Q_ASSERT(document()->height() == m_fromSelectionPtr->height());
+        m_oldImage = document()->image();
 
         //
         // e.g. original elliptical selection:
@@ -142,116 +133,92 @@ void SetDocumentToSelectionImageCommand::execute ()
         QImage newDocImage(document()->width(), document()->height(), QImage::Format_ARGB32_Premultiplied);
         newDocImage.fill(m_backgroundColor.toQRgb());
 
-    #if DEBUG_KP_TOOL_CROP
-        qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
-                   << " pm=" << m_fromSelectionPtr->hasContent ();
-    #endif
+#if DEBUG_KP_TOOL_CROP
+        qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect() << " pm=" << m_fromSelectionPtr->hasContent();
+#endif
         QImage setTransparentImage;
 
-        if (m_fromSelectionPtr->hasContent ())
-        {
-            setTransparentImage = m_fromSelectionPtr->transparentImage ();
+        if (m_fromSelectionPtr->hasContent()) {
+            setTransparentImage = m_fromSelectionPtr->transparentImage();
 
-        #if DEBUG_KP_TOOL_CROP
-            qCDebug(kpLogImagelib) << "\thave pixmap; rect="
-                       << setTransparentImage.rect ();
-        #endif
-        }
-        else
-        {
+#if DEBUG_KP_TOOL_CROP
+            qCDebug(kpLogImagelib) << "\thave pixmap; rect=" << setTransparentImage.rect();
+#endif
+        } else {
             setTransparentImage = m_imageIfFromSelectionDoesntHaveOne;
-        #if DEBUG_KP_TOOL_CROP
-            qCDebug(kpLogImagelib) << "\tno pixmap in sel - get it; rect="
-                       << setTransparentImage.rect ();
-        #endif
+#if DEBUG_KP_TOOL_CROP
+            qCDebug(kpLogImagelib) << "\tno pixmap in sel - get it; rect=" << setTransparentImage.rect();
+#endif
         }
 
-        kpPixmapFX::paintPixmapAt (&newDocImage,
-            QPoint (0, 0),
-            setTransparentImage);
+        kpPixmapFX::paintPixmapAt(&newDocImage, QPoint(0, 0), setTransparentImage);
 
+        document()->setImageAt(newDocImage, QPoint(0, 0));
+        document()->selectionDelete();
 
-        document ()->setImageAt (newDocImage, QPoint (0, 0));
-        document ()->selectionDelete ();
-
-
-        environ ()->somethingBelowTheCursorChanged ();
+        environ()->somethingBelowTheCursorChanged();
     }
-    viewManager ()->restoreQueueUpdates ();
+    viewManager()->restoreQueueUpdates();
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-void SetDocumentToSelectionImageCommand::unexecute ()
+void SetDocumentToSelectionImageCommand::unexecute()
 {
 #if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "SetDocumentToSelectionImageCommand::unexecute()";
 #endif
 
-    viewManager ()->setQueueUpdates ();
+    viewManager()->setQueueUpdates();
     {
-        document ()->setImageAt (m_oldImage, QPoint (0, 0));
-        m_oldImage = kpImage ();
+        document()->setImageAt(m_oldImage, QPoint(0, 0));
+        m_oldImage = kpImage();
 
-    #if DEBUG_KP_TOOL_CROP
-        qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
-                   << " pm=" << m_fromSelectionPtr->hasContent ();
-    #endif
-        document ()->setSelection (*m_fromSelectionPtr);
+#if DEBUG_KP_TOOL_CROP
+        qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect() << " pm=" << m_fromSelectionPtr->hasContent();
+#endif
+        document()->setSelection(*m_fromSelectionPtr);
 
-        environ ()->somethingBelowTheCursorChanged ();
+        environ()->somethingBelowTheCursorChanged();
     }
-    viewManager ()->restoreQueueUpdates ();
+    viewManager()->restoreQueueUpdates();
 }
 
 //---------------------------------------------------------------------
 
-
-void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
-        const QString &commandName, kpCommand *resizeDocCommand)
+void kpTransformCrop_ImageSelection(kpMainWindow *mainWindow, const QString &commandName, kpCommand *resizeDocCommand)
 {
     // Save starting selection, minus the border.
-    auto *borderImageSel = dynamic_cast <kpAbstractImageSelection *> (
-            mainWindow->document ()->selection ()->clone ());
+    auto *borderImageSel = dynamic_cast<kpAbstractImageSelection *>(mainWindow->document()->selection()->clone());
 
-    Q_ASSERT (borderImageSel);
+    Q_ASSERT(borderImageSel);
 
-    if ( !borderImageSel ) {  // make coverity happy
+    if (!borderImageSel) { // make coverity happy
         return;
     }
 
     // (only interested in border)
-    borderImageSel->deleteContent ();
-    borderImageSel->moveTo (QPoint (0, 0));
+    borderImageSel->deleteContent();
+    borderImageSel->moveTo(QPoint(0, 0));
 
-    auto *environ = mainWindow->commandEnvironment ();
-    auto *macroCmd = new kpMacroCommand (commandName, environ);
+    auto *environ = mainWindow->commandEnvironment();
+    auto *macroCmd = new kpMacroCommand(commandName, environ);
 
     // (must resize doc _before_ SetDocumentToSelectionImageCommand in case
     //  doc needs to get bigger - else selection image may not fit)
-    macroCmd->addCommand (resizeDocCommand);
+    macroCmd->addCommand(resizeDocCommand);
 
 #if DEBUG_KP_TOOL_CROP
     qCDebug(kpLogImagelib) << "\tis pixmap sel";
     qCDebug(kpLogImagelib) << "\tcreating SetImage cmd";
 #endif
-    macroCmd->addCommand (new SetDocumentToSelectionImageCommand (environ));
+    macroCmd->addCommand(new SetDocumentToSelectionImageCommand(environ));
 
-
-    mainWindow->addImageOrSelectionCommand (
-        macroCmd,
-        true/*add create cmd*/,
-        false/*don't add pull cmd*/);
-
+    mainWindow->addImageOrSelectionCommand(macroCmd, true /*add create cmd*/, false /*don't add pull cmd*/);
 
     // Add selection border back for convenience.
-    mainWindow->commandHistory ()->addCommand (
-        new kpToolSelectionCreateCommand (
-            i18n ("Selection: Create"),
-            *borderImageSel,
-            mainWindow->commandEnvironment ()));
-
+    mainWindow->commandHistory()->addCommand(new kpToolSelectionCreateCommand(i18n("Selection: Create"), *borderImageSel, mainWindow->commandEnvironment()));
 
     delete borderImageSel;
 }

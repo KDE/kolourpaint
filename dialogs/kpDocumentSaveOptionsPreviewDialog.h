@@ -25,14 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDocumentSaveOptionsPreviewDialog_H
 #define kpDocumentSaveOptionsPreviewDialog_H
 
 #include "generic/widgets/kpSubWindow.h"
 
 #include <QSize>
-
 
 class QCloseEvent;
 class QImage;
@@ -42,33 +40,32 @@ class QResizeEvent;
 
 class kpResizeSignallingLabel;
 
-
 class kpDocumentSaveOptionsPreviewDialog : public kpSubWindow
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
-    ~kpDocumentSaveOptionsPreviewDialog () override;
+    explicit kpDocumentSaveOptionsPreviewDialog(QWidget *parent);
+    ~kpDocumentSaveOptionsPreviewDialog() override;
 
-    QSize preferredMinimumSize () const;
+    QSize preferredMinimumSize() const;
 
 protected:
     static const QSize s_pixmapLabelMinimumSize;
 
 Q_SIGNALS:
-    void moved ();
-    void resized ();
-    void finished ();
+    void moved();
+    void resized();
+    void finished();
 
 public Q_SLOTS:
-    void setFilePixmapAndSize (const QImage &filePixmap, qint64 fileSize);
-    void updatePixmapPreview ();
+    void setFilePixmapAndSize(const QImage &filePixmap, qint64 fileSize);
+    void updatePixmapPreview();
 
 protected:
-    void closeEvent (QCloseEvent *e) override;
-    void moveEvent (QMoveEvent *e) override;
-    void resizeEvent (QResizeEvent *e) override;
+    void closeEvent(QCloseEvent *e) override;
+    void moveEvent(QMoveEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
 
 protected:
     QImage *m_filePixmap;
@@ -78,5 +75,4 @@ protected:
     QLabel *m_fileSizeLabel;
 };
 
-
-#endif  // kpDocumentSaveOptionsPreviewDialog_H
+#endif // kpDocumentSaveOptionsPreviewDialog_H

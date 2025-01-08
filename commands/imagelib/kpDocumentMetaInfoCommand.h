@@ -25,34 +25,27 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDocumentMetaInfoCommand_H
 #define kpDocumentMetaInfoCommand_H
 
-
 #include "commands/kpNamedCommand.h"
-
 
 class kpDocumentMetaInfo;
 
 class kpDocumentMetaInfoCommand : public kpNamedCommand
 {
 public:
-    kpDocumentMetaInfoCommand (const QString &name,
-        const kpDocumentMetaInfo &metaInfo,
-        const kpDocumentMetaInfo &oldMetaInfo,
-        kpCommandEnvironment *environ);
-    ~kpDocumentMetaInfoCommand () override;
+    kpDocumentMetaInfoCommand(const QString &name, const kpDocumentMetaInfo &metaInfo, const kpDocumentMetaInfo &oldMetaInfo, kpCommandEnvironment *environ);
+    ~kpDocumentMetaInfoCommand() override;
 
-    SizeType size () const override;
+    SizeType size() const override;
 
 public:
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
-    struct kpDocumentMetaInfoCommandPrivate * const d;
+    struct kpDocumentMetaInfoCommandPrivate *const d;
 };
 
-
-#endif  // kpDocumentMetaInfoCommand_H
+#endif // kpDocumentMetaInfoCommand_H

@@ -25,15 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpAbstractImageSelection_H
 #define kpAbstractImageSelection_H
 
-
+#include "imagelib/kpImage.h"
 #include "kpImageSelectionTransparency.h"
 #include "layers/selections/kpAbstractSelection.h"
-#include "imagelib/kpImage.h"
-
 
 //
 // An abstract selection with optional image content and background
@@ -63,61 +60,55 @@
 //
 class kpAbstractImageSelection : public kpAbstractSelection
 {
-Q_OBJECT
+    Q_OBJECT
 
-//
-// Initialization
-//
+    //
+    // Initialization
+    //
 
 protected:
     // (Call these in subclass constructors)
-    kpAbstractImageSelection (const kpImageSelectionTransparency &transparency =
-        kpImageSelectionTransparency ());
+    kpAbstractImageSelection(const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpAbstractImageSelection (const QRect &rect,
-        const kpImage &baseImage = kpImage (),
-        const kpImageSelectionTransparency &transparency =
-            kpImageSelectionTransparency ());
+    kpAbstractImageSelection(const QRect &rect,
+                             const kpImage &baseImage = kpImage(),
+                             const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpAbstractImageSelection (const QRect &rect,
-        const kpImageSelectionTransparency &transparency =
-            kpImageSelectionTransparency ());
+    kpAbstractImageSelection(const QRect &rect, const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
     // (Call this in subclass implementations of operator=)
-    kpAbstractImageSelection &operator= (const kpAbstractImageSelection &rhs);
+    kpAbstractImageSelection &operator=(const kpAbstractImageSelection &rhs);
 
 public:
     // (Covariant return-type specialization of superclass pure virtual method)
-    kpAbstractImageSelection *clone () const override = 0;
+    kpAbstractImageSelection *clone() const override = 0;
 
-    ~kpAbstractImageSelection () override;
+    ~kpAbstractImageSelection() override;
 
-
-//
-// Marshalling
-//
+    //
+    // Marshalling
+    //
 
 public:
     // You must override this if you have extra serializable fields.
     // Remember to call this base implementation before your code.
-    bool readFromStream (QDataStream &stream) override;
+    bool readFromStream(QDataStream &stream) override;
 
     // You must override this if you have extra serializable fields.
     // Remember to call this base implementation before your code.
-    void writeToStream (QDataStream &stream) const override;
+    void writeToStream(QDataStream &stream) const override;
 
-
-//
-// General Queries
-//
+    //
+    // General Queries
+    //
 
 public:
-    QString name () const override;
+    QString name() const override;
 
     // You must override this, if you have extra fields that take a
     // non-constant amount of space, and add the size returned by this
     // implementation.
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
     // Same as virtual size() (it even calls it) but subtracts the size of the
     // baseImage().
@@ -137,23 +128,21 @@ public:
     //       started removing the old kpSelection::setPixmap(QPixmap())
     //       (now kpAbstractImageSelection::setBaseImage(kpImage()) or
     //        kpAbstractImageSelection::deleteContent()) space saving hack.
-    kpCommandSize::SizeType sizeWithoutImage () const;
+    kpCommandSize::SizeType sizeWithoutImage() const;
 
-
-//
-// Dimensions
-//
+    //
+    // Dimensions
+    //
 
 public:
-    int minimumWidth () const override;
-    int minimumHeight () const override;
+    int minimumWidth() const override;
+    int minimumHeight() const override;
 
-
-//
-// Shape Mask
-//
-// These methods do not access any class instance fields.
-//
+    //
+    // Shape Mask
+    //
+    // These methods do not access any class instance fields.
+    //
 
 public:
     // Returns the mask corresponding to the shape of the selection.
@@ -171,7 +160,7 @@ public:
     //       shapeRegion().
     //
     // TODO: Try to get rid of this method since it's slow.
-    virtual QBitmap shapeBitmap (bool nullForRectangular = false) const;
+    virtual QBitmap shapeBitmap(bool nullForRectangular = false) const;
 
     // Returns the region corresponding to the shape of the selection
     // e.g. elliptical region for an elliptical selection.
@@ -182,7 +171,7 @@ public:
     //       shapeRegion().
     //
     // OPT: QRegion is probably incredibly slow - cache
-    virtual QRegion shapeRegion () const = 0;
+    virtual QRegion shapeRegion() const = 0;
 
     // Returns the given <image> with the pixels outside of the selection's
     // shape set to transparent.
@@ -190,77 +179,70 @@ public:
     // Very slow.
     //
     // ASSUMPTION: The image has the same dimensions as the selection.
-    kpImage givenImageMaskedByShape (const kpImage &image) const;
+    kpImage givenImageMaskedByShape(const kpImage &image) const;
 
-
-//
-// Content - Base Image
-//
+    //
+    // Content - Base Image
+    //
 
 public:
     // Returns whether there's a non-null base image.
-    bool hasContent () const override;
+    bool hasContent() const override;
 
-    void deleteContent () override;
-
-public:
-    kpImage baseImage () const;
-    void setBaseImage (const kpImage &baseImage);
-
-
-//
-// Background Subtraction
-//
+    void deleteContent() override;
 
 public:
-    kpImageSelectionTransparency transparency () const;
+    kpImage baseImage() const;
+    void setBaseImage(const kpImage &baseImage);
+
+    //
+    // Background Subtraction
+    //
+
+public:
+    kpImageSelectionTransparency transparency() const;
 
     // Returns whether or not the selection changed due to setting the
     // transparency info.  If <checkTransparentPixmapChanged> is set,
     // it will try harder to return false (although the check is
     // expensive).
-    bool setTransparency (const kpImageSelectionTransparency &transparency,
-                          bool checkTransparentPixmapChanged = false);
+    bool setTransparency(const kpImageSelectionTransparency &transparency, bool checkTransparentPixmapChanged = false);
 
 private:
     // Updates the selection transparency (a.k.a. background subtraction) mask
     // so that transparentImage() will work.
     //
     // Called when the base image or selection transparency changes.
-    void recalculateTransparencyMaskCache ();
+    void recalculateTransparencyMaskCache();
 
 public:
     // Returns baseImage() after applying kpImageSelectionTransparency
-    kpImage transparentImage () const;
+    kpImage transparentImage() const;
 
-
-//
-// Mutation - Effects
-//
+    //
+    // Mutation - Effects
+    //
 
 public:
     // Overwrites the base image with the selection's shape (e.g. ellipse)
     // filled in with <color>.  See shapeBitmap().
-    void fill (const kpColor &color);
+    void fill(const kpColor &color);
 
-    virtual void flip (bool horiz, bool vert);
+    virtual void flip(bool horiz, bool vert);
 
-
-//
-// Rendering
-//
+    //
+    // Rendering
+    //
 
 public:
     // (using transparent image)
-    void paint (QImage *destPixmap, const QRect &docRect) const override;
+    void paint(QImage *destPixmap, const QRect &docRect) const override;
 
     // (using base image)
-    void paintWithBaseImage (QImage *destPixmap, const QRect &docRect) const;
-
+    void paintWithBaseImage(QImage *destPixmap, const QRect &docRect) const;
 
 private:
-    struct kpAbstractImageSelectionPrivate * const d;
+    struct kpAbstractImageSelectionPrivate *const d;
 };
 
-
-#endif  // kpAbstractImageSelection_H
+#endif // kpAbstractImageSelection_H

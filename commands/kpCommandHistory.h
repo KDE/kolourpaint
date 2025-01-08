@@ -25,16 +25,13 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpCommandHistory_H
 #define kpCommandHistory_H
-
 
 #include "kpCommandHistoryBase.h"
 
 class kpMainWindow;
 class kpToolSelectionCreateCommand;
-
 
 //
 // KolourPaint-specific command history functionality.
@@ -59,11 +56,11 @@ class kpToolSelectionCreateCommand;
 //
 class kpCommandHistory : public kpCommandHistoryBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow);
-    ~kpCommandHistory () override;
+    kpCommandHistory(bool doReadConfig, kpMainWindow *mainWindow);
+    ~kpCommandHistory() override;
 
 public:
     // Same as addCommand(), except that this has a more desirable behavior
@@ -90,16 +87,14 @@ public:
     //
     // REFACTOR: Why not just override addCommand() and test if it was given a
     //           kpToolSelectionCreateCommand?
-    void addCreateSelectionCommand (kpToolSelectionCreateCommand *cmd,
-        bool execute = true);
+    void addCreateSelectionCommand(kpToolSelectionCreateCommand *cmd, bool execute = true);
 
 public Q_SLOTS:
-    void undo () override;
-    void redo () override;
+    void undo() override;
+    void redo() override;
 
 protected:
     kpMainWindow *m_mainWindow;
 };
 
-
-#endif  // kpCommandHistory_H
+#endif // kpCommandHistory_H

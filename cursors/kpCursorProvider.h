@@ -25,19 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_CURSOR_PROVIDER_H
 #define KP_CURSOR_PROVIDER_H
 
-
 class QCursor;
-
 
 class kpCursorProvider
 {
 public:
-    static QCursor lightCross ();
+    static QCursor lightCross();
 };
 
-
-#endif  // KP_CURSOR_PROVIDER_H
+#endif // KP_CURSOR_PROVIDER_H

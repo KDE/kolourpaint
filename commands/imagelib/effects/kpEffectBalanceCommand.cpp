@@ -33,23 +33,19 @@
 
 //--------------------------------------------------------------------------------
 
-kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
-        int brightness, int contrast, int gamma,
-        bool actOnSelection,
-        kpCommandEnvironment *environ)
-    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, environ),
-      m_channels (channels),
-      m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
+kpEffectBalanceCommand::kpEffectBalanceCommand(int channels, int brightness, int contrast, int gamma, bool actOnSelection, kpCommandEnvironment *environ)
+    : kpEffectCommandBase(i18n("Balance"), actOnSelection, environ)
+    , m_channels(channels)
+    , m_brightness(brightness)
+    , m_contrast(contrast)
+    , m_gamma(gamma)
 {
 }
 
-kpEffectBalanceCommand::~kpEffectBalanceCommand () = default;
-
+kpEffectBalanceCommand::~kpEffectBalanceCommand() = default;
 
 // protected virtual [base kpEffectCommandBase]
-kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image)
+kpImage kpEffectBalanceCommand::applyEffect(const kpImage &image)
 {
-    return kpEffectBalance::applyEffect (image, m_channels,
-        m_brightness, m_contrast, m_gamma);
+    return kpEffectBalance::applyEffect(image, m_channels, m_brightness, m_contrast, m_gamma);
 }
-

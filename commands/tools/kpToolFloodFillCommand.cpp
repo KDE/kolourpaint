@@ -25,16 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_FLOOD_FILL 0
-
 
 #include "kpToolFloodFillCommand.h"
 
-#include "imagelib/kpColor.h"
-#include "kpDefs.h"
 #include "document/kpDocument.h"
+#include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"
+#include "kpDefs.h"
 #include "kpLogCategories.h"
 
 #include <QApplication>
@@ -43,28 +41,25 @@
 
 //---------------------------------------------------------------------
 
-struct kpToolFloodFillCommandPrivate
-{
+struct kpToolFloodFillCommandPrivate {
     kpImage oldImage;
     bool fillEntireImage{false};
 };
 
 //---------------------------------------------------------------------
 
-kpToolFloodFillCommand::kpToolFloodFillCommand (int x, int y,
-        const kpColor &color, int processedColorSimilarity,
-        kpCommandEnvironment *environ)
+kpToolFloodFillCommand::kpToolFloodFillCommand(int x, int y, const kpColor &color, int processedColorSimilarity, kpCommandEnvironment *environ)
 
-    : kpCommand (environ),
-      kpFloodFill (document ()->imagePointer (), x, y, color, processedColorSimilarity),
-      d (new kpToolFloodFillCommandPrivate ())
+    : kpCommand(environ)
+    , kpFloodFill(document()->imagePointer(), x, y, color, processedColorSimilarity)
+    , d(new kpToolFloodFillCommandPrivate())
 {
     d->fillEntireImage = false;
 }
 
 //---------------------------------------------------------------------
 
-kpToolFloodFillCommand::~kpToolFloodFillCommand ()
+kpToolFloodFillCommand::~kpToolFloodFillCommand()
 {
     delete d;
 }
@@ -72,23 +67,23 @@ kpToolFloodFillCommand::~kpToolFloodFillCommand ()
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-QString kpToolFloodFillCommand::name () const
+QString kpToolFloodFillCommand::name() const
 {
-    return i18n ("Flood Fill");
+    return i18n("Flood Fill");
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
-kpCommandSize::SizeType kpToolFloodFillCommand::size () const
+kpCommandSize::SizeType kpToolFloodFillCommand::size() const
 {
-    return kpFloodFill::size () + ImageSize (d->oldImage);
+    return kpFloodFill::size() + ImageSize(d->oldImage);
 }
 
 //---------------------------------------------------------------------
 
 // public
-void kpToolFloodFillCommand::setFillEntireImage (bool yes)
+void kpToolFloodFillCommand::setFillEntireImage(bool yes)
 {
     d->fillEntireImage = yes;
 }
@@ -96,40 +91,32 @@ void kpToolFloodFillCommand::setFillEntireImage (bool yes)
 //---------------------------------------------------------------------
 
 // protected virtual [base kpCommand]
-void kpToolFloodFillCommand::execute ()
+void kpToolFloodFillCommand::execute()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    qCDebug(kpLogCommands) << "kpToolFloodFillCommand::execute() fillEntireImage="
-              << d->fillEntireImage;
+    qCDebug(kpLogCommands) << "kpToolFloodFillCommand::execute() fillEntireImage=" << d->fillEntireImage;
 #endif
 
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
-
-    if (d->fillEntireImage)
-    {
-        doc->fill (kpFloodFill::color ());
-    }
-    else
-    {
-        QRect rect = kpFloodFill::boundingRect ();
-        if (rect.isValid ())
-        {
-            QApplication::setOverrideCursor (Qt::WaitCursor);
+    if (d->fillEntireImage) {
+        doc->fill(kpFloodFill::color());
+    } else {
+        QRect rect = kpFloodFill::boundingRect();
+        if (rect.isValid()) {
+            QApplication::setOverrideCursor(Qt::WaitCursor);
             {
-                d->oldImage = doc->getImageAt (rect);
+                d->oldImage = doc->getImageAt(rect);
 
-                kpFloodFill::fill ();
-                doc->slotContentsChanged (rect);
+                kpFloodFill::fill();
+                doc->slotContentsChanged(rect);
             }
-            QApplication::restoreOverrideCursor ();
-        }
-        else
-        {
-        #if DEBUG_KP_TOOL_FLOOD_FILL && 1
+            QApplication::restoreOverrideCursor();
+        } else {
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
             qCDebug(kpLogCommands) << "\tinvalid boundingRect - must be NOP case";
-        #endif
+#endif
         }
     }
 }
@@ -137,31 +124,25 @@ void kpToolFloodFillCommand::execute ()
 //---------------------------------------------------------------------
 
 // protected virtual [base kpCommand]
-void kpToolFloodFillCommand::unexecute ()
+void kpToolFloodFillCommand::unexecute()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    qCDebug(kpLogCommands) << "kpToolFloodFillCommand::unexecute() fillEntireImage="
-              << d->fillEntireImage;
+    qCDebug(kpLogCommands) << "kpToolFloodFillCommand::unexecute() fillEntireImage=" << d->fillEntireImage;
 #endif
 
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
+    if (d->fillEntireImage) {
+        doc->fill(kpFloodFill::colorToChange());
+    } else {
+        QRect rect = kpFloodFill::boundingRect();
+        if (rect.isValid()) {
+            doc->setImageAt(d->oldImage, rect.topLeft());
 
-    if (d->fillEntireImage)
-    {
-        doc->fill (kpFloodFill::colorToChange ());
-    }
-    else
-    {
-        QRect rect = kpFloodFill::boundingRect ();
-        if (rect.isValid ())
-        {
-            doc->setImageAt (d->oldImage, rect.topLeft ());
+            d->oldImage = kpImage();
 
-            d->oldImage = kpImage ();
-
-            doc->slotContentsChanged (rect);
+            doc->slotContentsChanged(rect);
         }
     }
 }

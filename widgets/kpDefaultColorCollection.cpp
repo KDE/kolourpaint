@@ -25,45 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpDefaultColorCollection.h"
 
 #include "imagelib/kpColor.h"
 
-
-kpDefaultColorCollection::kpDefaultColorCollection ()
+kpDefaultColorCollection::kpDefaultColorCollection()
 {
-    kpColor colors [] =
-    {
-        kpColor::Black,
-        kpColor::Gray,
-        kpColor::Red,
-        kpColor::Orange,
-        kpColor::Yellow,
-        kpColor::Green,
-        kpColor::Aqua,
-        kpColor::Blue,
-        kpColor::Purple,
-        kpColor::Pink,
-        kpColor::LightGreen,
+    kpColor colors[] = {kpColor::Black,    kpColor::Gray,      kpColor::Red,        kpColor::Orange,     kpColor::Yellow,     kpColor::Green,
+                        kpColor::Aqua,     kpColor::Blue,      kpColor::Purple,     kpColor::Pink,       kpColor::LightGreen,
 
-        kpColor::White,
-        kpColor::LightGray,
-        kpColor::DarkRed,
-        kpColor::DarkOrange,
-        kpColor::DarkYellow,
-        kpColor::DarkGreen,
-        kpColor::DarkAqua,
-        kpColor::DarkBlue,
-        kpColor::DarkPurple,
-        kpColor::LightBlue,
-        kpColor::Tan
-    };
+                        kpColor::White,    kpColor::LightGray, kpColor::DarkRed,    kpColor::DarkOrange, kpColor::DarkYellow, kpColor::DarkGreen,
+                        kpColor::DarkAqua, kpColor::DarkBlue,  kpColor::DarkPurple, kpColor::LightBlue,  kpColor::Tan};
 
-    for (const auto & color : colors)
-    {
-        addColor (color.toQColor ());
+    for (const auto &color : colors) {
+        addColor(color.toQColor());
     }
 }
 
-kpDefaultColorCollection::~kpDefaultColorCollection () = default;
+kpDefaultColorCollection::~kpDefaultColorCollection() = default;

@@ -25,32 +25,25 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpTransformSkewCommand_H
 #define kpTransformSkewCommand_H
 
-
+#include "commands/kpCommand.h"
 #include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"
-#include "commands/kpCommand.h"
-
-
-
 
 class kpTransformSkewCommand : public kpCommand
 {
 public:
-    kpTransformSkewCommand (bool actOnSelection,
-        int hangle, int vangle,
-        kpCommandEnvironment *environ);
-    ~kpTransformSkewCommand () override;
+    kpTransformSkewCommand(bool actOnSelection, int hangle, int vangle, kpCommandEnvironment *environ);
+    ~kpTransformSkewCommand() override;
 
-    QString name () const override;
+    QString name() const override;
 
-    SizeType size () const override;
+    SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     bool m_actOnSelection;
@@ -61,5 +54,4 @@ private:
     kpAbstractImageSelection *m_oldSelectionPtr;
 };
 
-
-#endif  // kpTransformSkewCommand_H
+#endif // kpTransformSkewCommand_H

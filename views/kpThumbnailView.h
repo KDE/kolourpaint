@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_THUMBNAIL_VIEW_H
 #define KP_THUMBNAIL_VIEW_H
 
-
 #include "views/kpView.h"
-
 
 /**
  * @short Abstract base class for all thumbnail views.
@@ -40,7 +37,7 @@
  */
 class kpThumbnailView : public kpView
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     /**
@@ -48,24 +45,22 @@ public:
      *
      * You must call adjustEnvironment() at the end of your constructor.
      */
-    kpThumbnailView (kpDocument *document,
-                     kpToolToolBar *toolToolBar,
-                     kpViewManager *viewManager,
-                     kpView *buddyView,
-                     kpViewScrollableContainer *scrollableContainer,
-                     QWidget *parent);
+    kpThumbnailView(kpDocument *document,
+                    kpToolToolBar *toolToolBar,
+                    kpViewManager *viewManager,
+                    kpView *buddyView,
+                    kpViewScrollableContainer *scrollableContainer,
+                    QWidget *parent);
 
     /**
      * Destructs this thumbnail view.
      */
-    ~kpThumbnailView () override;
-
+    ~kpThumbnailView() override;
 
     /**
      * @returns the caption to display in an enclosing thumbnail window.
      */
-    virtual QString caption () const = 0;
-
+    virtual QString caption() const = 0;
 
 protected:
     /**
@@ -75,16 +70,14 @@ protected:
      * that all pixels are initialised with either document pixels or the
      * standard widget background.
      */
-    void setMaskToCoverDocument ();
-
+    void setMaskToCoverDocument();
 
     /**
      * Calls adjustToEnvironment() in response to a resize event.
      *
      * Extends @ref kpView.
      */
-    void resizeEvent (QResizeEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
 };
 
-
-#endif  // KP_THUMBNAIL_VIEW_H
+#endif // KP_THUMBNAIL_VIEW_H

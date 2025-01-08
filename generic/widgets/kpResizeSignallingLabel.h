@@ -25,32 +25,27 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_RESIZE_SIGNALLING_LABEL_H
 #define KP_RESIZE_SIGNALLING_LABEL_H
 
-
 #include <QLabel>
-
 
 class QResizeEvent;
 
-
 class kpResizeSignallingLabel : public QLabel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpResizeSignallingLabel (const QString &string, QWidget *parent);
-    kpResizeSignallingLabel (QWidget *parent);
-    ~kpResizeSignallingLabel () override;
+    kpResizeSignallingLabel(const QString &string, QWidget *parent);
+    kpResizeSignallingLabel(QWidget *parent);
+    ~kpResizeSignallingLabel() override;
 
 Q_SIGNALS:
-    void resized ();
+    void resized();
 
 protected:
-    void resizeEvent (QResizeEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
 };
 
-
-#endif  // KP_RESIZE_SIGNALLING_LABEL_H
+#endif // KP_RESIZE_SIGNALLING_LABEL_H

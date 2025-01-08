@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpEffectGrayscaleCommand.h"
 #include "imagelib/effects/kpEffectGrayscale.h"
 
@@ -33,27 +32,20 @@
 
 //--------------------------------------------------------------------------------
 
-kpEffectGrayscaleCommand::kpEffectGrayscaleCommand (
-        bool actOnSelection,
-        kpCommandEnvironment *environ)
+kpEffectGrayscaleCommand::kpEffectGrayscaleCommand(bool actOnSelection, kpCommandEnvironment *environ)
 
-    : kpEffectCommandBase (
-        i18n ("Reduce to Grayscale"),
-        actOnSelection,
-        environ)
+    : kpEffectCommandBase(i18n("Reduce to Grayscale"), actOnSelection, environ)
 {
 }
 
-kpEffectGrayscaleCommand::~kpEffectGrayscaleCommand () = default;
-
+kpEffectGrayscaleCommand::~kpEffectGrayscaleCommand() = default;
 
 //
 // kpEffectGrayscaleCommand implements kpEffectCommandBase interface
 //
 
 // protected virtual [base kpEffectCommandBase]
-kpImage kpEffectGrayscaleCommand::applyEffect (const kpImage &image)
+kpImage kpEffectGrayscaleCommand::applyEffect(const kpImage &image)
 {
-    return kpEffectGrayscale::applyEffect (image);
+    return kpEffectGrayscale::applyEffect(image);
 }
-

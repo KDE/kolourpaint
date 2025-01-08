@@ -26,13 +26,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectToneEnhance_H
 #define kpEffectToneEnhance_H
 
-
 #include "imagelib/kpImage.h"
-
 
 //
 // Histogram Equalizer effect.
@@ -53,9 +50,7 @@
 class kpEffectToneEnhance
 {
 public:
-    static kpImage applyEffect (const kpImage &image,
-        double granularity, double amount);
+    static kpImage applyEffect(const kpImage &image, double granularity, double amount);
 };
 
-
-#endif  // kpEffectToneEnhance_H
+#endif // kpEffectToneEnhance_H

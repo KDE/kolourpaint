@@ -25,20 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectBlurSharpen_H
 #define kpEffectBlurSharpen_H
 
-
 #include "imagelib/kpImage.h"
-
 
 class kpEffectBlurSharpen
 {
 public:
-    enum Type
-    {
-        None = 0, Blur, Sharpen, MakeConfidential
+    enum Type {
+        None = 0,
+        Blur,
+        Sharpen,
+        MakeConfidential
     };
 
     // Blur or Sharpen with this strength is the same as None.
@@ -49,9 +48,7 @@ public:
 
     // <strength> = strength of the effect
     //              (must be between MinStrength and MaxStrength inclusive)
-    static kpImage applyEffect (const kpImage &image,
-        Type type, int strength);
+    static kpImage applyEffect(const kpImage &image, Type type, int strength);
 };
 
-
-#endif  // kpEffectBlurSharpen_H
+#endif // kpEffectBlurSharpen_H

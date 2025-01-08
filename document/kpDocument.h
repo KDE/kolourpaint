@@ -25,10 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_DOCUMENT_H
 #define KP_DOCUMENT_H
-
 
 #include <QObject>
 #include <QString>
@@ -52,11 +50,10 @@ class kpAbstractImageSelection;
 class kpAbstractSelection;
 class kpTextSelection;
 
-
 // REFACTOR: rearrange method order to make sense and reflect kpDocument_*.cpp split.
 class kpDocument : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // REFACTOR: Hide constructor and have 2 factory methods:
@@ -67,62 +64,54 @@ public:
     //              and constructorHeight()) need not be specified.
     //
     //           ?
-    kpDocument (int w, int h, kpDocumentEnvironment *environ);
-    ~kpDocument () override;
+    kpDocument(int w, int h, kpDocumentEnvironment *environ);
+    ~kpDocument() override;
 
-    kpDocumentEnvironment *environ () const;
-    void setEnviron (kpDocumentEnvironment *environ);
-
+    kpDocumentEnvironment *environ() const;
+    void setEnviron(kpDocumentEnvironment *environ);
 
     //
     // File I/O - Open
     //
 
-
-    static QImage getPixmapFromFile (const QUrl &url, bool suppressDoesntExistDialog,
-                                     QWidget *parent,
-                                     kpDocumentSaveOptions *saveOptions = nullptr,
-                                     kpDocumentMetaInfo *metaInfo = nullptr);
+    static QImage getPixmapFromFile(const QUrl &url,
+                                    bool suppressDoesntExistDialog,
+                                    QWidget *parent,
+                                    kpDocumentSaveOptions *saveOptions = nullptr,
+                                    kpDocumentMetaInfo *metaInfo = nullptr);
     // REFACTOR: fix: open*() should only be called once.
     //                Create a new kpDocument() if you want to open again.
-    void openNew (const QUrl &url);
-    bool open (const QUrl &url, bool newDocSameNameIfNotExist = false);
+    void openNew(const QUrl &url);
+    bool open(const QUrl &url, bool newDocSameNameIfNotExist = false);
 
-    static void getDataFromImage(const QImage &image,
-                                 kpDocumentSaveOptions &saveOptions,
-                                 kpDocumentMetaInfo &metaInfo);
+    static void getDataFromImage(const QImage &image, kpDocumentSaveOptions &saveOptions, kpDocumentMetaInfo &metaInfo);
 
     //
     // File I/O - Save
     //
 
-    static bool lossyPromptContinue (const QImage &pixmap,
-                                     const kpDocumentSaveOptions &saveOptions,
-                                     QWidget *parent);
-    static bool savePixmapToDevice (const QImage &pixmap,
-                                    QIODevice *device,
-                                    const kpDocumentSaveOptions &saveOptions,
-                                    const kpDocumentMetaInfo &metaInfo,
-                                    bool lossyPrompt,
-                                    QWidget *parent,
-                                    bool *userCancelled = nullptr);
-    static bool savePixmapToFile (const QImage &pixmap,
-                                  const QUrl &url,
-                                  const kpDocumentSaveOptions &saveOptions,
-                                  const kpDocumentMetaInfo &metaInfo,
-                                  bool lossyPrompt,
-                                  QWidget *parent);
-    bool save (bool lossyPrompt = false);
-    bool saveAs (const QUrl &url,
-                 const kpDocumentSaveOptions &saveOptions,
-                 bool lossyPrompt = true);
-
+    static bool lossyPromptContinue(const QImage &pixmap, const kpDocumentSaveOptions &saveOptions, QWidget *parent);
+    static bool savePixmapToDevice(const QImage &pixmap,
+                                   QIODevice *device,
+                                   const kpDocumentSaveOptions &saveOptions,
+                                   const kpDocumentMetaInfo &metaInfo,
+                                   bool lossyPrompt,
+                                   QWidget *parent,
+                                   bool *userCancelled = nullptr);
+    static bool savePixmapToFile(const QImage &pixmap,
+                                 const QUrl &url,
+                                 const kpDocumentSaveOptions &saveOptions,
+                                 const kpDocumentMetaInfo &metaInfo,
+                                 bool lossyPrompt,
+                                 QWidget *parent);
+    bool save(bool lossyPrompt = false);
+    bool saveAs(const QUrl &url, const kpDocumentSaveOptions &saveOptions, bool lossyPrompt = true);
 
     // Returns whether save() or saveAs() have ever been called and returned true
-    bool savedAtLeastOnceBefore () const;
+    bool savedAtLeastOnceBefore() const;
 
-    QUrl url () const;
-    void setURL (const QUrl &url, bool isFromExistingURL);
+    QUrl url() const;
+    void setURL(const QUrl &url, bool isFromExistingURL);
 
     // Returns whether the document's image was successfully opened from
     // or saved to the URL returned by url().  This is not true for a
@@ -136,48 +125,46 @@ public:
     //
     // e.g. If the user types "kolourpaint doesnotexist.png" to start
     //      KolourPaint, this method will return false.
-    bool isFromExistingURL () const;
+    bool isFromExistingURL() const;
 
     // Checks whether @p url still exists
-    bool urlExists (const QUrl &url) const;
+    bool urlExists(const QUrl &url) const;
 
     // (will convert: empty Url --> "Untitled")
-    QString prettyUrl () const;
+    QString prettyUrl() const;
 
     // (will convert: empty Url --> "Untitled")
-    QString prettyFilename () const;
+    QString prettyFilename() const;
 
     // (guaranteed to return valid pointer)
 
-    const kpDocumentSaveOptions *saveOptions () const;
-    void setSaveOptions (const kpDocumentSaveOptions &saveOptions);
+    const kpDocumentSaveOptions *saveOptions() const;
+    void setSaveOptions(const kpDocumentSaveOptions &saveOptions);
 
-    const kpDocumentMetaInfo *metaInfo () const;
-    void setMetaInfo (const kpDocumentMetaInfo &metaInfo);
-
+    const kpDocumentMetaInfo *metaInfo() const;
+    void setMetaInfo(const kpDocumentMetaInfo &metaInfo);
 
     /*
      * Properties (modified, width, height, color depth...)
      */
 
-    void setModified (bool yes = true);
-    bool isModified () const;
-    bool isEmpty () const;
+    void setModified(bool yes = true);
+    bool isModified() const;
+    bool isEmpty() const;
 
     // REFACTOR: Rename to originalWidth()?
-    int constructorWidth () const;  // as passed to the constructor
-    int width (bool ofSelection = false) const;
-    int oldWidth () const;  // only valid in a slot connected to sizeChanged()
-    void setWidth (int w, const kpColor &backgroundColor);
+    int constructorWidth() const; // as passed to the constructor
+    int width(bool ofSelection = false) const;
+    int oldWidth() const; // only valid in a slot connected to sizeChanged()
+    void setWidth(int w, const kpColor &backgroundColor);
 
     // REFACTOR: Rename to originalHeight()?
-    int constructorHeight () const;  // as passed to the constructor
-    int height (bool ofSelection = false) const;
-    int oldHeight () const;  // only valid in a slot connected to sizeChanged()
-    void setHeight (int h, const kpColor &backgroundColor);
+    int constructorHeight() const; // as passed to the constructor
+    int height(bool ofSelection = false) const;
+    int oldHeight() const; // only valid in a slot connected to sizeChanged()
+    void setHeight(int h, const kpColor &backgroundColor);
 
-    QRect rect (bool ofSelection = false) const;
-
+    QRect rect(bool ofSelection = false) const;
 
     //
     // Image access
@@ -185,9 +172,9 @@ public:
 
     // Returns a copy of part of the document's image (not including the
     // selection).
-    kpImage getImageAt (const QRect &rect) const;
+    kpImage getImageAt(const QRect &rect) const;
 
-    void setImageAt (const kpImage &image, const QPoint &at);
+    void setImageAt(const kpImage &image, const QPoint &at);
 
     // "image(false)" returns a copy of the document's image, ignoring any
     // floating selection.
@@ -197,23 +184,22 @@ public:
     // null if the image selection is a just a border.
     //
     // ASSUMPTION: For <ofSelection> == true only, an image selection exists.
-    kpImage image (bool ofSelection = false) const;
-    kpImage *imagePointer () const;
+    kpImage image(bool ofSelection = false) const;
+    kpImage *imagePointer() const;
 
-    void setImage (const kpImage &image);
+    void setImage(const kpImage &image);
     // ASSUMPTION: If setting the selection's image, the selection must be
     //             an image selection.
-    void setImage (bool ofSelection, const kpImage &image);
-
+    void setImage(bool ofSelection, const kpImage &image);
 
     //
     // Selections
     //
 
 public:
-    kpAbstractSelection *selection () const;
-    kpAbstractImageSelection *imageSelection () const;
-    kpTextSelection *textSelection () const;
+    kpAbstractSelection *selection() const;
+    kpAbstractImageSelection *imageSelection() const;
+    kpTextSelection *textSelection() const;
 
     // Sets the document's selection to the given one and changes to the
     // matching selection tool.  Tool changes occur in the following situations:
@@ -241,7 +227,7 @@ public:
     //          has the <selection>'s selection transparency or
     //          for a text selection, its text style, selected.
     // TODO: Why can't we change it for them, if we change tool automatically for them already?
-    void setSelection (const kpAbstractSelection &selection);
+    void setSelection(const kpAbstractSelection &selection);
 
     // Returns the base image of the current image selection.  If this is
     // null (because the selection is still a border), it extracts the
@@ -251,17 +237,17 @@ public:
     //
     // TODO: this always returns base image - need ver that applies selection
     //       transparency.
-    kpImage getSelectedBaseImage () const;
+    kpImage getSelectedBaseImage() const;
 
     // Sets the base image of the current image selection to the pixels
     // of the document marked out by the border of the selection.
     //
     // ASSUMPTION: There is an imageSelection() that is just a border
     //             (no base image).
-    void imageSelectionPullFromDocument (const kpColor &backgroundColor);
+    void imageSelectionPullFromDocument(const kpColor &backgroundColor);
 
     // Deletes the current selection, if there is a selection(), else NOP
-    void selectionDelete ();
+    void selectionDelete();
 
     // Stamps a copy of the selection onto the document.
     //
@@ -271,11 +257,11 @@ public:
     // for non-image selections.
     //
     // ASSUMPTION: There is a selection() with content, else NOP
-    void selectionCopyOntoDocument (bool applySelTransparency = true);
+    void selectionCopyOntoDocument(bool applySelTransparency = true);
 
     // Same as selectionCopyOntoDocument() but deletes the selection
     // afterwards.
-    void selectionPushOntoDocument (bool applySelTransparency = true);
+    void selectionPushOntoDocument(bool applySelTransparency = true);
 
     //
     // Same as image() but returns a _copy_ of the document image
@@ -294,8 +280,7 @@ public:
     //
     //    b) with a transparent background: this makes no difference.
     //
-    kpImage imageWithSelection () const;
-
+    kpImage imageWithSelection() const;
 
     /*
      * Transformations
@@ -303,34 +288,33 @@ public:
      *  kpPixmapFX: these functions do not affect the selection)
      */
 
-    void fill (const kpColor &color);
-    void resize (int w, int h, const kpColor &backgroundColor);
-
+    void fill(const kpColor &color);
+    void resize(int w, int h, const kpColor &backgroundColor);
 
 public Q_SLOTS:
     // these will emit signals!
-    void slotContentsChanged (const QRect &rect);
-    void slotSizeChanged (const QSize &newSize);
+    void slotContentsChanged(const QRect &rect);
+    void slotSizeChanged(const QSize &newSize);
 
 Q_SIGNALS:
-    void documentOpened ();
-    void documentSaved ();
+    void documentOpened();
+    void documentSaved();
 
     // Emitted whenever the isModified() flag changes from false to true.
     // This is the _only_ signal that may be emitted in addition to the others.
-    void documentModified ();
+    void documentModified();
 
-    void contentsChanged (const QRect &rect);
-    void sizeChanged (int newWidth, int newHeight);  // see oldWidth(), oldHeight()
-    void sizeChanged (const QSize &newSize);
+    void contentsChanged(const QRect &rect);
+    void sizeChanged(int newWidth, int newHeight); // see oldWidth(), oldHeight()
+    void sizeChanged(const QSize &newSize);
 
-    void selectionEnabled (bool on);
+    void selectionEnabled(bool on);
 
     // Emitted when setSelection() is given a selection such that we change
     // from a non-text-selection tool to the text selection tool or vice-versa.
     // <isText> reports whether the new selection is text (and therefore,
     // whether we've switched to the text tool).
-    void selectionIsTextChanged (bool isText);
+    void selectionIsTextChanged(bool isText);
 
 private:
     int m_constructorWidth, m_constructorHeight;
@@ -355,5 +339,4 @@ private:
     struct kpDocumentPrivate *d;
 };
 
-
-#endif  // KP_DOCUMENT_H
+#endif // KP_DOCUMENT_H

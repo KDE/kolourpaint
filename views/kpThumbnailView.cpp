@@ -25,54 +25,41 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_THUMBNAIL_VIEW 0
-
 
 #include "views/kpThumbnailView.h"
 
 #include "kpLogCategories.h"
 
+kpThumbnailView::kpThumbnailView(kpDocument *document,
+                                 kpToolToolBar *toolToolBar,
+                                 kpViewManager *viewManager,
+                                 kpView *buddyView,
+                                 kpViewScrollableContainer *scrollableContainer,
+                                 QWidget *parent)
 
-kpThumbnailView::kpThumbnailView (kpDocument *document,
-        kpToolToolBar *toolToolBar,
-        kpViewManager *viewManager,
-        kpView *buddyView,
-        kpViewScrollableContainer *scrollableContainer,
-        QWidget *parent)
-
-    : kpView (document, toolToolBar, viewManager,
-              buddyView,
-              scrollableContainer,
-              parent)
+    : kpView(document, toolToolBar, viewManager, buddyView, scrollableContainer, parent)
 {
 }
 
-kpThumbnailView::~kpThumbnailView () = default;
-
+kpThumbnailView::~kpThumbnailView() = default;
 
 // protected
-void kpThumbnailView::setMaskToCoverDocument ()
+void kpThumbnailView::setMaskToCoverDocument()
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
     qCDebug(kpLogViews) << "kpThumbnailView::setMaskToCoverDocument()"
-               << " origin=" << origin ()
-               << " zoomedDoc: width=" << zoomedDocWidth ()
-               << " height=" << zoomedDocHeight ()
-               << endl;
+                        << " origin=" << origin() << " zoomedDoc: width=" << zoomedDocWidth() << " height=" << zoomedDocHeight() << endl;
 #endif
 
-    setMask (QRegion (QRect (origin ().x (), origin ().y (),
-                      zoomedDocWidth (), zoomedDocHeight ())));
+    setMask(QRegion(QRect(origin().x(), origin().y(), zoomedDocWidth(), zoomedDocHeight())));
 }
 
-
 // protected virtual [base kpView]
-void kpThumbnailView::resizeEvent (QResizeEvent *e)
+void kpThumbnailView::resizeEvent(QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
-    qCDebug(kpLogViews) << "kpThumbnailView(" << name () << ")::resizeEvent()"
-               << endl;
+    qCDebug(kpLogViews) << "kpThumbnailView(" << name() << ")::resizeEvent()" << endl;
 #endif
 
     // For QResizeEvent's, Qt already throws an entire widget repaint into
@@ -80,16 +67,16 @@ void kpThumbnailView::resizeEvent (QResizeEvent *e)
     // things down.
     // TODO: this doesn't seem to work.
     //       Later: In Qt4, setUpdatesEnabled(true) calls update().
-    const bool oldIsUpdatesEnabled = updatesEnabled ();
-    setUpdatesEnabled (false);
+    const bool oldIsUpdatesEnabled = updatesEnabled();
+    setUpdatesEnabled(false);
 
     {
-        kpView::resizeEvent (e);
+        kpView::resizeEvent(e);
 
-        adjustToEnvironment ();
+        adjustToEnvironment();
     }
 
-    setUpdatesEnabled (oldIsUpdatesEnabled);
+    setUpdatesEnabled(oldIsUpdatesEnabled);
 }
 
 #include "moc_kpThumbnailView.cpp"

@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_COLOR_PALETTE 0
-
 
 #include "kpColorPalette.h"
 
@@ -38,8 +36,7 @@
 
 //---------------------------------------------------------------------
 
-struct kpColorPalettePrivate
-{
+struct kpColorPalettePrivate {
     Qt::Orientation orientation;
 
     QBoxLayout *boxLayout;
@@ -51,32 +48,28 @@ struct kpColorPalettePrivate
 
 //---------------------------------------------------------------------
 
-kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
-    : QWidget (parent),
-      d (new kpColorPalettePrivate ())
+kpColorPalette::kpColorPalette(QWidget *parent, Qt::Orientation o)
+    : QWidget(parent)
+    , d(new kpColorPalettePrivate())
 {
     d->boxLayout = nullptr;
 
-    d->transparentColorCell = new kpTransparentColorCell (this);
-    connect (d->transparentColorCell, &kpTransparentColorCell::foregroundColorChanged,
-             this, &kpColorPalette::foregroundColorChanged);
+    d->transparentColorCell = new kpTransparentColorCell(this);
+    connect(d->transparentColorCell, &kpTransparentColorCell::foregroundColorChanged, this, &kpColorPalette::foregroundColorChanged);
 
-    connect (d->transparentColorCell, &kpTransparentColorCell::backgroundColorChanged,
-             this, &kpColorPalette::backgroundColorChanged);
+    connect(d->transparentColorCell, &kpTransparentColorCell::backgroundColorChanged, this, &kpColorPalette::backgroundColorChanged);
 
-    d->colorCells = new kpColorCells (this);
-    connect (d->colorCells, &kpColorCells::foregroundColorChanged,
-             this, &kpColorPalette::foregroundColorChanged);
+    d->colorCells = new kpColorCells(this);
+    connect(d->colorCells, &kpColorCells::foregroundColorChanged, this, &kpColorPalette::foregroundColorChanged);
 
-    connect (d->colorCells, &kpColorCells::backgroundColorChanged,
-             this, &kpColorPalette::backgroundColorChanged);
+    connect(d->colorCells, &kpColorCells::backgroundColorChanged, this, &kpColorPalette::backgroundColorChanged);
 
-    setOrientation (o);
+    setOrientation(o);
 }
 
 //---------------------------------------------------------------------
 
-kpColorPalette::~kpColorPalette ()
+kpColorPalette::~kpColorPalette()
 {
     delete d;
 }
@@ -84,32 +77,29 @@ kpColorPalette::~kpColorPalette ()
 //---------------------------------------------------------------------
 
 // public
-Qt::Orientation kpColorPalette::orientation () const
+Qt::Orientation kpColorPalette::orientation() const
 {
     return d->orientation;
 }
 
 //---------------------------------------------------------------------
 
-void kpColorPalette::setOrientation (Qt::Orientation o)
+void kpColorPalette::setOrientation(Qt::Orientation o)
 {
-    d->colorCells->setOrientation (o);
+    d->colorCells->setOrientation(o);
 
     delete d->boxLayout;
 
-    if (o == Qt::Horizontal)
-    {
-        d->boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this);
-        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignTop);
-        d->boxLayout->addWidget (d->colorCells);
+    if (o == Qt::Horizontal) {
+        d->boxLayout = new QBoxLayout(QBoxLayout::LeftToRight, this);
+        d->boxLayout->addWidget(d->transparentColorCell, 0 /*stretch*/, Qt::AlignTop);
+        d->boxLayout->addWidget(d->colorCells);
+    } else {
+        d->boxLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+        d->boxLayout->addWidget(d->transparentColorCell, 0 /*stretch*/, Qt::AlignTop);
+        d->boxLayout->addWidget(d->colorCells);
     }
-    else
-    {
-        d->boxLayout = new QBoxLayout (QBoxLayout::TopToBottom, this);
-        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignTop);
-        d->boxLayout->addWidget (d->colorCells);
-    }
-    d->boxLayout->setSpacing (5);
+    d->boxLayout->setSpacing(5);
 
     d->orientation = o;
 }
@@ -117,7 +107,7 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
 //---------------------------------------------------------------------
 
 // public
-kpColorCells *kpColorPalette::colorCells () const
+kpColorCells *kpColorPalette::colorCells() const
 {
     return d->colorCells;
 }

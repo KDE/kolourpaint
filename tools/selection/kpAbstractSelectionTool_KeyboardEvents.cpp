@@ -25,16 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_SELECTION 0
-
 
 #include "kpAbstractSelectionTool.h"
 #include "kpAbstractSelectionToolPrivate.h"
 
+#include "commands/tools/selection/kpToolSelectionMoveCommand.h"
 #include "document/kpDocument.h"
 #include "environments/tools/selection/kpToolSelectionEnvironment.h"
-#include "commands/tools/selection/kpToolSelectionMoveCommand.h"
 #include "layers/selections/kpAbstractSelection.h"
 
 #include <QKeyEvent>
@@ -44,58 +42,42 @@
 //---------------------------------------------------------------------
 
 // protected virtual [base kpTool]
-void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
+void kpAbstractSelectionTool::keyPressEvent(QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    qCDebug(kpLogTools) << "kpAbstractSelectionTool::keyPressEvent(e->text='"
-              << e->text () << "')";
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::keyPressEvent(e->text='" << e->text() << "')";
 #endif
 
-    e->ignore ();
+    e->ignore();
 
-    if (document ()->selection () &&
-        !hasBegunDraw () &&
-         e->key () == Qt::Key_Escape)
-    {
-    #if DEBUG_KP_TOOL_SELECTION && 0
+    if (document()->selection() && !hasBegunDraw() && e->key() == Qt::Key_Escape) {
+#if DEBUG_KP_TOOL_SELECTION && 0
         qCDebug(kpLogTools) << "\tescape pressed with sel when not begun draw - deselecting";
-    #endif
+#endif
 
-        pushOntoDocument ();
-        e->accept ();
-    }
-    else
-    {
-    #if DEBUG_KP_TOOL_SELECTION && 0
-        qCDebug(kpLogTools) << "\tkey processing did not accept (text was '"
-                   << e->text ()
-                   << "') - passing on event to kpTool";
-    #endif
+        pushOntoDocument();
+        e->accept();
+    } else {
+#if DEBUG_KP_TOOL_SELECTION && 0
+        qCDebug(kpLogTools) << "\tkey processing did not accept (text was '" << e->text() << "') - passing on event to kpTool";
+#endif
 
-      if ( document()->selection() && !hasBegunDraw() &&
-           ((e->key() == Qt::Key_Left) ||
-            (e->key() == Qt::Key_Right) ||
-            (e->key() == Qt::Key_Up) ||
-            (e->key() == Qt::Key_Down)) )
-      {
-        // move selection with cursor keys pixel-wise
-        giveContentIfNeeded();
+        if (document()->selection() && !hasBegunDraw()
+            && ((e->key() == Qt::Key_Left) || (e->key() == Qt::Key_Right) || (e->key() == Qt::Key_Up) || (e->key() == Qt::Key_Down))) {
+            // move selection with cursor keys pixel-wise
+            giveContentIfNeeded();
 
-        if ( !d->currentMoveCommand )
-        {
-          d->currentMoveCommand = new kpToolSelectionMoveCommand(
-              QString()/*uninteresting child of macro cmd*/,
-              environ()->commandEnvironment());
-          d->currentMoveCommandIsSmear = false;
-        }
+            if (!d->currentMoveCommand) {
+                d->currentMoveCommand = new kpToolSelectionMoveCommand(QString() /*uninteresting child of macro cmd*/, environ()->commandEnvironment());
+                d->currentMoveCommandIsSmear = false;
+            }
 
-        int dx, dy;
-        arrowKeyPressDirection(e, &dx, &dy);
-        d->currentMoveCommand->moveTo(document()->selection()->topLeft() + QPoint(dx, dy));
-        endDrawMove();
-      }
-      else
-        kpTool::keyPressEvent(e);
+            int dx, dy;
+            arrowKeyPressDirection(e, &dx, &dy);
+            d->currentMoveCommand->moveTo(document()->selection()->topLeft() + QPoint(dx, dy));
+            endDrawMove();
+        } else
+            kpTool::keyPressEvent(e);
     }
 }
 

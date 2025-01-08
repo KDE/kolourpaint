@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectGrayscale_H
 #define kpEffectGrayscale_H
 
-
 #include "imagelib/kpImage.h"
-
 
 //
 // Converts the image to grayscale.
@@ -40,8 +37,7 @@
 class kpEffectGrayscale
 {
 public:
-    static kpImage applyEffect (const kpImage &image);
+    static kpImage applyEffect(const kpImage &image);
 };
 
-
-#endif  // kpEffectGrayscale_H
+#endif // kpEffectGrayscale_H

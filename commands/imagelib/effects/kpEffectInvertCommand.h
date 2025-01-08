@@ -25,39 +25,33 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectInvertCommand_H
 #define kpEffectInvertCommand_H
 
-
-#include "kpEffectCommandBase.h"
 #include "imagelib/kpImage.h"
-
-
+#include "kpEffectCommandBase.h"
 
 class kpEffectInvertCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectInvertCommand (int channels,
-                           bool actOnSelection,
-                           kpCommandEnvironment *environ);
-    kpEffectInvertCommand (bool actOnSelection,
-                           kpCommandEnvironment *environ);
-    ~kpEffectInvertCommand () override;
-
+    kpEffectInvertCommand(int channels, bool actOnSelection, kpCommandEnvironment *environ);
+    kpEffectInvertCommand(bool actOnSelection, kpCommandEnvironment *environ);
+    ~kpEffectInvertCommand() override;
 
     //
     // kpEffectCommandBase interface
     //
 
 public:
-    bool isInvertible () const override { return true; }
+    bool isInvertible() const override
+    {
+        return true;
+    }
 
 protected:
-    kpImage applyEffect (const kpImage &image) override;
+    kpImage applyEffect(const kpImage &image) override;
 
     int m_channels;
 };
 
-
-#endif  // kpEffectInvertCommand_H
+#endif // kpEffectInvertCommand_H

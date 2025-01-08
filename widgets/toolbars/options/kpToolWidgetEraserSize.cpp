@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_WIDGET_ERASER_SIZE 0
-
 
 #include "kpToolWidgetEraserSize.h"
 
@@ -40,31 +38,25 @@
 
 #include <QPainter>
 
+static int EraserSizes[] = {2, 3, 5, 9, 17, 29};
+static const int NumEraserSizes = int(sizeof(::EraserSizes) / sizeof(::EraserSizes[0]));
 
-static int EraserSizes [] = {2, 3, 5, 9, 17, 29};
-static const int NumEraserSizes =
-    int (sizeof (::EraserSizes) / sizeof (::EraserSizes [0]));
-
-
-static void DrawImage (kpImage *destImage, const QPoint &topLeft, void *userData)
+static void DrawImage(kpImage *destImage, const QPoint &topLeft, void *userData)
 {
-    auto *pack = static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
+    auto *pack = static_cast<kpToolWidgetEraserSize::DrawPackage *>(userData);
 
-    const int size = ::EraserSizes [pack->selected];
+    const int size = ::EraserSizes[pack->selected];
 
-    kpPainter::fillRect (destImage,
-        topLeft.x (), topLeft.y (), size, size,
-        pack->color);
+    kpPainter::fillRect(destImage, topLeft.x(), topLeft.y(), size, size, pack->color);
 }
 
-static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userData)
+static void DrawCursor(kpImage *destImage, const QPoint &topLeft, void *userData)
 {
-    ::DrawImage (destImage, topLeft, userData);
+    ::DrawImage(destImage, topLeft, userData);
 
+    auto *pack = static_cast<kpToolWidgetEraserSize::DrawPackage *>(userData);
 
-    auto *pack = static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
-
-    const int size = ::EraserSizes [pack->selected];
+    const int size = ::EraserSizes[pack->selected];
 
     // Would 1-pixel border on all sides completely cover the color of the
     // eraser?
@@ -79,73 +71,62 @@ static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userDat
 
 //---------------------------------------------------------------------
 
-kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &name)
-    : kpToolWidgetBase (parent, name)
+kpToolWidgetEraserSize::kpToolWidgetEraserSize(QWidget *parent, const QString &name)
+    : kpToolWidgetBase(parent, name)
 {
-    for (int i = 0; i < ::NumEraserSizes; i++)
-    {
+    for (int i = 0; i < ::NumEraserSizes; i++) {
         if (i == 3 || i == 5) {
-            startNewOptionRow ();
+            startNewOptionRow();
         }
 
-        const int s = ::EraserSizes [i];
+        const int s = ::EraserSizes[i];
 
-        QImage previewPixmap (s, s, QImage::Format_ARGB32_Premultiplied);
-        if (i < 3)
-        {
+        QImage previewPixmap(s, s, QImage::Format_ARGB32_Premultiplied);
+        if (i < 3) {
             // HACK: kpToolWidgetBase's layout code sucks and gives uneven spacing
-            previewPixmap = QImage ((width () - 4) / 3, 9, QImage::Format_ARGB32_Premultiplied);
-            Q_ASSERT (previewPixmap.width () >= s &&
-                previewPixmap.height () >= s);
+            previewPixmap = QImage((width() - 4) / 3, 9, QImage::Format_ARGB32_Premultiplied);
+            Q_ASSERT(previewPixmap.width() >= s && previewPixmap.height() >= s);
         }
 
         previewPixmap.fill(0);
 
-        DrawPackage pack = drawFunctionDataForSelected (kpColor::Black, i);
-        ::DrawImage (&previewPixmap,
-            QPoint ((previewPixmap.width () - s) / 2,
-                    (previewPixmap.height () - s) / 2),
-            &pack);
+        DrawPackage pack = drawFunctionDataForSelected(kpColor::Black, i);
+        ::DrawImage(&previewPixmap, QPoint((previewPixmap.width() - s) / 2, (previewPixmap.height() - s) / 2), &pack);
 
-        addOption(QPixmap::fromImage(std::move(previewPixmap)),
-                  i18n("%1x%2", s, s) /*tooltip*/);
+        addOption(QPixmap::fromImage(std::move(previewPixmap)), i18n("%1x%2", s, s) /*tooltip*/);
     }
 
-    finishConstruction (1, 0);
+    finishConstruction(1, 0);
 }
 
 //---------------------------------------------------------------------
 
-kpToolWidgetEraserSize::~kpToolWidgetEraserSize () = default;
+kpToolWidgetEraserSize::~kpToolWidgetEraserSize() = default;
 
 //---------------------------------------------------------------------
 
-
 // public
-int kpToolWidgetEraserSize::eraserSize () const
+int kpToolWidgetEraserSize::eraserSize() const
 {
     return ::EraserSizes[selected() < 0 ? 0 : selected()];
 }
 
-
 // public
-kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawFunction () const
+kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawFunction() const
 {
     return &::DrawImage;
 }
 
 // public
-kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawCursorFunction () const
+kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawCursorFunction() const
 {
     return &::DrawCursor;
 }
 
 //---------------------------------------------------------------------
 
-
 // public static
-kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionDataForSelected (
-        const kpColor &color, int selectedIndex)
+kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionDataForSelected(const kpColor &color, int selectedIndex)
 {
     DrawPackage pack;
 
@@ -158,20 +139,19 @@ kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionDataForS
 //---------------------------------------------------------------------
 
 // public
-kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionData (
-        const kpColor &color) const
+kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionData(const kpColor &color) const
 {
-    return drawFunctionDataForSelected (color, selected ());
+    return drawFunctionDataForSelected(color, selected());
 }
 
 //---------------------------------------------------------------------
 
 // protected slot virtual [base kpToolWidgetBase]
-bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
+bool kpToolWidgetEraserSize::setSelected(int row, int col, bool saveAsDefault)
 {
-    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    const bool ret = kpToolWidgetBase::setSelected(row, col, saveAsDefault);
     if (ret) {
-        Q_EMIT eraserSizeChanged (eraserSize ());
+        Q_EMIT eraserSizeChanged(eraserSize());
     }
     return ret;
 }

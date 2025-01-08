@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectReduceColors_H
 #define kpEffectReduceColors_H
 
@@ -38,14 +37,13 @@ public:
     // TODO: Why isn't applyEffect() for the public API sufficient?
     //       Ans: See TODO in kpDocument_Save.cpp.  Maybe we should rename
     //            this method?
-    //      
+    //
     //            Also, this can increase the image depth while applyEffect()
     //            will not.
-    static QImage convertImageDepth (const QImage &image, int depth, bool dither);
+    static QImage convertImageDepth(const QImage &image, int depth, bool dither);
 
-    static void applyEffect (QImage *destPixmapPtr, int depth, bool dither);
-    static QImage applyEffect (const QImage &pm, int depth, bool dither);
+    static void applyEffect(QImage *destPixmapPtr, int depth, bool dither);
+    static QImage applyEffect(const QImage &pm, int depth, bool dither);
 };
 
-
-#endif  // kpEffectReduceColors_H
+#endif // kpEffectReduceColors_H

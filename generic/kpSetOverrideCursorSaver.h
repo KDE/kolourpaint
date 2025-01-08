@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpSetOverrideCursorSaver_H
 #define kpSetOverrideCursorSaver_H
 
-
 class QCursor;
-
 
 //
 // A less error-prone way of setting the override cursor, compared to
@@ -99,9 +96,8 @@ class QCursor;
 class kpSetOverrideCursorSaver
 {
 public:
-    kpSetOverrideCursorSaver (const QCursor &cursor);
-    ~kpSetOverrideCursorSaver ();
+    kpSetOverrideCursorSaver(const QCursor &cursor);
+    ~kpSetOverrideCursorSaver();
 };
 
-
-#endif  // kpSetOverrideCursorSaver_H
+#endif // kpSetOverrideCursorSaver_H

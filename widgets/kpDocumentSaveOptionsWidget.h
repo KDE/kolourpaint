@@ -25,17 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDocumentSaveOptionsWidget_H
 #define kpDocumentSaveOptionsWidget_H
-
 
 #include <QRect>
 #include <QWidget>
 
-#include "imagelib/kpDocumentMetaInfo.h"
 #include "document/kpDocumentSaveOptions.h"
-
+#include "imagelib/kpDocumentMetaInfo.h"
 
 class QComboBox;
 class QImage;
@@ -46,84 +43,77 @@ class QPushButton;
 
 class kpDocumentSaveOptionsPreviewDialog;
 
-
 class kpDocumentSaveOptionsWidget : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpDocumentSaveOptionsWidget (const QImage &docPixmap,
-                                 const kpDocumentSaveOptions &saveOptions,
-                                 const kpDocumentMetaInfo &metaInfo,
-                                 QWidget *parent);
-    kpDocumentSaveOptionsWidget (QWidget *parent);
+    kpDocumentSaveOptionsWidget(const QImage &docPixmap, const kpDocumentSaveOptions &saveOptions, const kpDocumentMetaInfo &metaInfo, QWidget *parent);
+    kpDocumentSaveOptionsWidget(QWidget *parent);
+
 private:
-    void init ();
-public:
-    ~kpDocumentSaveOptionsWidget () override;
+    void init();
 
+public:
+    ~kpDocumentSaveOptionsWidget() override;
 
     // <visualParent> is usually the filedialog
-    void setVisualParent (QWidget *visualParent);
-
+    void setVisualParent(QWidget *visualParent);
 
 protected:
-    bool mimeTypeHasConfigurableColorDepth () const;
-    bool mimeTypeHasConfigurableQuality () const;
+    bool mimeTypeHasConfigurableColorDepth() const;
+    bool mimeTypeHasConfigurableQuality() const;
 
 public:
-    QString mimeType () const;
+    QString mimeType() const;
 public Q_SLOTS:
-    void setMimeType (const QString &string);
+    void setMimeType(const QString &string);
 
 public:
-    int colorDepth () const;
-    bool dither () const;
+    int colorDepth() const;
+    bool dither() const;
+
 protected:
-    static int colorDepthComboItemFromColorDepthAndDither (int depth, bool dither);
+    static int colorDepthComboItemFromColorDepthAndDither(int depth, bool dither);
 public Q_SLOTS:
-    void setColorDepthDither (int depth,
-                              bool dither = kpDocumentSaveOptions::initialDither ());
+    void setColorDepthDither(int depth, bool dither = kpDocumentSaveOptions::initialDither());
 protected Q_SLOTS:
-    void slotColorDepthSelected ();
+    void slotColorDepthSelected();
 
 public:
-    int quality () const;
+    int quality() const;
 public Q_SLOTS:
-    void setQuality (int newQuality);
+    void setQuality(int newQuality);
 
 public:
-    kpDocumentSaveOptions documentSaveOptions () const;
+    kpDocumentSaveOptions documentSaveOptions() const;
 public Q_SLOTS:
-    void setDocumentSaveOptions (const kpDocumentSaveOptions &saveOptions);
-
+    void setDocumentSaveOptions(const kpDocumentSaveOptions &saveOptions);
 
 public:
-    void setDocumentPixmap (const QImage &documentPixmap);
-    void setDocumentMetaInfo (const kpDocumentMetaInfo &metaInfo);
-
+    void setDocumentPixmap(const QImage &documentPixmap);
+    void setDocumentMetaInfo(const kpDocumentMetaInfo &metaInfo);
 
 protected:
-    enum Mode
-    {
+    enum Mode {
         // (mutually exclusive)
-        None, ColorDepth, Quality
+        None,
+        ColorDepth,
+        Quality
     };
 
-    Mode mode () const;
-    void setMode (Mode mode);
+    Mode mode() const;
+    void setMode(Mode mode);
 
 protected Q_SLOTS:
-    void repaintLabels ();
-
+    void repaintLabels();
 
 protected Q_SLOTS:
-    void showPreview (bool yes = true);
-    void hidePreview ();
-    void updatePreviewDelayed ();
-    void updatePreview ();
-    void updatePreviewDialogLastRelativeGeometry ();
-
+    void showPreview(bool yes = true);
+    void hidePreview();
+    void updatePreviewDelayed();
+    void updatePreview();
+    void updatePreviewDialogLastRelativeGeometry();
 
 protected:
     QWidget *m_visualParent;
@@ -151,5 +141,4 @@ protected:
     QTimer *m_updatePreviewDialogLastRelativeGeometryTimer;
 };
 
-
-#endif  // kpDocumentSaveOptionsWidget_H
+#endif // kpDocumentSaveOptionsWidget_H

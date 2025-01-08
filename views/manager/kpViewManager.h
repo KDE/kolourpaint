@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_VIEW_MANAGER_H
 #define KP_VIEW_MANAGER_H
 
-
 #include <QObject>
-
 
 class QCursor;
 class QRegion;
@@ -42,36 +39,32 @@ class kpView;
 class kpMainWindow;
 class kpTempImage;
 
-
 class kpViewManager : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit kpViewManager (kpMainWindow *mainWindow);
-    ~kpViewManager () override;
-
+    explicit kpViewManager(kpMainWindow *mainWindow);
+    ~kpViewManager() override;
 
 private:
-    kpDocument *document () const;
+    kpDocument *document() const;
 
-
-//
-// Registering views
-//
-
-public:
-    void registerView (kpView *view);
-    void unregisterView (kpView *view);
-    void unregisterAllViews ();
-
-
-//
-// View
-//
+    //
+    // Registering views
+    //
 
 public:
-    kpView *viewUnderCursor (bool usingQt = false) const;
+    void registerView(kpView *view);
+    void unregisterView(kpView *view);
+    void unregisterAllViews();
+
+    //
+    // View
+    //
+
+public:
+    kpView *viewUnderCursor(bool usingQt = false) const;
 
     //
     // QWidget::hasMouse() is unreliable:
@@ -90,61 +83,56 @@ public:
     // as a reasonable replacement (although there is at least one case where
     // it still won't work - just after a fake drag onto the view).
     //
-    void setViewUnderCursor (kpView *view);
-
+    void setViewUnderCursor(kpView *view);
 
 public:
     // Returns whether at least 1 view has keyboard focus.
     // A pointer is not returned to such a view because more than one can
     // have focus at the same time (see QWidget::isActiveWindow()).
-    bool hasAViewWithFocus () const;
+    bool hasAViewWithFocus() const;
 
-
-//
-// Mouse Cursors
-//
-
-public:
-    void setCursor (const QCursor &cursor);
-    void unsetCursor ();
-
-
-//
-// Temp Image
-//
+    //
+    // Mouse Cursors
+    //
 
 public:
-    const kpTempImage *tempImage () const;
-    void setTempImage (const kpTempImage &tempImage);
-    void invalidateTempImage ();
+    void setCursor(const QCursor &cursor);
+    void unsetCursor();
 
-
-//
-// Selections
-//
+    //
+    // Temp Image
+    //
 
 public:
-    bool selectionBorderVisible () const;
-    void setSelectionBorderVisible (bool yes = true);
+    const kpTempImage *tempImage() const;
+    void setTempImage(const kpTempImage &tempImage);
+    void invalidateTempImage();
 
-    bool selectionBorderFinished () const;
-    void setSelectionBorderFinished (bool yes = true);
+    //
+    // Selections
+    //
 
+public:
+    bool selectionBorderVisible() const;
+    void setSelectionBorderVisible(bool yes = true);
 
-//
-// Text Cursor
-//
+    bool selectionBorderFinished() const;
+    void setSelectionBorderFinished(bool yes = true);
+
+    //
+    // Text Cursor
+    //
 
 public:
     // If you enable the text cursor, a timer will start ticking to update
     // the text cursor.  If no text selection is active, the update will
     // be a NOP but the timer will still tick and textCursorEnabled() will
     // still return true.
-    bool textCursorEnabled () const;
-    void setTextCursorEnabled (bool yes = true);
+    bool textCursorEnabled() const;
+    void setTextCursorEnabled(bool yes = true);
 
-    bool textCursorBlinkState () const;
-    void setTextCursorBlinkState (bool on = true);
+    bool textCursorBlinkState() const;
+    void setTextCursorBlinkState(bool on = true);
 
     // By convention, a text box with no content (i.e. no text lines) should
     // have a cursor position of (row=0,col=0).  Some code assumes this.
@@ -152,8 +140,8 @@ public:
     // (no error checking is performed - the row and col are as per
     //  setTextCursorPosition() so may be out of the bounds of the
     //  text selection)
-    int textCursorRow () const;
-    int textCursorCol () const;
+    int textCursorRow() const;
+    int textCursorCol() const;
     // See kpToolText::beginDrawSelectText() for a correct use of this
     // method, satisfying the above convention.
     //
@@ -165,7 +153,7 @@ public:
     //          Always ensure that the text cursor position is valid.
     //          TODO: We need to check this in all source files.
     //                e.g. It's definitely wrong for kpToolTextBackspaceCommand.
-    void setTextCursorPosition (int row, int col);
+    void setTextCursorPosition(int row, int col);
 
     // Returns the document rectangle where cursor would be placed, using
     // textCursorRow() and textCursorCol ().
@@ -175,22 +163,21 @@ public:
     //
     // If there is no text selection or textCursorRow() or
     // textCursorCol() are invalid, it returns an empty rectangle.
-    QRect textCursorRect () const;
+    QRect textCursorRect() const;
 
 protected:
     // If textCursorRect() is valid, updates all views at that rectangle.
     // The cursor blink state and timer are not affected at all.
     // TODO: This and other methods will happily execute even if
     //       !textCursorEnabled().  We should fix this.
-    void updateTextCursor ();
+    void updateTextCursor();
 
 protected Q_SLOTS:
-    void slotTextCursorBlink ();
+    void slotTextCursorBlink();
 
-
-//
-// View Updates
-//
+    //
+    // View Updates
+    //
 
 public:
     // Specifies whether to queue _all_ paint events
@@ -204,9 +191,9 @@ public:
     // only the _regions_ that need to be repainted.
     //
     // You can nest blocks of setQueueUpdates()/restoreQueueUpdates().
-    bool queueUpdates () const;
-    void setQueueUpdates ();
-    void restoreQueueUpdates ();
+    bool queueUpdates() const;
+    void setQueueUpdates();
+    void restoreQueueUpdates();
 
 public:
     // Controls behaviour of updateViews():
@@ -225,30 +212,28 @@ public:
     //       unnecessary redraws and incredibly slugish performance.
     //
     // You can nest blocks of setFastUpdates()/restoreFastUpdates().
-    bool fastUpdates () const;
-    void setFastUpdates ();
-    void restoreFastUpdates ();
+    bool fastUpdates() const;
+    void setFastUpdates();
+    void restoreFastUpdates();
 
 public Q_SLOTS:
-    void updateView (kpView *v);
-    void updateView (kpView *v, const QRect &viewRect);
-    void updateView (kpView *v, int x, int y, int w, int h);
-    void updateView (kpView *v, const QRegion &viewRegion);
+    void updateView(kpView *v);
+    void updateView(kpView *v, const QRect &viewRect);
+    void updateView(kpView *v, int x, int y, int w, int h);
+    void updateView(kpView *v, const QRegion &viewRegion);
 
-    void updateViewRectangleEdges (kpView *v, const QRect &viewRect);
+    void updateViewRectangleEdges(kpView *v, const QRect &viewRect);
 
-    void updateViews (const QRect &docRect);
-
-
-public Q_SLOTS:
-    void adjustViewsToEnvironment ();
+    void updateViews(const QRect &docRect);
 
 public Q_SLOTS:
-    void setInputMethodEnabled (bool inputMethodEnabled);
+    void adjustViewsToEnvironment();
+
+public Q_SLOTS:
+    void setInputMethodEnabled(bool inputMethodEnabled);
 
 private:
-    struct kpViewManagerPrivate * const d;
+    struct kpViewManagerPrivate *const d;
 };
 
-
-#endif  // KP_VIEW_MANAGER_H
+#endif // KP_VIEW_MANAGER_H

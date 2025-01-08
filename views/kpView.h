@@ -25,15 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_VIEW_H
 #define KP_VIEW_H
-
 
 #include <QWidget>
 
 #include "kpDefs.h"
-
 
 class QDragEnterEvent;
 class QDragLeaveEvent;
@@ -52,7 +49,6 @@ class kpToolToolBar;
 class kpViewManager;
 class kpViewScrollableContainer;
 
-
 /**
  * @short Abstract base class for all views.
  *
@@ -68,7 +64,7 @@ class kpViewScrollableContainer;
  */
 class kpView : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     /**
@@ -85,82 +81,79 @@ public:
      *
      * You must call adjustEnvironment() at the end of your constructor.
      */
-    kpView (kpDocument *document,
-            kpToolToolBar *toolToolBar,
-            kpViewManager *viewManager,
-            kpView *buddyView,
-            kpViewScrollableContainer *scrollableContainer,
-            QWidget *parent);
+    kpView(kpDocument *document,
+           kpToolToolBar *toolToolBar,
+           kpViewManager *viewManager,
+           kpView *buddyView,
+           kpViewScrollableContainer *scrollableContainer,
+           QWidget *parent);
 
     /**
      * Destructs this view.  Informs the viewManager() that the mouse
      * cursor is no longer above this view.
      */
-    ~kpView () override;
-
+    ~kpView() override;
 
     //
     // Constants (enforced by methods)
     //
     static const int MinZoomLevel, MaxZoomLevel;
 
-
     /**
      * @returns the document.
      */
-    kpDocument *document () const;
+    kpDocument *document() const;
 
 protected:
     /**
      * @returns the document's selection.
      */
-    kpAbstractSelection *selection () const;
+    kpAbstractSelection *selection() const;
 
-    kpTextSelection *textSelection () const;
+    kpTextSelection *textSelection() const;
 
 public:
     /**
      * @returns the tool tool bar.
      */
-    kpToolToolBar *toolToolBar () const;
+    kpToolToolBar *toolToolBar() const;
 
 protected:
     /**
      * @returns the currently selected tool.
      */
-    kpTool *tool () const;
+    kpTool *tool() const;
 
 public:
     /**
      * @returns the view manager.
      */
-    kpViewManager *viewManager () const;
+    kpViewManager *viewManager() const;
 
     /**
      * @returns the buddy view.
      */
-    kpView *buddyView () const;
+    kpView *buddyView() const;
 
     /**
      * @returns the buddyView()'s scrollable container.
      */
-    kpViewScrollableContainer *buddyViewScrollableContainer () const;
+    kpViewScrollableContainer *buddyViewScrollableContainer() const;
 
     /**
      * @returns this view's scrollable container.
      */
-    kpViewScrollableContainer *scrollableContainer () const;
-
+    kpViewScrollableContainer *scrollableContainer() const;
 
     /**
      * @returns the horizontal zoom level (100 is unzoomed).
      */
-    int zoomLevelX (void) const;
+    int zoomLevelX(void) const;
 
     /**
      * @returns the vertical zoom level (100 is unzoomed).
      */
-    int zoomLevelY (void) const;
+    int zoomLevelY(void) const;
 
     /**
      * Sets the horizontal and vertical zoom levels.
@@ -173,14 +166,13 @@ public:
      *
      * If reimplementing, you must call this base implementation.
      */
-    virtual void setZoomLevel (int hzoom, int vzoom);
-
+    virtual void setZoomLevel(int hzoom, int vzoom);
 
     /**
      * @returns in views coordinates, where the top-left document() pixel
      *          will be rendered (default: (0,0)).
      */
-    QPoint origin () const;
+    QPoint origin() const;
 
     /**
      * Sets the origin.
@@ -189,33 +181,31 @@ public:
      *
      * If reimplementing, you must call this base implementation.
      */
-    virtual void setOrigin (const QPoint &origin);
-
+    virtual void setOrigin(const QPoint &origin);
 
     /**
      * @returns whether at this zoom level, the grid can be enabled.
      *          This is based on whether the grid can be sensibly rendered.
      */
-    bool canShowGrid () const;
+    bool canShowGrid() const;
 
     /**
      * @returns whether the grid is currently shown.
      */
-    bool isGridShown () const;
+    bool isGridShown() const;
 
     /**
      * Turns on/off the grid.
      *
      * @param yes Whether to enable the grid.
      */
-    void showGrid (bool yes = true);
-
+    void showGrid(bool yes = true);
 
     /**
      * @returns whether to draw a rectangle highlighting the area of
      *          buddyView() visible through buddyViewScrollableContainer().
      */
-    bool isBuddyViewScrollableContainerRectangleShown () const;
+    bool isBuddyViewScrollableContainerRectangleShown() const;
 
     /**
      * Turns on/off the rectangle highlighting the area of buddyView()
@@ -223,7 +213,7 @@ public:
      *
      * @param yes Whether to turn on the rectangle.
      */
-    void showBuddyViewScrollableContainerRectangle (bool yes = true);
+    void showBuddyViewScrollableContainerRectangle(bool yes = true);
 
 protected:
     /**
@@ -231,7 +221,7 @@ protected:
      *          visible through buddyViewScrollableContainer(), that is being
      *          rendered by this view.
      */
-    QRect buddyViewScrollableContainerRectangle () const;
+    QRect buddyViewScrollableContainerRectangle() const;
 
 protected Q_SLOTS:
     /**
@@ -242,18 +232,16 @@ protected Q_SLOTS:
      * buddyView() and buddyViewScrollableContainer() signals.  There is probably no
      * need to call this function directly.
      */
-    void updateBuddyViewScrollableContainerRectangle ();
-
+    void updateBuddyViewScrollableContainerRectangle();
 
 public:
-
     /**
      * @param viewX Horizontal position in view coordinates.
      *
      * @returns viewX transformed to document coordinates, based on the
      *                origin() and zoomLevelX().
      */
-    double transformViewToDocX (double viewX) const;
+    double transformViewToDocX(double viewX) const;
 
     /**
      * @param viewY Vertical position in view coordinates.
@@ -261,7 +249,7 @@ public:
      * @returns viewY transformed to document coordinates, based on the
      *                origin() and zoomLevelY().
      */
-    double transformViewToDocY (double viewY) const;
+    double transformViewToDocY(double viewY) const;
 
     /**
      * @param viewPoint Position in view coordinates.
@@ -269,7 +257,7 @@ public:
      * @returns viewPoint transformed to document coordinates, based on the
      *                    origin(), zoomLevelX() and zoomLevelY().
      */
-    QPoint transformViewToDoc (const QPoint &viewPoint) const;
+    QPoint transformViewToDoc(const QPoint &viewPoint) const;
 
     /**
      * @param viewRect Rectangle in view coordinates.
@@ -281,8 +269,7 @@ public:
      * transformViewToDocX(), transformViewToDocY() or
      * transformViewToDoc(const QPoint &) which act on coordinates only.
      */
-    QRect transformViewToDoc (const QRect &viewRect) const;
-
+    QRect transformViewToDoc(const QRect &viewRect) const;
 
     /**
      * @param docX Horizontal position in document coordinates.
@@ -290,7 +277,7 @@ public:
      * @returns docX transformed to view coordinates, based on the origin()
      *               and zoomLevelX().
      */
-    double transformDocToViewX (double docX) const;
+    double transformDocToViewX(double docX) const;
 
     /**
      * @param docY Vertical position in document coordinates.
@@ -298,7 +285,7 @@ public:
      * @returns docY transformed to view coordinates, based on the origin()
      *               and zoomLevelY().
      */
-    double transformDocToViewY (double docY) const;
+    double transformDocToViewY(double docY) const;
 
     /**
      * @param docPoint Position in document coordinates.
@@ -306,7 +293,7 @@ public:
      * @returns docPoint transformed to view coordinates, based on the
      *                   origin(), zoomLevelX(), zoomLevelY().
      */
-    QPoint transformDocToView (const QPoint &docPoint) const;
+    QPoint transformDocToView(const QPoint &docPoint) const;
 
     /**
      * @param docRect Rectangle in document coordinates.
@@ -318,8 +305,7 @@ public:
      * transformDocToViewX(), transformDocToViewY() or
      * transformDocToView(const QPoint &) which act on coordinates only.
      */
-    QRect transformDocToView (const QRect &docRect) const;
-
+    QRect transformDocToView(const QRect &docRect) const;
 
     /**
      * @param viewPoint Position in view coordinates.
@@ -331,22 +317,19 @@ public:
      *          zoomLevelX() and zoomLevelY().  This has less rounding
      *          error than otherView->transformDocToView (transformViewToDoc (viewPoint)).
      */
-    QPoint transformViewToOtherView (const QPoint &viewPoint,
-                                     const kpView *otherView);
-
+    QPoint transformViewToOtherView(const QPoint &viewPoint, const kpView *otherView);
 
     /**
      * @returns the approximate view width required to display the entire
      *          document(), based on the zoom level only.
      */
-    int zoomedDocWidth () const;
+    int zoomedDocWidth() const;
 
     /**
      * @returns the approximate view height required to display the entire
      *          document(), based on the zoom level only.
      */
-    int zoomedDocHeight () const;
-
+    int zoomedDocHeight() const;
 
 protected:
     /**
@@ -358,8 +341,7 @@ protected:
      *
      * @param yes Whether the mouse is directly above this view.
      */
-    void setHasMouse (bool yes = true);
-
+    void setHasMouse(bool yes = true);
 
 public:
     /**
@@ -369,7 +351,7 @@ public:
      *
      * @param region Region (in view coordinates) that needs repainting.
      */
-    void addToQueuedArea (const QRegion &region);
+    void addToQueuedArea(const QRegion &region);
 
     /**
      * Convenience function.  Same as above.
@@ -380,22 +362,22 @@ public:
      *
      * @param rect Rectangle (in view coordinates) that needs repainting.
      */
-    void addToQueuedArea (const QRect &rect);
+    void addToQueuedArea(const QRect &rect);
 
     /**
      * Removes the dirty region that has been queued for updating.
      * Does not update the view.
      */
-    void invalidateQueuedArea ();
+    void invalidateQueuedArea();
 
     /**
      * Updates the part of the view described by dirty region and then
      * calls invalidateQueuedArea().  Does nothing if @ref kpViewManager
      * is set to queue updates.
      */
-    void updateQueuedArea ();
+    void updateQueuedArea();
 
-    QVariant inputMethodQuery (Qt::InputMethodQuery query) const override;
+    QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 
 public Q_SLOTS:
     /**
@@ -411,15 +393,13 @@ public Q_SLOTS:
      * type of view.  For instance, an unzoomed view would resize itself;
      * a zoomed thumbnail would change the zoom level.
      */
-    virtual void adjustToEnvironment () = 0;
-
+    virtual void adjustToEnvironment() = 0;
 
 public:
     // If <returnViewPoint> is not KP_INVALID_POINT, it spits it back.
     // Else, it returns the current mouse position in view coordinates.
     // REFACTOR: Seems like a bad API.
-    QPoint mouseViewPoint (const QPoint &returnViewPoint = KP_INVALID_POINT) const;
-
+    QPoint mouseViewPoint(const QPoint &returnViewPoint = KP_INVALID_POINT) const;
 
 Q_SIGNALS:
     /**
@@ -428,14 +408,14 @@ Q_SIGNALS:
      * @param zoomLevelX New zoomLevelX()
      * @param zoomLevelY New zoomLevelY()
      */
-    void zoomLevelChanged (int zoomLevelX, int zoomLevelY);
+    void zoomLevelChanged(int zoomLevelX, int zoomLevelY);
 
     /**
      * Emitted after all resizing code has been executed.
      *
      * @param size New view size.
      */
-    void sizeChanged (const QSize &size);
+    void sizeChanged(const QSize &size);
 
     /**
      * Convenience signal - same as above.
@@ -445,42 +425,40 @@ Q_SIGNALS:
      * @param width New view width.
      * @param height New view height.
      */
-    void sizeChanged (int width, int height);
+    void sizeChanged(int width, int height);
 
     /**
      * Emitted after all origin changing code has been executed.
      *
      * @param origin The new origin.
      */
-    void originChanged (const QPoint &origin);
+    void originChanged(const QPoint &origin);
 
-
-
-//
-// Selections
-//
+    //
+    // Selections
+    //
 
 public:
-    QRect selectionViewRect () const;
+    QRect selectionViewRect() const;
 
     // (if <viewPoint> is KP_INVALID_POINT, it uses QCursor::pos())
 
-    QPoint mouseViewPointRelativeToSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
-    bool mouseOnSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
+    QPoint mouseViewPointRelativeToSelection(const QPoint &viewPoint = KP_INVALID_POINT) const;
+    bool mouseOnSelection(const QPoint &viewPoint = KP_INVALID_POINT) const;
 
-    int textSelectionMoveBorderAtomicSize () const;
-    bool mouseOnSelectionToMove (const QPoint &viewPoint = KP_INVALID_POINT) const;
+    int textSelectionMoveBorderAtomicSize() const;
+    bool mouseOnSelectionToMove(const QPoint &viewPoint = KP_INVALID_POINT) const;
 
 protected:
-    bool selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const;
+    bool selectionLargeEnoughToHaveResizeHandlesIfAtomicSize(int atomicSize) const;
+
 public:
-    int selectionResizeHandleAtomicSize () const;
-    bool selectionLargeEnoughToHaveResizeHandles () const;
+    int selectionResizeHandleAtomicSize() const;
+    bool selectionLargeEnoughToHaveResizeHandles() const;
 
-    QRegion selectionResizeHandlesViewRegion (bool forRenderer = false) const;
+    QRegion selectionResizeHandlesViewRegion(bool forRenderer = false) const;
 
-    enum SelectionResizeType
-    {
+    enum SelectionResizeType {
         None = 0,
         Left = 1,
         Right = 2,
@@ -489,65 +467,60 @@ public:
     };
 
     // Returns a bitwise OR of the SelectionResizeType's
-    int mouseOnSelectionResizeHandle (const QPoint &viewPoint = KP_INVALID_POINT) const;
+    int mouseOnSelectionResizeHandle(const QPoint &viewPoint = KP_INVALID_POINT) const;
 
-    bool mouseOnSelectionToSelectText (const QPoint &viewPoint = KP_INVALID_POINT) const;
+    bool mouseOnSelectionToSelectText(const QPoint &viewPoint = KP_INVALID_POINT) const;
 
-
-//
-// Events
-//
+    //
+    // Events
+    //
 
 protected:
-    void mouseMoveEvent (QMouseEvent *e) override;
-    void mousePressEvent (QMouseEvent *e) override;
-    void mouseReleaseEvent (QMouseEvent *e) override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+
 public:
     // (needs to be public as it may also get event from
     //  QScrollView::contentsWheelEvent())
-    void wheelEvent (QWheelEvent *e) override;
-
-
-protected:
-    void keyPressEvent (QKeyEvent *e) override;
-    void keyReleaseEvent (QKeyEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
 
 protected:
-    void inputMethodEvent (QInputMethodEvent *e) override;
+    void keyPressEvent(QKeyEvent *e) override;
+    void keyReleaseEvent(QKeyEvent *e) override;
 
 protected:
-    bool event (QEvent *e) override;
-
-
-protected:
-    void focusInEvent (QFocusEvent *e) override;
-    void focusOutEvent (QFocusEvent *e) override;
-
+    void inputMethodEvent(QInputMethodEvent *e) override;
 
 protected:
-    void enterEvent (QEnterEvent *e) override;
-    void leaveEvent (QEvent *e) override;
-
+    bool event(QEvent *e) override;
 
 protected:
-    void dragEnterEvent (QDragEnterEvent *) override;
-    void dragLeaveEvent (QDragLeaveEvent *) override;
-
+    void focusInEvent(QFocusEvent *e) override;
+    void focusOutEvent(QFocusEvent *e) override;
 
 protected:
-    void resizeEvent (QResizeEvent *e) override;
+    void enterEvent(QEnterEvent *e) override;
+    void leaveEvent(QEvent *e) override;
 
+protected:
+    void dragEnterEvent(QDragEnterEvent *) override;
+    void dragLeaveEvent(QDragLeaveEvent *) override;
 
-//
-// Painting
-//
+protected:
+    void resizeEvent(QResizeEvent *e) override;
+
+    //
+    // Painting
+    //
 
 protected:
     // Returns the document rectangle that, when scaled to the view,
     // is "guaranteed" to at least cover <viewRect> and possibly more
     // ("guaranteed" in quotes because it doesn't seem so reliable for
     // zoom levels that aren't multiples of 100%).
-    QRect paintEventGetDocRect (const QRect &viewRect) const;
+    QRect paintEventGetDocRect(const QRect &viewRect) const;
+
 public:
     /**
      * Draws an opaque background representing transparency.
@@ -564,35 +537,30 @@ public:
      *                  e.g. editing.  If set, this function may render
      *                  slightly differently.
      */
-    static void drawTransparentBackground (QPainter *painter,
-                                           const QPoint &patternOrigin,
-                                           const QRect &viewRect,
-                                           bool isPreview = false);
+    static void drawTransparentBackground(QPainter *painter, const QPoint &patternOrigin, const QRect &viewRect, bool isPreview = false);
+
 protected:
     // Draws a checkerboard that looks static even if the view is scrollable.
-    void paintEventDrawCheckerBoard (QPainter *painter,
-        const QRect &viewRect);
+    void paintEventDrawCheckerBoard(QPainter *painter, const QRect &viewRect);
 
     // Draws the selection and its border onto <destPixmap>.
     // <destPixmap> is the part of the document given by <docRect>.
-    void paintEventDrawSelection (QImage *destPixmap, const QRect &docRect);
+    void paintEventDrawSelection(QImage *destPixmap, const QRect &docRect);
 
     // Draws the parts of the selection's resize handles that are inside
     // <clipRect> onto the view
-    void paintEventDrawSelectionResizeHandles (const QRect &clipRect);
-    void paintEventDrawTempImage (QImage *destPixmap, const QRect &docRect);
+    void paintEventDrawSelectionResizeHandles(const QRect &clipRect);
+    void paintEventDrawTempImage(QImage *destPixmap, const QRect &docRect);
 
     // Draws the parts of the grid lines that are inside <viewRect> on
     // <painter>.
-    void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
+    void paintEventDrawGridLines(QPainter *painter, const QRect &viewRect);
 
-    void paintEventDrawDoc_Unclipped (const QRect &viewRect);
-    void paintEvent (QPaintEvent *e) override;
-
+    void paintEventDrawDoc_Unclipped(const QRect &viewRect);
+    void paintEvent(QPaintEvent *e) override;
 
 private:
     struct kpViewPrivate *d;
 };
 
-
-#endif  // KP_VIEW_H
+#endif // KP_VIEW_H

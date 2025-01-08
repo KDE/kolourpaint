@@ -25,34 +25,28 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_TEXT_BACKSPACE_COMMAND_H
 #define KP_TOOL_TEXT_BACKSPACE_COMMAND_H
 
-
 #include "commands/kpNamedCommand.h"
-
 
 class kpToolTextBackspaceCommand : public kpNamedCommand
 {
 public:
-    enum Action
-    {
+    enum Action {
         DontAddBackspaceYet,
         AddBackspaceNow
     };
 
-    kpToolTextBackspaceCommand (const QString &name,
-        int row, int col, Action action,
-        kpCommandEnvironment *environ);
-    ~kpToolTextBackspaceCommand () override;
+    kpToolTextBackspaceCommand(const QString &name, int row, int col, Action action, kpCommandEnvironment *environ);
+    ~kpToolTextBackspaceCommand() override;
 
-    void addBackspace ();
+    void addBackspace();
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 protected:
     int m_row, m_col;
@@ -60,5 +54,4 @@ protected:
     QString m_deletedText;
 };
 
-
-#endif  // KP_TOOL_TEXT_BACKSPACE_COMMAND_H
+#endif // KP_TOOL_TEXT_BACKSPACE_COMMAND_H

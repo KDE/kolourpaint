@@ -43,4 +43,3 @@ Q_DECLARE_LOGGING_CATEGORY(kpLogLayers)
 Q_DECLARE_LOGGING_CATEGORY(kpLogImagelib)
 
 #endif
-

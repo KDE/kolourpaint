@@ -25,35 +25,28 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectFlattenCommand_H
 #define kpEffectFlattenCommand_H
 
-
 #include <QColor>
 
-#include "kpEffectCommandBase.h"
 #include "imagelib/kpImage.h"
-
+#include "kpEffectCommandBase.h"
 
 class kpEffectFlattenCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpCommandEnvironment *environ);
-    ~kpEffectFlattenCommand () override;
-
+    kpEffectFlattenCommand(const QColor &color1, const QColor &color2, bool actOnSelection, kpCommandEnvironment *environ);
+    ~kpEffectFlattenCommand() override;
 
     //
     // kpEffectCommandBase interface
     //
 
 protected:
-    kpImage applyEffect (const kpImage &image) override;
+    kpImage applyEffect(const kpImage &image) override;
 
     QColor m_color1, m_color2;
 };
 
-
-#endif  // kpEffectFlattenCommand_H
+#endif // kpEffectFlattenCommand_H

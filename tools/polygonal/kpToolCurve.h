@@ -25,30 +25,26 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_CURVE_H
 #define KP_TOOL_CURVE_H
 
-
 #include "kpToolPolygonalBase.h"
-
 
 class kpToolCurve : public kpToolPolygonalBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolCurve (kpToolEnvironment *environ, QObject *parent);
-    ~kpToolCurve () override;
+    kpToolCurve(kpToolEnvironment *environ, QObject *parent);
+    ~kpToolCurve() override;
 
 protected:
-    QString haventBegunShapeUserMessage () const override;
+    QString haventBegunShapeUserMessage() const override;
 
-    bool drawingALine () const override;
+    bool drawingALine() const override;
 
 public:
-    void endDraw (const QPoint &, const QRect &) override;
+    void endDraw(const QPoint &, const QRect &) override;
 };
 
-
-#endif  // KP_TOOL_CURVE_H
+#endif // KP_TOOL_CURVE_H

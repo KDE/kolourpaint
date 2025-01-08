@@ -26,43 +26,37 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectToneEnhanceWidget_H
 #define kpEffectToneEnhanceWidget_H
-
 
 #include "kpEffectWidgetBase.h"
 #include "kpNumInput.h"
 
 class kpDoubleNumInput;
 
-
 class kpEffectToneEnhanceWidget : public kpEffectWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpEffectToneEnhanceWidget (bool actOnSelection,
-                               QWidget *parent);
-    ~kpEffectToneEnhanceWidget () override;
+    kpEffectToneEnhanceWidget(bool actOnSelection, QWidget *parent);
+    ~kpEffectToneEnhanceWidget() override;
 
-    QString caption () const override;
+    QString caption() const override;
 
 private:
-    double amount () const;
-    double granularity () const;
+    double amount() const;
+    double granularity() const;
 
 public:
-    bool isNoOp () const override;
-    kpImage applyEffect (const kpImage &image) override;
+    bool isNoOp() const override;
+    kpImage applyEffect(const kpImage &image) override;
 
-    kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const override;
+    kpEffectCommandBase *createCommand(kpCommandEnvironment *cmdEnviron) const override;
 
 protected:
     kpDoubleNumInput *m_granularityInput;
     kpDoubleNumInput *m_amountInput;
 };
 
-
-#endif  // kpEffectToneEnhanceWidget_H
+#endif // kpEffectToneEnhanceWidget_H

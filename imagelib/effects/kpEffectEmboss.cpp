@@ -24,9 +24,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_EFFECT_EMBOSS 0
-
 
 #include "kpEffectEmboss.h"
 #include "blitz.h"
@@ -35,14 +33,12 @@
 
 #include "pixmapfx/kpPixmapFX.h"
 
-
-static QImage EmbossQImage (const QImage &qimage_, int strength)
+static QImage EmbossQImage(const QImage &qimage_, int strength)
 {
     QImage qimage = qimage_;
     if (strength == 0) {
         return qimage;
     }
-
 
     // The numbers that follow were picked by experimentation to try to get
     // an effect linearly proportional to <strength> and at the same time,
@@ -56,26 +52,21 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
 
     const auto repeat = 1;
 
-
-    for (int i = 0; i < repeat; i++)
-    {
-        qimage = Blitz::emboss (qimage, radius, sigma);
+    for (int i = 0; i < repeat; i++) {
+        qimage = Blitz::emboss(qimage, radius, sigma);
     }
-
 
     return qimage;
 }
 
-
 // public static
-kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
+kpImage kpEffectEmboss::applyEffect(const kpImage &image, int strength)
 {
 #if DEBUG_KP_EFFECT_EMBOSS
-    qCDebug(kpLogImagelib) << "kpEffectEmboss::applyEffect(strength=" << strength << ")"
-               << endl;
+    qCDebug(kpLogImagelib) << "kpEffectEmboss::applyEffect(strength=" << strength << ")" << endl;
 #endif
 
-    Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
+    Q_ASSERT(strength >= MinStrength && strength <= MaxStrength);
 
-    return ::EmbossQImage (image, strength);
+    return ::EmbossQImage(image, strength);
 }

@@ -25,17 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_FLOOD_FILL 0
-
 
 #include "kpToolFloodFill.h"
 
 #include "commands/kpCommandHistory.h"
-#include "kpDefs.h"
+#include "commands/tools/kpToolFloodFillCommand.h"
 #include "document/kpDocument.h"
 #include "environments/tools/kpToolEnvironment.h"
-#include "commands/tools/kpToolFloodFillCommand.h"
+#include "kpDefs.h"
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
@@ -44,25 +42,22 @@
 
 //---------------------------------------------------------------------
 
-struct kpToolFloodFillPrivate
-{
+struct kpToolFloodFillPrivate {
     kpToolFloodFillCommand *currentCommand;
 };
 
 //---------------------------------------------------------------------
 
-kpToolFloodFill::kpToolFloodFill (kpToolEnvironment *environ, QObject *parent)
-    : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
-              Qt::Key_F,
-              environ, parent, QStringLiteral("tool_flood_fill")),
-      d (new kpToolFloodFillPrivate ())
+kpToolFloodFill::kpToolFloodFill(kpToolEnvironment *environ, QObject *parent)
+    : kpTool(i18n("Flood Fill"), i18n("Fills regions in the image"), Qt::Key_F, environ, parent, QStringLiteral("tool_flood_fill"))
+    , d(new kpToolFloodFillPrivate())
 {
     d->currentCommand = nullptr;
 }
 
 //---------------------------------------------------------------------
 
-kpToolFloodFill::~kpToolFloodFill ()
+kpToolFloodFill::~kpToolFloodFill()
 {
     delete d;
 }
@@ -70,99 +65,98 @@ kpToolFloodFill::~kpToolFloodFill ()
 //---------------------------------------------------------------------
 
 // private
-QString kpToolFloodFill::haventBegunDrawUserMessage () const
+QString kpToolFloodFill::haventBegunDrawUserMessage() const
 {
-    return i18n ("Click to fill a region.");
+    return i18n("Click to fill a region.");
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpTool]
-void kpToolFloodFill::begin ()
+void kpToolFloodFill::begin()
 {
-    setUserMessage (haventBegunDrawUserMessage ());
+    setUserMessage(haventBegunDrawUserMessage());
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpTool]
-void kpToolFloodFill::beginDraw ()
+void kpToolFloodFill::beginDraw()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
     qCDebug(kpLogTools) << "kpToolFloodFill::beginDraw()";
 #endif
 
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
     {
-        environ ()->flashColorSimilarityToolBarItem ();
+        environ()->flashColorSimilarityToolBarItem();
 
         // Flood Fill is an expensive CPU operation so we only fill at a
         // mouse click (beginDraw ()), not on mouse move (virtually draw())
-        d->currentCommand = new kpToolFloodFillCommand (
-            currentPoint ().x (), currentPoint ().y (),
-            color (mouseButton ()), processedColorSimilarity (),
-            environ ()->commandEnvironment ());
+        d->currentCommand = new kpToolFloodFillCommand(currentPoint().x(),
+                                                       currentPoint().y(),
+                                                       color(mouseButton()),
+                                                       processedColorSimilarity(),
+                                                       environ()->commandEnvironment());
 
-    #if DEBUG_KP_TOOL_FLOOD_FILL && 1
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
         qCDebug(kpLogTools) << "\tperforming new-doc-corner-case check";
-    #endif
+#endif
 
-        if (document ()->url ().isEmpty () && !document ()->isModified ())
-        {
+        if (document()->url().isEmpty() && !document()->isModified()) {
             // Collect the color that gets changed before we change the pixels
             // (execute() below).  Needed in unexecute().
-            d->currentCommand->prepareColorToChange ();
+            d->currentCommand->prepareColorToChange();
 
-            d->currentCommand->setFillEntireImage ();
+            d->currentCommand->setFillEntireImage();
         }
 
-        d->currentCommand->execute ();
+        d->currentCommand->execute();
     }
-    QApplication::restoreOverrideCursor ();
+    QApplication::restoreOverrideCursor();
 
-    setUserMessage (cancelUserMessage ());
+    setUserMessage(cancelUserMessage());
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpTool]
-void kpToolFloodFill::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
+void kpToolFloodFill::draw(const QPoint &thisPoint, const QPoint &, const QRect &)
 {
-    setUserShapePoints (thisPoint);
+    setUserShapePoints(thisPoint);
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpTool]
-void kpToolFloodFill::cancelShape ()
+void kpToolFloodFill::cancelShape()
 {
-    d->currentCommand->unexecute ();
+    d->currentCommand->unexecute();
 
     delete d->currentCommand;
     d->currentCommand = nullptr;
 
-    setUserMessage (i18n ("Let go of all the mouse buttons."));
+    setUserMessage(i18n("Let go of all the mouse buttons."));
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpTool]
-void kpToolFloodFill::releasedAllButtons ()
+void kpToolFloodFill::releasedAllButtons()
 {
-    setUserMessage (haventBegunDrawUserMessage ());
+    setUserMessage(haventBegunDrawUserMessage());
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpTool]
-void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
+void kpToolFloodFill::endDraw(const QPoint &, const QRect &)
 {
-    environ ()->commandHistory ()->addCommand (d->currentCommand,
-        false/*no exec - we already did it up there*/);
+    environ()->commandHistory()->addCommand(d->currentCommand, false /*no exec - we already did it up there*/);
 
     // Don't delete - it just got added to the history.
     d->currentCommand = nullptr;
-    setUserMessage (haventBegunDrawUserMessage ());
+    setUserMessage(haventBegunDrawUserMessage());
 }
 
 //---------------------------------------------------------------------

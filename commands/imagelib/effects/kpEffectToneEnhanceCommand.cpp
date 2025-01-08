@@ -26,7 +26,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpEffectToneEnhanceCommand.h"
 
 #include "imagelib/effects/kpEffectToneEnhance.h"
@@ -35,20 +34,17 @@
 
 //--------------------------------------------------------------------------------
 
-kpEffectToneEnhanceCommand::kpEffectToneEnhanceCommand (double granularity, double amount,
-        bool actOnSelection,
-        kpCommandEnvironment *environ)
-    : kpEffectCommandBase (i18n ("Histogram Equalizer"), actOnSelection, environ),
-      m_granularity (granularity), m_amount (amount)
+kpEffectToneEnhanceCommand::kpEffectToneEnhanceCommand(double granularity, double amount, bool actOnSelection, kpCommandEnvironment *environ)
+    : kpEffectCommandBase(i18n("Histogram Equalizer"), actOnSelection, environ)
+    , m_granularity(granularity)
+    , m_amount(amount)
 {
 }
 
-kpEffectToneEnhanceCommand::~kpEffectToneEnhanceCommand () = default;
-
+kpEffectToneEnhanceCommand::~kpEffectToneEnhanceCommand() = default;
 
 // protected virtual [base kpEffectCommandBase]
-kpImage kpEffectToneEnhanceCommand::applyEffect (const kpImage &image)
+kpImage kpEffectToneEnhanceCommand::applyEffect(const kpImage &image)
 {
-    return kpEffectToneEnhance::applyEffect (image, m_granularity, m_amount);
+    return kpEffectToneEnhance::applyEffect(image, m_granularity, m_amount);
 }
-

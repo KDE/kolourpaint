@@ -25,94 +25,85 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "environments/kpEnvironmentBase.h"
 
-#include "widgets/toolbars/kpColorToolBar.h"
 #include "document/kpDocument.h"
-#include "mainWindow/kpMainWindow.h"
 #include "layers/selections/text/kpTextStyle.h"
+#include "mainWindow/kpMainWindow.h"
 #include "tools/kpTool.h"
+#include "widgets/toolbars/kpColorToolBar.h"
 
-
-struct kpEnvironmentBasePrivate
-{
+struct kpEnvironmentBasePrivate {
     kpMainWindow *mainWindow;
 };
 
-kpEnvironmentBase::kpEnvironmentBase (kpMainWindow *mainWindow)
-    : QObject (mainWindow),
-      d (new kpEnvironmentBasePrivate ())
+kpEnvironmentBase::kpEnvironmentBase(kpMainWindow *mainWindow)
+    : QObject(mainWindow)
+    , d(new kpEnvironmentBasePrivate())
 {
-    Q_ASSERT (mainWindow);
+    Q_ASSERT(mainWindow);
 
     d->mainWindow = mainWindow;
 }
 
-kpEnvironmentBase::~kpEnvironmentBase ()
+kpEnvironmentBase::~kpEnvironmentBase()
 {
     delete d;
 }
 
-
 // public
-kpDocument *kpEnvironmentBase::document () const
+kpDocument *kpEnvironmentBase::document() const
 {
-    return d->mainWindow->document ();
-}
-
-
-// public
-kpAbstractSelection *kpEnvironmentBase::selection () const
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-    return doc->selection ();
+    return d->mainWindow->document();
 }
 
 // public
-kpAbstractImageSelection *kpEnvironmentBase::imageSelection () const
+kpAbstractSelection *kpEnvironmentBase::selection() const
 {
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
-    return doc->imageSelection ();
+    return doc->selection();
 }
 
 // public
-kpTextSelection *kpEnvironmentBase::textSelection () const
+kpAbstractImageSelection *kpEnvironmentBase::imageSelection() const
 {
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
-    return doc->textSelection ();
+    return doc->imageSelection();
 }
-
 
 // public
-kpViewManager *kpEnvironmentBase::viewManager () const
+kpTextSelection *kpEnvironmentBase::textSelection() const
 {
-    return mainWindow ()->viewManager ();
-}
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
+    return doc->textSelection();
+}
 
 // public
-kpCommandEnvironment *kpEnvironmentBase::commandEnvironment () const
+kpViewManager *kpEnvironmentBase::viewManager() const
 {
-    return mainWindow ()->commandEnvironment ();
+    return mainWindow()->viewManager();
 }
-
 
 // public
-kpColor kpEnvironmentBase::backgroundColor (bool ofSelection) const
+kpCommandEnvironment *kpEnvironmentBase::commandEnvironment() const
 {
-    return d->mainWindow->backgroundColor (ofSelection);
+    return mainWindow()->commandEnvironment();
 }
 
+// public
+kpColor kpEnvironmentBase::backgroundColor(bool ofSelection) const
+{
+    return d->mainWindow->backgroundColor(ofSelection);
+}
 
 // protected
-kpMainWindow *kpEnvironmentBase::mainWindow () const
+kpMainWindow *kpEnvironmentBase::mainWindow() const
 {
     return d->mainWindow;
 }

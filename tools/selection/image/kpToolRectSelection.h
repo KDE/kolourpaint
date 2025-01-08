@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_RECT_SELECTION_H
 #define KP_TOOL_RECT_SELECTION_H
 
-
 #include "kpAbstractImageSelectionTool.h"
-
 
 class kpToolRectSelection : public kpAbstractImageSelectionTool
 {
 public:
-    kpToolRectSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    ~kpToolRectSelection () override;
+    kpToolRectSelection(kpToolSelectionEnvironment *environ, QObject *parent);
+    ~kpToolRectSelection() override;
 
 protected:
-    bool drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragAccepted,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect) override;
+    bool drawCreateMoreSelectionAndUpdateStatusBar(bool dragAccepted, const QPoint &accidentalDragAdjustedPoint, const QRect &normalizedRect) override;
 };
 
-
-#endif  // KP_TOOL_RECT_SELECTION_H
+#endif // KP_TOOL_RECT_SELECTION_H

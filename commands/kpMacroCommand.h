@@ -25,42 +25,36 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpMacroCommand_H
 #define kpMacroCommand_H
-
 
 #include "commands/kpNamedCommand.h"
 
 #include <QList>
 
-
 class kpMacroCommand : public kpNamedCommand
 {
 public:
-    kpMacroCommand (const QString &name, kpCommandEnvironment *environ);
-    ~kpMacroCommand () override;
-
+    kpMacroCommand(const QString &name, kpCommandEnvironment *environ);
+    ~kpMacroCommand() override;
 
     //
     // kpCommand Interface
     //
 
-    SizeType size () const override;
+    SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
-
+    void execute() override;
+    void unexecute() override;
 
     //
     // Interface
     //
 
-    void addCommand (kpCommand *command);
+    void addCommand(kpCommand *command);
 
 protected:
-    QList <kpCommand *> m_commandList;
+    QList<kpCommand *> m_commandList;
 };
 
-
-#endif  // kpMacroCommand_H
+#endif // kpMacroCommand_H

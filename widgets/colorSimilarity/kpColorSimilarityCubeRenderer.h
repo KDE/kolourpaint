@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpColorSimilarityCubeRenderer_H
 #define kpColorSimilarityCubeRenderer_H
 
-
 class QPaintDevice;
-
 
 class kpColorSimilarityCubeRenderer
 {
@@ -44,11 +41,7 @@ public:
     //  .
     //  255 = full highlight
 
-    static void Paint(QPaintDevice *target,
-        int x, int y, int size,
-        double colorSimilarity,
-        int highlight = 0);
+    static void Paint(QPaintDevice *target, int x, int y, int size, double colorSimilarity, int highlight = 0);
 };
 
-
-#endif  // kpColorSimilarityCubeRenderer_H
+#endif // kpColorSimilarityCubeRenderer_H

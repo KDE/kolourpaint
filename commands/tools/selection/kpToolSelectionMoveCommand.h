@@ -25,39 +25,35 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolSelectionMoveCommand_H
 #define kpToolSelectionMoveCommand_H
-
 
 #include <QPoint>
 #include <QPolygon>
 #include <QRect>
 
-#include "imagelib/kpImage.h"
 #include "commands/kpNamedCommand.h"
-
+#include "imagelib/kpImage.h"
 
 class kpAbstractSelection;
-
 
 class kpToolSelectionMoveCommand : public kpNamedCommand
 {
 public:
-    kpToolSelectionMoveCommand (const QString &name, kpCommandEnvironment *environ);
-    ~kpToolSelectionMoveCommand () override;
+    kpToolSelectionMoveCommand(const QString &name, kpCommandEnvironment *environ);
+    ~kpToolSelectionMoveCommand() override;
 
-    kpAbstractSelection *originalSelectionClone () const;
+    kpAbstractSelection *originalSelectionClone() const;
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
-    void moveTo (const QPoint &point, bool moveLater = false);
-    void moveTo (int x, int y, bool moveLater = false);
-    void copyOntoDocument ();
-    void finalize ();
+    void moveTo(const QPoint &point, bool moveLater = false);
+    void moveTo(int x, int y, bool moveLater = false);
+    void copyOntoDocument();
+    void finalize();
 
 private:
     QPoint m_startPoint, m_endPoint;
@@ -70,5 +66,4 @@ private:
     QPolygon m_copyOntoDocumentPoints;
 };
 
-
-#endif  // kpToolSelectionMoveCommand_H
+#endif // kpToolSelectionMoveCommand_H

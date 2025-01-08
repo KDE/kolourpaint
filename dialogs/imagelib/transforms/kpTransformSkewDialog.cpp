@@ -24,270 +24,235 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_SKEW 0
 #define DEBUG_KP_TOOL_SKEW_DIALOG 0
-
 
 #include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QImage>
 #include <QLabel>
 #include <QPushButton>
-#include <QImage>
 #include <QSpinBox>
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
-#include "kpDefs.h"
 #include "document/kpDocument.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+#include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
-#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
-
 
 // private static
-int kpTransformSkewDialog::s_lastWidth = -1,
-    kpTransformSkewDialog::s_lastHeight = -1;
+int kpTransformSkewDialog::s_lastWidth = -1, kpTransformSkewDialog::s_lastHeight = -1;
 
 // private static
-int kpTransformSkewDialog::s_lastHorizontalAngle = 0,
-    kpTransformSkewDialog::s_lastVerticalAngle = 0;
+int kpTransformSkewDialog::s_lastHorizontalAngle = 0, kpTransformSkewDialog::s_lastVerticalAngle = 0;
 
-
-kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
-        kpTransformDialogEnvironment *_env, QWidget *parent)
-    : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
-        false/*don't reserve top row*/,
-        actOnSelection ? i18nc ("@title:window", "Skew Selection") : i18nc ("@title:window", "Skew Image"),
-        i18n ("After skew:"),
-        actOnSelection,
-        _env, parent)
+kpTransformSkewDialog::kpTransformSkewDialog(bool actOnSelection, kpTransformDialogEnvironment *_env, QWidget *parent)
+    : kpTransformPreviewDialog(kpTransformPreviewDialog::AllFeatures,
+                               false /*don't reserve top row*/,
+                               actOnSelection ? i18nc("@title:window", "Skew Selection") : i18nc("@title:window", "Skew Image"),
+                               i18n("After skew:"),
+                               actOnSelection,
+                               _env,
+                               parent)
 {
     // Too confusing - disable for now
     s_lastHorizontalAngle = s_lastVerticalAngle = 0;
 
-
-    createAngleGroupBox ();
-
+    createAngleGroupBox();
 
     if (s_lastWidth > 0 && s_lastHeight > 0) {
-        resize (s_lastWidth, s_lastHeight);
+        resize(s_lastWidth, s_lastHeight);
     }
 
+    slotUpdate();
 
-    slotUpdate ();
-    
-
-    m_horizontalSkewInput->setFocus ();
+    m_horizontalSkewInput->setFocus();
 }
 
-kpTransformSkewDialog::~kpTransformSkewDialog ()
+kpTransformSkewDialog::~kpTransformSkewDialog()
 {
-    s_lastWidth = width ();
-    s_lastHeight = height ();
+    s_lastWidth = width();
+    s_lastHeight = height();
 }
-
 
 // private
-void kpTransformSkewDialog::createAngleGroupBox ()
+void kpTransformSkewDialog::createAngleGroupBox()
 {
-    auto *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
-    addCustomWidget (angleGroupBox);
+    auto *angleGroupBox = new QGroupBox(i18n("Angle"), mainWidget());
+    addCustomWidget(angleGroupBox);
 
+    auto *horizontalSkewPixmapLabel = new QLabel(angleGroupBox);
+    horizontalSkewPixmapLabel->setPixmap(QStringLiteral(":/icons/image_skew_horizontal"));
 
-    auto *horizontalSkewPixmapLabel = new QLabel (angleGroupBox);
-    horizontalSkewPixmapLabel->setPixmap (QStringLiteral(":/icons/image_skew_horizontal"));
-
-    auto *horizontalSkewLabel = new QLabel (i18n ("&Horizontal:"), angleGroupBox);
+    auto *horizontalSkewLabel = new QLabel(i18n("&Horizontal:"), angleGroupBox);
     m_horizontalSkewInput = new QSpinBox;
     m_horizontalSkewInput->setValue(s_lastHorizontalAngle);
     m_horizontalSkewInput->setMinimum(-89);
     m_horizontalSkewInput->setMaximum(+89);
 
-    auto *horizontalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+    auto *horizontalSkewDegreesLabel = new QLabel(i18n("degrees"), angleGroupBox);
 
+    auto *verticalSkewPixmapLabel = new QLabel(angleGroupBox);
+    verticalSkewPixmapLabel->setPixmap(QStringLiteral(":/icons/image_skew_vertical"));
 
-    auto *verticalSkewPixmapLabel = new QLabel (angleGroupBox);
-    verticalSkewPixmapLabel->setPixmap (QStringLiteral(":/icons/image_skew_vertical"));
-
-    auto *verticalSkewLabel = new QLabel (i18n ("&Vertical:"), angleGroupBox);
+    auto *verticalSkewLabel = new QLabel(i18n("&Vertical:"), angleGroupBox);
     m_verticalSkewInput = new QSpinBox;
     m_verticalSkewInput->setValue(s_lastVerticalAngle);
     m_verticalSkewInput->setMinimum(-89);
     m_verticalSkewInput->setMaximum(+89);
 
-    auto *verticalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+    auto *verticalSkewDegreesLabel = new QLabel(i18n("degrees"), angleGroupBox);
 
+    horizontalSkewLabel->setBuddy(m_horizontalSkewInput);
+    verticalSkewLabel->setBuddy(m_verticalSkewInput);
 
-    horizontalSkewLabel->setBuddy (m_horizontalSkewInput);
-    verticalSkewLabel->setBuddy (m_verticalSkewInput);
+    auto *angleLayout = new QGridLayout(angleGroupBox);
 
+    angleLayout->addWidget(horizontalSkewPixmapLabel, 0, 0);
+    angleLayout->addWidget(horizontalSkewLabel, 0, 1);
+    angleLayout->addWidget(m_horizontalSkewInput, 0, 2, Qt::AlignVCenter);
+    angleLayout->addWidget(horizontalSkewDegreesLabel, 0, 3);
 
-    auto *angleLayout = new QGridLayout (angleGroupBox);
+    angleLayout->addWidget(verticalSkewPixmapLabel, 1, 0);
+    angleLayout->addWidget(verticalSkewLabel, 1, 1);
+    angleLayout->addWidget(m_verticalSkewInput, 1, 2, Qt::AlignVCenter);
+    angleLayout->addWidget(verticalSkewDegreesLabel, 1, 3);
 
-    angleLayout->addWidget (horizontalSkewPixmapLabel, 0, 0);
-    angleLayout->addWidget (horizontalSkewLabel, 0, 1);
-    angleLayout->addWidget (m_horizontalSkewInput, 0, 2, Qt::AlignVCenter);
-    angleLayout->addWidget (horizontalSkewDegreesLabel, 0, 3);
+    connect(m_horizontalSkewInput, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &kpTransformSkewDialog::slotUpdate);
 
-    angleLayout->addWidget (verticalSkewPixmapLabel, 1, 0);
-    angleLayout->addWidget (verticalSkewLabel, 1, 1);
-    angleLayout->addWidget (m_verticalSkewInput, 1, 2, Qt::AlignVCenter);
-    angleLayout->addWidget (verticalSkewDegreesLabel, 1, 3);
-
-
-    connect (m_horizontalSkewInput,
-             static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-             this, &kpTransformSkewDialog::slotUpdate);
-
-    connect (m_verticalSkewInput,
-             static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-             this, &kpTransformSkewDialog::slotUpdate);
-}
-
-
-// private virtual [base kpTransformPreviewDialog]
-QSize kpTransformSkewDialog::newDimensions () const
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-    auto skewMatrix = kpPixmapFX::skewMatrix (doc->image (),
-                                                  horizontalAngleForPixmapFX (),
-                                                  verticalAngleForPixmapFX ());
-    auto skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));
-
-    return  {skewRect.width (), skewRect.height ()};
+    connect(m_verticalSkewInput, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &kpTransformSkewDialog::slotUpdate);
 }
 
 // private virtual [base kpTransformPreviewDialog]
-QImage kpTransformSkewDialog::transformPixmap (const QImage &image,
-                                           int targetWidth, int targetHeight) const
+QSize kpTransformSkewDialog::newDimensions() const
 {
-    return kpPixmapFX::skew (image,
-                             horizontalAngleForPixmapFX (),
-                             verticalAngleForPixmapFX (),
-                             m_environ->backgroundColor (m_actOnSelection),
-                             targetWidth,
-                             targetHeight);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
+
+    auto skewMatrix = kpPixmapFX::skewMatrix(doc->image(), horizontalAngleForPixmapFX(), verticalAngleForPixmapFX());
+    auto skewRect = skewMatrix.mapRect(doc->rect(m_actOnSelection));
+
+    return {skewRect.width(), skewRect.height()};
 }
 
+// private virtual [base kpTransformPreviewDialog]
+QImage kpTransformSkewDialog::transformPixmap(const QImage &image, int targetWidth, int targetHeight) const
+{
+    return kpPixmapFX::skew(image,
+                            horizontalAngleForPixmapFX(),
+                            verticalAngleForPixmapFX(),
+                            m_environ->backgroundColor(m_actOnSelection),
+                            targetWidth,
+                            targetHeight);
+}
 
 // private
-void kpTransformSkewDialog::updateLastAngles ()
+void kpTransformSkewDialog::updateLastAngles()
 {
-    s_lastHorizontalAngle = horizontalAngle ();
-    s_lastVerticalAngle = verticalAngle ();
+    s_lastHorizontalAngle = horizontalAngle();
+    s_lastVerticalAngle = verticalAngle();
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
-void kpTransformSkewDialog::slotUpdate ()
+void kpTransformSkewDialog::slotUpdate()
 {
-    updateLastAngles ();
-    kpTransformPreviewDialog::slotUpdate ();
-}
-
-
-// public
-int kpTransformSkewDialog::horizontalAngle () const
-{
-    return m_horizontalSkewInput->value ();
+    updateLastAngles();
+    kpTransformPreviewDialog::slotUpdate();
 }
 
 // public
-int kpTransformSkewDialog::verticalAngle () const
+int kpTransformSkewDialog::horizontalAngle() const
 {
-    return m_verticalSkewInput->value ();
+    return m_horizontalSkewInput->value();
 }
 
+// public
+int kpTransformSkewDialog::verticalAngle() const
+{
+    return m_verticalSkewInput->value();
+}
 
 // public static
-int kpTransformSkewDialog::horizontalAngleForPixmapFX (int hangle)
+int kpTransformSkewDialog::horizontalAngleForPixmapFX(int hangle)
 {
     return -hangle;
 }
 
 // public static
-int kpTransformSkewDialog::verticalAngleForPixmapFX (int vangle)
+int kpTransformSkewDialog::verticalAngleForPixmapFX(int vangle)
 {
     return -vangle;
 }
 
-
 // public
-int kpTransformSkewDialog::horizontalAngleForPixmapFX () const
+int kpTransformSkewDialog::horizontalAngleForPixmapFX() const
 {
-    return kpTransformSkewDialog::horizontalAngleForPixmapFX (horizontalAngle ());
+    return kpTransformSkewDialog::horizontalAngleForPixmapFX(horizontalAngle());
 }
 
 // public
-int kpTransformSkewDialog::verticalAngleForPixmapFX () const
+int kpTransformSkewDialog::verticalAngleForPixmapFX() const
 {
-    return kpTransformSkewDialog::verticalAngleForPixmapFX (verticalAngle ());
+    return kpTransformSkewDialog::verticalAngleForPixmapFX(verticalAngle());
 }
-
 
 // public virtual [base kpTransformPreviewDialog]
-bool kpTransformSkewDialog::isNoOp () const
+bool kpTransformSkewDialog::isNoOp() const
 {
-    return (horizontalAngle () == 0) && (verticalAngle () == 0);
+    return (horizontalAngle() == 0) && (verticalAngle() == 0);
 }
 
-
 // private slot virtual [base QDialog]
-void kpTransformSkewDialog::accept ()
+void kpTransformSkewDialog::accept()
 {
     KLocalizedString message;
     QString caption, continueButtonText;
 
-    if (document ()->selection ())
-    {
-        if (!document ()->textSelection ())
-        {
-            message =
-                ki18n ("<qt><p>Skewing the selection to %1x%2"
-                      " may take a substantial amount of memory."
-                      " This can reduce system"
-                      " responsiveness and cause other application resource"
-                      " problems.</p>"
+    if (document()->selection()) {
+        if (!document()->textSelection()) {
+            message = ki18n(
+                "<qt><p>Skewing the selection to %1x%2"
+                " may take a substantial amount of memory."
+                " This can reduce system"
+                " responsiveness and cause other application resource"
+                " problems.</p>"
 
-                      "<p>Are you sure you want to skew the selection?</p></qt>");
+                "<p>Are you sure you want to skew the selection?</p></qt>");
 
-            caption = i18nc ("@title:window", "Skew Selection?");
-            continueButtonText = i18n ("Sk&ew Selection");
+            caption = i18nc("@title:window", "Skew Selection?");
+            continueButtonText = i18n("Sk&ew Selection");
         }
-    }
-    else
-    {
-        message =
-            ki18n ("<qt><p>Skewing the image to %1x%2"
-                  " may take a substantial amount of memory."
-                  " This can reduce system"
-                  " responsiveness and cause other application resource"
-                  " problems.</p>"
+    } else {
+        message = ki18n(
+            "<qt><p>Skewing the image to %1x%2"
+            " may take a substantial amount of memory."
+            " This can reduce system"
+            " responsiveness and cause other application resource"
+            " problems.</p>"
 
-                  "<p>Are you sure you want to skew the image?</p></qt>");
+            "<p>Are you sure you want to skew the image?</p></qt>");
 
-        caption = i18nc ("@title:window", "Skew Image?");
-        continueButtonText = i18n ("Sk&ew Image");
+        caption = i18nc("@title:window", "Skew Image?");
+        continueButtonText = i18n("Sk&ew Image");
     }
 
+    const int newWidth = newDimensions().width();
+    const int newHeight = newDimensions().height();
 
-    const int newWidth = newDimensions ().width ();
-    const int newHeight = newDimensions ().height ();
-
-    if (kpTool::warnIfBigImageSize (m_oldWidth,
-            m_oldHeight,
-            newWidth, newHeight,
-            message.subs (newWidth).subs (newHeight).toString (),
-            caption,
-            continueButtonText,
-            this))
-    {
-        QDialog::accept ();
+    if (kpTool::warnIfBigImageSize(m_oldWidth,
+                                   m_oldHeight,
+                                   newWidth,
+                                   newHeight,
+                                   message.subs(newWidth).subs(newHeight).toString(),
+                                   caption,
+                                   continueButtonText,
+                                   this)) {
+        QDialog::accept();
     }
 }
 

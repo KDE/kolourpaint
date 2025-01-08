@@ -26,9 +26,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_SELECTION 0
-
 
 #include "kpTextSelection.h"
 #include "kpTextSelectionPrivate.h"
@@ -41,39 +39,35 @@
 #include <QFontMetrics>
 #include <QList>
 
-
 // public
-kpTextSelection::kpTextSelection (const QRect &rect,
-        const kpTextStyle &textStyle)
-    : kpAbstractSelection (rect),
-      d (new kpTextSelectionPrivate ())
+kpTextSelection::kpTextSelection(const QRect &rect, const kpTextStyle &textStyle)
+    : kpAbstractSelection(rect)
+    , d(new kpTextSelectionPrivate())
 {
     d->textStyle = textStyle;
 }
 
 // public
-kpTextSelection::kpTextSelection (const QRect &rect,
-        const QList <QString> &textLines,
-        const kpTextStyle &textStyle)
-    : kpAbstractSelection (rect),
-      d (new kpTextSelectionPrivate ())
+kpTextSelection::kpTextSelection(const QRect &rect, const QList<QString> &textLines, const kpTextStyle &textStyle)
+    : kpAbstractSelection(rect)
+    , d(new kpTextSelectionPrivate())
 {
     d->textLines = textLines;
     d->textStyle = textStyle;
 }
 
 // public
-kpTextSelection::kpTextSelection (const kpTextSelection &rhs)
-    : kpAbstractSelection (),
-      d (new kpTextSelectionPrivate ())
+kpTextSelection::kpTextSelection(const kpTextSelection &rhs)
+    : kpAbstractSelection()
+    , d(new kpTextSelectionPrivate())
 {
     *this = rhs;
 }
 
 // public
-kpTextSelection &kpTextSelection::operator= (const kpTextSelection &rhs)
+kpTextSelection &kpTextSelection::operator=(const kpTextSelection &rhs)
 {
-    kpAbstractSelection::operator= (rhs);
+    kpAbstractSelection::operator=(rhs);
 
     d->textLines = rhs.d->textLines;
     d->textStyle = rhs.d->textStyle;
@@ -83,212 +77,188 @@ kpTextSelection &kpTextSelection::operator= (const kpTextSelection &rhs)
 }
 
 // public virtual [base kpAbstractSelection]
-kpTextSelection *kpTextSelection::clone () const
+kpTextSelection *kpTextSelection::clone() const
 {
-    kpTextSelection *sel = new kpTextSelection ();
+    kpTextSelection *sel = new kpTextSelection();
     *sel = *this;
     return sel;
 }
 
 // public
-kpTextSelection *kpTextSelection::resized (int newWidth, int newHeight) const
+kpTextSelection *kpTextSelection::resized(int newWidth, int newHeight) const
 {
-    return new kpTextSelection (QRect (x (), y (), newWidth, newHeight),
-        d->textLines,
-        d->textStyle);
+    return new kpTextSelection(QRect(x(), y(), newWidth, newHeight), d->textLines, d->textStyle);
 }
 
 // public
-kpTextSelection::~kpTextSelection ()
+kpTextSelection::~kpTextSelection()
 {
     delete d;
 }
 
-
 // public virtual [kpAbstractSelection]
-int kpTextSelection::serialID () const
+int kpTextSelection::serialID() const
 {
-    Q_ASSERT (!"Marshalling not supported");
+    Q_ASSERT(!"Marshalling not supported");
     return -1;
 }
 
 // public virtual [base kpAbstractSelection]
-bool kpTextSelection::readFromStream (QDataStream &stream)
+bool kpTextSelection::readFromStream(QDataStream &stream)
 {
-    (void) stream;
+    (void)stream;
 
-    Q_ASSERT (!"Marshalling not supported");
+    Q_ASSERT(!"Marshalling not supported");
     return false;
 }
 
 // public virtual [base kpAbstractSelection]
-void kpTextSelection::writeToStream (QDataStream &stream) const
+void kpTextSelection::writeToStream(QDataStream &stream) const
 {
-    (void) stream;
+    (void)stream;
 
-    Q_ASSERT (!"Marshalling not supported");
+    Q_ASSERT(!"Marshalling not supported");
 }
-
 
 // public virtual [kpAbstractSelection]
-QString kpTextSelection::name () const
+QString kpTextSelection::name() const
 {
-    return i18n ("Text");
+    return i18n("Text");
 }
-
 
 // public virtual [base kpAbstractSelection]
-kpCommandSize::SizeType kpTextSelection::size () const
+kpCommandSize::SizeType kpTextSelection::size() const
 {
-    return kpAbstractSelection::size () +
-        kpCommandSize::StringSize (text ());
+    return kpAbstractSelection::size() + kpCommandSize::StringSize(text());
 }
 
-
 // public virtual [kpAbstractSelection]
-bool kpTextSelection::isRectangular () const
+bool kpTextSelection::isRectangular() const
 {
     return true;
 }
 
-
 // public static
-int kpTextSelection::MinimumWidthForTextStyle (const kpTextStyle &)
+int kpTextSelection::MinimumWidthForTextStyle(const kpTextStyle &)
 {
-    return (kpTextSelection::TextBorderSize () * 2 + 5);
+    return (kpTextSelection::TextBorderSize() * 2 + 5);
 }
 
 // public static
-int kpTextSelection::MinimumHeightForTextStyle (const kpTextStyle &)
+int kpTextSelection::MinimumHeightForTextStyle(const kpTextStyle &)
 {
-    return (kpTextSelection::TextBorderSize () * 2 + 5);
+    return (kpTextSelection::TextBorderSize() * 2 + 5);
 }
 
 // public static
-QSize kpTextSelection::MinimumSizeForTextStyle (const kpTextStyle &textStyle)
+QSize kpTextSelection::MinimumSizeForTextStyle(const kpTextStyle &textStyle)
 {
-    return  {kpTextSelection::MinimumWidthForTextStyle (textStyle),
-                kpTextSelection::MinimumHeightForTextStyle (textStyle)};
-}
-
-
-// public virtual [kpAbstractSelection]
-int kpTextSelection::minimumWidth () const
-{
-    return kpTextSelection::MinimumWidthForTextStyle (textStyle ());
+    return {kpTextSelection::MinimumWidthForTextStyle(textStyle), kpTextSelection::MinimumHeightForTextStyle(textStyle)};
 }
 
 // public virtual [kpAbstractSelection]
-int kpTextSelection::minimumHeight () const
+int kpTextSelection::minimumWidth() const
 {
-    return kpTextSelection::MinimumHeightForTextStyle (textStyle ());
+    return kpTextSelection::MinimumWidthForTextStyle(textStyle());
 }
 
-
-// public static
-int kpTextSelection::PreferredMinimumWidthForTextStyle (const kpTextStyle &textStyle)
+// public virtual [kpAbstractSelection]
+int kpTextSelection::minimumHeight() const
 {
-    const int about15CharsWidth =
-        textStyle.fontMetrics().horizontalAdvance(QLatin1String("1234567890abcde"));
-
-    const int preferredMinWidth =
-        qMax (150,
-              kpTextSelection::TextBorderSize () * 2 + about15CharsWidth);
-
-    return qMax (kpTextSelection::MinimumWidthForTextStyle (textStyle),
-                 qMin (250, preferredMinWidth));
+    return kpTextSelection::MinimumHeightForTextStyle(textStyle());
 }
 
 // public static
-int kpTextSelection::PreferredMinimumHeightForTextStyle (const kpTextStyle &textStyle)
+int kpTextSelection::PreferredMinimumWidthForTextStyle(const kpTextStyle &textStyle)
 {
-    const int preferredMinHeight =
-        kpTextSelection::TextBorderSize () * 2 + textStyle.fontMetrics ().height ();
+    const int about15CharsWidth = textStyle.fontMetrics().horizontalAdvance(QLatin1String("1234567890abcde"));
 
-    return qMax (kpTextSelection::MinimumHeightForTextStyle (textStyle),
-                 qMin (150, preferredMinHeight));
+    const int preferredMinWidth = qMax(150, kpTextSelection::TextBorderSize() * 2 + about15CharsWidth);
+
+    return qMax(kpTextSelection::MinimumWidthForTextStyle(textStyle), qMin(250, preferredMinWidth));
 }
 
 // public static
-QSize kpTextSelection::PreferredMinimumSizeForTextStyle (const kpTextStyle &textStyle)
+int kpTextSelection::PreferredMinimumHeightForTextStyle(const kpTextStyle &textStyle)
 {
-    return  {kpTextSelection::PreferredMinimumWidthForTextStyle (textStyle),
-                kpTextSelection::PreferredMinimumHeightForTextStyle (textStyle)};
+    const int preferredMinHeight = kpTextSelection::TextBorderSize() * 2 + textStyle.fontMetrics().height();
+
+    return qMax(kpTextSelection::MinimumHeightForTextStyle(textStyle), qMin(150, preferredMinHeight));
 }
 
+// public static
+QSize kpTextSelection::PreferredMinimumSizeForTextStyle(const kpTextStyle &textStyle)
+{
+    return {kpTextSelection::PreferredMinimumWidthForTextStyle(textStyle), kpTextSelection::PreferredMinimumHeightForTextStyle(textStyle)};
+}
 
 // public static
-int kpTextSelection::TextBorderSize ()
+int kpTextSelection::TextBorderSize()
 {
     return 1;
 }
 
 // public
-QRect kpTextSelection::textAreaRect () const
+QRect kpTextSelection::textAreaRect() const
 {
-    return  {x () + kpTextSelection::TextBorderSize (),
-                y () + kpTextSelection::TextBorderSize (),
-                width () - kpTextSelection::TextBorderSize () * 2,
-                height () - kpTextSelection::TextBorderSize () * 2};
+    return {x() + kpTextSelection::TextBorderSize(),
+            y() + kpTextSelection::TextBorderSize(),
+            width() - kpTextSelection::TextBorderSize() * 2,
+            height() - kpTextSelection::TextBorderSize() * 2};
 }
-
 
 // public virtual [kpAbstractSelection]
-QPolygon kpTextSelection::calculatePoints () const
+QPolygon kpTextSelection::calculatePoints() const
 {
-    return kpAbstractSelection::CalculatePointsForRectangle (boundingRect ());
+    return kpAbstractSelection::CalculatePointsForRectangle(boundingRect());
 }
-
 
 // public virtual [kpAbstractSelection]
-bool kpTextSelection::contains (const QPoint &point) const
+bool kpTextSelection::contains(const QPoint &point) const
 {
-    return boundingRect ().contains (point);
-}
-
-
-// public
-bool kpTextSelection::pointIsInTextBorderArea (const QPoint &point) const
-{
-    return (boundingRect ().contains (point) && !pointIsInTextArea (point));
+    return boundingRect().contains(point);
 }
 
 // public
-bool kpTextSelection::pointIsInTextArea (const QPoint &point) const
+bool kpTextSelection::pointIsInTextBorderArea(const QPoint &point) const
 {
-    return textAreaRect ().contains (point);
+    return (boundingRect().contains(point) && !pointIsInTextArea(point));
 }
 
-
-// public virtual [kpAbstractSelection]
-bool kpTextSelection::hasContent () const
+// public
+bool kpTextSelection::pointIsInTextArea(const QPoint &point) const
 {
-    return !d->textLines.isEmpty ();
+    return textAreaRect().contains(point);
 }
 
 // public virtual [kpAbstractSelection]
-void kpTextSelection::deleteContent ()
+bool kpTextSelection::hasContent() const
 {
-    if (!hasContent ()) {
+    return !d->textLines.isEmpty();
+}
+
+// public virtual [kpAbstractSelection]
+void kpTextSelection::deleteContent()
+{
+    if (!hasContent()) {
         return;
     }
 
-    setTextLines (QList <QString> ());
+    setTextLines(QList<QString>());
 }
 
-
 // public
-QList <QString> kpTextSelection::textLines () const
+QList<QString> kpTextSelection::textLines() const
 {
     return d->textLines;
 }
 
 // public
-void kpTextSelection::setTextLines (const QList <QString> &textLines_)
+void kpTextSelection::setTextLines(const QList<QString> &textLines_)
 {
     d->textLines = textLines_;
 
-    Q_EMIT changed (boundingRect ());
+    Q_EMIT changed(boundingRect());
 }
 
 //--------------------------------------------------------------------------------
@@ -296,13 +266,12 @@ void kpTextSelection::setTextLines (const QList <QString> &textLines_)
 // public static
 QString kpTextSelection::textForTextLines(const QList<QString> &textLines)
 {
-    if (textLines.isEmpty ())
-      return QString();
+    if (textLines.isEmpty())
+        return QString();
 
     QString bigString = textLines[0];
 
-    for (int i = 1; i < textLines.count(); i++)
-    {
+    for (int i = 1; i < textLines.count(); i++) {
         bigString += QLatin1String("\n");
         bigString += textLines[i];
     }
@@ -313,35 +282,34 @@ QString kpTextSelection::textForTextLines(const QList<QString> &textLines)
 //--------------------------------------------------------------------------------
 
 // public
-QString kpTextSelection::text () const
+QString kpTextSelection::text() const
 {
-    return kpTextSelection::textForTextLines (d->textLines);
+    return kpTextSelection::textForTextLines(d->textLines);
 }
 
-
 // public
-kpTextStyle kpTextSelection::textStyle () const
+kpTextStyle kpTextSelection::textStyle() const
 {
     return d->textStyle;
 }
 
 // public
-void kpTextSelection::setTextStyle (const kpTextStyle &textStyle)
+void kpTextSelection::setTextStyle(const kpTextStyle &textStyle)
 {
     d->textStyle = textStyle;
 
-    Q_EMIT changed (boundingRect ());
+    Q_EMIT changed(boundingRect());
 }
 
-kpPreeditText kpTextSelection::preeditText () const
+kpPreeditText kpTextSelection::preeditText() const
 {
     return d->preeditText;
 }
 
-void kpTextSelection::setPreeditText (const kpPreeditText &preeditText)
+void kpTextSelection::setPreeditText(const kpPreeditText &preeditText)
 {
     d->preeditText = preeditText;
-    Q_EMIT changed (boundingRect ());
+    Q_EMIT changed(boundingRect());
 }
 
 #include "moc_kpTextSelection.cpp"

@@ -31,8 +31,8 @@
 
 #define DEBUG_KP_TOOL 0
 
-#include "tools/kpTool.h"
 #include "kpToolPrivate.h"
+#include "tools/kpTool.h"
 
 #include "kpLogCategories.h"
 
@@ -40,9 +40,9 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-#include <QMouseEvent>
 #include <QApplication>
 #include <QClipboard>
+#include <QMouseEvent>
 
 //---------------------------------------------------------------------
 
@@ -57,34 +57,27 @@
 //         It is somewhat hard to reproduce so the best way is to position the
 //         mouse close to an edge of the view.  If you do it right, no mouseMoveEvent
 //         is generated at _all_, until you move it back into the view.
-void kpTool::mousePressEvent (QMouseEvent *e)
+void kpTool::mousePressEvent(QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1
-    qCDebug(kpLogTools) << "kpTool::mousePressEvent pos=" << e->pos ()
-               << " button=" << (int) e->button ()
-               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
-               << " modifiers=" << (int *) (int) e->modifiers ()
-               << " beganDraw=" << d->beganDraw << endl;
+    qCDebug(kpLogTools) << "kpTool::mousePressEvent pos=" << e->pos() << " button=" << (int)e->button() << " stateAfter: buttons=" << (int *)(int)e->buttons()
+                        << " modifiers=" << (int *)(int)e->modifiers() << " beganDraw=" << d->beganDraw << endl;
 #endif
 
-    if (e->button () == Qt::MiddleButton)
-    {
-        const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
-    #if DEBUG_KP_TOOL && 1
+    if (e->button() == Qt::MiddleButton) {
+        const QString text = QApplication::clipboard()->text(QClipboard::Selection);
+#if DEBUG_KP_TOOL && 1
         qCDebug(kpLogTools) << "\tMMB pasteText='" << text << "'";
-    #endif
-        if (!text.isEmpty ())
-        {
-            if (hasBegunShape ())
-            {
-            #if DEBUG_KP_TOOL && 1
+#endif
+        if (!text.isEmpty()) {
+            if (hasBegunShape()) {
+#if DEBUG_KP_TOOL && 1
                 qCDebug(kpLogTools) << "\t\thasBegunShape - end";
-            #endif
-                endShapeInternal (d->currentPoint, normalizedRect ());
+#endif
+                endShapeInternal(d->currentPoint, normalizedRect());
             }
 
-            if (viewUnderCursor ())
-            {
+            if (viewUnderCursor()) {
                 d->environ->pasteTextAt (text,
                     viewUnderCursor ()->transformViewToDoc (e->pos ()),
                     true/*adjust topLeft so that cursor isn't
@@ -95,64 +88,61 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         }
     }
 
-    int mb = mouseButton (e->buttons ());
+    int mb = mouseButton(e->buttons());
 #if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "\tmb=" << mb << " d->beganDraw=" << d->beganDraw;
 #endif
 
-    if (mb == -1 && !d->beganDraw)
-    {
+    if (mb == -1 && !d->beganDraw) {
         // Ignore mouse press.
         return;
     }
 
-    if (d->beganDraw)
-    {
-        if (mb == -1 || mb != d->mouseButton)
-        {
-        #if DEBUG_KP_TOOL && 1
+    if (d->beganDraw) {
+        if (mb == -1 || mb != d->mouseButton) {
+#if DEBUG_KP_TOOL && 1
             qCDebug(kpLogTools) << "\tCancelling operation as " << mb << " == -1 or != " << d->mouseButton;
-        #endif
+#endif
 
-            kpView *view = viewUnderStartPoint ();
-            Q_ASSERT (view);
+            kpView *view = viewUnderStartPoint();
+            Q_ASSERT(view);
 
             // if we get a mousePressEvent when we're drawing, then the other
             // mouse button must have been pressed
-            d->currentPoint = view->transformViewToDoc (e->pos ());
-            d->currentViewPoint = e->pos ();
-            cancelShapeInternal ();
+            d->currentPoint = view->transformViewToDoc(e->pos());
+            d->currentViewPoint = e->pos();
+            cancelShapeInternal();
         }
 
         return;
     }
 
-    kpView *view = viewUnderCursor ();
-    Q_ASSERT (view);
+    kpView *view = viewUnderCursor();
+    Q_ASSERT(view);
 
 #if DEBUG_KP_TOOL && 1
     if (view) {
-        qCDebug(kpLogTools) << "\tview=" << view->objectName ();
+        qCDebug(kpLogTools) << "\tview=" << view->objectName();
     }
 #endif
 
     // let user know what mouse button is being used for entire draw
-    d->mouseButton = mouseButton (e->buttons ());
-    d->shiftPressed = (e->modifiers () & Qt::ShiftModifier);
-    d->controlPressed = (e->modifiers () & Qt::ControlModifier);
-    d->altPressed = (e->modifiers () & Qt::AltModifier);
-    d->startPoint = d->currentPoint = view->transformViewToDoc (e->pos ());
-    d->currentViewPoint = e->pos ();
+    d->mouseButton = mouseButton(e->buttons());
+    d->shiftPressed = (e->modifiers() & Qt::ShiftModifier);
+    d->controlPressed = (e->modifiers() & Qt::ControlModifier);
+    d->altPressed = (e->modifiers() & Qt::AltModifier);
+    d->startPoint = d->currentPoint = view->transformViewToDoc(e->pos());
+    d->currentViewPoint = e->pos();
     d->viewUnderStartPoint = view;
-    d->lastPoint = QPoint (-1, -1);
+    d->lastPoint = QPoint(-1, -1);
 
 #if DEBUG_KP_TOOL && 1
     qCDebug(kpLogTools) << "\tBeginning draw @ " << d->currentPoint;
 #endif
 
-    beginDrawInternal ();
+    beginDrawInternal();
 
-    draw (d->currentPoint, d->lastPoint, QRect (d->currentPoint, d->currentPoint));
+    draw(d->currentPoint, d->lastPoint, QRect(d->currentPoint, d->currentPoint));
     d->lastPoint = d->currentPoint;
 }
 
@@ -167,45 +157,39 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 //      point changes, not just document points, since the selection resize
 //      handles may be smaller than document points.  Also, I wonder if
 //      selections' accidental drag detection feature cares?
-void kpTool::mouseMoveEvent (QMouseEvent *e)
+void kpTool::mouseMoveEvent(QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    qCDebug(kpLogTools) << "kpTool::mouseMoveEvent pos=" << e->pos ()
-               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
-               << " modifiers=" << (int *) (int) e->modifiers ();
-    kpView *v0 = viewUnderCursor (),
-           *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
-           *v2 = viewUnderStartPoint ();
-    qCDebug(kpLogTools) << "\tviewUnderCursor=" << (v0 ? v0->objectName () : "(none)")
-               << " viewUnderCursorQt=" << (v1 ? v1->objectName () : "(none)")
-               << " viewUnderStartPoint=" << (v2 ? v2->objectName () : "(none)");
-    qCDebug(kpLogTools) << "\tfocusWidget=" << kapp->focusWidget ();
+    qCDebug(kpLogTools) << "kpTool::mouseMoveEvent pos=" << e->pos() << " stateAfter: buttons=" << (int *)(int)e->buttons()
+                        << " modifiers=" << (int *)(int)e->modifiers();
+    kpView *v0 = viewUnderCursor(), *v1 = viewManager()->viewUnderCursor(true /*use Qt*/), *v2 = viewUnderStartPoint();
+    qCDebug(kpLogTools) << "\tviewUnderCursor=" << (v0 ? v0->objectName() : "(none)") << " viewUnderCursorQt=" << (v1 ? v1->objectName() : "(none)")
+                        << " viewUnderStartPoint=" << (v2 ? v2->objectName() : "(none)");
+    qCDebug(kpLogTools) << "\tfocusWidget=" << kapp->focusWidget();
     qCDebug(kpLogTools) << "\tbeganDraw=" << d->beganDraw;
 #endif
 
-    d->shiftPressed = (e->modifiers () & Qt::ShiftModifier);
-    d->controlPressed = (e->modifiers () & Qt::ControlModifier);
-    d->altPressed = (e->modifiers () & Qt::AltModifier);
+    d->shiftPressed = (e->modifiers() & Qt::ShiftModifier);
+    d->controlPressed = (e->modifiers() & Qt::ControlModifier);
+    d->altPressed = (e->modifiers() & Qt::AltModifier);
 
-    if (d->beganDraw)
-    {
-        kpView *view = viewUnderStartPoint ();
-        Q_ASSERT (view);
+    if (d->beganDraw) {
+        kpView *view = viewUnderStartPoint();
+        Q_ASSERT(view);
 
-        d->currentPoint = view->transformViewToDoc (e->pos ());
-        d->currentViewPoint = e->pos ();
+        d->currentPoint = view->transformViewToDoc(e->pos());
+        d->currentViewPoint = e->pos();
 
-    #if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 0
         qCDebug(kpLogTools) << "\tDraw!";
-    #endif
+#endif
 
         bool dragScrolled = false;
-        movedAndAboutToDraw (d->currentPoint, d->lastPoint, view->zoomLevelX (), &dragScrolled);
+        movedAndAboutToDraw(d->currentPoint, d->lastPoint, view->zoomLevelX(), &dragScrolled);
 
-        if (dragScrolled)
-        {
-            d->currentPoint = calculateCurrentPoint ();
-            d->currentViewPoint = calculateCurrentPoint (false/*view point*/);
+        if (dragScrolled) {
+            d->currentPoint = calculateCurrentPoint();
+            d->currentViewPoint = calculateCurrentPoint(false /*view point*/);
 
             // Scrollview has scrolled contents and has scheduled an update
             // for the newly exposed region.  If draw() schedules an update
@@ -213,124 +197,110 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             // update will be executed first and it'll only update part of
             // the screen resulting in ugly tearing of the viewManager's
             // tempImage.
-            viewManager ()->setFastUpdates ();
+            viewManager()->setFastUpdates();
         }
 
-        drawInternal ();
+        drawInternal();
 
         if (dragScrolled) {
-            viewManager ()->restoreFastUpdates ();
+            viewManager()->restoreFastUpdates();
         }
 
         d->lastPoint = d->currentPoint;
-    }
-    else
-    {
-        kpView *view = viewUnderCursor ();
-        if (!view)  // possible if cancelShape()'ed but still holding down initial mousebtn
+    } else {
+        kpView *view = viewUnderCursor();
+        if (!view) // possible if cancelShape()'ed but still holding down initial mousebtn
         {
             d->currentPoint = KP_INVALID_POINT;
             d->currentViewPoint = KP_INVALID_POINT;
             return;
         }
 
-        d->currentPoint = view->transformViewToDoc (e->pos ());
-        d->currentViewPoint = e->pos ();
-        hover (d->currentPoint);
+        d->currentPoint = view->transformViewToDoc(e->pos());
+        d->currentViewPoint = e->pos();
+        hover(d->currentPoint);
     }
 }
 
 //---------------------------------------------------------------------
 
-void kpTool::mouseReleaseEvent (QMouseEvent *e)
+void kpTool::mouseReleaseEvent(QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1
-    qCDebug(kpLogTools) << "kpTool::mouseReleaseEvent pos=" << e->pos ()
-               << " button=" << (int) e->button ()
-               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
-               << " modifiers=" << (int *) (int) e->modifiers ()
-               << " beganDraw=" << d->beganDraw;
+    qCDebug(kpLogTools) << "kpTool::mouseReleaseEvent pos=" << e->pos() << " button=" << (int)e->button() << " stateAfter: buttons=" << (int *)(int)e->buttons()
+                        << " modifiers=" << (int *)(int)e->modifiers() << " beganDraw=" << d->beganDraw;
 #endif
 
     // Have _not_ already cancelShape()'ed by pressing other mouse button?
     // (e.g. you can cancel a line dragged out with the LMB, by pressing
     //       the RMB)
-    if (d->beganDraw)
-    {
-        kpView *view = viewUnderStartPoint ();
-        Q_ASSERT (view);
+    if (d->beganDraw) {
+        kpView *view = viewUnderStartPoint();
+        Q_ASSERT(view);
 
-        d->currentPoint = view->transformViewToDoc (e->pos ());
-        d->currentViewPoint = e->pos ();
+        d->currentPoint = view->transformViewToDoc(e->pos());
+        d->currentViewPoint = e->pos();
 
-        drawInternal ();
+        drawInternal();
 
-        endDrawInternal (d->currentPoint, normalizedRect ());
+        endDrawInternal(d->currentPoint, normalizedRect());
     }
 
-    if ((e->buttons () & Qt::MouseButtonMask) == 0)
-    {
-        releasedAllButtons ();
+    if ((e->buttons() & Qt::MouseButtonMask) == 0) {
+        releasedAllButtons();
     }
 }
 
 //---------------------------------------------------------------------
 
-void kpTool::wheelEvent (QWheelEvent *e)
+void kpTool::wheelEvent(QWheelEvent *e)
 {
 #if DEBUG_KP_TOOL
-    qCDebug(kpLogTools) << "kpTool::wheelEvent() modifiers=" << (int *) (int) e->modifiers ()
-               << " hasBegunDraw=" << hasBegunDraw ()
-               << " delta=" << e->delta ();
+    qCDebug(kpLogTools) << "kpTool::wheelEvent() modifiers=" << (int *)(int)e->modifiers() << " hasBegunDraw=" << hasBegunDraw() << " delta=" << e->delta();
 #endif
 
-    e->ignore ();
+    e->ignore();
 
     // If CTRL not pressed, bye.
-    if ((e->modifiers () & Qt::ControlModifier) == 0)
-    {
-    #if DEBUG_KP_TOOL
+    if ((e->modifiers() & Qt::ControlModifier) == 0) {
+#if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\tno CTRL -> bye";
-    #endif
+#endif
         return;
     }
 
     // If drawing, bye; don't care if a shape in progress though.
-    if (hasBegunDraw ())
-    {
-    #if DEBUG_KP_TOOL
+    if (hasBegunDraw()) {
+#if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\thasBegunDraw() -> bye";
-    #endif
+#endif
         return;
     }
-
 
     // Zoom in/out depending on wheel direction.
 
     // Moved wheel away from user?
-    if (e->angleDelta().y() > 0)
-    {
-    #if DEBUG_KP_TOOL
+    if (e->angleDelta().y() > 0) {
+#if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\tzoom in";
-    #endif
-        d->environ->zoomIn (true/*center under cursor*/);
-        e->accept ();
+#endif
+        d->environ->zoomIn(true /*center under cursor*/);
+        e->accept();
     }
     // Moved wheel towards user?
-    else if (e->angleDelta().y() < 0)
-    {
-    #if DEBUG_KP_TOOL
+    else if (e->angleDelta().y() < 0) {
+#if DEBUG_KP_TOOL
         qCDebug(kpLogTools) << "\tzoom out";
-    #endif
-    #if 1
+#endif
+#if 1
         d->environ->zoomOut (true/*center under cursor - make zoom in/out
                                    stay under same doc pos*/);
-    #else
+#else
         d->environ->zoomOut (false/*don't center under cursor - as is
                                     confusing behaviour when zooming
                                     out*/);
-    #endif
-        e->accept ();
+#endif
+        e->accept();
     }
 }
 

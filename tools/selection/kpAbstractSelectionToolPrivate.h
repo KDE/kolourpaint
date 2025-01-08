@@ -25,14 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpAbstractSelectionToolPrivate_H
 #define kpAbstractSelectionToolPrivate_H
 
 #include "kpAbstractSelectionTool.h"
 
 #include <QPoint>
-
 
 class QTimer;
 
@@ -41,9 +39,7 @@ class kpToolSelectionMoveCommand;
 class kpToolSelectionResizeScaleCommand;
 class kpToolWidgetOpaqueOrTransparent;
 
-
-struct kpAbstractSelectionToolPrivate
-{
+struct kpAbstractSelectionToolPrivate {
     kpAbstractSelectionTool::DrawType drawType;
     kpAbstractSelectionContentCommand *currentSelContentCommand;
 
@@ -59,13 +55,11 @@ struct kpAbstractSelectionToolPrivate
 
     kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent;
 
-
     //
     // Create
     //
 
     QTimer *createNOPTimer;
-
 
     //
     // Move
@@ -78,7 +72,6 @@ struct kpAbstractSelectionToolPrivate
 
     QTimer *RMBMoveUpdateGUITimer;
 
-
     //
     // Resize / Scale
     //
@@ -87,5 +80,4 @@ struct kpAbstractSelectionToolPrivate
     int resizeScaleType;
 };
 
-
-#endif  // kpAbstractSelectionToolPrivate_H
+#endif // kpAbstractSelectionToolPrivate_H

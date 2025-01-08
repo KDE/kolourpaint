@@ -25,22 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_IMAGE_SELECTION_TRANSPARENCY_H
 #define KP_IMAGE_SELECTION_TRANSPARENCY_H
 
-
 #include "imagelib/kpColor.h"
-
 
 // This does not apply to the Text Tool.  Use kpTextStyle for that.
 class kpImageSelectionTransparency
 {
 public:
     // Opaque selection
-    kpImageSelectionTransparency ();
+    kpImageSelectionTransparency();
     // Selection that's transparent at pixels with <color>
-    kpImageSelectionTransparency (const kpColor &transparentColor, double colorSimilarity);
+    kpImageSelectionTransparency(const kpColor &transparentColor, double colorSimilarity);
     // If <isOpaque>, <transparentColor> is allowed to be anything
     // (including invalid) as the color would have no effect.
     // However, you are encouraged to set it as you would if !<isOpaque>,
@@ -49,27 +46,27 @@ public:
     //
     // It is a similar case with <colorSimilarity>, although <colorSimilarity>
     // must be in-range (see kpColorSimilarityHolder).
-    kpImageSelectionTransparency (bool isOpaque, const kpColor &transparentColor, double colorSimilarity);
+    kpImageSelectionTransparency(bool isOpaque, const kpColor &transparentColor, double colorSimilarity);
     // Returns whether they are visually equivalent.
     // This is the same as a memcmp() except that if they are both opaque,
     // this function will return true regardless of the transparentColor's.
-    bool operator== (const kpImageSelectionTransparency &rhs) const;
-    bool operator!= (const kpImageSelectionTransparency &rhs) const;
-    ~kpImageSelectionTransparency ();
+    bool operator==(const kpImageSelectionTransparency &rhs) const;
+    bool operator!=(const kpImageSelectionTransparency &rhs) const;
+    ~kpImageSelectionTransparency();
 
-    bool isOpaque () const;
-    bool isTransparent () const;
-    void setOpaque (bool yes = true);
-    void setTransparent (bool yes = true);
+    bool isOpaque() const;
+    bool isTransparent() const;
+    void setOpaque(bool yes = true);
+    void setTransparent(bool yes = true);
 
     // If isOpaque(), transparentColor() is generally not called because
     // the transparent color would have no effect.
-    kpColor transparentColor () const;
-    void setTransparentColor (const kpColor &transparentColor);
+    kpColor transparentColor() const;
+    void setTransparentColor(const kpColor &transparentColor);
 
-    double colorSimilarity () const;
-    void setColorSimilarity (double colorSimilarity);
-    int processedColorSimilarity () const;
+    double colorSimilarity() const;
+    void setColorSimilarity(double colorSimilarity);
+    int processedColorSimilarity() const;
 
 private:
     bool m_isOpaque;
@@ -78,5 +75,4 @@ private:
     int m_processedColorSimilarity;
 };
 
-
-#endif  // KP_IMAGE_SELECTION_TRANSPARENCY_H
+#endif // KP_IMAGE_SELECTION_TRANSPARENCY_H

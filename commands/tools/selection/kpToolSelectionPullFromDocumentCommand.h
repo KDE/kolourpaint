@@ -25,35 +25,28 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolSelectionPullFromDocumentCommand_H
 #define kpToolSelectionPullFromDocumentCommand_H
 
-
-#include "kpAbstractSelectionContentCommand.h"
 #include "imagelib/kpColor.h"
-
+#include "kpAbstractSelectionContentCommand.h"
 
 class kpAbstractImageSelection;
 
-
-class kpToolSelectionPullFromDocumentCommand :
-        public kpAbstractSelectionContentCommand
+class kpToolSelectionPullFromDocumentCommand : public kpAbstractSelectionContentCommand
 {
 public:
-    kpToolSelectionPullFromDocumentCommand (
-        const kpAbstractImageSelection &originalSelBorder,
-        const kpColor &backgroundColor,
-        const QString &name,
-        kpCommandEnvironment *environ);
-    ~kpToolSelectionPullFromDocumentCommand () override;
+    kpToolSelectionPullFromDocumentCommand(const kpAbstractImageSelection &originalSelBorder,
+                                           const kpColor &backgroundColor,
+                                           const QString &name,
+                                           kpCommandEnvironment *environ);
+    ~kpToolSelectionPullFromDocumentCommand() override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     kpColor m_backgroundColor;
 };
 
-
-#endif  // kpToolSelectionPullFromDocumentCommand_H
+#endif // kpToolSelectionPullFromDocumentCommand_H

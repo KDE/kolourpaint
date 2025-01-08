@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_COLOR_PICKER 0
-
 
 #include "kpToolColorPickerCommand.h"
 
@@ -36,46 +34,37 @@
 
 #include <KLocalizedString>
 
+kpToolColorPickerCommand::kpToolColorPickerCommand(int mouseButton, const kpColor &newColor, const kpColor &oldColor, kpCommandEnvironment *environ)
 
-kpToolColorPickerCommand::kpToolColorPickerCommand (
-        int mouseButton,
-        const kpColor &newColor,
-        const kpColor &oldColor,
-        kpCommandEnvironment *environ)
-
-    : kpCommand (environ),
-      m_mouseButton (mouseButton),
-      m_newColor (newColor),
-      m_oldColor (oldColor)
+    : kpCommand(environ)
+    , m_mouseButton(mouseButton)
+    , m_newColor(newColor)
+    , m_oldColor(oldColor)
 {
 }
 
-kpToolColorPickerCommand::~kpToolColorPickerCommand () = default;
-
+kpToolColorPickerCommand::~kpToolColorPickerCommand() = default;
 
 // public virtual [base kpCommand]
-QString kpToolColorPickerCommand::name () const
+QString kpToolColorPickerCommand::name() const
 {
-    return i18n ("Color Picker");
+    return i18n("Color Picker");
 }
 
-
 // public virtual [base kpCommand]
-kpCommandSize::SizeType kpToolColorPickerCommand::size () const
+kpCommandSize::SizeType kpToolColorPickerCommand::size() const
 {
     return 0;
 }
 
-
 // public virtual [base kpCommand]
-void kpToolColorPickerCommand::execute ()
+void kpToolColorPickerCommand::execute()
 {
-    environ ()->setColor (m_mouseButton, m_newColor);
+    environ()->setColor(m_mouseButton, m_newColor);
 }
 
 // public virtual [base kpCommand]
-void kpToolColorPickerCommand::unexecute ()
+void kpToolColorPickerCommand::unexecute()
 {
-    environ ()->setColor (m_mouseButton, m_oldColor);
+    environ()->setColor(m_mouseButton, m_oldColor);
 }
-

@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_COLOR_SIMILARITY_CUBE 0
-
 
 #include "kpColorSimilarityFrame.h"
 
@@ -40,39 +38,37 @@
 kpColorSimilarityFrame::kpColorSimilarityFrame(QWidget *parent)
     : QWidget(parent)
 {
-    setWhatsThis (WhatsThis ());
+    setWhatsThis(WhatsThis());
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpColorSimilarityHolder]
-void kpColorSimilarityFrame::setColorSimilarity (double similarity)
+void kpColorSimilarityFrame::setColorSimilarity(double similarity)
 {
-    kpColorSimilarityHolder::setColorSimilarity (similarity);
+    kpColorSimilarityHolder::setColorSimilarity(similarity);
 
-    repaint ();
+    repaint();
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
-QSize kpColorSimilarityFrame::sizeHint () const
+QSize kpColorSimilarityFrame::sizeHint() const
 {
-    return  {52, 52};
+    return {52, 52};
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
-void kpColorSimilarityFrame::paintEvent (QPaintEvent *)
+void kpColorSimilarityFrame::paintEvent(QPaintEvent *)
 {
     int cubeRectSize = qMin(width() * 6 / 8, height() * 6 / 8);
     int x = (width() - cubeRectSize) / 2;
     int y = (height() - cubeRectSize) / 2;
 
-    kpColorSimilarityCubeRenderer::Paint(this,
-        x, y, cubeRectSize,
-        colorSimilarity());
+    kpColorSimilarityCubeRenderer::Paint(this, x, y, cubeRectSize, colorSimilarity());
 }
 
 //---------------------------------------------------------------------

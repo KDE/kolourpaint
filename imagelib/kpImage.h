@@ -25,14 +25,11 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_IMAGE_H
 #define KP_IMAGE_H
-
 
 #include <QImage>
 
 typedef QImage kpImage;
 
-
-#endif  // KP_IMAGE_H
+#endif // KP_IMAGE_H

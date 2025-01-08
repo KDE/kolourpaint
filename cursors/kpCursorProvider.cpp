@@ -25,23 +25,20 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpCursorProvider.h"
 
 #include "kpCursorLightCross.h"
 
 #include <QCursor>
 
-
 static const QCursor *TheLightCursor = nullptr;
 
-
 // public static
-QCursor kpCursorProvider::lightCross ()
+QCursor kpCursorProvider::lightCross()
 {
     // TODO: don't leak (although it's cleaned up on exit by OS anyway)
     if (!::TheLightCursor) {
-        ::TheLightCursor = kpCursorLightCrossCreate ();
+        ::TheLightCursor = kpCursorLightCrossCreate();
     }
 
     return *::TheLightCursor;

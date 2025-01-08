@@ -25,31 +25,26 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_WIDGET_ERASER_SIZE_H
 #define KP_TOOL_WIDGET_ERASER_SIZE_H
 
-#include "kpToolWidgetBase.h"
 #include "imagelib/kpColor.h"
+#include "kpToolWidgetBase.h"
 #include "layers/tempImage/kpTempImage.h"
-
-
 
 class kpColor;
 
-
 class kpToolWidgetEraserSize : public kpToolWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolWidgetEraserSize (QWidget *parent, const QString &name);
-    ~kpToolWidgetEraserSize () override;
+    kpToolWidgetEraserSize(QWidget *parent, const QString &name);
+    ~kpToolWidgetEraserSize() override;
 
-    int eraserSize () const;
-    
-    struct DrawPackage
-    {
+    int eraserSize() const;
+
+    struct DrawPackage {
         int selected;
         kpColor color;
     };
@@ -62,19 +57,17 @@ public:
     // border suitable as a cursor only.
     //
     // TODO: change function + data -> object
-    kpTempImage::UserFunctionType drawFunction () const;
-    kpTempImage::UserFunctionType drawCursorFunction () const;
-    
-    static DrawPackage drawFunctionDataForSelected (const kpColor &color,
-        int selectedIndex);
-    DrawPackage drawFunctionData (const kpColor &color) const;
+    kpTempImage::UserFunctionType drawFunction() const;
+    kpTempImage::UserFunctionType drawCursorFunction() const;
+
+    static DrawPackage drawFunctionDataForSelected(const kpColor &color, int selectedIndex);
+    DrawPackage drawFunctionData(const kpColor &color) const;
 
 Q_SIGNALS:
-    void eraserSizeChanged (int size);
+    void eraserSizeChanged(int size);
 
 protected Q_SLOTS:
-    bool setSelected (int row, int col, bool saveAsDefault) override;
+    bool setSelected(int row, int col, bool saveAsDefault) override;
 };
 
-
-#endif  // KP_TOOL_WIDGET_ERASER_SIZE_H
+#endif // KP_TOOL_WIDGET_ERASER_SIZE_H

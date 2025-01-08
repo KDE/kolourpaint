@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpDefaultColorCollection_H
 #define kpDefaultColorCollection_H
 
-
 #include "lgpl/generic/kpColorCollection.h"
-
 
 //
 // The default set of colors offered by KolourPaint to the user.
@@ -42,9 +39,8 @@
 class kpDefaultColorCollection : public kpColorCollection
 {
 public:
-    kpDefaultColorCollection ();
-    ~kpDefaultColorCollection ();
+    kpDefaultColorCollection();
+    ~kpDefaultColorCollection();
 };
 
-
-#endif  // kpDefaultColorCollection_H
+#endif // kpDefaultColorCollection_H

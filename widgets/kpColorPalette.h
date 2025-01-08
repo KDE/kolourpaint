@@ -25,39 +25,33 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpColorPalette_H
 #define kpColorPalette_H
 
-
 #include <QWidget>
-
 
 class kpColor;
 class kpColorCells;
 
-
 class kpColorPalette : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit kpColorPalette (QWidget *parent,
-                    Qt::Orientation o = Qt::Horizontal);
-    ~kpColorPalette () override;
+    explicit kpColorPalette(QWidget *parent, Qt::Orientation o = Qt::Horizontal);
+    ~kpColorPalette() override;
 
-    Qt::Orientation orientation () const;
-    void setOrientation (Qt::Orientation o);
+    Qt::Orientation orientation() const;
+    void setOrientation(Qt::Orientation o);
 
-    kpColorCells *colorCells () const;
+    kpColorCells *colorCells() const;
 
 Q_SIGNALS:
-    void foregroundColorChanged (const kpColor &color);
-    void backgroundColorChanged (const kpColor &color);
+    void foregroundColorChanged(const kpColor &color);
+    void backgroundColorChanged(const kpColor &color);
 
 private:
-    struct kpColorPalettePrivate * const d;
+    struct kpColorPalettePrivate *const d;
 };
 
-
-#endif  // kpColorPalette_H
+#endif // kpColorPalette_H

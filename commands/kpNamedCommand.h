@@ -25,26 +25,22 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpNamedCommand_H
 #define kpNamedCommand_H
-
 
 #include "commands/kpCommand.h"
 
 #include <QString>
 
-
 class kpNamedCommand : public kpCommand
 {
 public:
-    kpNamedCommand (const QString &name, kpCommandEnvironment *environ);
+    kpNamedCommand(const QString &name, kpCommandEnvironment *environ);
 
-    QString name () const override;
+    QString name() const override;
 
 protected:
     QString m_name;
 };
 
-
-#endif  // kpNamedCommand_H
+#endif // kpNamedCommand_H

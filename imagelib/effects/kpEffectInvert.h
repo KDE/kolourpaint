@@ -25,21 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectInvert_H
 #define kpEffectInvert_H
 
-
 class QImage;
-
 
 class kpEffectInvert
 {
 public:
-    enum Channel
-    {
+    enum Channel {
         None = 0,
-        Red = 1, Green = 2, Blue = 4,
+        Red = 1,
+        Green = 2,
+        Blue = 4,
         RGB = Red | Green | Blue
     };
 
@@ -54,9 +52,8 @@ public:
     // 2. never inverts the Alpha Buffer
     //
 
-    static void applyEffect (QImage *destImagePtr, int channels = RGB);
-    static QImage applyEffect (const QImage &img, int channels = RGB);
+    static void applyEffect(QImage *destImagePtr, int channels = RGB);
+    static QImage applyEffect(const QImage &img, int channels = RGB);
 };
 
-
-#endif  // kpEffectInvert_H
+#endif // kpEffectInvert_H

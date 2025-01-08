@@ -25,59 +25,51 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_COMMAND_HISTORY 0
-
 
 #include "kpCommand.h"
 
 #include "environments/commands/kpCommandEnvironment.h"
 
-
-kpCommand::kpCommand (kpCommandEnvironment *environ)
-    : m_environ (environ)
+kpCommand::kpCommand(kpCommandEnvironment *environ)
+    : m_environ(environ)
 {
-    Q_ASSERT (environ);
+    Q_ASSERT(environ);
 }
 
-kpCommand::~kpCommand () = default;
+kpCommand::~kpCommand() = default;
 
-
-kpCommandEnvironment *kpCommand::environ () const
+kpCommandEnvironment *kpCommand::environ() const
 {
     return m_environ;
 }
 
-
 // protected
-kpDocument *kpCommand::document () const
+kpDocument *kpCommand::document() const
 {
-    return m_environ->document ();
-}
-
-
-// protected
-kpAbstractSelection *kpCommand::selection () const
-{
-    return m_environ->selection ();
+    return m_environ->document();
 }
 
 // protected
-kpAbstractImageSelection *kpCommand::imageSelection () const
+kpAbstractSelection *kpCommand::selection() const
 {
-    return m_environ->imageSelection ();
+    return m_environ->selection();
 }
 
 // protected
-kpTextSelection *kpCommand::textSelection () const
+kpAbstractImageSelection *kpCommand::imageSelection() const
 {
-    return m_environ->textSelection ();
+    return m_environ->imageSelection();
 }
-
 
 // protected
-kpViewManager *kpCommand::viewManager () const
+kpTextSelection *kpCommand::textSelection() const
 {
-    return m_environ->viewManager ();
+    return m_environ->textSelection();
 }
 
+// protected
+kpViewManager *kpCommand::viewManager() const
+{
+    return m_environ->viewManager();
+}

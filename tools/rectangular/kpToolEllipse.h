@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_ELLIPSE_H
 #define KP_TOOL_ELLIPSE_H
 
-
 #include "tools/rectangular/kpToolRectangularBase.h"
-
 
 class kpToolEllipse : public kpToolRectangularBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolEllipse (kpToolEnvironment *environ, QObject *parent);
+    kpToolEllipse(kpToolEnvironment *environ, QObject *parent);
 
-    static void drawEllipse(kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor);
+    static void drawEllipse(kpImage *image, int x, int y, int width, int height, const kpColor &fcolor, int penWidth, const kpColor &bcolor);
 };
 
-
-#endif  // KP_TOOL_ELLIPSE_H
+#endif // KP_TOOL_ELLIPSE_H

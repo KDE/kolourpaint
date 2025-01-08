@@ -25,78 +25,69 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "environments/commands/kpCommandEnvironment.h"
 
-#include "widgets/toolbars/kpColorToolBar.h"
 #include "document/kpDocument.h"
-#include "mainWindow/kpMainWindow.h"
 #include "layers/selections/image/kpImageSelectionTransparency.h"
 #include "layers/selections/text/kpTextStyle.h"
+#include "mainWindow/kpMainWindow.h"
 #include "tools/kpTool.h"
+#include "widgets/toolbars/kpColorToolBar.h"
 
-
-struct kpCommandEnvironmentPrivate
-{
+struct kpCommandEnvironmentPrivate {
 };
 
-kpCommandEnvironment::kpCommandEnvironment (kpMainWindow *mainWindow)
-    : kpEnvironmentBase (mainWindow),
-      d (new kpCommandEnvironmentPrivate ())
+kpCommandEnvironment::kpCommandEnvironment(kpMainWindow *mainWindow)
+    : kpEnvironmentBase(mainWindow)
+    , d(new kpCommandEnvironmentPrivate())
 {
 }
 
-kpCommandEnvironment::~kpCommandEnvironment ()
+kpCommandEnvironment::~kpCommandEnvironment()
 {
     delete d;
 }
 
-
 // public
-void kpCommandEnvironment::setColor (int which, const kpColor &color) const
+void kpCommandEnvironment::setColor(int which, const kpColor &color) const
 {
-    kpColorToolBar *toolBar = mainWindow ()->colorToolBar ();
-    Q_ASSERT (toolBar);
+    kpColorToolBar *toolBar = mainWindow()->colorToolBar();
+    Q_ASSERT(toolBar);
 
-    toolBar->setColor (which, color);
-}
-
-
-// public
-void kpCommandEnvironment::somethingBelowTheCursorChanged () const
-{
-    kpTool *tool = mainWindow ()->tool ();
-    Q_ASSERT (tool);
-
-    tool->somethingBelowTheCursorChanged ();
-}
-
-
-// public
-kpImageSelectionTransparency kpCommandEnvironment::imageSelectionTransparency () const
-{
-    return mainWindow ()->imageSelectionTransparency ();
+    toolBar->setColor(which, color);
 }
 
 // public
-void kpCommandEnvironment::setImageSelectionTransparency (
-        const kpImageSelectionTransparency &transparency,
-        bool forceColorChange)
+void kpCommandEnvironment::somethingBelowTheCursorChanged() const
 {
-    mainWindow ()->setImageSelectionTransparency (transparency, forceColorChange);
-}
+    kpTool *tool = mainWindow()->tool();
+    Q_ASSERT(tool);
 
-
-// public
-kpTextStyle kpCommandEnvironment::textStyle () const
-{
-    return mainWindow ()->textStyle ();
+    tool->somethingBelowTheCursorChanged();
 }
 
 // public
-void kpCommandEnvironment::setTextStyle (const kpTextStyle &textStyle)
+kpImageSelectionTransparency kpCommandEnvironment::imageSelectionTransparency() const
 {
-    mainWindow ()->setTextStyle (textStyle);
+    return mainWindow()->imageSelectionTransparency();
+}
+
+// public
+void kpCommandEnvironment::setImageSelectionTransparency(const kpImageSelectionTransparency &transparency, bool forceColorChange)
+{
+    mainWindow()->setImageSelectionTransparency(transparency, forceColorChange);
+}
+
+// public
+kpTextStyle kpCommandEnvironment::textStyle() const
+{
+    return mainWindow()->textStyle();
+}
+
+// public
+void kpCommandEnvironment::setTextStyle(const kpTextStyle &textStyle)
+{
+    mainWindow()->setTextStyle(textStyle);
 }
 
 #include "moc_kpCommandEnvironment.cpp"

@@ -25,71 +25,64 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpColorSimilarityToolBarItem_H
 #define kpColorSimilarityToolBarItem_H
-
 
 #include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
 
 #include <QToolButton>
 
-
 class QTimer;
 
-
-class kpColorSimilarityToolBarItem : public QToolButton,
-        public kpColorSimilarityHolder
+class kpColorSimilarityToolBarItem : public QToolButton, public kpColorSimilarityHolder
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     // (reads the color similarity config setting)
-    explicit kpColorSimilarityToolBarItem (QWidget *parent);
+    explicit kpColorSimilarityToolBarItem(QWidget *parent);
 
-    int processedColorSimilarity () const;
+    int processedColorSimilarity() const;
 
 private:
     // <writeConfig> specifies whether to write the color similarity config
     // setting.
-    void setColorSimilarityInternal (double similarity, bool writeConfig);
+    void setColorSimilarityInternal(double similarity, bool writeConfig);
+
 public:
-    void setColorSimilarity (double similarity) override;
+    void setColorSimilarity(double similarity) override;
 
 Q_SIGNALS:
-    void colorSimilarityChanged (double similarity, int processedSimilarity);
+    void colorSimilarityChanged(double similarity, int processedSimilarity);
 
 public:
     // (only valid in slots connected to colorSimilarityChanged());
-    double oldColorSimilarity () const;
-
+    double oldColorSimilarity() const;
 
 public Q_SLOTS:
     // Open configuration dialog for color similarity.
-    void openDialog ();
+    void openDialog();
 
 private Q_SLOTS:
-    void slotFlashTimerTimeout ();
+    void slotFlashTimerTimeout();
 
 public:
     // Animates the cube, so that the user is aware of its existence.
     // Call this whenever a tool or command uses color similarity.
-    void flash ();
+    void flash();
 
 public:
     // Whether to ignore calls to flash().
     // You can nest blocks of suppressFlash()/unsuppressFlash().
-    bool isSuppressingFlash () const;
-    void suppressFlash ();
-    void unsupressFlash ();
-
+    bool isSuppressingFlash() const;
+    void suppressFlash();
+    void unsupressFlash();
 
 private:
-    void updateToolTip ();
-    void updateIcon ();
+    void updateToolTip();
+    void updateIcon();
 
-    void resizeEvent (QResizeEvent *e) override;
-
+    void resizeEvent(QResizeEvent *e) override;
 
 private:
     double m_oldColorSimilarity;
@@ -100,5 +93,4 @@ private:
     int m_suppressingFlashCounter;
 };
 
-
-#endif  // kpColorSimilarityToolBarItem_H
+#endif // kpColorSimilarityToolBarItem_H

@@ -25,19 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_POLYGON 0
-
 
 #include "kpToolPolygonalCommand.h"
 
 #include "document/kpDocument.h"
-#include "kpDefs.h"
 #include "imagelib/kpImage.h"
+#include "kpDefs.h"
 
-
-struct kpToolPolygonalCommandPrivate
-{
+struct kpToolPolygonalCommandPrivate {
     kpToolPolygonalBase::DrawShapeFunc drawShapeFunc{};
 
     QPolygon points;
@@ -50,16 +46,17 @@ struct kpToolPolygonalCommandPrivate
     kpImage oldImage;
 };
 
-kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
-        kpToolPolygonalBase::DrawShapeFunc drawShapeFunc,
-        const QPolygon &points,
-        const QRect &boundingRect,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor,
-        kpCommandEnvironment *environ)
+kpToolPolygonalCommand::kpToolPolygonalCommand(const QString &name,
+                                               kpToolPolygonalBase::DrawShapeFunc drawShapeFunc,
+                                               const QPolygon &points,
+                                               const QRect &boundingRect,
+                                               const kpColor &fcolor,
+                                               int penWidth,
+                                               const kpColor &bcolor,
+                                               kpCommandEnvironment *environ)
 
-    : kpNamedCommand (name, environ),
-      d (new kpToolPolygonalCommandPrivate ())
+    : kpNamedCommand(name, environ)
+    , d(new kpToolPolygonalCommandPrivate())
 {
     d->drawShapeFunc = drawShapeFunc;
 
@@ -71,53 +68,46 @@ kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
     d->bcolor = bcolor;
 }
 
-kpToolPolygonalCommand::~kpToolPolygonalCommand ()
+kpToolPolygonalCommand::~kpToolPolygonalCommand()
 {
     delete d;
 }
 
-
 // public virtual [base kpCommand]
-kpCommandSize::SizeType kpToolPolygonalCommand::size () const
+kpCommandSize::SizeType kpToolPolygonalCommand::size() const
 {
-    return PolygonSize (d->points) +
-           ImageSize (d->oldImage);
+    return PolygonSize(d->points) + ImageSize(d->oldImage);
 }
 
 // public virtual [base kpCommand]
-void kpToolPolygonalCommand::execute ()
+void kpToolPolygonalCommand::execute()
 {
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
     // Store Undo info.
-    Q_ASSERT (d->oldImage.isNull ());
-    d->oldImage = doc->getImageAt (d->boundingRect);
+    Q_ASSERT(d->oldImage.isNull());
+    d->oldImage = doc->getImageAt(d->boundingRect);
 
     // Invoke shape drawing function passed in ctor.
     kpImage image = d->oldImage;
 
     QPolygon pointsTranslated = d->points;
-    pointsTranslated.translate (-d->boundingRect.x (), -d->boundingRect.y ());
+    pointsTranslated.translate(-d->boundingRect.x(), -d->boundingRect.y());
 
-    (*d->drawShapeFunc) (&image,
-        pointsTranslated,
-        d->fcolor, d->penWidth,
-        d->bcolor,
-        true/*final shape*/);
+    (*d->drawShapeFunc)(&image, pointsTranslated, d->fcolor, d->penWidth, d->bcolor, true /*final shape*/);
 
-    doc->setImageAt (image, d->boundingRect.topLeft ());
+    doc->setImageAt(image, d->boundingRect.topLeft());
 }
 
 // public virtual [base kpCommand]
-void kpToolPolygonalCommand::unexecute ()
+void kpToolPolygonalCommand::unexecute()
 {
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpDocument *doc = document();
+    Q_ASSERT(doc);
 
-    Q_ASSERT (!d->oldImage.isNull ());
-    doc->setImageAt (d->oldImage, d->boundingRect.topLeft ());
+    Q_ASSERT(!d->oldImage.isNull());
+    doc->setImageAt(d->oldImage, d->boundingRect.topLeft());
 
-    d->oldImage = kpImage ();
+    d->oldImage = kpImage();
 }
-

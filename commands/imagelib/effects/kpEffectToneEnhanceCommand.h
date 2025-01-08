@@ -26,28 +26,22 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpEffectToneEnhanceCommand_H
 #define kpEffectToneEnhanceCommand_H
 
-
 #include "kpEffectCommandBase.h"
-
 
 class kpEffectToneEnhanceCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectToneEnhanceCommand (double granularity, double amount,
-                                bool actOnSelection,
-                                kpCommandEnvironment *environ);
-    ~kpEffectToneEnhanceCommand () override;
+    kpEffectToneEnhanceCommand(double granularity, double amount, bool actOnSelection, kpCommandEnvironment *environ);
+    ~kpEffectToneEnhanceCommand() override;
 
 protected:
-    kpImage applyEffect (const kpImage &image) override;
+    kpImage applyEffect(const kpImage &image) override;
 
 protected:
     double m_granularity, m_amount;
 };
 
-
-#endif  // kpEffectToneEnhanceCommand_H
+#endif // kpEffectToneEnhanceCommand_H

@@ -25,15 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpToolPen.h"
 
-#include "imagelib/kpColor.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
 #include "document/kpDocument.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "imagelib/kpColor.h"
 #include "imagelib/kpImage.h"
 #include "imagelib/kpPainter.h"
-#include "commands/tools/flow/kpToolFlowCommand.h"
-#include "environments/tools/kpToolEnvironment.h"
 
 #include <KLocalizedString>
 
@@ -41,43 +40,40 @@
 
 //---------------------------------------------------------------------
 
-kpToolPen::kpToolPen (kpToolEnvironment *environ, QObject *parent)
-    : kpToolFlowBase (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
-        Qt::Key_P,
-        environ, parent, QStringLiteral("tool_pen"))
+kpToolPen::kpToolPen(kpToolEnvironment *environ, QObject *parent)
+    : kpToolFlowBase(i18n("Pen"), i18n("Draws dots and freehand strokes"), Qt::Key_P, environ, parent, QStringLiteral("tool_pen"))
 {
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
-QString kpToolPen::haventBegunDrawUserMessage () const
+QString kpToolPen::haventBegunDrawUserMessage() const
 {
-    return i18n ("Click to draw dots or drag to draw strokes.");
+    return i18n("Click to draw dots or drag to draw strokes.");
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
-QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolPen::drawLine(const QPoint &thisPoint, const QPoint &lastPoint)
 {
-  QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
-  docRect = neededRect (docRect, 1/*pen width*/);
-  kpImage image = document ()->getImageAt (docRect);
+    QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
+    docRect = neededRect(docRect, 1 /*pen width*/);
+    kpImage image = document()->getImageAt(docRect);
 
-  const QPoint sp = lastPoint - docRect.topLeft (),
-               ep = thisPoint - docRect.topLeft ();
+    const QPoint sp = lastPoint - docRect.topLeft(), ep = thisPoint - docRect.topLeft();
 
-  QPainter painter(&image);
+    QPainter painter(&image);
 
-  // never use AA - it does not look good for the usually very short lines
-  //painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
+    // never use AA - it does not look good for the usually very short lines
+    // painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
 
-  painter.setPen(color(mouseButton()).toQColor());
-  painter.drawLine(sp, ep);
+    painter.setPen(color(mouseButton()).toQColor());
+    painter.drawLine(sp, ep);
 
-  document ()->setImageAt (image, docRect.topLeft ());
-  return docRect;
+    document()->setImageAt(image, docRect.topLeft());
+    return docRect;
 }
 
 //--------------------------------------------------------------------------------

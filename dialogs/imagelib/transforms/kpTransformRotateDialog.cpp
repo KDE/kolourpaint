@@ -26,74 +26,67 @@
 
 #define DEBUG_KP_TOOL_ROTATE 0
 
-
 #include "kpTransformRotateDialog.h"
 
-#include "kpDefs.h"
 #include "document/kpDocument.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+#include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
-#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 #include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
 #include <KLocalizedString>
 
+#include <QGridLayout>
 #include <QGroupBox>
 #include <QIcon>
 #include <QLabel>
-#include <QSpinBox>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSpinBox>
 #include <QTransform>
-#include <QGridLayout>
 
 // private static
-int kpTransformRotateDialog::s_lastWidth = -1,
-    kpTransformRotateDialog::s_lastHeight = -1;
+int kpTransformRotateDialog::s_lastWidth = -1, kpTransformRotateDialog::s_lastHeight = -1;
 
 // private static
 bool kpTransformRotateDialog::s_lastIsClockwise = true;
 int kpTransformRotateDialog::s_lastAngleCustom = 0;
 
-
-kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
-        kpTransformDialogEnvironment *_env, QWidget *parent)
-    : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
-        false/*don't reserve top row*/,
-        actOnSelection ? i18nc ("@title:window", "Rotate Selection") : i18nc ("@title:window", "Rotate Image"),
-        i18n ("After rotate:"),
-        actOnSelection,
-        _env, parent)
+kpTransformRotateDialog::kpTransformRotateDialog(bool actOnSelection, kpTransformDialogEnvironment *_env, QWidget *parent)
+    : kpTransformPreviewDialog(kpTransformPreviewDialog::AllFeatures,
+                               false /*don't reserve top row*/,
+                               actOnSelection ? i18nc("@title:window", "Rotate Selection") : i18nc("@title:window", "Rotate Image"),
+                               i18n("After rotate:"),
+                               actOnSelection,
+                               _env,
+                               parent)
 {
     s_lastAngleCustom = 0;
 
-
-    createDirectionGroupBox ();
-    createAngleGroupBox ();
-
+    createDirectionGroupBox();
+    createAngleGroupBox();
 
     if (s_lastWidth > 0 && s_lastHeight > 0) {
-        resize (s_lastWidth, s_lastHeight);
+        resize(s_lastWidth, s_lastHeight);
     }
 
-
-    slotAngleCustomRadioButtonToggled (m_angleCustomRadioButton->isChecked ());
-    slotUpdate ();
+    slotAngleCustomRadioButtonToggled(m_angleCustomRadioButton->isChecked());
+    slotUpdate();
 }
 
-kpTransformRotateDialog::~kpTransformRotateDialog ()
+kpTransformRotateDialog::~kpTransformRotateDialog()
 {
-    s_lastWidth = width ();
-    s_lastHeight = height ();
+    s_lastWidth = width();
+    s_lastHeight = height();
 }
-
 
 // private
-void kpTransformRotateDialog::createDirectionGroupBox ()
+void kpTransformRotateDialog::createDirectionGroupBox()
 {
-    auto *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
-    addCustomWidget (directionGroupBox);
+    auto *directionGroupBox = new QGroupBox(i18n("Direction"), mainWidget());
+    addCustomWidget(directionGroupBox);
 
     QPixmap antiClockwisePixmap;
     const QIcon rotateLeftIcon = QIcon::fromTheme(QStringLiteral("object-rotate-left"));
@@ -104,8 +97,8 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
         antiClockwisePixmap = rotateLeftIcon.pixmap(48);
     }
 
-    auto *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
-    antiClockwisePixmapLabel->setPixmap (antiClockwisePixmap);
+    auto *antiClockwisePixmapLabel = new QLabel(directionGroupBox);
+    antiClockwisePixmapLabel->setPixmap(antiClockwisePixmap);
 
     QPixmap clockwisePixmap;
     const QIcon rotateRightIcon = QIcon::fromTheme(QStringLiteral("object-rotate-right"));
@@ -115,115 +108,91 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
         clockwisePixmap = rotateRightIcon.pixmap(48);
     }
 
-    auto *clockwisePixmapLabel = new QLabel (directionGroupBox);
-    clockwisePixmapLabel->setPixmap (clockwisePixmap);
+    auto *clockwisePixmapLabel = new QLabel(directionGroupBox);
+    clockwisePixmapLabel->setPixmap(clockwisePixmap);
 
-    m_antiClockwiseRadioButton = new QRadioButton (i18n ("Cou&nterclockwise"), directionGroupBox);
-    m_clockwiseRadioButton = new QRadioButton (i18n ("C&lockwise"), directionGroupBox);
+    m_antiClockwiseRadioButton = new QRadioButton(i18n("Cou&nterclockwise"), directionGroupBox);
+    m_clockwiseRadioButton = new QRadioButton(i18n("C&lockwise"), directionGroupBox);
 
+    m_antiClockwiseRadioButton->setChecked(!s_lastIsClockwise);
+    m_clockwiseRadioButton->setChecked(s_lastIsClockwise);
 
-    m_antiClockwiseRadioButton->setChecked (!s_lastIsClockwise);
-    m_clockwiseRadioButton->setChecked (s_lastIsClockwise);
+    auto *directionLayout = new QGridLayout(directionGroupBox);
+    directionLayout->addWidget(antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
+    directionLayout->addWidget(clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
+    directionLayout->addWidget(m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
+    directionLayout->addWidget(m_clockwiseRadioButton, 1, 1, Qt::AlignCenter);
 
+    connect(m_antiClockwiseRadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotUpdate);
 
-    auto *directionLayout = new QGridLayout (directionGroupBox );
-    directionLayout->addWidget (antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
-    directionLayout->addWidget (clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
-    directionLayout->addWidget (m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
-    directionLayout->addWidget (m_clockwiseRadioButton, 1, 1, Qt::AlignCenter);
-
-
-    connect (m_antiClockwiseRadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotUpdate);
-
-    connect (m_clockwiseRadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotUpdate);
+    connect(m_clockwiseRadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotUpdate);
 }
 
 // private
-void kpTransformRotateDialog::createAngleGroupBox ()
+void kpTransformRotateDialog::createAngleGroupBox()
 {
-    auto *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
-    addCustomWidget (angleGroupBox);
+    auto *angleGroupBox = new QGroupBox(i18n("Angle"), mainWidget());
+    addCustomWidget(angleGroupBox);
 
+    m_angle90RadioButton = new QRadioButton(i18n("90 &degrees"), angleGroupBox);
+    m_angle180RadioButton = new QRadioButton(i18n("180 d&egrees"), angleGroupBox);
+    m_angle270RadioButton = new QRadioButton(i18n("270 de&grees"), angleGroupBox);
 
-    m_angle90RadioButton = new QRadioButton (i18n ("90 &degrees"), angleGroupBox);
-    m_angle180RadioButton = new QRadioButton (i18n ("180 d&egrees"), angleGroupBox);
-    m_angle270RadioButton = new QRadioButton (i18n ("270 de&grees"), angleGroupBox);
-
-    m_angleCustomRadioButton = new QRadioButton (i18n ("C&ustom:"), angleGroupBox);
+    m_angleCustomRadioButton = new QRadioButton(i18n("C&ustom:"), angleGroupBox);
     m_angleCustomInput = new QSpinBox;
     m_angleCustomInput->setMinimum(-359);
     m_angleCustomInput->setMaximum(+359);
     m_angleCustomInput->setValue(s_lastAngleCustom);
-    auto *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+    auto *degreesLabel = new QLabel(i18n("degrees"), angleGroupBox);
 
+    m_angleCustomRadioButton->setChecked(true);
 
-    m_angleCustomRadioButton->setChecked (true);
+    auto *angleLayout = new QGridLayout(angleGroupBox);
 
+    angleLayout->addWidget(m_angle90RadioButton, 0, 0, 1, 3);
+    angleLayout->addWidget(m_angle180RadioButton, 1, 0, 1, 3);
+    angleLayout->addWidget(m_angle270RadioButton, 2, 0, 1, 3);
 
-    auto *angleLayout = new QGridLayout (angleGroupBox );
+    angleLayout->addWidget(m_angleCustomRadioButton, 3, 0);
+    angleLayout->addWidget(m_angleCustomInput, 3, 1);
+    angleLayout->addWidget(degreesLabel, 3, 2);
 
-    angleLayout->addWidget (m_angle90RadioButton, 0, 0, 1, 3);
-    angleLayout->addWidget (m_angle180RadioButton, 1, 0, 1, 3);
-    angleLayout->addWidget (m_angle270RadioButton, 2, 0, 1, 3);
+    angleLayout->setColumnStretch(1, 2); // Stretch Custom Angle Input
 
-    angleLayout->addWidget (m_angleCustomRadioButton, 3, 0);
-    angleLayout->addWidget (m_angleCustomInput, 3, 1);
-    angleLayout->addWidget (degreesLabel, 3, 2);
+    connect(m_angle90RadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotUpdate);
+    connect(m_angle180RadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotUpdate);
+    connect(m_angle270RadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotUpdate);
 
-    angleLayout->setColumnStretch (1, 2);  // Stretch Custom Angle Input
+    connect(m_angleCustomRadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotAngleCustomRadioButtonToggled);
+    connect(m_angleCustomRadioButton, &QRadioButton::toggled, this, &kpTransformRotateDialog::slotUpdate);
 
-
-
-    connect (m_angle90RadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotUpdate);
-    connect (m_angle180RadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotUpdate);
-    connect (m_angle270RadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotUpdate);
-
-    connect (m_angleCustomRadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotAngleCustomRadioButtonToggled);
-    connect (m_angleCustomRadioButton, &QRadioButton::toggled,
-             this, &kpTransformRotateDialog::slotUpdate);
-
-    connect (m_angleCustomInput,
-             static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-             this, &kpTransformRotateDialog::slotUpdate);
+    connect(m_angleCustomInput, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &kpTransformRotateDialog::slotUpdate);
 }
 
-
 // public virtual [base kpTransformPreviewDialog]
-bool kpTransformRotateDialog::isNoOp () const
+bool kpTransformRotateDialog::isNoOp() const
 {
-    return (angle () == 0);
+    return (angle() == 0);
 }
 
 // public
-int kpTransformRotateDialog::angle () const
+int kpTransformRotateDialog::angle() const
 {
     int retAngle;
 
-
-    if (m_angle90RadioButton->isChecked ()) {
+    if (m_angle90RadioButton->isChecked()) {
         retAngle = 90;
-    }
-    else if (m_angle180RadioButton->isChecked ()) {
+    } else if (m_angle180RadioButton->isChecked()) {
         retAngle = 180;
-    }
-    else if (m_angle270RadioButton->isChecked ()) {
+    } else if (m_angle270RadioButton->isChecked()) {
         retAngle = 270;
-    }
-    else { // if (m_angleCustomRadioButton->isChecked ())
-        retAngle = m_angleCustomInput->value ();
+    } else { // if (m_angleCustomRadioButton->isChecked ())
+        retAngle = m_angleCustomInput->value();
     }
 
-
-    if (m_antiClockwiseRadioButton->isChecked ()) {
+    if (m_antiClockwiseRadioButton->isChecked()) {
         retAngle *= -1;
     }
-
 
     if (retAngle < 0) {
         retAngle += ((0 - retAngle) / 360 + 1) * 360;
@@ -233,33 +202,27 @@ int kpTransformRotateDialog::angle () const
         retAngle -= ((retAngle - 360) / 360 + 1) * 360;
     }
 
-
     return retAngle;
 }
 
-
 // private virtual [base kpTransformPreviewDialog]
-QSize kpTransformRotateDialog::newDimensions () const
+QSize kpTransformRotateDialog::newDimensions() const
 {
-    QTransform matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
-    QRect rect = matrix.mapRect (QRect (0, 0, m_oldWidth, m_oldHeight));
-    return rect.size ();
+    QTransform matrix = kpPixmapFX::rotateMatrix(m_oldWidth, m_oldHeight, angle());
+    QRect rect = matrix.mapRect(QRect(0, 0, m_oldWidth, m_oldHeight));
+    return rect.size();
 }
 
 // private virtual [base kpTransformPreviewDialog]
-QImage kpTransformRotateDialog::transformPixmap (const QImage &image,
-                                                 int targetWidth, int targetHeight) const
+QImage kpTransformRotateDialog::transformPixmap(const QImage &image, int targetWidth, int targetHeight) const
 {
-    return kpPixmapFX::rotate (image, angle (),
-                               m_environ->backgroundColor (m_actOnSelection),
-                               targetWidth, targetHeight);
+    return kpPixmapFX::rotate(image, angle(), m_environ->backgroundColor(m_actOnSelection), targetWidth, targetHeight);
 }
-
 
 // private slot
-void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
+void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled(bool isChecked)
 {
-    m_angleCustomInput->setEnabled (isChecked);
+    m_angleCustomInput->setEnabled(isChecked);
 
     if (isChecked) {
         m_angleCustomInput->setFocus();
@@ -267,66 +230,60 @@ void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
-void kpTransformRotateDialog::slotUpdate ()
+void kpTransformRotateDialog::slotUpdate()
 {
-    s_lastIsClockwise = m_clockwiseRadioButton->isChecked ();
-    s_lastAngleCustom = m_angleCustomInput->value ();
+    s_lastIsClockwise = m_clockwiseRadioButton->isChecked();
+    s_lastAngleCustom = m_angleCustomInput->value();
 
-    kpTransformPreviewDialog::slotUpdate ();
+    kpTransformPreviewDialog::slotUpdate();
 }
 
-
 // private slot virtual [base QDialog]
-void kpTransformRotateDialog::accept ()
+void kpTransformRotateDialog::accept()
 {
     KLocalizedString message;
     QString caption, continueButtonText;
 
-    if (document ()->selection ())
-    {
-        if (!document ()->textSelection ())
-        {
-            message =
-                ki18n ("<qt><p>Rotating the selection to %1x%2"
-                      " may take a substantial amount of memory."
-                      " This can reduce system"
-                      " responsiveness and cause other application resource"
-                      " problems.</p>"
+    if (document()->selection()) {
+        if (!document()->textSelection()) {
+            message = ki18n(
+                "<qt><p>Rotating the selection to %1x%2"
+                " may take a substantial amount of memory."
+                " This can reduce system"
+                " responsiveness and cause other application resource"
+                " problems.</p>"
 
-                      "<p>Are you sure you want to rotate the selection?</p></qt>");
+                "<p>Are you sure you want to rotate the selection?</p></qt>");
 
-            caption = i18nc ("@title:window", "Rotate Selection?");
-            continueButtonText = i18n ("Rotat&e Selection");
+            caption = i18nc("@title:window", "Rotate Selection?");
+            continueButtonText = i18n("Rotat&e Selection");
         }
-    }
-    else
-    {
-        message =
-            ki18n ("<qt><p>Rotating the image to %1x%2"
-                  " may take a substantial amount of memory."
-                  " This can reduce system"
-                  " responsiveness and cause other application resource"
-                  " problems.</p>"
+    } else {
+        message = ki18n(
+            "<qt><p>Rotating the image to %1x%2"
+            " may take a substantial amount of memory."
+            " This can reduce system"
+            " responsiveness and cause other application resource"
+            " problems.</p>"
 
-                  "<p>Are you sure you want to rotate the image?</p></qt>");
+            "<p>Are you sure you want to rotate the image?</p></qt>");
 
-        caption = i18nc ("@title:window", "Rotate Image?");
-        continueButtonText = i18n ("Rotat&e Image");
+        caption = i18nc("@title:window", "Rotate Image?");
+        continueButtonText = i18n("Rotat&e Image");
     }
 
+    const int newWidth = newDimensions().width();
+    const int newHeight = newDimensions().height();
 
-    const int newWidth = newDimensions ().width ();
-    const int newHeight = newDimensions ().height ();
-
-    if (kpTool::warnIfBigImageSize (m_oldWidth,
-            m_oldHeight,
-            newWidth, newHeight,
-            message.subs (newWidth).subs (newHeight).toString (),
-            caption,
-            continueButtonText,
-            this))
-    {
-        QDialog::accept ();
+    if (kpTool::warnIfBigImageSize(m_oldWidth,
+                                   m_oldHeight,
+                                   newWidth,
+                                   newHeight,
+                                   message.subs(newWidth).subs(newHeight).toString(),
+                                   caption,
+                                   continueButtonText,
+                                   this)) {
+        QDialog::accept();
     }
 }
 

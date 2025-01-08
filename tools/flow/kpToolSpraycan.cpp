@@ -25,21 +25,20 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_SPRAYCAN 0
 
 #include "kpToolSpraycan.h"
 
-#include "kpDefs.h"
-#include "document/kpDocument.h"
-#include "imagelib/kpPainter.h"
-#include "pixmapfx/kpPixmapFX.h"
-#include "environments/tools/kpToolEnvironment.h"
 #include "commands/tools/flow/kpToolFlowCommand.h"
-#include "widgets/toolbars/kpToolToolBar.h"
-#include "widgets/toolbars/options/kpToolWidgetSpraycanSize.h"
+#include "document/kpDocument.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "imagelib/kpPainter.h"
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetSpraycanSize.h"
 
 #include <cstdlib>
 
@@ -52,98 +51,83 @@
 
 //---------------------------------------------------------------------
 
-kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
-    : kpToolFlowBase (i18n ("Spraycan"), i18n ("Sprays graffiti"),
-        Qt::Key_Y,
-        environ, parent, QStringLiteral("tool_spraycan")),
-    m_toolWidgetSpraycanSize(nullptr)
+kpToolSpraycan::kpToolSpraycan(kpToolEnvironment *environ, QObject *parent)
+    : kpToolFlowBase(i18n("Spraycan"), i18n("Sprays graffiti"), Qt::Key_Y, environ, parent, QStringLiteral("tool_spraycan"))
+    , m_toolWidgetSpraycanSize(nullptr)
 {
-    m_timer = new QTimer (this);
-    m_timer->setInterval (25/*ms*/);
-    connect (m_timer, &QTimer::timeout, this, &kpToolSpraycan::timeoutDraw);
+    m_timer = new QTimer(this);
+    m_timer->setInterval(25 /*ms*/);
+    connect(m_timer, &QTimer::timeout, this, &kpToolSpraycan::timeoutDraw);
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
-QString kpToolSpraycan::haventBegunDrawUserMessage () const
+QString kpToolSpraycan::haventBegunDrawUserMessage() const
 {
-    return i18n ("Click or drag to spray graffiti.");
+    return i18n("Click or drag to spray graffiti.");
 }
 
 //---------------------------------------------------------------------
 
 // public virtual [base kpToolFlowBase]
-void kpToolSpraycan::begin ()
+void kpToolSpraycan::begin()
 {
-    kpToolToolBar *tb = toolToolBar ();
-    Q_ASSERT (tb);
+    kpToolToolBar *tb = toolToolBar();
+    Q_ASSERT(tb);
 
-    m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
-    connect (m_toolWidgetSpraycanSize, &kpToolWidgetSpraycanSize::spraycanSizeChanged,
-             this, &kpToolSpraycan::slotSpraycanSizeChanged);
-    m_toolWidgetSpraycanSize->show ();
+    m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize();
+    connect(m_toolWidgetSpraycanSize, &kpToolWidgetSpraycanSize::spraycanSizeChanged, this, &kpToolSpraycan::slotSpraycanSizeChanged);
+    m_toolWidgetSpraycanSize->show();
 
-    kpToolFlowBase::begin ();
+    kpToolFlowBase::begin();
 }
 
 // public virtual [base kpToolFlowBase]
-void kpToolSpraycan::end ()
+void kpToolSpraycan::end()
 {
-    kpToolFlowBase::end ();
+    kpToolFlowBase::end();
 
-    disconnect (m_toolWidgetSpraycanSize, &kpToolWidgetSpraycanSize::spraycanSizeChanged,
-                this, &kpToolSpraycan::slotSpraycanSizeChanged);
+    disconnect(m_toolWidgetSpraycanSize, &kpToolWidgetSpraycanSize::spraycanSizeChanged, this, &kpToolSpraycan::slotSpraycanSizeChanged);
 
     m_toolWidgetSpraycanSize = nullptr;
 }
 
-
 // public virtual [base kpToolFlowBase]
-void kpToolSpraycan::beginDraw ()
+void kpToolSpraycan::beginDraw()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::beginDraw()";
 #endif
 
-    kpToolFlowBase::beginDraw ();
+    kpToolFlowBase::beginDraw();
 
     // We draw even if the user doesn't move the mouse.
     // We still timeout-draw even if the user _does_ move the mouse.
-    m_timer->start ();
+    m_timer->start();
 }
 
-
 // protected
-QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
-         const QPoint &lastPoint,
-         double probability)
+QRect kpToolSpraycan::drawLineWithProbability(const QPoint &thisPoint, const QPoint &lastPoint, double probability)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint
-               << ",lastPoint=" << lastPoint
-               << ")";
+    qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint << ",lastPoint=" << lastPoint << ")";
 #endif
 
-    QList <QPoint> docPoints = kpPainter::interpolatePoints (lastPoint, thisPoint,
-        false/*no need for cardinally adjacency points*/,
-        probability);
+    QList<QPoint> docPoints = kpPainter::interpolatePoints(lastPoint, thisPoint, false /*no need for cardinally adjacency points*/, probability);
 #if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "\tdocPoints=" << docPoints;
 #endif
 
-
     // By chance no points to draw?
-    if (docPoints.empty ()) {
-        return  {};
+    if (docPoints.empty()) {
+        return {};
     }
-
 
     // For efficiency, only get image after NOP check above.
     QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
-    docRect = neededRect (docRect, spraycanSize ());
-    kpImage image = document ()->getImageAt (docRect);
-
+    docRect = neededRect(docRect, spraycanSize());
+    kpImage image = document()->getImageAt(docRect);
 
     // Spray at each point, onto the image.
     //
@@ -151,108 +135,94 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     //                  over the same point does result in a different
     //                  appearance.
 
-    QList <QPoint> imagePoints;
+    QList<QPoint> imagePoints;
     for (const auto &dp : docPoints)
-        imagePoints.append (dp - docRect.topLeft ());
+        imagePoints.append(dp - docRect.topLeft());
 
-    kpPainter::sprayPoints (&image,
-        imagePoints,
-        color (mouseButton ()),
-        spraycanSize ());
+    kpPainter::sprayPoints(&image, imagePoints, color(mouseButton()), spraycanSize());
 
-
-    viewManager ()->setFastUpdates ();
-    document ()->setImageAt (image, docRect.topLeft ());
-    viewManager ()->restoreFastUpdates ();
-
+    viewManager()->setFastUpdates();
+    document()->setImageAt(image, docRect.topLeft());
+    viewManager()->restoreFastUpdates();
 
     return docRect;
 }
 
 // public virtual [base kpToolFlowBase]
-QRect kpToolSpraycan::drawPoint (const QPoint &point)
+QRect kpToolSpraycan::drawPoint(const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    qCDebug(kpLogTools) << "kpToolSpraycan::drawPoint" << point
-               << " lastPoint=" << lastPoint ();
+    qCDebug(kpLogTools) << "kpToolSpraycan::drawPoint" << point << " lastPoint=" << lastPoint();
 #endif
 
     // If this is the first in the flow or if the user is moving the spray,
     // make the spray line continuous.
-    if (point != lastPoint ())
-    {
+    if (point != lastPoint()) {
         // Draw at this single point without delay.
-        return drawLineWithProbability (point, point,
-            1.0/*100% chance of drawing*/);
+        return drawLineWithProbability(point, point, 1.0 /*100% chance of drawing*/);
     }
 
-    return  {};
+    return {};
 }
 
 // public virtual [base kpToolFlowBase]
-QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolSpraycan::drawLine(const QPoint &thisPoint, const QPoint &lastPoint)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint << ",lastPoint=" << lastPoint;
 #endif
 
     // Draw only every so often in response to movement.
-    return drawLineWithProbability (thisPoint, lastPoint,
-        0.05/*less dense: select 5% of adjacent pixels - not all*/);
+    return drawLineWithProbability(thisPoint, lastPoint, 0.05 /*less dense: select 5% of adjacent pixels - not all*/);
 }
 
 // protected slot
-void kpToolSpraycan::timeoutDraw ()
+void kpToolSpraycan::timeoutDraw()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::timeoutDraw()";
 #endif
 
     // Draw at this single point without delay.
-    const QRect drawnRect = drawLineWithProbability (currentPoint (), currentPoint (),
-        1.0/*100% chance of drawing*/);
+    const QRect drawnRect = drawLineWithProbability(currentPoint(), currentPoint(), 1.0 /*100% chance of drawing*/);
 
     // kpToolFlowBase() does this after calling drawPoint() and drawLine() so
     // we need to do it too.
-    currentCommand ()->updateBoundingRect (drawnRect);
+    currentCommand()->updateBoundingRect(drawnRect);
 }
 
-
 // public virtual [base kpToolFlowBase]
-void kpToolSpraycan::cancelShape ()
+void kpToolSpraycan::cancelShape()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
     qCDebug(kpLogTools) << "kpToolSpraycan::cancelShape()";
 #endif
 
-    m_timer->stop ();
-    kpToolFlowBase::cancelShape ();
+    m_timer->stop();
+    kpToolFlowBase::cancelShape();
 }
 
 // public virtual [base kpToolFlowBase]
-void kpToolSpraycan::endDraw (const QPoint &thisPoint,
-    const QRect &normalizedRect)
+void kpToolSpraycan::endDraw(const QPoint &thisPoint, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    qCDebug(kpLogTools) << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint
-               << ")";
+    qCDebug(kpLogTools) << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint << ")";
 #endif
 
-    m_timer->stop ();
-    kpToolFlowBase::endDraw (thisPoint, normalizedRect);
+    m_timer->stop();
+    kpToolFlowBase::endDraw(thisPoint, normalizedRect);
 }
 
-
 // protected
-int kpToolSpraycan::spraycanSize () const
+int kpToolSpraycan::spraycanSize() const
 {
-    return m_toolWidgetSpraycanSize->spraycanSize ();
+    return m_toolWidgetSpraycanSize->spraycanSize();
 }
 
 // protected slot
-void kpToolSpraycan::slotSpraycanSizeChanged (int size)
+void kpToolSpraycan::slotSpraycanSizeChanged(int size)
 {
-    (void) size;
+    (void)size;
 }
 
 #include "moc_kpToolSpraycan.cpp"

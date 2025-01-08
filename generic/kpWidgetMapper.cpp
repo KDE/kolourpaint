@@ -25,56 +25,51 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include "kpWidgetMapper.h"
 
 #include <QPoint>
 #include <QRect>
 #include <QWidget>
 
-
 namespace kpWidgetMapper
 {
 
-
-QPoint fromGlobal (const QWidget *widget, const QPoint &point)
+QPoint fromGlobal(const QWidget *widget, const QPoint &point)
 {
     if (!widget) {
         return point;
     }
 
-    return widget->mapFromGlobal (point);
+    return widget->mapFromGlobal(point);
 }
 
-QRect fromGlobal (const QWidget *widget, const QRect &rect)
+QRect fromGlobal(const QWidget *widget, const QRect &rect)
 {
-    if (!widget || !rect.isValid ()) {
+    if (!widget || !rect.isValid()) {
         return rect;
     }
 
-    auto topLeft = fromGlobal (widget, rect.topLeft ());
-    return  {topLeft.x (), topLeft.y (), rect.width (), rect.height ()};
+    auto topLeft = fromGlobal(widget, rect.topLeft());
+    return {topLeft.x(), topLeft.y(), rect.width(), rect.height()};
 }
 
-
-QPoint toGlobal (const QWidget *widget, const QPoint &point)
+QPoint toGlobal(const QWidget *widget, const QPoint &point)
 {
     if (!widget) {
         return point;
     }
 
-    return widget->mapToGlobal (point);
+    return widget->mapToGlobal(point);
 }
 
-QRect toGlobal (const QWidget *widget, const QRect &rect)
+QRect toGlobal(const QWidget *widget, const QRect &rect)
 {
-    if (!widget || !rect.isValid ()) {
+    if (!widget || !rect.isValid()) {
         return rect;
     }
 
-    auto topLeft = toGlobal (widget, rect.topLeft ());
-    return  {topLeft.x (), topLeft.y (), rect.width (), rect.height ()};
+    auto topLeft = toGlobal(widget, rect.topLeft());
+    return {topLeft.x(), topLeft.y(), rect.width(), rect.height()};
 }
 
-
-}  // namespace kpWidgetMapper
+} // namespace kpWidgetMapper

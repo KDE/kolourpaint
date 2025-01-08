@@ -25,9 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_SELECTION 0
-
 
 #include "kpAbstractSelectionTool.h"
 #include "kpAbstractSelectionToolPrivate.h"
@@ -35,69 +33,67 @@
 
 #include <KLocalizedString>
 
-#include "layers/selections/image/kpAbstractImageSelection.h"
-#include "layers/selections/kpAbstractSelection.h"
 #include "commands/kpCommandHistory.h"
-#include "kpDefs.h"
-#include "document/kpDocument.h"
 #include "commands/kpMacroCommand.h"
+#include "commands/tools/selection/kpToolImageSelectionTransparencyCommand.h"
 #include "commands/tools/selection/kpToolSelectionCreateCommand.h"
 #include "commands/tools/selection/kpToolSelectionDestroyCommand.h"
-#include "environments/tools/selection/kpToolSelectionEnvironment.h"
 #include "commands/tools/selection/kpToolSelectionMoveCommand.h"
 #include "commands/tools/selection/kpToolSelectionResizeScaleCommand.h"
-#include "commands/tools/selection/kpToolImageSelectionTransparencyCommand.h"
-#include "widgets/toolbars/kpToolToolBar.h"
-#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "document/kpDocument.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "kpDefs.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/kpAbstractSelection.h"
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
-
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 
 // private
-int kpAbstractSelectionTool::onSelectionResizeHandle () const
+int kpAbstractSelectionTool::onSelectionResizeHandle() const
 {
-    kpView *v = viewManager ()->viewUnderCursor ();
+    kpView *v = viewManager()->viewUnderCursor();
     if (!v) {
         return 0;
     }
 
-    return v->mouseOnSelectionResizeHandle (currentViewPoint ());
+    return v->mouseOnSelectionResizeHandle(currentViewPoint());
 }
 
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractSelectionTool::initResizeScale ()
+void kpAbstractSelectionTool::initResizeScale()
 {
     d->currentResizeScaleCommand = nullptr;
 
-   // d->resizeScaleType
-}
-
-// private
-void kpAbstractSelectionTool::uninitResizeScale ()
-{
-    // (state must be after construction, or after some time after endResizeScale())
-    Q_ASSERT (!d->currentResizeScaleCommand);
-
     // d->resizeScaleType
 }
 
-
 // private
-void kpAbstractSelectionTool::beginResizeScale ()
+void kpAbstractSelectionTool::uninitResizeScale()
 {
     // (state must be after construction, or after some time after endResizeScale())
-    Q_ASSERT (!d->currentResizeScaleCommand);
+    Q_ASSERT(!d->currentResizeScaleCommand);
 
     // d->resizeScaleType
 }
 
 // private
-void kpAbstractSelectionTool::endResizeScale ()
+void kpAbstractSelectionTool::beginResizeScale()
+{
+    // (state must be after construction, or after some time after endResizeScale())
+    Q_ASSERT(!d->currentResizeScaleCommand);
+
+    // d->resizeScaleType
+}
+
+// private
+void kpAbstractSelectionTool::endResizeScale()
 {
     // (should have been killed by cancelResizeScale() or endResizeScale())
-    Q_ASSERT (!d->currentResizeScaleCommand);
+    Q_ASSERT(!d->currentResizeScaleCommand);
 
     // d->resizeScaleType
 }
@@ -105,16 +101,14 @@ void kpAbstractSelectionTool::endResizeScale ()
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractSelectionTool::setCursorResizeScale ()
+void kpAbstractSelectionTool::setCursorResizeScale()
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    qCDebug(kpLogTools) << "\tonSelectionResizeHandle="
-                << onSelectionResizeHandle ();
+    qCDebug(kpLogTools) << "\tonSelectionResizeHandle=" << onSelectionResizeHandle();
 #endif
     Qt::CursorShape shape = Qt::ArrowCursor;
 
-    switch (onSelectionResizeHandle ())
-    {
+    switch (onSelectionResizeHandle()) {
     case (kpView::Top | kpView::Left):
     case (kpView::Bottom | kpView::Right):
         shape = Qt::SizeFDiagCursor;
@@ -136,46 +130,46 @@ void kpAbstractSelectionTool::setCursorResizeScale ()
         break;
     }
 
-    viewManager ()->setCursor (shape);
+    viewManager()->setCursor(shape);
 }
 
 //---------------------------------------------------------------------
 
 // protected virtual
-void kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale ()
+void kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale()
 {
-    viewManager ()->setQueueUpdates ();
+    viewManager()->setQueueUpdates();
     {
-        viewManager ()->setSelectionBorderVisible (true);
-        viewManager ()->setSelectionBorderFinished (true);
+        viewManager()->setSelectionBorderVisible(true);
+        viewManager()->setSelectionBorderFinished(true);
     }
-    viewManager ()->restoreQueueUpdates ();
+    viewManager()->restoreQueueUpdates();
 }
 
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractSelectionTool::beginDrawResizeScale ()
+void kpAbstractSelectionTool::beginDrawResizeScale()
 {
-    d->resizeScaleType = onSelectionResizeHandle ();
+    d->resizeScaleType = onSelectionResizeHandle();
 
-    /*virtual*/setSelectionBorderForBeginDrawResizeScale ();
+    /*virtual*/ setSelectionBorderForBeginDrawResizeScale();
 
-    setUserMessage (cancelUserMessage ());
+    setUserMessage(cancelUserMessage());
 }
 
 //---------------------------------------------------------------------
 
-
 // private
-void kpAbstractSelectionTool::drawResizeScaleTryKeepAspect (
-        int newWidth, int newHeight,
-        bool horizontalGripDragged, bool verticalGripDragged,
-        const kpAbstractSelection &originalSelection,
-        int *newWidthOut, int *newHeightOut)
+void kpAbstractSelectionTool::drawResizeScaleTryKeepAspect(int newWidth,
+                                                           int newHeight,
+                                                           bool horizontalGripDragged,
+                                                           bool verticalGripDragged,
+                                                           const kpAbstractSelection &originalSelection,
+                                                           int *newWidthOut,
+                                                           int *newHeightOut)
 {
-    const int oldWidth = originalSelection.width (),
-        oldHeight = originalSelection.height ();
+    const int oldWidth = originalSelection.width(), oldHeight = originalSelection.height();
 
     // Width changed more than height?  At equality, favor width.
     // Fix width, change height.
@@ -185,28 +179,26 @@ void kpAbstractSelectionTool::drawResizeScaleTryKeepAspect (
     // we're not dragging a vertical grip.  We certainly don't want this
     // code to modify the width - we want to fix the width and change the
     // height.
-    if ((horizontalGripDragged ? double (newWidth) / oldWidth : 0) >=
-        (verticalGripDragged ? double (newHeight) / oldHeight : 0))
-    {
+    if ((horizontalGripDragged ? double(newWidth) / oldWidth : 0) >= (verticalGripDragged ? double(newHeight) / oldHeight : 0)) {
         *newHeightOut = newWidth * oldHeight / oldWidth;
-        *newHeightOut = qMax (originalSelection.minimumHeight (), *newHeightOut);
+        *newHeightOut = qMax(originalSelection.minimumHeight(), *newHeightOut);
     }
     // Height changed more than width?
     // Fix height, change width.
-    else
-    {
+    else {
         *newWidthOut = newHeight * oldWidth / oldHeight;
-        *newWidthOut = qMax (originalSelection.minimumWidth (), *newWidthOut);
+        *newWidthOut = qMax(originalSelection.minimumWidth(), *newWidthOut);
     }
 }
 
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
-        const kpAbstractSelection &originalSelection,
-        int *newX, int *newY,
-        int *newWidth, int *newHeight)
+void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize(const kpAbstractSelection &originalSelection,
+                                                                          int *newX,
+                                                                          int *newY,
+                                                                          int *newWidth,
+                                                                          int *newHeight)
 {
     //
     // Determine new width.
@@ -218,19 +210,16 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
     int userXSign = 0;
     if (d->resizeScaleType & kpView::Left) {
         userXSign = -1;
-    }
-    else if (d->resizeScaleType & kpView::Right) {
+    } else if (d->resizeScaleType & kpView::Right) {
         userXSign = +1;
     }
 
     // Calculate new width.
-    *newWidth = originalSelection.width () +
-        userXSign * (currentPoint ().x () - startPoint ().x ());
+    *newWidth = originalSelection.width() + userXSign * (currentPoint().x() - startPoint().x());
 
     // Don't allow new width to be less than that kind of selection type's
     // minimum.
-    *newWidth = qMax (originalSelection.minimumWidth (), *newWidth);
-
+    *newWidth = qMax(originalSelection.minimumWidth(), *newWidth);
 
     //
     // Determine new height.
@@ -242,132 +231,98 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
     int userYSign = 0;
     if (d->resizeScaleType & kpView::Top) {
         userYSign = -1;
-    }
-    else if (d->resizeScaleType & kpView::Bottom) {
+    } else if (d->resizeScaleType & kpView::Bottom) {
         userYSign = +1;
     }
 
     // Calculate new height.
-    *newHeight = originalSelection.height () +
-        userYSign * (currentPoint ().y () - startPoint ().y ());
+    *newHeight = originalSelection.height() + userYSign * (currentPoint().y() - startPoint().y());
 
     // Don't allow new height to be less than that kind of selection type's
     // minimum.
-    *newHeight = qMax (originalSelection.minimumHeight (), *newHeight);
-
+    *newHeight = qMax(originalSelection.minimumHeight(), *newHeight);
 
     // Keep aspect ratio?
-    if (shiftPressed ())
-    {
-        drawResizeScaleTryKeepAspect (*newWidth, *newHeight,
-            (userXSign != 0)/*X or XY grip dragged*/,
-                (userYSign != 0)/*Y or XY grip dragged*/,
-            originalSelection,
-            newWidth/*ptr*/, newHeight/*ptr*/);
+    if (shiftPressed()) {
+        drawResizeScaleTryKeepAspect(*newWidth,
+                                     *newHeight,
+                                     (userXSign != 0) /*X or XY grip dragged*/,
+                                     (userYSign != 0) /*Y or XY grip dragged*/,
+                                     originalSelection,
+                                     newWidth /*ptr*/,
+                                     newHeight /*ptr*/);
     }
 
-
-    *newX = originalSelection.x ();
-    *newY = originalSelection.y ();
-
+    *newX = originalSelection.x();
+    *newY = originalSelection.y();
 
     //
     // Adjust x/y to new width/height for left/top resizes.
     //
 
-    if (d->resizeScaleType & kpView::Left)
-    {
-        *newX -= (*newWidth - originalSelection.width ());
+    if (d->resizeScaleType & kpView::Left) {
+        *newX -= (*newWidth - originalSelection.width());
     }
 
-    if (d->resizeScaleType & kpView::Top)
-    {
-        *newY -= (*newHeight - originalSelection.height ());
+    if (d->resizeScaleType & kpView::Top) {
+        *newY -= (*newHeight - originalSelection.height());
     }
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    qCDebug(kpLogTools) << "\t\tnewX=" << *newX
-                << " newY=" << *newY
-                << " newWidth=" << *newWidth
-                << " newHeight=" << *newHeight;
+    qCDebug(kpLogTools) << "\t\tnewX=" << *newX << " newY=" << *newY << " newWidth=" << *newWidth << " newHeight=" << *newHeight;
 #endif
 }
 
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractSelectionTool::drawResizeScale (
-        const QPoint &thisPoint,
-        const QRect &/*normalizedRect*/)
+void kpAbstractSelectionTool::drawResizeScale(const QPoint &thisPoint, const QRect & /*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     qCDebug(kpLogTools) << "\tresize/scale";
 #endif
 
-    kpAbstractSelection *sel = document ()->selection ();
+    kpAbstractSelection *sel = document()->selection();
 
-    if (!d->dragAccepted && thisPoint == startPoint ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION && 1
+    if (!d->dragAccepted && thisPoint == startPoint()) {
+#if DEBUG_KP_TOOL_SELECTION && 1
         qCDebug(kpLogTools) << "\t\tnop";
-    #endif
+#endif
 
-        setUserShapePoints (QPoint (sel->width (), sel->height ()));
+        setUserShapePoints(QPoint(sel->width(), sel->height()));
         return;
     }
 
+    giveContentIfNeeded();
 
-    giveContentIfNeeded ();
-
-
-    if (!d->currentResizeScaleCommand)
-    {
-        d->currentResizeScaleCommand
-            = new kpToolSelectionResizeScaleCommand (environ ()->commandEnvironment ());
+    if (!d->currentResizeScaleCommand) {
+        d->currentResizeScaleCommand = new kpToolSelectionResizeScaleCommand(environ()->commandEnvironment());
     }
 
-
-    const kpAbstractSelection *originalSelection =
-        d->currentResizeScaleCommand->originalSelection ();
-
+    const kpAbstractSelection *originalSelection = d->currentResizeScaleCommand->originalSelection();
 
     // There is nothing illegal about position (-1,-1) but why not.
-    int newX = -1, newY = -1,
-        newWidth = 0, newHeight = 0;
+    int newX = -1, newY = -1, newWidth = 0, newHeight = 0;
 
     // This should change all of the above values.
-    drawResizeScaleCalculateNewSelectionPosSize (
-        *originalSelection,
-        &newX, &newY,
-        &newWidth, &newHeight);
+    drawResizeScaleCalculateNewSelectionPosSize(*originalSelection, &newX, &newY, &newWidth, &newHeight);
 
-
-    viewManager ()->setFastUpdates ();
+    viewManager()->setFastUpdates();
     {
-        d->currentResizeScaleCommand->resizeAndMoveTo (
-            newWidth, newHeight,
-            QPoint (newX, newY),
-            true/*smooth scale delayed*/);
+        d->currentResizeScaleCommand->resizeAndMoveTo(newWidth, newHeight, QPoint(newX, newY), true /*smooth scale delayed*/);
     }
-    viewManager ()->restoreFastUpdates ();
+    viewManager()->restoreFastUpdates();
 
-    setUserShapePoints (QPoint (originalSelection->width (),
-                                originalSelection->height ()),
-                        QPoint (newWidth,
-                                newHeight),
-                        false/*don't set size*/);
-    setUserShapeSize (newWidth - originalSelection->width (),
-                        newHeight - originalSelection->height ());
-
+    setUserShapePoints(QPoint(originalSelection->width(), originalSelection->height()), QPoint(newWidth, newHeight), false /*don't set size*/);
+    setUserShapeSize(newWidth - originalSelection->width(), newHeight - originalSelection->height());
 
     d->dragAccepted = true;
 }
 
 //---------------------------------------------------------------------
 
-
 // private
-void kpAbstractSelectionTool::cancelResizeScale ()
+void kpAbstractSelectionTool::cancelResizeScale()
 {
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "\twas resize/scale sel - kill";
@@ -381,8 +336,8 @@ void kpAbstractSelectionTool::cancelResizeScale ()
 #if DEBUG_KP_TOOL_SELECTION
     qCDebug(kpLogTools) << "\t\tundo currentResizeScaleCommand";
 #endif
-    d->currentResizeScaleCommand->finalize ();  // (unneeded but let's be safe)
-    d->currentResizeScaleCommand->unexecute ();
+    d->currentResizeScaleCommand->finalize(); // (unneeded but let's be safe)
+    d->currentResizeScaleCommand->unexecute();
     delete d->currentResizeScaleCommand;
     d->currentResizeScaleCommand = nullptr;
 }
@@ -390,59 +345,55 @@ void kpAbstractSelectionTool::cancelResizeScale ()
 //---------------------------------------------------------------------
 
 // private
-void kpAbstractSelectionTool::endDrawResizeScale ()
+void kpAbstractSelectionTool::endDrawResizeScale()
 {
     // NOP drag?
     if (!d->currentResizeScaleCommand) {
         return;
     }
 
-    d->currentResizeScaleCommand->finalize ();
+    d->currentResizeScaleCommand->finalize();
 
-    addNeedingContentCommand (d->currentResizeScaleCommand);
+    addNeedingContentCommand(d->currentResizeScaleCommand);
     d->currentResizeScaleCommand = nullptr;
 }
 
 //---------------------------------------------------------------------
 
 // private
-QVariant kpAbstractSelectionTool::operationResizeScale (Operation op,
-        const QVariant &data1, const QVariant &data2)
+QVariant kpAbstractSelectionTool::operationResizeScale(Operation op, const QVariant &data1, const QVariant &data2)
 {
-    (void) data1;
-    (void) data2;
+    (void)data1;
+    (void)data2;
 
-
-    switch (op)
-    {
+    switch (op) {
     case HaventBegunDrawUserMessage:
-        return /*virtual*/haventBegunDrawUserMessageResizeScale ();
+        return /*virtual*/ haventBegunDrawUserMessageResizeScale();
 
     case SetCursor:
-        setCursorResizeScale ();
+        setCursorResizeScale();
         break;
 
     case BeginDraw:
-        beginDrawResizeScale ();
+        beginDrawResizeScale();
         break;
 
     case Draw:
-        drawResizeScale (currentPoint (), normalizedRect ());
+        drawResizeScale(currentPoint(), normalizedRect());
         break;
 
     case Cancel:
-        cancelResizeScale ();
+        cancelResizeScale();
         break;
 
     case EndDraw:
-        endDrawResizeScale ();
+        endDrawResizeScale();
         break;
 
     default:
-        Q_ASSERT (!"Unhandled operation");
+        Q_ASSERT(!"Unhandled operation");
         break;
     }
-
 
     return {};
 }

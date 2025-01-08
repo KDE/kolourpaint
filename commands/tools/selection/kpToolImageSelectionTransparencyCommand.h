@@ -25,32 +25,28 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpToolImageSelectionTransparencyCommand_H
 #define kpToolImageSelectionTransparencyCommand_H
-
 
 #include "commands/kpNamedCommand.h"
 #include "layers/selections/image/kpImageSelectionTransparency.h"
 
-
 class kpToolImageSelectionTransparencyCommand : public kpNamedCommand
 {
 public:
-    kpToolImageSelectionTransparencyCommand (const QString &name,
-        const kpImageSelectionTransparency &st,
-        const kpImageSelectionTransparency &oldST,
-        kpCommandEnvironment *environ);
-    ~kpToolImageSelectionTransparencyCommand () override;
+    kpToolImageSelectionTransparencyCommand(const QString &name,
+                                            const kpImageSelectionTransparency &st,
+                                            const kpImageSelectionTransparency &oldST,
+                                            kpCommandEnvironment *environ);
+    ~kpToolImageSelectionTransparencyCommand() override;
 
-    kpCommandSize::SizeType size () const override;
+    kpCommandSize::SizeType size() const override;
 
-    void execute () override;
-    void unexecute () override;
+    void execute() override;
+    void unexecute() override;
 
 private:
     kpImageSelectionTransparency m_st, m_oldST;
 };
 
-
-#endif  // kpToolImageSelectionTransparencyCommand_H
+#endif // kpToolImageSelectionTransparencyCommand_H

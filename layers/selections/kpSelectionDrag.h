@@ -24,7 +24,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_SELECTION_DRAG_H
 #define KP_SELECTION_DRAG_H
 
@@ -32,21 +31,19 @@
 
 class kpAbstractImageSelection;
 
-
 class kpSelectionDrag : public QMimeData
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    static const char * const SelectionMimeType;
+public:
+    static const char *const SelectionMimeType;
 
     // ASSUMPTION: <sel> has content (is not just a border).
     explicit kpSelectionDrag(const kpAbstractImageSelection &sel);
 
-  public:
+public:
     static bool canDecode(const QMimeData *mimeData);
     static kpAbstractImageSelection *decode(const QMimeData *mimeData);
 };
 
-
-#endif  // KP_SELECTION_DRAG_H
+#endif // KP_SELECTION_DRAG_H

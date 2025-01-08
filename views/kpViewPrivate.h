@@ -25,25 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpViewPrivate_H
 #define kpViewPrivate_H
-
 
 #include <QPoint>
 #include <QPointer>
 #include <QRect>
 #include <QRegion>
 
-
 class kpDocument;
 class kpToolToolBar;
 class kpView;
 class kpViewScrollableContainer;
+class kpViewManager;
 
-
-struct kpViewPrivate
-{
+struct kpViewPrivate {
     // sync: kpView::paintEvent()
     //
     // Normally, these pointers must be valid while the kpView is alive.
@@ -58,11 +54,11 @@ struct kpViewPrivate
     //
     // For more details, see SVN commit:
     //     "r385274 | dang | 2005-02-02 22:08:27 +1100 (Wed, 02 Feb 2005) | 21 lines".
-    QPointer <kpDocument> document;
-    QPointer <kpToolToolBar> toolToolBar;
-    QPointer <kpViewManager> viewManager;
-    QPointer <kpView> buddyView;
-    QPointer <kpViewScrollableContainer> scrollableContainer;
+    QPointer<kpDocument> document;
+    QPointer<kpToolToolBar> toolToolBar;
+    QPointer<kpViewManager> viewManager;
+    QPointer<kpView> buddyView;
+    QPointer<kpViewScrollableContainer> scrollableContainer;
 
     int hzoom, vzoom;
     QPoint origin;
@@ -73,5 +69,4 @@ struct kpViewPrivate
     QRegion queuedUpdateArea;
 };
 
-
-#endif  // kpViewPrivate_H
+#endif // kpViewPrivate_H

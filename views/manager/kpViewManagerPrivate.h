@@ -25,25 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpViewManagerPrivate_H
 #define kpViewManagerPrivate_H
-
 
 #include <QCursor>
 #include <QList>
 
-
 class kpMainWindow;
+class kpTempImage;
 class QTimer;
 class kpView;
 
-
-struct kpViewManagerPrivate
-{
+struct kpViewManagerPrivate {
     kpMainWindow *mainWindow;
 
-    QList <kpView *> views;
+    QList<kpView *> views;
     kpView *viewUnderCursor;
 
     QCursor cursor;
@@ -52,7 +48,6 @@ struct kpViewManagerPrivate
 
     bool selectionBorderVisible;
     bool selectionBorderFinished;
-
 
     //
     // Text Cursor
@@ -67,7 +62,6 @@ struct kpViewManagerPrivate
     // (undefined if there is not currently a text selection)
     bool textCursorBlinkState;
 
-
     //
     // View Updates
     //
@@ -81,5 +75,4 @@ struct kpViewManagerPrivate
     bool inputMethodEnabled;
 };
 
-
-#endif  // kpViewManagerPrivate_H
+#endif // kpViewManagerPrivate_H

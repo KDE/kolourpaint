@@ -25,13 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_COLOR_SIMILARITY_DIALOG_H
 #define KP_COLOR_SIMILARITY_DIALOG_H
 
-
 #include <QDialog>
-
 
 class QLabel;
 
@@ -39,24 +36,23 @@ class kpIntNumInput;
 
 class kpColorSimilarityFrame;
 
-
 // LOTODO: Why doesn't this dialog automatically enforce a minimum size
 //         based on layout magic, like Image -> Resize / Scale?
 class kpColorSimilarityDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit kpColorSimilarityDialog (QWidget *parent);
-    ~kpColorSimilarityDialog () override;
+    explicit kpColorSimilarityDialog(QWidget *parent);
+    ~kpColorSimilarityDialog() override;
 
-    double colorSimilarity () const;
-    void setColorSimilarity (double similarity);
+    double colorSimilarity() const;
+    void setColorSimilarity(double similarity);
 
 private Q_SLOTS:
-    void slotColorSimilarityValueChanged ();
+    void slotColorSimilarityValueChanged();
 
-    void slotWhatIsLabelClicked ();
+    void slotWhatIsLabelClicked();
 
 private:
     kpColorSimilarityFrame *m_colorSimilarityFrame;
@@ -64,5 +60,4 @@ private:
     QLabel *m_whatIsLabel;
 };
 
-
-#endif  // KP_COLOR_SIMILARITY_DIALOG_H
+#endif // KP_COLOR_SIMILARITY_DIALOG_H

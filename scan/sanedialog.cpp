@@ -25,37 +25,35 @@
 
 #include "sanedialog.h"
 
-#include <KLocalizedString>
 #include "kpLogCategories.h"
+#include <KConfigGroup>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KSharedConfig>
 #include <KWindowConfig>
-#include <KConfigGroup>
 
 #include <QPushButton>
 
 SaneDialog::SaneDialog(QWidget *parent)
     : KPageDialog(parent)
 {
-    setFaceType(static_cast<KPageDialog::FaceType> (Plain));
+    setFaceType(static_cast<KPageDialog::FaceType>(Plain));
     setWindowTitle(i18nc("@title:window", "Acquire Image"));
 
     buttonBox()->setStandardButtons(QDialogButtonBox::Close);
     buttonBox()->button(QDialogButtonBox::Close)->setDefault(true);
 
-
     m_ksanew = new KSaneIface::KSaneWidget(this);
     addPage(m_ksanew, QString());
 
-    connect (m_ksanew, &KSaneIface::KSaneWidget::scannedImageReady,
-             this, &SaneDialog::imageReady);
+    connect(m_ksanew, &KSaneIface::KSaneWidget::scannedImageReady, this, &SaneDialog::imageReady);
 
     m_openDev = QString();
 }
 
 bool SaneDialog::setup()
 {
-    if(!m_ksanew) {
+    if (!m_ksanew) {
         // new failed
         return false;
     }
@@ -65,7 +63,7 @@ bool SaneDialog::setup()
     // need to select a scanner
     m_openDev = m_ksanew->selectDevice(parentWidget());
     if (m_openDev.isEmpty()) {
-       // either no scanner was found or then cancel was pressed.
+        // either no scanner was found or then cancel was pressed.
         return false;
     }
     if (!m_ksanew->openDevice(m_openDev)) {
@@ -87,7 +85,7 @@ bool SaneDialog::setup()
         }
     }
 
-   return true;
+    return true;
 }
 
 SaneDialog::~SaneDialog()

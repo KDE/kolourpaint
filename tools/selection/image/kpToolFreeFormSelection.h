@@ -25,26 +25,19 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_FREE_FORM_SELECTION_H
 #define KP_TOOL_FREE_FORM_SELECTION_H
 
-
 #include "kpAbstractImageSelectionTool.h"
-
 
 class kpToolFreeFormSelection : public kpAbstractImageSelectionTool
 {
 public:
-    kpToolFreeFormSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    ~kpToolFreeFormSelection () override;
+    kpToolFreeFormSelection(kpToolSelectionEnvironment *environ, QObject *parent);
+    ~kpToolFreeFormSelection() override;
 
 protected:
-    bool drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragAccepted,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect) override;
+    bool drawCreateMoreSelectionAndUpdateStatusBar(bool dragAccepted, const QPoint &accidentalDragAdjustedPoint, const QRect &normalizedRect) override;
 };
 
-
-#endif  // KP_TOOL_FREE_FORM_SELECTION_H
+#endif // KP_TOOL_FREE_FORM_SELECTION_H

@@ -25,95 +25,79 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef kpRectangularImageSelection_H
 #define kpRectangularImageSelection_H
 
-
 #include "layers/selections/image/kpAbstractImageSelection.h"
-
 
 class kpRectangularImageSelection : public kpAbstractImageSelection
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpRectangularImageSelection (const kpImageSelectionTransparency &transparency =
-        kpImageSelectionTransparency ());
+    kpRectangularImageSelection(const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpRectangularImageSelection (const QRect &rect,
-        const kpImage &baseImage = kpImage (),
-        const kpImageSelectionTransparency &transparency =
-            kpImageSelectionTransparency ());
+    kpRectangularImageSelection(const QRect &rect,
+                                const kpImage &baseImage = kpImage(),
+                                const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpRectangularImageSelection (const QRect &rect,
-        const kpImageSelectionTransparency &transparency =
-            kpImageSelectionTransparency ());
+    kpRectangularImageSelection(const QRect &rect, const kpImageSelectionTransparency &transparency = kpImageSelectionTransparency());
 
-    kpRectangularImageSelection (const kpRectangularImageSelection &rhs);
+    kpRectangularImageSelection(const kpRectangularImageSelection &rhs);
 
-    kpRectangularImageSelection &operator= (const kpRectangularImageSelection &rhs);
+    kpRectangularImageSelection &operator=(const kpRectangularImageSelection &rhs);
 
-    kpRectangularImageSelection *clone () const override;
+    kpRectangularImageSelection *clone() const override;
 
-    ~kpRectangularImageSelection () override;
+    ~kpRectangularImageSelection() override;
 
-
-//
-// Marshalling
-//
+    //
+    // Marshalling
+    //
 
 public:
     static const int SerialID = 0;
-    int serialID () const override;
+    int serialID() const override;
 
-
-//
-// General Queries
-//
-
-public:
-    bool isRectangular () const override;
-
-
-//
-// Position & Dimensions
-//
+    //
+    // General Queries
+    //
 
 public:
-    QPolygon calculatePoints () const override;
+    bool isRectangular() const override;
 
-
-//
-// Shape Mask
-//
-
-public:
-    QBitmap shapeBitmap (bool nullForRectangular = false) const override;
-
-    QRegion shapeRegion () const override;
-
-
-//
-// Point Testing
-//
+    //
+    // Position & Dimensions
+    //
 
 public:
-    bool contains (const QPoint &point) const override;
+    QPolygon calculatePoints() const override;
 
-
-//
-// Rendering
-//
+    //
+    // Shape Mask
+    //
 
 public:
-    void paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const override;
+    QBitmap shapeBitmap(bool nullForRectangular = false) const override;
 
+    QRegion shapeRegion() const override;
+
+    //
+    // Point Testing
+    //
+
+public:
+    bool contains(const QPoint &point) const override;
+
+    //
+    // Rendering
+    //
+
+public:
+    void paintBorder(QImage *destPixmap, const QRect &docRect, bool selectionFinished) const override;
 
 private:
-    struct kpRectangularImageSelectionPrivate * const d;
+    struct kpRectangularImageSelectionPrivate *const d;
 };
 
-
-#endif  // kpRectangularImageSelection_H
+#endif // kpRectangularImageSelection_H

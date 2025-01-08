@@ -27,29 +27,26 @@
 
 #define DEBUG_KP_TOOL_TEXT 0
 
-
-#include "tools/selection/text/kpToolText.h"
 #include "kpToolTextPrivate.h"
+#include "tools/selection/text/kpToolText.h"
 
 #include <KLocalizedString>
 
 #include "views/manager/kpViewManager.h"
 
-
 // protected virtual [kpAbstractSelectionTool]
-QString kpToolText::haventBegunDrawUserMessageResizeScale () const
+QString kpToolText::haventBegunDrawUserMessageResizeScale() const
 {
-    return i18n ("Left drag to resize text box.");
+    return i18n("Left drag to resize text box.");
 }
 
-
 // protected virtual [base kpAbstractSelectionTool]
-void kpToolText::setSelectionBorderForBeginDrawResizeScale ()
+void kpToolText::setSelectionBorderForBeginDrawResizeScale()
 {
-    viewManager ()->setQueueUpdates ();
+    viewManager()->setQueueUpdates();
     {
-        kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale ();
-        viewManager ()->setTextCursorEnabled (false);
+        kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale();
+        viewManager()->setTextCursorEnabled(false);
     }
-    viewManager ()->restoreQueueUpdates ();
+    viewManager()->restoreQueueUpdates();
 }

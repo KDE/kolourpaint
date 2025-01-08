@@ -25,31 +25,32 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef KP_TOOL_ERASER_H
 #define KP_TOOL_ERASER_H
 
-
 #include "kpToolFlowPixmapBase.h"
-
 
 // Eraser = Brush but with foreground & background colors swapped (a few square brushes)
 class kpToolEraser : public kpToolFlowPixmapBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    kpToolEraser (kpToolEnvironment *environ, QObject *parent);
+    kpToolEraser(kpToolEnvironment *environ, QObject *parent);
 
-    void globalDraw () override;
-
+    void globalDraw() override;
 
 protected:
-    QString haventBegunDrawUserMessage () const override;
+    QString haventBegunDrawUserMessage() const override;
 
-    bool haveSquareBrushes () const override { return true; }
-    bool colorsAreSwapped () const override { return true; }
+    bool haveSquareBrushes() const override
+    {
+        return true;
+    }
+    bool colorsAreSwapped() const override
+    {
+        return true;
+    }
 };
 
-
-#endif  // KP_TOOL_ERASER_H
+#endif // KP_TOOL_ERASER_H
