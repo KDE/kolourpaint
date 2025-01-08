@@ -35,6 +35,10 @@
 
 #include "document/kpDocumentSaveOptions.h"
 
+#include <QList>
+#include <QRect>
+#include <QTimer>
+#include <QUrl>
 
 class QAction;
 class QActionGroup;
