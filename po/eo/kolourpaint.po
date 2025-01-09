@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-07 00:38+0000\n"
+"POT-Creation-Date: 2025-01-09 00:39+0000\n"
 "PO-Revision-Date: 2024-12-27 10:42+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -29,284 +29,284 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "pedrotpmx@wanadoo.fr,olivermkellogg@gmail.com"
 
-#: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
+#: commands/imagelib/effects/kpEffectBalanceCommand.cpp:17
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:80
 #, kde-format
 msgid "Balance"
 msgstr "Kompensi"
 
-#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:52
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:28
 #, kde-format
 msgid "Soften"
 msgstr "Glatigi"
 
-#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:53
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:30
 #, kde-format
 msgid "Sharpen"
 msgstr "Akrigi"
 
-#: commands/imagelib/effects/kpEffectClearCommand.cpp:58
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:34
 #, kde-format
 msgid "Clear"
 msgstr "Forviŝi"
 
-#: commands/imagelib/effects/kpEffectClearCommand.cpp:60
-#: commands/imagelib/effects/kpEffectCommandBase.cpp:68
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:83
-#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:74
-#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:77
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:36
+#: commands/imagelib/effects/kpEffectCommandBase.cpp:43
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:58
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:50
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:53
 #, kde-format
 msgid "Selection: %1"
 msgstr "Elektado: %1"
 
-#: commands/imagelib/effects/kpEffectEmbossCommand.cpp:42
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:113
+#: commands/imagelib/effects/kpEffectEmbossCommand.cpp:17
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:81
 #, kde-format
 msgid "Emboss"
 msgstr "Reliefigi"
 
-#: commands/imagelib/effects/kpEffectFlattenCommand.cpp:43
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:114
+#: commands/imagelib/effects/kpEffectFlattenCommand.cpp:18
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:82
 #, kde-format
 msgid "Flatten"
 msgstr "Tavoligi"
 
-#: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
+#: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:17
 #, kde-format
 msgid "Reduce to Grayscale"
 msgstr "Redukti al grizoskalo"
 
-#: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
+#: commands/imagelib/effects/kpEffectHSVCommand.cpp:15
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:84
 #, kde-format
 msgid "Hue, Saturation, Value"
 msgstr "Koloro, satureco, valoro"
 
-#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:17
 #, kde-format
 msgid "Invert Colors"
 msgstr "Inversigi la kolorojn"
 
-#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:117
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:17
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:85
 #, kde-format
 msgid "Invert"
 msgstr "Inversigi"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:32
 #, kde-format
 msgid "Reduce to Monochrome (Dithered)"
 msgstr "Redukti al unukoloro (punkte)"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:34
 #, kde-format
 msgid "Reduce to Monochrome"
 msgstr "Redukti al unukoloro"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:38
 #, kde-format
 msgid "Reduce to 256 Color (Dithered)"
 msgstr "Redukti al 256 koloroj (punkte)"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:40
 #, kde-format
 msgid "Reduce to 256 Color"
 msgstr "Redukti al 256 koloroj"
 
-#: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:41
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
+#: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:18
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:83
 #, kde-format
 msgid "Histogram Equalizer"
 msgstr "Histograma egaligilo"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:43
 #, kde-format
 msgid "Flip"
 msgstr "Renversi"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:69
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:46
 #, kde-format
 msgid "Flip horizontally and vertically"
 msgstr "Renversi horizontale kaj vertikale"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:71
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:48
 #, kde-format
 msgid "Flip horizontally"
 msgstr "Renversi horizontale"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:73
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:50
 #, kde-format
 msgid "Flip vertically"
 msgstr "Renversi vertikale"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:101
-#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:69
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
 #, kde-format
 msgid "Text: Resize Box"
 msgstr "Teksto: Regrandigi la ujon"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:107
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:73
 #, kde-format
 msgid "Selection: Scale"
 msgstr "Elektado: Skali"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:111
-#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:54
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:77
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
 #, kde-format
 msgid "Selection: Smooth Scale"
 msgstr "Elektado: Glate skali"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:120
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:83
 #, kde-format
 msgid "Resize"
 msgstr "Regrandigi"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:122
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:85
 #, kde-format
 msgid "Scale"
 msgstr "Skali"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:124
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:87
 #, kde-format
 msgid "Smooth Scale"
 msgstr "Glate skali"
 
-#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:72
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:48
 #, kde-format
 msgid "Rotate"
 msgstr "Rotacii"
 
-#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:51
 #, kde-format
 msgid "Skew"
 msgstr "Klini"
 
-#: commands/kpCommandHistoryBase.cpp:436
+#: commands/kpCommandHistoryBase.cpp:376
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&Malfari: %1"
 
-#: commands/kpCommandHistoryBase.cpp:436
+#: commands/kpCommandHistoryBase.cpp:376
 #, kde-format
 msgid "&Undo"
 msgstr "&Malfari"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:384
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&Refari: %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:384
 #, kde-format
 msgid "&Redo"
 msgstr "&Refari"
 
-#: commands/kpCommandHistoryBase.cpp:453
+#: commands/kpCommandHistoryBase.cpp:392
 #, kde-format
 msgid "Undo: %1"
 msgstr "Malfari: %1"
 
-#: commands/kpCommandHistoryBase.cpp:453 commands/kpCommandHistoryBase.cpp:634
+#: commands/kpCommandHistoryBase.cpp:392 commands/kpCommandHistoryBase.cpp:554
 #, kde-format
 msgid "Undo"
 msgstr "Malfari"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:400
 #, kde-format
 msgid "Redo: %1"
 msgstr "Refari: %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
+#: commands/kpCommandHistoryBase.cpp:400 commands/kpCommandHistoryBase.cpp:572
 #, kde-format
 msgid "Redo"
 msgstr "Refari"
 
-#: commands/kpCommandHistoryBase.cpp:596
+#: commands/kpCommandHistoryBase.cpp:519
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:607
+#: commands/kpCommandHistoryBase.cpp:529
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
 msgstr[0] "%1 plia ago"
 msgstr[1] "%1 pliaj agoj"
 
-#: commands/tools/kpToolColorPickerCommand.cpp:59
-#: tools/kpToolColorPicker.cpp:45
+#: commands/tools/kpToolColorPickerCommand.cpp:31
+#: tools/kpToolColorPicker.cpp:23
 #, kde-format
 msgid "Color Picker"
 msgstr "Kolora elektilo"
 
-#: commands/tools/kpToolFloodFillCommand.cpp:77 tools/kpToolFloodFill.cpp:55
+#: commands/tools/kpToolFloodFillCommand.cpp:52 tools/kpToolFloodFill.cpp:32
 #, kde-format
 msgid "Flood Fill"
 msgstr "Plenigilo"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:89
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:61
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects (Selection)"
 msgstr "Pliaj bildaj efektoj (elektaĵo)"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:63
 #, kde-format
 msgctxt "@title:window"
 msgid "More Image Effects"
 msgstr "Pliaj bildaj efektoj"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:74
 #, kde-format
 msgid "&Effect:"
 msgstr "&Efekto:"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:118
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:86
 #, kde-format
 msgid "Reduce Colors"
 msgstr "Redukti la kolorojn"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:87
 #, kde-format
 msgid "Soften & Sharpen"
 msgstr "Glatigi & Akrigi"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:121
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:89
 #, kde-format
 msgctxt "@title:window"
 msgid "Document Properties"
 msgstr "Dokumentaj ecoj"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:141
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:107
 #, kde-format
 msgid "Dots &Per Inch (DPI)"
 msgstr "Punktoj &po colo (DPI)"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:148
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:159
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:114
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:124
 #, kde-format
 msgid "Unspecified"
 msgstr "Nespecifita"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:151
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " x "
 msgstr " x "
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
 #, kde-format
 msgid "Horizontal:"
 msgstr "Horizontale:"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:167
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:217
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:131
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:177
 #, kde-format
 msgid "Vertical:"
 msgstr "Vertikale:"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:137
 #, kde-format
 msgid ""
 "<qt><p><b>Dots Per Inch</b> (DPI) specifies the number of pixels of the "
@@ -333,12 +333,12 @@ msgstr ""
 "ĉiuj bildformatoj subtenas DPI-valorojn. Se la formato en kiu vi konservas "
 "ne subtenas ilin, ili ne estos konservitaj.</p></qt>"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:165
 #, kde-format
 msgid "O&ffset"
 msgstr "Deŝo&vo"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:225
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:183
 #, kde-format
 msgid ""
 "<qt><p>The <b>Offset</b> is the relative position where this image should be "
@@ -351,28 +351,28 @@ msgstr ""
 "la <b>Deŝovo</b>-trajton. Se la formato en kiu vi konservas ne subtenas ĝin, "
 "la valoroj ĉi tie specifitaj ne estos konservitaj.</p></qt>"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:196
 #, kde-format
 msgid "&Text Fields"
 msgstr "&Tekstaj kampoj"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:253
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
 #, kde-format
 msgid "&Add Row"
 msgstr "&Aldoni vicon"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:258
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:208
 #, kde-format
 msgid "&Delete Row"
 msgstr "&Forigi vicon"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:263
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:211
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:44
 #, kde-format
 msgid "&Reset"
 msgstr "&Restarigi"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:226
 #, kde-format
 msgid ""
 "<qt><p><b>Text Fields</b> provide extra information about the image. This is "
@@ -390,22 +390,22 @@ msgstr ""
 "b>. Se la formato en kiu vi konservas ne subtenas ilin, ili ne estos "
 "konservitaj.</p></qt>"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:307
 #, kde-format
 msgid "Key"
 msgstr "Klavo"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:307
 #, kde-format
 msgid "Value"
 msgstr "Valoro"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:381
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
 msgstr "La teksta valoro \"%1\" en linio %2 bezonas klavon."
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:403
 #, kde-format
 msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
@@ -414,77 +414,77 @@ msgstr ""
 "Ĉiuj tekstaj klavoj devas esti unikaj. La tekstoklavo \"%1\" sur linioj %2 "
 "kaj %3 estas identaj."
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:639
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Text Fields"
 msgstr "Nevalidaj tekstaj kampoj"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
 #, kde-format
 msgid "Dimensions"
 msgstr "Dimensioj"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:139
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:288
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
 #, kde-format
 msgid "Original:"
 msgstr "Origina:"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:143
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:251
-#: mainWindow/kpMainWindow_StatusBar.cpp:92
-#: mainWindow/kpMainWindow_StatusBar.cpp:236
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:170
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:127
+#: dialogs/kpColorSimilarityDialog.cpp:36
 #, kde-format
 msgid "Preview"
 msgstr "Antaŭrigardo"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:177
-#: dialogs/kpColorSimilarityDialog.cpp:63
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:133
+#: dialogs/kpColorSimilarityDialog.cpp:41
 #, kde-format
 msgid "&Update"
 msgstr "Akt&ualigi"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:90
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "Regrandigi / Skali"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
 #, kde-format
 msgid "Ac&t on:"
 msgstr "E&fiki sur:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
 #, kde-format
 msgid "Entire Image"
 msgstr "Tuta bildo"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:168
-#: layers/selections/image/kpAbstractImageSelection.cpp:204
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "Elektaĵo"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:171
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
 #, kde-format
 msgid "Text Box"
 msgstr "Tekstujo"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:220
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
 #, kde-format
 msgid "Operation"
 msgstr "Operacio"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:222
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -503,61 +503,61 @@ msgstr ""
 "Skalo. </b>: Ĉi tio estas la sama kiel <i>Skalo</i> krom ke ĝi miksas "
 "najbarajn rastrumerojn por produkti pli glatan bildon.</li></ul></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
 #, kde-format
 msgid "&Resize"
 msgstr "&Regrandigi"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
 #, kde-format
 msgid "&Scale"
 msgstr "&Skali"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "&Glate skali"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:283
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
 #, kde-format
 msgid "Width:"
 msgstr "Larĝo:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:285
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
 #, kde-format
 msgid "Height:"
 msgstr "Alto:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:292
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:300
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:312
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
 #, kde-format
 msgid "x"
 msgstr "x"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:297
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
 #, kde-format
 msgid "&New:"
 msgstr "&Nova:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:304
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
 #, kde-format
 msgid "&Percent:"
 msgstr "&Elcento:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:310
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:319
-#: dialogs/kpColorSimilarityDialog.cpp:81
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
+#: dialogs/kpColorSimilarityDialog.cpp:53
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:321
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr "Konservi la &aspektan rilaton"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:724
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -570,19 +570,19 @@ msgstr ""
 "problemojn ĉe alia programo.</p><p>Ĉu vi vere volas regrandigi la tekstujon?"
 "</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "Ĉu regrandigi la tekstujon?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, kde-format
 msgid "R&esize Text Box"
 msgstr "R&egrandigi la tekstujon"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:738
-#: mainWindow/kpMainWindow_Tools.cpp:652
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
 "<qt><p>Resizing the image to %1x%2 may take a substantial amount of memory. "
@@ -594,20 +594,20 @@ msgstr ""
 "problemojn ĉe alia programo.</p><p>Ĉu vi vere volas regrandigi la bildon?</"
 "p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
-#: mainWindow/kpMainWindow_Tools.cpp:662
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: mainWindow/kpMainWindow_Tools.cpp:571
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "Ĉu regrandigi la bildon?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
-#: mainWindow/kpMainWindow_Tools.cpp:663
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "R&egrandigi la bildon"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:756
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -618,18 +618,18 @@ msgstr ""
 "Tio povas redukti la respondecon de la sistemo aŭ kaŭzi risurcajn problemojn "
 "ĉe alia programo.</p><p>Ĉu vi vere volas skali la bildon?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "Ĉu skali la bildon?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, kde-format
 msgid "Scal&e Image"
 msgstr "Ska&li la bildon"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:770
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -642,18 +642,18 @@ msgstr ""
 "problemojn ĉe alia programo.</p><p>Ĉu vi vere volas skali la elektaĵon?</p></"
 "qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "Ĉu skali la elektaĵon?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "Skali la &elektaĵon"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:788
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -666,18 +666,18 @@ msgstr ""
 "problemojn ĉe alia programo.</p><p>Ĉu vi vere volas glate skali la bildon?</"
 "p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "Ĉu glate skali la bildon?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "Glat&e skali la bildon"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:802
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -690,83 +690,83 @@ msgstr ""
 "problemojn ĉe alia programo.</p><p>Ĉu vi vere volas glate skali la elektaĵon?"
 "</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "Ĉu glate skali la elektaĵon?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "Glate skali la &elektaĵon"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection"
 msgstr "Rotacii la elektaĵon"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image"
 msgstr "Rotacii la bildon"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:41
 #, kde-format
 msgid "After rotate:"
 msgstr "Post rotacio:"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:68
 #, kde-format
 msgid "Direction"
 msgstr "Direkto"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:94
 #, kde-format
 msgid "Cou&nterclockwise"
 msgstr "&Nelaŭhorloĝe"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:122
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
 #, kde-format
 msgid "C&lockwise"
 msgstr "&Laŭhorloĝe"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:146
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:97
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:114
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:66
 #, kde-format
 msgid "Angle"
 msgstr "Angulo"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:150
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:117
 #, kde-format
 msgid "90 &degrees"
 msgstr "90 gra&doj"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:151
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:118
 #, kde-format
 msgid "180 d&egrees"
 msgstr "180 grad&oj"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:152
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:119
 #, kde-format
 msgid "270 de&grees"
 msgstr "270 &gradoj"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:154
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
 #, kde-format
 msgid "C&ustom:"
 msgstr "&Propra:"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:159
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:110
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:122
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:126
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:78
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:89
 #, kde-format
 msgid "degrees"
 msgstr "gradoj"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:230
 #, kde-format
 msgid ""
 "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
@@ -779,18 +779,18 @@ msgstr ""
 "aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas rotacii la elekton?"
 "</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:238
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Selection?"
 msgstr "Ĉu rotacii la elektaĵon?"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:239
 #, kde-format
 msgid "Rotat&e Selection"
 msgstr "Rotacii la &elektaĵon"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:243
 #, kde-format
 msgid ""
 "<qt><p>Rotating the image to %1x%2 may take a substantial amount of memory. "
@@ -802,45 +802,45 @@ msgstr ""
 "aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas rotacii la bildon?</"
 "p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:251
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image?"
 msgstr "Ĉu rotacii la bildon?"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:252
 #, kde-format
 msgid "Rotat&e Image"
 msgstr "Rotacii &la bildon"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:37
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection"
 msgstr "Klini la elektaĵon"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:37
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image"
 msgstr "Klini la bildon"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:38
 #, kde-format
 msgid "After skew:"
 msgstr "Post oblikvo:"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:72
 #, kde-format
 msgid "&Horizontal:"
 msgstr "&Horizontale:"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:116
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:83
 #, kde-format
 msgid "&Vertical:"
 msgstr "&Vertikale:"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:199
 #, kde-format
 msgid ""
 "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
@@ -853,18 +853,18 @@ msgstr ""
 "aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas misformigi la "
 "elekton?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:207
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Selection?"
 msgstr "Ĉu klini la elektaĵon?"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:208
 #, kde-format
 msgid "Sk&ew Selection"
 msgstr "Klini la &elektaĵon"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:212
 #, kde-format
 msgid ""
 "<qt><p>Skewing the image to %1x%2 may take a substantial amount of memory. "
@@ -876,58 +876,58 @@ msgstr ""
 "aliaj aplikaĵaj rimedoj.</p><p>Ĉu vi certas, ke vi volas misformigi la "
 "bildon?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:220
 #, kde-format
 msgctxt "@title:window"
 msgid "Skew Image?"
 msgstr "Ĉu klini la bildon?"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:221
 #, kde-format
 msgid "Sk&ew Image"
 msgstr "Kli&ni la bildon"
 
-#: dialogs/kpColorSimilarityDialog.cpp:46
+#: dialogs/kpColorSimilarityDialog.cpp:25
 #, kde-format
 msgctxt "@title:window"
 msgid "Color Similarity"
 msgstr "Kolora simileco"
 
-#: dialogs/kpColorSimilarityDialog.cpp:75
+#: dialogs/kpColorSimilarityDialog.cpp:49
 #, kde-format
 msgid "&RGB Color Cube Distance"
 msgstr "&RVB kolorkuba distanco"
 
-#: dialogs/kpColorSimilarityDialog.cpp:82
+#: dialogs/kpColorSimilarityDialog.cpp:54
 #, kde-format
 msgid "Exact Match"
 msgstr "Ekzakta kongruo"
 
-#: dialogs/kpColorSimilarityDialog.cpp:87
+#: dialogs/kpColorSimilarityDialog.cpp:58
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr ""
 "<a href=\"dummy_to_make_link_clickable\">Kio estas kolora simileco?</a>"
 
-#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:58
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:34
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Preview"
 msgstr "Konservi la antaŭrigardon"
 
-#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:126
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:88
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
 msgstr[0] "1 bitoko (aproks. %2%)"
 msgstr[1] "%1 bitokoj (aproks. %2%)"
 
-#: document/kpDocument_Open.cpp:114
+#: document/kpDocument_Open.cpp:87
 #, kde-format
 msgid "Could not open \"%1\"."
 msgstr "Ne eblis malfermi \"%1\"."
 
-#: document/kpDocument_Open.cpp:150
+#: document/kpDocument_Open.cpp:121
 #, kde-format
 msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
@@ -936,12 +936,12 @@ msgstr ""
 "Ne eblis malfermi \"%1\" - nesubtenata bilda formato.\n"
 "La dosiero eble estas koruptita."
 
-#: document/kpDocument_Save.cpp:74
+#: document/kpDocument_Save.cpp:47
 #, kde-format
 msgid "Could not save image - insufficient information."
 msgstr "Ne eblis konservi la bildon - maltroo da informo."
 
-#: document/kpDocument_Save.cpp:75
+#: document/kpDocument_Save.cpp:48
 #, kde-format
 msgid ""
 "URL: %1\n"
@@ -950,18 +950,18 @@ msgstr ""
 "URL: %1\n"
 "Mime tipo: %2"
 
-#: document/kpDocument_Save.cpp:79
+#: document/kpDocument_Save.cpp:51
 #, kde-format
 msgid "<empty>"
 msgstr "<malplena>"
 
-#: document/kpDocument_Save.cpp:81
+#: document/kpDocument_Save.cpp:52
 #, kde-format
 msgctxt "@title:window"
 msgid "Internal Error"
 msgstr "Interna eraro"
 
-#: document/kpDocument_Save.cpp:116
+#: document/kpDocument_Save.cpp:80
 #, kde-format
 msgid ""
 "<qt><p>The <b>%1</b> format may not be able to preserve all of the image's "
@@ -972,13 +972,13 @@ msgstr ""
 "de la bildo.</p><p>Ĉu vi certas, ke vi volas konservi en ĉi tiu formato?</"
 "p></qt>"
 
-#: document/kpDocument_Save.cpp:123
+#: document/kpDocument_Save.cpp:87
 #, kde-format
 msgctxt "@title:window"
 msgid "Lossy File Format"
 msgstr "Perdema dosierformato"
 
-#: document/kpDocument_Save.cpp:132
+#: document/kpDocument_Save.cpp:93
 #, kde-format
 msgid ""
 "<qt><p>Saving the image at the low color depth of %1-bit may result in the "
@@ -990,53 +990,53 @@ msgstr ""
 "forigita.</p><p>Ĉu vi certas, ke vi volas konservi ĉi tiun kolorprofundon?</"
 "p></qt>"
 
-#: document/kpDocument_Save.cpp:142
+#: document/kpDocument_Save.cpp:103
 #, kde-format
 msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "Malalta kolorozo"
 
-#: document/kpDocument_Save.cpp:268
+#: document/kpDocument_Save.cpp:212
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "Ne eblis konservi bildon - ne eblas krei provizoran dosieron."
 
-#: document/kpDocument_Save.cpp:276
+#: document/kpDocument_Save.cpp:219
 #, kde-format
 msgid "Could not save as \"%1\": %2"
 msgstr "Ne eblis konservi kiel \"%1\": %2"
 
-#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
+#: document/kpDocument_Save.cpp:277 document/kpDocument_Save.cpp:312
 #, kde-format
 msgid "Error saving image"
 msgstr "Eraro dum konservado de bildo"
 
-#: document/kpDocument_Save.cpp:426
+#: document/kpDocument_Save.cpp:341
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "Ne eblis konservi bildon - malsukcesis alŝuti."
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:384
+#: imagelib/transforms/kpTransformAutoCrop.cpp:334
 #, kde-format
 msgid "Remove Internal B&order"
 msgstr "Forigi la internan rand&on"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:387
+#: imagelib/transforms/kpTransformAutoCrop.cpp:337
 #, kde-format
 msgid "Remove Internal Border"
 msgstr "Forigi la internan randon"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:391
+#: imagelib/transforms/kpTransformAutoCrop.cpp:341
 #, kde-format
 msgid "Autocr&op"
 msgstr "Aŭt&omate stuci"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:393
+#: imagelib/transforms/kpTransformAutoCrop.cpp:343
 #, kde-format
 msgid "Autocrop"
 msgstr "Aŭtomate stuci"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:623
+#: imagelib/transforms/kpTransformAutoCrop.cpp:518
 #, kde-format
 msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
@@ -1045,13 +1045,13 @@ msgstr ""
 "KolourPaint ne povas forigi la internan limon de la elekto ĉar ĝi ne povis "
 "troviĝi."
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:625
+#: imagelib/transforms/kpTransformAutoCrop.cpp:520
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
 msgstr "Ne eblas forigi la internan randon"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:631
+#: imagelib/transforms/kpTransformAutoCrop.cpp:524
 #, kde-format
 msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
@@ -1059,152 +1059,152 @@ msgid ""
 msgstr ""
 "KolourPaint ne povas aŭtomate tondi la bildon ĉar ĝia rando ne povis troviĝi."
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:633
+#: imagelib/transforms/kpTransformAutoCrop.cpp:526
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
 msgstr "Ne eblas aŭtomate stuci"
 
-#: imagelib/transforms/kpTransformCrop.cpp:69
-#: imagelib/transforms/kpTransformCrop.cpp:72
+#: imagelib/transforms/kpTransformCrop.cpp:43
+#: imagelib/transforms/kpTransformCrop.cpp:45
 #, kde-format
 msgid "Set as Image"
 msgstr "Meti kiel bildon"
 
-#: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:251
-#: mainWindow/kpMainWindow_Edit.cpp:365 mainWindow/kpMainWindow_Image.cpp:320
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:74
+#: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:201
+#: mainWindow/kpMainWindow_Edit.cpp:312 mainWindow/kpMainWindow_Image.cpp:282
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:52
 #, kde-format
 msgid "Selection: Create"
 msgstr "Elektado: Krei"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:30
 #, kde-format
 msgid "KolourPaint"
 msgstr "KolourPaint"
 
-#: kolourpaint.cpp:55
+#: kolourpaint.cpp:32
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "Pentra Programo de KDE"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:46
 #, kde-format
 msgid "Clarence Dang"
 msgstr "Clarence Dang"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:46
 #, kde-format
 msgid "Project Founder"
 msgstr "Projekta fondinto"
 
-#: kolourpaint.cpp:71
+#: kolourpaint.cpp:48
 #, kde-format
 msgid "Thurston Dang"
 msgstr "Thurston Dang"
 
-#: kolourpaint.cpp:71
+#: kolourpaint.cpp:48
 #, kde-format
 msgid "Chief Investigator"
 msgstr "Ĉefula enketanto"
 
-#: kolourpaint.cpp:74
+#: kolourpaint.cpp:50
 #, kde-format
 msgid "Martin Koller"
 msgstr "Martin Koller"
 
-#: kolourpaint.cpp:74
+#: kolourpaint.cpp:50
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr "Skanado Subteno, Alpha Subteno, Nuna Prizorganto"
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:52
 #, kde-format
 msgid "Kristof Borrey"
 msgstr "Kristof Borrey"
 
-#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
+#: kolourpaint.cpp:52 kolourpaint.cpp:55 kolourpaint.cpp:56
 #, kde-format
 msgid "Icons"
 msgstr "Piktogramoj"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr "Tasuku Suzuki"
 
-#: kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:53 kolourpaint.cpp:54
 #, kde-format
 msgid "InputMethod Support"
 msgstr "InputMethod subteno"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:54
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr "Kazuki Ohta"
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr "Nuno Pinheiro"
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:56
 #, kde-format
 msgid "Danny Allen"
 msgstr "Danny Allen"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:57
 #, kde-format
 msgid "Mike Gashler"
 msgstr "Mike Gashler"
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:57
 #, kde-format
 msgid "Image Effects"
 msgstr "Bildefektoj"
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:59
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:59
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr "Portado al KDE 4"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:60
 #, kde-format
 msgid "Christoph Feck"
 msgstr "Christoph Feck"
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:60
 #, kde-format
 msgid "KF 5 Porting"
 msgstr "KF 5 Porting"
 
-#: kolourpaint.cpp:87
+#: kolourpaint.cpp:62
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr "Dankon al la multaj aliuloj kiuj helpis por ebligi ĉi tiun programon."
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:68
 #, kde-format
 msgid "Image files to open, optionally"
 msgstr "Bilddosieroj por malfermi, laŭvole"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "Listigi ĉiujn legeblajn bildajn MIME-tipojn"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Start with new image using given size"
 msgstr "Komenci kun nova bildo uzante donitan grandecon"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[larĝo]x[alteco]"
@@ -1251,40 +1251,40 @@ msgstr "Elektila RMB menuo"
 msgid "&Edit"
 msgstr "&Redakti"
 
-#: kpThumbnail.cpp:129
+#: kpThumbnail.cpp:94
 #, kde-format
 msgctxt "@title:window"
 msgid "Thumbnail"
 msgstr "Miniaturo"
 
-#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
-#: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
+#: kpViewScrollableContainer.cpp:132 kpViewScrollableContainer.cpp:763
+#: kpViewScrollableContainer.cpp:765 kpViewScrollableContainer.cpp:767
 #, kde-format
 msgid "Left drag the handle to resize the image."
 msgstr "Dekstre ŝovi la traktilon por regrandigi la bildon."
 
-#: kpViewScrollableContainer.cpp:194
+#: kpViewScrollableContainer.cpp:171
 #, kde-format
 msgid "Resize Image: Let go of all the mouse buttons."
 msgstr "Regrandigi Bildon: Forlasu ĉiujn musbutonojn."
 
-#: kpViewScrollableContainer.cpp:226
+#: kpViewScrollableContainer.cpp:199
 #, kde-format
 msgid "Resize Image: Right click to cancel."
 msgstr "Regrandigi bildon: Dekstre klaki por malfari."
 
-#: layers/selections/text/kpTextSelection.cpp:136
-#: tools/selection/text/kpToolText.cpp:55
+#: layers/selections/text/kpTextSelection.cpp:106
+#: tools/selection/text/kpToolText.cpp:34
 #, kde-format
 msgid "Text"
 msgstr "Teksto"
 
-#: lgpl/generic/kpColorCollection.cpp:120
+#: lgpl/generic/kpColorCollection.cpp:109
 #, kde-format
 msgid "Could not open color palette \"%1\"."
 msgstr "Ne eblis malfermi la koloran paletron \"%1\"."
 
-#: lgpl/generic/kpColorCollection.cpp:153
+#: lgpl/generic/kpColorCollection.cpp:138
 #, kde-format
 msgid ""
 "Could not open color palette \"%1\" - unsupported format.\n"
@@ -1293,75 +1293,75 @@ msgstr ""
 "Ne eblis malfermi la koloran paletron \"%1\" - nesubtenata formato.\n"
 "La dosiero eble estas koruptita."
 
-#: lgpl/generic/kpColorCollection.cpp:213
+#: lgpl/generic/kpColorCollection.cpp:192
 #, kde-format
 msgid "Could not open KDE color palette \"%1\"."
 msgstr "Ne eblis malfermi la KDE koloran paletron \"%1\"."
 
-#: lgpl/generic/kpColorCollection.cpp:263
+#: lgpl/generic/kpColorCollection.cpp:236
 #, kde-format
 msgid "Could not save color palette as \"%1\"."
 msgstr "Ne eblis konservi la koloran paletron kiel \"%1\"."
 
-#: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
-#: widgets/toolbars/kpColorToolBar.cpp:312
+#: lgpl/generic/kpUrlFormatter.cpp:19 lgpl/generic/kpUrlFormatter.cpp:31
+#: widgets/toolbars/kpColorToolBar.cpp:268
 #, kde-format
 msgid "Untitled"
 msgstr "Sentitola"
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:39
 #, kde-format
 msgid "Use KolourPaint Defaults"
 msgstr "Uzi la defaŭlton de KolourPaint"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:43
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr "Uzi tiun de KDE"
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:53
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "&Malfermi..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:57
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "Reŝar&gi"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:61
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "Kon&servi"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:65
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "Konservi &kiel..."
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:69
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr "Aldoni vicon"
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:73
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "Forigi la lastan vicon"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:84
 #, kde-format
 msgid "Color Box"
 msgstr "Kolorujo"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:162
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1370,7 +1370,7 @@ msgstr ""
 "La kolora paletro \"%1\" estas modifita.\n"
 "Ĉu vi volas konservi ĝin?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:172
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1379,7 +1379,7 @@ msgstr ""
 "La KDE-kolora paletro \"%1\" estas modifita.\n"
 "Ĉu vi volas konservi ĝin en dosiero?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:180
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1388,13 +1388,13 @@ msgstr ""
 "La defaŭlta kolora paletro estas modifita.\n"
 "Ĉu vi volas konservi ĝin en dosiero?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:293
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "Malfermi koloran paletron"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:319
 #, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
@@ -1405,15 +1405,15 @@ msgstr ""
 "Reŝargi perdos ĉiujn ŝanĝojn ekde kiam vi laste konservis ĝin.\n"
 "Ĉu vi certas?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1087
-#: mainWindow/kpMainWindow_File.cpp:1097
+#: mainWindow/kpMainWindow_Colors.cpp:324
+#: mainWindow/kpMainWindow_Colors.cpp:334
+#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:968
+#: mainWindow/kpMainWindow_File.cpp:976
 #, kde-format
 msgid "&Reload"
 msgstr "&Reŝargi"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:329
 #, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
@@ -1424,7 +1424,7 @@ msgstr ""
 "Reŝargi perdos ĉiujn ŝanĝojn.\n"
 "Ĉu vi certas?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:337
 #, kde-format
 msgid ""
 "The default color palette has been modified.\n"
@@ -1435,43 +1435,43 @@ msgstr ""
 "Reŝargi perdos ĉiujn ŝanĝojn.\n"
 "Ĉu vi certas?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, kde-format
 msgid "Save Color Palette As"
 msgstr "Konservi la koloran paletron kiel"
 
-#: mainWindow/kpMainWindow_Edit.cpp:96
+#: mainWindow/kpMainWindow_Edit.cpp:72
 #, kde-format
 msgid "Paste in &New Window"
 msgstr "Alglui en &nova fenestro"
 
-#: mainWindow/kpMainWindow_Edit.cpp:103
+#: mainWindow/kpMainWindow_Edit.cpp:78
 #, kde-format
 msgid "&Delete Selection"
 msgstr "&Forigi la elektaĵon"
 
-#: mainWindow/kpMainWindow_Edit.cpp:111
+#: mainWindow/kpMainWindow_Edit.cpp:85
 #, kde-format
 msgid "C&opy to File..."
 msgstr "K&opii el dosiero..."
 
-#: mainWindow/kpMainWindow_Edit.cpp:115
+#: mainWindow/kpMainWindow_Edit.cpp:89
 #, kde-format
 msgid "Paste &From File..."
 msgstr "Al&glui el dosiero..."
 
-#: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
-#: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
+#: mainWindow/kpMainWindow_Edit.cpp:312 mainWindow/kpMainWindow_Edit.cpp:368
+#: mainWindow/kpMainWindow_Image.cpp:284 tools/selection/text/kpToolText.cpp:60
 #, kde-format
 msgid "Text: Create Box"
 msgstr "Teksto: Krei ujon"
 
-#: mainWindow/kpMainWindow_Edit.cpp:444
+#: mainWindow/kpMainWindow_Edit.cpp:372
 #, kde-format
 msgid "Text: Paste"
 msgstr "Teksto: Alglui"
 
-#: mainWindow/kpMainWindow_Edit.cpp:611
+#: mainWindow/kpMainWindow_Edit.cpp:500
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
@@ -1480,56 +1480,56 @@ msgstr ""
 "<qt>KolourPaint ne povas alglui la enhavon de la tondujo ĉar ĝi havas "
 "nekonatan formaton.</qt>"
 
-#: mainWindow/kpMainWindow_Edit.cpp:613
+#: mainWindow/kpMainWindow_Edit.cpp:502
 #, kde-format
 msgid "Cannot Paste"
 msgstr "Ne eblas alglui"
 
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:576
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "Teksto: Forigi la ujon"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:693
+#: mainWindow/kpMainWindow_Edit.cpp:578
 #, kde-format
 msgid "Selection: Delete"
 msgstr "Elektado: Forigi"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:642
 #, kde-format
 msgid "Text: Finish"
 msgstr "Teksto: Fini"
 
-#: mainWindow/kpMainWindow_Edit.cpp:768
+#: mainWindow/kpMainWindow_Edit.cpp:642
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "Elektado: Malelekti"
 
-#: mainWindow/kpMainWindow_Edit.cpp:852
+#: mainWindow/kpMainWindow_Edit.cpp:713
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "Kopii al dosiero"
 
-#: mainWindow/kpMainWindow_Edit.cpp:899
+#: mainWindow/kpMainWindow_Edit.cpp:751
 #, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Alglui el dosiero"
 
-#: mainWindow/kpMainWindow_File.cpp:105
+#: mainWindow/kpMainWindow_File.cpp:84
 #, kde-format
 msgid "E&xport..."
 msgstr "E&ksporti..."
 
-#: mainWindow/kpMainWindow_File.cpp:107
+#: mainWindow/kpMainWindow_File.cpp:86
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr "Eksporti al alia dosiero"
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:88
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1543,88 +1543,88 @@ msgstr ""
 "<nl/>Tiel vi povas konservi la laste uzatan konservan dosierujon sendependa "
 "de la dosierujo de la aktuala dokumento."
 
-#: mainWindow/kpMainWindow_File.cpp:115
+#: mainWindow/kpMainWindow_File.cpp:94
 #, kde-format
 msgid "Scan..."
 msgstr "Skani..."
 
-#: mainWindow/kpMainWindow_File.cpp:124
+#: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Akiri Ekrankopion"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
 msgid "Properties"
 msgstr "Proprecoj"
 
-#: mainWindow/kpMainWindow_File.cpp:134
+#: mainWindow/kpMainWindow_File.cpp:113
 #, kde-format
 msgid "Reloa&d"
 msgstr "Reŝar&gi"
 
-#: mainWindow/kpMainWindow_File.cpp:464
+#: mainWindow/kpMainWindow_File.cpp:412
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Ĉiuj Subtenataj Dosieroj (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:489
+#: mainWindow/kpMainWindow_File.cpp:437
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Malfermi bildon"
 
-#: mainWindow/kpMainWindow_File.cpp:552
+#: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Malsukcesis malfermi skanan dialogon."
 
-#: mainWindow/kpMainWindow_File.cpp:553
+#: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Skanado Malsukcesis"
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:606
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Momentfoto Prokrasto"
 
-#: mainWindow/kpMainWindow_File.cpp:673
+#: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] "%v sekundo"
 msgstr[1] "%v sekundoj"
 
-#: mainWindow/kpMainWindow_File.cpp:674
+#: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
 msgid "No delay"
 msgstr "Neniu prokrasto"
 
-#: mainWindow/kpMainWindow_File.cpp:676
+#: mainWindow/kpMainWindow_File.cpp:612
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Kaŝi Ĉefan Fenestron"
 
-#: mainWindow/kpMainWindow_File.cpp:730
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Document Properties"
 msgstr "Dokumentaj ecoj"
 
-#: mainWindow/kpMainWindow_File.cpp:970
+#: mainWindow/kpMainWindow_File.cpp:867
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Konservi la bildon kiel"
 
-#: mainWindow/kpMainWindow_File.cpp:1018
+#: mainWindow/kpMainWindow_File.cpp:910
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Eksporti"
 
-#: mainWindow/kpMainWindow_File.cpp:1082
+#: mainWindow/kpMainWindow_File.cpp:963
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1635,7 +1635,7 @@ msgstr ""
 "Reŝargi perdos ĉiujn ŝanĝojn de kiam vi laste konservis ĝin.\n"
 "Ĉu vi certas?"
 
-#: mainWindow/kpMainWindow_File.cpp:1092
+#: mainWindow/kpMainWindow_File.cpp:971
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1646,13 +1646,13 @@ msgstr ""
 "Reŝargi perdos ĉiujn ŝanĝojn.\n"
 "Ĉu vi certas?"
 
-#: mainWindow/kpMainWindow_File.cpp:1340
+#: mainWindow/kpMainWindow_File.cpp:1178
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Printi bildon"
 
-#: mainWindow/kpMainWindow_File.cpp:1420
+#: mainWindow/kpMainWindow_File.cpp:1251
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1661,7 +1661,7 @@ msgstr ""
 "Vi devas konservi tiun bildon antaŭ ol sendi ĝin.\n"
 "Ĉu vi volas konservi ĝin?"
 
-#: mainWindow/kpMainWindow_File.cpp:1458
+#: mainWindow/kpMainWindow_File.cpp:1286
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1670,77 +1670,77 @@ msgstr ""
 "La dokumento \"%1\" estas modifita.\n"
 "Ĉu vi volas konservi ĝin?"
 
-#: mainWindow/kpMainWindow_Image.cpp:117
+#: mainWindow/kpMainWindow_Image.cpp:94
 #, kde-format
 msgid "R&esize / Scale..."
 msgstr "R&egrandigi / Skali..."
 
-#: mainWindow/kpMainWindow_Image.cpp:123
+#: mainWindow/kpMainWindow_Image.cpp:100
 #, kde-format
 msgid "Se&t as Image (Crop)"
 msgstr "Me&ti kiel bildon (stuce)"
 
-#: mainWindow/kpMainWindow_Image.cpp:133
+#: mainWindow/kpMainWindow_Image.cpp:110
 #, kde-format
 msgid "&Flip (upside down)"
 msgstr "&Flip (vertikale inversa)"
 
-#: mainWindow/kpMainWindow_Image.cpp:138
+#: mainWindow/kpMainWindow_Image.cpp:115
 #, kde-format
 msgid "Mirror (horizontally)"
 msgstr "Speguli (horizontale)"
 
-#: mainWindow/kpMainWindow_Image.cpp:143
+#: mainWindow/kpMainWindow_Image.cpp:120
 #, kde-format
 msgid "&Rotate..."
 msgstr "&Rotacii..."
 
-#: mainWindow/kpMainWindow_Image.cpp:149
+#: mainWindow/kpMainWindow_Image.cpp:126
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Rotacii ma&ldekstren"
 
-#: mainWindow/kpMainWindow_Image.cpp:155
+#: mainWindow/kpMainWindow_Image.cpp:132
 #, kde-format
 msgid "Rotate Righ&t"
 msgstr "Rotacii deks&tren"
 
-#: mainWindow/kpMainWindow_Image.cpp:161
+#: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "S&kew..."
 msgstr "&Klini..."
 
-#: mainWindow/kpMainWindow_Image.cpp:166
+#: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
 msgstr "Redukti al u&nukoloro (punkte)"
 
-#: mainWindow/kpMainWindow_Image.cpp:171
+#: mainWindow/kpMainWindow_Image.cpp:147
 #, kde-format
 msgid "Reduce to &Grayscale"
 msgstr "Redukti al &grizoskalo"
 
-#: mainWindow/kpMainWindow_Image.cpp:175
+#: mainWindow/kpMainWindow_Image.cpp:151
 #, kde-format
 msgid "&Invert Colors"
 msgstr "&Inversigi la kolorojn"
 
-#: mainWindow/kpMainWindow_Image.cpp:180
+#: mainWindow/kpMainWindow_Image.cpp:156
 #, kde-format
 msgid "C&lear"
 msgstr "For&viŝi"
 
-#: mainWindow/kpMainWindow_Image.cpp:185
+#: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "Make Confidential"
 msgstr "Igi Konfidenca"
 
-#: mainWindow/kpMainWindow_Image.cpp:189
+#: mainWindow/kpMainWindow_Image.cpp:165
 #, kde-format
 msgid "&More Effects..."
 msgstr "&Pliaj efektoj..."
 
-#: mainWindow/kpMainWindow_Image.cpp:230
+#: mainWindow/kpMainWindow_Image.cpp:205
 #, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure the translation has the same accel "
@@ -1748,7 +1748,7 @@ msgctxt ""
 msgid "&Image"
 msgstr "Bi&ldo"
 
-#: mainWindow/kpMainWindow_Image.cpp:234
+#: mainWindow/kpMainWindow_Image.cpp:209
 #, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure that translation has the same accel "
@@ -1756,271 +1756,271 @@ msgctxt ""
 msgid "Select&ion"
 msgstr "E&lektaĵo"
 
-#: mainWindow/kpMainWindow_Settings.cpp:66
+#: mainWindow/kpMainWindow_Settings.cpp:41
 #, kde-format
 msgid "Show &Path"
 msgstr "Montri la &vojon"
 
-#: mainWindow/kpMainWindow_Settings.cpp:71
+#: mainWindow/kpMainWindow_Settings.cpp:46
 #, kde-format
 msgid "Draw Anti-Aliased"
 msgstr "Desegni Anti-Aliased"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:156
+#: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1,%2"
 msgstr "%1,%2"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:162
+#: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, kde-format
 msgid "%1,%2 - %3,%4"
 msgstr "%1,%2 - %3,%4"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:205
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
 #, kde-format
 msgid "%1x%2"
 msgstr "%1x%2"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:264
+#: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
 msgid "%1bpp"
 msgstr "%1bpp"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:88
+#: mainWindow/kpMainWindow_StatusBar.cpp:221
+#: mainWindow/kpMainWindow_View_Zoom.cpp:67
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
 
-#: mainWindow/kpMainWindow_Text.cpp:56
+#: mainWindow/kpMainWindow_Text.cpp:34
 #, kde-format
 msgid "Font Family"
 msgstr "Tipara familio"
 
-#: mainWindow/kpMainWindow_Text.cpp:62
+#: mainWindow/kpMainWindow_Text.cpp:38
 #, kde-format
 msgid "Font Size"
 msgstr "Tipara grando"
 
-#: mainWindow/kpMainWindow_Text.cpp:69
+#: mainWindow/kpMainWindow_Text.cpp:43
 #, kde-format
 msgid "Bold"
 msgstr "Grasa"
 
-#: mainWindow/kpMainWindow_Text.cpp:75
+#: mainWindow/kpMainWindow_Text.cpp:48
 #, kde-format
 msgid "Italic"
 msgstr "Kursiva"
 
-#: mainWindow/kpMainWindow_Text.cpp:81
+#: mainWindow/kpMainWindow_Text.cpp:53
 #, kde-format
 msgid "Underline"
 msgstr "Substrekita"
 
-#: mainWindow/kpMainWindow_Text.cpp:87
+#: mainWindow/kpMainWindow_Text.cpp:58
 #, kde-format
 msgid "Strike Through"
 msgstr "Enstrekita"
 
-#: mainWindow/kpMainWindow_Tools.cpp:133
+#: mainWindow/kpMainWindow_Tools.cpp:111
 #, kde-format
 msgid "Previous Tool Option (Group #1)"
 msgstr "Antaŭa Il-Opcio (Grupo #1)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:139
+#: mainWindow/kpMainWindow_Tools.cpp:116
 #, kde-format
 msgid "Next Tool Option (Group #1)"
 msgstr "Sekva Il-Opcio (Grupo #1)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:145
+#: mainWindow/kpMainWindow_Tools.cpp:121
 #, kde-format
 msgid "Previous Tool Option (Group #2)"
 msgstr "Antaŭa Il-Opcio (Grupo #2)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:151
+#: mainWindow/kpMainWindow_Tools.cpp:126
 #, kde-format
 msgid "Next Tool Option (Group #2)"
 msgstr "Sekva Il-Opcio (Grupo #2)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:163
+#: mainWindow/kpMainWindow_Tools.cpp:136
 #, kde-format
 msgid "&Draw Opaque"
 msgstr "&Desegni Maldiafane"
 
-#: mainWindow/kpMainWindow_Tools.cpp:168
+#: mainWindow/kpMainWindow_Tools.cpp:140
 #, kde-format
 msgid "Draw With Color Similarity..."
 msgstr "Desegni kun Kolora Simileco..."
 
-#: mainWindow/kpMainWindow_Tools.cpp:179
+#: mainWindow/kpMainWindow_Tools.cpp:150
 #, kde-format
 msgid "Tool Box"
 msgstr "Ilujo"
 
-#: mainWindow/kpMainWindow_View.cpp:65
+#: mainWindow/kpMainWindow_View.cpp:41
 #, kde-format
 msgid "Show &Grid"
 msgstr "Montru &kradon"
 
-#: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:40
 #, kde-format
 msgid "Show T&humbnail"
 msgstr "Montri miniat&uron"
 
-#: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:50
 #, kde-format
 msgid "Zoo&med Thumbnail Mode"
 msgstr "Zo&ma miniatura moduso"
 
-#: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:59
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
 msgstr "Ebligi Bildetan &Rektangulon"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:110
+#: mainWindow/kpMainWindow_View_Zoom.cpp:86
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zomi"
 
-#: scan/sanedialog.cpp:41
+#: scan/sanedialog.cpp:27
 #, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
 msgstr "Akiri Bildon"
 
-#: scan/sanedialog.cpp:73
+#: scan/sanedialog.cpp:57
 #, kde-format
 msgid "Opening the selected scanner failed."
 msgstr "Malfermo de la elektita skanilo malsukcesis."
 
-#: tools/flow/kpToolBrush.cpp:35
+#: tools/flow/kpToolBrush.cpp:15
 #, kde-format
 msgid "Brush"
 msgstr "Broso"
 
-#: tools/flow/kpToolBrush.cpp:36
+#: tools/flow/kpToolBrush.cpp:15
 #, kde-format
 msgid "Draw using brushes of different shapes and sizes"
 msgstr "Desegni per brosoj kun malsamaj formoj kaj grandecoj"
 
-#: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
+#: tools/flow/kpToolBrush.cpp:24 tools/flow/kpToolPen.cpp:33
 #, kde-format
 msgid "Click to draw dots or drag to draw strokes."
 msgstr "Klaki por desegni punktojn aŭ manumajn strekojn."
 
-#: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
+#: tools/flow/kpToolColorEraser.cpp:28 tools/flow/kpToolColorEraser.cpp:57
 #, kde-format
 msgid "Color Eraser"
 msgstr "Kolora viŝilo"
 
-#: tools/flow/kpToolColorEraser.cpp:50
+#: tools/flow/kpToolColorEraser.cpp:29
 #, kde-format
 msgid "Replaces pixels of the foreground color with the background color"
 msgstr "Anstataŭigas rastrumerojn el la malfona koloro per la fona koloro"
 
-#: tools/flow/kpToolColorEraser.cpp:115
+#: tools/flow/kpToolColorEraser.cpp:93
 #, kde-format
 msgid "Click or drag to erase pixels of the foreground color."
 msgstr "Klaki aŭ ŝovi por forviŝi rastrumerojn el la malfona koloro."
 
-#: tools/flow/kpToolEraser.cpp:42
+#: tools/flow/kpToolEraser.cpp:21
 #, kde-format
 msgid "Eraser"
 msgstr "Skrapgumo"
 
-#: tools/flow/kpToolEraser.cpp:43
+#: tools/flow/kpToolEraser.cpp:21
 #, kde-format
 msgid "Lets you rub out mistakes"
 msgstr "Permesas forviŝi desegnerarojn"
 
-#: tools/flow/kpToolEraser.cpp:70
+#: tools/flow/kpToolEraser.cpp:42
 #, kde-format
 msgid "Click or drag to erase."
 msgstr "Klaki aŭ ŝovi por forviŝi"
 
-#: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
-#: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
-#: tools/polygonal/kpToolPolygonalBase.cpp:435
-#: tools/rectangular/kpToolRectangularBase.cpp:351
-#: tools/selection/kpAbstractSelectionTool.cpp:261
-#: tools/selection/kpAbstractSelectionTool.cpp:528
+#: tools/flow/kpToolFlowBase.cpp:252 tools/kpToolColorPicker.cpp:78
+#: tools/kpToolFloodFill.cpp:119 tools/kpToolZoom.cpp:176
+#: tools/polygonal/kpToolPolygonalBase.cpp:367
+#: tools/rectangular/kpToolRectangularBase.cpp:290
+#: tools/selection/kpAbstractSelectionTool.cpp:228
+#: tools/selection/kpAbstractSelectionTool.cpp:462
 #, kde-format
 msgid "Let go of all the mouse buttons."
 msgstr "Lasu ĉiujn musbutonojn."
 
-#: tools/flow/kpToolPen.cpp:45
+#: tools/flow/kpToolPen.cpp:24
 #, kde-format
 msgid "Pen"
 msgstr "Krajono"
 
-#: tools/flow/kpToolPen.cpp:45
+#: tools/flow/kpToolPen.cpp:24
 #, kde-format
 msgid "Draws dots and freehand strokes"
 msgstr "Desegnas punktojn kaj manumajn strekojn"
 
-#: tools/flow/kpToolSpraycan.cpp:56
+#: tools/flow/kpToolSpraycan.cpp:35
 #, kde-format
 msgid "Spraycan"
 msgstr "Vaporigilo"
 
-#: tools/flow/kpToolSpraycan.cpp:56
+#: tools/flow/kpToolSpraycan.cpp:35
 #, kde-format
 msgid "Sprays graffiti"
 msgstr "Vaporigas grafition"
 
-#: tools/flow/kpToolSpraycan.cpp:71
+#: tools/flow/kpToolSpraycan.cpp:48
 #, kde-format
 msgid "Click or drag to spray graffiti."
 msgstr "Klaki aŭ ŝovi por vaporigi grafition."
 
-#: tools/kpTool_UserNotifications.cpp:42
+#: tools/kpTool_UserNotifications.cpp:22
 #, kde-format
 msgid "Right click to cancel."
 msgstr "Dekstre klaki por nuligi."
 
-#: tools/kpTool_UserNotifications.cpp:45
+#: tools/kpTool_UserNotifications.cpp:25
 #, kde-format
 msgid "Left click to cancel."
 msgstr "Maldekstre klaki por nuligi."
 
-#: tools/kpTool_UserNotifications.cpp:75
+#: tools/kpTool_UserNotifications.cpp:54
 #, kde-format
 msgid "%1: "
 msgstr "%1: "
 
-#: tools/kpToolColorPicker.cpp:45
+#: tools/kpToolColorPicker.cpp:23
 #, kde-format
 msgid "Lets you select a color from the image"
 msgstr "Permesas elekti koloron el la bildo"
 
-#: tools/kpToolColorPicker.cpp:68
+#: tools/kpToolColorPicker.cpp:42
 #, kde-format
 msgid "Click to select a color."
 msgstr "Klaki por elekti koloron."
 
-#: tools/kpToolFloodFill.cpp:55
+#: tools/kpToolFloodFill.cpp:32
 #, kde-format
 msgid "Fills regions in the image"
 msgstr "Plenigas zonojn en la bildo"
 
-#: tools/kpToolFloodFill.cpp:75
+#: tools/kpToolFloodFill.cpp:50
 #, kde-format
 msgid "Click to fill a region."
 msgstr "Klaki por plenigi zonon."
 
-#: tools/kpToolZoom.cpp:75
+#: tools/kpToolZoom.cpp:51
 #, kde-format
 msgid "Zoom"
 msgstr "Zomo"
 
-#: tools/kpToolZoom.cpp:75
+#: tools/kpToolZoom.cpp:51
 #, kde-format
 msgid "Zooms in and out of the image"
 msgstr "En- kaj elzomas la bildon"
 
-#: tools/kpToolZoom.cpp:119
+#: tools/kpToolZoom.cpp:92
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -2028,317 +2028,317 @@ msgid ""
 msgstr ""
 "Klaku por zomi. Dekstre klaku por malzomi. Trenu por zomi en specifan areon."
 
-#: tools/polygonal/kpToolCurve.cpp:103
+#: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
 msgid "Curve"
 msgstr "Kurbo"
 
-#: tools/polygonal/kpToolCurve.cpp:104
+#: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
 msgid "Draws curves"
 msgstr "Desegnas kurbojn"
 
-#: tools/polygonal/kpToolCurve.cpp:118
+#: tools/polygonal/kpToolCurve.cpp:83
 #, kde-format
 msgid "Drag out the start and end points."
 msgstr "Elŝovi la startan kaj finan punktojn."
 
-#: tools/polygonal/kpToolCurve.cpp:157
+#: tools/polygonal/kpToolCurve.cpp:116
 #, kde-format
 msgid "Left drag to set the first control point or right click to finish."
 msgstr ""
 "Maldekstre ŝovi por krei la unuan kontrolpunkton aŭ dekstre klaki por fini."
 
-#: tools/polygonal/kpToolCurve.cpp:162
+#: tools/polygonal/kpToolCurve.cpp:118
 #, kde-format
 msgid "Right drag to set the first control point or left click to finish."
 msgstr ""
 "Dekstre ŝovi por krei la unuan kontrolpunkton aŭ maldekstre klaki por fini."
 
-#: tools/polygonal/kpToolCurve.cpp:172
+#: tools/polygonal/kpToolCurve.cpp:126
 #, kde-format
 msgid "Left drag to set the last control point or right click to finish."
 msgstr ""
 "Maldekstre ŝovi por krei la lastan kontrolpunkton aŭ dekstre klaki por fini."
 
-#: tools/polygonal/kpToolCurve.cpp:177
+#: tools/polygonal/kpToolCurve.cpp:128
 #, kde-format
 msgid "Right drag to set the last control point or left click to finish."
 msgstr ""
 "Dekstre ŝovi por krei la lastan kontrolpunkton aŭ maldekstre klaki por fini."
 
-#: tools/polygonal/kpToolLine.cpp:41
+#: tools/polygonal/kpToolLine.cpp:18
 #, kde-format
 msgid "Line"
 msgstr "Linio"
 
-#: tools/polygonal/kpToolLine.cpp:42
+#: tools/polygonal/kpToolLine.cpp:18
 #, kde-format
 msgid "Draws lines"
 msgstr "Desegnas liniojn"
 
-#: tools/polygonal/kpToolLine.cpp:55
-#: tools/rectangular/kpToolRectangularBase.cpp:119
+#: tools/polygonal/kpToolLine.cpp:27
+#: tools/rectangular/kpToolRectangularBase.cpp:94
 #, kde-format
 msgid "Drag to draw."
 msgstr "Ŝovi por desegni."
 
-#: tools/polygonal/kpToolPolygon.cpp:93
+#: tools/polygonal/kpToolPolygon.cpp:63
 #, kde-format
 msgid "Polygon"
 msgstr "Poligono"
 
-#: tools/polygonal/kpToolPolygon.cpp:94
+#: tools/polygonal/kpToolPolygon.cpp:63
 #, kde-format
 msgid "Draws polygons"
 msgstr "Desegnas poligonojn"
 
-#: tools/polygonal/kpToolPolygon.cpp:112 tools/polygonal/kpToolPolyline.cpp:60
+#: tools/polygonal/kpToolPolygon.cpp:76 tools/polygonal/kpToolPolyline.cpp:32
 #, kde-format
 msgid "Drag to draw the first line."
 msgstr "Ŝovi por streki la unuan linion."
 
-#: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
+#: tools/polygonal/kpToolPolygon.cpp:137 tools/polygonal/kpToolPolyline.cpp:81
 #, kde-format
 msgid "Left drag another line or right click to finish."
 msgstr "Maldekstre ŝovi alian linion aŭ dekstre klaki por fini."
 
-#: tools/polygonal/kpToolPolygon.cpp:186 tools/polygonal/kpToolPolyline.cpp:121
+#: tools/polygonal/kpToolPolygon.cpp:139 tools/polygonal/kpToolPolyline.cpp:83
 #, kde-format
 msgid "Right drag another line or left click to finish."
 msgstr "Dekstre ŝovi alian linion aŭ maldekstre klaki por fini."
 
-#: tools/polygonal/kpToolPolyline.cpp:46
+#: tools/polygonal/kpToolPolyline.cpp:23
 #, kde-format
 msgid "Connected Lines"
 msgstr "Konektitaj linioj"
 
-#: tools/polygonal/kpToolPolyline.cpp:47
+#: tools/polygonal/kpToolPolyline.cpp:23
 #, kde-format
 msgid "Draws connected lines"
 msgstr "Desegnas konektitajn liniojn"
 
-#: tools/rectangular/kpToolEllipse.cpp:42
+#: tools/rectangular/kpToolEllipse.cpp:21
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipso"
 
-#: tools/rectangular/kpToolEllipse.cpp:43
+#: tools/rectangular/kpToolEllipse.cpp:22
 #, kde-format
 msgid "Draws ellipses and circles"
 msgstr "Desegnas elipsojn kaj cirklojn"
 
-#: tools/rectangular/kpToolRectangle.cpp:43
+#: tools/rectangular/kpToolRectangle.cpp:22
 #, kde-format
 msgid "Rectangle"
 msgstr "Rektangulo"
 
-#: tools/rectangular/kpToolRectangle.cpp:44
+#: tools/rectangular/kpToolRectangle.cpp:23
 #, kde-format
 msgid "Draws rectangles and squares"
 msgstr "Desegnas rektangulojn kaj kvadratojn"
 
-#: tools/rectangular/kpToolRoundedRectangle.cpp:42
+#: tools/rectangular/kpToolRoundedRectangle.cpp:22
 #, kde-format
 msgid "Rounded Rectangle"
 msgstr "Ronda rektangulo"
 
-#: tools/rectangular/kpToolRoundedRectangle.cpp:43
+#: tools/rectangular/kpToolRoundedRectangle.cpp:23
 #, kde-format
 msgid "Draws rectangles and squares with rounded corners"
 msgstr "Desegnas rektangulojn kaj kvadratojn kun rundigitaj anguloj"
 
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:61
 #, kde-format
 msgid "Left drag to create selection."
 msgstr "Maldekstre ŝovi por krei la elektaĵon."
 
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:69
 #, kde-format
 msgid "Left drag to move selection."
 msgstr "Maldekstre ŝovi por movi la elektaĵon."
 
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:77
 #, kde-format
 msgid "Left drag to scale selection."
 msgstr "Maldekstre ŝovi por skali la elektaĵon."
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:129
 #, kde-format
 msgid "Selection: Opaque"
 msgstr "Elektado: Maldiafana"
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:129
 #, kde-format
 msgid "Selection: Transparent"
 msgstr "Elektado: Travidebla"
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:184
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:148
 #, kde-format
 msgid "Selection: Transparency Color"
 msgstr "Elektado: Travidebla koloro"
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:205
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:167
 #, kde-format
 msgid "Selection: Transparency Color Similarity"
 msgstr "Elektado: Travidebla kolora simileco"
 
-#: tools/selection/image/kpToolEllipticalSelection.cpp:42
+#: tools/selection/image/kpToolEllipticalSelection.cpp:20
 #, kde-format
 msgid "Selection (Elliptical)"
 msgstr "Elektado (elipse)"
 
-#: tools/selection/image/kpToolEllipticalSelection.cpp:43
+#: tools/selection/image/kpToolEllipticalSelection.cpp:21
 #, kde-format
 msgid "Makes an elliptical or circular selection"
 msgstr "Kreas elipsan aŭ cirklan elektaĵon"
 
-#: tools/selection/image/kpToolFreeFormSelection.cpp:45
+#: tools/selection/image/kpToolFreeFormSelection.cpp:22
 #, kde-format
 msgid "Selection (Free-Form)"
 msgstr "Elektado (senforme)"
 
-#: tools/selection/image/kpToolFreeFormSelection.cpp:46
+#: tools/selection/image/kpToolFreeFormSelection.cpp:23
 #, kde-format
 msgid "Makes a free-form selection"
 msgstr "Kreas iaforman elektaĵon"
 
-#: tools/selection/image/kpToolRectSelection.cpp:40
+#: tools/selection/image/kpToolRectSelection.cpp:19
 #, kde-format
 msgid "Selection (Rectangular)"
 msgstr "Elektado (rektangule)"
 
-#: tools/selection/image/kpToolRectSelection.cpp:41
+#: tools/selection/image/kpToolRectSelection.cpp:20
 #, kde-format
 msgid "Makes a rectangular selection"
 msgstr "Kreas rektangulan elektaĵon"
 
-#: tools/selection/kpAbstractSelectionTool_Move.cpp:324
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:279
 #, kde-format
 msgid "Selection: Move"
 msgstr "Elektado: Movi"
 
-#: tools/selection/kpAbstractSelectionTool_Move.cpp:347
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:301
 #, kde-format
 msgid "%1: Smear"
 msgstr "%1: Ŝmiri"
 
-#: tools/selection/text/kpToolText.cpp:55
+#: tools/selection/text/kpToolText.cpp:34
 #, kde-format
 msgid "Writes text"
 msgstr "Skribas tekston"
 
-#: tools/selection/text/kpToolText_Commands.cpp:69
+#: tools/selection/text/kpToolText_Commands.cpp:46
 #, kde-format
 msgid "Text: Backspace"
 msgstr "Teksto: Retropaŝo"
 
-#: tools/selection/text/kpToolText_Commands.cpp:86
+#: tools/selection/text/kpToolText_Commands.cpp:63
 #, kde-format
 msgid "Text: Delete"
 msgstr "Teksto: Forigi"
 
-#: tools/selection/text/kpToolText_Commands.cpp:103
+#: tools/selection/text/kpToolText_Commands.cpp:80
 #, kde-format
 msgid "Text: New Line"
 msgstr "Teksto: Nova linio"
 
-#: tools/selection/text/kpToolText_Commands.cpp:120
+#: tools/selection/text/kpToolText_Commands.cpp:97
 #, kde-format
 msgid "Text: Write"
 msgstr "Teksto: Skribi"
 
-#: tools/selection/text/kpToolText_Create.cpp:48
+#: tools/selection/text/kpToolText_Create.cpp:26
 #, kde-format
 msgid "Left drag to create text box."
 msgstr "Maldekstre ŝovi por krei tekstujon."
 
-#: tools/selection/text/kpToolText_Move.cpp:42
+#: tools/selection/text/kpToolText_Move.cpp:20
 #, kde-format
 msgid "Left drag to move text box."
 msgstr "Maldekstre ŝovi por movi la tekstujon."
 
-#: tools/selection/text/kpToolText_Move.cpp:61
+#: tools/selection/text/kpToolText_Move.cpp:37
 #, kde-format
 msgid "Text: Move Box"
 msgstr "Teksto: Movi la ujon"
 
-#: tools/selection/text/kpToolText_ResizeScale.cpp:42
+#: tools/selection/text/kpToolText_ResizeScale.cpp:20
 #, kde-format
 msgid "Left drag to resize text box."
 msgstr "Maldekstre ŝovi por regrandigi la elektaĵon."
 
-#: tools/selection/text/kpToolText_SelectText.cpp:57
+#: tools/selection/text/kpToolText_SelectText.cpp:34
 #, kde-format
 msgid "Left click to change cursor position."
 msgstr "Maldekstre klaki por ŝanĝi la kursoran pozicion."
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:113
+#: tools/selection/text/kpToolText_TextStyle.cpp:80
 #, kde-format
 msgid "Text: Opaque Background"
 msgstr "Teksto: Maldiafana fono"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:114
+#: tools/selection/text/kpToolText_TextStyle.cpp:80
 #, kde-format
 msgid "Text: Transparent Background"
 msgstr "Teksto: Travidebla fono"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:137
+#: tools/selection/text/kpToolText_TextStyle.cpp:100
 #, kde-format
 msgid "Text: Swap Colors"
 msgstr "Teksto: Komuti la kolorojn"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:158
+#: tools/selection/text/kpToolText_TextStyle.cpp:119
 #, kde-format
 msgid "Text: Foreground Color"
 msgstr "Teksta: Malfona koloro"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:179
+#: tools/selection/text/kpToolText_TextStyle.cpp:138
 #, kde-format
 msgid "Text: Background Color"
 msgstr "Teksta: Fona koloro"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:215
+#: tools/selection/text/kpToolText_TextStyle.cpp:167
 #, kde-format
 msgid "Text: Font"
 msgstr "Teksto: Tiparo"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:242
+#: tools/selection/text/kpToolText_TextStyle.cpp:189
 #, kde-format
 msgid "Text: Font Size"
 msgstr "Teksto: Tipara grando"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:265
+#: tools/selection/text/kpToolText_TextStyle.cpp:209
 #, kde-format
 msgid "Text: Bold"
 msgstr "Teksto: Grasa"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:287
+#: tools/selection/text/kpToolText_TextStyle.cpp:229
 #, kde-format
 msgid "Text: Italic"
 msgstr "Teksto: Kursiva"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:309
+#: tools/selection/text/kpToolText_TextStyle.cpp:249
 #, kde-format
 msgid "Text: Underline"
 msgstr "Teksto: Substreki"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:331
+#: tools/selection/text/kpToolText_TextStyle.cpp:269
 #, kde-format
 msgid "Text: Strike Through"
 msgstr "Teksto: Enstreki"
 
-#: views/kpUnzoomedThumbnailView.cpp:86
+#: views/kpUnzoomedThumbnailView.cpp:56
 #, kde-format
 msgid "Unzoomed Mode - Thumbnail"
 msgstr "Senzoma moduso - Miniaturo"
 
-#: views/kpZoomedThumbnailView.cpp:65
+#: views/kpZoomedThumbnailView.cpp:38
 #, kde-format
 msgid "%1% - Thumbnail"
 msgstr "%1% - Minitaturo"
 
-#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
 msgid ""
 "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
@@ -2385,7 +2385,7 @@ msgstr ""
 "bilderoj), vi devus malpliigi ĉi tiun agordon.</p><p>Por agordi ĝin, alklaku "
 "la kubon.</p></qt>"
 
-#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:93
 #, kde-format
 msgid ""
 "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
@@ -2431,12 +2431,12 @@ msgstr ""
 "vi faras. ne konsideru kiel simila (ekz. se <b>Inundo-plenigo</b> ŝanĝas tro "
 "da bilderoj), vi devus malpliigi ĉi tiun agordon.</p></qt>"
 
-#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr "<p>Kolora simileco: %1%</p><p align=\"center\">Klaku por agordi.</p>"
 
-#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
 #, kde-format
 msgid ""
 "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
@@ -2445,160 +2445,160 @@ msgstr ""
 "<p>Kolora simileco: Ekzakta kongruo</p><p align=\"center\">Klaku por agordi."
 "</p>"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format
 msgid "&Brightness:"
 msgstr "&Heleco:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:39
 #, kde-format
 msgid "Re&set"
 msgstr "Re&starigi"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:41
 #, kde-format
 msgid "Co&ntrast:"
 msgstr "Ko&ntrasto:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:70
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:46
 #, kde-format
 msgid "&Gamma:"
 msgstr "&Gamo:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:55
 #, kde-format
 msgid "Rese&t"
 msgstr "Res&tarigi"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
 #, kde-format
 msgid "C&hannels:"
 msgstr "&Kanaloj:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:88
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:62
 #, kde-format
 msgid "All"
 msgstr "Ĉio"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:89
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
 #, kde-format
 msgid "Red"
 msgstr "Ruĝo"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:90
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:64
 #, kde-format
 msgid "Green"
 msgstr "Verdo"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:91
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
 #, kde-format
 msgid "Blue"
 msgstr "Bluo"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:67
 #, kde-format
 msgid "Reset &All Values"
 msgstr "Rest&arigi ĉiujn valorojn"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:120
 #, kde-format
 msgid "Settings"
 msgstr "Agordo"
 
-#: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:51
-#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:56
+#: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:27
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:34
 #, kde-format
 msgid "&Amount:"
 msgstr "&Kvanto:"
 
-#: widgets/imagelib/effects/kpEffectEmbossWidget.cpp:51
-#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:71
+#: widgets/imagelib/effects/kpEffectEmbossWidget.cpp:27
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:46
 #, kde-format
 msgid "E&nable"
 msgstr "E&bligi"
 
-#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:130
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:98
 #, kde-format
 msgid "Colors"
 msgstr "Koloroj"
 
-#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:47
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:25
 #, kde-format
 msgid "&Hue:"
 msgstr "&Koloro:"
 
-#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:48
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:26
 #, kde-format
 msgid "&Saturation:"
 msgstr "&Satureco:"
 
-#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:49
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:27
 #, kde-format
 msgctxt "The V of HSV"
 msgid "&Value:"
 msgstr "&Valoro:"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:57
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:34
 #, kde-format
 msgid "&Red"
 msgstr "&Ruĝo"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:58
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:35
 #, kde-format
 msgid "&Green"
 msgstr "&Verdo"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:59
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:36
 #, kde-format
 msgid "&Blue"
 msgstr "&Bluo"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:64
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:41
 #, kde-format
 msgid "&All"
 msgstr "Ĉ&io"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:141
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:105
 #, kde-format
 msgid "Channels"
 msgstr "Kanaloj"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:55
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:31
 #, kde-format
 msgid "&Monochrome"
 msgstr "&Unukoloro"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:33
 #, kde-format
 msgid "Mo&nochrome (dithered)"
 msgstr "U&nukoloro (punkte)"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:35
 #, kde-format
 msgid "256 co&lor"
 msgstr "256 ko&loroj"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:62
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:37
 #, kde-format
 msgid "256 colo&r (dithered)"
 msgstr "256 kolo&roj (punkte)"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:39
 #, kde-format
 msgid "24-&bit color"
 msgstr "24-&bitaj koloroj"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:144
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:107
 #, kde-format
 msgid "Reduce To"
 msgstr "Redukti al"
 
-#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:54
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:32
 #, kde-format
 msgid "&Granularity:"
 msgstr "&Grajneco:"
 
-#: widgets/kpColorCells.cpp:195
+#: widgets/kpColorCells.cpp:153
 #, kde-format
 msgid ""
 "<qt><p>To select the foreground color that tools use to draw, left-click on "
@@ -2617,81 +2617,81 @@ msgstr ""
 "la koloro de la cela ĉelo estos anstataŭita, anstataŭ esti interŝanĝita kun "
 "la koloro de la fonta ĉelo.</p></qt>"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:85
+#: widgets/kpDocumentSaveOptionsWidget.cpp:61
 #, kde-format
 msgid "Convert &to:"
 msgstr "Konver&ti al:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:90
+#: widgets/kpDocumentSaveOptionsWidget.cpp:66
 #, kde-format
 msgid "Quali&ty:"
 msgstr "Kvali&teco:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:98
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
 #, kde-format
 msgid "&Preview"
 msgstr "&Antaŭrigardo"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:223
+#: widgets/kpDocumentSaveOptionsWidget.cpp:171
 #, kde-format
 msgid "Monochrome"
 msgstr "Unukoloro"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:224
+#: widgets/kpDocumentSaveOptionsWidget.cpp:172
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "Unukoloro (punkte)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:228
+#: widgets/kpDocumentSaveOptionsWidget.cpp:175
 #, kde-format
 msgid "256 Color"
 msgstr "256 Koloro"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:229
+#: widgets/kpDocumentSaveOptionsWidget.cpp:176
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 koloroj (punkte)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:234
+#: widgets/kpDocumentSaveOptionsWidget.cpp:180
 #, kde-format
 msgid "24-bit Color"
 msgstr "24-bitaj koloroj"
 
-#: widgets/kpPrintDialogPage.cpp:57
+#: widgets/kpPrintDialogPage.cpp:33
 #, kde-format
 msgctxt "@title:tab"
 msgid "I&mage Position"
 msgstr "Bilda po&zicio"
 
-#: widgets/kpPrintDialogPage.cpp:59
+#: widgets/kpPrintDialogPage.cpp:35
 #, kde-format
 msgid "&Center of the page"
 msgstr "&Centro de la pagô"
 
-#: widgets/kpPrintDialogPage.cpp:61
+#: widgets/kpPrintDialogPage.cpp:36
 #, kde-format
 msgid "Top-&left of the page"
 msgstr "Supro-ma&ldekstro de la paĝo"
 
-#: widgets/kpTransparentColorCell.cpp:53
-#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44
+#: widgets/kpTransparentColorCell.cpp:30
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:22
 #, kde-format
 msgid "Transparent"
 msgstr "Travidebla"
 
-#: widgets/toolbars/kpColorToolBar.cpp:120
+#: widgets/toolbars/kpColorToolBar.cpp:87
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
 msgstr "Malŝlosi Panelojn"
 
-#: widgets/toolbars/kpColorToolBar.cpp:122
+#: widgets/toolbars/kpColorToolBar.cpp:89
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
 msgstr "Ŝlosi Panelojn"
 
-#: widgets/toolbars/kpColorToolBar.cpp:125
+#: widgets/toolbars/kpColorToolBar.cpp:92
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -2705,69 +2705,69 @@ msgstr ""
 "trenitaj al la alia flanko de la fenestro kaj havas fermbutonon.<nl/"
 ">Ŝlositaj paneloj estas enigitaj pli pure."
 
-#: widgets/toolbars/kpColorToolBar.cpp:307
+#: widgets/toolbars/kpColorToolBar.cpp:263
 #, kde-format
 msgid "KolourPaint Defaults"
 msgstr "KolourPaint Defaŭltoj"
 
-#: widgets/toolbars/kpColorToolBar.cpp:322
+#: widgets/toolbars/kpColorToolBar.cpp:274
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette"
 msgid "Colors: %1"
 msgstr "Koloroj: %1"
 
-#: widgets/toolbars/kpColorToolBar.cpp:329
+#: widgets/toolbars/kpColorToolBar.cpp:276
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette [modified]"
 msgid "Colors: %1 [modified]"
 msgstr "Koloroj: %1 [ŝanĝita]"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:148
 #, kde-format
 msgid "1x1"
 msgstr "1x1"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:208
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:156
 #, kde-format
 msgid "Circle"
 msgstr "Cirklo"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:211
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:159
 #, kde-format
 msgid "Square"
 msgstr "Kvadrato"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:215
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:163
 #, kde-format
 msgid "Slash"
 msgstr "Oblikvo"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:219
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:167
 #, kde-format
 msgid "Backslash"
 msgstr "Deklivo"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:227
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:175
 #, kde-format
 msgid "%1x%2 %3"
 msgstr "%1x%2 %3"
 
-#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:117
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
 msgstr "Neniu plenigo"
 
-#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:120
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:90
 #, kde-format
 msgid "Fill with Background Color"
 msgstr "Plenigi per la fona koloro"
 
-#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:123
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:93
 #, kde-format
 msgid "Fill with Foreground Color"
 msgstr "Plenigi per la malfona koloro"
 
-#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:42
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:20
 #, kde-format
 msgid "Opaque"
 msgstr "Maldiafana"

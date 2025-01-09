@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-07 00:38+0000\n"
+"POT-Creation-Date: 2025-01-09 00:39+0000\n"
 "PO-Revision-Date: 2023-12-04 20:50+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -26,286 +26,286 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "velnet2004@yahoo.co.in"
 
-#: commands/imagelib/effects/kpEffectBalanceCommand.cpp:40
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:112
+#: commands/imagelib/effects/kpEffectBalanceCommand.cpp:17
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:80
 #, kde-format
 msgid "Balance"
 msgstr "சமன்படுத்து"
 
-#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:52
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:28
 #, kde-format
 msgid "Soften"
 msgstr "மழுங்கல்"
 
-#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:53
+#: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:30
 #, kde-format
 msgid "Sharpen"
 msgstr "கூறாக்குதல்"
 
-#: commands/imagelib/effects/kpEffectClearCommand.cpp:58
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:34
 #, kde-format
 msgid "Clear"
 msgstr "காலியாக்கு"
 
-#: commands/imagelib/effects/kpEffectClearCommand.cpp:60
-#: commands/imagelib/effects/kpEffectCommandBase.cpp:68
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:83
-#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:74
-#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:77
+#: commands/imagelib/effects/kpEffectClearCommand.cpp:36
+#: commands/imagelib/effects/kpEffectCommandBase.cpp:43
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:58
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:50
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:53
 #, kde-format
 msgid "Selection: %1"
 msgstr "தேர்வு: %1"
 
-#: commands/imagelib/effects/kpEffectEmbossCommand.cpp:42
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:113
+#: commands/imagelib/effects/kpEffectEmbossCommand.cpp:17
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:81
 #, kde-format
 msgid "Emboss"
 msgstr "விளைவு"
 
-#: commands/imagelib/effects/kpEffectFlattenCommand.cpp:43
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:114
+#: commands/imagelib/effects/kpEffectFlattenCommand.cpp:18
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:82
 #, kde-format
 msgid "Flatten"
 msgstr "ஒன்றுசேர்"
 
-#: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:41
+#: commands/imagelib/effects/kpEffectGrayscaleCommand.cpp:17
 #, kde-format
 msgid "Reduce to Grayscale"
 msgstr "சாம்பல் நிறவகைக்கு மாற்று"
 
-#: commands/imagelib/effects/kpEffectHSVCommand.cpp:37
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:116
+#: commands/imagelib/effects/kpEffectHSVCommand.cpp:15
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:84
 #, kde-format
 msgid "Hue, Saturation, Value"
 msgstr ""
 
-#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:17
 #, kde-format
 msgid "Invert Colors"
 msgstr "நிறங்களைப் புரட்டு"
 
-#: commands/imagelib/effects/kpEffectInvertCommand.cpp:41
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:117
+#: commands/imagelib/effects/kpEffectInvertCommand.cpp:17
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:85
 #, kde-format
 msgid "Invert"
 msgstr "புரட்டு"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:54
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:32
 #, kde-format
 msgid "Reduce to Monochrome (Dithered)"
 msgstr "மோனோக்ரோம்முக்கு குறை (வண்ணம் தெளிக்கப்பட்ட)"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:56
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:34
 #, kde-format
 msgid "Reduce to Monochrome"
 msgstr "மோனோக்ரோம்முக்கு குறை"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:60
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:38
 #, kde-format
 msgid "Reduce to 256 Color (Dithered)"
 msgstr "256 வண்ணத்துக்கு குறை (தெளிக்கப்பட்ட வண்ணம்)"
 
-#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:62
+#: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:40
 #, kde-format
 msgid "Reduce to 256 Color"
 msgstr "256 வண்ணத்துக்கு குறை"
 
-#: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:41
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:115
+#: commands/imagelib/effects/kpEffectToneEnhanceCommand.cpp:18
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:83
 #, kde-format
 msgid "Histogram Equalizer"
 msgstr ""
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:66
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:43
 #, kde-format
 msgid "Flip"
 msgstr "திருப்பு"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:69
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:46
 #, kde-format
 msgid "Flip horizontally and vertically"
 msgstr "இடம்வலமாக மற்றும் உயரவாகில் திருப்பு"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:71
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:48
 #, kde-format
 msgid "Flip horizontally"
 msgstr "இடம்வலமாகத் திருப்பு"
 
-#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:73
+#: commands/imagelib/transforms/kpTransformFlipCommand.cpp:50
 #, kde-format
 msgid "Flip vertically"
 msgstr "உயர்வாகி திருப்பு"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:101
-#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:53
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:69
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
 #, kde-format
 msgid "Text: Resize Box"
 msgstr "உரை: பெட்டியை அளவு மாற்று"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:107
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:73
 #, kde-format
 msgid "Selection: Scale"
 msgstr "தேர்ந்தெடுப்பு: அளவுமாற்று"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:111
-#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:54
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:77
+#: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
 #, kde-format
 msgid "Selection: Smooth Scale"
 msgstr "தேர்ந்தெடுப்பு: சீர் அளவுகோல்"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:120
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:83
 #, kde-format
 msgid "Resize"
 msgstr "மறு அளவாக்கு"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:122
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:85
 #, kde-format
 msgid "Scale"
 msgstr "அளவுகோல்"
 
-#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:124
+#: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:87
 #, kde-format
 msgid "Smooth Scale"
 msgstr "சீர் அளவுகோல்"
 
-#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:72
+#: commands/imagelib/transforms/kpTransformRotateCommand.cpp:48
 #, kde-format
 msgid "Rotate"
 msgstr "சுழற்று"
 
-#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:75
+#: commands/imagelib/transforms/kpTransformSkewCommand.cpp:51
 #, kde-format
 msgid "Skew"
 msgstr "ஓராயம்"
 
-#: commands/kpCommandHistoryBase.cpp:436
+#: commands/kpCommandHistoryBase.cpp:376
 #, kde-format
 msgid "&Undo: %1"
 msgstr "&செய்யாதே: %1"
 
-#: commands/kpCommandHistoryBase.cpp:436
+#: commands/kpCommandHistoryBase.cpp:376
 #, kde-format
 msgid "&Undo"
 msgstr "&செயல்நீக்கு"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:384
 #, kde-format
 msgid "&Redo: %1"
 msgstr "&திரும்பச் செய்: %1"
 
-#: commands/kpCommandHistoryBase.cpp:444
+#: commands/kpCommandHistoryBase.cpp:384
 #, kde-format
 msgid "&Redo"
 msgstr "&மீளச்செய்"
 
-#: commands/kpCommandHistoryBase.cpp:453
+#: commands/kpCommandHistoryBase.cpp:392
 #, kde-format
 msgid "Undo: %1"
 msgstr "செயல்நீக்கு: %1"
 
-#: commands/kpCommandHistoryBase.cpp:453 commands/kpCommandHistoryBase.cpp:634
+#: commands/kpCommandHistoryBase.cpp:392 commands/kpCommandHistoryBase.cpp:554
 #, kde-format
 msgid "Undo"
 msgstr "செயல்நீக்கு"
 
-#: commands/kpCommandHistoryBase.cpp:461
+#: commands/kpCommandHistoryBase.cpp:400
 #, kde-format
 msgid "Redo: %1"
 msgstr "மீளச்செய்: %1"
 
-#: commands/kpCommandHistoryBase.cpp:461 commands/kpCommandHistoryBase.cpp:655
+#: commands/kpCommandHistoryBase.cpp:400 commands/kpCommandHistoryBase.cpp:572
 #, kde-format
 msgid "Redo"
 msgstr "மீளச்செய்"
 
-#: commands/kpCommandHistoryBase.cpp:596
+#: commands/kpCommandHistoryBase.cpp:519
 #, kde-format
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: commands/kpCommandHistoryBase.cpp:607
+#: commands/kpCommandHistoryBase.cpp:529
 #, kde-format
 msgid "%1 more item"
 msgid_plural "%1 more items"
 msgstr[0] "இன்னும் %1 உருப்படி"
 msgstr[1] "இன்னும் %1 உருப்படிகள்"
 
-#: commands/tools/kpToolColorPickerCommand.cpp:59
-#: tools/kpToolColorPicker.cpp:45
+#: commands/tools/kpToolColorPickerCommand.cpp:31
+#: tools/kpToolColorPicker.cpp:23
 #, kde-format
 msgid "Color Picker"
 msgstr "வண்ண எடுப்பான்"
 
-#: commands/tools/kpToolFloodFillCommand.cpp:77 tools/kpToolFloodFill.cpp:55
+#: commands/tools/kpToolFloodFillCommand.cpp:52 tools/kpToolFloodFill.cpp:32
 #, kde-format
 msgid "Flood Fill"
 msgstr "அதிகமாக நிரப்பு."
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:89
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:61
 #, fuzzy, kde-format
 #| msgid "More Image Effects (Selection)"
 msgctxt "@title:window"
 msgid "More Image Effects (Selection)"
 msgstr "அதிக பிம்ப விளைவுகள் (தேர்வு)"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:92
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:63
 #, fuzzy, kde-format
 #| msgid "More Image Effects"
 msgctxt "@title:window"
 msgid "More Image Effects"
 msgstr "அதிக பிம்ப விளைவுகள்"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:106
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:74
 #, kde-format
 msgid "&Effect:"
 msgstr "&விளைவு:"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:118
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:86
 #, kde-format
 msgid "Reduce Colors"
 msgstr "வண்ணங்களைக் குறை"
 
-#: dialogs/imagelib/effects/kpEffectsDialog.cpp:119
+#: dialogs/imagelib/effects/kpEffectsDialog.cpp:87
 #, kde-format
 msgid "Soften & Sharpen"
 msgstr "மென்மையாக்குதல் & கூர்மையாக்குதல்"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:121
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:89
 #, kde-format
 msgctxt "@title:window"
 msgid "Document Properties"
 msgstr "ஆவணப் பண்புகள்"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:141
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:107
 #, kde-format
 msgid "Dots &Per Inch (DPI)"
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:148
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:159
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:114
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:124
 #, kde-format
 msgid "Unspecified"
 msgstr "குறிப்பிடப்படாத‍து"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:151
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " x "
 msgstr " x "
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:164
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:215
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
 #, kde-format
 msgid "Horizontal:"
 msgstr "கிடைமட்டமாக:"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:167
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:217
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:131
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:177
 #, kde-format
 msgid "Vertical:"
 msgstr "நெடுக்காக:"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:137
 #, kde-format
 msgid ""
 "<qt><p><b>Dots Per Inch</b> (DPI) specifies the number of pixels of the "
@@ -321,13 +321,13 @@ msgid ""
 "qt>"
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:165
 #, fuzzy, kde-format
 #| msgid "&Effect:"
 msgid "O&ffset"
 msgstr "&விளைவு:"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:225
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:183
 #, kde-format
 msgid ""
 "<qt><p>The <b>Offset</b> is the relative position where this image should be "
@@ -336,29 +336,29 @@ msgid ""
 "values specified here will not be saved.</p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:241
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:196
 #, fuzzy, kde-format
 #| msgid "Text: Finish"
 msgid "&Text Fields"
 msgstr "உரை: முடி"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:253
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:205
 #, kde-format
 msgid "&Add Row"
 msgstr "&வரிசையை சேர்"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:258
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:208
 #, kde-format
 msgid "&Delete Row"
 msgstr "வரிசையை &நீக்கு"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:263
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:68
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:211
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:44
 #, kde-format
 msgid "&Reset"
 msgstr "&மீட்டமை"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:282
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:226
 #, kde-format
 msgid ""
 "<qt><p><b>Text Fields</b> provide extra information about the image. This is "
@@ -369,100 +369,100 @@ msgid ""
 "format you save in does not support them, they will not be saved.</p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:307
 #, kde-format
 msgid "Key"
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:372
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:307
 #, kde-format
 msgid "Value"
 msgstr "மதிப்பு"
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:466
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:381
 #, kde-format
 msgid "The text value \"%1\" on line %2 requires a key."
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:493
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:403
 #, kde-format
 msgid ""
 "All text keys must be unique. The text key \"%1\" on lines %2 and %3 are "
 "identical."
 msgstr ""
 
-#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:746
+#: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:639
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Text Fields"
 msgstr "முறையற்ற உரைப் புலங்கள்"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:137
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:281
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
 #, kde-format
 msgid "Dimensions"
 msgstr "அளவுகள்"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:139
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:288
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
 #, kde-format
 msgid "Original:"
 msgstr "மூலம்:"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:143
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:251
-#: mainWindow/kpMainWindow_StatusBar.cpp:92
-#: mainWindow/kpMainWindow_StatusBar.cpp:236
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:170
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:127
+#: dialogs/kpColorSimilarityDialog.cpp:36
 #, kde-format
 msgid "Preview"
 msgstr "முன்தோற்றம்"
 
-#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:177
-#: dialogs/kpColorSimilarityDialog.cpp:63
+#: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:133
+#: dialogs/kpColorSimilarityDialog.cpp:41
 #, kde-format
 msgid "&Update"
 msgstr "&புதுப்பி"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:90
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
 #, fuzzy, kde-format
 #| msgid "Resize / Scale"
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "அளவை மாற்று / அளவு எடு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:159
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
 #, kde-format
 msgid "Ac&t on:"
 msgstr "இல் செயல்:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:165
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
 #, kde-format
 msgid "Entire Image"
 msgstr "முழு படம்"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:168
-#: layers/selections/image/kpAbstractImageSelection.cpp:204
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "தேர்வு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:171
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
 #, kde-format
 msgid "Text Box"
 msgstr "உரைப் பெட்டி"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:220
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
 #, kde-format
 msgid "Operation"
 msgstr "செயல்பாடு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:222
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -474,61 +474,61 @@ msgid ""
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:243
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
 #, kde-format
 msgid "&Resize"
 msgstr "மறு அளவாக்கு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
 #, kde-format
 msgid "&Scale"
 msgstr "அளவுகோல்"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "சீர் அளவுகோல்"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:283
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
 #, kde-format
 msgid "Width:"
 msgstr "அகலம்"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:285
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
 #, kde-format
 msgid "Height:"
 msgstr "உயரம்"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:292
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:300
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:312
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
 #, kde-format
 msgid "x"
 msgstr "x"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:297
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
 #, kde-format
 msgid "&New:"
 msgstr "புதிய:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:304
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
 #, kde-format
 msgid "&Percent:"
 msgstr "விழுக்காடு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:310
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:319
-#: dialogs/kpColorSimilarityDialog.cpp:81
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
+#: dialogs/kpColorSimilarityDialog.cpp:53
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:321
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr "வைப்பு விவரண விகிதம்"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:724
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -540,19 +540,19 @@ msgstr ""
 "கணினியின் செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உரைப்பெட்டியை உறுதியாக மறுஅளவாகாவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:732
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "உரைப் பெட்டியின் அளவை மாற்றலாமா?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:733
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, kde-format
 msgid "R&esize Text Box"
 msgstr "உரைப் பெட்டியை மறு அளவாக்கு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:738
-#: mainWindow/kpMainWindow_Tools.cpp:652
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
 "<qt><p>Resizing the image to %1x%2 may take a substantial amount of memory. "
@@ -563,20 +563,20 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக பிம்பத்தை அளவு மாற்றவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:746
-#: mainWindow/kpMainWindow_Tools.cpp:662
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: mainWindow/kpMainWindow_Tools.cpp:571
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "படத்தின் அளவை மாற்றலாமா?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:747
-#: mainWindow/kpMainWindow_Tools.cpp:663
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "&படத்தின் அளவை மாற்று"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:756
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -587,19 +587,19 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக பிம்பத்தை அளவிடவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:764
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
 #, fuzzy, kde-format
 #| msgid "Scale Image?"
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "பிம்பத்தை மறுஅளவாக்கு?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:765
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, kde-format
 msgid "Scal&e Image"
 msgstr "பிம்பத்தை மாற்று"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:770
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -611,19 +611,19 @@ msgstr ""
 "கணினியின் செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக தேர்ந்தெடுப்பை அளவு மாற்றவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:778
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
 #, fuzzy, kde-format
 #| msgid "Scale Selection?"
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "தேர்ந்தெடுப்பை மறுஅளவாக்கு?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:779
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "தேர்ந்தெடுப்பை அளவு மாற்று"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:788
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -635,19 +635,19 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக பிம்பத்தை அளவு மாற்றவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:796
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
 #, fuzzy, kde-format
 #| msgid "Smooth Scale Image?"
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "பிம்பத்தை சீர் அளவுமாற்று"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:797
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "பிம்ப சீர் அளவுமாற்று"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:802
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -659,87 +659,87 @@ msgstr ""
 "கணினியின் செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக தேர்ந்தெடுப்பை மென்மையாக்க வேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:810
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
 #, fuzzy, kde-format
 #| msgid "Smooth Scale Selection?"
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "சீர் அளவுகோல் தேர்ந்தெடுப்பு"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:811
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "சீர் அளவுகோல் தேர்ந்தெடுப்பு"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Rotate Selection"
 msgctxt "@title:window"
 msgid "Rotate Selection"
 msgstr "தேர்ந்தெடுப்பை சுற்று"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Rotate Image"
 msgctxt "@title:window"
 msgid "Rotate Image"
 msgstr "பிம்பத்தை சுற்று"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:65
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "After Rotate:"
 msgid "After rotate:"
 msgstr "சுற்றியபின்:"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:68
 #, kde-format
 msgid "Direction"
 msgstr "திசை"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:94
 #, kde-format
 msgid "Cou&nterclockwise"
 msgstr "எண்ணி வலச்சுற்று"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:122
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:95
 #, kde-format
 msgid "C&lockwise"
 msgstr "வலச்சுற்று"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:146
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:97
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:114
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:66
 #, kde-format
 msgid "Angle"
 msgstr "சாய் கோணம்"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:150
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:117
 #, kde-format
 msgid "90 &degrees"
 msgstr "90  டிகிரிகள்"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:151
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:118
 #, kde-format
 msgid "180 d&egrees"
 msgstr "180  டிகிரிகள்"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:152
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:119
 #, kde-format
 msgid "270 de&grees"
 msgstr "270  டிகிரிகள்"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:154
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
 #, kde-format
 msgid "C&ustom:"
 msgstr "வழக்கம்:"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:159
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:110
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:122
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:126
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:78
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:89
 #, kde-format
 msgid "degrees"
 msgstr " டிகிரிகள்"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:290
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:230
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Rotating the selection to %1x%2 may take a substantial amount of "
@@ -756,19 +756,19 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக தேர்ந்தெடுப்பை சுழற்றவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:298
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:238
 #, fuzzy, kde-format
 #| msgid "Rotate Selection?"
 msgctxt "@title:window"
 msgid "Rotate Selection?"
 msgstr "சுழற்சி தேர்ந்தெடுப்பு"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:299
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:239
 #, kde-format
 msgid "Rotat&e Selection"
 msgstr "சுழற்சி தேர்ந்தெடுப்பு"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:305
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:243
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Rotating the image to %1x%2 may take a substantial amount of "
@@ -783,49 +783,49 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக பிம்பத்தை சுழற்றவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:313
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:251
 #, fuzzy, kde-format
 #| msgid "Rotate Image?"
 msgctxt "@title:window"
 msgid "Rotate Image?"
 msgstr "பிம்பத்தை சுழற்று?"
 
-#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:314
+#: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:252
 #, kde-format
 msgid "Rotat&e Image"
 msgstr "பிம்பத்தை சுழற்று"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:37
 #, fuzzy, kde-format
 #| msgid "Skew Selection"
 msgctxt "@title:window"
 msgid "Skew Selection"
 msgstr "சரிவு தேர்வு"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:64
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:37
 #, fuzzy, kde-format
 #| msgid "Skew Image"
 msgctxt "@title:window"
 msgid "Skew Image"
 msgstr "பிம்பத்தை சரிவாக்கு"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:65
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:38
 #, fuzzy, kde-format
 #| msgid "After Skew:"
 msgid "After skew:"
 msgstr "சரிவுக்குப் பிறகு:"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:104
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:72
 #, kde-format
 msgid "&Horizontal:"
 msgstr "கிடைமட்டம்"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:116
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:83
 #, kde-format
 msgid "&Vertical:"
 msgstr "உயர"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:251
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:199
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Skewing the selection to %1x%2 may take a substantial amount of "
@@ -841,19 +841,19 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>தேர்ந்தெடுப்பை பிம்பத்தை சாய்க்கவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:259
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:207
 #, fuzzy, kde-format
 #| msgid "Skew Selection?"
 msgctxt "@title:window"
 msgid "Skew Selection?"
 msgstr "தேர்ந்தெடுப்பை மறு அளவாக்கு?"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:208
 #, kde-format
 msgid "Sk&ew Selection"
 msgstr "தேர்ந்தெடுப்பை ஒருபுறமாக சாய்"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:266
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:212
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Skewing the image to %1x%2 may take a substantial amount of "
@@ -868,61 +868,61 @@ msgstr ""
 "செயல்திறனை குறைத்து மற்ற பயன்பாட்டு மூலங்களின் பிரச்னைகளுக்கு வழிவகுக்கும்.</"
 "p><p>உறுதியாக பிம்பத்தை சாய்க்கவேண்டுமா?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:274
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:220
 #, fuzzy, kde-format
 #| msgid "Skew Image?"
 msgctxt "@title:window"
 msgid "Skew Image?"
 msgstr "பிம்பத்தை மறு அளவாக்கு"
 
-#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:275
+#: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:221
 #, kde-format
 msgid "Sk&ew Image"
 msgstr "பிம்பத்தை ஒருபுறமாக சாய்"
 
-#: dialogs/kpColorSimilarityDialog.cpp:46
+#: dialogs/kpColorSimilarityDialog.cpp:25
 #, fuzzy, kde-format
 #| msgid "Color Similarity"
 msgctxt "@title:window"
 msgid "Color Similarity"
 msgstr "வண்ண ஒற்றுமை"
 
-#: dialogs/kpColorSimilarityDialog.cpp:75
+#: dialogs/kpColorSimilarityDialog.cpp:49
 #, fuzzy, kde-format
 #| msgid "RGB Color Cube Distance"
 msgid "&RGB Color Cube Distance"
 msgstr "RGB வண்ணப்பட்டகத்தின் தொலைவு"
 
-#: dialogs/kpColorSimilarityDialog.cpp:82
+#: dialogs/kpColorSimilarityDialog.cpp:54
 #, kde-format
 msgid "Exact Match"
 msgstr "மிக சரியான பொருத்தம்"
 
-#: dialogs/kpColorSimilarityDialog.cpp:87
+#: dialogs/kpColorSimilarityDialog.cpp:58
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr ""
 
-#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:58
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:34
 #, fuzzy, kde-format
 #| msgid "Save Preview"
 msgctxt "@title:window"
 msgid "Save Preview"
 msgstr "முன்காட்சியை சேமி"
 
-#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:126
+#: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:88
 #, fuzzy, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
 msgstr[0] "%1 பைட்டுகள் (தோராயமாக %2%)"
 msgstr[1] "%1 பைட்டுகள் (தோராயமாக %2%)"
 
-#: document/kpDocument_Open.cpp:114
+#: document/kpDocument_Open.cpp:87
 #, kde-format
 msgid "Could not open \"%1\"."
 msgstr "\"%1\" யை திறக்க முடியவில்லை."
 
-#: document/kpDocument_Open.cpp:150
+#: document/kpDocument_Open.cpp:121
 #, kde-format
 msgid ""
 "Could not open \"%1\" - unsupported image format.\n"
@@ -931,12 +931,12 @@ msgstr ""
 "\"%1\" யை திறக்க முடியவில்லை - துணைபுரியாத படிம வடிவம்.\n"
 "இந்த கோப்பு பழுதடைந்திருக்கலாம்."
 
-#: document/kpDocument_Save.cpp:74
+#: document/kpDocument_Save.cpp:47
 #, kde-format
 msgid "Could not save image - insufficient information."
 msgstr "படிமத்தை சேமிக்க முடியவில்லை - தேவையான தகவல் இல்லை."
 
-#: document/kpDocument_Save.cpp:75
+#: document/kpDocument_Save.cpp:48
 #, kde-format
 msgid ""
 "URL: %1\n"
@@ -945,18 +945,18 @@ msgstr ""
 "முகவரி: %1\n"
 "மைம் வகை: %2"
 
-#: document/kpDocument_Save.cpp:79
+#: document/kpDocument_Save.cpp:51
 #, kde-format
 msgid "<empty>"
 msgstr "<empty>"
 
-#: document/kpDocument_Save.cpp:81
+#: document/kpDocument_Save.cpp:52
 #, kde-format
 msgctxt "@title:window"
 msgid "Internal Error"
 msgstr "உள்ளக சிக்கல்"
 
-#: document/kpDocument_Save.cpp:116
+#: document/kpDocument_Save.cpp:80
 #, kde-format
 msgid ""
 "<qt><p>The <b>%1</b> format may not be able to preserve all of the image's "
@@ -966,14 +966,14 @@ msgstr ""
 "<qt><p>இந்த<b>%1</b>வடிவமைப்பால் பிம்பத்தினுடைய வண்ண தகவலை பாதுகாக்க முடியாது.</"
 "p><p>இந்த வடிவமைப்பில் சேமிக்க வேண்டுமா?</p></qt>"
 
-#: document/kpDocument_Save.cpp:123
+#: document/kpDocument_Save.cpp:87
 #, fuzzy, kde-format
 #| msgid "Lossy File Format"
 msgctxt "@title:window"
 msgid "Lossy File Format"
 msgstr "நம்பகமற்ற கோப்பு வடிவம்"
 
-#: document/kpDocument_Save.cpp:132
+#: document/kpDocument_Save.cpp:93
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>Saving the image at the low color depth of %1-bit may result in the "
@@ -983,224 +983,224 @@ msgstr ""
 "<qt><p>%1-பிட்டின் குறைந்த வண்ண ஆழத்தில் பிம்பத்தை சேமிக்கும்போது அதில் வண்ண இழப்பு "
 "ஏற்படும். ஊடகங்களும் நீக்கப்படும்..<p>இந்த வண்ண ஆழத்தில் சேமிக்கவேண்டுமா?</p></qt>"
 
-#: document/kpDocument_Save.cpp:142
+#: document/kpDocument_Save.cpp:103
 #, fuzzy, kde-format
 #| msgid "Low Color Depth"
 msgctxt "@title:window"
 msgid "Low Color Depth"
 msgstr "குறைந்த வண்ண ஆழம்"
 
-#: document/kpDocument_Save.cpp:268
+#: document/kpDocument_Save.cpp:212
 #, kde-format
 msgid "Could not save image - unable to create temporary file."
 msgstr "படிமத்தை சேமிக்க முடியவில்லை - தற்காலிக கோப்பினை உருவாக்க முடியவில்லை"
 
-#: document/kpDocument_Save.cpp:276
+#: document/kpDocument_Save.cpp:219
 #, kde-format
 msgid "Could not save as \"%1\": %2"
 msgstr "\"%1\" என சேமிக்க முடியவில்லை: %2"
 
-#: document/kpDocument_Save.cpp:348 document/kpDocument_Save.cpp:391
+#: document/kpDocument_Save.cpp:277 document/kpDocument_Save.cpp:312
 #, kde-format
 msgid "Error saving image"
 msgstr "படத்தை சேமிப்பதில் சிக்கல்"
 
-#: document/kpDocument_Save.cpp:426
+#: document/kpDocument_Save.cpp:341
 #, kde-format
 msgid "Could not save image - failed to upload."
 msgstr "படிமத்தை சேமிக்க முடியவில்லை - மேல் ஏற்ற தோல்வியுற்றது."
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:384
+#: imagelib/transforms/kpTransformAutoCrop.cpp:334
 #, kde-format
 msgid "Remove Internal B&order"
 msgstr "உள் விளிம்பை நீக்கு"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:387
+#: imagelib/transforms/kpTransformAutoCrop.cpp:337
 #, kde-format
 msgid "Remove Internal Border"
 msgstr "உள் விளிம்பை நீக்கு"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:391
+#: imagelib/transforms/kpTransformAutoCrop.cpp:341
 #, kde-format
 msgid "Autocr&op"
 msgstr "தானாக வெட்டுதல்"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:393
+#: imagelib/transforms/kpTransformAutoCrop.cpp:343
 #, kde-format
 msgid "Autocrop"
 msgstr "தானாக வெட்டு"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:623
+#: imagelib/transforms/kpTransformAutoCrop.cpp:518
 #, kde-format
 msgid ""
 "KolourPaint cannot remove the selection's internal border as it could not be "
 "located."
 msgstr "KolourPaintஆல் தேர்ந்தெடுப்பின் உள் விளிம்பை நீக்கமுடியாது, அதை வைக்கமுடியாது."
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:625
+#: imagelib/transforms/kpTransformAutoCrop.cpp:520
 #, fuzzy, kde-format
 #| msgid "Cannot Remove Internal Border"
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
 msgstr "உள் விளிம்பை நீக்க முடியவில்லை"
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:631
+#: imagelib/transforms/kpTransformAutoCrop.cpp:524
 #, kde-format
 msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
 msgstr "KolourPaint தானாகவே பிம்பத்தை வெட்டாது, அதன் விளிம்பை வைக்கமுடியாது."
 
-#: imagelib/transforms/kpTransformAutoCrop.cpp:633
+#: imagelib/transforms/kpTransformAutoCrop.cpp:526
 #, fuzzy, kde-format
 #| msgid "Cannot Autocrop"
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
 msgstr "தானாக வெட்டுதல் முடியாது"
 
-#: imagelib/transforms/kpTransformCrop.cpp:69
-#: imagelib/transforms/kpTransformCrop.cpp:72
+#: imagelib/transforms/kpTransformCrop.cpp:43
+#: imagelib/transforms/kpTransformCrop.cpp:45
 #, kde-format
 msgid "Set as Image"
 msgstr "பிம்பமாக அமை"
 
-#: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:251
-#: mainWindow/kpMainWindow_Edit.cpp:365 mainWindow/kpMainWindow_Image.cpp:320
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:74
+#: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:201
+#: mainWindow/kpMainWindow_Edit.cpp:312 mainWindow/kpMainWindow_Image.cpp:282
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:52
 #, kde-format
 msgid "Selection: Create"
 msgstr "தேர்ந்தெடுப்பு: உருவாக்கு"
 
-#: kolourpaint.cpp:53
+#: kolourpaint.cpp:30
 #, fuzzy, kde-format
 #| msgid "KolourPaint"
 msgid "KolourPaint"
 msgstr "கேலொர்பெயிண்ட்"
 
-#: kolourpaint.cpp:55
+#: kolourpaint.cpp:32
 #, kde-format
 msgid "Paint Program by KDE"
 msgstr "கே.டீ.யீ. வழங்கும் ஓவியநிரல்"
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:46
 #, kde-format
 msgid "Clarence Dang"
 msgstr ""
 
-#: kolourpaint.cpp:69
+#: kolourpaint.cpp:46
 #, kde-format
 msgid "Project Founder"
 msgstr ""
 
-#: kolourpaint.cpp:71
+#: kolourpaint.cpp:48
 #, kde-format
 msgid "Thurston Dang"
 msgstr ""
 
-#: kolourpaint.cpp:71
+#: kolourpaint.cpp:48
 #, kde-format
 msgid "Chief Investigator"
 msgstr "தலைமை பார்வையாளர்"
 
-#: kolourpaint.cpp:74
+#: kolourpaint.cpp:50
 #, fuzzy, kde-format
 msgid "Martin Koller"
 msgstr "உரை கருவிப்பட்டி"
 
-#: kolourpaint.cpp:74
+#: kolourpaint.cpp:50
 #, kde-format
 msgid "Scanning Support, Alpha Support, Current Maintainer"
 msgstr ""
 
-#: kolourpaint.cpp:77
+#: kolourpaint.cpp:52
 #, kde-format
 msgid "Kristof Borrey"
 msgstr ""
 
-#: kolourpaint.cpp:77 kolourpaint.cpp:80 kolourpaint.cpp:81
+#: kolourpaint.cpp:52 kolourpaint.cpp:55 kolourpaint.cpp:56
 #, kde-format
 msgid "Icons"
 msgstr "சின்னங்கள்"
 
-#: kolourpaint.cpp:78
+#: kolourpaint.cpp:53
 #, kde-format
 msgid "Tasuku Suzuki"
 msgstr ""
 
-#: kolourpaint.cpp:78 kolourpaint.cpp:79
+#: kolourpaint.cpp:53 kolourpaint.cpp:54
 #, kde-format
 msgid "InputMethod Support"
 msgstr "InputMethod  ஆதரவு"
 
-#: kolourpaint.cpp:79
+#: kolourpaint.cpp:54
 #, kde-format
 msgid "Kazuki Ohta"
 msgstr ""
 
-#: kolourpaint.cpp:80
+#: kolourpaint.cpp:55
 #, kde-format
 msgid "Nuno Pinheiro"
 msgstr ""
 
-#: kolourpaint.cpp:81
+#: kolourpaint.cpp:56
 #, kde-format
 msgid "Danny Allen"
 msgstr ""
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:57
 #, kde-format
 msgid "Mike Gashler"
 msgstr ""
 
-#: kolourpaint.cpp:82
+#: kolourpaint.cpp:57
 #, fuzzy, kde-format
 #| msgid "More Image Effects"
 msgid "Image Effects"
 msgstr "அதிக பிம்ப விளைவுகள்"
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:59
 #, kde-format
 msgid "Laurent Montel"
 msgstr ""
 
-#: kolourpaint.cpp:84
+#: kolourpaint.cpp:59
 #, kde-format
 msgid "KDE 4 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:60
 #, kde-format
 msgid "Christoph Feck"
 msgstr ""
 
-#: kolourpaint.cpp:85
+#: kolourpaint.cpp:60
 #, kde-format
 msgid "KF 5 Porting"
 msgstr ""
 
-#: kolourpaint.cpp:87
+#: kolourpaint.cpp:62
 #, kde-format
 msgid ""
 "Thanks to the many others who have helped to make this program possible."
 msgstr ""
 
-#: kolourpaint.cpp:93
+#: kolourpaint.cpp:68
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgid "Image files to open, optionally"
 msgstr "திறக்கவேண்டிய பிம்ப கோப்பு"
 
-#: kolourpaint.cpp:96
+#: kolourpaint.cpp:71
 #, kde-format
 msgid "List all readable image MIME types"
 msgstr "படிக்கக்கூடிய அனைத்து மைம்வகைகளையும் பட்டியலிடு"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "Start with new image using given size"
 msgstr "குறிப்பிட்ட அளவையுடைய புதிய படத்துடன் தொடங்கு"
 
-#: kolourpaint.cpp:97
+#: kolourpaint.cpp:72
 #, kde-format
 msgid "[width]x[height]"
 msgstr "[அகலம்]x[உயரம்]"
@@ -1247,41 +1247,41 @@ msgstr "தேர்ந்தெடுப்பு கருவி RMB பட்
 msgid "&Edit"
 msgstr "&திருத்து"
 
-#: kpThumbnail.cpp:129
+#: kpThumbnail.cpp:94
 #, kde-format
 msgctxt "@title:window"
 msgid "Thumbnail"
 msgstr "சிறுபடம்"
 
-#: kpViewScrollableContainer.cpp:155 kpViewScrollableContainer.cpp:863
-#: kpViewScrollableContainer.cpp:867 kpViewScrollableContainer.cpp:871
+#: kpViewScrollableContainer.cpp:132 kpViewScrollableContainer.cpp:763
+#: kpViewScrollableContainer.cpp:765 kpViewScrollableContainer.cpp:767
 #, fuzzy, kde-format
 msgid "Left drag the handle to resize the image."
 msgstr "பிம்பத்தை மறுஅளவிட பிடியை இழுக்கவும்."
 
-#: kpViewScrollableContainer.cpp:194
+#: kpViewScrollableContainer.cpp:171
 #, kde-format
 msgid "Resize Image: Let go of all the mouse buttons."
 msgstr "பிம்பத்தை மறுஅளவிடு: அனைத்து சுட்டி பொத்தானிடம் செல்க   "
 
-#: kpViewScrollableContainer.cpp:226
+#: kpViewScrollableContainer.cpp:199
 #, kde-format
 msgid "Resize Image: Right click to cancel."
 msgstr "பிம்பத்தை மறுஅளவாக்கு: ரத்து செய்ய வலதுபுற க்ளிக் செய்யவும்."
 
-#: layers/selections/text/kpTextSelection.cpp:136
-#: tools/selection/text/kpToolText.cpp:55
+#: layers/selections/text/kpTextSelection.cpp:106
+#: tools/selection/text/kpToolText.cpp:34
 #, kde-format
 msgid "Text"
 msgstr "உரை"
 
-#: lgpl/generic/kpColorCollection.cpp:120
+#: lgpl/generic/kpColorCollection.cpp:109
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\"."
 msgid "Could not open color palette \"%1\"."
 msgstr "\"%1\" யை திறக்க முடியவில்லை."
 
-#: lgpl/generic/kpColorCollection.cpp:153
+#: lgpl/generic/kpColorCollection.cpp:138
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not open \"%1\" - unsupported image format.\n"
@@ -1293,83 +1293,83 @@ msgstr ""
 "\"%1\" யை திறக்க முடியவில்லை - துணைபுரியாத படிம வடிவம்.\n"
 "இந்த கோப்பு பழுதடைந்திருக்கலாம்."
 
-#: lgpl/generic/kpColorCollection.cpp:213
+#: lgpl/generic/kpColorCollection.cpp:192
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\"."
 msgid "Could not open KDE color palette \"%1\"."
 msgstr "\"%1\" யை திறக்க முடியவில்லை."
 
-#: lgpl/generic/kpColorCollection.cpp:263
+#: lgpl/generic/kpColorCollection.cpp:236
 #, fuzzy, kde-format
 #| msgid "Could not save as \"%1\"."
 msgid "Could not save color palette as \"%1\"."
 msgstr "\"%1\" ஆக சேமிக்க முடியவில்லை."
 
-#: lgpl/generic/kpUrlFormatter.cpp:41 lgpl/generic/kpUrlFormatter.cpp:54
-#: widgets/toolbars/kpColorToolBar.cpp:312
+#: lgpl/generic/kpUrlFormatter.cpp:19 lgpl/generic/kpUrlFormatter.cpp:31
+#: widgets/toolbars/kpColorToolBar.cpp:268
 #, kde-format
 msgid "Untitled"
 msgstr "தலைப்பில்லாதது"
 
-#: mainWindow/kpMainWindow_Colors.cpp:61
+#: mainWindow/kpMainWindow_Colors.cpp:39
 #, fuzzy, kde-format
 #| msgid "KolourPaint"
 msgid "Use KolourPaint Defaults"
 msgstr "கேலொர்பெயிண்ட்"
 
-#: mainWindow/kpMainWindow_Colors.cpp:66
+#: mainWindow/kpMainWindow_Colors.cpp:43
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:78
+#: mainWindow/kpMainWindow_Colors.cpp:53
 #, fuzzy, kde-format
 #| msgid "&Flip..."
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
 msgstr "சுழற்று"
 
-#: mainWindow/kpMainWindow_Colors.cpp:82
+#: mainWindow/kpMainWindow_Colors.cpp:57
 #, fuzzy, kde-format
 #| msgid "Reloa&d"
 msgctxt "@item:inmenu colors"
 msgid "Reloa&d"
 msgstr "திரும்ப ஏற்று"
 
-#: mainWindow/kpMainWindow_Colors.cpp:87
+#: mainWindow/kpMainWindow_Colors.cpp:61
 #, fuzzy, kde-format
 #| msgid "&Scale"
 msgctxt "@item:inmenu colors"
 msgid "&Save"
 msgstr "அளவுகோல்"
 
-#: mainWindow/kpMainWindow_Colors.cpp:92
+#: mainWindow/kpMainWindow_Colors.cpp:65
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
 msgstr "படிமத்தை சேமிக்க"
 
-#: mainWindow/kpMainWindow_Colors.cpp:97
+#: mainWindow/kpMainWindow_Colors.cpp:69
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Add Row"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Colors.cpp:102
+#: mainWindow/kpMainWindow_Colors.cpp:73
 #, fuzzy, kde-format
 #| msgid "&Delete Selection"
 msgctxt "@item:inmenu colors"
 msgid "Delete Last Row"
 msgstr "தேர்ந்தெடுத்தவையை அழி"
 
-#: mainWindow/kpMainWindow_Colors.cpp:115
+#: mainWindow/kpMainWindow_Colors.cpp:84
 #, fuzzy, kde-format
 msgid "Color Box"
 msgstr "வண்ணங்கள்"
 
-#: mainWindow/kpMainWindow_Colors.cpp:200
+#: mainWindow/kpMainWindow_Colors.cpp:162
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1381,7 +1381,7 @@ msgstr ""
 "ஆவணம் \"%1\" மாற்றப்பட்டது.\n"
 "நீங்கள் சேமிக்க விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:212
+#: mainWindow/kpMainWindow_Colors.cpp:172
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1393,7 +1393,7 @@ msgstr ""
 "ஆவணம் \"%1\" மாற்றப்பட்டது.\n"
 "நீங்கள் சேமிக்க விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:221
+#: mainWindow/kpMainWindow_Colors.cpp:180
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1405,14 +1405,14 @@ msgstr ""
 "ஆவணம் \"%1\" மாற்றப்பட்டது.\n"
 "நீங்கள் சேமிக்க விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:340
+#: mainWindow/kpMainWindow_Colors.cpp:293
 #, fuzzy, kde-format
 #| msgid "Colors"
 msgctxt "@title:window"
 msgid "Open Color Palette"
 msgstr "வண்ணங்கள்"
 
-#: mainWindow/kpMainWindow_Colors.cpp:369
+#: mainWindow/kpMainWindow_Colors.cpp:319
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1427,15 +1427,15 @@ msgstr ""
 "திரும்ப ஏற்றுவது கண்டிப்பாக கடைசியாக மாற்றியவையை இழந்துவிடும்.\n"
 "நீங்கள் விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:374
-#: mainWindow/kpMainWindow_Colors.cpp:387
-#: mainWindow/kpMainWindow_Colors.cpp:396 mainWindow/kpMainWindow_File.cpp:1087
-#: mainWindow/kpMainWindow_File.cpp:1097
+#: mainWindow/kpMainWindow_Colors.cpp:324
+#: mainWindow/kpMainWindow_Colors.cpp:334
+#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:968
+#: mainWindow/kpMainWindow_File.cpp:976
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "திரும்ப ஏற்று"
 
-#: mainWindow/kpMainWindow_Colors.cpp:382
+#: mainWindow/kpMainWindow_Colors.cpp:329
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1450,7 +1450,7 @@ msgstr ""
 "திரும்ப ஏற்றினால் எல்லா மாற்றங்களையும் இழக்க நேரிடும்.\n"
 "உறுதியாக செய்யலாமா?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:392
+#: mainWindow/kpMainWindow_Colors.cpp:337
 #, fuzzy, kde-format
 #| msgid ""
 #| "The document \"%1\" has been modified.\n"
@@ -1465,102 +1465,102 @@ msgstr ""
 "திரும்ப ஏற்றினால் எல்லா மாற்றங்களையும் இழக்க நேரிடும்.\n"
 "உறுதியாக செய்யலாமா?"
 
-#: mainWindow/kpMainWindow_Colors.cpp:453
+#: mainWindow/kpMainWindow_Colors.cpp:390
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgid "Save Color Palette As"
 msgstr "வண்ணத்தை மாற்று"
 
-#: mainWindow/kpMainWindow_Edit.cpp:96
+#: mainWindow/kpMainWindow_Edit.cpp:72
 #, kde-format
 msgid "Paste in &New Window"
 msgstr "புதிய சாளரத்தில் ஒட்டு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:103
+#: mainWindow/kpMainWindow_Edit.cpp:78
 #, kde-format
 msgid "&Delete Selection"
 msgstr "தேர்ந்தெடுத்தவையை அழி"
 
-#: mainWindow/kpMainWindow_Edit.cpp:111
+#: mainWindow/kpMainWindow_Edit.cpp:85
 #, kde-format
 msgid "C&opy to File..."
 msgstr "கோப்பிற்கு நகலிடு..."
 
-#: mainWindow/kpMainWindow_Edit.cpp:115
+#: mainWindow/kpMainWindow_Edit.cpp:89
 #, kde-format
 msgid "Paste &From File..."
 msgstr "கோப்பிலிருந்து ஒட்டு..."
 
-#: mainWindow/kpMainWindow_Edit.cpp:364 mainWindow/kpMainWindow_Edit.cpp:438
-#: mainWindow/kpMainWindow_Image.cpp:323 tools/selection/text/kpToolText.cpp:89
+#: mainWindow/kpMainWindow_Edit.cpp:312 mainWindow/kpMainWindow_Edit.cpp:368
+#: mainWindow/kpMainWindow_Image.cpp:284 tools/selection/text/kpToolText.cpp:60
 #, kde-format
 msgid "Text: Create Box"
 msgstr "உரை: பெட்டியை உருவாக்கு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:444
+#: mainWindow/kpMainWindow_Edit.cpp:372
 #, kde-format
 msgid "Text: Paste"
 msgstr "உரை: ஒட்டு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:611
+#: mainWindow/kpMainWindow_Edit.cpp:500
 #, kde-format
 msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Edit.cpp:613
+#: mainWindow/kpMainWindow_Edit.cpp:502
 #, kde-format
 msgid "Cannot Paste"
 msgstr "ஒட்ட முடியவில்லை"
 
-#: mainWindow/kpMainWindow_Edit.cpp:692
+#: mainWindow/kpMainWindow_Edit.cpp:576
 #, kde-format
 msgid "Text: Delete Box"
 msgstr "உரை: பெட்டியை அழி"
 
 #. i18n ("Text: Delete")
-#: mainWindow/kpMainWindow_Edit.cpp:693
+#: mainWindow/kpMainWindow_Edit.cpp:578
 #, kde-format
 msgid "Selection: Delete"
 msgstr "தேந்தெடுப்பு: அழி"
 
-#: mainWindow/kpMainWindow_Edit.cpp:767
+#: mainWindow/kpMainWindow_Edit.cpp:642
 #, kde-format
 msgid "Text: Finish"
 msgstr "உரை: முடி"
 
-#: mainWindow/kpMainWindow_Edit.cpp:768
+#: mainWindow/kpMainWindow_Edit.cpp:642
 #, kde-format
 msgid "Selection: Deselect"
 msgstr "தேர்ந்தெடுப்பு: தேர்வை நீக்கு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:852
+#: mainWindow/kpMainWindow_Edit.cpp:713
 #, fuzzy, kde-format
 #| msgid "Copy to File"
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "கோப்பிற்கு நகல் எடு"
 
-#: mainWindow/kpMainWindow_Edit.cpp:899
+#: mainWindow/kpMainWindow_Edit.cpp:751
 #, fuzzy, kde-format
 #| msgid "Paste From File"
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "கோப்பிலிருந்து ஒட்டு"
 
-#: mainWindow/kpMainWindow_File.cpp:105
+#: mainWindow/kpMainWindow_File.cpp:84
 #, kde-format
 msgid "E&xport..."
 msgstr "ஏற்றுமதி..."
 
-#: mainWindow/kpMainWindow_File.cpp:107
+#: mainWindow/kpMainWindow_File.cpp:86
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:109
+#: mainWindow/kpMainWindow_File.cpp:88
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1570,92 +1570,92 @@ msgid ""
 "current document."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:115
+#: mainWindow/kpMainWindow_File.cpp:94
 #, fuzzy, kde-format
 msgid "Scan..."
 msgstr "..."
 
-#: mainWindow/kpMainWindow_File.cpp:124
+#: mainWindow/kpMainWindow_File.cpp:103
 #, fuzzy, kde-format
 #| msgid "Acquiring Screenshots"
 msgid "Acquire Screenshot"
 msgstr "திரைப்பிடிப்புகளை பெறுகிறது"
 
-#: mainWindow/kpMainWindow_File.cpp:128
+#: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
 msgid "Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:134
+#: mainWindow/kpMainWindow_File.cpp:113
 #, kde-format
 msgid "Reloa&d"
 msgstr "திரும்ப ஏற்று"
 
-#: mainWindow/kpMainWindow_File.cpp:464
+#: mainWindow/kpMainWindow_File.cpp:412
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:489
+#: mainWindow/kpMainWindow_File.cpp:437
 #, fuzzy, kde-format
 #| msgid "Open Image"
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "படிமத்தை திற"
 
-#: mainWindow/kpMainWindow_File.cpp:552
+#: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:553
+#: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:670
+#: mainWindow/kpMainWindow_File.cpp:606
 #, kde-format
 msgid "Snapshot Delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:673
+#: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: mainWindow/kpMainWindow_File.cpp:674
+#: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
 msgid "No delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:676
+#: mainWindow/kpMainWindow_File.cpp:612
 #, fuzzy, kde-format
 #| msgid "Paste in &New Window"
 msgid "Hide Main Window"
 msgstr "புதிய சாளரத்தில் ஒட்டு"
 
-#: mainWindow/kpMainWindow_File.cpp:730
+#: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:970
+#: mainWindow/kpMainWindow_File.cpp:867
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "படிமத்தை சேமிக்க"
 
-#: mainWindow/kpMainWindow_File.cpp:1018
+#: mainWindow/kpMainWindow_File.cpp:910
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "ஏற்றுமதி..."
 
-#: mainWindow/kpMainWindow_File.cpp:1082
+#: mainWindow/kpMainWindow_File.cpp:963
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1666,7 +1666,7 @@ msgstr ""
 "திரும்ப ஏற்றுவது கண்டிப்பாக கடைசியாக மாற்றியவையை இழந்துவிடும்.\n"
 "நீங்கள் விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_File.cpp:1092
+#: mainWindow/kpMainWindow_File.cpp:971
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1677,14 +1677,14 @@ msgstr ""
 "திரும்ப ஏற்றினால் எல்லா மாற்றங்களையும் இழக்க நேரிடும்.\n"
 "உறுதியாக செய்யலாமா?"
 
-#: mainWindow/kpMainWindow_File.cpp:1340
+#: mainWindow/kpMainWindow_File.cpp:1178
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "முழு பிம்பம்"
 
-#: mainWindow/kpMainWindow_File.cpp:1420
+#: mainWindow/kpMainWindow_File.cpp:1251
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1693,7 +1693,7 @@ msgstr ""
 "நீங்கள் அனுப்புவதற்கு முன் சேமிக்க வேண்டும்.\n"
 "நீங்கள் சேமிக்க விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_File.cpp:1458
+#: mainWindow/kpMainWindow_File.cpp:1286
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1702,81 +1702,81 @@ msgstr ""
 "ஆவணம் \"%1\" மாற்றப்பட்டது.\n"
 "நீங்கள் சேமிக்க விரும்புகிறீரா?"
 
-#: mainWindow/kpMainWindow_Image.cpp:117
+#: mainWindow/kpMainWindow_Image.cpp:94
 #, kde-format
 msgid "R&esize / Scale..."
 msgstr "அளவை மாற்று / அளவுஎடு..."
 
-#: mainWindow/kpMainWindow_Image.cpp:123
+#: mainWindow/kpMainWindow_Image.cpp:100
 #, kde-format
 msgid "Se&t as Image (Crop)"
 msgstr "பிம்பமாக அமை (வெட்டு)"
 
-#: mainWindow/kpMainWindow_Image.cpp:133
+#: mainWindow/kpMainWindow_Image.cpp:110
 #, fuzzy, kde-format
 #| msgid "&Vertical (upside-down)"
 msgid "&Flip (upside down)"
 msgstr "உயரவாக்கில்(மேற்பக்கம்-கீழ்)"
 
-#: mainWindow/kpMainWindow_Image.cpp:138
+#: mainWindow/kpMainWindow_Image.cpp:115
 #, fuzzy, kde-format
 #| msgid "Flip horizontally"
 msgid "Mirror (horizontally)"
 msgstr "இடம்வலமாகத் திருப்பு"
 
-#: mainWindow/kpMainWindow_Image.cpp:143
+#: mainWindow/kpMainWindow_Image.cpp:120
 #, kde-format
 msgid "&Rotate..."
 msgstr "சுழற்று..."
 
-#: mainWindow/kpMainWindow_Image.cpp:149
+#: mainWindow/kpMainWindow_Image.cpp:126
 #, fuzzy, kde-format
 #| msgid "Rotate Image"
 msgid "Rotate &Left"
 msgstr "பிம்பத்தை சுற்று"
 
-#: mainWindow/kpMainWindow_Image.cpp:155
+#: mainWindow/kpMainWindow_Image.cpp:132
 #, fuzzy, kde-format
 #| msgid "Rotate Image"
 msgid "Rotate Righ&t"
 msgstr "பிம்பத்தை சுற்று"
 
-#: mainWindow/kpMainWindow_Image.cpp:161
+#: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "S&kew..."
 msgstr "சாய்வு"
 
-#: mainWindow/kpMainWindow_Image.cpp:166
+#: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
 msgstr "மோனோக்ரோமுக்கு வண்ணத்துக்கு குறை (தெளிக்கப்பட்ட வண்ணம்)"
 
-#: mainWindow/kpMainWindow_Image.cpp:171
+#: mainWindow/kpMainWindow_Image.cpp:147
 #, kde-format
 msgid "Reduce to &Grayscale"
 msgstr "பழுப்பு நிறத்துக்கு குறை"
 
-#: mainWindow/kpMainWindow_Image.cpp:175
+#: mainWindow/kpMainWindow_Image.cpp:151
 #, kde-format
 msgid "&Invert Colors"
 msgstr "வண்ணத்தை மாற்று"
 
-#: mainWindow/kpMainWindow_Image.cpp:180
+#: mainWindow/kpMainWindow_Image.cpp:156
 #, kde-format
 msgid "C&lear"
 msgstr "தெளிவு"
 
-#: mainWindow/kpMainWindow_Image.cpp:185
+#: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "Make Confidential"
 msgstr ""
 
-#: mainWindow/kpMainWindow_Image.cpp:189
+#: mainWindow/kpMainWindow_Image.cpp:165
 #, kde-format
 msgid "&More Effects..."
 msgstr "&அதிக விளைவுகள்..."
 
-#: mainWindow/kpMainWindow_Image.cpp:230
+#: mainWindow/kpMainWindow_Image.cpp:205
 #, fuzzy, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure the translation has the same accel "
@@ -1784,7 +1784,7 @@ msgctxt ""
 msgid "&Image"
 msgstr "படிமம்"
 
-#: mainWindow/kpMainWindow_Image.cpp:234
+#: mainWindow/kpMainWindow_Image.cpp:209
 #, fuzzy, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure that translation has the same accel "
@@ -1792,595 +1792,595 @@ msgctxt ""
 msgid "Select&ion"
 msgstr "தேர்வு"
 
-#: mainWindow/kpMainWindow_Settings.cpp:66
+#: mainWindow/kpMainWindow_Settings.cpp:41
 #, kde-format
 msgid "Show &Path"
 msgstr "பாதையை &காட்டு"
 
-#: mainWindow/kpMainWindow_Settings.cpp:71
+#: mainWindow/kpMainWindow_Settings.cpp:46
 #, kde-format
 msgid "Draw Anti-Aliased"
 msgstr ""
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:156
+#: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1,%2"
 msgstr "%1,%2"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:162
+#: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, kde-format
 msgid "%1,%2 - %3,%4"
 msgstr "%1,%2 - %3,%4"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:205
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:111
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:92
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
 #, kde-format
 msgid "%1x%2"
 msgstr "%1x%2"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:264
+#: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
 msgid "%1bpp"
 msgstr "%1bpp"
 
-#: mainWindow/kpMainWindow_StatusBar.cpp:290
-#: mainWindow/kpMainWindow_View_Zoom.cpp:88
+#: mainWindow/kpMainWindow_StatusBar.cpp:221
+#: mainWindow/kpMainWindow_View_Zoom.cpp:67
 #, kde-format
 msgid "%1%"
 msgstr "%1%"
 
-#: mainWindow/kpMainWindow_Text.cpp:56
+#: mainWindow/kpMainWindow_Text.cpp:34
 #, kde-format
 msgid "Font Family"
 msgstr "எழுத்துரு குடும்பம்"
 
-#: mainWindow/kpMainWindow_Text.cpp:62
+#: mainWindow/kpMainWindow_Text.cpp:38
 #, fuzzy, kde-format
 msgid "Font Size"
 msgstr "உரை:எழுத்துரு அளவு"
 
-#: mainWindow/kpMainWindow_Text.cpp:69
+#: mainWindow/kpMainWindow_Text.cpp:43
 #, kde-format
 msgid "Bold"
 msgstr "தடிமன்"
 
-#: mainWindow/kpMainWindow_Text.cpp:75
+#: mainWindow/kpMainWindow_Text.cpp:48
 #, fuzzy, kde-format
 msgid "Italic"
 msgstr "உரை:சாய்வெழுத்து"
 
-#: mainWindow/kpMainWindow_Text.cpp:81
+#: mainWindow/kpMainWindow_Text.cpp:53
 #, kde-format
 msgid "Underline"
 msgstr "அடிக்கோடு"
 
-#: mainWindow/kpMainWindow_Text.cpp:87
+#: mainWindow/kpMainWindow_Text.cpp:58
 #, kde-format
 msgid "Strike Through"
 msgstr "குறுக்குக்கோடு"
 
-#: mainWindow/kpMainWindow_Tools.cpp:133
+#: mainWindow/kpMainWindow_Tools.cpp:111
 #, kde-format
 msgid "Previous Tool Option (Group #1)"
 msgstr "முந்தைய கருவி விருப்பத்தேர்வு (குழு #1)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:139
+#: mainWindow/kpMainWindow_Tools.cpp:116
 #, kde-format
 msgid "Next Tool Option (Group #1)"
 msgstr "அடுத்த கருவி விருப்பத்தேர்வு (குழு #1)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:145
+#: mainWindow/kpMainWindow_Tools.cpp:121
 #, kde-format
 msgid "Previous Tool Option (Group #2)"
 msgstr "முந்தைய கருவி விருப்பத் தேர்வு (குழு #2)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:151
+#: mainWindow/kpMainWindow_Tools.cpp:126
 #, kde-format
 msgid "Next Tool Option (Group #2)"
 msgstr "அடுத்த கருவி விருப்பத்தேர்வு (குழு #2)"
 
-#: mainWindow/kpMainWindow_Tools.cpp:163
+#: mainWindow/kpMainWindow_Tools.cpp:136
 #, fuzzy, kde-format
 #| msgid "Opaque"
 msgid "&Draw Opaque"
 msgstr "ஒளி பாயாத"
 
-#: mainWindow/kpMainWindow_Tools.cpp:168
+#: mainWindow/kpMainWindow_Tools.cpp:140
 #, fuzzy, kde-format
 #| msgid "Color Similarity"
 msgid "Draw With Color Similarity..."
 msgstr "வண்ண ஒற்றுமை"
 
-#: mainWindow/kpMainWindow_Tools.cpp:179
+#: mainWindow/kpMainWindow_Tools.cpp:150
 #, fuzzy, kde-format
 msgid "Tool Box"
 msgstr "உரைப் பெட்டி"
 
-#: mainWindow/kpMainWindow_View.cpp:65
+#: mainWindow/kpMainWindow_View.cpp:41
 #, kde-format
 msgid "Show &Grid"
 msgstr "கட்டங்களை காட்டு"
 
-#: mainWindow/kpMainWindow_View_Thumbnail.cpp:63
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:40
 #, kde-format
 msgid "Show T&humbnail"
 msgstr "குறும்படத்தை காட்டு"
 
-#: mainWindow/kpMainWindow_View_Thumbnail.cpp:74
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:50
 #, kde-format
 msgid "Zoo&med Thumbnail Mode"
 msgstr "பெரிதாக்கப்பட்ட சிறுபிம்ப வகை"
 
-#: mainWindow/kpMainWindow_View_Thumbnail.cpp:84
+#: mainWindow/kpMainWindow_View_Thumbnail.cpp:59
 #, kde-format
 msgid "Enable Thumbnail &Rectangle"
 msgstr "சிறுபிம்ப நீள்வடிவத்தை செயல்படுத்து"
 
-#: mainWindow/kpMainWindow_View_Zoom.cpp:110
+#: mainWindow/kpMainWindow_View_Zoom.cpp:86
 #, kde-format
 msgid "&Zoom"
 msgstr ""
 
-#: scan/sanedialog.cpp:41
+#: scan/sanedialog.cpp:27
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Acquire Image"
 msgstr "முழு பிம்பம்"
 
-#: scan/sanedialog.cpp:73
+#: scan/sanedialog.cpp:57
 #, kde-format
 msgid "Opening the selected scanner failed."
 msgstr ""
 
-#: tools/flow/kpToolBrush.cpp:35
+#: tools/flow/kpToolBrush.cpp:15
 #, kde-format
 msgid "Brush"
 msgstr "தூரிகை"
 
-#: tools/flow/kpToolBrush.cpp:36
+#: tools/flow/kpToolBrush.cpp:15
 #, kde-format
 msgid "Draw using brushes of different shapes and sizes"
 msgstr "வித்தியாசமான வடிவங்கள் மற்றும் அளவுகளை தூரிகைக் கொண்டு வரைக "
 
-#: tools/flow/kpToolBrush.cpp:47 tools/flow/kpToolPen.cpp:56
+#: tools/flow/kpToolBrush.cpp:24 tools/flow/kpToolPen.cpp:33
 #, kde-format
 msgid "Click to draw dots or drag to draw strokes."
 msgstr "சொடுக்கி புள்ளிகளை வரை அல்லது இழுத்து அடியினை வரைக "
 
-#: tools/flow/kpToolColorEraser.cpp:49 tools/flow/kpToolColorEraser.cpp:78
+#: tools/flow/kpToolColorEraser.cpp:28 tools/flow/kpToolColorEraser.cpp:57
 #, kde-format
 msgid "Color Eraser"
 msgstr "வண்ண அழிப்பி"
 
-#: tools/flow/kpToolColorEraser.cpp:50
+#: tools/flow/kpToolColorEraser.cpp:29
 #, kde-format
 msgid "Replaces pixels of the foreground color with the background color"
 msgstr "பின்னணி வண்ணங்களை கொண்டு முன்னணி வண்ணங்களின் படப்புள்ளிகளை மாற்றவும்."
 
-#: tools/flow/kpToolColorEraser.cpp:115
+#: tools/flow/kpToolColorEraser.cpp:93
 #, kde-format
 msgid "Click or drag to erase pixels of the foreground color."
 msgstr "சொடுக்கு அல்லது இழுத்து படப்புள்ளிகளை அழித்திடும் முன்னணி வண்ணம்"
 
-#: tools/flow/kpToolEraser.cpp:42
+#: tools/flow/kpToolEraser.cpp:21
 #, kde-format
 msgid "Eraser"
 msgstr "அழிப்பி"
 
-#: tools/flow/kpToolEraser.cpp:43
+#: tools/flow/kpToolEraser.cpp:21
 #, kde-format
 msgid "Lets you rub out mistakes"
 msgstr "தவறுகளை அழிக்கவிடுதல்"
 
-#: tools/flow/kpToolEraser.cpp:70
+#: tools/flow/kpToolEraser.cpp:42
 #, kde-format
 msgid "Click or drag to erase."
 msgstr "சொடுக்கு அல்லது இழுத்து அழி "
 
-#: tools/flow/kpToolFlowBase.cpp:302 tools/kpToolColorPicker.cpp:108
-#: tools/kpToolFloodFill.cpp:144 tools/kpToolZoom.cpp:208
-#: tools/polygonal/kpToolPolygonalBase.cpp:435
-#: tools/rectangular/kpToolRectangularBase.cpp:351
-#: tools/selection/kpAbstractSelectionTool.cpp:261
-#: tools/selection/kpAbstractSelectionTool.cpp:528
+#: tools/flow/kpToolFlowBase.cpp:252 tools/kpToolColorPicker.cpp:78
+#: tools/kpToolFloodFill.cpp:119 tools/kpToolZoom.cpp:176
+#: tools/polygonal/kpToolPolygonalBase.cpp:367
+#: tools/rectangular/kpToolRectangularBase.cpp:290
+#: tools/selection/kpAbstractSelectionTool.cpp:228
+#: tools/selection/kpAbstractSelectionTool.cpp:462
 #, kde-format
 msgid "Let go of all the mouse buttons."
 msgstr "அனைத்து சுட்டி பொத்தானிடம் செல்க   "
 
-#: tools/flow/kpToolPen.cpp:45
+#: tools/flow/kpToolPen.cpp:24
 #, kde-format
 msgid "Pen"
 msgstr "பேனா"
 
-#: tools/flow/kpToolPen.cpp:45
+#: tools/flow/kpToolPen.cpp:24
 #, kde-format
 msgid "Draws dots and freehand strokes"
 msgstr "புள்ளிகளை வரைக மற்றும் வெறும் கை அடிகள் "
 
-#: tools/flow/kpToolSpraycan.cpp:56
+#: tools/flow/kpToolSpraycan.cpp:35
 #, kde-format
 msgid "Spraycan"
 msgstr "சிதறுதலுக்காக"
 
-#: tools/flow/kpToolSpraycan.cpp:56
+#: tools/flow/kpToolSpraycan.cpp:35
 #, kde-format
 msgid "Sprays graffiti"
 msgstr "சிதறலின் கிரஃப்டி"
 
-#: tools/flow/kpToolSpraycan.cpp:71
+#: tools/flow/kpToolSpraycan.cpp:48
 #, kde-format
 msgid "Click or drag to spray graffiti."
 msgstr "சிதரலின் கிரஃப்டியை சொடுக்கு அல்லது இழு"
 
-#: tools/kpTool_UserNotifications.cpp:42
+#: tools/kpTool_UserNotifications.cpp:22
 #, kde-format
 msgid "Right click to cancel."
 msgstr "ரத்து செய்ய வலதுபுறம் க்ளிக் செய்யவும்."
 
-#: tools/kpTool_UserNotifications.cpp:45
+#: tools/kpTool_UserNotifications.cpp:25
 #, kde-format
 msgid "Left click to cancel."
 msgstr "ரத்து செய்ய இடதுபுறம் க்ளிக் செய்யவும்."
 
-#: tools/kpTool_UserNotifications.cpp:75
+#: tools/kpTool_UserNotifications.cpp:54
 #, kde-format
 msgid "%1: "
 msgstr "%1: "
 
-#: tools/kpToolColorPicker.cpp:45
+#: tools/kpToolColorPicker.cpp:23
 #, kde-format
 msgid "Lets you select a color from the image"
 msgstr "நீங்கள் படிவத்திலிருந்து வண்ணத்தினை செயல்படுத்துவும்"
 
-#: tools/kpToolColorPicker.cpp:68
+#: tools/kpToolColorPicker.cpp:42
 #, kde-format
 msgid "Click to select a color."
 msgstr "சொடுக்கி வண்ணத்தைத் தேர்ந்தெடு"
 
-#: tools/kpToolFloodFill.cpp:55
+#: tools/kpToolFloodFill.cpp:32
 #, kde-format
 msgid "Fills regions in the image"
 msgstr "வட்டாரத்தின் படிவத்தினை நிரப்பு"
 
-#: tools/kpToolFloodFill.cpp:75
+#: tools/kpToolFloodFill.cpp:50
 #, kde-format
 msgid "Click to fill a region."
 msgstr "சொடுக்கி வட்டாரத்தை நிரப்பு"
 
-#: tools/kpToolZoom.cpp:75
+#: tools/kpToolZoom.cpp:51
 #, kde-format
 msgid "Zoom"
 msgstr ""
 
-#: tools/kpToolZoom.cpp:75
+#: tools/kpToolZoom.cpp:51
 #, kde-format
 msgid "Zooms in and out of the image"
 msgstr ""
 
-#: tools/kpToolZoom.cpp:119
+#: tools/kpToolZoom.cpp:92
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
 
-#: tools/polygonal/kpToolCurve.cpp:103
+#: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
 msgid "Curve"
 msgstr "வளைவு"
 
-#: tools/polygonal/kpToolCurve.cpp:104
+#: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
 msgid "Draws curves"
 msgstr "வளைவுகளை வரைக"
 
-#: tools/polygonal/kpToolCurve.cpp:118
+#: tools/polygonal/kpToolCurve.cpp:83
 #, kde-format
 msgid "Drag out the start and end points."
 msgstr "முதல் மற்றும் இறுதி புள்ளியினை இழுத்தல் "
 
-#: tools/polygonal/kpToolCurve.cpp:157
+#: tools/polygonal/kpToolCurve.cpp:116
 #, kde-format
 msgid "Left drag to set the first control point or right click to finish."
 msgstr ""
 "இடதுபுறமாக இழுத்தல் முதல் கட்டுப்பாடு புள்ளியை அமைக்க அல்லது முடிக்க வலதுபுறம் க்ளிக் "
 "செய்யவும்."
 
-#: tools/polygonal/kpToolCurve.cpp:162
+#: tools/polygonal/kpToolCurve.cpp:118
 #, kde-format
 msgid "Right drag to set the first control point or left click to finish."
 msgstr ""
 "வலதுபுறமாக இழுத்தல் முதல் கட்டுப்பாடு புள்ளியை அமைக்க அல்லது முடிக்க இடதுபுறம் க்ளிக் "
 "செய்யவும்."
 
-#: tools/polygonal/kpToolCurve.cpp:172
+#: tools/polygonal/kpToolCurve.cpp:126
 #, kde-format
 msgid "Left drag to set the last control point or right click to finish."
 msgstr ""
 "இடதுபுறமாக இழுத்தல் கடைசி கட்டுப்பாடு புள்ளியை அமைக்க அல்லது முடிக்க வலதுபுறம் க்ளிக் "
 "செய்யவும்."
 
-#: tools/polygonal/kpToolCurve.cpp:177
+#: tools/polygonal/kpToolCurve.cpp:128
 #, kde-format
 msgid "Right drag to set the last control point or left click to finish."
 msgstr ""
 "வலதுபுறமாக இழுத்தல் கடைசி கட்டுப்பாடு புள்ளியை அமைக்க அல்லது முடிக்க இடதுபுறம் க்ளிக் "
 "செய்யவும்."
 
-#: tools/polygonal/kpToolLine.cpp:41
+#: tools/polygonal/kpToolLine.cpp:18
 #, kde-format
 msgid "Line"
 msgstr "கோடு"
 
-#: tools/polygonal/kpToolLine.cpp:42
+#: tools/polygonal/kpToolLine.cpp:18
 #, kde-format
 msgid "Draws lines"
 msgstr "கோட்டிகளை வரைக"
 
-#: tools/polygonal/kpToolLine.cpp:55
-#: tools/rectangular/kpToolRectangularBase.cpp:119
+#: tools/polygonal/kpToolLine.cpp:27
+#: tools/rectangular/kpToolRectangularBase.cpp:94
 #, kde-format
 msgid "Drag to draw."
 msgstr "இழுத்து வரைதல்"
 
-#: tools/polygonal/kpToolPolygon.cpp:93
+#: tools/polygonal/kpToolPolygon.cpp:63
 #, kde-format
 msgid "Polygon"
 msgstr "பலகோணம்"
 
-#: tools/polygonal/kpToolPolygon.cpp:94
+#: tools/polygonal/kpToolPolygon.cpp:63
 #, kde-format
 msgid "Draws polygons"
 msgstr "பலகோணங்களை வரைக"
 
-#: tools/polygonal/kpToolPolygon.cpp:112 tools/polygonal/kpToolPolyline.cpp:60
+#: tools/polygonal/kpToolPolygon.cpp:76 tools/polygonal/kpToolPolyline.cpp:32
 #, kde-format
 msgid "Drag to draw the first line."
 msgstr "முதல் கோட்டினை இழுத்து வரைதல்"
 
-#: tools/polygonal/kpToolPolygon.cpp:182 tools/polygonal/kpToolPolyline.cpp:117
+#: tools/polygonal/kpToolPolygon.cpp:137 tools/polygonal/kpToolPolyline.cpp:81
 #, kde-format
 msgid "Left drag another line or right click to finish."
 msgstr "மற்றொரு வரியை இடதுபுறமாக இழு அல்ல்து முடிக்க வலதுபுறம் க்ளிக் செய்யவும்."
 
-#: tools/polygonal/kpToolPolygon.cpp:186 tools/polygonal/kpToolPolyline.cpp:121
+#: tools/polygonal/kpToolPolygon.cpp:139 tools/polygonal/kpToolPolyline.cpp:83
 #, kde-format
 msgid "Right drag another line or left click to finish."
 msgstr "மற்றொரு வரியை வலதுபுறமாக இழு அல்லது முடிக்க இடதுபுறம் க்ளிக் செய்யவும்."
 
-#: tools/polygonal/kpToolPolyline.cpp:46
+#: tools/polygonal/kpToolPolyline.cpp:23
 #, kde-format
 msgid "Connected Lines"
 msgstr "இணையும் கோடுகள்"
 
-#: tools/polygonal/kpToolPolyline.cpp:47
+#: tools/polygonal/kpToolPolyline.cpp:23
 #, kde-format
 msgid "Draws connected lines"
 msgstr "வரைதல் கோடுகளை இணைக்க"
 
-#: tools/rectangular/kpToolEllipse.cpp:42
+#: tools/rectangular/kpToolEllipse.cpp:21
 #, kde-format
 msgid "Ellipse"
 msgstr "நீள் வட்டம்"
 
-#: tools/rectangular/kpToolEllipse.cpp:43
+#: tools/rectangular/kpToolEllipse.cpp:22
 #, kde-format
 msgid "Draws ellipses and circles"
 msgstr "நீள் வட்டம் மற்றும் வட்டத்தை வரைக"
 
-#: tools/rectangular/kpToolRectangle.cpp:43
+#: tools/rectangular/kpToolRectangle.cpp:22
 #, kde-format
 msgid "Rectangle"
 msgstr "நீள்சதுரம்"
 
-#: tools/rectangular/kpToolRectangle.cpp:44
+#: tools/rectangular/kpToolRectangle.cpp:23
 #, kde-format
 msgid "Draws rectangles and squares"
 msgstr "சதுரங்கள் மற்றும் முக்கோணங்களை வரைதல்"
 
-#: tools/rectangular/kpToolRoundedRectangle.cpp:42
+#: tools/rectangular/kpToolRoundedRectangle.cpp:22
 #, kde-format
 msgid "Rounded Rectangle"
 msgstr "வட்டவடிவ நீள்சதுரம்"
 
-#: tools/rectangular/kpToolRoundedRectangle.cpp:43
+#: tools/rectangular/kpToolRoundedRectangle.cpp:23
 #, kde-format
 msgid "Draws rectangles and squares with rounded corners"
 msgstr "வட்டமாக்கப்பட்ட ஓரங்களுடன் நீள்சதுரங்கள் மற்றும் முக்கோணங்களை வரைதல்"
 
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:83
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:61
 #, kde-format
 msgid "Left drag to create selection."
 msgstr "இடது பக்கமாக இழுத்துச் செயல்பாட்டினை உருவாக்கு "
 
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:91
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:69
 #, kde-format
 msgid "Left drag to move selection."
 msgstr "இடது பக்கமாக இழுத்துச் செயல்பாட்டினைத் தள்ளுதல் "
 
-#: tools/selection/image/kpAbstractImageSelectionTool.cpp:99
+#: tools/selection/image/kpAbstractImageSelectionTool.cpp:77
 #, kde-format
 msgid "Left drag to scale selection."
 msgstr "மறு அளவாக்கியதை இடது பக்கமாக இழு."
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:162
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:129
 #, kde-format
 msgid "Selection: Opaque"
 msgstr "தேர்ந்தெடுப்பு: ஒளி ஊடுருவாத"
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:163
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:129
 #, kde-format
 msgid "Selection: Transparent"
 msgstr "தேர்ந்தெடுப்பு: ஊடுதெரிதல்"
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:184
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:148
 #, kde-format
 msgid "Selection: Transparency Color"
 msgstr "தேர்ந்தெடுப்பு: ஊடு தெரியும் வண்ணம்"
 
-#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:205
+#: tools/selection/image/kpAbstractImageSelectionTool_Transparency.cpp:167
 #, kde-format
 msgid "Selection: Transparency Color Similarity"
 msgstr "தேர்ந்தெடுப்பு: ஒரே மாதிரியான ஊடு தெரியும் வண்ணம்"
 
-#: tools/selection/image/kpToolEllipticalSelection.cpp:42
+#: tools/selection/image/kpToolEllipticalSelection.cpp:20
 #, kde-format
 msgid "Selection (Elliptical)"
 msgstr "செயல்பாடு(நீளவட்ட)"
 
-#: tools/selection/image/kpToolEllipticalSelection.cpp:43
+#: tools/selection/image/kpToolEllipticalSelection.cpp:21
 #, kde-format
 msgid "Makes an elliptical or circular selection"
 msgstr "ஒரு மங்கலான அல்லது வட்டவடிவமான தேர்வை உருவாக்குகிறது"
 
-#: tools/selection/image/kpToolFreeFormSelection.cpp:45
+#: tools/selection/image/kpToolFreeFormSelection.cpp:22
 #, kde-format
 msgid "Selection (Free-Form)"
 msgstr "தேர்ந்தெடுப்பு(சுதந்திரவடிவம்)"
 
-#: tools/selection/image/kpToolFreeFormSelection.cpp:46
+#: tools/selection/image/kpToolFreeFormSelection.cpp:23
 #, kde-format
 msgid "Makes a free-form selection"
 msgstr "ஒரு சுலப-வடிவ தேர்வை உருவாக்குகிறாது"
 
-#: tools/selection/image/kpToolRectSelection.cpp:40
+#: tools/selection/image/kpToolRectSelection.cpp:19
 #, kde-format
 msgid "Selection (Rectangular)"
 msgstr "தேர்ந்தெடுப்பு(நீள்சதுரம்)"
 
-#: tools/selection/image/kpToolRectSelection.cpp:41
+#: tools/selection/image/kpToolRectSelection.cpp:20
 #, kde-format
 msgid "Makes a rectangular selection"
 msgstr "ஒரு நீள்சதுரத்தை உருவாக்குகிறது"
 
-#: tools/selection/kpAbstractSelectionTool_Move.cpp:324
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:279
 #, kde-format
 msgid "Selection: Move"
 msgstr "தேர்ந்தெடுப்பு:நகர்த்து"
 
-#: tools/selection/kpAbstractSelectionTool_Move.cpp:347
+#: tools/selection/kpAbstractSelectionTool_Move.cpp:301
 #, kde-format
 msgid "%1: Smear"
 msgstr "%1: ஸ்மிர்"
 
-#: tools/selection/text/kpToolText.cpp:55
+#: tools/selection/text/kpToolText.cpp:34
 #, kde-format
 msgid "Writes text"
 msgstr "உரையை எழுதுகிறது"
 
-#: tools/selection/text/kpToolText_Commands.cpp:69
+#: tools/selection/text/kpToolText_Commands.cpp:46
 #, kde-format
 msgid "Text: Backspace"
 msgstr "உரை:பின் வாங்கு"
 
-#: tools/selection/text/kpToolText_Commands.cpp:86
+#: tools/selection/text/kpToolText_Commands.cpp:63
 #, kde-format
 msgid "Text: Delete"
 msgstr "உரை:நீக்கு"
 
-#: tools/selection/text/kpToolText_Commands.cpp:103
+#: tools/selection/text/kpToolText_Commands.cpp:80
 #, kde-format
 msgid "Text: New Line"
 msgstr "உரை:புதிய கோடு"
 
-#: tools/selection/text/kpToolText_Commands.cpp:120
+#: tools/selection/text/kpToolText_Commands.cpp:97
 #, kde-format
 msgid "Text: Write"
 msgstr "உரை:எழுது"
 
-#: tools/selection/text/kpToolText_Create.cpp:48
+#: tools/selection/text/kpToolText_Create.cpp:26
 #, kde-format
 msgid "Left drag to create text box."
 msgstr "இடது பக்கமாக இழுத்து உரைப் பெட்டியை உருவாக்கு"
 
-#: tools/selection/text/kpToolText_Move.cpp:42
+#: tools/selection/text/kpToolText_Move.cpp:20
 #, kde-format
 msgid "Left drag to move text box."
 msgstr "இடது பக்கமாக இழுத்துச் உரைப் பெட்டியைத் தள்ளு"
 
-#: tools/selection/text/kpToolText_Move.cpp:61
+#: tools/selection/text/kpToolText_Move.cpp:37
 #, kde-format
 msgid "Text: Move Box"
 msgstr "உரை: பெட்டியை நகர்த்து"
 
-#: tools/selection/text/kpToolText_ResizeScale.cpp:42
+#: tools/selection/text/kpToolText_ResizeScale.cpp:20
 #, kde-format
 msgid "Left drag to resize text box."
 msgstr "உரைப் பெட்டியை மறுஅளவாக்க இடது பக்கமாக இழுக்கவேண்டும்"
 
-#: tools/selection/text/kpToolText_SelectText.cpp:57
+#: tools/selection/text/kpToolText_SelectText.cpp:34
 #, kde-format
 msgid "Left click to change cursor position."
 msgstr "காட்டி இடத்தை மாற்ற இடது சொடுக்கவும்"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:113
+#: tools/selection/text/kpToolText_TextStyle.cpp:80
 #, kde-format
 msgid "Text: Opaque Background"
 msgstr "உரை: ஒளி ஊடுருவாத பின்னணி"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:114
+#: tools/selection/text/kpToolText_TextStyle.cpp:80
 #, kde-format
 msgid "Text: Transparent Background"
 msgstr "உரை: ஊடு தெரியும் பின்னணி"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:137
+#: tools/selection/text/kpToolText_TextStyle.cpp:100
 #, kde-format
 msgid "Text: Swap Colors"
 msgstr "உரை: வண்ணங்களை மாறுகோல்"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:158
+#: tools/selection/text/kpToolText_TextStyle.cpp:119
 #, kde-format
 msgid "Text: Foreground Color"
 msgstr "உரை:முன்னணி வண்ணம்"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:179
+#: tools/selection/text/kpToolText_TextStyle.cpp:138
 #, kde-format
 msgid "Text: Background Color"
 msgstr "உரை:பின்னணி வண்ணம்"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:215
+#: tools/selection/text/kpToolText_TextStyle.cpp:167
 #, kde-format
 msgid "Text: Font"
 msgstr "உரை:எழுத்துரு"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:242
+#: tools/selection/text/kpToolText_TextStyle.cpp:189
 #, kde-format
 msgid "Text: Font Size"
 msgstr "உரை:எழுத்துரு அளவு"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:265
+#: tools/selection/text/kpToolText_TextStyle.cpp:209
 #, kde-format
 msgid "Text: Bold"
 msgstr "உரை:தடிமன்"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:287
+#: tools/selection/text/kpToolText_TextStyle.cpp:229
 #, kde-format
 msgid "Text: Italic"
 msgstr "உரை:சாய்வெழுத்து"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:309
+#: tools/selection/text/kpToolText_TextStyle.cpp:249
 #, kde-format
 msgid "Text: Underline"
 msgstr "உரை:அடிக்கோடு"
 
-#: tools/selection/text/kpToolText_TextStyle.cpp:331
+#: tools/selection/text/kpToolText_TextStyle.cpp:269
 #, kde-format
 msgid "Text: Strike Through"
 msgstr "உரை:முழு அடித்தல்"
 
-#: views/kpUnzoomedThumbnailView.cpp:86
+#: views/kpUnzoomedThumbnailView.cpp:56
 #, fuzzy, kde-format
 msgid "Unzoomed Mode - Thumbnail"
 msgstr "பெரிதாக்கப்பட்ட சிறுபிம்ப வகை"
 
-#: views/kpZoomedThumbnailView.cpp:65
+#: views/kpZoomedThumbnailView.cpp:38
 #, fuzzy, kde-format
 msgid "%1% - Thumbnail"
 msgstr "குறும்படம்"
 
-#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:67
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
 msgid ""
 "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
@@ -2406,7 +2406,7 @@ msgid ""
 "decrease this setting.</p><p>To configure it, click on the cube.</p></qt>"
 msgstr ""
 
-#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:117
+#: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:93
 #, kde-format
 msgid ""
 "<qt><p><b>Color Similarity</b> is how <i>similar</i> the colors of different "
@@ -2432,174 +2432,174 @@ msgid ""
 "decrease this setting.</p></qt>"
 msgstr ""
 
-#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:231
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 
-#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:238
+#: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
 #, kde-format
 msgid ""
 "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format
 msgid "&Brightness:"
 msgstr "&பிரகாசம்:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:39
 #, kde-format
 msgid "Re&set"
 msgstr "திரும்ப அமை"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:41
 #, kde-format
 msgid "Co&ntrast:"
 msgstr "மாறுபாடு:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:70
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:46
 #, kde-format
 msgid "&Gamma:"
 msgstr "&காமா:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:79
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:55
 #, kde-format
 msgid "Rese&t"
 msgstr "திரும்ப அமை"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:86
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
 #, kde-format
 msgid "C&hannels:"
 msgstr "வழிமுறைகள்:"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:88
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:62
 #, kde-format
 msgid "All"
 msgstr "எல்லாம்"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:89
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:63
 #, kde-format
 msgid "Red"
 msgstr "சிவப்பு"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:90
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:64
 #, kde-format
 msgid "Green"
 msgstr "பச்சை"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:91
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:65
 #, kde-format
 msgid "Blue"
 msgstr "நீலம்"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:94
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:67
 #, kde-format
 msgid "Reset &All Values"
 msgstr "எல்லா மதிப்புகளையும் திரும்ப அமை"
 
-#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:161
+#: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:120
 #, kde-format
 msgid "Settings"
 msgstr "அமைப்புகள்"
 
-#: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:51
-#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:56
+#: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:27
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:34
 #, kde-format
 msgid "&Amount:"
 msgstr "&தொகை:"
 
-#: widgets/imagelib/effects/kpEffectEmbossWidget.cpp:51
-#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:71
+#: widgets/imagelib/effects/kpEffectEmbossWidget.cpp:27
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:46
 #, kde-format
 msgid "E&nable"
 msgstr "செயல்படுத்து"
 
-#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:130
+#: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:98
 #, kde-format
 msgid "Colors"
 msgstr "வண்ணங்கள்"
 
-#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:47
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:25
 #, fuzzy, kde-format
 #| msgid "&New:"
 msgid "&Hue:"
 msgstr "புதிய:"
 
-#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:48
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:26
 #, kde-format
 msgid "&Saturation:"
 msgstr ""
 
-#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:49
+#: widgets/imagelib/effects/kpEffectHSVWidget.cpp:27
 #, fuzzy, kde-format
 #| msgid "&Blue"
 msgctxt "The V of HSV"
 msgid "&Value:"
 msgstr "&நீலம்"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:57
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:34
 #, kde-format
 msgid "&Red"
 msgstr "&சிவப்பு"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:58
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:35
 #, kde-format
 msgid "&Green"
 msgstr "&பச்சை"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:59
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:36
 #, kde-format
 msgid "&Blue"
 msgstr "&நீலம்"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:64
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:41
 #, kde-format
 msgid "&All"
 msgstr "&எல்லாம்"
 
-#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:141
+#: widgets/imagelib/effects/kpEffectInvertWidget.cpp:105
 #, kde-format
 msgid "Channels"
 msgstr "வழிமுறைகள்"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:55
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:31
 #, kde-format
 msgid "&Monochrome"
 msgstr "&&மானோக்ரோம்"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:58
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:33
 #, fuzzy, kde-format
 msgid "Mo&nochrome (dithered)"
 msgstr "மானோக்ரோம் (தெளிக்கப்பட்ட)"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:60
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:35
 #, fuzzy, kde-format
 msgid "256 co&lor"
 msgstr "25 வண்ணம்"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:62
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:37
 #, fuzzy, kde-format
 msgid "256 colo&r (dithered)"
 msgstr "256 வண்ணம் (தெளிக்கப்பட்ட)"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:64
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:39
 #, fuzzy, kde-format
 msgid "24-&bit color"
 msgstr "24-&பிட் வண்ணம்"
 
-#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:144
+#: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:107
 #, kde-format
 msgid "Reduce To"
 msgstr "இதற்கு குறை"
 
-#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:54
+#: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:32
 #, kde-format
 msgid "&Granularity:"
 msgstr ""
 
-#: widgets/kpColorCells.cpp:195
+#: widgets/kpColorCells.cpp:153
 #, kde-format
 msgid ""
 "<qt><p>To select the foreground color that tools use to draw, left-click on "
@@ -2611,82 +2611,82 @@ msgid ""
 "the color of the source cell.</p></qt>"
 msgstr ""
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:85
+#: widgets/kpDocumentSaveOptionsWidget.cpp:61
 #, kde-format
 msgid "Convert &to:"
 msgstr "இதற்கு மாற்று:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:90
+#: widgets/kpDocumentSaveOptionsWidget.cpp:66
 #, kde-format
 msgid "Quali&ty:"
 msgstr "தரம்:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:98
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
 #, kde-format
 msgid "&Preview"
 msgstr "&முன்காட்சி"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:223
+#: widgets/kpDocumentSaveOptionsWidget.cpp:171
 #, kde-format
 msgid "Monochrome"
 msgstr "மானோக்ரோம்"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:224
+#: widgets/kpDocumentSaveOptionsWidget.cpp:172
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "மோனோக்ரோம் (வண்ணம் தெளிக்கப்பட்ட)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:228
+#: widgets/kpDocumentSaveOptionsWidget.cpp:175
 #, kde-format
 msgid "256 Color"
 msgstr "256 வண்ணம்"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:229
+#: widgets/kpDocumentSaveOptionsWidget.cpp:176
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 வண்ணம் (தெளிக்கப்பட்ட)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:234
+#: widgets/kpDocumentSaveOptionsWidget.cpp:180
 #, kde-format
 msgid "24-bit Color"
 msgstr "24-பிட் வண்ணம்"
 
-#: widgets/kpPrintDialogPage.cpp:57
+#: widgets/kpPrintDialogPage.cpp:33
 #, fuzzy, kde-format
 #| msgid "Image file to open"
 msgctxt "@title:tab"
 msgid "I&mage Position"
 msgstr "திறக்கவேண்டிய பிம்ப கோப்பு"
 
-#: widgets/kpPrintDialogPage.cpp:59
+#: widgets/kpPrintDialogPage.cpp:35
 #, kde-format
 msgid "&Center of the page"
 msgstr ""
 
-#: widgets/kpPrintDialogPage.cpp:61
+#: widgets/kpPrintDialogPage.cpp:36
 #, kde-format
 msgid "Top-&left of the page"
 msgstr ""
 
-#: widgets/kpTransparentColorCell.cpp:53
-#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:44
+#: widgets/kpTransparentColorCell.cpp:30
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:22
 #, kde-format
 msgid "Transparent"
 msgstr "தெரியக்கூடிய"
 
-#: widgets/toolbars/kpColorToolBar.cpp:120
+#: widgets/toolbars/kpColorToolBar.cpp:87
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
 msgstr ""
 
-#: widgets/toolbars/kpColorToolBar.cpp:122
+#: widgets/toolbars/kpColorToolBar.cpp:89
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
 msgstr ""
 
-#: widgets/toolbars/kpColorToolBar.cpp:125
+#: widgets/toolbars/kpColorToolBar.cpp:92
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -2696,71 +2696,71 @@ msgid ""
 "embedded more cleanly."
 msgstr ""
 
-#: widgets/toolbars/kpColorToolBar.cpp:307
+#: widgets/toolbars/kpColorToolBar.cpp:263
 #, fuzzy, kde-format
 #| msgid "KolourPaint"
 msgid "KolourPaint Defaults"
 msgstr "கேலொர்பெயிண்ட்"
 
-#: widgets/toolbars/kpColorToolBar.cpp:322
+#: widgets/toolbars/kpColorToolBar.cpp:274
 #, fuzzy, kde-format
 #| msgid "Colors"
 msgctxt "Colors: name_or_url_of_color_palette"
 msgid "Colors: %1"
 msgstr "வண்ணங்கள்"
 
-#: widgets/toolbars/kpColorToolBar.cpp:329
+#: widgets/toolbars/kpColorToolBar.cpp:276
 #, kde-format
 msgctxt "Colors: name_or_url_of_color_palette [modified]"
 msgid "Colors: %1 [modified]"
 msgstr ""
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:199
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:148
 #, kde-format
 msgid "1x1"
 msgstr "1x1"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:208
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:156
 #, kde-format
 msgid "Circle"
 msgstr "வட்டம்"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:211
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:159
 #, kde-format
 msgid "Square"
 msgstr "சதுரம்"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:215
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:163
 #, kde-format
 msgid "Slash"
 msgstr "வகுத்தல் குறி"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:219
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:167
 #, kde-format
 msgid "Backslash"
 msgstr "பின் வகுத்தல் குறி"
 
-#: widgets/toolbars/options/kpToolWidgetBrush.cpp:227
+#: widgets/toolbars/options/kpToolWidgetBrush.cpp:175
 #, kde-format
 msgid "%1x%2 %3"
 msgstr "%1x%2 %3"
 
-#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:117
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
 msgstr "நிரப்பு இல்லை"
 
-#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:120
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:90
 #, kde-format
 msgid "Fill with Background Color"
 msgstr "பின்னணி வண்ணத்தோடு நிரப்பு"
 
-#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:123
+#: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:93
 #, kde-format
 msgid "Fill with Foreground Color"
 msgstr "முன்னணி வண்ணத்தோடு நிரப்பு"
 
-#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:42
+#: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:20
 #, kde-format
 msgid "Opaque"
 msgstr "ஒளி பாயாத"
