@@ -371,7 +371,7 @@ void kpTransformResizeScaleDialog::heightFitWidthToAspectRatio()
 
 bool kpTransformResizeScaleDialog::resizeEnabled() const
 {
-    return (!actOnSelection() || (actOnSelection() && textSelection()));
+    return !actOnSelection() || textSelection();
 }
 
 //---------------------------------------------------------------------
