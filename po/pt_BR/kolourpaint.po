@@ -7,20 +7,21 @@
 # Henrique Pinto <henrique.pinto@kdemail.net>, 2005.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2008, 2009, 2010, 2011, 2012, 2014, 2015.
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2016, 2017, 2018, 2020, 2021, 2023.
+# SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-07 00:38+0000\n"
-"PO-Revision-Date: 2023-11-08 15:43-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"PO-Revision-Date: 2025-02-05 23:57-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1607,13 +1608,11 @@ msgid "Snapshot Delay"
 msgstr "Atraso na captura de tela"
 
 #: mainWindow/kpMainWindow_File.cpp:673
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " segundo"
-msgstr[1] " segundos"
+msgstr[0] "%v segundo"
+msgstr[1] "%v segundos"
 
 #: mainWindow/kpMainWindow_File.cpp:674
 #, kde-format
@@ -2041,13 +2040,12 @@ msgid "Zooms in and out of the image"
 msgstr "Amplia e reduz a imagem"
 
 #: tools/kpToolZoom.cpp:119
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Clique para ampliar/reduzir ou arraste com o botão esquerdo para ampliar uma "
+"Clique para ampliar. Clique direito para reduzir. Arraste para ampliar uma "
 "área específica."
 
 #: tools/polygonal/kpToolCurve.cpp:103
