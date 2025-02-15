@@ -1035,7 +1035,13 @@ void kpViewScrollableContainer::wheelEvent(QWheelEvent *e)
     }
 
     if (!e->isAccepted()) {
-        QScrollArea::wheelEvent(e);
+        if ((e->modifiers() & Qt::ShiftModifier) == 0)
+            QScrollArea::wheelEvent(e);
+        else
+        {
+            e->setModifiers(e->modifiers() & ~Qt::ShiftModifier);
+            horizontalScrollBar()->event(e);
+        }
     }
 }
 
