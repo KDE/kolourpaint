@@ -12,13 +12,13 @@
 # Victor Ryzhykh <victorr2007@yandex.ru>, 2016.
 # Alexander Podolskiy <apd2004@gmail.com>, 2010.
 # Alexander Yavorsky <kekcuha@gmail.com>, 2020, 2021, 2024.
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-09 00:39+0000\n"
-"PO-Revision-Date: 2024-10-15 16:22+0300\n"
+"PO-Revision-Date: 2025-03-05 16:05+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1601,13 +1601,13 @@ msgid "Snapshot Delay"
 msgstr "Задержка снимка"
 
 #: mainWindow/kpMainWindow_File.cpp:609
-#, fuzzy, kde-format
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " секунда"
-msgstr[1] " секунды"
-msgstr[2] " секунд"
-msgstr[3] " секунда"
+msgstr[0] "%v секунда"
+msgstr[1] "%v секунды"
+msgstr[2] "%v секунд"
+msgstr[3] "%v секунда"
 
 #: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
