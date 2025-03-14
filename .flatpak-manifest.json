@@ -8,7 +8,6 @@
     "tags": ["nightly"],
     "desktop-file-name-suffix": " (Nightly)",
     "finish-args": ["--share=ipc", "--socket=cups", "--socket=fallback-x11", "--socket=wayland", "--filesystem=host" ],
-
     "modules": [
         {
             "name": "kolourpaint",
@@ -16,7 +15,6 @@
             "config-opts": [
                 "-DBUILD_TESTING=OFF"
             ],
-
             "sources": [
                 { "type": "dir", "path": "." }
             ]
