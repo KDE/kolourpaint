@@ -13,6 +13,10 @@
         {
             "name": "kolourpaint",
             "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DBUILD_TESTING=OFF"
+            ],
+
             "sources": [
                 { "type": "dir", "path": "." }
             ]
