@@ -50,8 +50,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog(QWidget *parent)
 
     m_colorSimilarityInput = new kpIntNumInput(inputGroupBox);
     m_colorSimilarityInput->setRange(0, int(kpColorSimilarityHolder::MaxColorSimilarity * 100 + 0.1 /*don't floor below target int*/), 5 /*step*/);
-    m_colorSimilarityInput->setSuffix(i18n("%"));
-    m_colorSimilarityInput->setSpecialValueText(i18n("Exact Match"));
+    m_colorSimilarityInput->setSpecialValueText(i18nc("@label:spinbox", "Exact match"));
 
     // TODO: We have a good handbook section on this, which we should
     //       somehow link to.

@@ -24,6 +24,7 @@
 
 #include "kpLogCategories.h"
 #include <KConfigGroup>
+#include <KLocalization>
 #include <KLocalizedString>
 #include <KSharedConfig>
 
@@ -245,7 +246,7 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     m_originalWidthInput = new QSpinBox;
     m_originalWidthInput->setRange(1, INT_MAX);
     m_originalWidthInput->setValue(document()->width(static_cast<bool>(selection())));
-    auto *xLabel0 = new QLabel(i18n("x"), dimensionsGroupBox);
+    auto *xLabel0 = new QLabel(i18n("×"), dimensionsGroupBox);
     m_originalHeightInput = new QSpinBox;
     m_originalHeightInput->setRange(1, INT_MAX);
     m_originalHeightInput->setValue(document()->height(static_cast<bool>(selection())));
@@ -253,7 +254,7 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     auto *newLabel = new QLabel(i18n("&New:"), dimensionsGroupBox);
     m_newWidthInput = new QSpinBox;
     m_newWidthInput->setRange(1, INT_MAX);
-    auto *xLabel1 = new QLabel(i18n("x"), dimensionsGroupBox);
+    auto *xLabel1 = new QLabel(i18n("×"), dimensionsGroupBox);
     m_newHeightInput = new QSpinBox;
     m_newHeightInput->setRange(1, INT_MAX);
 
@@ -263,16 +264,16 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     m_percentWidthInput->setValue(100);
     m_percentWidthInput->setSingleStep(1);
     m_percentWidthInput->setDecimals(2);
-    m_percentWidthInput->setSuffix(i18n("%"));
+    KLocalization::setupSpinBoxFormatString(m_percentWidthInput, ki18nc("@label:spinbox", "%v%"));
 
-    auto *xLabel2 = new QLabel(i18n("x"), dimensionsGroupBox);
+    auto *xLabel2 = new QLabel(i18n("×"), dimensionsGroupBox);
 
     m_percentHeightInput = new QDoubleSpinBox;
     m_percentHeightInput->setRange(0.01, 1000000);
     m_percentHeightInput->setValue(100);
     m_percentHeightInput->setSingleStep(1);
     m_percentHeightInput->setDecimals(2);
-    m_percentHeightInput->setSuffix(i18n("%"));
+    KLocalization::setupSpinBoxFormatString(m_percentHeightInput, ki18nc("@label:spinbox", "%v%"));
 
     m_keepAspectRatioCheckBox = new QCheckBox(i18n("Keep &aspect ratio"), dimensionsGroupBox);
 
