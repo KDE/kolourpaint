@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-09 00:39+0000\n"
-"PO-Revision-Date: 2025-03-07 23:34+0300\n"
+"PO-Revision-Date: 2025-03-16 00:03+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -89,7 +89,7 @@ msgstr "Gri Tona Düşür"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:84
 #, kde-format
 msgid "Hue, Saturation, Value"
-msgstr "Ton, Doygunluk, Değer"
+msgstr "Ton, doygunluk, değer"
 
 #: commands/imagelib/effects/kpEffectInvertCommand.cpp:17
 #, kde-format
@@ -100,7 +100,7 @@ msgstr "Renkleri Ters Çevir"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:85
 #, kde-format
 msgid "Invert"
-msgstr "Ters Çevir"
+msgstr "Ters çevir"
 
 #: commands/imagelib/effects/kpEffectReduceColorsCommand.cpp:32
 #, kde-format
@@ -126,7 +126,7 @@ msgstr "256 Renge Düşür"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:83
 #, kde-format
 msgid "Histogram Equalizer"
-msgstr "Grafiksel Dengeleyici"
+msgstr "Histogram dengeleyicisi"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:43
 #, kde-format
@@ -273,12 +273,12 @@ msgstr "&Efekt:"
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:86
 #, kde-format
 msgid "Reduce Colors"
-msgstr "Renkleri Düşür"
+msgstr "Renkleri düşür"
 
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:87
 #, kde-format
 msgid "Soften & Sharpen"
-msgstr "Yumuşat & Keskinleştir"
+msgstr "Yumuşat ve keskinleştir"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:89
 #, kde-format
@@ -1041,7 +1041,7 @@ msgstr "&Otomatik Kırp"
 #: imagelib/transforms/kpTransformAutoCrop.cpp:343
 #, kde-format
 msgid "Autocrop"
-msgstr "Otomatik Kırp"
+msgstr "Kendiliğinden Kırp"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:518
 #, kde-format
@@ -1692,12 +1692,12 @@ msgstr "Gö&rsel Olarak Ayarla (Kırp)"
 #: mainWindow/kpMainWindow_Image.cpp:110
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "Ters Çevir (Başaşağı)"
+msgstr "&Dikey Yansıt"
 
 #: mainWindow/kpMainWindow_Image.cpp:115
 #, kde-format
 msgid "Mirror (horizontally)"
-msgstr "Yansıt (Yatay)"
+msgstr "Yatay Yansıt"
 
 #: mainWindow/kpMainWindow_Image.cpp:120
 #, kde-format
@@ -1783,7 +1783,7 @@ msgstr "%1,%2"
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, kde-format
 msgid "%1,%2 - %3,%4"
-msgstr "%1,%2 — %3,%4"
+msgstr "%1, %2 — %3,%4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:155
 #: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
@@ -1801,7 +1801,7 @@ msgstr "%1 bpp"
 #: mainWindow/kpMainWindow_View_Zoom.cpp:67
 #, kde-format
 msgid "%1%"
-msgstr "%​%1"
+msgstr "%%1"
 
 #: mainWindow/kpMainWindow_Text.cpp:34
 #, kde-format
@@ -2346,7 +2346,7 @@ msgstr "Yakınlaştırılmamış Kip — Küçük Görsel"
 #: views/kpZoomedThumbnailView.cpp:38
 #, kde-format
 msgid "%1% - Thumbnail"
-msgstr "%​%1 — Küçük Görsel"
+msgstr "%%1 — Küçük Görsel"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2449,7 +2449,7 @@ msgstr ""
 #, kde-format
 msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Renk benzerliği: %​%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
+"<p>Renk benzerliği: %%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
 "p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
@@ -2582,7 +2582,7 @@ msgstr "Kanallar"
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:31
 #, kde-format
 msgid "&Monochrome"
-msgstr "Te&k Renk"
+msgstr "Te&k renk"
 
 #: widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp:33
 #, kde-format
@@ -2657,22 +2657,22 @@ msgstr "Tek renk"
 #: widgets/kpDocumentSaveOptionsWidget.cpp:172
 #, kde-format
 msgid "Monochrome (Dithered)"
-msgstr "Tek renk (Titrek)"
+msgstr "Tek renk (titrek)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:175
 #, kde-format
 msgid "256 Color"
-msgstr "256 Renk"
+msgstr "256 renk"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:176
 #, kde-format
 msgid "256 Color (Dithered)"
-msgstr "256 Renk (Titrek)"
+msgstr "256 renk (titrek)"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:180
 #, kde-format
 msgid "24-bit Color"
-msgstr "24 Bit Renk"
+msgstr "24 bit renk"
 
 #: widgets/kpPrintDialogPage.cpp:33
 #, kde-format
