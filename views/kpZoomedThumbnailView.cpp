@@ -35,7 +35,7 @@ kpZoomedThumbnailView::~kpZoomedThumbnailView() = default;
 // public virtual [base kpThumbnailView]
 QString kpZoomedThumbnailView::caption() const
 {
-    return i18n("%1% - Thumbnail", zoomLevelX());
+    return i18n("%1% — Thumbnail", zoomLevelX());
 }
 
 // public slot virtual [base kpView]

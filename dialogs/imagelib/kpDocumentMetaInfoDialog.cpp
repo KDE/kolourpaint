@@ -113,7 +113,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog(const kpDocumentMetaInfo *doc
     d->horizDpiInput->setDecimals(::DpiPrecision);
     d->horizDpiInput->setSpecialValueText(i18n("Unspecified"));
 
-    auto *dpiXLabel = new QLabel(i18nc("Horizontal DPI 'x' Vertical DPI", " x "), dpiGroupBox);
+    auto *dpiXLabel = new QLabel(i18nc("Horizontal DPI 'x' Vertical DPI", " × "), dpiGroupBox);
     dpiXLabel->setAlignment(Qt::AlignCenter);
 
     d->vertDpiInput = new QDoubleSpinBox(dpiGroupBox);

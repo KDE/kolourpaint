@@ -18,6 +18,7 @@
 #include <QSlider>
 #include <QStyle>
 
+#include <KLocalization>
 #include <KLocalizedString>
 
 static inline int calcDiffByTen(int x, int y)
@@ -179,6 +180,7 @@ void kpIntNumInput::initWidget(int val)
     d->intSpinBox->setRange(INT_MIN, INT_MAX);
     d->intSpinBox->setSingleStep(1);
     d->intSpinBox->setValue(val);
+    KLocalization::setupSpinBoxFormatString(d->intSpinBox, ki18nc("@label:spinbox", "%v%"));
     d->intSpinBox->setObjectName(QStringLiteral("kpIntNumInput::QSpinBox"));
 
     connect(d->intSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &kpIntNumInput::spinValueChanged);
@@ -262,18 +264,6 @@ int kpIntNumInput::singleStep() const
 void kpIntNumInput::setSingleStep(int singleStep)
 {
     d->intSpinBox->setSingleStep(singleStep);
-}
-
-void kpIntNumInput::setSuffix(const QString &suffix)
-{
-    d->intSpinBox->setSuffix(suffix);
-
-    layout();
-}
-
-QString kpIntNumInput::suffix() const
-{
-    return d->intSpinBox->suffix();
 }
 
 void kpIntNumInput::setEditFocus(bool mark)
@@ -638,18 +628,6 @@ void kpDoubleNumInput::setSingleStep(double singleStep)
 double kpDoubleNumInput::value() const
 {
     return d->spin->value();
-}
-
-QString kpDoubleNumInput::suffix() const
-{
-    return d->spin->suffix();
-}
-
-void kpDoubleNumInput::setSuffix(const QString &suffix)
-{
-    d->spin->setSuffix(suffix);
-
-    layout();
 }
 
 void kpDoubleNumInput::setDecimals(int decimals)

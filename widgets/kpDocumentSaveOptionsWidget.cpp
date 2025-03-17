@@ -19,6 +19,7 @@
 
 #include "kpLogCategories.h"
 #include <KConfigGroup>
+#include <KLocalization>
 #include <KSharedConfig>
 
 #include <QApplication>
@@ -70,6 +71,7 @@ void kpDocumentSaveOptionsWidget::init()
     // according to QImage::save().
     // TODO: 100 quality is also misleading since that implies perfect quality.
     m_qualityInput->setRange(1, 100);
+    KLocalization::setupSpinBoxFormatString(m_qualityInput, ki18nc("@label:spinbox", "%v%"));
 
     m_previewButton = new QPushButton(i18n("&Preview"), this);
     m_previewButton->setCheckable(true);

@@ -66,7 +66,7 @@ void kpMainWindow::createStatusBar()
     addPermanentStatusBarItem(StatusBarItemShapePoints, (maxDimenLength + 1 /*,*/ + maxDimenLength) * 2 + 3 /* - */);
     addPermanentStatusBarItem(StatusBarItemShapeSize, (1 /*+/-*/ + maxDimenLength) * 2 + 1 /*x*/);
 
-    QString numSample = i18n("%1 x %2", 5000, 5000); // localized string; can e.g. be "5 000"
+    QString numSample = i18n("%1 × %2", 5000, 5000); // localized string; can e.g. be "5 000"
     addPermanentStatusBarItem(StatusBarItemDocSize, numSample.length());
 
     addPermanentStatusBarItem(StatusBarItemDocDepth, 5 /*XXbpp*/);
@@ -118,9 +118,9 @@ void kpMainWindow::setStatusBarShapePoints(const QPoint &startPoint, const QPoin
     if (startPoint == KP_INVALID_POINT) {
         statusBarLabel->setText(QString());
     } else if (endPoint == KP_INVALID_POINT) {
-        statusBarLabel->setText(i18n("%1,%2", startPoint.x(), startPoint.y()));
+        statusBarLabel->setText(i18n("%1, %2", startPoint.x(), startPoint.y()));
     } else {
-        statusBarLabel->setText(i18n("%1,%2 - %3,%4", startPoint.x(), startPoint.y(), endPoint.x(), endPoint.y()));
+        statusBarLabel->setText(i18n("%1, %2 — %3, %4", startPoint.x(), startPoint.y(), endPoint.x(), endPoint.y()));
     }
 
     d->statusBarShapeLastStartPoint = startPoint;
@@ -152,7 +152,7 @@ void kpMainWindow::setStatusBarShapeSize(const QSize &size)
     if (size == KP_INVALID_SIZE) {
         statusBarLabel->setText(QString());
     } else {
-        statusBarLabel->setText(i18n("%1x%2", size.width(), size.height()));
+        statusBarLabel->setText(i18n("%1 × %2", size.width(), size.height()));
     }
 
     d->statusBarShapeLastSize = size;
@@ -176,7 +176,7 @@ void kpMainWindow::setStatusBarDocSize(const QSize &size)
     if (size == KP_INVALID_SIZE) {
         statusBarLabel->setText(QString());
     } else {
-        statusBarLabel->setText(i18n("%1 x %2", size.width(), size.height()));
+        statusBarLabel->setText(i18n("%1 × %2", size.width(), size.height()));
     }
 }
 

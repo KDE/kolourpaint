@@ -178,7 +178,7 @@ int kpEffectBalanceWidget::gamma() const
 // protected slot
 void kpEffectBalanceWidget::recalculateGammaLabel()
 {
-    m_gammaLabel->setText(QLatin1String(" ") + QString::number(std::pow(10, gamma() / 50.0), 'f' /*[-]9.9*/, 2 /*precision*/) + QLatin1String(" "));
+    m_gammaLabel->setText(QLatin1String(" ") + QLocale().toString(std::pow(10, gamma() / 50.0), 'f', 2) + QLatin1String(" "));
     m_gammaLabel->repaint();
 }
 

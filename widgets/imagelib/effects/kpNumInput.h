@@ -140,7 +140,6 @@ class kpIntNumInput : public kpNumInput
     Q_PROPERTY(int minimum READ minimum WRITE setMinimum)
     Q_PROPERTY(int maximum READ maximum WRITE setMaximum)
     Q_PROPERTY(int singleStep READ singleStep WRITE setSingleStep)
-    Q_PROPERTY(QString suffix READ suffix WRITE setSuffix)
     Q_PROPERTY(QString specialValueText READ specialValueText WRITE setSpecialValueText)
 
 public:
@@ -173,11 +172,6 @@ public:
      */
     int value() const;
 
-    /**
-     * @return the suffix displayed behind the value.
-     * @see setSuffix()
-     */
-    QString suffix() const;
     /**
      * @return the string displayed for a special value.
      * @see setSpecialValueText()
@@ -245,17 +239,6 @@ public Q_SLOTS:
      * Sets the value of the control.
      */
     void setValue(int);
-
-    /**
-     * Sets the suffix to @p suffix.
-     * Use QString() to disable this feature.
-     * Formatting has to be provided (e.g. a space separator between the
-     * prepended @p value and the suffix's text has to be provided
-     * as the first character in the suffix).
-     *
-     * @see QSpinBox::setSuffix()
-     */
-    void setSuffix(const QString &suffix);
 
     /**
      * sets focus to the edit widget and marks all text in if mark == true
@@ -326,7 +309,6 @@ class kpDoubleNumInput : public kpNumInput
     Q_PROPERTY(double minimum READ minimum WRITE setMinimum)
     Q_PROPERTY(double maximum READ maximum WRITE setMaximum)
     Q_PROPERTY(double singleStep READ singleStep WRITE setSingleStep)
-    Q_PROPERTY(QString suffix READ suffix WRITE setSuffix)
     Q_PROPERTY(QString specialValueText READ specialValueText WRITE setSpecialValueText)
     Q_PROPERTY(int decimals READ decimals WRITE setDecimals)
 
@@ -358,12 +340,6 @@ public:
      * @return the current value.
      */
     double value() const;
-
-    /**
-     * @return the suffix.
-     * @see setSuffix()
-     */
-    QString suffix() const;
 
     /**
      * @return number of decimals.
@@ -433,15 +409,6 @@ public Q_SLOTS:
      * Sets the value of the control.
      */
     void setValue(double);
-
-    /**
-     * Sets the suffix to be displayed to @p suffix. Use QString() to disable
-     * this feature. Note that the suffix is attached to the value without any
-     * spacing. So if you prefer to display a space separator, set suffix
-     * to something like " cm".
-     * @see setSuffix()
-     */
-    void setSuffix(const QString &suffix);
 
 Q_SIGNALS:
     /**

@@ -196,12 +196,12 @@ void kpColorSimilarityToolBarItem::updateToolTip()
 
     if (colorSimilarity() > 0) {
         setToolTip(
-            i18n("<p>Color Similarity: %1%</p>"
+            i18n("<p>Color similarity: %1%</p>"
                  "<p align=\"center\">Click to configure.</p>",
                  qRound(colorSimilarity() * 100)));
     } else {
         setToolTip(
-            i18n("<p>Color Similarity: Exact Match</p>"
+            i18n("<p>Color similarity: Exact match</p>"
                  "<p align=\"center\">Click to configure.</p>"));
     }
 }
