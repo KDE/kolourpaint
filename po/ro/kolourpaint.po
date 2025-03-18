@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-09 00:39+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2021-07-26 14:33+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -294,8 +294,8 @@ msgstr "Nespecificat"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
-msgid " x "
-msgstr " x "
+msgid " × "
+msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -403,21 +403,19 @@ msgid "Invalid Text Fields"
 msgstr "Text: Finalizează"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:238
 #, kde-format
 msgid "Dimensions"
 msgstr "Dimensiuni"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:245
 #, kde-format
 msgid "Original:"
 msgstr "Original:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
-#: mainWindow/kpMainWindow_StatusBar.cpp:69
-#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
@@ -434,40 +432,40 @@ msgstr "Previzualizare"
 msgid "&Update"
 msgstr "&Actualizează"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Resize / Scale"
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "Redimensionează / Scalează"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:133
 #, kde-format
 msgid "Ac&t on:"
 msgstr "&Acționează asupra:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:138
 #, kde-format
 msgid "Entire Image"
 msgstr "Toată imaginea"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:140
 #: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "Selecție"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:143
 #, kde-format
 msgid "Text Box"
 msgstr "Casetă textulaă"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:187
 #, kde-format
 msgid "Operation"
 msgstr "Operație"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:189
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -479,61 +477,64 @@ msgid ""
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:208
 #, kde-format
 msgid "&Resize"
 msgstr "&Redimensionează"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:211
 #, kde-format
 msgid "&Scale"
 msgstr "&Scalează"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:214
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "Scalare li&nă"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:240
 #, kde-format
 msgid "Width:"
 msgstr "Lățime:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:242
 #, kde-format
 msgid "Height:"
 msgstr "Înălțime:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:249
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:257
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
-msgid "x"
-msgstr "x"
+msgid "×"
+msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
 msgid "&New:"
 msgstr "&Nou:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:261
 #, kde-format
 msgid "&Percent:"
 msgstr "&Procent:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
-#: dialogs/kpColorSimilarityDialog.cpp:53
-#, kde-format
-msgid "%"
-msgstr "%"
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:267
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
+#: widgets/imagelib/effects/kpNumInput.cpp:183
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#, fuzzy, kde-format
+#| msgid "%1%"
+msgctxt "@label:spinbox"
+msgid "%v%"
+msgstr "%1%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -542,18 +543,18 @@ msgid ""
 "qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "Text"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:648
 #, fuzzy, kde-format
 msgid "R&esize Text Box"
 msgstr "Text"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:651
 #: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
@@ -562,7 +563,7 @@ msgid ""
 "problems.</p><p>Are you sure you want to resize the image?</p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
 #: mainWindow/kpMainWindow_Tools.cpp:571
 #, fuzzy, kde-format
 #| msgid "Resize Image?"
@@ -570,13 +571,13 @@ msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "Redimensionați imaginea?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:660
 #: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "R&edimensionează imaginea"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:668
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -584,19 +585,19 @@ msgid ""
 "problems.</p><p>Are you sure you want to scale the image?</p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, fuzzy, kde-format
 #| msgid "Scale Image?"
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "Scalați imaginea?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:677
 #, kde-format
 msgid "Scal&e Image"
 msgstr "Scal&ează imaginea"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:680
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -605,19 +606,19 @@ msgid ""
 "qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, fuzzy, kde-format
 #| msgid "Scale Selection?"
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "Scalați selecția?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:689
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "Scal&ează selecția"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:697
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -626,18 +627,18 @@ msgid ""
 "p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "Selecție: %1"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:706
 #, fuzzy, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "Selecție: %1"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:709
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -646,13 +647,13 @@ msgid ""
 "</p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "Selecție: %1"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:718
 #, fuzzy, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "Selecție: %1"
@@ -843,12 +844,14 @@ msgstr "Similaritate culori"
 msgid "&RGB Color Cube Distance"
 msgstr ""
 
-#: dialogs/kpColorSimilarityDialog.cpp:54
-#, kde-format
-msgid "Exact Match"
+#: dialogs/kpColorSimilarityDialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Exact Match"
+msgctxt "@label:spinbox"
+msgid "Exact match"
 msgstr "Potrivire exactă"
 
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr ""
@@ -1721,22 +1724,23 @@ msgstr "Afișează &calea"
 msgid "Draw Anti-Aliased"
 msgstr ""
 
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
-msgid "%1,%2"
-msgstr "%1,%2"
+msgid "%1, %2"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, kde-format
-msgid "%1,%2 - %3,%4"
+#, fuzzy, kde-format
+#| msgid "%1,%2 - %3,%4"
+msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 - %3,%4"
-
-#: mainWindow/kpMainWindow_StatusBar.cpp:155
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
-#, kde-format
-msgid "%1x%2"
-msgstr "%1x%2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2286,7 +2290,7 @@ msgstr "Ascunde &mini-imaginea"
 
 #: views/kpZoomedThumbnailView.cpp:38
 #, fuzzy, kde-format
-msgid "%1% - Thumbnail"
+msgid "%1% — Thumbnail"
 msgstr "Mini-imagine"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
@@ -2343,13 +2347,13 @@ msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, kde-format
-msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
 #, kde-format
 msgid ""
-"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
 
@@ -2518,42 +2522,42 @@ msgid ""
 "the color of the source cell.</p></qt>"
 msgstr ""
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:61
+#: widgets/kpDocumentSaveOptionsWidget.cpp:62
 #, kde-format
 msgid "Convert &to:"
 msgstr "Convertește &la:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:66
+#: widgets/kpDocumentSaveOptionsWidget.cpp:67
 #, kde-format
 msgid "Quali&ty:"
 msgstr "Cali&tate:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#: widgets/kpDocumentSaveOptionsWidget.cpp:76
 #, kde-format
 msgid "&Preview"
 msgstr "&Previzualizare"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:171
+#: widgets/kpDocumentSaveOptionsWidget.cpp:173
 #, kde-format
 msgid "Monochrome"
 msgstr "Monocrom"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:172
+#: widgets/kpDocumentSaveOptionsWidget.cpp:174
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "Monocromă (Împrăștiere)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:175
+#: widgets/kpDocumentSaveOptionsWidget.cpp:177
 #, kde-format
 msgid "256 Color"
 msgstr "256 Culori"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:176
+#: widgets/kpDocumentSaveOptionsWidget.cpp:178
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 Culori (Împrăștiere)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:180
+#: widgets/kpDocumentSaveOptionsWidget.cpp:182
 #, kde-format
 msgid "24-bit Color"
 msgstr "Color pe 24 biți"
@@ -2650,6 +2654,12 @@ msgstr "Backslash"
 msgid "%1x%2 %3"
 msgstr "%1x%2 %3"
 
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
@@ -2669,6 +2679,19 @@ msgstr "Umple cu culoarea prim-planului"
 #, kde-format
 msgid "Opaque"
 msgstr "Opac"
+
+#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
+#~ msgid " x "
+#~ msgstr " x "
+
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "%1,%2"
+#~ msgstr "%1,%2"
 
 #~ msgctxt "<Tool Name> (<Single Accel Key>)"
 #~ msgid "%1 (%2)"

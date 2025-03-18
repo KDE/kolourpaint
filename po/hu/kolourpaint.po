@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-09 00:39+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2024-10-10 21:37+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -288,8 +288,8 @@ msgstr "Nincs megadva"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
-msgid " x "
-msgstr "x "
+msgid " × "
+msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -414,21 +414,19 @@ msgid "Invalid Text Fields"
 msgstr "Érvénytelen szövegmezők"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:238
 #, kde-format
 msgid "Dimensions"
 msgstr "Méretek"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:245
 #, kde-format
 msgid "Original:"
 msgstr "Eredeti:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
-#: mainWindow/kpMainWindow_StatusBar.cpp:69
-#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
@@ -445,39 +443,39 @@ msgstr "Előnézet"
 msgid "&Update"
 msgstr "&Frissítés"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:67
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "Átméretezés/nyújtás"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:133
 #, kde-format
 msgid "Ac&t on:"
 msgstr "Al&kalmazás erre:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:138
 #, kde-format
 msgid "Entire Image"
 msgstr "Az egész kép"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:140
 #: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "Kijelölés"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:143
 #, kde-format
 msgid "Text Box"
 msgstr "Szövegdoboz"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:187
 #, kde-format
 msgid "Operation"
 msgstr "Művelet"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:189
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -496,61 +494,64 @@ msgstr ""
 "i>, de a szomszédos képpontok kombinálásával simább, egyenletesebb kép lesz "
 "az eredmény.</li></ul></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:208
 #, kde-format
 msgid "&Resize"
 msgstr "&Átméretezés"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:211
 #, kde-format
 msgid "&Scale"
 msgstr "Nyúj&tás"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:214
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "Sima nyú&jtás"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:240
 #, kde-format
 msgid "Width:"
 msgstr "Szélesség:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:242
 #, kde-format
 msgid "Height:"
 msgstr "Magasság:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:249
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:257
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
-msgid "x"
-msgstr "x"
+msgid "×"
+msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
 msgid "&New:"
 msgstr "Ú&j:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:261
 #, kde-format
 msgid "&Percent:"
 msgstr "Szá&zalék:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
-#: dialogs/kpColorSimilarityDialog.cpp:53
-#, kde-format
-msgid "%"
-msgstr "%"
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:267
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
+#: widgets/imagelib/effects/kpNumInput.cpp:183
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#, fuzzy, kde-format
+#| msgid "%1%"
+msgctxt "@label:spinbox"
+msgid "%v%"
+msgstr "%1%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr "Az &oldalarány megtartása"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -563,18 +564,18 @@ msgstr ""
 "alkalmazásokban erőforrásproblémák léphetnek fel.</p><p>Biztosan át szeretné "
 "méretezni a szövegdobozt?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "A szövegdoboz átméretezése?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:648
 #, kde-format
 msgid "R&esize Text Box"
 msgstr "A szövegdoboz átmé&retezése"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:651
 #: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
@@ -587,20 +588,20 @@ msgstr ""
 "erőforrásproblémák léphetnek fel.</p><p>Biztosan át szeretné méretezni a "
 "képet?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
 #: mainWindow/kpMainWindow_Tools.cpp:571
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "A kép átméretezése?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:660
 #: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "A kép átmérete&zése"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:668
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -612,18 +613,18 @@ msgstr ""
 "erőforrásproblémák léphetnek fel.</p><p>Biztosan meg szeretné nyújtani a "
 "képet?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "A kép nyújtása?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:677
 #, kde-format
 msgid "Scal&e Image"
 msgstr "A kép nyúj&tása"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:680
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -636,18 +637,18 @@ msgstr ""
 "alkalmazásokban erőforrásproblémák léphetnek fel.</p><p>Biztosan meg "
 "szeretné nyújtani a kijelölt részt?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "A kijelölt rész nyújtása?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:689
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "A k&ijelölt rész nyújtása"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:697
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -660,18 +661,18 @@ msgstr ""
 "erőforrásproblémák léphetnek fel.</p><p>Biztosan meg szeretné nyújtani simán "
 "a képet?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "Sima nyújtás?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:706
 #, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "A kép &sima nyújtása"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:709
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -684,13 +685,13 @@ msgstr ""
 "alkalmazásokban erőforrásproblémák léphetnek fel.</p><p>Biztosan meg "
 "szeretné nyújtani simán a kijelölt részt?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "A kijelölt rész sima nyújtása?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:718
 #, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "A kijelölt rés&z sima nyújtása"
@@ -892,12 +893,14 @@ msgstr "Színhasonlóság"
 msgid "&RGB Color Cube Distance"
 msgstr "&RGB színkockatávolság"
 
-#: dialogs/kpColorSimilarityDialog.cpp:54
-#, kde-format
-msgid "Exact Match"
+#: dialogs/kpColorSimilarityDialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Exact Match"
+msgctxt "@label:spinbox"
+msgid "Exact match"
 msgstr "Pontos egyezés"
 
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr "<a href=\"dummy_to_make_link_clickable\">Mi a színhasonlóság?</a>"
@@ -1765,22 +1768,23 @@ msgstr "Az &elérési út megjelenítése"
 msgid "Draw Anti-Aliased"
 msgstr "Élsimított rajzolás"
 
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
-msgid "%1,%2"
-msgstr "%1,%2"
+msgid "%1, %2"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, kde-format
-msgid "%1,%2 - %3,%4"
+#, fuzzy, kde-format
+#| msgid "%1,%2 - %3,%4"
+msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 - %3,%4"
-
-#: mainWindow/kpMainWindow_StatusBar.cpp:155
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
-#, kde-format
-msgid "%1x%2"
-msgstr "%1x%2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2342,8 +2346,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Nagyítás nél&küli gyorsnézet"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, kde-format
-msgid "%1% - Thumbnail"
+#, fuzzy, kde-format
+#| msgid "%1% - Thumbnail"
+msgid "%1% — Thumbnail"
 msgstr "%1% - Gyorsnézet"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
@@ -2436,14 +2441,19 @@ msgstr ""
 "túl sok képpontot módosít), állítson be kisebb értéket.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, kde-format
-msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr "<p>Színhasonlóság: %1%</p><p align=\"center\">Beállítás</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
+#| "configure.</p>"
 msgid ""
-"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr "<p>Színhasonlóság: pontos egyezés</p><p align=\"center\">Beállítás</p>"
 
@@ -2618,42 +2628,42 @@ msgstr ""
 "a <b>Ctrl</b> billentyűt, a célcella színe felül lesz írva és a forráscella "
 "változatlan marad.</p></qt>"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:61
+#: widgets/kpDocumentSaveOptionsWidget.cpp:62
 #, kde-format
 msgid "Convert &to:"
 msgstr "Konvertálás &erre:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:66
+#: widgets/kpDocumentSaveOptionsWidget.cpp:67
 #, kde-format
 msgid "Quali&ty:"
 msgstr "M&inőség:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#: widgets/kpDocumentSaveOptionsWidget.cpp:76
 #, kde-format
 msgid "&Preview"
 msgstr "E&lőnézet"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:171
+#: widgets/kpDocumentSaveOptionsWidget.cpp:173
 #, kde-format
 msgid "Monochrome"
 msgstr "Fekete-fehér"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:172
+#: widgets/kpDocumentSaveOptionsWidget.cpp:174
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "Fekete-fehér (színcsökkentéssel)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:175
+#: widgets/kpDocumentSaveOptionsWidget.cpp:177
 #, kde-format
 msgid "256 Color"
 msgstr "256 szín"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:176
+#: widgets/kpDocumentSaveOptionsWidget.cpp:178
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 (színcsökkentéssel)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:180
+#: widgets/kpDocumentSaveOptionsWidget.cpp:182
 #, kde-format
 msgid "24-bit Color"
 msgstr "24 bites szín"
@@ -2752,6 +2762,12 @@ msgstr "Backslash"
 msgid "%1x%2 %3"
 msgstr "%1x%2 %3"
 
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
@@ -2771,6 +2787,19 @@ msgstr "Kitöltés az előtérszínnel"
 #, kde-format
 msgid "Opaque"
 msgstr "Nem áttetsző"
+
+#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
+#~ msgid " x "
+#~ msgstr "x "
+
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "%1,%2"
+#~ msgstr "%1,%2"
 
 #~ msgctxt "<Tool Name> (<Single Accel Key>)"
 #~ msgid "%1 (%2)"

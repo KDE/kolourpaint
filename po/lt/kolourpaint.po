@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-09 00:39+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2015-07-06 18:07+0300\n"
 "Last-Translator: Danutė <d.informatika@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -292,8 +292,8 @@ msgstr "Nenurodyta"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
-msgid " x "
-msgstr " x "
+msgid " × "
+msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -421,21 +421,19 @@ msgid "Invalid Text Fields"
 msgstr "Klaidingi teksto laukeliai"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:238
 #, kde-format
 msgid "Dimensions"
 msgstr "Matmenys"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:245
 #, kde-format
 msgid "Original:"
 msgstr "Pradinis:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
-#: mainWindow/kpMainWindow_StatusBar.cpp:69
-#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
@@ -452,39 +450,39 @@ msgstr "Peržiūra"
 msgid "&Update"
 msgstr "&Atnaujinti"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:67
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "Keisti lapo dydį / Ištempti"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:133
 #, kde-format
 msgid "Ac&t on:"
 msgstr "Operacijos &objektas:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:138
 #, kde-format
 msgid "Entire Image"
 msgstr "Visas paveikslėlis"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:140
 #: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "Žymėjimas"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:143
 #, kde-format
 msgid "Text Box"
 msgstr "Teksto laukas"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:187
 #, kde-format
 msgid "Operation"
 msgstr "Operacija"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:189
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -503,61 +501,64 @@ msgstr ""
 "Veikia taip pat kaip <i>Ištempimas</i>, tačiau jis sulieja šalia esančius "
 "pikselius, kad paveikslėlis atrodytų glotnesnis.</li></ul></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:208
 #, kde-format
 msgid "&Resize"
 msgstr "&Keisti lapo dydį"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:211
 #, kde-format
 msgid "&Scale"
 msgstr "&Ištempti"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:214
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "&Glotnus ištempimas"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:240
 #, kde-format
 msgid "Width:"
 msgstr "Plotis:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:242
 #, kde-format
 msgid "Height:"
 msgstr "Aukštis:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:249
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:257
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
-msgid "x"
-msgstr "x"
+msgid "×"
+msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
 msgid "&New:"
 msgstr "&Naujas:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:261
 #, kde-format
 msgid "&Percent:"
 msgstr "&Procentai:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
-#: dialogs/kpColorSimilarityDialog.cpp:53
-#, kde-format
-msgid "%"
-msgstr "%"
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:267
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
+#: widgets/imagelib/effects/kpNumInput.cpp:183
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#, fuzzy, kde-format
+#| msgid "%1%"
+msgctxt "@label:spinbox"
+msgid "%v%"
+msgstr "%1%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr "Išlaikyti &santykį"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -569,18 +570,18 @@ msgstr ""
 "atminties. Tai gali sulėtinti kompiuterio bei programų darbą.</p><p>Ar "
 "tikrai norite keisti teksto lauko dydį?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "Keisti tekstinio lauko dydį?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:648
 #, kde-format
 msgid "R&esize Text Box"
 msgstr "K&eisti teksto laukelio dydį"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:651
 #: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
@@ -592,20 +593,20 @@ msgstr ""
 "gali sulėtinti kompiuterio bei programų darbą.</p><p>Ar tikrai norite keisti "
 "paveikslėlio dydį?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
 #: mainWindow/kpMainWindow_Tools.cpp:571
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "Keisti paveikslėlio dydį?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:660
 #: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "Keisti paveikslėlio &dydį"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:668
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -616,18 +617,18 @@ msgstr ""
 "atminties. Tai gali sulėtinti kompiuterio bei programų darbą.</p><p>Ar "
 "tikrai norite ištempti paveikslėlį?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "Ištempti paveikslėlį?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:677
 #, kde-format
 msgid "Scal&e Image"
 msgstr "Ištempti paveikslėlį"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:680
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -639,18 +640,18 @@ msgstr ""
 "atminties. Tai gali sulėtinti kompiuterio bei programų darbą.</p><p>Ar "
 "tikrai norite ištempti pažymėtą sritį?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "Ištempti žymėjimą?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:689
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "Iš&tempti žymėjimą"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:697
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -662,18 +663,18 @@ msgstr ""
 "atminties. Tai gali sulėtinti kompiuterio bei programų darbą.</p><p>Ar "
 "tikrai norite glotniai ištempti paveikslėlį?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "Glotniai ištempti paveikslėlį?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:706
 #, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "Glotnus &paveikslėlio ištempimas"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:709
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -685,13 +686,13 @@ msgstr ""
 "kompiuterio atminties. Tai gali sulėtinti kompiuterio bei programų darbą.</"
 "p><p>Ar tikrai norite glotnai ištempti pažymėtą sritį?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "Glotniai ištempti žymėjimą?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:718
 #, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "Glotnus &žymėjimo ištempimas"
@@ -906,12 +907,14 @@ msgstr "Spalvų panašumas"
 msgid "&RGB Color Cube Distance"
 msgstr "&RGB spalvų kubo atstumas"
 
-#: dialogs/kpColorSimilarityDialog.cpp:54
-#, kde-format
-msgid "Exact Match"
+#: dialogs/kpColorSimilarityDialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Exact Match"
+msgctxt "@label:spinbox"
+msgid "Exact match"
 msgstr "Tiksliai atitinka"
 
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr "<a href=\"dummy_to_make_link_clickable\">Kas yra spalvų panašumas?</a>"
@@ -1779,22 +1782,23 @@ msgstr "Rodyti kelią"
 msgid "Draw Anti-Aliased"
 msgstr ""
 
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
-msgid "%1,%2"
-msgstr "%1,%2"
+msgid "%1, %2"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, kde-format
-msgid "%1,%2 - %3,%4"
+#, fuzzy, kde-format
+#| msgid "%1,%2 - %3,%4"
+msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 – %3,%4"
-
-#: mainWindow/kpMainWindow_StatusBar.cpp:155
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
-#, kde-format
-msgid "%1x%2"
-msgstr "%1x%2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2361,8 +2365,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Priartinta miniatiūra"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, kde-format
-msgid "%1% - Thumbnail"
+#, fuzzy, kde-format
+#| msgid "%1% - Thumbnail"
+msgid "%1% — Thumbnail"
 msgstr "%1% - Miniatiūra"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
@@ -2458,16 +2463,21 @@ msgstr ""
 "qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, kde-format
-msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Spalvų panašumas: %1%</p><p align=\"center\">Spustelėkite norėdami keisti."
 "</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
+#| "configure.</p>"
 msgid ""
-"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
 "<p>Spalvų panašumas: tiksliai atitinka</p><p align=\"center\">Spustelėkite "
@@ -2645,42 +2655,42 @@ msgstr ""
 "tempiant spalvą į kitą vietą. Taipogi, jei tai darysite laikydami "
 "klavišą<b>Vald</b>, buvusi spalva pasikeis naująja spalva.</p></qt>"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:61
+#: widgets/kpDocumentSaveOptionsWidget.cpp:62
 #, kde-format
 msgid "Convert &to:"
 msgstr "&Konvertuoti į:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:66
+#: widgets/kpDocumentSaveOptionsWidget.cpp:67
 #, kde-format
 msgid "Quali&ty:"
 msgstr "&Kokybė:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#: widgets/kpDocumentSaveOptionsWidget.cpp:76
 #, kde-format
 msgid "&Preview"
 msgstr "&Peržiūra"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:171
+#: widgets/kpDocumentSaveOptionsWidget.cpp:173
 #, kde-format
 msgid "Monochrome"
 msgstr "Vienspalvis"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:172
+#: widgets/kpDocumentSaveOptionsWidget.cpp:174
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "Vienspalvis (pikseliuotas)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:175
+#: widgets/kpDocumentSaveOptionsWidget.cpp:177
 #, kde-format
 msgid "256 Color"
 msgstr "256 spalvų"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:176
+#: widgets/kpDocumentSaveOptionsWidget.cpp:178
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 spalvos (pikseliuotos)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:180
+#: widgets/kpDocumentSaveOptionsWidget.cpp:182
 #, kde-format
 msgid "24-bit Color"
 msgstr "24-bitų spalvos"
@@ -2776,6 +2786,12 @@ msgstr "Kairinis brūkšnys"
 msgid "%1x%2 %3"
 msgstr "%1x%2 %3"
 
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
@@ -2795,6 +2811,19 @@ msgstr "Užpildyti priekinio plano spalva"
 #, kde-format
 msgid "Opaque"
 msgstr "Neskaidrus"
+
+#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
+#~ msgid " x "
+#~ msgstr " x "
+
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "%1,%2"
+#~ msgstr "%1,%2"
 
 #~ msgctxt "<Tool Name> (<Single Accel Key>)"
 #~ msgid "%1 (%2)"

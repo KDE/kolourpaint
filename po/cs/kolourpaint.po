@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-09 00:39+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2024-10-08 14:43+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -292,8 +292,8 @@ msgstr "Neurčeno"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
-msgid " x "
-msgstr " x "
+msgid " × "
+msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -420,21 +420,19 @@ msgid "Invalid Text Fields"
 msgstr "Neplatná textová pole"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:238
 #, kde-format
 msgid "Dimensions"
 msgstr "Rozměry"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:245
 #, kde-format
 msgid "Original:"
 msgstr "Původní:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
-#: mainWindow/kpMainWindow_StatusBar.cpp:69
-#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
@@ -451,39 +449,39 @@ msgstr "Náhled"
 msgid "&Update"
 msgstr "Akt&ualizovat"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:67
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "Změnit velikost / měřítko"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:133
 #, kde-format
 msgid "Ac&t on:"
 msgstr "&Na:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:138
 #, kde-format
 msgid "Entire Image"
 msgstr "Celý obrázek"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:140
 #: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "Výběr"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:143
 #, kde-format
 msgid "Text Box"
 msgstr "Textový rámeček"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:187
 #, kde-format
 msgid "Operation"
 msgstr "Operace"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:189
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -501,61 +499,64 @@ msgstr ""
 "hladce</b>: Totéž jako <b>Změnit měřítko</b>, ale sousední pixely jsou "
 "prolnuty, čímž je docíleno hladšího vzhledu.</li></ul></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:208
 #, kde-format
 msgid "&Resize"
 msgstr "Změnit &velikost"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:211
 #, kde-format
 msgid "&Scale"
 msgstr "Změnit &měřítko"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:214
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "Změnit měřítko &hladce"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:240
 #, kde-format
 msgid "Width:"
 msgstr "Šířka:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:242
 #, kde-format
 msgid "Height:"
 msgstr "Výška:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:249
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:257
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
-msgid "x"
-msgstr "x"
+msgid "×"
+msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
 msgid "&New:"
 msgstr "&Nový:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:261
 #, kde-format
 msgid "&Percent:"
 msgstr "&Procent:"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
-#: dialogs/kpColorSimilarityDialog.cpp:53
-#, kde-format
-msgid "%"
-msgstr "%"
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:267
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
+#: widgets/imagelib/effects/kpNumInput.cpp:183
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#, fuzzy, kde-format
+#| msgid "%1%"
+msgctxt "@label:spinbox"
+msgid "%v%"
+msgstr "%1%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr "Zachov&at poměr stran"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -567,18 +568,18 @@ msgstr ""
 "množství paměti. Může to vést k prodloužení odezvy systému a dalším "
 "problémům.</p><p>Opravdu změnit velikost textového rámečku?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "Změnit velikost textového rámečku?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:648
 #, kde-format
 msgid "R&esize Text Box"
 msgstr "Změnit v&elikost textového rámečku"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:651
 #: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
@@ -590,20 +591,20 @@ msgstr ""
 "Může to vést k prodloužení odezvy systému a dalším problémům.</p><p>Opravdu "
 "změnit velikost obrázku?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
 #: mainWindow/kpMainWindow_Tools.cpp:571
 #, kde-format
 msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "Změnit velikost obrázku?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:660
 #: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "Změnit v&elikost obrázku"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:668
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -614,18 +615,18 @@ msgstr ""
 "Může to vést k prodloužení odezvy systému a dalším problémům.</p><p>Opravdu "
 "změnit měřítko obrázku?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "Změnit měřítko obrázku?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:677
 #, kde-format
 msgid "Scal&e Image"
 msgstr "Změnit &měřítko obrázku"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:680
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -637,18 +638,18 @@ msgstr ""
 "Může to vést k prodloužení odezvy systému a dalším problémům.</p><p>Opravdu "
 "změnit měřítko výběru?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, kde-format
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "Změnit měřítko výběru?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:689
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "Změnit &měřítko výběru"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:697
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -660,18 +661,18 @@ msgstr ""
 "paměti. Může to vést k prodloužení odezvy systému a dalším problémům.</"
 "p><p>Opravdu změnit hladce měřítko obrázku?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "Změnit hladce měřítko obrázku?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:706
 #, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "Změnit měřítko &hladce"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:709
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -683,13 +684,13 @@ msgstr ""
 "paměti. Může to vést k prodloužení odezvy systému a dalším problémům.</"
 "p><p>Opravdu změnit hladce měřítko výběru?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "Hladce změnit měřítko výběru?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:718
 #, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "&Hladce změnit měřítko výběru"
@@ -887,12 +888,14 @@ msgstr "Podobnost barev"
 msgid "&RGB Color Cube Distance"
 msgstr "Vzdálenost v RGB barevné krychli"
 
-#: dialogs/kpColorSimilarityDialog.cpp:54
-#, kde-format
-msgid "Exact Match"
+#: dialogs/kpColorSimilarityDialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Exact Match"
+msgctxt "@label:spinbox"
+msgid "Exact match"
 msgstr "Přesná shoda"
 
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr "<a href=\"dummy_to_make_link_clickable\">Co je to podobnost barev?</a>"
@@ -1749,22 +1752,23 @@ msgstr "Zobrazit &cestu"
 msgid "Draw Anti-Aliased"
 msgstr "Vykreslit vyhlazovaný"
 
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
-msgid "%1,%2"
-msgstr "%1,%2"
+msgid "%1, %2"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, kde-format
-msgid "%1,%2 - %3,%4"
+#, fuzzy, kde-format
+#| msgid "%1,%2 - %3,%4"
+msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 - %3,%4"
-
-#: mainWindow/kpMainWindow_StatusBar.cpp:155
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
-#, kde-format
-msgid "%1x%2"
-msgstr "%1x%2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2318,8 +2322,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Nepřiblížený režim - Náhled"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, kde-format
-msgid "%1% - Thumbnail"
+#, fuzzy, kde-format
+#| msgid "%1% - Thumbnail"
+msgid "%1% — Thumbnail"
 msgstr "%1% - Náhled"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
@@ -2375,15 +2380,20 @@ msgid ""
 msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, kde-format
-msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Podobnost barev: %1%</p><p align=\"center\">Klikněte pro nastavení.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
+#| "configure.</p>"
 msgid ""
-"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
 "<p>Podobnost barev: Přesná shoda</p><p align=\"center\">Klikněte pro "
@@ -2554,42 +2564,42 @@ msgid ""
 "the color of the source cell.</p></qt>"
 msgstr ""
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:61
+#: widgets/kpDocumentSaveOptionsWidget.cpp:62
 #, kde-format
 msgid "Convert &to:"
 msgstr "Převést &do:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:66
+#: widgets/kpDocumentSaveOptionsWidget.cpp:67
 #, kde-format
 msgid "Quali&ty:"
 msgstr "Kvali&ta:"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#: widgets/kpDocumentSaveOptionsWidget.cpp:76
 #, kde-format
 msgid "&Preview"
 msgstr "Ná&hled"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:171
+#: widgets/kpDocumentSaveOptionsWidget.cpp:173
 #, kde-format
 msgid "Monochrome"
 msgstr "Černobílý"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:172
+#: widgets/kpDocumentSaveOptionsWidget.cpp:174
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "Černobílý (rozptýlený)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:175
+#: widgets/kpDocumentSaveOptionsWidget.cpp:177
 #, kde-format
 msgid "256 Color"
 msgstr "256 barev"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:176
+#: widgets/kpDocumentSaveOptionsWidget.cpp:178
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 barev (rozptýlené)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:180
+#: widgets/kpDocumentSaveOptionsWidget.cpp:182
 #, kde-format
 msgid "24-bit Color"
 msgstr "24bitové barvy"
@@ -2685,6 +2695,12 @@ msgstr "Obrácený kaligrafický"
 msgid "%1x%2 %3"
 msgstr "%3 %1x%2"
 
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
@@ -2704,3 +2720,16 @@ msgstr "Vyplnit barvou popředí"
 #, kde-format
 msgid "Opaque"
 msgstr "Neprůhledné pozadí"
+
+#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
+#~ msgid " x "
+#~ msgstr " x "
+
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "%1,%2"
+#~ msgstr "%1,%2"

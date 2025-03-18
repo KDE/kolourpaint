@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-09 00:39+0000\n"
+"POT-Creation-Date: 2025-03-18 00:40+0000\n"
 "PO-Revision-Date: 2021-08-21 16:25+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -294,8 +294,8 @@ msgstr "अविशिष्ट"
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:116
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
-msgid " x "
-msgstr " x "
+msgid " × "
+msgstr ""
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -406,21 +406,19 @@ msgid "Invalid Text Fields"
 msgstr "अवैध पाठ फ़ील्ड"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:98
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:237
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:238
 #, kde-format
 msgid "Dimensions"
 msgstr "आयाम"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:100
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:244
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:245
 #, kde-format
 msgid "Original:"
 msgstr "असली:"
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:103
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
-#: mainWindow/kpMainWindow_StatusBar.cpp:69
-#: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 x %2"
 msgstr "%1 x %2"
@@ -437,40 +435,40 @@ msgstr "पूर्वावलोकन"
 msgid "&Update"
 msgstr "अद्यतन (&U)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:66
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Resize / Scale"
 msgctxt "@title:window"
 msgid "Resize / Scale"
 msgstr "नया आकार / स्केल"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:132
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:133
 #, kde-format
 msgid "Ac&t on:"
 msgstr "क्रिया: (&t)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:137
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:138
 #, kde-format
 msgid "Entire Image"
 msgstr "सम्पूर्ण छवि"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:139
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:140
 #: layers/selections/image/kpAbstractImageSelection.cpp:168
 #, kde-format
 msgid "Selection"
 msgstr "चयन"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:142
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:143
 #, kde-format
 msgid "Text Box"
 msgstr "पाठ बक्सा"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:186
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:187
 #, kde-format
 msgid "Operation"
 msgstr "ऑपरेशन"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:188
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:189
 #, kde-format
 msgid ""
 "<qt><ul><li><b>Resize</b>: The size of the picture will be increased by "
@@ -482,61 +480,64 @@ msgid ""
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:207
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:208
 #, kde-format
 msgid "&Resize"
 msgstr "नया-आकार (&R)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:210
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:211
 #, kde-format
 msgid "&Scale"
 msgstr "स्केल (&S)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:213
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:214
 #, kde-format
 msgid "S&mooth Scale"
 msgstr "मृदु स्केल (&m)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:239
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:240
 #, kde-format
 msgid "Width:"
 msgstr "चौडाईः"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:241
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:242
 #, kde-format
 msgid "Height:"
 msgstr "ऊँचाईः"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:248
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:256
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:268
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:249
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:257
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
-msgid "x"
-msgstr "एक्स"
+msgid "×"
+msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:253
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
 msgid "&New:"
 msgstr "नयाः (&N)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:260
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:261
 #, kde-format
 msgid "&Percent:"
 msgstr "प्रतिशत: (&P)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:266
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:275
-#: dialogs/kpColorSimilarityDialog.cpp:53
-#, kde-format
-msgid "%"
-msgstr "%"
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:267
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
+#: widgets/imagelib/effects/kpNumInput.cpp:183
+#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#, fuzzy, kde-format
+#| msgid "%1%"
+msgctxt "@label:spinbox"
+msgid "%v%"
+msgstr "%1%"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:277
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
 msgid "Keep &aspect ratio"
 msgstr "आस्पेक्ट रेशो बनाए रखें (&a)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:638
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>Resizing the text box to %1x%2 may take a substantial amount of "
@@ -545,19 +546,19 @@ msgid ""
 "qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:646
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
 #, fuzzy, kde-format
 #| msgid "Resize Text Box?"
 msgctxt "@title:window"
 msgid "Resize Text Box?"
 msgstr "पाठ बक्सा को नया आकार दें?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:647
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:648
 #, kde-format
 msgid "R&esize Text Box"
 msgstr "पाठ बक्सा नया आकार (&e)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:650
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:651
 #: mainWindow/kpMainWindow_Tools.cpp:561
 #, kde-format
 msgid ""
@@ -569,7 +570,7 @@ msgstr ""
 "सिस्टम के रिस्पांसिवनेस को कम कर सकता है तथा अन्य अनुप्रयोग रिसोर्सों में समस्याएँ पैदा कर "
 "सकता है.</p><p>क्या आप सुनिश्चित हैं कि आप छवि को नया आकार देना चाहते हैं?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:658
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
 #: mainWindow/kpMainWindow_Tools.cpp:571
 #, fuzzy, kde-format
 #| msgid "Resize Image?"
@@ -577,13 +578,13 @@ msgctxt "@title:window"
 msgid "Resize Image?"
 msgstr "छवि को नया आकार दें?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:659
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:660
 #: mainWindow/kpMainWindow_Tools.cpp:572
 #, kde-format
 msgid "R&esize Image"
 msgstr "छवि को नया आकार दें (&e)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:667
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:668
 #, kde-format
 msgid ""
 "<qt><p>Scaling the image to %1x%2 may take a substantial amount of memory. "
@@ -594,19 +595,19 @@ msgstr ""
 "रिस्पांसिवनेस को कम कर सकता है तथा अन्य अनुप्रयोग रिसोर्सों में समस्याएँ पैदा कर सकता है.</"
 "p><p>क्या आप सुनिश्चित हैं कि आप छवि को स्केल करना चाहते हैं?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:675
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
 #, fuzzy, kde-format
 #| msgid "Scale Image?"
 msgctxt "@title:window"
 msgid "Scale Image?"
 msgstr "छवि आकार बदलें?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:676
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:677
 #, kde-format
 msgid "Scal&e Image"
 msgstr "छवि स्केल करें (&e)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:679
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:680
 #, kde-format
 msgid ""
 "<qt><p>Scaling the selection to %1x%2 may take a substantial amount of "
@@ -618,19 +619,19 @@ msgstr ""
 "सिस्टम के रिस्पांसिवनेस को कम कर सकता है तथा अन्य अनुप्रयोग रिसोर्सों में समस्याएँ पैदा कर "
 "सकता है.</p><p>क्या आप सुनिश्चित हैं कि आप चयनित को स्केल करना चाहते हैं?</p></qt>"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:687
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
 #, fuzzy, kde-format
 #| msgid "Scale Selection?"
 msgctxt "@title:window"
 msgid "Scale Selection?"
 msgstr "चयन स्केल करें?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:688
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:689
 #, kde-format
 msgid "Scal&e Selection"
 msgstr "चयन स्केल करें (&e)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:696
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:697
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the image to %1x%2 may take a substantial amount of "
@@ -639,19 +640,19 @@ msgid ""
 "p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:704
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
 #, fuzzy, kde-format
 #| msgid "Smooth Scale Image?"
 msgctxt "@title:window"
 msgid "Smooth Scale Image?"
 msgstr "छवि मृदु स्केल करें?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:705
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:706
 #, kde-format
 msgid "Smooth Scal&e Image"
 msgstr "छवि मृदु स्केल करें (&e)"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:708
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:709
 #, kde-format
 msgid ""
 "<qt><p>Smooth Scaling the selection to %1x%2 may take a substantial amount "
@@ -660,14 +661,14 @@ msgid ""
 "</p></qt>"
 msgstr ""
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:716
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
 #, fuzzy, kde-format
 #| msgid "Smooth Scale Selection?"
 msgctxt "@title:window"
 msgid "Smooth Scale Selection?"
 msgstr "चयन मृदु स्केल करें?"
 
-#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:717
+#: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:718
 #, kde-format
 msgid "Smooth Scal&e Selection"
 msgstr "चयन मृदु स्केल करें (&e)"
@@ -893,12 +894,14 @@ msgstr "रंग एकरूपता"
 msgid "&RGB Color Cube Distance"
 msgstr "आरजीबी रंग घन दूरी (&R)"
 
-#: dialogs/kpColorSimilarityDialog.cpp:54
-#, kde-format
-msgid "Exact Match"
+#: dialogs/kpColorSimilarityDialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Exact Match"
+msgctxt "@label:spinbox"
+msgid "Exact match"
 msgstr "सटीक जोड़ीदार"
 
-#: dialogs/kpColorSimilarityDialog.cpp:58
+#: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
 msgid "<a href=\"dummy_to_make_link_clickable\">What is Color Similarity?</a>"
 msgstr "<a href=\"dummy_to_make_link_clickable\">रंग सिमिलेरिटी क्या है?</a>"
@@ -1774,22 +1777,23 @@ msgstr "पथ दिखाएँ (&P)"
 msgid "Draw Anti-Aliased"
 msgstr ""
 
+#: mainWindow/kpMainWindow_StatusBar.cpp:69
+#: mainWindow/kpMainWindow_StatusBar.cpp:155
+#: mainWindow/kpMainWindow_StatusBar.cpp:179
+#, kde-format
+msgid "%1 × %2"
+msgstr ""
+
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
-msgid "%1,%2"
-msgstr "%1,%2"
+msgid "%1, %2"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, kde-format
-msgid "%1,%2 - %3,%4"
+#, fuzzy, kde-format
+#| msgid "%1,%2 - %3,%4"
+msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 - %3,%4"
-
-#: mainWindow/kpMainWindow_StatusBar.cpp:155
-#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
-#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
-#, kde-format
-msgid "%1x%2"
-msgstr "%1x%2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2343,8 +2347,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "अनजूम्ड मोड - लघुछवि"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, kde-format
-msgid "%1% - Thumbnail"
+#, fuzzy, kde-format
+#| msgid "%1% - Thumbnail"
+msgid "%1% — Thumbnail"
 msgstr "%1% - लघु छवि"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
@@ -2400,15 +2405,20 @@ msgid ""
 msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, kde-format
-msgid "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>रंग एकरूपता: %1%</p><p align=\"center\">कॉन्फ़िगर करने के लिए क्लिक करें.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
+#| "configure.</p>"
 msgid ""
-"<p>Color Similarity: Exact Match</p><p align=\"center\">Click to configure.</"
+"<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
 "<p>रंग एकरूपता: सटीक जोड़</p><p align=\"center\">कॉन्फ़िगर करने के लिए क्लिक करें.</p>"
@@ -2579,42 +2589,42 @@ msgid ""
 "the color of the source cell.</p></qt>"
 msgstr ""
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:61
+#: widgets/kpDocumentSaveOptionsWidget.cpp:62
 #, kde-format
 msgid "Convert &to:"
 msgstr "में बदलें: (&t)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:66
+#: widgets/kpDocumentSaveOptionsWidget.cpp:67
 #, kde-format
 msgid "Quali&ty:"
 msgstr "गुण: (&t)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:74
+#: widgets/kpDocumentSaveOptionsWidget.cpp:76
 #, kde-format
 msgid "&Preview"
 msgstr "पूर्वावलोकन (&P)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:171
+#: widgets/kpDocumentSaveOptionsWidget.cpp:173
 #, kde-format
 msgid "Monochrome"
 msgstr "एकवर्ण"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:172
+#: widgets/kpDocumentSaveOptionsWidget.cpp:174
 #, kde-format
 msgid "Monochrome (Dithered)"
 msgstr "मोनोक्रोम (डिथर्ड)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:175
+#: widgets/kpDocumentSaveOptionsWidget.cpp:177
 #, kde-format
 msgid "256 Color"
 msgstr "256 रंग"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:176
+#: widgets/kpDocumentSaveOptionsWidget.cpp:178
 #, kde-format
 msgid "256 Color (Dithered)"
 msgstr "256 रंग (डिथर्ड)"
 
-#: widgets/kpDocumentSaveOptionsWidget.cpp:180
+#: widgets/kpDocumentSaveOptionsWidget.cpp:182
 #, kde-format
 msgid "24-bit Color"
 msgstr "24-बिट रंग"
@@ -2711,6 +2721,12 @@ msgstr "बैकस्लैश"
 msgid "%1x%2 %3"
 msgstr "%1x%2 %3"
 
+#: widgets/toolbars/options/kpToolWidgetEraserSize.cpp:76
+#: widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp:66
+#, kde-format
+msgid "%1x%2"
+msgstr "%1x%2"
+
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:87
 #, kde-format
 msgid "No Fill"
@@ -2730,6 +2746,19 @@ msgstr "अग्रभूमि रंग से भरें"
 #, kde-format
 msgid "Opaque"
 msgstr "अपारदर्शी"
+
+#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
+#~ msgid " x "
+#~ msgstr " x "
+
+#~ msgid "x"
+#~ msgstr "एक्स"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "%1,%2"
+#~ msgstr "%1,%2"
 
 #~ msgctxt "<Tool Name> (<Single Accel Key>)"
 #~ msgid "%1 (%2)"
