@@ -6,13 +6,13 @@
 # Andriy Rysin <rysin@kde.org>, 2002, 2003, 2006.
 # Eugene Onischenko <oneugene@ukr.net>, 2004, 2005.
 # Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2004, 2005, 2007, 2008.
-# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2020, 2021, 2023, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2020, 2021, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2024-10-07 09:57+0300\n"
+"PO-Revision-Date: 2025-03-18 08:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -298,7 +298,7 @@ msgstr "Не вказано"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -537,7 +537,7 @@ msgstr "Висота:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -553,11 +553,10 @@ msgstr "&Відсотки:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -902,8 +901,7 @@ msgid "&RGB Color Cube Distance"
 msgstr "Відстань в кубі кольорів &RGB"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Точний збіг"
@@ -1781,18 +1779,17 @@ msgstr "Малювати зі згладжуванням"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2356,10 +2353,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Режим без масштабування — мініатюри"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "%1% — Мініатюра"
+msgstr "%1% — мініатюра"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2457,19 +2453,14 @@ msgstr ""
 "пікселів), вам слід зменшити це значення.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Подібність кольорів: %1%</p><p align=\"center\">Натисніть, щоб "
 "налаштувати.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"

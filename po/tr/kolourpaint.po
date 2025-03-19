@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-03-16 00:03+0300\n"
+"PO-Revision-Date: 2025-03-18 13:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -301,7 +301,7 @@ msgstr "Belirtilmemiş"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -540,7 +540,7 @@ msgstr "Yükseklik:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -556,11 +556,10 @@ msgstr "&Yüzde:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%%1"
+msgstr "%%v"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -910,11 +909,10 @@ msgid "&RGB Color Cube Distance"
 msgstr "RGB Renk K&üpü Uzaklığı"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
-msgstr "Birebir Eşleştirme"
+msgstr "Tam eşleştirme"
 
 #: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
@@ -1783,18 +1781,17 @@ msgstr "Kenar Yumuşatmalı Çiz"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1, %2 — %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2348,8 +2345,7 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Yakınlaştırılmamış Kip — Küçük Görsel"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
 msgstr "%%1 — Küçük Görsel"
 
@@ -2451,25 +2447,20 @@ msgstr ""
 "değiştiriyorsa) bu değeri düşürmelisiniz.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Renk benzerliği: %%1</p><p align=\"center\">Yapılandırmak için tıklayın.</"
 "p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
-"<p>Renk benzerliği: Birebir Eşleştirme</p><p align=\"center\">Yapılandırmak "
-"için tıklayın.</p>"
+"<p>Renk benzerliği: Tam eşleştirme</p><p align=\"center\">Yapılandırmak için "
+"tıklayın.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format

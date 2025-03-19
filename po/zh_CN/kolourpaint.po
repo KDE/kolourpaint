@@ -533,11 +533,10 @@ msgstr "增减比例(&P)："
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1%"
+msgstr ""
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -872,11 +871,10 @@ msgid "&RGB Color Cube Distance"
 msgstr "&RGB 颜色立方体距离"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
-msgstr "完全一致"
+msgstr ""
 
 #: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
@@ -1744,10 +1742,9 @@ msgid "%1, %2"
 msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1，%2 - %3，%4"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2296,10 +2293,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "总览图 - 无缩放"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "%1% - 总览图"
+msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2380,21 +2376,16 @@ msgstr ""
 "低此值。</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
-msgstr "<p>颜色相似阈值：%1%</p><p align=\"center\">点击调整。</p>"
+msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
-msgstr "<p>颜色相似阈值：完全一致</p><p align=\"center\">点击调整。</p>"
+msgstr ""
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format
@@ -2724,16 +2715,3 @@ msgstr "填充前景色"
 #, kde-format
 msgid "Opaque"
 msgstr "选区背景不透明"
-
-#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
-#~ msgid " x "
-#~ msgstr " x "
-
-#~ msgid "x"
-#~ msgstr "x"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "%1,%2"
-#~ msgstr "%1，%2"
