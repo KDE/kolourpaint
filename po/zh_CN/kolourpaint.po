@@ -289,7 +289,7 @@ msgstr "未指定"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -517,7 +517,7 @@ msgstr "高度："
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -536,7 +536,7 @@ msgstr "增减比例(&P)："
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -874,7 +874,7 @@ msgstr "&RGB 颜色立方体距离"
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
-msgstr ""
+msgstr "精确匹配"
 
 #: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
@@ -1734,17 +1734,17 @@ msgstr "绘制时使用抗锯齿平滑"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr ""
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2295,7 +2295,7 @@ msgstr "总览图 - 无缩放"
 #: views/kpZoomedThumbnailView.cpp:38
 #, kde-format
 msgid "%1% — Thumbnail"
-msgstr ""
+msgstr "%1% — 缩略图"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2378,14 +2378,14 @@ msgstr ""
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
-msgstr ""
+msgstr "<p>色彩相似度：%1%</p><p align=\"center\">点此配置。</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
 #, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
-msgstr ""
+msgstr "<p>色彩相似度：精确匹配</p><p align=\"center\">点此配置。</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format

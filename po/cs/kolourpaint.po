@@ -529,7 +529,7 @@ msgstr "Výška:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -1762,7 +1762,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, fuzzy, kde-format
