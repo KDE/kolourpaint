@@ -2793,16 +2793,3 @@ msgstr "Fyll med framgrunnsfarge"
 #, kde-format
 msgid "Opaque"
 msgstr "Ugjennomsiktig"
-
-#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
-#~ msgid " x "
-#~ msgstr " × "
-
-#~ msgid "x"
-#~ msgstr "×"
-
-#~ msgid "%"
-#~ msgstr " %"
-
-#~ msgid "%1,%2"
-#~ msgstr "%1,%2"

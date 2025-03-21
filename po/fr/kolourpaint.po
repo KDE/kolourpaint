@@ -1,7 +1,7 @@
 # translation of kolourpaint.po to Français
 # traduction de kolourpaint.po en Français
 # traduction de kolourpaint.po en Français
-# SPDX-FileCopyrightText: 2020, 2021, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2020, 2021, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 # Cedric Pasteur <cedric.pasteur@free.fr>, 2004.
 # Matthieu Robin <kde@macolu.org>, 2004, 2005.
 # Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2004, 2005, 2008, 2009, 2010.
@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2024-10-08 12:05+0200\n"
+"PO-Revision-Date: 2025-03-19 11:46+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -28,9 +28,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 24.12.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -311,7 +311,7 @@ msgstr "Non spécifié"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -557,7 +557,7 @@ msgstr "Hauteur :"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -574,11 +574,10 @@ msgstr "&Pourcentage :"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1 %"
+msgstr "%v %"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -928,8 +927,7 @@ msgid "&RGB Color Cube Distance"
 msgstr "Distance dans le cube des couleurs &RVB"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Correspondance exacte"
@@ -1813,18 +1811,17 @@ msgstr "Dessiner avec anticrénelage"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1, %2 - %3, %4"
+msgstr "%1, %2 — %3, %4"
 
 # unreviewed-context
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
@@ -2401,10 +2398,9 @@ msgstr "Mode « Taille originale » - Vignette"
 
 # unreviewed-context
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "%1 % - Vignette"
+msgstr "%1 % — Vignette"
 
 # unreviewed-context
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
@@ -2507,25 +2503,20 @@ msgstr ""
 "valeur.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Similitude de couleurs : %1 %</p><p align=\"center\">Cliquez pour "
-"configurer</p>"
+"<p>Similitude de couleurs : %1 %</p><p align=\"center\">Veuillez cliquer "
+"pour configurer</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
 "<p>Similitude de couleurs : correspondance exacte</p><p align=\"center"
-"\">Cliquez pour configurer</p>"
+"\">Veuillez cliquer pour configurer</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format
