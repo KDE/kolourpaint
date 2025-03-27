@@ -7,13 +7,13 @@
 # Maris Nartiss <maris.kde@gmail.com>, 2007, 2008.
 # Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
 # Einars Sprugis <einars8@gmail.com>, 2011.
-# SPDX-FileCopyrightText: 2024 Toms Trasuns <toms.trasuns@posteo.net>
+# SPDX-FileCopyrightText: 2024, 2025 Toms Trasuns <toms.trasuns@posteo.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2024-11-12 20:49+0200\n"
+"PO-Revision-Date: 2025-03-22 09:24+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -298,7 +298,7 @@ msgstr "Nenorādīts"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -536,7 +536,7 @@ msgstr "Augstums:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -552,11 +552,10 @@ msgstr "&Procenti:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1 %"
+msgstr "%v %"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -896,8 +895,7 @@ msgid "&RGB Color Cube Distance"
 msgstr "&RGB krāsu kuba attālums"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Precīzi sakrīt"
@@ -1768,18 +1766,17 @@ msgstr "Zīmēt ar kropļojumnovērsi"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 — %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2341,8 +2338,7 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Nemērogots režīms — sīktēls"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
 msgstr "%1 % — sīktēls"
 
@@ -2440,19 +2436,14 @@ msgstr ""
 "vajadzētu samazināt šo vērtību.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Krāsu līdzība: %1 %</p><p align=\"center\">Nospiediet, lai konfigurētu.</"
 "p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
