@@ -151,7 +151,7 @@ bool kpMainWindow::queryCloseColors()
 
     toolEndShape();
 
-    if (!colorCells()->isModified()) {
+    if (!colorCells()->isModified() || noAskSave()) {
         return true; // ok to close
     }
 

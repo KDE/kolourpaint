@@ -1278,7 +1278,7 @@ bool kpMainWindow::queryCloseDocument()
 {
     toolEndShape();
 
-    if (!d->document || !d->document->isModified()) {
+    if (!d->document || !d->document->isModified() || noAskSave()) {
         return true; // ok to close current doc
     }
 

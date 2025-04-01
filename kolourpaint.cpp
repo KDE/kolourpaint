@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
     aboutData.setupCommandLine(&cmdLine);
     cmdLine.addOption(QCommandLineOption(QStringLiteral("mimetypes"), i18n("List all readable image MIME types")));
     cmdLine.addOption(QCommandLineOption(QStringLiteral("new"), i18n("Start with new image using given size"), i18n("[width]x[height]")));
+    cmdLine.addOption(QCommandLineOption(QStringLiteral("no-ask-save"), i18n("Exit without asking to save changes")));
     cmdLine.process(app);
     aboutData.processCommandLine(&cmdLine);
 
@@ -122,6 +123,8 @@ int main(int argc, char *argv[])
             mainWindow->show();
         }
     }
+
+    kpMainWindow::setNoAskSave(cmdLine.isSet(QStringLiteral("no-ask-save")));
 
     return QApplication::exec();
 }

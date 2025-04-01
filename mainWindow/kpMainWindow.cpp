@@ -1,4 +1,3 @@
-
 /*
    SPDX-FileCopyrightText: 2003-2007 Clarence Dang <dang@kde.org>
 
@@ -34,6 +33,10 @@
 #include <QMenu>
 
 #include "kpLogCategories.h"
+
+//---------------------------------------------------------------------
+
+bool kpMainWindow::s_noAskSave = false;
 
 //---------------------------------------------------------------------
 
@@ -316,7 +319,7 @@ void kpMainWindow::saveProperties(KConfigGroup &configGroup)
 #endif
         configGroup.writeEntry(kpSessionSettingDocumentUrl, url.url());
 
-        // Not from URL e.g. "kolourpaint doesnotexist.png"?
+        // Not from URL e.g. "kolourpaint doesexist.png"?
         //
         // Note that "kolourpaint doesexist.png" is considered to be from
         // a URL even if it was deleted in the background. This is because the user expects
@@ -798,6 +801,18 @@ void kpMainWindow::slotDocumentRestored()
         d->document->setModified(false);
     }
     slotUpdateCaption();
+}
+
+//---------------------------------------------------------------------
+
+void kpMainWindow::setNoAskSave(bool noAskSave)
+{
+    s_noAskSave = noAskSave;
+}
+
+bool kpMainWindow::noAskSave()
+{
+    return s_noAskSave;
 }
 
 //---------------------------------------------------------------------

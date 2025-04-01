@@ -70,6 +70,10 @@ public:
 
     void finalizeGUI(KXMLGUIClient *client) override;
 
+public:
+    static void setNoAskSave(bool noAskSave);
+    static bool noAskSave();
+
 private:
     void readGeneralSettings();
     void readThumbnailSettings();
@@ -644,6 +648,7 @@ public:
 
 private:
     struct kpMainWindowPrivate *d;
+    static bool s_noAskSave;  // Flag to indicate if --no-ask-save was specified
 };
 
 #endif // KP_MAIN_WINDOW_H
