@@ -546,7 +546,6 @@ msgstr "&Prosent:"
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
 #, fuzzy, kde-format
-#| msgid "%1%"
 msgctxt "@label:spinbox"
 msgid "%v%"
 msgstr "%1%"
@@ -880,7 +879,6 @@ msgstr "Avstand på &RGB-fargeterningen"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
 #, fuzzy, kde-format
-#| msgid "Exact Match"
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Nøyaktig treff"
@@ -1757,7 +1755,6 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
 msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 – %3,%4"
 
@@ -2321,7 +2318,6 @@ msgstr "Uendret størrelse ‒ minibilde"
 
 #: views/kpZoomedThumbnailView.cpp:38
 #, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
 msgid "%1% — Thumbnail"
 msgstr "%1% ‒ minibilde"
 
@@ -2418,16 +2414,11 @@ msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr "<p>Fargelikhet:  %1%</p><p align=\"center\">Trykk for å sette opp.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
 #, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
