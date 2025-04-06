@@ -517,7 +517,6 @@ msgstr "&Proseanta:"
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
 #, fuzzy, kde-format
-#| msgid "%1%"
 msgctxt "@label:spinbox"
 msgid "%v%"
 msgstr "%1%"
@@ -1683,7 +1682,6 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
 msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 – %3,%4"
 
@@ -2243,7 +2241,6 @@ msgstr ""
 
 #: views/kpZoomedThumbnailView.cpp:38
 #, fuzzy, kde-format
-#| msgid "Show T&humbnail"
 msgid "%1% — Thumbnail"
 msgstr "Čájet &uhcagovaža"
 
