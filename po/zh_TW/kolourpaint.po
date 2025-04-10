@@ -5,20 +5,20 @@
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
 # Franklin Weng <franklin@goodhorse.idv.tw>, 2007, 2011, 2012.
 # Jeff Huang <s8321414@gmail.com>, 2016, 2017.
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-09 00:39+0000\n"
-"PO-Revision-Date: 2024-10-19 20:00+0900\n"
+"PO-Revision-Date: 2025-04-09 17:09+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -1284,7 +1284,7 @@ msgstr "使用 KolourPaint 預設值"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
-msgstr "使用 KDE 的值"
+msgstr "使用 KDE 的顏色"
 
 #: mainWindow/kpMainWindow_Colors.cpp:53
 #, kde-format
@@ -1855,17 +1855,17 @@ msgstr "開啟選取的掃描器失敗。"
 #: tools/flow/kpToolBrush.cpp:15
 #, kde-format
 msgid "Brush"
-msgstr "刷子"
+msgstr "筆刷"
 
 #: tools/flow/kpToolBrush.cpp:15
 #, kde-format
 msgid "Draw using brushes of different shapes and sizes"
-msgstr "使用不同形狀大小的刷子來畫"
+msgstr "使用不同形狀大小的筆刷來畫圖"
 
 #: tools/flow/kpToolBrush.cpp:24 tools/flow/kpToolPen.cpp:33
 #, kde-format
 msgid "Click to draw dots or drag to draw strokes."
-msgstr "點擊可以畫點，拖曳則畫出手繪的形狀。"
+msgstr "按一下畫一點，拖曳來畫出筆劃。"
 
 #: tools/flow/kpToolColorEraser.cpp:28 tools/flow/kpToolColorEraser.cpp:57
 #, kde-format
@@ -1910,7 +1910,7 @@ msgstr "放開所有的滑鼠按鍵。"
 #: tools/flow/kpToolPen.cpp:24
 #, kde-format
 msgid "Pen"
-msgstr "筆"
+msgstr "尖筆"
 
 #: tools/flow/kpToolPen.cpp:24
 #, kde-format
