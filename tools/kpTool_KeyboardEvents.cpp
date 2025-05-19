@@ -194,7 +194,8 @@ void kpTool::seeIfAndHandleBeginDrawKeyPress(QKeyEvent *e)
     }
 
     // TODO: what about the modifiers?
-    QMouseEvent me(QEvent::MouseButtonPress, view->mapFromGlobal(QCursor::pos()), Qt::LeftButton, Qt::LeftButton /*button state after event*/, Qt::NoModifier);
+    QMouseEvent me(QEvent::MouseButtonPress, view->mapFromGlobal(QCursor::pos()), QCursor::pos(),
+                   Qt::LeftButton, Qt::LeftButton /*button state after event*/, Qt::NoModifier);
     mousePressEvent(&me);
     e->accept();
 }
@@ -224,7 +225,8 @@ void kpTool::seeIfAndHandleEndDrawKeyPress(QKeyEvent *e)
     }
 
     // TODO: what about the modifiers?
-    QMouseEvent me(QEvent::MouseButtonRelease, view->mapFromGlobal(QCursor::pos()), Qt::LeftButton, Qt::NoButton /*button state after event*/, Qt::NoModifier);
+    QMouseEvent me(QEvent::MouseButtonRelease, view->mapFromGlobal(QCursor::pos()), QCursor::pos(),
+                   Qt::LeftButton, Qt::NoButton /*button state after event*/, Qt::NoModifier);
     mouseReleaseEvent(&me);
 
     e->accept();

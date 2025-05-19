@@ -694,7 +694,7 @@ void kpMainWindow::dropEvent(QDropEvent *e)
         const QString text = e->mimeData()->text();
 
         QPoint selTopLeft = KP_INVALID_POINT;
-        const QPoint globalPos = QWidget::mapToGlobal(e->pos());
+        const QPoint globalPos = QWidget::mapToGlobal(e->position().toPoint());
 #if DEBUG_KP_MAIN_WINDOW
         qCDebug(kpLogMainWindow) << "\tpos toGlobal=" << globalPos;
 #endif

@@ -175,7 +175,8 @@ void kpDualColorButton::dragMoveEvent(QDragMoveEvent *e)
 #if DEBUG_KP_DUAL_COLOR_BUTTON
     qCDebug(kpLogWidgets) << "kpDualColorButton::dragMoveEvent() canDecode=" << KColorMimeData::canDecode(e->mimeData());
 #endif
-    e->setAccepted((foregroundRect().contains(e->pos()) || backgroundRect().contains(e->pos())) && KColorMimeData::canDecode(e->mimeData()));
+    e->setAccepted((foregroundRect().contains(e->position().toPoint()) ||
+                    backgroundRect().contains(e->position().toPoint())) && KColorMimeData::canDecode(e->mimeData()));
 }
 
 //---------------------------------------------------------------------
@@ -189,9 +190,9 @@ void kpDualColorButton::dropEvent(QDropEvent *e)
 #endif
 
     if (col.isValid()) {
-        if (foregroundRect().contains(e->pos())) {
+        if (foregroundRect().contains(e->position().toPoint())) {
             setForegroundColor(kpColor(col.rgba()));
-        } else if (backgroundRect().contains(e->pos())) {
+        } else if (backgroundRect().contains(e->position().toPoint())) {
             setBackgroundColor(kpColor(col.rgba()));
         }
     }
@@ -203,13 +204,13 @@ void kpDualColorButton::dropEvent(QDropEvent *e)
 void kpDualColorButton::mousePressEvent(QMouseEvent *e)
 {
 #if DEBUG_KP_DUAL_COLOR_BUTTON
-    qCDebug(kpLogWidgets) << "kpDualColorButton::mousePressEvent() pos=" << e->pos();
+    qCDebug(kpLogWidgets) << "kpDualColorButton::mousePressEvent() pos=" << e->position().toPoint();
 #endif
 
     m_dragStartPoint = KP_INVALID_POINT;
 
     if (e->button() == Qt::LeftButton) {
-        m_dragStartPoint = e->pos();
+        m_dragStartPoint = e->position().toPoint();
     }
 }
 
@@ -218,7 +219,7 @@ void kpDualColorButton::mousePressEvent(QMouseEvent *e)
 void kpDualColorButton::mouseMoveEvent(QMouseEvent *e)
 {
 #if DEBUG_KP_DUAL_COLOR_BUTTON
-    qCDebug(kpLogWidgets) << "kpDualColorButton::mouseMoveEvent() pos=" << e->pos() << " buttons=" << e->buttons() << " dragStartPoint=" << m_dragStartPoint
+    qCDebug(kpLogWidgets) << "kpDualColorButton::mouseMoveEvent() pos=" << e->position().toPoint() << " buttons=" << e->buttons() << " dragStartPoint=" << m_dragStartPoint
                           << endl;
 #endif
 
@@ -232,8 +233,10 @@ void kpDualColorButton::mouseMoveEvent(QMouseEvent *e)
     }
 
     const int delay = QApplication::startDragDistance();
-    if (e->x() < m_dragStartPoint.x() - delay || e->x() > m_dragStartPoint.x() + delay || e->y() < m_dragStartPoint.y() - delay
-        || e->y() > m_dragStartPoint.y() + delay) {
+    if (e->position().toPoint().x() < m_dragStartPoint.x() - delay ||
+        e->position().toPoint().x() > m_dragStartPoint.x() + delay ||
+        e->position().toPoint().y() < m_dragStartPoint.y() - delay ||
+        e->position().toPoint().y() > m_dragStartPoint.y() + delay) {
 #if DEBUG_KP_DUAL_COLOR_BUTTON
         qCDebug(kpLogWidgets) << "\tstarting drag as long as it's in a rectangle";
 #endif
@@ -267,7 +270,7 @@ void kpDualColorButton::mouseReleaseEvent(QMouseEvent *e)
 {
     m_dragStartPoint = KP_INVALID_POINT;
 
-    if (swapPixmapRect().contains(e->pos()) && m_color[0] != m_color[1]) {
+    if (swapPixmapRect().contains(e->position().toPoint()) && m_color[0] != m_color[1]) {
 #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
         qCDebug(kpLogWidgets) << "kpDualColorButton::mouseReleaseEvent() swap colors:";
 #endif
@@ -293,9 +296,9 @@ void kpDualColorButton::mouseDoubleClickEvent(QMouseEvent *e)
 {
     int whichColor = -1;
 
-    if (foregroundRect().contains(e->pos())) {
+    if (foregroundRect().contains(e->position().toPoint())) {
         whichColor = 0;
-    } else if (backgroundRect().contains(e->pos())) {
+    } else if (backgroundRect().contains(e->position().toPoint())) {
         whichColor = 1;
     }
 

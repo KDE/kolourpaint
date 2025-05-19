@@ -388,7 +388,10 @@ void kpColorCellsBase::mouseMoveEvent(QMouseEvent *e)
 
     if (d->inMouse) {
         int delay = QApplication::startDragDistance();
-        if (e->x() > d->mousePos.x() + delay || e->x() < d->mousePos.x() - delay || e->y() > d->mousePos.y() + delay || e->y() < d->mousePos.y() - delay) {
+        if ((e->position().toPoint().x() > d->mousePos.x() + delay) ||
+            (e->position().toPoint().x() < d->mousePos.x() - delay) ||
+            (e->position().toPoint().y() > d->mousePos.y() + delay) ||
+            (e->position().toPoint().y() < d->mousePos.y() - delay)) {
             // Drag color object
             int cell = positionToCell(d->mousePos);
             if (cell != -1) {
@@ -420,7 +423,7 @@ static void SetDropAction(QWidget *self, QDropEvent *event)
 {
     // TODO: Would be nice to default to CopyAction if the destination cell
     //       is null.
-    if (event->source() == self && (event->keyboardModifiers() & Qt::ControlModifier) == 0)
+    if (event->source() == self && (event->modifiers() & Qt::ControlModifier) == 0)
         event->setDropAction(Qt::MoveAction);
     else
         event->setDropAction(Qt::CopyAction);
@@ -463,7 +466,7 @@ void kpColorCellsBase::dropEvent(QDropEvent *event)
     if (c.isValid()) {
         ::SetDropAction(this, event);
 
-        int cell = positionToCell(event->pos(), true, true /*allow empty cell*/);
+        int cell = positionToCell(event->position().toPoint(), true, true /*allow empty cell*/);
 #if DEBUG_KP_COLOR_CELLS_BASE
         qCDebug(kpLogColorCollection) << "\tcell=" << cell;
 #endif
