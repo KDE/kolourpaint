@@ -368,6 +368,7 @@ endif()
 
 install(PROGRAMS org.kde.kolourpaint.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.kolourpaint.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(DIRECTORY colors DESTINATION ${KDE_INSTALL_CONFDIR})
 
 if(BUILD_DOC)
     add_subdirectory(doc)
