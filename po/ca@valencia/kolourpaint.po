@@ -2401,7 +2401,7 @@ msgstr ""
 "són prou similars.</p><p>Amb tot, si hi ha massa efecte i es canvien píxels "
 "amb colors que no considereu que siguen similars (p. ex., si <b>omplir</b> "
 "canvia massa píxels), hauríeu de disminuir este valor.</p><p>Per a "
-"configurar-lo, cliqueu en el cub.</p></qt>"
+"configurar-lo, cliqueu damunt del cub.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:93
 #, kde-format
@@ -2631,7 +2631,7 @@ msgid ""
 "the color of the source cell.</p></qt>"
 msgstr ""
 "<qt><p>Per a seleccionar el color de primer pla amb el qual dibuixaran les "
-"eines, cliqueu amb el botó esquerre en una cel·la de color. Per a "
+"eines, cliqueu amb el botó esquerre damunt d'una cel·la de color. Per a "
 "seleccionar el color de fons, cliqueu amb el botó dret.</p><p>Per a canviar "
 "el color de la mateixa cel·la, feu-hi doble clic.</p><p>També podeu "
 "intercanviar el color d'una cel·la amb una altra arrossegant i deixant anar. "
