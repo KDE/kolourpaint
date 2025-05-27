@@ -1,38 +1,38 @@
 # Translation for kolourpaint.po to Euskara/Basque (eu).
-# Copyright (C) 2005-2024 This file is copyright:
+# Copyright (C) 2005-2025 This file is copyright:
 # This file is distributed under the same license as the kolourpaint package.
-# SPDX-FileCopyrightText: 2023, 2024 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2005.
 # Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
 # Enbata <urazpian@hotmail.com>, 2009.
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2011, 2018, 2020, 2021, 2022, 2023, 2024.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2011, 2018, 2020, 2021, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2024-10-09 21:03+0200\n"
+"PO-Revision-Date: 2025-05-26 17:33+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 25.04.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Ion Gaztañaga, Marcos Goyenetxe"
+msgstr "Ion Gaztañaga,Marcos Goyenetxe"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "igaztanaga@gmail.com, marcos@euskalgnu.org"
+msgstr "igaztanaga@gmail.com,marcos@euskalgnu.org"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:17
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:80
@@ -297,7 +297,7 @@ msgstr "Zehaztu gabea"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -538,7 +538,7 @@ msgstr "Altuera:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -554,11 +554,10 @@ msgstr "E&hunekoa:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "% %1"
+msgstr "%%v"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -907,11 +906,10 @@ msgid "&RGB Color Cube Distance"
 msgstr "&GBU koloreen kuboaren distanzia"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
-msgstr "Bat egite zehatza"
+msgstr "Bat etortze zehatza"
 
 #: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
@@ -1784,18 +1782,17 @@ msgstr "Marraztu ertzak leunduta"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2355,10 +2352,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Zoomik gabeko modua - Koadro txikia"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "% %1 - Koadro txikia"
+msgstr "%%1 — Koadro txikia"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2457,24 +2453,19 @@ msgstr ""
 "dezakezu.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Kolorearen antzekotasuna: % %1</p><p align=\"center\">Egin klik "
+"<p>Kolorearen antzekotasuna: %%1</p><p align=\"center\">Egin klik "
 "konfiguratzeko.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
-"<p>Kolorearen antzekotasuna: bat egite zehatza</p><p align=\"center\">Egin "
+"<p>Kolorearen antzekotasuna: bat etortze zehatza</p><p align=\"center\">Egin "
 "klik konfiguratzeko.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
