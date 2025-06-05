@@ -53,6 +53,7 @@
 
 #include <QMenu>
 #include <QDropEvent>
+#include <QVBoxLayout>
 
 #include "kpLogCategories.h"
 
@@ -216,6 +217,7 @@ void kpMainWindow::init ()
     setupActions ();
     createStatusBar ();
     createGUI ();
+    // This is where the Ribbon setup code goes
 
     createColorBox ();
     createToolBox ();
@@ -253,7 +255,19 @@ void kpMainWindow::init ()
     connect (d->scrollView, &kpViewScrollableContainer::contentsMoved,
              this, &kpMainWindow::slotScrollViewAfterScroll);
 
-    setCentralWidget (d->scrollView);
+    auto container = new QWidget(this);
+    auto vbox = new QVBoxLayout(container);
+
+    auto rwidg = new SARibbonWidget(container);
+    d->ribbon = rwidg->ribbonBar();
+    setupRibbon();
+    vbox->addWidget(rwidg);
+    // setMenuWidget(ribbon);    // https://doc.qt.io/qt-6/qmainwindow.html#setMenuWidget
+
+    d->scrollView->setParent(container);
+    vbox->addWidget(d->scrollView);
+
+    setCentralWidget (container);
 
     //
     // set initial pos/size of GUI

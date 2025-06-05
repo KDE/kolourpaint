@@ -34,6 +34,9 @@
 
 #include <kxmlguiwindow.h>
 
+#include <SARibbonBar/SARibbonBar.h>
+#include <SARibbonBar/SARibbonWidget.h>
+
 #include "kpDefs.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "imagelib/kpImage.h"
@@ -136,6 +139,12 @@ private Q_SLOTS:
     void slotUpdateCaption ();
     void slotDocumentRestored ();
 
+//
+// Ribbon
+//
+
+private:
+    void setupRibbon();
 
 //
 // Tools

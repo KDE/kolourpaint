@@ -48,6 +48,47 @@
 #include "views/kpZoomedView.h"
 #include "views/kpZoomedThumbnailView.h"
 
+#include <SARibbonBar/SARibbonCategory.h>
+#include <SARibbonBar/SARibbonPannel.h>
+
+static QAction* createAction(QMainWindow *win, const char *text, const char *iconurl)
+{
+    QAction* act = new QAction(win);
+    act->setText(QLatin1String(text));
+    act->setIcon(QIcon(QLatin1String(iconurl)));
+    act->setObjectName(QLatin1String(text));
+    win->connect(act, &QAction::triggered, win, [ win, act ]() {
+        // InnerWidget* w = qobject_cast< InnerWidget* >(widget());
+        // if (w) {
+        //     w->appendText(QString("action(%1) triggered").arg(act->text()));
+        // }
+    });
+    return act;
+}
+
+void kpMainWindow::setupRibbon()
+{
+    d->ribbon->setTitleVisible(false);
+    d->ribbon->setRibbonStyle(SARibbonBar::RibbonStyleCompactThreeRow);
+    d->ribbon->setApplicationButton(nullptr);
+
+
+    SARibbonCategory* page1 = new SARibbonCategory();
+    page1->setCategoryName(QLatin1String("page1"));
+    SARibbonPannel* pannel1 = new SARibbonPannel(QLatin1String("pannel1"), page1);
+    page1->addPannel(pannel1);
+    QAction* act = createAction(this, "  save  ", ":/icon/icon/save.svg");
+    act->setIconText(QLatin1String("  save  "));
+    pannel1->addLargeAction(act);
+    pannel1->addLargeAction(createAction(this, "open", ":/icon/icon/folder-star.svg"));
+    pannel1->addSmallAction(createAction(this, "action1", ":/icon/icon/action.svg"));
+    pannel1->addSmallAction(createAction(this, "action2", ":/icon/icon/action2.svg"));
+    SARibbonPannel* pannel2 = new SARibbonPannel(QLatin1String("pannel2"), page1);
+    page1->addPannel(pannel2);
+    pannel2->addLargeAction(createAction(this, "setting", ":/icon/icon/customize0.svg"));
+    pannel2->addLargeAction(createAction(this, "windowsflag", ":/icon/icon/windowsflag-normal.svg"));
+    d->ribbon->addCategoryPage(page1);
+}
 
 // private
 void kpMainWindow::setupViewMenuActions ()

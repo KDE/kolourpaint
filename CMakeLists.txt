@@ -348,11 +348,14 @@ ecm_add_app_icon(kolourpaint_SRCS ICONS
 
 add_executable(kolourpaint ${kolourpaint_SRCS})
 
+find_package(SARibbonBar REQUIRED)
+
 target_link_libraries(kolourpaint
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::KIOFileWidgets
     KF${KF_MAJOR_VERSION}::TextWidgets
     Qt${QT_MAJOR_VERSION}::PrintSupport
+    SARibbonBar::SARibbonBar
     kolourpaint_lgpl
 )
 
