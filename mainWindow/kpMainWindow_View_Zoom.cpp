@@ -97,6 +97,7 @@ void kpMainWindow::setupViewMenuZoomActions ()
 
 
     d->actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize()), ac);
+    d->actionActualSize->setText(QLatin1String("1:1"));
     d->actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage()), ac);
     d->actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth()), ac);
     d->actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight()), ac);

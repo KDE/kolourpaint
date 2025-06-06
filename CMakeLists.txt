@@ -213,6 +213,7 @@ set(kolourpaint_lib2_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Edit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Image.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Ribbon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Settings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_StatusBar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Text.cpp
