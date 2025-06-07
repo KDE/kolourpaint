@@ -28,6 +28,8 @@
 #include "mainWindow/kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
 
+#include <SARibbonBar/SARibbonContextCategory.h>
+
 #include <KActionCollection>
 #include <KSharedConfig>
 #include <KConfigGroup>
@@ -140,6 +142,17 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
         //         the Main Tool Bar, if there isn't enough room.  This makes
         //         accessing the Text Tool Bar's buttons difficult.
         textToolBar ()->setVisible (enable);
+    }
+
+    if (d->ribbon)
+    {
+        if (enable)
+        {
+            d->ribbon->showContextCategory(d->ribTextTools);
+            d->ribbon->raiseCategory(d->ribTextTools->categoryPage(0));
+        }
+        else
+            d->ribbon->hideContextCategory(d->ribTextTools);
     }
 }
 

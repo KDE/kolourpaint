@@ -5,12 +5,16 @@
 #include <SARibbonBar/SARibbonCategory.h>
 #include <SARibbonBar/SARibbonPannel.h>
 #include <SARibbonBar/SARibbonMenu.h>
+#include <SARibbonBar/SARibbonButtonGroupWidget.h>
 
 #include <KStandardAction>
 #include <KToggleAction>
+#include <KFontSizeAction>
+#include <KFontAction>
 
 #include <QCheckBox>
 #include <QString>
+#include <QHBoxLayout>
 
 static QAction* createAction(QMainWindow *win, const char *text, const char *iconurl)
 {
@@ -112,4 +116,22 @@ void kpMainWindow::setupRibbon()
         pnThumb->addAction((d->actionZoomedThumbnail), SARibbonPannelItem::Small);
         pnThumb->addAction((d->actionShowThumbnailRectangle), SARibbonPannelItem::Small);
     d->ribbon->addCategoryPage(pgView);
+
+    d->ribTextTools = d->ribbon->addContextCategory(QLatin1String("Text tools"), QColor(), 1);
+    SARibbonCategory* pgText = d->ribTextTools->addCategoryPage(QLatin1String("Text"));
+        SARibbonPannel* pnFont = new SARibbonPannel(QLatin1String("Font"), pgText);
+        pgText->addPannel(pnFont);
+        pnFont->addMediumAction(static_cast<QAction*>(d->actionTextFontFamily));
+        auto hBox = new QWidget(this);
+        auto hLayout = new QHBoxLayout(hBox);
+            hLayout->addWidget(d->actionTextFontSize->requestWidget(hBox));
+            auto fontSettingsGrp = new SARibbonButtonGroupWidget(pnFont);
+                fontSettingsGrp->addAction(d->actionTextBold);
+                fontSettingsGrp->addAction(d->actionTextItalic);
+                fontSettingsGrp->addAction(d->actionTextUnderline);
+                fontSettingsGrp->addAction(d->actionTextStrikeThru);
+            hLayout->addWidget(fontSettingsGrp);
+        pnFont->addMediumWidget(hBox);
+    d->ribbon->hideContextCategory(d->ribTextTools);
+    
 }

@@ -259,7 +259,7 @@ void kpMainWindow::init ()
     auto vbox = new QVBoxLayout(container);
 
     auto rwidg = new SARibbonWidget(container);
-    // rwidg->setRibbonTheme(SARibbonTheme::RibbonThemeOffice2016Blue);
+    rwidg->setRibbonTheme(SARibbonTheme::RibbonThemeOffice2016Blue);
     d->ribbon = rwidg->ribbonBar();
     setupRibbon();
     vbox->addWidget(rwidg);

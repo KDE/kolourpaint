@@ -41,6 +41,7 @@ class QActionGroup;
 class QLabel;
 
 class SARibbonBar;
+class SARibbonContextCategory;
 class KSelectAction;
 class KToggleAction;
 class KSqueezedTextLabel;
@@ -73,6 +74,7 @@ struct kpMainWindowPrivate
       scrollView(nullptr),
       mainView(nullptr),
       ribbon(nullptr),
+      ribTextTools(nullptr),
       thumbnail(nullptr),
       thumbnailView(nullptr),
       document(nullptr),
@@ -262,6 +264,7 @@ struct kpMainWindowPrivate
   kpViewScrollableContainer *scrollView;
   kpZoomedView *mainView;
   SARibbonBar *ribbon;
+  SARibbonContextCategory *ribTextTools;
   kpThumbnail *thumbnail;
   kpThumbnailView *thumbnailView;
   kpDocument *document;
