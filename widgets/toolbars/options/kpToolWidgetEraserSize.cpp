@@ -84,10 +84,6 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
 {
     for (int i = 0; i < ::NumEraserSizes; i++)
     {
-        if (i == 3 || i == 5) {
-            startNewOptionRow ();
-        }
-
         const int s = ::EraserSizes [i];
 
         QImage previewPixmap (s, s, QImage::Format_ARGB32_Premultiplied);

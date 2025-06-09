@@ -65,7 +65,7 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
               << topLeft << " pack: row=" << pack->row << " col=" << pack->col
               << " color=" << (int *) pack->color.toQRgb ();
 #endif
-    const int size = ::BrushSizes [pack->row][pack->col];
+    const int size = ::BrushSizes [0][pack->row];
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
     qCDebug(kpLogWidgets) << "\tsize=" << size;
 #endif
@@ -177,8 +177,6 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
             addOption(QPixmap::fromImage(std::move(previewPixmap)),
                       brushName(shape, i) /*tooltip*/);
         }
-
-        startNewOptionRow ();
     }
 
     finishConstruction (0, 0);
@@ -232,7 +230,7 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
 // public
 int kpToolWidgetBrush::brushSize () const
 {
-    return ::BrushSizes [selectedRow ()][selectedCol ()];
+    return ::BrushSizes [0][selectedRow ()];
 }
 
 //---------------------------------------------------------------------
@@ -241,7 +239,7 @@ int kpToolWidgetBrush::brushSize () const
 bool kpToolWidgetBrush::brushIsDiagonalLine () const
 {
     // sync: <brushes>
-    return (selectedRow () >= 2);
+    return ((selectedRow () / BRUSH_SIZE_NUM_COLS) >= 2);
 }
 
 //---------------------------------------------------------------------

@@ -213,6 +213,7 @@ struct kpMainWindowPrivate
       actionInvertColors(nullptr),
       actionClear(nullptr),
 
+      bgroupOpaqueOrTransparent(nullptr),
       actionDrawOpaque(nullptr),
       actionDrawColorSimilarity(nullptr),
 
@@ -392,6 +393,7 @@ struct kpMainWindowPrivate
 
   // Implemented in kpMainWindow_Tools.cpp, not kpImageWindow_Image.cpp
   // since they're really setting tool options.
+  QButtonGroup  *bgroupOpaqueOrTransparent;
   KToggleAction *actionDrawOpaque;
   QAction *actionDrawColorSimilarity;
 

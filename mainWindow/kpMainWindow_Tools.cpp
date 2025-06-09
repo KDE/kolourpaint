@@ -30,6 +30,7 @@
 #include "kpMainWindowPrivate.h"
 
 #include <QActionGroup>
+#include <QButtonGroup>
 
 #include <KActionCollection>
 #include <KSharedConfig>
@@ -286,11 +287,11 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 #endif
 
     const bool drawOpaque =
-        (d->toolToolBar->toolWidgetOpaqueOrTransparent ()->selectedRow () == 0);
+        (d->bgroupOpaqueOrTransparent->checkedId() == 0);
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tdrawOpaque=" << drawOpaque;
 #endif
-
+    fprintf(stderr, "\tswitched: %b\n", drawOpaque);
     d->actionDrawOpaque->setChecked (drawOpaque);
 }
 

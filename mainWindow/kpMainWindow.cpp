@@ -220,8 +220,6 @@ void kpMainWindow::init ()
     // This is where the Ribbon setup code goes
 
     createColorBox ();
-    createToolBox ();
-
 
     // Let the Tool Box take all the vertical space, since it can be quite
     // tall with all its tool option widgets.  This also avoids occasional
@@ -269,6 +267,7 @@ void kpMainWindow::init ()
     vbox->addWidget(d->scrollView);
 
     setCentralWidget (container);
+    createToolBox ();
 
     //
     // set initial pos/size of GUI

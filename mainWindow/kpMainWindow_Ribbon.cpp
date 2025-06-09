@@ -1,5 +1,7 @@
 #include "mainWindow/kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
+#include "tools/kpTool.h"
+#include "tools/selection/text/kpToolText.h"
 #include "kpLogCategories.h"
 
 #include <SARibbonBar/SARibbonCategory.h>
@@ -13,8 +15,27 @@
 #include <KFontAction>
 
 #include <QCheckBox>
+#include <QButtonGroup>
 #include <QString>
 #include <QHBoxLayout>
+
+    // m_toolWidgets.append (m_toolWidgetBrush =
+    //     new kpToolWidgetBrush (m_baseWidget, QStringLiteral("Tool Widget Brush")));
+    // m_toolWidgets.append (m_toolWidgetEraserSize =
+    //     new kpToolWidgetEraserSize (m_baseWidget, QStringLiteral("Tool Widget Eraser Size")));
+    // m_toolWidgets.append (m_toolWidgetFillStyle =
+    //     new kpToolWidgetFillStyle (m_baseWidget, QStringLiteral("Tool Widget Fill Style")));
+    // m_toolWidgets.append (m_toolWidgetLineWidth =
+    //     new kpToolWidgetLineWidth (m_baseWidget, QStringLiteral("Tool Widget Line Width")));
+    // m_toolWidgets.append (m_toolWidgetOpaqueOrTransparent =
+    //     new kpToolWidgetOpaqueOrTransparent (m_baseWidget, QStringLiteral("Tool Widget Opaque/Transparent")));
+    // m_toolWidgets.append (m_toolWidgetSpraycanSize =
+    //     new kpToolWidgetSpraycanSize (m_baseWidget, QStringLiteral("Tool Widget Spraycan Size")));
+    // for (auto *w : m_toolWidgets)
+    // {
+    //   connect (w, &kpToolWidgetBase::optionSelected,
+    //            this, &kpToolToolBar::toolWidgetOptionSelected);
+    // }
 
 static QAction* createAction(QMainWindow *win, const char *text, const char *iconurl)
 {
@@ -71,21 +92,59 @@ void kpMainWindow::setupRibbon()
     d->ribbon->setApplicationButton(nullptr);
 
 
-    SARibbonCategory* page1 = new SARibbonCategory();
-    page1->setCategoryName(QLatin1String("page1"));
-    SARibbonPannel* pannel1 = new SARibbonPannel(QLatin1String("pannel1"), page1);
-    page1->addPannel(pannel1);
-    QAction* act = createAction(this, "  save  ", ":/icon/icon/save.svg");
-    act->setIconText(QLatin1String("  save  "));
-    pannel1->addLargeAction(act);
-    pannel1->addLargeAction(createAction(this, "open", ":/icon/icon/folder-star.svg"));
-    pannel1->addSmallAction(createAction(this, "action1", ":/icon/icon/action.svg"));
-    pannel1->addSmallAction(createAction(this, "action2", ":/icon/icon/action2.svg"));
-    SARibbonPannel* pannel2 = new SARibbonPannel(QLatin1String("pannel2"), page1);
-    page1->addPannel(pannel2);
-    pannel2->addLargeAction(createAction(this, "setting", ":/icon/icon/customize0.svg"));
-    pannel2->addLargeAction(createAction(this, "windowsflag", ":/icon/icon/windowsflag-normal.svg"));
-    d->ribbon->addCategoryPage(page1);
+    SARibbonCategory* pgHome = new SARibbonCategory();
+    pgHome->setCategoryName(QLatin1String("Home"));
+        SARibbonPannel* pnClp = new SARibbonPannel(QLatin1String("Clipboard"), pgHome);
+        pgHome->addPannel(pnClp);
+        pnClp->addLargeAction(d->actionPaste, QToolButton::MenuButtonPopup);
+            SARibbonMenu* pasteMenu = new SARibbonMenu(pnClp);
+            pasteMenu->addAction(d->actionPasteInNewWindow);
+            pasteMenu->addAction(d->actionPasteFromFile);
+            d->actionPaste->setMenu(pasteMenu);
+        pnClp->addSmallAction(d->actionCut);
+        SARibbonMenu* copyMenu = new SARibbonMenu(pnClp);
+        copyMenu->addAction(d->actionCopyToFile);
+        d->actionCopy->setMenu(copyMenu);
+        pnClp->addSmallAction(d->actionCopy, QToolButton::MenuButtonPopup);
+
+        SARibbonPannel* pnSel = new SARibbonPannel(QLatin1String("Selection"), pgHome);
+        pgHome->addPannel(pnSel);
+        auto actSelectMenu = createAction(this, "Select", nullptr);
+            SARibbonMenu* selectMenu = new SARibbonMenu(pnSel);
+                selectMenu->addAction(d->toolRectSelection->action());
+                selectMenu->addAction(d->toolEllipticalSelection->action());
+                selectMenu->addAction(d->toolFreeFormSelection->action());
+            actSelectMenu->setIcon(d->toolRectSelection->action()->icon());
+            actSelectMenu->setMenu(selectMenu);
+        pnSel->addLargeAction(actSelectMenu, QToolButton::InstantPopup);
+        pnSel->addSmallAction(d->actionSelectAll);
+        pnSel->addSmallAction(d->actionDeselect);
+        pnSel->addSmallAction(d->actionDelete);
+
+        SARibbonPannel* pnTools = new SARibbonPannel(QLatin1String("Tools"), pgHome);
+        pgHome->addPannel(pnTools);
+        auto toolsRow1 = new SARibbonButtonGroupWidget(pnTools);
+            toolsRow1->addAction(d->toolPen->action());
+            toolsRow1->addAction(d->toolLine->action());
+            toolsRow1->addAction(d->toolPolygon->action());
+            toolsRow1->addAction(d->toolText->action());
+        auto toolsRow2 = new SARibbonButtonGroupWidget(pnTools);
+            toolsRow2->addAction(d->toolFloodFill->action());
+            toolsRow2->addAction(d->toolEraser->action());
+            toolsRow2->addAction(d->toolColorPicker->action());
+            toolsRow2->addAction(d->toolZoom->action());
+        pnTools->addMediumWidget(toolsRow1);
+        pnTools->addMediumWidget(toolsRow2);
+
+    d->ribbon->addCategoryPage(pgHome);
+
+    SARibbonCategory* pgColors = new SARibbonCategory();
+    pgColors->setCategoryName(QLatin1String("Colors"));
+    d->ribbon->addCategoryPage(pgColors);
+
+    SARibbonCategory* pgImage = new SARibbonCategory();
+    pgImage->setCategoryName(QLatin1String("Image"));
+    d->ribbon->addCategoryPage(pgImage);
 
     SARibbonCategory* pgView = new SARibbonCategory();
     pgView->setCategoryName(QLatin1String("View"));
@@ -119,6 +178,12 @@ void kpMainWindow::setupRibbon()
 
     d->ribTextTools = d->ribbon->addContextCategory(QLatin1String("Text tools"), QColor(), 1);
     SARibbonCategory* pgText = d->ribTextTools->addCategoryPage(QLatin1String("Text"));
+        // SARibbonPannel* pnClp2 = new SARibbonPannel(QLatin1String("Clipboard"), pgText);
+        // pgText->addPannel(pnClp2);
+        // pnClp2->addLargeAction(KStandardAction::create(KStandardAction::Paste, this, nullptr, this));
+        // pnClp2->addMediumAction(KStandardAction::create(KStandardAction::Cut, this, nullptr, this));
+        // pnClp2->addMediumAction(KStandardAction::create(KStandardAction::Copy, this, nullptr, this));
+
         SARibbonPannel* pnFont = new SARibbonPannel(QLatin1String("Font"), pgText);
         pgText->addPannel(pnFont);
         pnFont->addMediumAction(static_cast<QAction*>(d->actionTextFontFamily));
@@ -132,6 +197,26 @@ void kpMainWindow::setupRibbon()
                 fontSettingsGrp->addAction(d->actionTextStrikeThru);
             hLayout->addWidget(fontSettingsGrp);
         pnFont->addMediumWidget(hBox);
+
+        SARibbonPannel* pnBg = new SARibbonPannel(QLatin1String("Background"), pgText);
+        pgText->addPannel(pnBg);
+            d->bgroupOpaqueOrTransparent = new QButtonGroup(pnBg);
+            d->bgroupOpaqueOrTransparent->setExclusive(true);
+            connect(d->bgroupOpaqueOrTransparent, &QButtonGroup::idToggled, this, &kpMainWindow::updateActionDrawOpaqueChecked);
+
+            auto tparencyOpaque = new QPushButton(QPixmap(QStringLiteral(":/icons/option_opaque")), QLatin1String("Opaque"), pnBg);
+            tparencyOpaque->setCheckable(true);
+            tparencyOpaque->setChecked(true);
+            d->bgroupOpaqueOrTransparent->addButton(tparencyOpaque, 0);
+            pnBg->addSmallWidget(tparencyOpaque);
+
+            auto tparencyTparent = new QPushButton(QPixmap(QStringLiteral(":/icons/option_transparent")), QLatin1String("Transparent"), pnBg);
+            tparencyTparent->setCheckable(true);
+            tparencyTparent->setChecked(true);
+            d->bgroupOpaqueOrTransparent->addButton(tparencyTparent, 1);
+            pnBg->addSmallWidget(tparencyTparent);
+        // Transparent / Opaque
+        // pnClp2->addSmallAction(KStandardAction::create(KStandardAction::Paste, this, nullptr, this));
     d->ribbon->hideContextCategory(d->ribTextTools);
     
 }

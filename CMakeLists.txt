@@ -318,6 +318,7 @@ set(kolourpaint_app_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/kpColorToolBar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/kpToolToolBar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetBase_ribbon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetBrush.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetEraserSize.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetFillStyle.cpp

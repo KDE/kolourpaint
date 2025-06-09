@@ -54,8 +54,6 @@ kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const QString &na
                                   (width () - 2/*margin*/) * 3 / 4,
                                   (height () - 2/*margin*/ - 2/*spacing*/) * 3 / (3 * 4));
         addOption (pixmap, fillStyleName (static_cast<FillStyle> (i))/*tooltip*/);
-
-        startNewOptionRow ();
     }
 
     finishConstruction (0, 0);

@@ -59,7 +59,6 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &na
 
         addOption(QPixmap::fromImage(std::move(image)),
                   QString::number(lineWidths[i]));
-        startNewOptionRow ();
     }
 
     finishConstruction (0, 0);
