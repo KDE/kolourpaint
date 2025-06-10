@@ -65,7 +65,7 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
               << topLeft << " pack: row=" << pack->row << " col=" << pack->col
               << " color=" << (int *) pack->color.toQRgb ();
 #endif
-    const int size = ::BrushSizes [0][pack->row];
+    const int size = ::BrushSizes [pack->row][pack->col];   // The ribbon UI perceives the brush list as 1D
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
     qCDebug(kpLogWidgets) << "\tsize=" << size;
 #endif
@@ -80,7 +80,7 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
     }
 
     // sync: <brushes>
-    switch (pack->row/*shape*/)
+    switch (pack->row /*shape*/)
     {
       case 0:
       {
@@ -159,12 +159,13 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
         {
             const int s = ::BrushSizes [shape][i];
 
-
-            const int w = (width () - 2/*margin*/ - 2/*spacing*/)
-                / BRUSH_SIZE_NUM_COLS;
-            const int h = (height () - 2/*margin*/ - 3/*spacing*/)
-                / BRUSH_SIZE_NUM_ROWS;
-            Q_ASSERT (w >= s && h >= s);
+            // const int w = (width () - 2/*margin*/ - 2/*spacing*/)
+            //     / BRUSH_SIZE_NUM_COLS;
+            // const int h = (height () - 2/*margin*/ - 3/*spacing*/)
+            //     / BRUSH_SIZE_NUM_ROWS;
+            const int w = 48;
+            const int h = 48;
+            // Q_ASSERT (w >= s && h >= s);
             QImage previewPixmap (w, h, QImage::Format_ARGB32_Premultiplied);
             previewPixmap.fill(0);
 
@@ -275,7 +276,7 @@ kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionDataForRowCol (
 kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
         const kpColor &color) const
 {
-    return drawFunctionDataForRowCol (color, selectedRow (), selectedCol ());
+    return drawFunctionDataForRowCol (color, selectedRow () / BRUSH_SIZE_NUM_COLS, selectedRow () % BRUSH_SIZE_NUM_COLS);
 }
 
 //---------------------------------------------------------------------

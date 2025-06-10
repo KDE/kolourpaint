@@ -37,13 +37,15 @@
 #include <QList>
 #include <QWidget>
 
+#include <SARibbonBar/SARibbonGallery.h>
+#include <SARibbonBar/SARibbonGalleryGroup.h>
 
 class QMouseEvent;
 
 
 // TODO: This is a crazy and overcomplicated class that invents its own (buggy)
 //       layout management.  It should be simplified or removed.
-class kpToolWidgetBase : public QFrame
+class kpToolWidgetBase : public SARibbonGallery
 {
 Q_OBJECT
 
@@ -51,12 +53,6 @@ public:
     // (must provide a <name> for config to work)
     kpToolWidgetBase (QWidget *parent, const QString &name);
     ~kpToolWidgetBase () override;
-
-protected:
-    kpToolWidgetBase (QWidget *parent) :
-        QFrame(parent)
-    {
-    }
 
 public:
     void addOption (const QPixmap &pixmap, const QString &toolTip = QString());
@@ -101,11 +97,6 @@ Q_SIGNALS:
     void optionSelected (int row, int col);
 
 protected:
-    bool event (QEvent *e) override;
- 
-    void mousePressEvent (QMouseEvent *e) override;
-    void paintEvent (QPaintEvent *e) override;
-
     QWidget *m_baseWidget;
 
     QList < QList <QPixmap> > m_pixmaps;
@@ -114,73 +105,12 @@ protected:
     QList < QList <QRect> > m_pixmapRects;
 
     int m_selectedRow, m_selectedCol;
-};
-
-#include <SARibbonBar/SARibbonGallery.h>
-#include <SARibbonBar/SARibbonGalleryGroup.h>
-
-class kpToolWidgetBase_Ribbon : public kpToolWidgetBase
-{
-Q_OBJECT
-
-public:
-    // (must provide a <name> for config to work)
-    kpToolWidgetBase_Ribbon (QWidget *parent, const QString &name);
-    ~kpToolWidgetBase_Ribbon () override;
-
-public:
-    void addOption (const QPixmap &pixmap, const QString &toolTip = QString());
-    void startNewOptionRow ();
-
-    // Call this at the end of your constructor.
-    // If the default row & col could not be read from the config,
-    // <fallBackRow> & <fallBackCol> are passed to setSelected().
-    void finishConstruction (int fallBackRow, int fallBackCol);
-
-private:
-    QList <int> spreadOutElements (const QList <int> &sizes, int maxSize);
-
-public:  // (only have to use these if you don't use finishConstruction())
-    // (rereads from config file)
-    QPair <int, int> defaultSelectedRowAndCol () const;
-    int defaultSelectedRow () const;
-    int defaultSelectedCol () const;
-
-    void saveSelectedAsDefault () const;
-
-    void relayoutOptions ();
-
-public:
-    int selectedRow () const;
-    int selectedCol () const;
-
-    int selected () const;
-
-    bool hasPreviousOption (int *row = nullptr, int *col = nullptr) const;
-    bool hasNextOption (int *row = nullptr, int *col = nullptr) const;
-
-public Q_SLOTS:
-    bool setSelected (int row, int col, bool saveAsDefault) override;
-    bool setSelected (int row, int col);
-
-    bool selectPreviousOption ();
-    bool selectNextOption ();
-
-protected:
-    bool event (QEvent *e) override;
- 
-    void mousePressEvent (QMouseEvent *e) override;
-    void paintEvent (QPaintEvent *e) override;
-
-    ////////////////
 
 private Q_SLOTS:
     void callOptionSelected();
 
 private:
-    SARibbonGallery *m_gallery;
     SARibbonGalleryGroup *m_galleryGroup;
 };
-
 
 #endif  // KP_TOOL_WIDGET_BASE_H

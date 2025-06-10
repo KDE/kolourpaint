@@ -32,7 +32,7 @@
 
 #include "kpToolWidgetBase.h"
 
-class kpToolWidgetSpraycanSize : public kpToolWidgetBase_Ribbon
+class kpToolWidgetSpraycanSize : public kpToolWidgetBase
 {
 Q_OBJECT
 
