@@ -912,12 +912,12 @@ format="PNG"/>
 
 <para
 >Es posible guardar la selección en un archivo usando la opción <guimenuitem
->Copiar en archivo...</guimenuitem
+>Copiar en archivo…</guimenuitem
 > del menú de contexto o la opción <menuchoice
 ><guimenu
 >Editar</guimenu
 ><guimenuitem
->Copiar en archivo...</guimenuitem
+>Copiar en archivo…</guimenuitem
 ></menuchoice
 > del menú principal. </para>
 </sect1>
