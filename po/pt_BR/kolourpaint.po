@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-02-05 23:57-0300\n"
+"PO-Revision-Date: 2025-06-21 19:22-0300\n"
 "Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -301,7 +301,7 @@ msgstr "Não indicado"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -543,7 +543,7 @@ msgstr "Altura:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -559,11 +559,10 @@ msgstr "&Porcenttagem:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -910,8 +909,7 @@ msgid "&RGB Color Cube Distance"
 msgstr "Afastamento do cubo de cores &RGB"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Coincidência exata"
@@ -1792,18 +1790,17 @@ msgstr "Desenhar suavizado"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2366,10 +2363,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Modo sem ampliação - Miniatura"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "%1% - Miniatura"
+msgstr "%1% — Miniatura"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2471,19 +2467,14 @@ msgstr ""
 "muitos pontos), você deverá diminuir este valor.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Semelhança de cores: %1%</p><p align=\"center\">Clique para configurar.</"
 "p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"

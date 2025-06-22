@@ -2790,16 +2790,3 @@ msgstr "Запълване с цвета на преден план"
 #, kde-format
 msgid "Opaque"
 msgstr "Непрозрачност"
-
-#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
-#~ msgid " x "
-#~ msgstr " x "
-
-#~ msgid "x"
-#~ msgstr "x"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "%1,%2"
-#~ msgstr "%1,%2"
