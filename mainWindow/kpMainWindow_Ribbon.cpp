@@ -55,8 +55,9 @@ static QAction* createAction(QMainWindow *win, const char *text, const char *ico
 class MySARibbonPannel : public SARibbonPannel
 {
 public:
-    void addAction(KToggleAction *action, SARibbonPannelItem::RowProportion rp);
+    void addAction(KToggleAction *action, SARibbonPannelItem::RowProportion rp);    // This is an implementation specific to `KToggleAction` that creates a checkbox instead of a button
 };
+
 
 void MySARibbonPannel::addAction(KToggleAction *kAction, SARibbonPannelItem::RowProportion rp)
 {
@@ -142,9 +143,59 @@ void kpMainWindow::setupRibbon()
     pgColors->setCategoryName(QLatin1String("Colors"));
     d->ribbon->addCategoryPage(pgColors);
 
-    SARibbonCategory* pgImage = new SARibbonCategory();
-    pgImage->setCategoryName(QLatin1String("Image"));
-    d->ribbon->addCategoryPage(pgImage);
+    {
+        SARibbonCategory* pg = new SARibbonCategory();
+        pg->setCategoryName(QLatin1String("Image"));
+        d->ribbon->addCategoryPage(pg);
+
+        {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Size"), pg);
+            pg->addPannel(pn);
+            pn->addLargeAction(d->actionResizeScale);
+            pn->addSmallAction(d->actionAutoCrop);
+        }
+        {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Manipulate"), pg);
+            pg->addPannel(pn);
+
+            {
+                auto group = new SARibbonButtonGroupWidget(pnTools);
+                pn->addMediumWidget(group);
+
+                group->addAction(d->actionRotateLeft);
+                group->addAction(d->actionRotateRight);
+            }
+            {
+                auto group = new SARibbonButtonGroupWidget(pnTools);
+                pn->addMediumWidget(group);
+
+                group->addAction(d->actionMirror);
+                group->addAction(d->actionFlip);
+            }
+
+            pn->addLargeAction(d->actionRotate);
+            pn->addLargeAction(d->actionSkew);
+        }
+        {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Image Effects"), pg);
+            pg->addPannel(pn);
+
+            pn->addSmallAction(d->actionInvertColors);
+            {
+                SARibbonMenu* menu = new SARibbonMenu(pn);
+                menu->addAction(d->actionConvertToGrayscale);
+                menu->addAction(d->actionConvertToBlackAndWhite);
+
+                auto act1 = createAction(this, "Reduce to", nullptr);
+                // act1->setIcon();
+                act1->setMenu(menu);
+
+                pn->addSmallAction(act1, QToolButton::InstantPopup);
+            }
+            pn->addSmallAction(d->actionBlur);
+            pn->addLargeAction(d->actionMoreEffects);
+        }
+    }
 
     SARibbonCategory* pgView = new SARibbonCategory();
     pgView->setCategoryName(QLatin1String("View"));

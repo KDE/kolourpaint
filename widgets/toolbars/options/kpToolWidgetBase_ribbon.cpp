@@ -17,11 +17,6 @@ kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name) :
     m_galleryGroup->setGroupTitle(name);
     // m_galleryGroup->setDisplayRow(SARibbonGalleryGroup::DisplayRow::DisplayTwoRow);
 
-    m_galleryGroup->setupGroupModel();
-
-    connect(this, &SARibbonGallery::triggered, this, &kpToolWidgetBase::callOptionSelected);
-    // connect(m_galleryGroup->selectionModel(), &QItemSelectionModel::selectionChanged, this, &kpToolWidgetBase::callOptionSelected);
-
     setObjectName (name);
 }
 
@@ -30,7 +25,6 @@ kpToolWidgetBase::~kpToolWidgetBase () = default;
 void kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip)
 {
     m_galleryGroup->addItem(toolTip, pixmap);
-    m_galleryGroup->recalcGridSize();
 }
 
 void kpToolWidgetBase::startNewOptionRow ()
@@ -40,6 +34,8 @@ void kpToolWidgetBase::startNewOptionRow ()
 
 void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 {
+    // connect(this, &SARibbonGallery::triggered, this, &kpToolWidgetBase::callOptionSelected);
+    connect(m_galleryGroup->selectionModel(), &QItemSelectionModel::currentChanged, this, &kpToolWidgetBase::callOptionSelected);
 }
 
 QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
@@ -193,6 +189,7 @@ bool kpToolWidgetBase::selectNextOption ()
 
 void kpToolWidgetBase::callOptionSelected()
 {
+    fprintf(stderr, "callOptionSelected\n");
     Q_EMIT optionSelected(selectedRow(), selectedCol());
 }
 

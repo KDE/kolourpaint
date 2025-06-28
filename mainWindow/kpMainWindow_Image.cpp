@@ -131,11 +131,13 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionFlip = ac->addAction (QStringLiteral("image_flip"));
     d->actionFlip->setText (i18n ("&Flip (upside down)"));
+    d->actionFlip->setIcon(QIcon::fromTheme(QStringLiteral("object-flip-vertical")));
     connect (d->actionFlip, &QAction::triggered, this, &kpMainWindow::slotFlip);
     ac->setDefaultShortcut (d->actionFlip, Qt::CTRL | Qt::Key_F);
 
     d->actionMirror = ac->addAction (QStringLiteral("image_mirror"));
     d->actionMirror->setText (i18n ("Mirror (horizontally)"));
+    d->actionMirror->setIcon(QIcon::fromTheme(QStringLiteral("object-flip-horizontal")));
     connect (d->actionMirror, &QAction::triggered, this, &kpMainWindow::slotMirror);
     //ac->setDefaultShortcut (d->actionMirror, Qt::CTRL | Qt::Key_M);
 
@@ -159,16 +161,17 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionSkew = ac->addAction (QStringLiteral("image_skew"));
     d->actionSkew->setText (i18n ("S&kew..."));
+    d->actionSkew->setIcon(QPixmap(QStringLiteral(":/icons/image_skew_horizontal")));
     connect (d->actionSkew, &QAction::triggered, this, &kpMainWindow::slotSkew);
     ac->setDefaultShortcut (d->actionSkew, Qt::CTRL | Qt::Key_K);
 
     d->actionConvertToBlackAndWhite = ac->addAction (QStringLiteral("image_convert_to_black_and_white"));
-    d->actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
+    d->actionConvertToBlackAndWhite->setText (i18n ("Mo&nochrome (Dithered)"));
     connect (d->actionConvertToBlackAndWhite, &QAction::triggered,
              this, &kpMainWindow::slotConvertToBlackAndWhite);
 
     d->actionConvertToGrayscale = ac->addAction (QStringLiteral("image_convert_to_grayscale"));
-    d->actionConvertToGrayscale->setText (i18n ("Reduce to &Grayscale"));
+    d->actionConvertToGrayscale->setText (i18n ("&Grayscale"));
     connect (d->actionConvertToGrayscale, &QAction::triggered, this, &kpMainWindow::slotConvertToGrayscale);
 
     d->actionInvertColors = ac->addAction (QStringLiteral("image_invert_colors"));
