@@ -7,6 +7,7 @@
 #include <SARibbonBar/SARibbonCategory.h>
 #include <SARibbonBar/SARibbonPannel.h>
 #include <SARibbonBar/SARibbonMenu.h>
+#include <SARibbonBar/SARibbonQuickAccessBar.h>
 #include <SARibbonBar/SARibbonButtonGroupWidget.h>
 
 #include <KStandardAction>
@@ -18,6 +19,7 @@
 #include <QButtonGroup>
 #include <QString>
 #include <QHBoxLayout>
+#include <QWidgetAction>
 
     // m_toolWidgets.append (m_toolWidgetBrush =
     //     new kpToolWidgetBrush (m_baseWidget, QStringLiteral("Tool Widget Brush")));
@@ -92,6 +94,11 @@ void kpMainWindow::setupRibbon()
     d->ribbon->setRibbonStyle(SARibbonBar::RibbonStyleCompactThreeRow);
     d->ribbon->setApplicationButton(nullptr);
 
+    d->ribbon->quickAccessBar()->addAction(d->actionSave);
+    d->ribbon->quickAccessBar()->addAction(d->actionUndo);
+    d->ribbon->quickAccessBar()->addAction(d->actionRedo);
+
+    /* Pages */
 
     SARibbonCategory* pgHome = new SARibbonCategory();
     pgHome->setCategoryName(QLatin1String("Home"));

@@ -76,6 +76,9 @@ public:
     kpCommandSize::SizeType undoMaxLimitSizeLimit () const;
     void setUndoMaxLimitSizeLimit (kpCommandSize::SizeType sizeLimit);
 
+    KToolBarPopupAction *actionUndo();
+    KToolBarPopupAction *actionRedo();
+
 public:
     // Read and write above config
     void readConfig ();

@@ -42,6 +42,7 @@
 #include <KMessageBox>
 #include <KStandardAction>
 #include <KActionCollection>
+#include <KToolBarPopupAction>
 #include <KXMLGUIFactory>
 #include <KLocalizedString>
 
@@ -81,6 +82,8 @@ void kpMainWindow::setupEditMenuActions ()
     // Undo/Redo
     // CONFIG: Need GUI for config history size.
     d->commandHistory = new kpCommandHistory (true/*read config*/, this);
+    d->actionUndo = d->commandHistory->actionUndo();
+    d->actionRedo = d->commandHistory->actionRedo();
 
     if (d->configFirstTime)
     {

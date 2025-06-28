@@ -227,6 +227,16 @@ void kpCommandHistoryBase::setUndoMaxLimitSizeLimit (kpCommandSize::SizeType siz
     trimCommandListsUpdateActions ();
 }
 
+KToolBarPopupAction *kpCommandHistoryBase::actionUndo()
+{
+    return m_actionUndo;
+}
+
+KToolBarPopupAction *kpCommandHistoryBase::actionRedo()
+{
+    return m_actionRedo;
+}
+
 
 // public
 void kpCommandHistoryBase::readConfig ()
