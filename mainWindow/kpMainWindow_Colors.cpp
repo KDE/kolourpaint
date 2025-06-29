@@ -28,10 +28,12 @@
 #include "kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
 
+#include "tools/kpTool.h"
 #include "widgets/kpColorCells.h"
 #include "lgpl/generic/kpColorCollection.h"
 #include "lgpl/generic/kpUrlFormatter.h"
 #include "widgets/toolbars/kpColorToolBar.h"
+#include "widgets/toolbars/kpToolToolBar.h"
 
 #include <KActionCollection>
 #include <KMessageBox>
@@ -109,6 +111,13 @@ void kpMainWindow::setupColorsMenuActions ()
     d->actionColorsDeleteRow->setText (i18nc ("@item:inmenu colors", "Delete Last Row"));
     connect (d->actionColorsDeleteRow, &QAction::triggered,
              this, &kpMainWindow::slotColorsDeleteRow);
+
+    d->actionColorsSwap = ac->addAction (QStringLiteral("colors_swap"));
+    d->actionColorsSwap->setText (i18nc ("@item:inmenu colors", "Swap colours"));
+    connect (d->actionColorsSwap, &QAction::triggered, this, [&]() {
+        // if (d->toolToolBar->tool())
+            // d->toolToolBar->tool()->slotColorsSwappedInternal();
+    });
 
 
     enableColorsMenuDocumentActions (false);

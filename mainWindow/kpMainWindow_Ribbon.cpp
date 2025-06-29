@@ -2,6 +2,7 @@
 #include "kpMainWindowPrivate.h"
 #include "tools/kpTool.h"
 #include "tools/selection/text/kpToolText.h"
+#include "widgets/colorSimilarity/kpColorSimilarityToolBarItem.h"
 #include "kpLogCategories.h"
 
 #include <SARibbonBar/SARibbonCategory.h>
@@ -9,6 +10,7 @@
 #include <SARibbonBar/SARibbonMenu.h>
 #include <SARibbonBar/SARibbonQuickAccessBar.h>
 #include <SARibbonBar/SARibbonButtonGroupWidget.h>
+#include <SARibbonBar/SARibbonColorToolButton.h>
 
 #include <KStandardAction>
 #include <KToggleAction>
@@ -95,6 +97,7 @@ void kpMainWindow::setupRibbon()
     d->ribbon->setApplicationButton(nullptr);
 
     d->ribbon->quickAccessBar()->addAction(d->actionSave);
+    d->ribbon->quickAccessBar()->addSeparator();
     d->ribbon->quickAccessBar()->addAction(d->actionUndo);
     d->ribbon->quickAccessBar()->addAction(d->actionRedo);
 
@@ -146,9 +149,76 @@ void kpMainWindow::setupRibbon()
 
     d->ribbon->addCategoryPage(pgHome);
 
-    SARibbonCategory* pgColors = new SARibbonCategory();
-    pgColors->setCategoryName(QLatin1String("Colors"));
-    d->ribbon->addCategoryPage(pgColors);
+    {
+        SARibbonCategory* pg = new SARibbonCategory();
+        pg->setCategoryName(QLatin1String("Colours"));
+        d->ribbon->addCategoryPage(pg);
+
+        {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Colours"), pg);
+            pg->addPannel(pn);
+
+            QAction* optAct = new QAction(this);
+            pn->setOptionAction(optAct);
+
+            //
+            
+            {
+                SARibbonColorToolButton* colorButton = new SARibbonColorToolButton(pn);
+                // colorButton->setColor(defaultColor);
+                SAColorMenu *men = colorButton->setupStandardColorMenu();
+                colorButton->setButtonType(SARibbonToolButton::LargeButton);
+                colorButton->setColorStyle(SARibbonColorToolButton::ColorFillToIcon);
+                colorButton->setText(QLatin1String("Foreground"));
+                pn->addLargeWidget(colorButton);
+            }
+
+            {
+                SARibbonColorToolButton* colorButton = new SARibbonColorToolButton(pn);
+                // colorButton->setColor(defaultColor);
+                SAColorMenu *men = colorButton->setupStandardColorMenu();
+                colorButton->setButtonType(SARibbonToolButton::LargeButton);
+                colorButton->setColorStyle(SARibbonColorToolButton::ColorFillToIcon);
+                colorButton->setText(QLatin1String("Background"));
+                pn->addLargeWidget(colorButton);
+            }
+
+            pn->addSmallAction(d->actionColorsAppendRow);
+            pn->addSmallAction(d->actionColorsDeleteRow);
+            pn->addSmallAction(d->actionColorsSwap);
+        }
+        {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Palette"), pg);
+            pg->addPannel(pn);
+
+            {
+                pn->addSmallAction(d->actionColorsOpen, QToolButton::MenuButtonPopup);
+
+                auto menu = new SARibbonMenu(pn);
+                menu->addAction(d->actionColorsDefault);
+                menu->addAction(d->actionColorsKDE);
+                d->actionColorsOpen->setMenu(menu);
+            }
+            {
+                pn->addSmallAction(d->actionColorsSave, QToolButton::MenuButtonPopup);
+
+                auto menu = new SARibbonMenu(pn);
+                menu->addAction(d->actionColorsSaveAs);
+                d->actionColorsSave->setMenu(menu);
+            }
+            pn->addSmallAction(d->actionColorsReload);
+
+            {
+                auto colorSimWidg = new kpColorSimilarityToolBarItem (pn);
+                // connect (
+                //     colorSimWidg,
+                //     &kpColorSimilarityToolBarItem::colorSimilarityChanged,
+                //     this, &kpColorToolBar::colorSimilarityChanged);
+
+                pn->addLargeWidget(colorSimWidg);
+            }
+        }
+    }
 
     {
         SARibbonCategory* pg = new SARibbonCategory();

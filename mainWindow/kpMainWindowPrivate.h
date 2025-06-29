@@ -413,6 +413,7 @@ struct kpMainWindowPrivate
 
   QAction *actionColorsAppendRow;
   QAction *actionColorsDeleteRow;
+  QAction *actionColorsSwap;
 
   //
   // Settings Menu
