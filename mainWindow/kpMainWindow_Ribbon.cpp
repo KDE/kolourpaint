@@ -262,16 +262,30 @@ void kpMainWindow::setupRibbon()
                 d->actionColorsSave->setMenu(menu);
             }
             pn->addSmallAction(d->actionColorsReload);
+        }
+        {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Colour Similarity"), pg);
+            pg->addPannel(pn);
 
-            // {
-            //     auto colorSimWidg = new kpColorSimilarityToolBarItem (pn);
-            //     // connect (
-            //     //     colorSimWidg,
-            //     //     &kpColorSimilarityToolBarItem::colorSimilarityChanged,
-            //     //     this, &kpColorToolBar::colorSimilarityChanged);
+            auto colorSimWidg = new kpColorSimilarityToolBarItem (pn);
+            connect (
+                colorSimWidg,
+                &kpColorSimilarityToolBarItem::colorSimilarityChanged,
+                [&, colorSimWidg](double similarity, int processedSimilarity) {
+                    colorSimWidg->blockSignals(true);
+                    d->colorToolBar->setColorSimilarity(similarity);
+                    colorSimWidg->blockSignals(false);
+                }
+            );
+            connect(
+                d->colorToolBar,
+                &kpColorToolBar::colorSimilarityChanged,
+                [&, colorSimWidg](double similarity, int processedSimilarity) {
+                    colorSimWidg->setColorSimilarity(similarity);
+                }
+            );
 
-            //     pn->addLargeWidget(colorSimWidg);
-            // }
+            pn->addLargeWidget(colorSimWidg);
         }
     }
 

@@ -140,6 +140,10 @@ private Q_SLOTS:
     void slotDocumentRestored ();
 
 //
+// UI state
+//
+
+//
 // Ribbon
 //
 
