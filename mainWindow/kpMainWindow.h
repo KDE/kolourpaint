@@ -125,8 +125,6 @@ public:
     kpCommandEnvironment *commandEnvironment ();
 
 private:
-    kpColorCells *m_colorCells;     // Usually placed within the ribbon
-
     void setupActions ();
     void enableDocumentActions (bool enable = true);
 
@@ -148,8 +146,14 @@ private Q_SLOTS:
 private:
     void setupRibbon();
 
+Q_SIGNALS:
+    void newPaletteTitle(QString title);
+
 private Q_SLOTS:
     void updatePaletteNameOrUrlLabel();
+
+    void slotFloatPalette();
+    void slotUnfloatPalette();
 
 //
 // Tools
@@ -701,6 +705,20 @@ public:
 
 private:
     struct kpMainWindowPrivate *d;
+};
+
+class PaletteToolWindow : public QMainWindow {
+    Q_OBJECT
+
+public:
+    PaletteToolWindow(QWidget *parent = nullptr);
+    virtual ~PaletteToolWindow();
+
+Q_SIGNALS:
+    void aboutToClose();
+
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
 };
 
 #endif  // KP_MAIN_WINDOW_H

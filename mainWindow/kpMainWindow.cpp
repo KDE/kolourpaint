@@ -34,6 +34,7 @@
 #include "environments/tools/kpToolEnvironment.h"
 #include "widgets/kpColorCells.h"
 #include "widgets/toolbars/kpColorToolBar.h"
+#include "widgets/kpColorPalette.h"
 #include "commands/kpCommandHistory.h"
 #include "document/kpDocument.h"
 #include "environments/document/kpDocumentEnvironment.h"
@@ -478,7 +479,7 @@ kpColorToolBar *kpMainWindow::colorToolBar () const
 // public
 kpColorCells *kpMainWindow::colorCells () const
 {
-    return m_colorCells;
+    return d->colorPalette->colorCells();
 }
 
 //---------------------------------------------------------------------

@@ -39,9 +39,11 @@
 class QAction;
 class QActionGroup;
 class QLabel;
+class QVBoxLayout;
 
 class SARibbonBar;
 class SARibbonContextCategory;
+class SARibbonPannel;
 class KSelectAction;
 class KToggleAction;
 class KSqueezedTextLabel;
@@ -59,6 +61,7 @@ class kpThumbnail;
 class kpThumbnailView;
 class kpDocument;
 class kpViewManager;
+class kpColorPalette;
 class kpColorToolBar;
 class kpToolToolBar;
 class kpCommandHistory;
@@ -274,6 +277,10 @@ struct kpMainWindowPrivate
   kpToolToolBar *toolToolBar;
   kpCommandHistory *commandHistory;
 
+  SARibbonPannel *pnPalette;
+  kpColorPalette *colorPalette;         // Because there is no easy way to have 2 palette widgets at once, this widget is physically transplanted from the ribbon to the floating window when that is requested (and vice versa when destroyed).
+  QVBoxLayout    *colorPaletteContainer;
+
   bool configFirstTime;
   bool configShowGrid;
   bool configShowPath;
@@ -449,6 +456,5 @@ struct kpMainWindowPrivate
   QString textOldFontFamily;
   int textOldFontSize;
 };
-
 
 #endif  // kpMainWindowPrivate_H

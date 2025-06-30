@@ -523,7 +523,7 @@ void kpMainWindow::slotColorsAppendRow ()
     // Call just in case.
     toolEndShape ();
 
-    m_colorCells->appendRow ();
+    colorCells()->appendRow ();
 }
 
 //---------------------------------------------------------------------
@@ -534,5 +534,5 @@ void kpMainWindow::slotColorsDeleteRow ()
     // Call just in case.
     toolEndShape ();
 
-    m_colorCells->deleteLastRow ();
+    colorCells()->deleteLastRow ();
 }

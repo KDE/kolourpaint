@@ -6,6 +6,7 @@
 #include "widgets/kpColorPalette.h"
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "widgets/colorSimilarity/kpColorSimilarityToolBarItem.h"
+#include "lgpl/generic/kpUrlFormatter.h"
 #include "kpLogCategories.h"
 
 #include <SARibbonBar/SARibbonCategory.h>
@@ -196,24 +197,33 @@ void kpMainWindow::setupRibbon()
             pn->addSmallAction(d->actionColorsSwap);
         }
         {
-            SARibbonPannel* pn = new SARibbonPannel(QLatin1String(""), pg);
+            SARibbonPannel* pn = d->pnPalette = new SARibbonPannel(QLatin1String(""), pg);
             pg->addPannel(pn);
 
-            QAction* optAct = new QAction(this);
-            pn->setOptionAction(optAct);
+            connect (this, &kpMainWindow::newPaletteTitle, [&](QString title) {
+                d->pnPalette->setPannelName(title);
+            });
+
+            QAction* actionFloatPalette = new QAction(this);
+            pn->setOptionAction(actionFloatPalette);
+            connect (actionFloatPalette, &QAction::triggered, this, &kpMainWindow::slotFloatPalette);
 
             {
-                auto colorPalette = new kpColorPalette (pn);
+                auto w = new QWidget(pn);   // We have it inside a placeholder widget so that we have something to put it inside when we transplant it back from the floating window.
+                d->colorPalette = new kpColorPalette(w);
 
-                connect (colorPalette, &kpColorPalette::foregroundColorChanged, [&](const kpColor& color) {
+                d->colorPaletteContainer = new QVBoxLayout(w);
+                w->setLayout(d->colorPaletteContainer);
+                d->colorPaletteContainer->addWidget(d->colorPalette);
+                w->adjustSize();
+
+                connect (d->colorPalette, &kpColorPalette::foregroundColorChanged, [&](const kpColor& color) {
                     d->colorToolBar->setForegroundColor(color);
                 });
 
-                connect (colorPalette, &kpColorPalette::backgroundColorChanged, [&](const kpColor& color) {
+                connect (d->colorPalette, &kpColorPalette::backgroundColorChanged, [&](const kpColor& color) {
                     d->colorToolBar->setBackgroundColor(color);
                 });
-
-                m_colorCells = colorPalette->colorCells ();
 
                 connect (colorCells (), &kpColorCells::rowCountChanged,
                     this, &kpMainWindow::slotUpdateColorsDeleteRowActionEnabled);
@@ -229,7 +239,7 @@ void kpMainWindow::setupRibbon()
 
                 updatePaletteNameOrUrlLabel ();
 
-                pn->addLargeWidget(colorPalette);
+                pn->addLargeWidget(w);
             }
         }
         {
@@ -394,53 +404,81 @@ void kpMainWindow::setupRibbon()
     
 }
 
+PaletteToolWindow::PaletteToolWindow(QWidget *parent)
+    : QMainWindow(parent, Qt::Tool)
+{
+}
+
+PaletteToolWindow::~PaletteToolWindow() = default;
+
+void PaletteToolWindow::closeEvent(QCloseEvent *event)
+{
+    Q_EMIT aboutToClose();
+    this->QMainWindow::closeEvent(event);
+}
+
+void kpMainWindow::slotFloatPalette()
+{
+    auto win = new PaletteToolWindow(this);
+    win->setCentralWidget(d->colorPalette);
+    win->adjustSize();
+    win->setWindowTitle(d->pnPalette->pannelName());
+    win->show();
+
+    connect(win, &PaletteToolWindow::aboutToClose, this, &kpMainWindow::slotUnfloatPalette);
+
+    connect(this, &kpMainWindow::newPaletteTitle, [&, win](QString title) {
+        win->setWindowTitle(title);
+    });
+
+    d->pnPalette->setVisible(false);    // Hide the ribbon pannel that it came from
+}
+
+void kpMainWindow::slotUnfloatPalette()
+{
+    d->colorPaletteContainer->addWidget(d->colorPalette);   // Transplant it back
+
+    d->pnPalette->setVisible(true);
+}
+
 void kpMainWindow::updatePaletteNameOrUrlLabel()
 {
-    // QString name;
+    QString name;
 
-    // kpColorCells *colorCells = colorPalette->colorCells ();
-    // if (!colorCells->url ().isEmpty ()) {
-    //     name = kpUrlFormatter::PrettyFilename (colorCells->url ());
-    // }
-    // else
-    // {
-    //     if (!colorCells->name ().isEmpty ()) {
-    //         name = colorCells->name ();
-    //     }
-    //     else {
-    //         name = i18n ("KolourPaint Defaults");
-    //     }
-    // }
+    if (!colorCells()->url ().isEmpty ()) {
+        name = kpUrlFormatter::PrettyFilename (colorCells()->url ());
+    }
+    else
+    {
+        if (!colorCells()->name ().isEmpty ()) {
+            name = colorCells()->name ();
+        }
+        else {
+            name = i18n ("KolourPaint Defaults");
+        }
+    }
 
-    // if (name.isEmpty ()) {
-    //     name = i18n ("Untitled");
-    // }
+    if (name.isEmpty ()) {
+        name = i18n ("Untitled");
+    }
 
 
-    // KLocalizedString labelStr;
+    KLocalizedString labelStr;
 
-    // if (!colorPalette->colorCells ()->isModified ())
-    // {
-    //     labelStr =
-    //         ki18nc ("Colors: name_or_url_of_color_palette",
-    //                 "Colors: %1")
-    //             .subs (name);
-    // }
-    // else
-    // {
-    //     labelStr =
-    //         ki18nc ("Colors: name_or_url_of_color_palette [modified]",
-    //                 "Colors: %1 [modified]")
-    //             .subs (name);
-    // }
+    if (!colorCells()->isModified ())
+    {
+        labelStr =
+            ki18nc ("Colors: name_or_url_of_color_palette",
+                    "Colors: %1")
+                .subs (name);
+    }
+    else
+    {
+        labelStr =
+            ki18nc ("Colors: name_or_url_of_color_palette [modified]",
+                    "Colors: %1 [modified]")
+                .subs (name);
+    }
 
-    // // Kill 2 birds with 1 stone:
-    // //
-    // // 1. Hide the windowTitle() when it's docked.
-    // // 2. Add a label containing the name of the open color palette.
-    // //
-    // // TODO: This currently hides the windowTitle() even when it's not docked,
-    // //       because we've abused it to show the name of open color palette
-    // //       instead.
-    // setWindowTitle (labelStr.toString ());
+    Q_EMIT newPaletteTitle(name);
 }
