@@ -144,9 +144,6 @@ void kpMainWindow::createColorBox ()
 
     // (needed for QMainWindow::saveState())
     d->colorToolBar->setObjectName ( QStringLiteral("Color Box" ));
-
-    connect (colorCells (), &kpColorCells::rowCountChanged,
-             this, &kpMainWindow::slotUpdateColorsDeleteRowActionEnabled);
 }
 
 //---------------------------------------------------------------------
@@ -526,8 +523,7 @@ void kpMainWindow::slotColorsAppendRow ()
     // Call just in case.
     toolEndShape ();
 
-    kpColorCells *colorCells = d->colorToolBar->colorCells ();
-    colorCells->appendRow ();
+    m_colorCells->appendRow ();
 }
 
 //---------------------------------------------------------------------
@@ -538,6 +534,5 @@ void kpMainWindow::slotColorsDeleteRow ()
     // Call just in case.
     toolEndShape ();
 
-    kpColorCells *colorCells = d->colorToolBar->colorCells ();
-    colorCells->deleteLastRow ();
+    m_colorCells->deleteLastRow ();
 }

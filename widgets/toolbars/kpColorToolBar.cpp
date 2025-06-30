@@ -79,26 +79,6 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 
     m_boxLayout->addWidget (m_dualColorButton, 0/*stretch*/, Qt::AlignVCenter);
 
-    m_colorPalette = new kpColorPalette (base);
-    connect (m_colorPalette, &kpColorPalette::foregroundColorChanged,
-             m_dualColorButton, &kpDualColorButton::setForegroundColor);
-
-    connect (m_colorPalette, &kpColorPalette::backgroundColorChanged,
-             m_dualColorButton, &kpDualColorButton::setBackgroundColor);
-
-    connect (m_colorPalette->colorCells (), &kpColorCells::isModifiedChanged,
-             this, &kpColorToolBar::updateNameOrUrlLabel);
-
-    connect (m_colorPalette->colorCells (), &kpColorCells::urlChanged,
-             this, &kpColorToolBar::updateNameOrUrlLabel);
-
-    connect (m_colorPalette->colorCells (), &kpColorCells::nameChanged,
-             this, &kpColorToolBar::updateNameOrUrlLabel);
-
-    updateNameOrUrlLabel ();
-
-    m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
-
     m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (base);
     connect (m_colorSimilarityToolBarItem,
              &kpColorSimilarityToolBarItem::colorSimilarityChanged,
@@ -164,16 +144,6 @@ void kpColorToolBar::adjustToOrientation (Qt::Orientation o)
     {
         m_boxLayout->setDirection (QBoxLayout::TopToBottom);
     }
-
-    m_colorPalette->setOrientation (o);
-}
-
-//---------------------------------------------------------------------
-
-// public
-kpColorCells *kpColorToolBar::colorCells () const
-{
-    return m_colorPalette->colorCells ();
 }
 
 //---------------------------------------------------------------------
@@ -285,60 +255,6 @@ void kpColorToolBar::openColorSimilarityDialog ()
 void kpColorToolBar::flashColorSimilarityToolBarItem ()
 {
     m_colorSimilarityToolBarItem->flash ();
-}
-
-//---------------------------------------------------------------------
-
-// private slot
-void kpColorToolBar::updateNameOrUrlLabel ()
-{
-    QString name;
-
-    kpColorCells *colorCells = m_colorPalette->colorCells ();
-    if (!colorCells->url ().isEmpty ()) {
-        name = kpUrlFormatter::PrettyFilename (colorCells->url ());
-    }
-    else
-    {
-        if (!colorCells->name ().isEmpty ()) {
-            name = colorCells->name ();
-        }
-        else {
-            name = i18n ("KolourPaint Defaults");
-        }
-    }
-
-    if (name.isEmpty ()) {
-        name = i18n ("Untitled");
-    }
-
-
-    KLocalizedString labelStr;
-
-    if (!m_colorPalette->colorCells ()->isModified ())
-    {
-        labelStr =
-            ki18nc ("Colors: name_or_url_of_color_palette",
-                    "Colors: %1")
-                .subs (name);
-    }
-    else
-    {
-        labelStr =
-            ki18nc ("Colors: name_or_url_of_color_palette [modified]",
-                    "Colors: %1 [modified]")
-                .subs (name);
-    }
-
-    // Kill 2 birds with 1 stone:
-    //
-    // 1. Hide the windowTitle() when it's docked.
-    // 2. Add a label containing the name of the open color palette.
-    //
-    // TODO: This currently hides the windowTitle() even when it's not docked,
-    //       because we've abused it to show the name of open color palette
-    //       instead.
-    setWindowTitle (labelStr.toString ());
 }
 
 //---------------------------------------------------------------------

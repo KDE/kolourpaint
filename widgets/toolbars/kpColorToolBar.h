@@ -103,9 +103,6 @@ public Q_SLOTS:
     void setForegroundColor (const kpColor &color);
     void setBackgroundColor (const kpColor &color);
 
-private Q_SLOTS:
-    void updateNameOrUrlLabel ();
-
 protected:
     // Eat color drops (which are usually accidental drags from one of our
     // child widgets) to prevent them from being pasted as text in the
@@ -124,7 +121,6 @@ private:
     QBoxLayout *m_boxLayout;
     QList<QAction *> m_customContextMenuActions;
     kpDualColorButton *m_dualColorButton;
-    kpColorPalette *m_colorPalette;
     kpColorSimilarityToolBarItem *m_colorSimilarityToolBarItem;
     bool m_locked = true;
 };

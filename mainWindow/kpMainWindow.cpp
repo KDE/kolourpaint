@@ -478,7 +478,7 @@ kpColorToolBar *kpMainWindow::colorToolBar () const
 // public
 kpColorCells *kpMainWindow::colorCells () const
 {
-    return d->colorToolBar ? d->colorToolBar->colorCells () : nullptr;
+    return m_colorCells;
 }
 
 //---------------------------------------------------------------------

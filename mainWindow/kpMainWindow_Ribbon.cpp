@@ -2,6 +2,8 @@
 #include "kpMainWindowPrivate.h"
 #include "tools/kpTool.h"
 #include "tools/selection/text/kpToolText.h"
+#include "widgets/kpColorCells.h"
+#include "widgets/kpColorPalette.h"
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "widgets/colorSimilarity/kpColorSimilarityToolBarItem.h"
 #include "kpLogCategories.h"
@@ -159,9 +161,6 @@ void kpMainWindow::setupRibbon()
             SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Colours"), pg);
             pg->addPannel(pn);
 
-            QAction* optAct = new QAction(this);
-            pn->setOptionAction(optAct);
-
             //
             
             {
@@ -197,6 +196,43 @@ void kpMainWindow::setupRibbon()
             pn->addSmallAction(d->actionColorsSwap);
         }
         {
+            SARibbonPannel* pn = new SARibbonPannel(QLatin1String(""), pg);
+            pg->addPannel(pn);
+
+            QAction* optAct = new QAction(this);
+            pn->setOptionAction(optAct);
+
+            {
+                auto colorPalette = new kpColorPalette (pn);
+
+                connect (colorPalette, &kpColorPalette::foregroundColorChanged, [&](const kpColor& color) {
+                    d->colorToolBar->setForegroundColor(color);
+                });
+
+                connect (colorPalette, &kpColorPalette::backgroundColorChanged, [&](const kpColor& color) {
+                    d->colorToolBar->setBackgroundColor(color);
+                });
+
+                m_colorCells = colorPalette->colorCells ();
+
+                connect (colorCells (), &kpColorCells::rowCountChanged,
+                    this, &kpMainWindow::slotUpdateColorsDeleteRowActionEnabled);
+
+                connect (colorCells (), &kpColorCells::isModifiedChanged,
+                    this, &kpMainWindow::updatePaletteNameOrUrlLabel);
+
+                connect (colorCells (), &kpColorCells::urlChanged,
+                    this, &kpMainWindow::updatePaletteNameOrUrlLabel);
+
+                connect (colorCells (), &kpColorCells::nameChanged,
+                    this, &kpMainWindow::updatePaletteNameOrUrlLabel);
+
+                updatePaletteNameOrUrlLabel ();
+
+                pn->addLargeWidget(colorPalette);
+            }
+        }
+        {
             SARibbonPannel* pn = new SARibbonPannel(QLatin1String("Palette"), pg);
             pg->addPannel(pn);
 
@@ -217,15 +253,15 @@ void kpMainWindow::setupRibbon()
             }
             pn->addSmallAction(d->actionColorsReload);
 
-            {
-                auto colorSimWidg = new kpColorSimilarityToolBarItem (pn);
-                // connect (
-                //     colorSimWidg,
-                //     &kpColorSimilarityToolBarItem::colorSimilarityChanged,
-                //     this, &kpColorToolBar::colorSimilarityChanged);
+            // {
+            //     auto colorSimWidg = new kpColorSimilarityToolBarItem (pn);
+            //     // connect (
+            //     //     colorSimWidg,
+            //     //     &kpColorSimilarityToolBarItem::colorSimilarityChanged,
+            //     //     this, &kpColorToolBar::colorSimilarityChanged);
 
-                pn->addLargeWidget(colorSimWidg);
-            }
+            //     pn->addLargeWidget(colorSimWidg);
+            // }
         }
     }
 
@@ -356,4 +392,55 @@ void kpMainWindow::setupRibbon()
         // pnClp2->addSmallAction(KStandardAction::create(KStandardAction::Paste, this, nullptr, this));
     d->ribbon->hideContextCategory(d->ribTextTools);
     
+}
+
+void kpMainWindow::updatePaletteNameOrUrlLabel()
+{
+    // QString name;
+
+    // kpColorCells *colorCells = colorPalette->colorCells ();
+    // if (!colorCells->url ().isEmpty ()) {
+    //     name = kpUrlFormatter::PrettyFilename (colorCells->url ());
+    // }
+    // else
+    // {
+    //     if (!colorCells->name ().isEmpty ()) {
+    //         name = colorCells->name ();
+    //     }
+    //     else {
+    //         name = i18n ("KolourPaint Defaults");
+    //     }
+    // }
+
+    // if (name.isEmpty ()) {
+    //     name = i18n ("Untitled");
+    // }
+
+
+    // KLocalizedString labelStr;
+
+    // if (!colorPalette->colorCells ()->isModified ())
+    // {
+    //     labelStr =
+    //         ki18nc ("Colors: name_or_url_of_color_palette",
+    //                 "Colors: %1")
+    //             .subs (name);
+    // }
+    // else
+    // {
+    //     labelStr =
+    //         ki18nc ("Colors: name_or_url_of_color_palette [modified]",
+    //                 "Colors: %1 [modified]")
+    //             .subs (name);
+    // }
+
+    // // Kill 2 birds with 1 stone:
+    // //
+    // // 1. Hide the windowTitle() when it's docked.
+    // // 2. Add a label containing the name of the open color palette.
+    // //
+    // // TODO: This currently hides the windowTitle() even when it's not docked,
+    // //       because we've abused it to show the name of open color palette
+    // //       instead.
+    // setWindowTitle (labelStr.toString ());
 }

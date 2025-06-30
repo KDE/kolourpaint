@@ -125,6 +125,8 @@ public:
     kpCommandEnvironment *commandEnvironment ();
 
 private:
+    kpColorCells *m_colorCells;     // Usually placed within the ribbon
+
     void setupActions ();
     void enableDocumentActions (bool enable = true);
 
@@ -145,6 +147,9 @@ private Q_SLOTS:
 
 private:
     void setupRibbon();
+
+private Q_SLOTS:
+    void updatePaletteNameOrUrlLabel();
 
 //
 // Tools
