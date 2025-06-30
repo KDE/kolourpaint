@@ -1,3 +1,9 @@
+Ribbon branch
+=============
+
+The old windows (like the colour window) are still created, they are just hidden. They couldn't be removed because their state (eg. of the colour widget) is used as the source of truth by the application and moving these into new variables inside the kpMainWindow class would take a larger re-write which is outside the scope of this branch. As such, the ribbon modifies the state of the widgets in the original, hidden, dialogs.
+
+---
 
 http://www.kolourpaint.org/
 

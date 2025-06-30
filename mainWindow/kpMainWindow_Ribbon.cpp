@@ -2,6 +2,7 @@
 #include "kpMainWindowPrivate.h"
 #include "tools/kpTool.h"
 #include "tools/selection/text/kpToolText.h"
+#include "widgets/toolbars/kpColorToolBar.h"
 #include "widgets/colorSimilarity/kpColorSimilarityToolBarItem.h"
 #include "kpLogCategories.h"
 
@@ -164,23 +165,31 @@ void kpMainWindow::setupRibbon()
             //
             
             {
-                SARibbonColorToolButton* colorButton = new SARibbonColorToolButton(pn);
-                // colorButton->setColor(defaultColor);
-                SAColorMenu *men = colorButton->setupStandardColorMenu();
-                colorButton->setButtonType(SARibbonToolButton::LargeButton);
-                colorButton->setColorStyle(SARibbonColorToolButton::ColorFillToIcon);
-                colorButton->setText(QLatin1String("Foreground"));
-                pn->addLargeWidget(colorButton);
-            }
+                auto fgButton = new SARibbonColorToolButton(pn);
+                auto bgButton = new SARibbonColorToolButton(pn);
+                SAColorMenu *fgMenu = fgButton->setupStandardColorMenu();
+                SAColorMenu *bgMenu = bgButton->setupStandardColorMenu();
+                fgButton->setButtonType(SARibbonToolButton::LargeButton);
+                bgButton->setButtonType(SARibbonToolButton::LargeButton);
+                fgButton->setColorStyle(SARibbonColorToolButton::ColorFillToIcon);
+                bgButton->setColorStyle(SARibbonColorToolButton::ColorFillToIcon);
+                fgButton->setText(QLatin1String("Foreground"));
+                bgButton->setText(QLatin1String("Background"));
+                pn->addLargeWidget(fgButton);
+                pn->addLargeWidget(bgButton);
 
-            {
-                SARibbonColorToolButton* colorButton = new SARibbonColorToolButton(pn);
-                // colorButton->setColor(defaultColor);
-                SAColorMenu *men = colorButton->setupStandardColorMenu();
-                colorButton->setButtonType(SARibbonToolButton::LargeButton);
-                colorButton->setColorStyle(SARibbonColorToolButton::ColorFillToIcon);
-                colorButton->setText(QLatin1String("Background"));
-                pn->addLargeWidget(colorButton);
+                connect(fgButton, &SARibbonColorToolButton::colorChanged, [&](const QColor& color) {
+                    d->colorToolBar->setForegroundColor(kpColor(color.rgba()));
+                });
+                connect(bgButton, &SARibbonColorToolButton::colorChanged, [&](const QColor& color) {
+                    d->colorToolBar->setBackgroundColor(kpColor(color.rgba()));
+                });
+                connect(d->colorToolBar, &kpColorToolBar::foregroundColorChanged, [&, fgButton](const kpColor& color) {
+                    fgButton->setColor(color.isTransparent() ? QColor(/*invalid*/) : color.toQColor());
+                });
+                connect(d->colorToolBar, &kpColorToolBar::backgroundColorChanged, [&, bgButton](const kpColor& color) {
+                    bgButton->setColor(color.isTransparent() ? QColor(/*invalid*/) : color.toQColor());
+                });
             }
 
             pn->addSmallAction(d->actionColorsAppendRow);

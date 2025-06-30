@@ -85,38 +85,50 @@ void kpMainWindow::setupColorsMenuActions ()
 
     d->actionColorsOpen = ac->addAction (QStringLiteral("colors_open"));
     d->actionColorsOpen->setText (i18nc ("@item:inmenu colors", "&Open..."));
+    d->actionColorsOpen->setIcon(QIcon::fromTheme(QLatin1String("document-open")));
     connect (d->actionColorsOpen, &QAction::triggered, this, &kpMainWindow::slotColorsOpen);
 
     d->actionColorsReload = ac->addAction (QStringLiteral("colors_reload"));
     d->actionColorsReload->setText (i18nc ("@item:inmenu colors", "Reloa&d"));
+    d->actionColorsReload->setIcon(QIcon::fromTheme(QLatin1String("view-refresh")));
     connect (d->actionColorsReload, &QAction::triggered,
              this, &kpMainWindow::slotColorsReload);
 
     d->actionColorsSave = ac->addAction (QStringLiteral("colors_save"));
+    d->actionColorsSave->setIcon(QIcon::fromTheme(QLatin1String("document-save")));
     d->actionColorsSave->setText (i18nc ("@item:inmenu colors", "&Save"));
     connect (d->actionColorsSave, &QAction::triggered,
              this, &kpMainWindow::slotColorsSave);
 
     d->actionColorsSaveAs = ac->addAction (QStringLiteral("colors_save_as"));
     d->actionColorsSaveAs->setText (i18nc ("@item:inmenu colors", "Save &As..."));
+    d->actionColorsSaveAs->setIcon(QIcon::fromTheme(QLatin1String("document-save-as")));
     connect (d->actionColorsSaveAs, &QAction::triggered,
              this, &kpMainWindow::slotColorsSaveAs);
 
     d->actionColorsAppendRow = ac->addAction (QStringLiteral("colors_append_row"));
     d->actionColorsAppendRow->setText (i18nc ("@item:inmenu colors", "Add Row"));
+    d->actionColorsAppendRow->setIcon(QIcon::fromTheme(QLatin1String("list-add")));
     connect (d->actionColorsAppendRow, &QAction::triggered,
              this, &kpMainWindow::slotColorsAppendRow);
 
     d->actionColorsDeleteRow = ac->addAction (QStringLiteral("colors_delete_row"));
     d->actionColorsDeleteRow->setText (i18nc ("@item:inmenu colors", "Delete Last Row"));
+    d->actionColorsDeleteRow->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
     connect (d->actionColorsDeleteRow, &QAction::triggered,
              this, &kpMainWindow::slotColorsDeleteRow);
 
-    d->actionColorsSwap = ac->addAction (QStringLiteral("colors_swap"));
-    d->actionColorsSwap->setText (i18nc ("@item:inmenu colors", "Swap colours"));
-    connect (d->actionColorsSwap, &QAction::triggered, this, [&]() {
-        // if (d->toolToolBar->tool())
-            // d->toolToolBar->tool()->slotColorsSwappedInternal();
+    d->actionColorsSwap = ac->addAction(QStringLiteral("colors_swap"));
+    d->actionColorsSwap->setText(i18nc("@item:inmenu colors", "Swap Colours"));
+    d->actionColorsSwap->setIcon(QPixmap(QLatin1String(":/icons/colorbutton_swap_16x16")));
+    connect (d->actionColorsSwap, &QAction::triggered, [&]() {
+        auto newFg = d->colorToolBar->backgroundColor();
+        auto newBg = d->colorToolBar->foregroundColor();
+
+        d->colorToolBar->setForegroundColor(newFg);     // colorToolBar would have done this itself if the `colorsSwapped` was originating from inside of it.
+        d->colorToolBar->setBackgroundColor(newBg);
+
+        Q_EMIT d->colorToolBar->colorsSwapped(newFg, newBg);
     });
 
 
