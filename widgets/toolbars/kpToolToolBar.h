@@ -41,6 +41,10 @@ class QBoxLayout;
 class QButtonGroup;
 class QGridLayout;
 class QWidget;
+class QWidgetAction;
+
+class SARibbonPannel;
+class SARibbonButtonGroupWidget;
 
 class kpTool;
 class kpToolButton;
@@ -65,7 +69,7 @@ public:
     void unregisterTool(kpTool *tool);
 
     kpTool *tool () const;
-    void selectTool (const kpTool *tool, bool reselectIfSameTool = false);
+    void selectTool (kpTool *tool, bool reselectIfSameTool = false);
 
     kpTool *previousTool () const;
     void selectPreviousTool ();
@@ -90,9 +94,7 @@ Q_SIGNALS:
     void toolWidgetOptionSelected ();
 
 private Q_SLOTS:
-    void slotToolButtonClicked ();
-
-    void slotToolActionActivated ();
+    void slotToolButtonClicked (kpTool *tool);
 
     void adjustToOrientation(Qt::Orientation o);
     void slotIconSizeChanged(const QSize &);
@@ -104,8 +106,7 @@ private:
 
     int m_vertCols;
 
-    QButtonGroup *m_buttonGroup;
-    QWidget *m_baseWidget;
+    SARibbonPannel *m_baseWidget;
     QBoxLayout *m_baseLayout;
     QGridLayout *m_toolLayout;
 
@@ -119,6 +120,8 @@ private:
     QList<kpToolWidgetBase *> m_toolWidgets;
 
     QList<kpToolButton *> m_toolButtons;
+
+    QList<SARibbonButtonGroupWidget *> m_toolsRows;
 
     kpTool *m_previousTool, *m_currentTool;
 };
