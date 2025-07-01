@@ -44,6 +44,7 @@ class QWidget;
 class QWidgetAction;
 
 class SARibbonPannel;
+class SARibbonCategory;
 class SARibbonButtonGroupWidget;
 
 class kpTool;
@@ -57,12 +58,12 @@ class kpToolWidgetLineWidth;
 class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
-class kpToolToolBar : public KToolBar
+class kpToolToolBar : public QObject
 {
 Q_OBJECT
 
 public:
-    kpToolToolBar (const QString &name, int colsOrRows, QMainWindow *parent);
+    kpToolToolBar (QMainWindow *parent, SARibbonCategory *ribbonPageForPannels);
     ~kpToolToolBar () override;
 
     void registerTool(kpTool *tool);
@@ -85,9 +86,8 @@ public:
 
     kpToolWidgetBase *shownToolWidget (int which) const;
 
-protected:
-    bool event(QEvent *ev) override;
-    void paintEvent(QPaintEvent *) override;
+    void setEnabled(bool enabled);
+    bool isEnabled();
 
 Q_SIGNALS:
     void sigToolSelected (kpTool *tool);  // tool may be 0
@@ -96,19 +96,10 @@ Q_SIGNALS:
 private Q_SLOTS:
     void slotToolButtonClicked (kpTool *tool);
 
-    void adjustToOrientation(Qt::Orientation o);
-    void slotIconSizeChanged(const QSize &);
-    void slotToolButtonStyleChanged(Qt::ToolButtonStyle style);
-
 private:
-    void addButton (QAbstractButton *button, Qt::Orientation o, int num);
     void adjustSizeConstraint();
 
-    int m_vertCols;
-
-    SARibbonPannel *m_baseWidget;
-    QBoxLayout *m_baseLayout;
-    QGridLayout *m_toolLayout;
+    SARibbonPannel *m_pnTools, *m_pnParams;
 
     kpToolWidgetBrush *m_toolWidgetBrush;
     kpToolWidgetEraserSize *m_toolWidgetEraserSize;
@@ -118,8 +109,6 @@ private:
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
     QList<kpToolWidgetBase *> m_toolWidgets;
-
-    QList<kpToolButton *> m_toolButtons;
 
     QList<SARibbonButtonGroupWidget *> m_toolsRows;
 

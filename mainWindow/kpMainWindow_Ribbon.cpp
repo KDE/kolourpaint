@@ -107,7 +107,7 @@ void kpMainWindow::setupRibbon()
 
     /* Pages */
 
-    SARibbonCategory* pgHome = new SARibbonCategory();
+    SARibbonCategory* pgHome = d->ribbonPgHome =  new SARibbonCategory();
     pgHome->setCategoryName(QLatin1String("Home"));
         SARibbonPannel* pnClp = new SARibbonPannel(QLatin1String("Clipboard"), pgHome);
         pgHome->addPannel(pnClp);
@@ -135,21 +135,6 @@ void kpMainWindow::setupRibbon()
         pnSel->addSmallAction(d->actionSelectAll);
         pnSel->addSmallAction(d->actionDeselect);
         pnSel->addSmallAction(d->actionDelete);
-
-        SARibbonPannel* pnTools = new SARibbonPannel(QLatin1String("Tools"), pgHome);
-        pgHome->addPannel(pnTools);
-        auto toolsRow1 = new SARibbonButtonGroupWidget(pnTools);
-            toolsRow1->addAction(d->toolPen->action());
-            toolsRow1->addAction(d->toolLine->action());
-            toolsRow1->addAction(d->toolPolygon->action());
-            toolsRow1->addAction(d->toolText->action());
-        auto toolsRow2 = new SARibbonButtonGroupWidget(pnTools);
-            toolsRow2->addAction(d->toolFloodFill->action());
-            toolsRow2->addAction(d->toolEraser->action());
-            toolsRow2->addAction(d->toolColorPicker->action());
-            toolsRow2->addAction(d->toolZoom->action());
-        pnTools->addMediumWidget(toolsRow1);
-        pnTools->addMediumWidget(toolsRow2);
 
     d->ribbon->addCategoryPage(pgHome);
 
@@ -305,14 +290,14 @@ void kpMainWindow::setupRibbon()
             pg->addPannel(pn);
 
             {
-                auto group = new SARibbonButtonGroupWidget(pnTools);
+                auto group = new SARibbonButtonGroupWidget(pn);
                 pn->addMediumWidget(group);
 
                 group->addAction(d->actionRotateLeft);
                 group->addAction(d->actionRotateRight);
             }
             {
-                auto group = new SARibbonButtonGroupWidget(pnTools);
+                auto group = new SARibbonButtonGroupWidget(pn);
                 pn->addMediumWidget(group);
 
                 group->addAction(d->actionMirror);

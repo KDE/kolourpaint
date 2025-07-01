@@ -42,6 +42,7 @@ class QLabel;
 class QVBoxLayout;
 
 class SARibbonBar;
+class SARibbonCategory;
 class SARibbonContextCategory;
 class SARibbonPannel;
 class KSelectAction;
@@ -269,6 +270,7 @@ struct kpMainWindowPrivate
   kpZoomedView *mainView;
   SARibbonBar *ribbon;
   SARibbonContextCategory *ribTextTools;
+  SARibbonCategory *ribbonPgHome;
   kpThumbnail *thumbnail;
   kpThumbnailView *thumbnailView;
   kpDocument *document;
@@ -310,6 +312,7 @@ struct kpMainWindowPrivate
   kpToolText *toolText;
 
   QList <kpTool *> tools;
+  QList <kpTool *> toolsExclude;  // Exclude these tools in the above list from the Tools pannel (they are activated from elsewhere.)
   int lastToolNumber;
 
   bool toolActionsEnabled;

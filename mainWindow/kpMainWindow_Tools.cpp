@@ -128,6 +128,11 @@ void kpMainWindow::setupToolActions ()
     d->tools.append (d->toolZoom = new kpToolZoom (toolEnv, this));
 
 
+    d->toolsExclude.append (d->toolFreeFormSelection);
+    d->toolsExclude.append (d->toolRectSelection);
+    d->toolsExclude.append (d->toolEllipticalSelection);
+
+
     KActionCollection *ac = actionCollection ();
 
     d->actionPrevToolOptionGroup1 = ac->addAction (QStringLiteral("prev_tool_option_group_1"));
@@ -176,8 +181,7 @@ void kpMainWindow::setupToolActions ()
 // private
 void kpMainWindow::createToolBox ()
 {
-    d->toolToolBar = new kpToolToolBar(QStringLiteral("Tool Box"), 2/*columns/rows*/, this);
-    d->toolToolBar->setWindowTitle(i18n("Tool Box"));
+    d->toolToolBar = new kpToolToolBar(this, d->ribbonPgHome);
 
     connect (d->toolToolBar, &kpToolToolBar::sigToolSelected,
              this, &kpMainWindow::slotToolSelected);
@@ -192,7 +196,8 @@ void kpMainWindow::createToolBox ()
     updateActionDrawOpaqueChecked ();
 
     for (auto *tool : d->tools) {
-      d->toolToolBar->registerTool(tool);
+        if (!d->toolsExclude.contains(tool))
+                d->toolToolBar->registerTool(tool);
     }
 
     // (from config file)
@@ -291,7 +296,6 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tdrawOpaque=" << drawOpaque;
 #endif
-    fprintf(stderr, "\tswitched: %b\n", drawOpaque);
     d->actionDrawOpaque->setChecked (drawOpaque);
 }
 

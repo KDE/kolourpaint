@@ -281,8 +281,6 @@ void kpMainWindow::init ()
     // (have to do this _after_ setAutoSaveSettings as that applies the default settings)
     if (d->configFirstTime)
     {
-      d->toolToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-
       KConfigGroup cfg(KSharedConfig::openConfig(), QStringLiteral(kpSettingsGroupGeneral));
 
       cfg.writeEntry(kpSettingFirstTime, d->configFirstTime = false);
