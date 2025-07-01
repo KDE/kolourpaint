@@ -15,9 +15,13 @@
 #include <SARibbonBar/SARibbonQuickAccessBar.h>
 #include <SARibbonBar/SARibbonButtonGroupWidget.h>
 #include <SARibbonBar/SARibbonColorToolButton.h>
+#include <SARibbonBar/SARibbonApplicationButton.h>
+#include <SARibbonBar/SARibbonMenu.h>
+
 
 #include <KStandardAction>
 #include <KToggleAction>
+#include <KActionCollection>
 #include <KFontSizeAction>
 #include <KFontAction>
 
@@ -100,10 +104,32 @@ void kpMainWindow::setupRibbon()
     d->ribbon->setRibbonStyle(SARibbonBar::RibbonStyleCompactThreeRow);
     d->ribbon->setApplicationButton(nullptr);
 
+    /* Quick access bar */
+
     d->ribbon->quickAccessBar()->addAction(d->actionSave);
     d->ribbon->quickAccessBar()->addSeparator();
     d->ribbon->quickAccessBar()->addAction(d->actionUndo);
     d->ribbon->quickAccessBar()->addAction(d->actionRedo);
+
+    /* File menu */
+
+    auto fileButton = new SARibbonApplicationButton(this);
+    fileButton->setText(QLatin1String("&File"));
+    d->ribbon->setApplicationButton(fileButton);
+
+    // auto fileButtonMenu = new SARibbonMenu(this);
+    // 
+    // for (auto *g : d->fileActions->actionGroups())
+    // {
+    //     for (auto *act : g->actions())
+    //         fileButtonMenu->addAction(act);
+    //     fileButtonMenu->addSeparator();
+    // }
+    // fileButtonMenu->addSeparator();
+    // for (auto *act : d->fileActions->actionsWithoutGroup())
+    //     fileButtonMenu->addAction(act);
+
+    fileButton->setMenu(menuBar()->actions()[0]->menu());
 
     /* Pages */
 
@@ -379,26 +405,6 @@ void kpMainWindow::setupRibbon()
                 fontSettingsGrp->addAction(d->actionTextStrikeThru);
             hLayout->addWidget(fontSettingsGrp);
         pnFont->addMediumWidget(hBox);
-
-        SARibbonPannel* pnBg = new SARibbonPannel(QLatin1String("Background"), pgText);
-        pgText->addPannel(pnBg);
-            d->bgroupOpaqueOrTransparent = new QButtonGroup(pnBg);
-            d->bgroupOpaqueOrTransparent->setExclusive(true);
-            connect(d->bgroupOpaqueOrTransparent, &QButtonGroup::idToggled, this, &kpMainWindow::updateActionDrawOpaqueChecked);
-
-            auto tparencyOpaque = new QPushButton(QPixmap(QStringLiteral(":/icons/option_opaque")), QLatin1String("Opaque"), pnBg);
-            tparencyOpaque->setCheckable(true);
-            tparencyOpaque->setChecked(true);
-            d->bgroupOpaqueOrTransparent->addButton(tparencyOpaque, 0);
-            pnBg->addSmallWidget(tparencyOpaque);
-
-            auto tparencyTparent = new QPushButton(QPixmap(QStringLiteral(":/icons/option_transparent")), QLatin1String("Transparent"), pnBg);
-            tparencyTparent->setCheckable(true);
-            tparencyTparent->setChecked(true);
-            d->bgroupOpaqueOrTransparent->addButton(tparencyTparent, 1);
-            pnBg->addSmallWidget(tparencyTparent);
-        // Transparent / Opaque
-        // pnClp2->addSmallAction(KStandardAction::create(KStandardAction::Paste, this, nullptr, this));
     d->ribbon->hideContextCategory(d->ribTextTools);
     
 }

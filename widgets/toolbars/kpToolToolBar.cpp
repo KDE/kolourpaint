@@ -117,7 +117,7 @@ kpToolToolBar::~kpToolToolBar()
 //---------------------------------------------------------------------
 
 // public
-void kpToolToolBar::registerTool (kpTool *tool)
+void kpToolToolBar::registerTool (kpTool *tool, bool dontMakeButton)
 {
     int numTools = 0;
     for (auto *row : m_toolsRows)
@@ -127,20 +127,13 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
         numTools += row->actions().count();
     }
-
-    m_toolsRows[numTools % m_toolsRows.count()]->addAction(tool->action());
+        
+    if (!dontMakeButton)
+        m_toolsRows[numTools % m_toolsRows.count()]->addAction(tool->action());
 
     connect (tool, &kpTool::actionActivated, [&, tool]() {
         selectTool (tool, true/*reselect if same tool*/);
     });
-}
-
-//---------------------------------------------------------------------
-// public
-
-void kpToolToolBar::unregisterTool(kpTool *tool)
-{
-    qDebug() << "kpToolToolBar::unregisterTool() not implemented. Code shouldn't be calling this.";
 }
 
 //---------------------------------------------------------------------

@@ -85,7 +85,7 @@ void kpMainWindow::setupFileMenuActions ()
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "kpMainWindow::setupFileMenuActions()";
 #endif
-    KActionCollection *ac = actionCollection ();
+    KActionCollection *ac = d->fileActions = actionCollection ();
 
     d->actionNew = KStandardAction::openNew (this, SLOT (slotNew()), ac);
     d->actionOpen = KStandardAction::open (this, SLOT (slotOpen()), ac);

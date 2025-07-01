@@ -196,8 +196,7 @@ void kpMainWindow::createToolBox ()
     updateActionDrawOpaqueChecked ();
 
     for (auto *tool : d->tools) {
-        if (!d->toolsExclude.contains(tool))
-                d->toolToolBar->registerTool(tool);
+        d->toolToolBar->registerTool(tool, d->toolsExclude.contains(tool));
     }
 
     // (from config file)
@@ -292,7 +291,7 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 #endif
 
     const bool drawOpaque =
-        (d->bgroupOpaqueOrTransparent->checkedId() == 0);
+        (d->toolToolBar->toolWidgetOpaqueOrTransparent ()->selectedRow () == 0);
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\tdrawOpaque=" << drawOpaque;
 #endif

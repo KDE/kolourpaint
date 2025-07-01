@@ -52,6 +52,7 @@ class KRecentFilesAction;
 class KFontAction;
 class KFontSizeAction;
 class KToggleFullScreenAction;
+class KActionCollection;
 class kpCommandEnvironment;
 class kpDocumentEnvironment;
 class kpToolSelectionEnvironment;
@@ -217,7 +218,6 @@ struct kpMainWindowPrivate
       actionInvertColors(nullptr),
       actionClear(nullptr),
 
-      bgroupOpaqueOrTransparent(nullptr),
       actionDrawOpaque(nullptr),
       actionDrawColorSimilarity(nullptr),
 
@@ -332,6 +332,8 @@ struct kpMainWindowPrivate
 
   bool configOpenImagesInSameWindow, configPrintImageCenteredOnPage;
 
+  KActionCollection *fileActions;
+
   QAction *actionNew, *actionOpen;
   KRecentFilesAction *actionOpenRecent;
   QAction *actionScan, *actionScreenshot, *actionProperties,
@@ -403,7 +405,6 @@ struct kpMainWindowPrivate
 
   // Implemented in kpMainWindow_Tools.cpp, not kpImageWindow_Image.cpp
   // since they're really setting tool options.
-  QButtonGroup  *bgroupOpaqueOrTransparent;
   KToggleAction *actionDrawOpaque;
   QAction *actionDrawColorSimilarity;
 

@@ -66,8 +66,7 @@ public:
     kpToolToolBar (QMainWindow *parent, SARibbonCategory *ribbonPageForPannels);
     ~kpToolToolBar () override;
 
-    void registerTool(kpTool *tool);
-    void unregisterTool(kpTool *tool);
+    void registerTool(kpTool *tool, bool dontMakeButton);
 
     kpTool *tool () const;
     void selectTool (kpTool *tool, bool reselectIfSameTool = false);
