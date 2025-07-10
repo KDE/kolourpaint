@@ -62,6 +62,7 @@
 #define kpSettingShowGrid "Show Grid"
 #define kpSettingShowPath "Show Path"
 #define kpSettingDrawAntiAliased "Draw AntiAliased"
+#define kpSettingShowRibbon "Show Ribbon"
 #define kpSettingColorSimilarity "Color Similarity"
 #define kpSettingDitherOnOpen "Dither on Open if Screen is 15/16bpp and Image Num Colors More Than"
 #define kpSettingPrintImageCenteredOnPage "Print Image Centered On Page"

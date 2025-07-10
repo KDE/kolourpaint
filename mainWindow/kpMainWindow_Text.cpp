@@ -141,7 +141,9 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
         // COMPAT: KDE4 does not place the Text Tool Bar in a new row, underneath
         //         the Main Tool Bar, if there isn't enough room.  This makes
         //         accessing the Text Tool Bar's buttons difficult.
-        textToolBar ()->setVisible (enable);
+
+        if (!d->configShowRibbon)
+            textToolBar ()->setVisible (enable);
     }
 
     if (d->ribbon)

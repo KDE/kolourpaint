@@ -153,7 +153,6 @@ public:
 
     static bool drawAntiAliased;
 
-
 private:
     struct kpToolEnvironmentPrivate * const d;
 };

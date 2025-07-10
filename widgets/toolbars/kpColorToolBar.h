@@ -58,6 +58,7 @@ class kpDualColorButton;
 class kpColorToolBar : public QDockWidget
 {
 Q_OBJECT
+    friend class kpMainWindow;
 
 public:
     kpColorToolBar (const QString &label, QWidget *parent);

@@ -140,7 +140,7 @@ private Q_SLOTS:
     void slotDocumentRestored ();
 
 //
-// UI state
+// UI state (so that the source of truth is stored centrally and not inside a widget)
 //
 
 //
@@ -644,6 +644,7 @@ private Q_SLOTS:
 
     void slotEnableSettingsShowPath ();
     void slotShowPathToggled ();
+    void slotShowRibbonToggled(bool on);
     void slotDrawAntiAliasedToggled(bool on);
 
     void slotKeyBindings ();

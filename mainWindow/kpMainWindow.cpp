@@ -109,6 +109,7 @@ void kpMainWindow::readGeneralSettings ()
     d->configFirstTime = cfg.readEntry (kpSettingFirstTime, true);
     d->configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
     d->configShowPath = cfg.readEntry (kpSettingShowPath, false);
+    d->configShowRibbon = cfg.readEntry (kpSettingShowRibbon, true);
     d->moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);
     kpToolEnvironment::drawAntiAliased = cfg.readEntry(kpSettingDrawAntiAliased, true);
 
@@ -218,7 +219,6 @@ void kpMainWindow::init ()
     setupActions ();
     createStatusBar ();
     createGUI ();
-    // This is where the Ribbon setup code goes
 
     createColorBox ();
 
@@ -260,6 +260,7 @@ void kpMainWindow::init ()
     auto rwidg = new SARibbonWidget(container);
     rwidg->setRibbonTheme(SARibbonTheme::RibbonThemeOffice2016Blue);
     d->ribbon = rwidg->ribbonBar();
+    d->ribbon->setVisible(d->configShowRibbon);
     setupRibbon();
     vbox->addWidget(rwidg);
     // setMenuWidget(ribbon);    // https://doc.qt.io/qt-6/qmainwindow.html#setMenuWidget

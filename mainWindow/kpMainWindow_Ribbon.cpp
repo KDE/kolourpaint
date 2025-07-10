@@ -98,6 +98,17 @@ void MySARibbonPannel::addAction(KToggleAction *kAction, SARibbonPannelItem::Row
     });
 }
 
+static QAction *getActionNamed(QList<QAction *> acts, QString name)
+{
+    for (auto *act : acts)
+    {
+        if (act->objectName() == name)
+            return act;
+    }
+
+    return nullptr;
+}
+
 void kpMainWindow::setupRibbon()
 {
     d->ribbon->setTitleVisible(false);
@@ -115,21 +126,8 @@ void kpMainWindow::setupRibbon()
 
     auto fileButton = new SARibbonApplicationButton(this);
     fileButton->setText(QLatin1String("&File"));
+    fileButton->setMenu(getActionNamed(menuBar()->actions(), QLatin1String("file"))->menu());
     d->ribbon->setApplicationButton(fileButton);
-
-    // auto fileButtonMenu = new SARibbonMenu(this);
-    // 
-    // for (auto *g : d->fileActions->actionGroups())
-    // {
-    //     for (auto *act : g->actions())
-    //         fileButtonMenu->addAction(act);
-    //     fileButtonMenu->addSeparator();
-    // }
-    // fileButtonMenu->addSeparator();
-    // for (auto *act : d->fileActions->actionsWithoutGroup())
-    //     fileButtonMenu->addAction(act);
-
-    fileButton->setMenu(menuBar()->actions()[0]->menu());
 
     /* Pages */
 
@@ -354,35 +352,71 @@ void kpMainWindow::setupRibbon()
         }
     }
 
-    SARibbonCategory* pgView = new SARibbonCategory();
-    pgView->setCategoryName(QLatin1String("View"));
-        SARibbonPannel* pnZoom = new SARibbonPannel(QLatin1String("Zoom"), pgView);
-        pgView->addPannel(pnZoom);
-        pnZoom->addLargeAction(d->actionZoomIn);
-        pnZoom->addLargeAction(d->actionZoomOut);
-        pnZoom->addSmallAction(d->actionActualSize);
+    {
+        SARibbonCategory* pgView = new SARibbonCategory();
+        pgView->setCategoryName(QLatin1String("View"));
+        d->ribbon->addCategoryPage(pgView);
 
-        SARibbonMenu* fitMenu = new SARibbonMenu(this);
-        fitMenu->addAction(d->actionFitToPage);
-        fitMenu->addAction(d->actionFitToWidth);
-        fitMenu->addAction(d->actionFitToHeight);
-        auto act2 = createAction(this, "Fit to...", nullptr);
-        act2->setIcon(d->actionFitToPage->icon());
-        act2->setMenu(fitMenu);
-        pnZoom->addSmallAction(act2, QToolButton::InstantPopup);
+        {
+            SARibbonPannel* pnZoom = new SARibbonPannel(QLatin1String("Zoom"), pgView);
+            pgView->addPannel(pnZoom);
 
-        MySARibbonPannel* pnShow = (MySARibbonPannel*) new SARibbonPannel(QLatin1String("Show or hide"), pgView);
-        pgView->addPannel(pnShow);
-        pnShow->addAction((d->actionShowGrid), SARibbonPannelItem::Small);
-        pnShow->addAction((KStandardAction::showStatusbar(this, nullptr, this)), SARibbonPannelItem::Small);
-        pnShow->addLargeAction(d->actionFullScreen);
+            pnZoom->addLargeAction(d->actionZoomIn);
+            pnZoom->addLargeAction(d->actionZoomOut);
+            pnZoom->addSmallAction(d->actionActualSize);
 
-        MySARibbonPannel* pnThumb = (MySARibbonPannel*) new SARibbonPannel(QLatin1String("Thumbnail"), pgView);
-        pgView->addPannel(pnThumb);
-        pnThumb->addLargeAction(d->actionShowThumbnail);
-        pnThumb->addAction((d->actionZoomedThumbnail), SARibbonPannelItem::Small);
-        pnThumb->addAction((d->actionShowThumbnailRectangle), SARibbonPannelItem::Small);
-    d->ribbon->addCategoryPage(pgView);
+            {
+                SARibbonMenu* fitMenu = new SARibbonMenu(this);
+                fitMenu->addAction(d->actionFitToPage);
+                fitMenu->addAction(d->actionFitToWidth);
+                fitMenu->addAction(d->actionFitToHeight);
+
+                auto act2 = createAction(this, "Fit to...", nullptr);
+                act2->setIcon(d->actionFitToPage->icon());
+                act2->setMenu(fitMenu);
+
+                pnZoom->addSmallAction(act2, QToolButton::InstantPopup);
+            }
+
+        }
+        {
+            MySARibbonPannel* pnShow = (MySARibbonPannel*) new SARibbonPannel(QLatin1String("Show or hide"), pgView);
+            pgView->addPannel(pnShow);
+            pnShow->addAction((d->actionShowGrid), SARibbonPannelItem::Small);
+            pnShow->addAction((KStandardAction::showStatusbar(this, nullptr, this)), SARibbonPannelItem::Small);
+            pnShow->addLargeAction(d->actionFullScreen);
+        }
+        {
+            MySARibbonPannel* pnThumb = (MySARibbonPannel*) new SARibbonPannel(QLatin1String("Thumbnail"), pgView);
+            pgView->addPannel(pnThumb);
+            pnThumb->addLargeAction(d->actionShowThumbnail);
+            pnThumb->addAction((d->actionZoomedThumbnail), SARibbonPannelItem::Small);
+            pnThumb->addAction((d->actionShowThumbnailRectangle), SARibbonPannelItem::Small);
+        }
+        {
+            MySARibbonPannel* pn = (MySARibbonPannel*) new SARibbonPannel(QLatin1String(/*"Settings"*/""), pgView);
+            pgView->addPannel(pn);
+
+            {
+                auto act = createAction(this, "Settings", nullptr);
+                act->setIcon(QIcon::fromTheme(QLatin1String("settings")));
+                act->setMenu(getActionNamed(menuBar()->actions(), QLatin1String("settings"))->menu());
+
+                pn->addLargeAction(act, QToolButton::InstantPopup);
+            }
+            {
+                auto act = createAction(this, "Help", nullptr);
+                act->setIcon(QIcon::fromTheme(QLatin1String("help")));
+                act->setMenu(getActionNamed(menuBar()->actions(), QLatin1String("help"))->menu());
+
+                pn->addLargeAction(act, QToolButton::InstantPopup);
+            }
+
+            // FIXME: This is supposed to be created automatically from its entry in kolourpaintui.rc but isn't for some reason.
+            auto settingsMenu = getActionNamed(menuBar()->actions(), QLatin1String("settings"))->menu();
+            settingsMenu->insertAction(actionCollection()->action(QLatin1String("settings_show_path")), actionCollection()->action(QLatin1String("settings_show_ribbon")));
+        }
+    }
 
     d->ribTextTools = d->ribbon->addContextCategory(QLatin1String("Text tools"), QColor(), 1);
     SARibbonCategory* pgText = d->ribTextTools->addCategoryPage(QLatin1String("Text"));

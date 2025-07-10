@@ -286,6 +286,7 @@ struct kpMainWindowPrivate
   bool configFirstTime;
   bool configShowGrid;
   bool configShowPath;
+  bool configShowRibbon;
 
   bool configThumbnailShown;
   QRect configThumbnailGeometry;

@@ -40,7 +40,9 @@
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
+#include "widgets/kpColorPalette.h"
 #include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/kpColorToolBar.h"
 #include "environments/tools/kpToolEnvironment.h"
 
 //---------------------------------------------------------------------
@@ -67,7 +69,12 @@ void kpMainWindow::setupSettingsMenuActions ()
     connect (d->actionShowPath, &QAction::triggered, this, &kpMainWindow::slotShowPathToggled);
     slotEnableSettingsShowPath ();
 
-    auto *action = ac->add<KToggleAction>(QStringLiteral("settings_draw_antialiased"));
+    auto *action = ac->add<KToggleAction>(QStringLiteral("settings_show_ribbon"));
+    action->setText(i18n("Show &Ribbon"));
+    action->setChecked(d->configShowRibbon);
+    connect (action, &KToggleAction::triggered, this, &kpMainWindow::slotShowRibbonToggled);
+
+    action = ac->add<KToggleAction>(QStringLiteral("settings_draw_antialiased"));
     action->setText(i18n("Draw Anti-Aliased"));
     action->setChecked(kpToolEnvironment::drawAntiAliased);
     connect (action, &KToggleAction::triggered, this, &kpMainWindow::slotDrawAntiAliasedToggled);
@@ -127,6 +134,41 @@ void kpMainWindow::slotShowPathToggled ()
 
     cfg.writeEntry (kpSettingShowPath, d->configShowPath);
     cfg.sync ();
+}
+
+//---------------------------------------------------------------------
+
+void kpMainWindow::slotShowRibbonToggled(bool showRibbon)
+{
+    d->configShowRibbon = showRibbon;
+
+    KConfigGroup cfg(KSharedConfig::openConfig(), QStringLiteral(kpSettingsGroupGeneral));
+
+    cfg.writeEntry(kpSettingShowRibbon, d->configShowRibbon);
+    cfg.sync();
+
+    d->ribbon->setVisible(showRibbon);
+
+    menuBar()->setVisible(!showRibbon);
+    d->colorToolBar->setVisible(!showRibbon);
+    // d->toolToolBar->setVisible(!on);
+
+    // KToolBars
+    if (showRibbon)
+    {
+        toolBar(QLatin1String("textToolBar"))->hide();
+        toolBar(QLatin1String("mainToolBar"))->hide();
+    }
+    else
+    {
+        toolBar(QLatin1String("mainToolBar"))->show();
+    }
+
+    // Move the color palette widget to wherever it needs to be
+    if (showRibbon)
+        d->colorPaletteContainer->addWidget(d->colorPalette);
+    else
+        d->colorToolBar->m_boxLayout->insertWidget(1, d->colorPalette);
 }
 
 //---------------------------------------------------------------------
