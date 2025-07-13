@@ -80,7 +80,7 @@ QStringList kpColorCollection::installedCollections()
 {
     QStringList paletteList;
 
-    QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericConfigLocation, QStringLiteral("colors"), QStandardPaths::LocateDirectory);
+    QStringList paths = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("colors"), QStandardPaths::LocateDirectory);
     for (const auto &path : paths) {
         paletteList.append(QDir(path).entryList(QStringList(), QDir::Files));
     }
@@ -206,7 +206,7 @@ bool kpColorCollection::openKDE(const QString &name, QWidget *parent)
         return false;
     }
 
-    QString filename = QStandardPaths::locate(QStandardPaths::GenericConfigLocation, QStringLiteral("colors/") + name);
+    QString filename = QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("colors/") + name);
     if (filename.isEmpty()) {
 #if DEBUG_KP_COLOR_COLLECTION
         qCDebug(kpLogColorCollection) << "could not find file";
