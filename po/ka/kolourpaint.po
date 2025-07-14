@@ -370,7 +370,7 @@ msgstr "&მწკრივის წაშლა"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:44
 #, kde-format
 msgid "&Reset"
-msgstr "&საწყისი მნიშვნელობებზე დაბრუნება"
+msgstr "ჩამოყ&რა"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:226
 #, kde-format
