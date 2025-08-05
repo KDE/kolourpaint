@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-08-03 14:26+0400\n"
+"PO-Revision-Date: 2025-08-04 15:13+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -372,7 +372,7 @@ msgstr "ا&حذف الصف"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:44
 #, kde-format
 msgid "&Reset"
-msgstr "استر&جع"
+msgstr "&صفّر"
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:226
 #, kde-format
@@ -1021,12 +1021,12 @@ msgstr "أزل الحافة الداخلية"
 #: imagelib/transforms/kpTransformAutoCrop.cpp:341
 #, kde-format
 msgid "Autocr&op"
-msgstr "قص &تلقائي"
+msgstr "قص &آليّ"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:343
 #, kde-format
 msgid "Autocrop"
-msgstr "قص تلقائي"
+msgstr "قص آليّ"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:518
 #, kde-format
@@ -1046,14 +1046,13 @@ msgstr "غير قادر على إزالة الحافة الداخلية"
 msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
-msgstr ""
-"الرسام لا يمكنه الحصول تلقائياً على الصورة وكذلك الحدود لا يمكن تحديدها."
+msgstr "الرسام لا يمكنه الحصول آليّاً على الصورة وكذلك الحدود لا يمكن تحديدها."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:526
 #, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
-msgstr "لا يمكن القص التلقائي"
+msgstr "لا يمكن القص الآليّ"
 
 #: imagelib/transforms/kpTransformCrop.cpp:43
 #: imagelib/transforms/kpTransformCrop.cpp:45
@@ -1301,7 +1300,7 @@ msgstr "دون ‌عنوان"
 #: mainWindow/kpMainWindow_Colors.cpp:39
 #, kde-format
 msgid "Use KolourPaint Defaults"
-msgstr "استعمل افتراضات الرسام"
+msgstr "استعمل مبدئيات الرسام"
 
 #: mainWindow/kpMainWindow_Colors.cpp:43
 #, kde-format
@@ -1374,7 +1373,7 @@ msgid ""
 "The default color palette has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"لوحة الألوان الافتراضية عدلت.\n"
+"لوحة الألوان المبدئية عدلت.\n"
 "هل تريد حفظها في ملف؟"
 
 #: mainWindow/kpMainWindow_Colors.cpp:293
@@ -1420,7 +1419,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"لوحة الألوان الافتراضية  عدلت.\n"
+"لوحة الألوان المبدئية  عدلت.\n"
 "إعادة تحميلها ستضيع كل التعديلات.\n"
 "هل أنت متأكد؟"
 
@@ -1720,7 +1719,7 @@ msgstr "أع&كس الألوان"
 #: mainWindow/kpMainWindow_Image.cpp:156
 #, kde-format
 msgid "C&lear"
-msgstr "امس&ح"
+msgstr "ام&حُ"
 
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
@@ -1859,7 +1858,7 @@ msgstr "أظهر ال&شبكة"
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:40
 #, kde-format
 msgid "Show T&humbnail"
-msgstr "اعرض الأ&ظافر"
+msgstr "اعرض ال&مصغرات"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:50
 #, kde-format
@@ -2359,16 +2358,16 @@ msgstr ""
 "لون في الانتقاء<i>مشابه</i> للون الخلفية سيصبح شفافا..</li><li><b>الملء "
 "بالسوائل</b>: أي منطقة <i>تشابه</i> - لكن لا تطابق - البكسلات الملونة ، "
 "الوضع العالي سيملأ بكسلات أكثر..</li><li><b>مسح الألوان</b>: أي بكسل يكون "
-"لونه <i>مشابه</i> للون المقدمة سيستبدل بلون الخلفية.</li><li><b>القص "
-"التلقائي</b> و <b>إزالة الحواف الداخلية</b>: للحدود التي<i>تشابه</i> - لكن "
-"لا تطابق - البكسلات الملونة،  الوضع العالي سيقص كل الحد في الغالب.</li></"
-"ul><p>الأوضاع العالية تعني أن العمليات ستعتبر المدى المزيد للألوان أنه كافي "
-"لتعتبرها <i>متشابه</i>  وكأنها نفسها.  لذا لا بد أن تزيد الأوضاع إذا كانت "
-"العمليات التي بالأعلى لا تؤثر على البكسلات التي تعتبر ألوانها متشابه بما فيه "
-"الكفاية.</p><p>على كل حال ، إذا كانت لتلك العمليات تأثير كبير و تغير الألوان "
-"التي تعبرها أنها غير متشابهة(على سبيل المثال إذا كان <b>الملء بالسوائل</"
-"b>يغير الكثير  من البكسلات) ، فيجب عليك إنقاص الإعداد.</p><p>لتضبطه انقر على "
-"المكعب.</p></qt>"
+"لونه <i>مشابه</i> للون المقدمة سيستبدل بلون الخلفية.</li><li><b>القص الآليّ</"
+"b> و <b>إزالة الحواف الداخلية</b>: للحدود التي<i>تشابه</i> - لكن لا تطابق - "
+"البكسلات الملونة،  الوضع العالي سيقص كل الحد في الغالب.</li></ul><p>الأوضاع "
+"العالية تعني أن العمليات ستعتبر المدى المزيد للألوان أنه كافي لتعتبرها "
+"<i>متشابه</i>  وكأنها نفسها.  لذا لا بد أن تزيد الأوضاع إذا كانت العمليات "
+"التي بالأعلى لا تؤثر على البكسلات التي تعتبر ألوانها متشابه بما فيه الكفاية."
+"</p><p>على كل حال ، إذا كانت لتلك العمليات تأثير كبير و تغير الألوان التي "
+"تعبرها أنها غير متشابهة(على سبيل المثال إذا كان <b>الملء بالسوائل</b>يغير "
+"الكثير  من البكسلات) ، فيجب عليك إنقاص الإعداد.</p><p>لتضبطه انقر على المكعب."
+"</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:93
 #, kde-format
@@ -2403,15 +2402,15 @@ msgstr ""
 "لون في الانتقاء<i>مشابه</i> للون الخلفية سيصبح شفافا..</li><li><b>الملء "
 "بالسوائل</b>: أي منطقة <i>تشابه</i> - لكن لا تطابق - البكسلات الملونة ، "
 "الوضع العالي سيملأ بكسلات أكثر..</li><li><b>مسح الألوان</b>: أي بكسل يكون "
-"لونه <i>مشابه</i> للون المقدمة سيستبدل بلون الخلفية.</li><li><b>القص "
-"التلقائي</b> و <b>إزالة الحواف الداخلية</b>: للحدود التي<i>تشابه</i> - لكن "
-"لا تطابق - البكسلات الملونة،  الوضع العالي سيقص كل الحد في الغالب.</li></"
-"ul><p>الأوضاع العالية تعني أن العمليات ستعتبر المدى المزيد للألوان أنه كافي "
-"لتعتبرها <i>متشابه</i>  وكأنها نفسها.  لذا لا بد أن تزيد الأوضاع إذا كانت "
-"العمليات التي بالأعلى لا تؤثر على البكسلات التي تعتبر ألوانها متشابه بما فيه "
-"الكفاية.</p><p>على كل حال ، إذا كانت لتلك العمليات تأثير كبير و تغير الألوان "
-"التي تعبرها أنها غير متشابهة(على سبيل المثال إذا كان <b>الملء بالسوائل</"
-"b>يغير الكثير  من البكسلات) ، فيجب عليك إنقاص الإعداد.</p></qt>"
+"لونه <i>مشابه</i> للون المقدمة سيستبدل بلون الخلفية.</li><li><b>القص الآليّ</"
+"b> و <b>إزالة الحواف الداخلية</b>: للحدود التي<i>تشابه</i> - لكن لا تطابق - "
+"البكسلات الملونة،  الوضع العالي سيقص كل الحد في الغالب.</li></ul><p>الأوضاع "
+"العالية تعني أن العمليات ستعتبر المدى المزيد للألوان أنه كافي لتعتبرها "
+"<i>متشابه</i>  وكأنها نفسها.  لذا لا بد أن تزيد الأوضاع إذا كانت العمليات "
+"التي بالأعلى لا تؤثر على البكسلات التي تعتبر ألوانها متشابه بما فيه الكفاية."
+"</p><p>على كل حال ، إذا كانت لتلك العمليات تأثير كبير و تغير الألوان التي "
+"تعبرها أنها غير متشابهة(على سبيل المثال إذا كان <b>الملء بالسوائل</b>يغير "
+"الكثير  من البكسلات) ، فيجب عليك إنقاص الإعداد.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, kde-format
@@ -2433,7 +2432,7 @@ msgstr "ال&سطوع:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:39
 #, kde-format
 msgid "Re&set"
-msgstr "است&رجع"
+msgstr "&صفّر"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:41
 #, kde-format
@@ -2448,7 +2447,7 @@ msgstr "&الغاما:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:55
 #, kde-format
 msgid "Rese&t"
-msgstr "استرج&ع"
+msgstr "&صفّر"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:60
 #, kde-format
@@ -2478,7 +2477,7 @@ msgstr "الأزرق"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:67
 #, kde-format
 msgid "Reset &All Values"
-msgstr "استرجع &كلّ القيم"
+msgstr "صفّر &كلّ القيم"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:120
 #, kde-format
@@ -2685,7 +2684,7 @@ msgstr ""
 #: widgets/toolbars/kpColorToolBar.cpp:263
 #, kde-format
 msgid "KolourPaint Defaults"
-msgstr "افتراضيات الرسام"
+msgstr "مبدئيات الرسام"
 
 #: widgets/toolbars/kpColorToolBar.cpp:274
 #, kde-format
