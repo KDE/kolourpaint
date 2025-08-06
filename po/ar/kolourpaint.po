@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-18 00:40+0000\n"
-"PO-Revision-Date: 2025-08-04 15:13+0400\n"
+"PO-Revision-Date: 2025-08-05 12:34+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -349,7 +349,7 @@ msgid ""
 "<b>Offset</b> feature. If the format you save in does not support it, the "
 "values specified here will not be saved.</p></qt>"
 msgstr ""
-"<qt><p> <b>الازاجة</b>هي موضع نسبي يمثل أين يجب وضع هذه الصورة بالمقارنة مع "
+"<qt><p> <b>الإزاحة</b>هي موضع نسبي يمثل أين يجب وضع هذه الصورة بالمقارنة مع "
 "الصورة الأخرى.</p><p>ليس كل أنساق الصور تدعم ميزة<b>الإزاحة</b>. إذا كان "
 "التنسيق لا تحفظ به لا يدعمها ، فإن القيمة المخصصة هنا لن تحفظ.</p></qt>"
 
@@ -493,7 +493,7 @@ msgid ""
 "as <i>Scale</i> except that it blends neighboring pixels to produce a "
 "smoother looking picture.</li></ul></qt>"
 msgstr ""
-"<qt><ul><li><b>تحجيم</b>: سيزيد حجم الصورة بإضافة مناطقإلى اليمين أو/و "
+"<qt><ul><li><b>تحجيم</b>: سيزيد حجم الصورة بإضافة مناطق إلى اليمين أو/و "
 "الأسفل (ستملأ بلون الخلفية)أو بإنقاص مناطق بقطعها من اليمين أو/و الأسفل.</"
 "li><li><b>تغيير القياس</b>:ستمدد الصورة بتكرار البكسلات أو ستقلص بحذف "
 "البكسلات.</li><li><b>تغير القياس بنعومة</b>: هذا نفس <i>تغيير القياس</i> "
@@ -1355,7 +1355,7 @@ msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"تم تعديل لوحة الألوان \"%1\" .\n"
+"عُدلت لوحة الألوان \"%1\" .\n"
 "هل تريد حفظها؟"
 
 #: mainWindow/kpMainWindow_Colors.cpp:172
@@ -1364,7 +1364,7 @@ msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"تم تعديل لوحة ألوان كِيدِي  \"%1\". \n"
+"عُدلت لوحة ألوان كِيدِي  \"%1\". \n"
 "هل تريد حفظها في ملف؟"
 
 #: mainWindow/kpMainWindow_Colors.cpp:180
@@ -1622,7 +1622,7 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
-"لقد تم تغيير المستند \"%1\".\n"
+"لقد تغير المستند \"%1\".\n"
 "إن إعادة التحميل ستسبب خسارة كل التغييرات التي حصلت منذ آخر عملية للحفظ.\n"
 "هل أنت متأكد ؟"
 
@@ -1633,7 +1633,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"لقد تمّ تغيير المستند \"%1\".\n"
+"لقد تغير المستند \"%1\".\n"
 "إعادة التحميل ستلغي كلّ التغييرات.\n"
 "هل أنت متأكد ؟"
 
@@ -1658,7 +1658,7 @@ msgid ""
 "The document \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"لقد تم تغيير المستند \"%1\" .\n"
+"لقد تغير المستند \"%1\" .\n"
 "هل تريد حفظه ؟"
 
 #: mainWindow/kpMainWindow_Image.cpp:94
@@ -1994,7 +1994,7 @@ msgstr "انقر لتختار لونا."
 #: tools/kpToolFloodFill.cpp:32
 #, kde-format
 msgid "Fills regions in the image"
-msgstr "يملئ مناطق من الصورة"
+msgstr "يملأ مناطق من الصورة"
 
 #: tools/kpToolFloodFill.cpp:50
 #, kde-format
@@ -2108,17 +2108,17 @@ msgstr "يرسم خطوطا متصلة"
 #: tools/rectangular/kpToolEllipse.cpp:21
 #, kde-format
 msgid "Ellipse"
-msgstr "إهليلج"
+msgstr "بيضاوي"
 
 #: tools/rectangular/kpToolEllipse.cpp:22
 #, kde-format
 msgid "Draws ellipses and circles"
-msgstr "يرسم إهليلجا ودائرات"
+msgstr "يرسم شكل بيضاوي ودائرات"
 
 #: tools/rectangular/kpToolRectangle.cpp:22
 #, kde-format
 msgid "Rectangle"
-msgstr "المستطيل"
+msgstr "مستطيل"
 
 #: tools/rectangular/kpToolRectangle.cpp:23
 #, kde-format
@@ -2397,7 +2397,7 @@ msgstr ""
 "<qt><p><b>التشابه اللوني</b>هو كيفية<i>تشابه</i> ألوان البكسلات المختلفة حتى "
 "تعتبرها العمليات أنها متطابقة.</p><p> إذا وضعتها لشيء غير <b>التطابق التام</"
 "b> فيمكنك العمل بكفاءة أكثر مع الصور أو الرسومات منعمة الحواف بصورة يمكن "
-"مقارنتها مع ميزة\"العصى السحرية\" في تطبيقات الرسم الأخرى.</p><p> هذه الميزة "
+"مقارنتها مع ميزة\"العصا السحرية\" في تطبيقات الرسم الأخرى.</p><p> هذه الميزة "
 "يمكن تطبيقها على: </p><ul><li><b>الانتقاءات</b>: في نمط <b>الشفافية</b> ، أي "
 "لون في الانتقاء<i>مشابه</i> للون الخلفية سيصبح شفافا..</li><li><b>الملء "
 "بالسوائل</b>: أي منطقة <i>تشابه</i> - لكن لا تطابق - البكسلات الملونة ، "
@@ -2442,7 +2442,7 @@ msgstr "التب&اين:"
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:46
 #, kde-format
 msgid "&Gamma:"
-msgstr "&الغاما:"
+msgstr "&غاما:"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:55
 #, kde-format
@@ -2742,12 +2742,12 @@ msgstr "لا تملئ"
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:90
 #, kde-format
 msgid "Fill with Background Color"
-msgstr "املئ بلون الخلفية"
+msgstr "املأ بلون الخلفية"
 
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:93
 #, kde-format
 msgid "Fill with Foreground Color"
-msgstr "املئ بلون الأمامية"
+msgstr "املأ بلون الأمامية"
 
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:20
 #, kde-format
