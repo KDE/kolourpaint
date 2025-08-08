@@ -10,11 +10,11 @@
     ],
     "desktop-file-name-suffix": " (Nightly)",
     "finish-args": [
+        "--filesystem=host",
         "--share=ipc",
         "--socket=cups",
         "--socket=fallback-x11",
-        "--socket=wayland",
-        "--filesystem=host"
+        "--socket=wayland"
     ],
     "modules": [
         {
