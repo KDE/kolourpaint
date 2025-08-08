@@ -16,6 +16,9 @@
         "--socket=fallback-x11",
         "--socket=wayland"
     ],
+    "cleanup": [
+        "/share/app-info"
+    ],
     "modules": [
         {
             "name": "kolourpaint",
