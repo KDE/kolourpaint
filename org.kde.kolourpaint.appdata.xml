@@ -179,7 +179,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
-      <li xml:lang="ar">دعم لرسم أشكال مختلفة - خطوط ومستطيلات ومستطيلات مستديرة الشكل وأشكال بيضاوية ومضلعات</li>
+      <li xml:lang="ar">يوفّر رسم أشكال مختلفة - خطوط ومستطيلات ومستطيلات مستديرة الشكل وأشكال بيضاوية ومضلعات</li>
       <li xml:lang="bg">Поддръжка на чертане на различни фигури - линии, правоъгълници, овали и полигони. </li>
       <li xml:lang="bs">Podrška za crtanje raznih oblika - linija, pravougaonika, zaobljenih pravougaonika, ovala i poligona</li>
       <li xml:lang="ca">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
@@ -348,7 +348,7 @@
       <li xml:lang="zh-CN">选区</li>
       <li xml:lang="zh-TW">選取區</li>
       <li>Rotation, monochrome and other advanced effects</li>
-      <li xml:lang="ar">دوران ، أحادية اللون وتأثيرات متقدمة أخرى</li>
+      <li xml:lang="ar">دوران، أحادية اللون وتأثيرات متقدمة أخرى</li>
       <li xml:lang="bg">Ротация, монохромност и други ефекти</li>
       <li xml:lang="bs">Rotacija, monohrom i drugi napredni efekti</li>
       <li xml:lang="ca">Gir, monocrom i altres efectes avançats</li>
