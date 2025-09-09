@@ -50,7 +50,6 @@
   <name xml:lang="tok">ilo KolourPaint</name>
   <name xml:lang="tr">RenkliBoya</name>
   <name xml:lang="uk">KolourPaint</name>
-  <name xml:lang="x-test">xxKolourPaintxx</name>
   <name xml:lang="zh-CN">KolourPaint 画图工具</name>
   <name xml:lang="zh-TW">KolourPaint</name>
   <summary>Paint Program</summary>
@@ -96,7 +95,6 @@
   <summary xml:lang="tok">ilo sitelen</summary>
   <summary xml:lang="tr">Boyama Programı</summary>
   <summary xml:lang="uk">Програма для малювання</summary>
-  <summary xml:lang="x-test">xxPaint Programxx</summary>
   <summary xml:lang="zh-CN">画图程序</summary>
   <summary xml:lang="zh-TW">繪圖程式</summary>
   <description>
@@ -128,7 +126,6 @@
     <p xml:lang="sv">KolourPaint är ett enkelt ritprogram för att snabbt skapa punktavbildningar. Det är användbart som förbättringsverktyg och för enkla bildredigeringsuppgifter.</p>
     <p xml:lang="tr">RenkliBoya, tez raster görseller oluşturabileceğiniz basit bir boyama programıdır. Bir rötuş aracı ve basit görsel düzenleme görevleri için kullanışlıdır.</p>
     <p xml:lang="uk">KolourPaint — проста програма для малювання, за допомогою якої можна швидко створювати растрові зображення. Ця програма може бути корисною для виконання простих завдань з редагування зображень.</p>
-    <p xml:lang="x-test">xxKolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and for simple image editing tasks.xx</p>
     <p xml:lang="zh-CN">KolourPaint 是一款简易画图程序，能够快速绘制栅格图像。您也可以将它用作简易修图工具。</p>
     <p xml:lang="zh-TW">KolourPaint 是一套類似小畫家的簡易繪圖程式。它適合拿來進行簡單的修飾與影像編輯。</p>
     <p>Features:</p>
@@ -175,7 +172,6 @@
     <p xml:lang="tok">ken pali:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -220,7 +216,6 @@
       <li xml:lang="tok">ona li ken sitelen e ni: linja, sike, leko en sijelo ante</li>
       <li xml:lang="tr">Çeşitli şekiller, çizgiler, dörtgenler, yuvarlatılmış dörtgenler, ovaller ve çokgenler desteği</li>
       <li xml:lang="uk">Підтримка малювання різноманітних форм: прямих, прямокутників, прямокутників із заокругленими кутами, овалів та багатокутників.</li>
-      <li xml:lang="x-test">xxSupport for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygonsxx</li>
       <li xml:lang="zh-CN">能够绘制各种几何图形 - 直线、矩形、圆角矩形、椭圆和多边形等</li>
       <li xml:lang="zh-TW">支援繪出不同的形狀 -- 線條、矩形、圓角矩形、橢圓與多邊形等</li>
       <li>Curves, lines and text</li>
@@ -266,7 +261,6 @@
       <li xml:lang="tok">ona li ken sitelen e linja sike</li>
       <li xml:lang="tr">Eğriler, çizgiler ve metin</li>
       <li xml:lang="uk">Можливість малювання кривих, прямих та тексту.</li>
-      <li xml:lang="x-test">xxCurves, lines and textxx</li>
       <li xml:lang="zh-CN">曲线、直线和文本</li>
       <li xml:lang="zh-TW">曲線、線條與文字</li>
       <li>Color picker</li>
@@ -299,7 +293,6 @@
       <li xml:lang="sv">Färgväljare</li>
       <li xml:lang="tr">Renk seçicisi</li>
       <li xml:lang="uk">Піпетка</li>
-      <li xml:lang="x-test">xxColor pickerxx</li>
       <li xml:lang="zh-CN">拾色器</li>
       <li xml:lang="zh-TW">取色工具</li>
       <li>Selections</li>
@@ -345,7 +338,6 @@
       <li xml:lang="tok">wile sitelen</li>
       <li xml:lang="tr">Seçimler</li>
       <li xml:lang="uk">Можливість позначення ділянок зображення.</li>
-      <li xml:lang="x-test">xxSelectionsxx</li>
       <li xml:lang="zh-CN">选区</li>
       <li xml:lang="zh-TW">選取區</li>
       <li>Rotation, monochrome and other advanced effects</li>
@@ -388,7 +380,6 @@
       <li xml:lang="sv">Rotation, svartvitt och andra avancerade effekter</li>
       <li xml:lang="tr">Döndürme, tek renkli resim ve diğer gelişmiş efektler</li>
       <li xml:lang="uk">Можливість обертання частин зображення, перетворення зображення на чорно-біле, різноманітні ефекти перетворення зображення.</li>
-      <li xml:lang="x-test">xxRotation, monochrome and other advanced effectsxx</li>
       <li xml:lang="zh-CN">旋转、纯黑白和其他高级效果</li>
       <li xml:lang="zh-TW">旋轉、單色與其他進階效果</li>
     </ul>
@@ -438,7 +429,6 @@
       <caption xml:lang="tok">sitelen lon ilo KolourPaint</caption>
       <caption xml:lang="tr">RenkliBoya’da Boyama</caption>
       <caption xml:lang="uk">Малювання у KolourPaint</caption>
-      <caption xml:lang="x-test">xxPainting in KolourPaintxx</caption>
       <caption xml:lang="zh-CN">使用 KolourPaint 绘画</caption>
       <caption xml:lang="zh-TW">在 KolourPaint 繪圖</caption>
       <image>https://kde.org/images/screenshots/kolourpaint.png</image>
