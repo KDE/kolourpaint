@@ -1166,7 +1166,7 @@ format="PNG"/>
 </para>
 
 <para
->La imagen de la izquierda muestra la imagen de ejemplo. La imagen de la derecha demuestra el uso del relleno de color, con preferencias de similitud de colores de 5%, 15% y 30%. En este ejemplo, con una similitud de color <guilabel
+>La imagen de la izquierda muestra la imagen de ejemplo. La imagen de la derecha demuestra el uso del relleno de color, con preferencias de similitud de colores de 5 %, 15 % y 30 %. En este ejemplo, con una similitud de color <guilabel
 >exacta</guilabel
 >, el relleno de color (80, 100) solo rellenará un píxel, ya que los píxeles que le rodean son similares, pero no idénticos. Mientras mayor valor tenga similitud de color más píxel con un color parecido se considerarán idénticos, por lo tanto, se extenderá más. </para>
 
@@ -1200,11 +1200,11 @@ format="PNG"/>
 
 <important>
 <para
->En los niveles de aumento que no sean múltiplos del 100%, pueden aparecer partes de la imagen al mover la imagen como consecuencia de la interacción del usuario. Se pueden producir algunos fallos menores como consecuencia de los niveles de zoom. </para>
+>En los niveles de aumento que no sean múltiplos del 100 %, pueden aparecer partes de la imagen al mover la imagen como consecuencia de la interacción del usuario. Se pueden producir algunos fallos menores como consecuencia de los niveles de zoom. </para>
 </important>
 
 <para
->En los niveles de aumento de 400% o superiores que sean múltiplos de 100%, se puede <guimenuitem
+>En los niveles de aumento de 400 % o superiores que sean múltiplos de 100 %, se puede <guimenuitem
 >Mostrar la rejilla</guimenuitem
 > para editar píxeles individuales de forma precisa.</para>
 
@@ -1225,7 +1225,7 @@ format="PNG"/>
 <para
 >La primera imagen muestra el icono de la herramienta de <link linkend="tool-text"
 >texto</link
->, mientras que la posterior muestra el mismo con un aumento del 600% con la rejilla activada.</para>
+>, mientras que la posterior muestra el mismo con un aumento del 600 % con la rejilla activada.</para>
 
 <tip>
 <para
