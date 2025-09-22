@@ -99,7 +99,7 @@ public:
 
     // Returns whether saving <image> with these options will result in
     // loss of information.  Returned value is the bitwise OR of
-    // LossType enum possiblities.
+    // LossType enum possibilities.
     int isLossyForSaving(const QImage &image) const;
 
 private:

@@ -369,7 +369,7 @@ public Q_SLOTS:
      *
      * This is never called by the kpView base class.
      *
-     * Implementors should change whatever state is necessary for their
+     * Implementers should change whatever state is necessary for their
      * type of view.  For instance, an unzoomed view would resize itself;
      * a zoomed thumbnail would change the zoom level.
      */

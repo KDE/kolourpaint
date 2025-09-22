@@ -65,7 +65,7 @@ protected:
     virtual QImage transformPixmap(const QImage &pixmap, int targetWidth, int targetHeight) const = 0;
 
 public:
-    // Use to avoid excessive, expensive preview pixmap label recalcuations,
+    // Use to avoid excessive, expensive preview pixmap label recalculations,
     // during init and widget relayouts.
     //
     // Setting <enable> to true automatically calls slotUpdateWithWaitCursor().

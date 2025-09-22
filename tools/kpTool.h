@@ -406,7 +406,7 @@ public:
     //
     // In order to make the translators' lives possible, this function cannot
     // generate the <text>,<caption> nor <continueButtonText> (without
-    // concantenating sentences and words with tense).  However, it is
+    // concatenating sentences and words with tense).  However, it is
     // recommended that you give them the following values:
     //
     // e.g.:

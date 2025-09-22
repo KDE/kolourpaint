@@ -79,7 +79,7 @@ void kpTransformRotateCommand::execute()
         // Save old selection
         m_oldSelectionPtr = sel->clone();
 
-        // Conserve memmory:
+        // Conserve memory:
         //
         // 1. If it's a lossless rotation, we don't need to the store old
         //    image anywhere at all, as we can reconstruct it by rotating in

@@ -85,7 +85,7 @@ public:
 
 protected:
     // The maximum number of points() we should allow (mainly, to ensure
-    // good performance).  Enforced by implementors of endShape().
+    // good performance).  Enforced by implementers of endShape().
     static const int MaxPoints = 50;
 
     virtual QString haventBegunShapeUserMessage() const = 0;
@@ -140,7 +140,7 @@ protected:
     //
     // Returns false if the current drag only draws something based on the last
     // point of points() e.g. a control point of a Bezier curve.  draw() will
-    // _not_ call applyModifiers().  It will update the statubar with just that
+    // _not_ call applyModifiers().  It will update the statusbar with just that
     // point.
     //
     // Reimplement this if not all points are used to construct connected lines.
