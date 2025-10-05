@@ -100,7 +100,16 @@ void kpTransformFlipCommand::flip()
         doc->imageSelection()->flip(m_horiz, m_vert);
         environ()->somethingBelowTheCursorChanged();
     } else {
-        doc->setImage(doc->image().mirrored(m_horiz, m_vert));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+        Qt::Orientations orientation;
+        if (m_horiz)
+            orientation |= Qt::Horizontal;
+        if (m_vert)
+            orientation |= Qt::Vertical;
+        doc->setImage(doc->image().flipped(orientation));
+#else
+        doc->setImage(doc->image().mirrored(m_horiz, m_vert))
+#endif
     }
 
     QApplication::restoreOverrideCursor();
