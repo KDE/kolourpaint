@@ -115,6 +115,7 @@
     <p xml:lang="he">KolourPaint היא תוכנית ציור פשוטה ליצירת תמונות מהירות עם כלי ציור. הוא שימושי ככלי לתיקונים קטנים ולמשימות עריכת תמונות פשוטות.</p>
     <p xml:lang="hu">A KolourPaint egy egyszerű rajzolóprogram raszteres képek gyors létrehozásához. Hasznos retusálóeszközként és egyszerű képszerkesztő feladatokhoz.</p>
     <p xml:lang="ia">KolourPant es un simple programma per pinger o designar  per crear rapidemente imagines raster. Il es utile como instrumento de retocco e per cargas simplice de modificar imagines.</p>
+    <p xml:lang="is">KolourPaint er einfalt myndmálunarforrit sem gefur kost á að útbúa rastamyndir í snatri. Það nýtist vel í einfaldar lagfæringar og minni háttar myndvinnsluaðgerðir.</p>
     <p xml:lang="it">KolourPaint è un semplice programma di disegno per la creazione rapida di immagini. È utile come strumento da usare «al volo» e per effettuare semplici modifiche alle immagini.</p>
     <p xml:lang="ka">KolourPaint მარტივი სახატავი პროგრამაა რასტრული გამოსახულებების ადვილად შესაქმნელად. ის სასარგებლოა გამოსახულებებში მარტივი ცვლილებების შესატანად.</p>
     <p xml:lang="ko">KolourPaint는 래스터 그림을 빠르게 만드는 프로그램입니다. 간단한 보정 도구 및 편집 도구로 사용할 수 있습니다.</p>
@@ -279,6 +280,7 @@
       <li xml:lang="he">בורר צבעים</li>
       <li xml:lang="hu">Színválasztó</li>
       <li xml:lang="ia">Selector de color</li>
+      <li xml:lang="is">Litplokkari</li>
       <li xml:lang="it">Selettore del colore</li>
       <li xml:lang="ka">ფერის ამრჩევი</li>
       <li xml:lang="ko">색상 선택기</li>
