@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
                          KAboutLicense::Custom,
                          QString(), // copyright statement - see license instead
                          QString(), // other text
-                         QStringLiteral("http://www.kolourpaint.org/") // home page
+                         QStringLiteral("https://apps.kde.org/kolourpaint/") // home page
     );
 
     // (this is _not_ the same as KAboutLicense::BSD)
