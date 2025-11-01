@@ -1,5 +1,5 @@
 
-http://www.kolourpaint.org/
+https://apps.kde.org/kolourpaint/
 
 Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
 
@@ -79,16 +79,8 @@ Features
   - Set as Wallpaper
 
 
-Updates & More Information
-==========================
-
-Visit: http://www.kolourpaint.org/
-
-
 Support
 =======
-
-Visit: http://www.kolourpaint.org/
 
 If you have any questions about compiling, installing or using KolourPaint,
 don't be afraid to contact us.  We try to support all versions of
@@ -98,7 +90,7 @@ KolourPaint and even issues with 3rd party binary packages.
 Feedback
 ========
 
-Please send bug reports and feature requests to http://bugs.kde.org/.
+Please send bug reports and feature requests to https://bugs.kde.org/.
 Don't hesitate to report bugs nor hesitate to send us your wishes -- it
 provides valuable feedback that will help to improve future versions of
 KolourPaint and you will not receive flames for reporting duplicates.
