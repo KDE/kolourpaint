@@ -1614,7 +1614,7 @@ msgstr "Ouvrir une image"
 #: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr "Impossible d'ouvrir la boîte de dialogue de numérisation."
+msgstr "Impossible d'ouvrir la boite de dialogue de numérisation."
 
 #: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
