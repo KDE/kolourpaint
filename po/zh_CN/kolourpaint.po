@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kolourpaint/kolourpaint.pot\n"
-"X-Crowdin-File-ID: 53296\n"
+"X-Crowdin-File: /kf6-stable/messages/kolourpaint/kolourpaint.pot\n"
+"X-Crowdin-File-ID: 53322\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2405,7 +2405,7 @@ msgstr "对比度(&N)："
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:46
 #, kde-format
 msgid "&Gamma:"
-msgstr "伽玛值(&G)："
+msgstr "伽马(&G)："
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:55
 #, kde-format
