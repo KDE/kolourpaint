@@ -2405,7 +2405,7 @@ msgstr "对比度(&N)："
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:46
 #, kde-format
 msgid "&Gamma:"
-msgstr "伽玛值(&G)："
+msgstr "伽马(&G)："
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:55
 #, kde-format
