@@ -477,6 +477,19 @@
 > <link linkend="tool-text"
 >Texto</link
 > (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Zoom</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -974,6 +987,27 @@ format="PNG"/>
 <para
 >A imagem da esquerda mostra a adição do texto com cores do primeiro plano opacas e cor do plano de fundo transparente. A imagem da direita mostra a adição de texto com a cor do primeiro plano transparente e a cor do plano de fundo opaca.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Zoom <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>O &LMB; amplia. O &RMB; reduz.</para>
+<para
+>Arraste com o &LMB; para ampliar uma área específica.</para>
+
+<tip>
+<para
+>Clique duas vezes no ícone da ferramenta Zoom para definir o zoom como "Ajustar à página".</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">
