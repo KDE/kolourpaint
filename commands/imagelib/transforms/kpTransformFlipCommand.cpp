@@ -108,7 +108,7 @@ void kpTransformFlipCommand::flip()
             orientation |= Qt::Vertical;
         doc->setImage(doc->image().flipped(orientation));
 #else
-        doc->setImage(doc->image().mirrored(m_horiz, m_vert))
+        doc->setImage(doc->image().mirrored(m_horiz, m_vert));
 #endif
     }
 
