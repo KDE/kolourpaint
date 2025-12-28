@@ -4,20 +4,21 @@
 # SPDX-FileCopyrightText: 2007, 2008, 2009, 2011, 2013, 2014, 2015, 2017, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2010, 2011 Panagiotis Papadopoulos <pano_90@gmx.net>
 # SPDX-FileCopyrightText: 2011, 2012, 2013, 2016, 2018, 2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2023-04-20 19:47+0200\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2025-12-08 16:29+0100\n"
+"Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.07.70\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -292,7 +293,7 @@ msgstr "Nicht festgelegt"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -535,7 +536,7 @@ msgstr "Höhe:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -551,11 +552,10 @@ msgstr "&Prozent:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1 %"
+msgstr "%v %"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -908,8 +908,7 @@ msgid "&RGB Color Cube Distance"
 msgstr "Farbdistanz im &RGB-Modell"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Exakte Übereinstimmung"
@@ -1543,7 +1542,7 @@ msgstr "E&xportieren ..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "In eine andere Datei exportieren"
 
 #: mainWindow/kpMainWindow_File.cpp:88
 #, kde-kuit-format
@@ -1554,6 +1553,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Hiermit wird das Dokument unter einem anderen Namen gespeichert, ähnlich zu "
+"<interface>Speichern unter</interface>, aber das aktuelle Dokument wird "
+"nicht verändert.<nl/>Auf diese Weise können Sie den zuletzt verwendeten "
+"Speicherort unabhängig vom Ordner des aktuellen Dokuments halten."
 
 #: mainWindow/kpMainWindow_File.cpp:94
 #, kde-format
@@ -1603,13 +1606,11 @@ msgid "Snapshot Delay"
 msgstr "Verzögerung für Bildschirmfotos"
 
 #: mainWindow/kpMainWindow_File.cpp:609
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " Sekunde"
-msgstr[1] " Sekunden"
+msgstr[0] "%v Sekunde"
+msgstr[1] "%v Sekunden"
 
 #: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
@@ -1786,18 +1787,17 @@ msgstr "Mit Kantenglättung zeichnen"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 – %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -2038,14 +2038,13 @@ msgid "Zooms in and out of the image"
 msgstr "Zoomt in das Bild hinein oder heraus"
 
 #: tools/kpToolZoom.cpp:92
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
-"Klicken Sie, um hinein oder heraus zu zoomen, oder ziehen Sie mit der linken "
-"Maustaste, um einen Bereich anzuzeigen."
+"Klicken Sie, um hinein zu zoomen. Klicken Sie mit der rechten Maustaste, um "
+"heraus zu zoomen. Ziehen Sie, um einen bestimmten Bereich zu vergrößern."
 
 #: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
@@ -2363,10 +2362,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Bildausschnitt – Vorschaubild"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "%1 % – Vorschaubild"
+msgstr "%1 % — Vorschaubild"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2468,25 +2466,20 @@ msgstr ""
 "viele Pixel mit Farbe füllt).</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Farbähnlichkeit: %1 %</p><p align=\"center\">Hier klicken für "
-"Einstellungen</p> "
+"<p>Farbähnlichkeit: %1 %</p><p align=\"center\">Zum Einrichten hier klicken."
+"</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
-"<p>Farbähnlichkeit: Exakte Übereinstimmung</p><p align=\"center\">Hier "
-"klicken für Einstellungen</p>"
+"<p>Farbähnlichkeit: Exakte Übereinstimmung</p><p align=\"center\">Zum "
+"Einrichten hier klicken.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format
@@ -2728,13 +2721,13 @@ msgstr "Transparent"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Kontrollleisten entsperren"
 
 #: widgets/toolbars/kpColorToolBar.cpp:89
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Kontrollleisten sperren"
 
 #: widgets/toolbars/kpColorToolBar.cpp:92
 #, kde-kuit-format
@@ -2745,6 +2738,11 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Dies schaltet den Zustand der Kontrollleisten zwischen <emphasis>gesperrt</"
+"emphasis> und <emphasis>entsperrt</emphasis> um.<nl/>Entsperrte "
+"Kontrollleisten können können zur anderen Seite des Fensters gezogen werden "
+"und haben einen Schließen-Knopf.<nl/>Gesperrte Kontrollleisten sind sauberer "
+"integriert."
 
 #: widgets/toolbars/kpColorToolBar.cpp:263
 #, kde-format
