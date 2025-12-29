@@ -106,6 +106,7 @@
     <p xml:lang="bg">KolourPaint е проста програма за рисуване на растерни изображения. Тя е полезна като инструмент за ретуширане и при стандартни задачи за редактиране на изображения.</p>
     <p xml:lang="ca">El KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles d'edició d'imatges.</p>
     <p xml:lang="ca-valencia">KolourPaint és un programa senzill de dibuix per a crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles d'edició d'imatges.</p>
+    <p xml:lang="de">KolourPaint ist ein einfach zu verwendendes Mal- und Zeichenprogramm zur schnellen Erstellung von Rasterbildern. Es kann für Korrekturen und einfache Bildbearbeitungsaufgaben verwendet werden.</p>
     <p xml:lang="eo">KolourPaint estas simpla pentra programo por rapide krei rastrumajn bildojn. Ĝi estas utila kiel ilo por rafinado kaj simplaj bildredaktaj taskoj.</p>
     <p xml:lang="es">KolourPaint es un sencillo programa de dibujo que permite crear imágenes de mapas de bits de una forma rápida. Resulta útil como herramienta de retoque y para tareas de edición sencillas.</p>
     <p xml:lang="eu">KolourPaint margotzeko aplikazio erraz bat da, raster irudiak azkar sortzeko balio duena. Baliagarria da ukituak emateko tresna gisa eta irudiak editatzeko zeregin sinpleetarako.</p>
@@ -270,6 +271,7 @@
       <li xml:lang="ca">Selector de color</li>
       <li xml:lang="ca-valencia">Selector de color</li>
       <li xml:lang="cs">Kapátko</li>
+      <li xml:lang="de">Farbwähler</li>
       <li xml:lang="en-GB">Colour picker</li>
       <li xml:lang="eo">Kolorelektilo</li>
       <li xml:lang="es">Selector de color</li>
