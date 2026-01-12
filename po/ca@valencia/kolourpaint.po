@@ -1013,7 +1013,7 @@ msgstr "No s'ha pogut guardar com «%1»: %2"
 #: document/kpDocument_Save.cpp:277 document/kpDocument_Save.cpp:312
 #, kde-format
 msgid "Error saving image"
-msgstr "S'ha produït un error en guardar la imatge"
+msgstr "S'ha produït un error mentre es guardava la imatge"
 
 #: document/kpDocument_Save.cpp:341
 #, kde-format
@@ -1584,7 +1584,7 @@ msgstr "Obri una imatge"
 #: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr "No s'ha pogut obrir el diàleg d'escaneig."
+msgstr "Ha fallat mentre s'obria el diàleg d'escaneig."
 
 #: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
@@ -1901,7 +1901,7 @@ msgstr "Captura una imatge"
 #: scan/sanedialog.cpp:57
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr "No s'ha pogut obrir l'escàner seleccionat."
+msgstr "Ha fallat mentre s'obria l'escàner seleccionat."
 
 #: tools/flow/kpToolBrush.cpp:15
 #, kde-format
@@ -2248,7 +2248,7 @@ msgstr "Escriu text"
 #: tools/selection/text/kpToolText_Commands.cpp:46
 #, kde-format
 msgid "Text: Backspace"
-msgstr "Text: Retrocés"
+msgstr "Text: «Retrocés»"
 
 #: tools/selection/text/kpToolText_Commands.cpp:63
 #, kde-format
