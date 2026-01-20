@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2024-2025 Scarlett Moore <sgmoore@kde.org>
+# SPDX-FileCopyrightText: 2024-2026 Scarlett Moore <sgmoore@kde.org>
 #
 # SPDX-License-Identifier: CC0-1.0
 ---
@@ -34,7 +34,17 @@ parts:
     plugin: cmake
     source: .
     source-type: local
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+      - kf6-core24-sdk/latest/beta
     build-packages:
+      - libxml2-dev
+      - gettext
+      - doxygen
+      - graphviz
+      - libxml2-utils
+      - docbook-xml
+      - docbook-xsl
       - libpulse0
     stage-packages:
       - libpulse0
@@ -46,9 +56,6 @@ parts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DQT_MAJOR_VERSION=6
       - -DBUILD_TESTING=OFF
-    build-environment:
-      - LD_LIBRARY_PATH: >
-         "/snap/mesa-2404/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:$LD_LIBRARY_PATH"
     override-pull: |
         craftctl default
         while read -r PATCHFILE ; do
