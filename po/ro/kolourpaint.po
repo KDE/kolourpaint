@@ -1,22 +1,21 @@
 # translation of kolourpaint.po to Romanian
 # Claudiu Costin <claudiuc@kde.org>, 2004, 2005.
-# Sergiu Bivol <sergiu@cip.md>, 2008, 2009, 2010.
-# Sergiu Bivol <sergiu@cip.md>, 2010, 2012, 2020, 2021.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2012, 2020, 2021, 2026 Sergiu Bivol <sergiu@cip.md>
 msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2021-07-26 14:33+0100\n"
+"PO-Revision-Date: 2026-02-16 22:42+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
-"Language-Team: Romanian\n"
+"Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -858,8 +857,7 @@ msgstr ""
 "<a href=\"dummy_to_make_link_clickable\">Ce este similaritatea culorilor?</a>"
 
 #: dialogs/kpDocumentSaveOptionsPreviewDialog.cpp:34
-#, fuzzy, kde-format
-#| msgid "Save Preview"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save Preview"
 msgstr "Salvează previzualizarea"
@@ -906,8 +904,7 @@ msgid "<empty>"
 msgstr "<gol>"
 
 #: document/kpDocument_Save.cpp:52
-#, fuzzy, kde-format
-#| msgid "Internal Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Internal Error"
 msgstr "Eroare internă"
@@ -921,8 +918,7 @@ msgid ""
 msgstr ""
 
 #: document/kpDocument_Save.cpp:87
-#, fuzzy, kde-format
-#| msgid "Lossy File Format"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lossy File Format"
 msgstr "Format de fișier cu pierderi"
@@ -956,7 +952,7 @@ msgstr "Nu am putut salva ca „%1”."
 #: document/kpDocument_Save.cpp:277 document/kpDocument_Save.cpp:312
 #, kde-format
 msgid "Error saving image"
-msgstr ""
+msgstr "Eroare la salvarea imaginii"
 
 #: document/kpDocument_Save.cpp:341
 #, kde-format
@@ -969,14 +965,14 @@ msgid "Remove Internal B&order"
 msgstr ""
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:337
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Internal Border"
-msgstr "Eroare internă"
+msgstr "Elimină conturul intern"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:341
 #, kde-format
 msgid "Autocr&op"
-msgstr "&Decupare automată"
+msgstr "Decupare aut&omată"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:343
 #, kde-format
@@ -991,10 +987,10 @@ msgid ""
 msgstr ""
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:520
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Cannot Remove Internal Border"
-msgstr "Eroare internă"
+msgstr "Nu se poate elimina conturul intern"
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:524
 #, kde-format
@@ -1004,17 +1000,16 @@ msgid ""
 msgstr ""
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:526
-#, fuzzy, kde-format
-#| msgid "Autocrop"
+#, kde-format
 msgctxt "@title:window"
 msgid "Cannot Autocrop"
-msgstr "Decupare automată"
+msgstr "Nu se poate decupa automat"
 
 #: imagelib/transforms/kpTransformCrop.cpp:43
 #: imagelib/transforms/kpTransformCrop.cpp:45
-#, fuzzy, kde-format
+#, kde-format
 msgid "Set as Image"
-msgstr "Salvează imaginea ca"
+msgstr "Stabilește ca imagine"
 
 #: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:201
 #: mainWindow/kpMainWindow_Edit.cpp:312 mainWindow/kpMainWindow_Image.cpp:282
@@ -1029,10 +1024,9 @@ msgid "KolourPaint"
 msgstr "KolourPaint"
 
 #: kolourpaint.cpp:32
-#, fuzzy, kde-format
-#| msgid "Paint Program for KDE"
+#, kde-format
 msgid "Paint Program by KDE"
-msgstr "Program de desenare pentru KDE"
+msgstr "Program pentru desen de la KDE"
 
 #: kolourpaint.cpp:46
 #, kde-format
@@ -1042,12 +1036,12 @@ msgstr "Clarence Dang"
 #: kolourpaint.cpp:46
 #, kde-format
 msgid "Project Founder"
-msgstr ""
+msgstr "Fondatorul proiectului"
 
 #: kolourpaint.cpp:48
 #, kde-format
 msgid "Thurston Dang"
-msgstr ""
+msgstr "Thurston Dang"
 
 #: kolourpaint.cpp:48
 #, kde-format
@@ -1055,9 +1049,9 @@ msgid "Chief Investigator"
 msgstr "Investigator șef"
 
 #: kolourpaint.cpp:50
-#, fuzzy, kde-format
+#, kde-format
 msgid "Martin Koller"
-msgstr "Bară de unelte text"
+msgstr "Martin Koller"
 
 #: kolourpaint.cpp:50
 #, kde-format
@@ -1067,7 +1061,7 @@ msgstr ""
 #: kolourpaint.cpp:52
 #, kde-format
 msgid "Kristof Borrey"
-msgstr ""
+msgstr "Kristof Borrey"
 
 #: kolourpaint.cpp:52 kolourpaint.cpp:55 kolourpaint.cpp:56
 #, kde-format
@@ -1077,7 +1071,7 @@ msgstr "Pictograme"
 #: kolourpaint.cpp:53
 #, kde-format
 msgid "Tasuku Suzuki"
-msgstr ""
+msgstr "Tasuku Suzuki"
 
 #: kolourpaint.cpp:53 kolourpaint.cpp:54
 #, kde-format
@@ -1087,12 +1081,12 @@ msgstr "Suport pentru metoda de introducere"
 #: kolourpaint.cpp:54
 #, kde-format
 msgid "Kazuki Ohta"
-msgstr ""
+msgstr "Kazuki Ohta"
 
 #: kolourpaint.cpp:55
 #, kde-format
 msgid "Nuno Pinheiro"
-msgstr ""
+msgstr "Nuno Pinheiro"
 
 #: kolourpaint.cpp:56
 #, kde-format
@@ -1102,13 +1096,12 @@ msgstr "Danny Allen"
 #: kolourpaint.cpp:57
 #, kde-format
 msgid "Mike Gashler"
-msgstr ""
+msgstr "Mike Gashler"
 
 #: kolourpaint.cpp:57
-#, fuzzy, kde-format
-#| msgid "More Image Effects"
+#, kde-format
 msgid "Image Effects"
-msgstr "Mai multe efecte"
+msgstr "Efecte de imagine"
 
 #: kolourpaint.cpp:59
 #, kde-format
@@ -1116,19 +1109,19 @@ msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
 #: kolourpaint.cpp:59
-#, fuzzy, kde-format
+#, kde-format
 msgid "KDE 4 Porting"
-msgstr "Portarea KDE4"
+msgstr "Portarea la KDE 4"
 
 #: kolourpaint.cpp:60
 #, kde-format
 msgid "Christoph Feck"
-msgstr ""
+msgstr "Christoph Feck"
 
 #: kolourpaint.cpp:60
-#, fuzzy, kde-format
+#, kde-format
 msgid "KF 5 Porting"
-msgstr "Portarea KDE4"
+msgstr "Portarea la KF 4"
 
 #: kolourpaint.cpp:62
 #, kde-format
@@ -1155,7 +1148,7 @@ msgstr ""
 #: kolourpaint.cpp:72
 #, kde-format
 msgid "[width]x[height]"
-msgstr ""
+msgstr "[lățime]x[înălțime]"
 
 #. i18n: ectx: Menu (view)
 #: kolourpaintui.rc:36
@@ -1200,11 +1193,10 @@ msgid "&Edit"
 msgstr "&Editare"
 
 #: kpThumbnail.cpp:94
-#, fuzzy, kde-format
-#| msgid "Thumbnail"
+#, kde-format
 msgctxt "@title:window"
 msgid "Thumbnail"
-msgstr "Mini-imagine"
+msgstr "Miniatură"
 
 #: kpViewScrollableContainer.cpp:132 kpViewScrollableContainer.cpp:763
 #: kpViewScrollableContainer.cpp:765 kpViewScrollableContainer.cpp:767
@@ -1267,13 +1259,13 @@ msgstr "Utilizează valorile implicite KolourPaint"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Use KDE's"
-msgstr ""
+msgstr "Folosește din KDE"
 
 #: mainWindow/kpMainWindow_Colors.cpp:53
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "&Open..."
-msgstr "&Deschidere..."
+msgstr "&Deschide…"
 
 #: mainWindow/kpMainWindow_Colors.cpp:57
 #, kde-format
@@ -1291,7 +1283,7 @@ msgstr "&Salvează"
 #, kde-format
 msgctxt "@item:inmenu colors"
 msgid "Save &As..."
-msgstr "Salv&are ca..."
+msgstr "S&alvează ca…"
 
 #: mainWindow/kpMainWindow_Colors.cpp:69
 #, kde-format
@@ -1311,40 +1303,31 @@ msgid "Color Box"
 msgstr "Culori"
 
 #: mainWindow/kpMainWindow_Colors.cpp:162
-#, fuzzy, kde-format
-#| msgid ""
-#| "The document \"%1\" has been modified.\n"
-#| "Do you want to save it?"
+#, kde-format
 msgid ""
 "The color palette \"%1\" has been modified.\n"
 "Do you want to save it?"
 msgstr ""
-"Documentul „%1” a fost modificat.\n"
-"Doriți să îl salvez?"
+"Paleta de culori „%1” a fost modificată.\n"
+"Doriți să o salvați?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:172
-#, fuzzy, kde-format
-#| msgid ""
-#| "The document \"%1\" has been modified.\n"
-#| "Do you want to save it?"
+#, kde-format
 msgid ""
 "The KDE color palette \"%1\" has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"Documentul „%1” a fost modificat.\n"
-"Doriți să îl salvez?"
+"Paleta de culori KDE „%1” a fost modificată.\n"
+"Doriți să o salvați într-un fișier?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:180
-#, fuzzy, kde-format
-#| msgid ""
-#| "The document \"%1\" has been modified.\n"
-#| "Do you want to save it?"
+#, kde-format
 msgid ""
 "The default color palette has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"Documentul „%1” a fost modificat.\n"
-"Doriți să îl salvez?"
+"Paleta de culori implicită a fost modificată.\n"
+"Doriți să o salvați într-un fișier?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:293
 #, kde-format
@@ -1395,10 +1378,9 @@ msgstr ""
 "Doriți să îl salvez?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:390
-#, fuzzy, kde-format
-#| msgid "Invert Colors"
+#, kde-format
 msgid "Save Color Palette As"
-msgstr "Inversează culorile"
+msgstr "Salvează paleta de culori ca"
 
 #: mainWindow/kpMainWindow_Edit.cpp:72
 #, kde-format
@@ -1465,15 +1447,13 @@ msgid "Selection: Deselect"
 msgstr "Selecție: Deselectează"
 
 #: mainWindow/kpMainWindow_Edit.cpp:713
-#, fuzzy, kde-format
-#| msgid "Copy to File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Copy to File"
 msgstr "Copiază în fișier"
 
 #: mainWindow/kpMainWindow_Edit.cpp:751
-#, fuzzy, kde-format
-#| msgid "Paste From File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Lipește din fișier"
@@ -1481,13 +1461,13 @@ msgstr "Lipește din fișier"
 #: mainWindow/kpMainWindow_File.cpp:84
 #, kde-format
 msgid "E&xport..."
-msgstr "E&xportă..."
+msgstr "E&xportă…"
 
 #: mainWindow/kpMainWindow_File.cpp:86
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Exportă în alt fișier"
 
 #: mainWindow/kpMainWindow_File.cpp:88
 #, kde-kuit-format
@@ -1502,12 +1482,12 @@ msgstr ""
 #: mainWindow/kpMainWindow_File.cpp:94
 #, kde-format
 msgid "Scan..."
-msgstr "Scanare..."
+msgstr "Scanează…"
 
 #: mainWindow/kpMainWindow_File.cpp:103
 #, kde-format
 msgid "Acquire Screenshot"
-msgstr ""
+msgstr "Obține captură de ecran"
 
 #: mainWindow/kpMainWindow_File.cpp:107
 #, kde-format
@@ -1522,11 +1502,10 @@ msgstr "&Reîncarcă"
 #: mainWindow/kpMainWindow_File.cpp:412
 #, kde-format
 msgid "All Supported Files (%1)"
-msgstr ""
+msgstr "Toate fișierele susținute (%1)"
 
 #: mainWindow/kpMainWindow_File.cpp:437
-#, fuzzy, kde-format
-#| msgid "Open Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Deschide imagine"
@@ -1540,31 +1519,30 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
-msgstr ""
+msgstr "Scanarea a eșuat"
 
 #: mainWindow/kpMainWindow_File.cpp:606
 #, kde-format
 msgid "Snapshot Delay"
-msgstr ""
+msgstr "Întârzierea capturii"
 
 #: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%v secundă"
+msgstr[1] "%v secunde"
+msgstr[2] "%v de secunde"
 
 #: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
 msgid "No delay"
-msgstr ""
+msgstr "Fără întârziere"
 
 #: mainWindow/kpMainWindow_File.cpp:612
-#, fuzzy, kde-format
-#| msgid "Paste in &New Window"
+#, kde-format
 msgid "Hide Main Window"
-msgstr "Lipește în fereastră &nouă"
+msgstr "Ascunde fereastra principală"
 
 #: mainWindow/kpMainWindow_File.cpp:663
 #, kde-format
@@ -1572,15 +1550,13 @@ msgid "Document Properties"
 msgstr "Proprietăți document"
 
 #: mainWindow/kpMainWindow_File.cpp:867
-#, fuzzy, kde-format
-#| msgid "Save Image As"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Salvează imaginea ca"
 
 #: mainWindow/kpMainWindow_File.cpp:910
-#, fuzzy, kde-format
-#| msgid "Export"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportă"
@@ -1592,6 +1568,9 @@ msgid ""
 "Reloading will lose all changes since you last saved it.\n"
 "Are you sure?"
 msgstr ""
+"Documentul „%1” a fost modificat.\n"
+"Reîncărcarea va anula toate modificările făcute de la ultima salvare.\n"
+"Sigur continuați?"
 
 #: mainWindow/kpMainWindow_File.cpp:971
 #, kde-format
@@ -1600,10 +1579,12 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
+"Documentul „%1” a fost modificat.\n"
+"Reîncărcarea va anula toate modificările.\n"
+"Sigur continuați?"
 
 #: mainWindow/kpMainWindow_File.cpp:1178
-#, fuzzy, kde-format
-#| msgid "Print Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Tipărește imaginea"
@@ -1637,46 +1618,44 @@ msgid "Se&t as Image (Crop)"
 msgstr "Se&tează ca imagine (Decupare)"
 
 #: mainWindow/kpMainWindow_Image.cpp:110
-#, fuzzy, kde-format
-#| msgid "&Vertical (upside-down)"
+#, kde-format
 msgid "&Flip (upside down)"
-msgstr "&Vertical (cu susul în jos)"
+msgstr "&Răstoarnă (cu susul în jos)"
 
 #: mainWindow/kpMainWindow_Image.cpp:115
-#, fuzzy, kde-format
-#| msgid "Flip horizontally"
+#, kde-format
 msgid "Mirror (horizontally)"
-msgstr "Răstoarnă orizontal"
+msgstr "Oglindește (orizontal)"
 
 #: mainWindow/kpMainWindow_Image.cpp:120
 #, kde-format
 msgid "&Rotate..."
-msgstr "&Rotește..."
+msgstr "&Rotește…"
 
 #: mainWindow/kpMainWindow_Image.cpp:126
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rotate &Left"
-msgstr "Rotește spre stânga"
+msgstr "Rotește &la stânga"
 
 #: mainWindow/kpMainWindow_Image.cpp:132
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rotate Righ&t"
-msgstr "Rotește spre dreapta"
+msgstr "Rotește la dreap&ta"
 
 #: mainWindow/kpMainWindow_Image.cpp:138
 #, kde-format
 msgid "S&kew..."
-msgstr "Îc&lină..."
+msgstr "În&clină…"
 
 #: mainWindow/kpMainWindow_Image.cpp:143
 #, kde-format
 msgid "Reduce to Mo&nochrome (Dithered)"
-msgstr "Reduce la mo&nocrom (Împrăstiere)"
+msgstr "Reduce la mo&nocrom (împrăștiat)"
 
 #: mainWindow/kpMainWindow_Image.cpp:147
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reduce to &Grayscale"
-msgstr "Reduce to &nuanțe de gri"
+msgstr "Reduce la tonuri de &gri"
 
 #: mainWindow/kpMainWindow_Image.cpp:151
 #, kde-format
@@ -1691,12 +1670,12 @@ msgstr "Ș&terge"
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "Make Confidential"
-msgstr ""
+msgstr "Fă confidențial"
 
 #: mainWindow/kpMainWindow_Image.cpp:165
 #, kde-format
 msgid "&More Effects..."
-msgstr "&Mai multe efecte..."
+msgstr "&Mai multe efecte…"
 
 #: mainWindow/kpMainWindow_Image.cpp:205
 #, kde-format
@@ -1707,40 +1686,39 @@ msgid "&Image"
 msgstr "&Imagine"
 
 #: mainWindow/kpMainWindow_Image.cpp:209
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "Image/Selection Menu caption - make sure that translation has the same accel "
 "as the &Image translation"
 msgid "Select&ion"
-msgstr "Selecție: %1"
+msgstr "Selecț&ie"
 
 #: mainWindow/kpMainWindow_Settings.cpp:41
 #, kde-format
 msgid "Show &Path"
-msgstr "Afișează &calea"
+msgstr "Arată &calea"
 
 #: mainWindow/kpMainWindow_Settings.cpp:46
 #, kde-format
 msgid "Draw Anti-Aliased"
-msgstr ""
+msgstr "Desenează fără crenelare"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:69
 #: mainWindow/kpMainWindow_StatusBar.cpp:155
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 - %3,%4"
+msgstr "%1, %2 — %3, %4"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -1814,19 +1792,19 @@ msgid "Draw With Color Similarity..."
 msgstr ""
 
 #: mainWindow/kpMainWindow_Tools.cpp:150
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tool Box"
-msgstr "Text"
+msgstr "Cutie cu unelte"
 
 #: mainWindow/kpMainWindow_View.cpp:41
 #, kde-format
 msgid "Show &Grid"
-msgstr "Afișează &grila"
+msgstr "Arată &grila"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:40
 #, kde-format
 msgid "Show T&humbnail"
-msgstr "Afișează &mini-imaginea"
+msgstr "Arată &miniatura"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:50
 #, kde-format
@@ -1841,19 +1819,18 @@ msgstr ""
 #: mainWindow/kpMainWindow_View_Zoom.cpp:86
 #, kde-format
 msgid "&Zoom"
-msgstr "&Lupă"
+msgstr "&Apropie"
 
 #: scan/sanedialog.cpp:27
-#, fuzzy, kde-format
-#| msgid "Entire Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr "Toată imaginea"
+msgstr "Obține imaginea"
 
 #: scan/sanedialog.cpp:57
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr ""
+msgstr "Deschiderea scanerului ales a eșuat."
 
 #: tools/flow/kpToolBrush.cpp:15
 #, kde-format
@@ -1873,12 +1850,12 @@ msgstr ""
 #: tools/flow/kpToolColorEraser.cpp:28 tools/flow/kpToolColorEraser.cpp:57
 #, kde-format
 msgid "Color Eraser"
-msgstr ""
+msgstr "Radieră de culori"
 
 #: tools/flow/kpToolColorEraser.cpp:29
 #, kde-format
 msgid "Replaces pixels of the foreground color with the background color"
-msgstr ""
+msgstr "Înlocuiește pixelii de culoarea din prim-plan cu culoarea din fundal"
 
 #: tools/flow/kpToolColorEraser.cpp:93
 #, kde-format
@@ -1888,17 +1865,17 @@ msgstr ""
 #: tools/flow/kpToolEraser.cpp:21
 #, kde-format
 msgid "Eraser"
-msgstr ""
+msgstr "Radieră"
 
 #: tools/flow/kpToolEraser.cpp:21
 #, kde-format
 msgid "Lets you rub out mistakes"
-msgstr ""
+msgstr "Vă permite să radeți greșelile"
 
 #: tools/flow/kpToolEraser.cpp:42
 #, kde-format
 msgid "Click or drag to erase."
-msgstr ""
+msgstr "Apăsați sau trageți pentru a șterge."
 
 #: tools/flow/kpToolFlowBase.cpp:252 tools/kpToolColorPicker.cpp:78
 #: tools/kpToolFloodFill.cpp:119 tools/kpToolZoom.cpp:176
@@ -1913,7 +1890,7 @@ msgstr "Eliberați toate butoanele șoricelului."
 #: tools/flow/kpToolPen.cpp:24
 #, kde-format
 msgid "Pen"
-msgstr ""
+msgstr "Creion"
 
 #: tools/flow/kpToolPen.cpp:24
 #, kde-format
@@ -1963,22 +1940,22 @@ msgstr "Apăsați pentru a alege o culoare."
 #: tools/kpToolFloodFill.cpp:32
 #, kde-format
 msgid "Fills regions in the image"
-msgstr ""
+msgstr "Umple regiuni din imagine"
 
 #: tools/kpToolFloodFill.cpp:50
 #, kde-format
 msgid "Click to fill a region."
-msgstr ""
+msgstr "Apăsați pentru a umple o regiune."
 
 #: tools/kpToolZoom.cpp:51
-#, fuzzy, kde-format
+#, kde-format
 msgid "Zoom"
-msgstr "Scalează"
+msgstr "Apropiere"
 
 #: tools/kpToolZoom.cpp:51
 #, kde-format
 msgid "Zooms in and out of the image"
-msgstr ""
+msgstr "Apropie sau îndepărtează imaginea"
 
 #: tools/kpToolZoom.cpp:92
 #, kde-kuit-format
@@ -1986,16 +1963,18 @@ msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
+"Apăsați pentru a apropia. Clic drept pentru a îndepărta. Trageți pentru a "
+"apropia o anumită zonă."
 
 #: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
 msgid "Curve"
-msgstr ""
+msgstr "Curbă"
 
 #: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
 msgid "Draws curves"
-msgstr ""
+msgstr "Desenează curbe"
 
 #: tools/polygonal/kpToolCurve.cpp:83
 #, kde-format
@@ -2046,12 +2025,12 @@ msgstr "Poligon"
 #: tools/polygonal/kpToolPolygon.cpp:63
 #, kde-format
 msgid "Draws polygons"
-msgstr ""
+msgstr "Desenează poligoane"
 
 #: tools/polygonal/kpToolPolygon.cpp:76 tools/polygonal/kpToolPolyline.cpp:32
 #, kde-format
 msgid "Drag to draw the first line."
-msgstr ""
+msgstr "Trageți pentru a desena prima linie."
 
 #: tools/polygonal/kpToolPolygon.cpp:137 tools/polygonal/kpToolPolyline.cpp:81
 #, kde-format
@@ -2084,24 +2063,24 @@ msgid "Draws ellipses and circles"
 msgstr ""
 
 #: tools/rectangular/kpToolRectangle.cpp:22
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rectangle"
-msgstr "Dreptunghiular"
+msgstr "Dreptunghi"
 
 #: tools/rectangular/kpToolRectangle.cpp:23
 #, kde-format
 msgid "Draws rectangles and squares"
-msgstr ""
+msgstr "Desenează dreptunghiuri și pătrate"
 
 #: tools/rectangular/kpToolRoundedRectangle.cpp:22
 #, kde-format
 msgid "Rounded Rectangle"
-msgstr ""
+msgstr "Dreptunghi rotunjit"
 
 #: tools/rectangular/kpToolRoundedRectangle.cpp:23
 #, kde-format
 msgid "Draws rectangles and squares with rounded corners"
-msgstr ""
+msgstr "Desenează dreptunghiuri și pătrate cu colțurile rotunjite"
 
 #: tools/selection/image/kpAbstractImageSelectionTool.cpp:61
 #, kde-format
@@ -2463,12 +2442,12 @@ msgstr "&Verde"
 #: widgets/imagelib/effects/kpEffectInvertWidget.cpp:36
 #, kde-format
 msgid "&Blue"
-msgstr "&Albastru"
+msgstr "Al&bastru"
 
 #: widgets/imagelib/effects/kpEffectInvertWidget.cpp:41
 #, kde-format
 msgid "&All"
-msgstr "&Toate"
+msgstr "To&ate"
 
 #: widgets/imagelib/effects/kpEffectInvertWidget.cpp:105
 #, kde-format
@@ -2589,13 +2568,13 @@ msgstr "Transparent"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "Deblochează panourile"
 
 #: widgets/toolbars/kpColorToolBar.cpp:89
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "Blochează panourile"
 
 #: widgets/toolbars/kpColorToolBar.cpp:92
 #, kde-kuit-format
@@ -2642,7 +2621,7 @@ msgstr "Pătrat"
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:163
 #, kde-format
 msgid "Slash"
-msgstr ""
+msgstr "Bară oblică"
 
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:167
 #, kde-format
