@@ -517,11 +517,10 @@ msgstr "&Céatadán:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1%"
+msgstr ""
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -831,11 +830,10 @@ msgid "&RGB Color Cube Distance"
 msgstr ""
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
-msgstr "Comhoiriúnú Beacht"
+msgstr ""
 
 #: dialogs/kpColorSimilarityDialog.cpp:57
 #, kde-format
@@ -929,10 +927,9 @@ msgid "Could not save image - unable to create temporary file."
 msgstr "Ní féidir an íomhá a shábháil - ní féidir comhad sealadach a chruthú."
 
 #: document/kpDocument_Save.cpp:219
-#, fuzzy, kde-format
-#| msgid "Could not save color palette as \"%1\"."
+#, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "Ní féidir pailéad datha \"%1\" a shábháil."
+msgstr ""
 
 #: document/kpDocument_Save.cpp:277 document/kpDocument_Save.cpp:312
 #, kde-format
@@ -1009,10 +1006,9 @@ msgid "KolourPaint"
 msgstr "KolourPaint"
 
 #: kolourpaint.cpp:32
-#, fuzzy, kde-format
-#| msgid "Paint Program for KDE"
+#, kde-format
 msgid "Paint Program by KDE"
-msgstr "Ríomhchlár Péinteála KDE"
+msgstr ""
 
 #: kolourpaint.cpp:46
 #, kde-format
@@ -1100,16 +1096,14 @@ msgid "KDE 4 Porting"
 msgstr "Leagan KDE 4"
 
 #: kolourpaint.cpp:60
-#, fuzzy, kde-format
-#| msgid "Christoph Eckert"
+#, kde-format
 msgid "Christoph Feck"
-msgstr "Christoph Eckert"
+msgstr ""
 
 #: kolourpaint.cpp:60
-#, fuzzy, kde-format
-#| msgid "KDE 4 Porting"
+#, kde-format
 msgid "KF 5 Porting"
-msgstr "Leagan KDE 4"
+msgstr ""
 
 #: kolourpaint.cpp:62
 #, kde-format
@@ -1118,10 +1112,9 @@ msgid ""
 msgstr ""
 
 #: kolourpaint.cpp:68
-#, fuzzy, kde-format
-#| msgid "Image file to open"
+#, kde-format
 msgid "Image files to open, optionally"
-msgstr "Comhad íomhá le hoscailt"
+msgstr ""
 
 #: kolourpaint.cpp:71
 #, kde-format
@@ -1170,10 +1163,9 @@ msgstr "Barra Uirlisí Téacs"
 
 #. i18n: ectx: Menu (selectionToolRMBMenu)
 #: kolourpaintui.rc:172
-#, fuzzy, kde-format
-#| msgid "Selection: Move"
+#, kde-format
 msgid "Selection Tool RMB Menu"
-msgstr "Roghnúchán: Bog"
+msgstr ""
 
 #. i18n: ectx: Menu (edit)
 #: kolourpaintui.rc:174
@@ -1515,9 +1507,6 @@ msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
@@ -1695,10 +1684,9 @@ msgid "%1, %2"
 msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
-msgstr "%1,%2 - %3,%4"
+msgstr ""
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:200
 #, kde-format
@@ -1802,11 +1790,10 @@ msgid "&Zoom"
 msgstr "&Súmáil"
 
 #: scan/sanedialog.cpp:27
-#, fuzzy, kde-format
-#| msgid "Entire Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr "An Íomhá Ar Fad"
+msgstr ""
 
 #: scan/sanedialog.cpp:57
 #, kde-format
@@ -2256,10 +2243,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Mód Gan Súmáil - Mionsamhail"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "%1% - Mionsamhail"
+msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2314,25 +2300,16 @@ msgid ""
 msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
-"<p>Comhchosúlacht Dathanna: %1%</p><p align=\"center\">Cliceáil chun cumrú.</"
-"p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
 msgstr ""
-"<p>Comhchosúlacht Dathanna: Comhoiriúnú Beacht</p><p align=\"center"
-"\">Cliceáil chun cumrú.</p>"
 
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:36
 #, kde-format
@@ -2655,381 +2632,3 @@ msgstr "Líon le Dath an Tulra"
 #, kde-format
 msgid "Opaque"
 msgstr "Teimhneach"
-
-#~ msgctxt "Horizontal DPI 'x' Vertical DPI"
-#~ msgid " x "
-#~ msgstr " × "
-
-#~ msgid "x"
-#~ msgstr "x"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "%1,%2"
-#~ msgstr "%1,%2"
-
-#~ msgctxt "<Tool Name> (<Single Accel Key>)"
-#~ msgid "%1 (%2)"
-#~ msgstr "%1 (%2)"
-
-#~ msgid ""
-#~ "A document called \"%1\" already exists.\n"
-#~ "Do you want to overwrite it?"
-#~ msgstr ""
-#~ "Tá comhad ann cheana agus an t-ainm \"%1\" air.\n"
-#~ "An bhfuil fonn ort scríobh air?"
-
-#~ msgid ""
-#~ "A color palette called \"%1\" already exists.\n"
-#~ "Do you want to overwrite it?"
-#~ msgstr ""
-#~ "Tá pailéad datha ann cheana agus an t-ainm \"%1\" air.\n"
-#~ "An bhfuil fonn ort scríobh air?"
-
-#~ msgid "None"
-#~ msgstr "Neamhní"
-
-#~ msgid "Overwrite"
-#~ msgstr "Forscríobh"
-
-#~ msgid "Could not open \"%1\" - unknown mimetype."
-#~ msgstr "Ní féidir \"%1\" a oscailt - cineál anaithnid MIME."
-
-#~ msgid "Save Preview"
-#~ msgstr "Sábháil Réamhamharc"
-
-#~ msgid "To obtain support, please visit the website."
-#~ msgstr "Chun tacaíocht a fháil, déan cuairt ar an suíomh Gréasáin."
-
-#~ msgid "No Scanning Support"
-#~ msgstr "Ní Thacaítear Le Scanadh"
-
-#~ msgid "Set as Wa&llpaper (Centered)"
-#~ msgstr "Socraigh Mar Chú&lbhrat (Láraithe)"
-
-#~ msgid "Set as Wallpaper (&Tiled)"
-#~ msgstr "Socraigh Mar Pháipéar Balla (&Tílithe)"
-
-#~ msgid ""
-#~ "Before this image can be set as the wallpaper, you must save it as a "
-#~ "local file.\n"
-#~ "Do you want to save it?"
-#~ msgstr ""
-#~ "Ní mór duit an íomhá seo a shábháil mar chomhad logánta sular féidir leat "
-#~ "í a shocrú mar chúlbhrat.\n"
-#~ "An bhfuil fonn ort í a shábháil?"
-
-#~ msgid ""
-#~ "Before this image can be set as the wallpaper, you must save it.\n"
-#~ "Do you want to save it?"
-#~ msgstr ""
-#~ "Ní mór duit an íomhá seo a shábháil sular féidir leat í a shocrú mar "
-#~ "chúlbhrat.\n"
-#~ "An bhfuil fonn ort í a shábháil?"
-
-#~ msgid "Could not change wallpaper."
-#~ msgstr "Níorbh fhéidir an chúlbhrat a athrú."
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "&Vertical (upside-down)"
-#~ msgstr "&Ingearach (bunoscionn)"
-
-#~ msgid "&Horizontal"
-#~ msgstr "&Cothrománach"
-
-#~ msgid "&Flip..."
-#~ msgstr "&Smeach..."
-
-#~ msgid "DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu"
-#~ msgstr "toolToolBarHiddenMenu"
-
-#~ msgid "Selection: Transparency"
-#~ msgstr "Roghnúchán: Tréshoilseacht"
-
-#~ msgid "Hide &Path"
-#~ msgstr "Folai&gh Conair"
-
-#~ msgid "Hide &Grid"
-#~ msgstr "Folai&gh Greille"
-
-#~ msgid "Hide T&humbnail"
-#~ msgstr "Folaigh Mionsam&hail"
-
-#~ msgid "Reload Colors"
-#~ msgstr "Athluchtaigh Dathanna"
-
-#~ msgid "Append Row"
-#~ msgstr "Iarcheangail Ró"
-
-#~ msgid "Use File..."
-#~ msgstr "Úsáid Comhad..."
-
-#~ msgid "Rashid N. Achilov"
-#~ msgstr "Rashid N. Achilov"
-
-#~ msgid "Toyohiro Asukai"
-#~ msgstr "Toyohiro Asukai"
-
-#~ msgid "Bela-Andreas Bargel"
-#~ msgstr "Bela-Andreas Bargel"
-
-#~ msgid "Waldo Bastian"
-#~ msgstr "Waldo Bastian"
-
-#~ msgid "Ismail Belhachmi"
-#~ msgstr "Ismail Belhachmi"
-
-#~ msgid "Sashmit Bhaduri"
-#~ msgstr "Sashmit Bhaduri"
-
-#~ msgid "Antonio Bianco"
-#~ msgstr "Antonio Bianco"
-
-#~ msgid "Stephan Binner"
-#~ msgstr "Stephan Binner"
-
-#~ msgid "Markus Brueffer"
-#~ msgstr "Markus Brueffer"
-
-#~ msgid "Rob Buis"
-#~ msgstr "Rob Buis"
-
-#~ msgid "Lucijan Busch"
-#~ msgstr "Lucijan Busch"
-
-#~ msgid "Mikhail Capone"
-#~ msgstr "Mikhail Capone"
-
-#~ msgid "Enrico Ceppi"
-#~ msgstr "Enrico Ceppi"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Jennifer Dang"
-#~ msgstr "Jennifer Dang"
-
-#~ msgid "Lawrence Dang"
-#~ msgstr "Lawrence Dang"
-
-#~ msgid "David Faure"
-#~ msgstr "David Faure"
-
-#~ msgid "P. Fisher"
-#~ msgstr "P. Fisher"
-
-#~ msgid "Nicolas Goutte"
-#~ msgstr "Nicolas Goutte"
-
-#~ msgid "Herbert Graeber"
-#~ msgstr "Herbert Graeber"
-
-#~ msgid "Brad Grant"
-#~ msgstr "Brad Grant"
-
-#~ msgid "David Greenaway"
-#~ msgstr "David Greenaway"
-
-#~ msgid "Wilco Greven"
-#~ msgstr "Wilco Greven"
-
-#~ msgid "Hubert Grininger"
-#~ msgstr "Hubert Grininger"
-
-#~ msgid "Adriaan de Groot"
-#~ msgstr "Adriaan de Groot"
-
-#~ msgid "Esben Mose Hansen"
-#~ msgstr "Esben Mose Hansen"
-
-#~ msgid "Nadeem Hasan"
-#~ msgstr "Nadeem Hasan"
-
-#~ msgid "Simon Hausmann"
-#~ msgstr "Simon Hausmann"
-
-#~ msgid "Michael Hoehne"
-#~ msgstr "Michael Hoehne"
-
-#~ msgid "Andrew J"
-#~ msgstr "Andrew J"
-
-#~ msgid "Werner Joss"
-#~ msgstr "Werner Joss"
-
-#~ msgid "Derek Kite"
-#~ msgstr "Derek Kite"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
-
-#~ msgid "Dmitry Kolesnikov"
-#~ msgstr "Dmitry Kolesnikov"
-
-#~ msgid "Stephan Kulow"
-#~ msgstr "Stephan Kulow"
-
-#~ msgid "Eric Laffoon"
-#~ msgstr "Eric Laffoon"
-
-#~ msgid "Michael Lake"
-#~ msgstr "Michael Lake"
-
-#~ msgid "Sebastien Laout"
-#~ msgstr "Sebastien Laout"
-
-#~ msgid "David Ling"
-#~ msgstr "David Ling"
-
-#~ msgid "Volker Lochte"
-#~ msgstr "Volker Lochte"
-
-#~ msgid "Anders Lund"
-#~ msgstr "Anders Lund"
-
-#~ msgid "Thiago Macieira"
-#~ msgstr "Thiago Macieira"
-
-#~ msgid "Jacek Masiulaniec"
-#~ msgstr "Jacek Masiulaniec"
-
-#~ msgid "Benjamin Meyer"
-#~ msgstr "Benjamin Meyer"
-
-#~ msgid "Amir Michail"
-#~ msgstr "Amir Michail"
-
-#~ msgid "Robert Moszczynski"
-#~ msgstr "Robert Moszczynski"
-
-#~ msgid "Dirk Mueller"
-#~ msgstr "Dirk Mueller"
-
-#~ msgid "Ruivaldo Neto"
-#~ msgstr "Ruivaldo Neto"
-
-#~ msgid "Ralf Nolden"
-#~ msgstr "Ralf Nolden"
-
-#~ msgid "Maks Orlovich"
-#~ msgstr "Maks Orlovich"
-
-#~ msgid "Steven Pasternak"
-#~ msgstr "Steven Pasternak"
-
-#~ msgid "Cédric Pasteur"
-#~ msgstr "Cédric Pasteur"
-
-#~ msgid "Erik K. Pedersen"
-#~ msgstr "Erik K. Pedersen"
-
-#~ msgid "Dennis Pennekamp"
-#~ msgstr "Dennis Pennekamp"
-
-#~ msgid "Jos Poortvliet"
-#~ msgstr "Jos Poortvliet"
-
-#~ msgid "Boudewijn Rempt"
-#~ msgstr "Boudewijn Rempt"
-
-#~ msgid "Marcos Rodriguez"
-#~ msgstr "Marcos Rodriguez"
-
-#~ msgid "Matt Rogers"
-#~ msgstr "Matt Rogers"
-
-#~ msgid "Francisco Jose Canizares Santofimia"
-#~ msgstr "Francisco Jose Canizares Santofimia"
-
-#~ msgid "Bram Schoenmakers"
-#~ msgstr "Bram Schoenmakers"
-
-#~ msgid "Dirk Schönberger"
-#~ msgstr "Dirk Schönberger"
-
-#~ msgid "Lutz Schweizer"
-#~ msgstr "Lutz Schweizer"
-
-#~ msgid "Emmeran Seehuber"
-#~ msgstr "Emmeran Seehuber"
-
-#~ msgid "Peter Simonsson"
-#~ msgstr "Peter Simonsson"
-
-#~ msgid "Andrew Simpson"
-#~ msgstr "Andrew Simpson"
-
-#~ msgid "A T Somers"
-#~ msgstr "A T Somers"
-
-#~ msgid "Igor Stepin"
-#~ msgstr "Igor Stepin"
-
-#~ msgid "Stephen Sweeney"
-#~ msgstr "Stephen Sweeney"
-
-#~ msgid "Bart Symons"
-#~ msgstr "Bart Symons"
-
-#~ msgid "Stefan Taferner"
-#~ msgstr "Stefan Taferner"
-
-#~ msgid "Hogne Titlestad"
-#~ msgstr "Hogne Titlestad"
-
-#~ msgid "Brandon Mark Turner"
-#~ msgstr "Brandon Mark Turner"
-
-#~ msgid "Jonathan Turner"
-#~ msgstr "Jonathan Turner"
-
-#~ msgid "Stephan Unknown"
-#~ msgstr "Stephan Unknown"
-
-#~ msgid "Dries Verachtert"
-#~ msgstr "Dries Verachtert"
-
-#~ msgid "Simon Vermeersch"
-#~ msgstr "Simon Vermeersch"
-
-#~ msgid "Lauri Watts"
-#~ msgstr "Lauri Watts"
-
-#~ msgid "Mark Wege"
-#~ msgstr "Mark Wege"
-
-#~ msgid "Christoph Wiesen"
-#~ msgstr "Christoph Wiesen"
-
-#~ msgid "Andre Wobbeking"
-#~ msgstr "Andre Wobbeking"
-
-#~ msgid "Luke-Jr"
-#~ msgstr "Luke-Jr"
-
-#~ msgid "Maxim_86ualb2"
-#~ msgstr "Maxim_86ualb2"
-
-#~ msgid "Michele"
-#~ msgstr "Michele"
-
-#~ msgid "%1 bytes"
-#~ msgstr "%1 beart"
-
-#~ msgid "%1 B"
-#~ msgstr "%1 B"
-
-#~ msgid "%1 B (%2%)"
-#~ msgstr "%1 B (%2%)"
-
-#~ msgid "%1B"
-#~ msgstr "%1B"
-
-#~ msgid "%1B (%2%)"
-#~ msgstr "%1B (%2%)"
-
-#~ msgid "Custom Pen or Brush"
-#~ msgstr "Peann nó Scuab Shaincheaptha"
