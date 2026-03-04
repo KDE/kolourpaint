@@ -1204,7 +1204,7 @@ msgstr "主工具栏"
 #: kolourpaintui.rc:162
 #, kde-format
 msgid "Text Toolbar"
-msgstr "文字工具栏"
+msgstr "文本工具栏"
 
 #. i18n: ectx: Menu (selectionToolRMBMenu)
 #: kolourpaintui.rc:172
