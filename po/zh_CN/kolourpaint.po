@@ -141,7 +141,7 @@ msgstr "翻转 (垂直)"
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
 #, kde-format
 msgid "Text: Resize Box"
-msgstr "文字：更改文本框大小"
+msgstr "文本：更改文本框大小"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:73
 #, kde-format
@@ -374,7 +374,7 @@ msgid ""
 "unlikely.</p><p>Not all image formats support <b>Text Fields</b>. If the "
 "format you save in does not support them, they will not be saved.</p></qt>"
 msgstr ""
-"<qt><p><b>文本字段</b>用于提供与此图像有关的额外信息，您可以在此填写任意文字"
+"<qt><p><b>文本字段</b>用于提供与此图像有关的额外信息，您可以在此填写任意文本"
 "用作图像的注释。</p><p>要注意的是，某些图像格式会在特定的字段记录一些供程序解"
 "读的信息，您不应更改这些信息。</p><p>不是所有图像类型都支持<b>文本字段</b>。"
 "如果您保存的图像格式不支持文本字段，它们将不会被保存。</p></qt>"
@@ -1244,7 +1244,7 @@ msgstr "更改图像大小：右键点击，即可取消操作。"
 #: tools/selection/text/kpToolText.cpp:34
 #, kde-format
 msgid "Text"
-msgstr "文字"
+msgstr "文本"
 
 #: lgpl/generic/kpColorCollection.cpp:109
 #, kde-format
@@ -1431,12 +1431,12 @@ msgstr "粘贴文件内容(&F)..."
 #: mainWindow/kpMainWindow_Image.cpp:284 tools/selection/text/kpToolText.cpp:60
 #, kde-format
 msgid "Text: Create Box"
-msgstr "文字：创建文本框"
+msgstr "文本：创建文本框"
 
 #: mainWindow/kpMainWindow_Edit.cpp:372
 #, kde-format
 msgid "Text: Paste"
-msgstr "文字：粘贴"
+msgstr "文本：粘贴"
 
 #: mainWindow/kpMainWindow_Edit.cpp:500
 #, kde-format
@@ -1453,7 +1453,7 @@ msgstr "无法粘贴"
 #: mainWindow/kpMainWindow_Edit.cpp:576
 #, kde-format
 msgid "Text: Delete Box"
-msgstr "文字：删除文本框"
+msgstr "文本：删除文本框"
 
 #. i18n ("Text: Delete")
 #: mainWindow/kpMainWindow_Edit.cpp:578
@@ -1464,7 +1464,7 @@ msgstr "选区：删除内容"
 #: mainWindow/kpMainWindow_Edit.cpp:642
 #, kde-format
 msgid "Text: Finish"
-msgstr "文字：完成"
+msgstr "文本：完成"
 
 #: mainWindow/kpMainWindow_Edit.cpp:642
 #, kde-format
@@ -2185,27 +2185,27 @@ msgstr "%1：涂抹"
 #: tools/selection/text/kpToolText.cpp:34
 #, kde-format
 msgid "Writes text"
-msgstr "插入文字"
+msgstr "插入文本"
 
 #: tools/selection/text/kpToolText_Commands.cpp:46
 #, kde-format
 msgid "Text: Backspace"
-msgstr "文字：退格"
+msgstr "文本：退格"
 
 #: tools/selection/text/kpToolText_Commands.cpp:63
 #, kde-format
 msgid "Text: Delete"
-msgstr "文字：删除"
+msgstr "文本：删除"
 
 #: tools/selection/text/kpToolText_Commands.cpp:80
 #, kde-format
 msgid "Text: New Line"
-msgstr "文字：新行"
+msgstr "文本：新行"
 
 #: tools/selection/text/kpToolText_Commands.cpp:97
 #, kde-format
 msgid "Text: Write"
-msgstr "文字：写入"
+msgstr "文本：写入"
 
 #: tools/selection/text/kpToolText_Create.cpp:26
 #, kde-format
@@ -2220,7 +2220,7 @@ msgstr "左键拖动，即可移动文本框。"
 #: tools/selection/text/kpToolText_Move.cpp:37
 #, kde-format
 msgid "Text: Move Box"
-msgstr "文字：移动文本框"
+msgstr "文本：移动文本框"
 
 #: tools/selection/text/kpToolText_ResizeScale.cpp:20
 #, kde-format
@@ -2235,57 +2235,57 @@ msgstr "左键点击，即可更改光标位置。"
 #: tools/selection/text/kpToolText_TextStyle.cpp:80
 #, kde-format
 msgid "Text: Opaque Background"
-msgstr "文字：文本框背景不透明"
+msgstr "文本：文本框背景不透明"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:80
 #, kde-format
 msgid "Text: Transparent Background"
-msgstr "文字：文本框背景透明"
+msgstr "文本：文本框背景透明"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:100
 #, kde-format
 msgid "Text: Swap Colors"
-msgstr "文字：对调前景/背景色"
+msgstr "文本：对调前景/背景色"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:119
 #, kde-format
 msgid "Text: Foreground Color"
-msgstr "文字：前景色"
+msgstr "文本：前景色"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:138
 #, kde-format
 msgid "Text: Background Color"
-msgstr "文字：背景色"
+msgstr "文本：背景色"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:167
 #, kde-format
 msgid "Text: Font"
-msgstr "文字：字体"
+msgstr "文本：字体"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:189
 #, kde-format
 msgid "Text: Font Size"
-msgstr "文字：字体大小"
+msgstr "文本：字体大小"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:209
 #, kde-format
 msgid "Text: Bold"
-msgstr "文字：粗体"
+msgstr "文本：粗体"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:229
 #, kde-format
 msgid "Text: Italic"
-msgstr "文字：斜体"
+msgstr "文本：斜体"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:249
 #, kde-format
 msgid "Text: Underline"
-msgstr "文字：下划线"
+msgstr "文本：下划线"
 
 #: tools/selection/text/kpToolText_TextStyle.cpp:269
 #, kde-format
 msgid "Text: Strike Through"
-msgstr "文字：删除线"
+msgstr "文本：删除线"
 
 #: views/kpUnzoomedThumbnailView.cpp:56
 #, kde-format
