@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2024, 2025 Vít Pelčák <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2024, 2025, 2026 Vít Pelčák <vit@pelcak.org>
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2013.
 # Vit Pelcak <vit@pelcak.org>, 2021, 2023.
 #
@@ -9,25 +9,25 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2025-12-05 10:39+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-03-17 10:31+0100\n"
+"Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Jakub Friedl, Tomáš Chvátal"
+msgstr "Jakub Friedl,Tomáš Chvátal,Libor Filípek"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "jfriedl@suse.cz, tomas.chvatal@gmail.com"
+msgstr "jfriedl@suse.cz,tomas.chvatal@gmail.com,libor.filipek@gmail.com"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:17
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:80
@@ -1191,7 +1191,7 @@ msgstr "Vypsat všechny čitelné typy MIME obrázků"
 #: kolourpaint.cpp:72
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Začněte s novým obrázkem o dané velikosti"
 
 #: kolourpaint.cpp:72
 #, kde-format
@@ -1466,6 +1466,7 @@ msgid ""
 "<qt>KolourPaint cannot paste the contents of the clipboard as it has an "
 "unknown format.</qt>"
 msgstr ""
+"<qt>KolourPaint nemůže vložit obsah schránky, protože má neznámý formát.</qt>"
 
 #: mainWindow/kpMainWindow_Edit.cpp:502
 #, kde-format
@@ -1525,6 +1526,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"Tím se dokument uloží pod jiným názvem, podobně jako <interface>Uložit jako "
+"</interface>, ale aktuální dokument se nezmění.<nl/>Tímto způsobem můžete "
+"udržet poslední použitou složku pro ukládání nezávislou na složce aktuálního "
+"dokumentu."
 
 #: mainWindow/kpMainWindow_File.cpp:94
 #, kde-format
@@ -1560,7 +1565,7 @@ msgstr "Otevřít obrázek"
 #: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
 msgid "Failed to open scanning dialog."
-msgstr ""
+msgstr "Nepodařilo se otevřít dialogové okno skenování."
 
 #: mainWindow/kpMainWindow_File.cpp:496
 #, kde-format
@@ -1717,7 +1722,7 @@ msgstr "Vyči&stit"
 #: mainWindow/kpMainWindow_Image.cpp:161
 #, kde-format
 msgid "Make Confidential"
-msgstr ""
+msgstr "Udělat důvěrné"
 
 #: mainWindow/kpMainWindow_Image.cpp:165
 #, kde-format
@@ -2010,6 +2015,8 @@ msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
 msgstr ""
+"Kliknutím přiblížíte. Kliknutím pravým tlačítkem oddálíte. Přetažením "
+"přiblížíte konkrétní oblast."
 
 #: tools/polygonal/kpToolCurve.cpp:74
 #, kde-format
@@ -2348,6 +2355,27 @@ msgid ""
 "similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
 "decrease this setting.</p><p>To configure it, click on the cube.</p></qt>"
 msgstr ""
+"<qt><p><b>Podobnost barev</b> udává, jak <i>podobné</i> musí být barvy "
+"různých  pixelů, aby je operace považovaly za stejné</p><p>Pokud nastavíte "
+"jinou hodnotu než <b>přesnou shodu</b>, můžete efektivněji pracovat s "
+"rozmazanými obrázky a fotografiemi, srovnatelně s funkcí „Kouzelná hůlka“ v "
+"jiných programech pro malování.</p><p>Tato funkce se vztahuje na:</"
+"p><ul><li><b>Výběry</b>: V režimu <b>Průhlednost</b> se jakákoli barva ve "
+"výběru, která je <i>podobná</i> barvě pozadí, stane průhlednou.</"
+"li><li><b>Plechovka s barvou</b>: U oblastí s <i>podobnými</i> - ale ne "
+"identickými - barevnými pixely vyšší nastavení pravděpodobně vyplní více "
+"pixelů.</li><li><b>Barevná guma</b>: Jakýkoli pixel, jehož barva je "
+"<i>podobná</i> barvě popředí bude nahrazena barvou pozadí.</"
+"li><li><b>Automatické ořezávání</b> a <b>odstranění vnitřního okraje</b>: U "
+"okrajů s <i>podobnými</i> - ale ne identickými - barevnými pixely je při "
+"vyšším nastavení pravděpodobnější oříznutí celého okraje.</li></ul><p>Vyšší "
+"nastavení znamená, že operace považují větší rozsahy barev za dostatečně "
+"<i>podobné</i>, aby byly stejné. Proto byste měli nastavení zvýšit, pokud "
+"výše uvedené operace neovlivňují pixely, jejichž barvy považujete za "
+"dostatečně podobné.</p><p>Pokud však mají příliš velký vliv a mění pixely, "
+"jejichž barvy nepovažujete za podobné (např. pokud <b>Výplň barvou</b> mění "
+"příliš mnoho pixelů), měli byste toto nastavení snížit.</p><p>Chcete-li jej "
+"nastavit, klikněte na kostku.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:93
 #, kde-format
@@ -2374,6 +2402,26 @@ msgid ""
 "similar (e.g. if <b>Flood Fill</b> is changing too many pixels), you should "
 "decrease this setting.</p></qt>"
 msgstr ""
+"<qt><p><b>Podobnost barev</b> udává, jak <i>podobné</i> musí být barvy "
+"různých  pixelů, aby je operace považovaly za stejné</p><p>Pokud nastavíte "
+"jinou hodnotu než <b>přesnou shodu</b>, můžete efektivněji pracovat s "
+"rozmazanými obrázky a fotografiemi, srovnatelně s funkcí „Kouzelná hůlka“ v "
+"jiných programech pro malování.</p><p>Tato funkce se vztahuje na:</"
+"p><ul><li><b>Výběry</b>: V režimu <b>Průhlednost</b> se jakákoli barva ve "
+"výběru, která je <i>podobná</i> barvě pozadí, stane průhlednou.</"
+"li><li><b>Plechovka s barvou</b>: U oblastí s <i>podobnými</i> - ale ne "
+"identickými - barevnými pixely vyšší nastavení pravděpodobně vyplní více "
+"pixelů.</li><li><b>Barevná guma</b>: Jakýkoli pixel, jehož barva je "
+"<i>podobná</i> barvě popředí bude nahrazena barvou pozadí.</"
+"li><li><b>Automatické ořezávání</b> a <b>odstranění vnitřního okraje</b>: U "
+"okrajů s <i>podobnými</i> - ale ne identickými - barevnými pixely je při "
+"vyšším nastavení pravděpodobnější oříznutí celého okraje.</li></ul><p>Vyšší "
+"nastavení znamená, že operace považují větší rozsahy barev za dostatečně "
+"<i>podobné</i>, aby byly stejné. Proto byste měli nastavení zvýšit, pokud "
+"výše uvedené operace neovlivňují pixely, jejichž barvy považujete za "
+"dostatečně podobné.</p><p>Pokud však mají příliš velký vliv a mění pixely, "
+"jejichž barvy nepovažujete za podobné (např. pokud <b>Výplň barvou</b> mění "
+"příliš mnoho pixelů), měli byste toto nastavení snížit.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
 #, kde-format
@@ -2554,6 +2602,13 @@ msgid ""
 "destination cell's color will be overwritten, instead of being swapped with "
 "the color of the source cell.</p></qt>"
 msgstr ""
+"<qt><p>Chcete-li vybrat barvu popředí, kterou nástroje používají k kreslení, "
+"klikněte levým tlačítkem myši na barevnou buňku. Chcete-li vybrat barvu "
+"pozadí, klikněte místo toho pravým tlačítkem myši.</p><p>Chcete-li změnit "
+"barvu samotné barevné buňky, dvakrát na ni klikněte.</p><p>Barvu vyplněné "
+"buňky můžete také zaměnit s jakoukoli jinou buňkou pomocí drag and drop. "
+"Pokud navíc podržíte klávesu <b>Ctrl</b>, barva cílové buňky bude přepsána, "
+"místo aby byla zaměněna s barvou zdrojové buňky.</p></qt>"
 
 #: widgets/kpDocumentSaveOptionsWidget.cpp:62
 #, kde-format
@@ -2638,6 +2693,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"Toto přepíná mezi <emphasis>uzamčenými</emphasis> a <emphasis>odemčenými</"
+"emphasis> panely.<nl/>Odemčené panely lze přetáhnout na druhou stranu okna a "
+"mají tlačítko pro zavření.<nl/>Uzamčené panely jsou vloženy čistěji."
 
 #: widgets/toolbars/kpColorToolBar.cpp:263
 #, kde-format
