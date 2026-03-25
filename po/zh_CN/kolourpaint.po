@@ -2070,12 +2070,12 @@ msgstr "按住右键再拖出下一段线。也可以点击左键结束绘制。
 #: tools/polygonal/kpToolPolyline.cpp:23
 #, kde-format
 msgid "Connected Lines"
-msgstr "折线"
+msgstr "多段线"
 
 #: tools/polygonal/kpToolPolyline.cpp:23
 #, kde-format
 msgid "Draws connected lines"
-msgstr "绘制首尾相连的直线"
+msgstr "绘制相连的多段直线"
 
 #: tools/rectangular/kpToolEllipse.cpp:21
 #, kde-format
