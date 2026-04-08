@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 23.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -292,7 +292,7 @@ msgstr "Neurčené"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -528,7 +528,7 @@ msgstr "Výška:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -544,11 +544,10 @@ msgstr "&Percentá:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -888,8 +887,7 @@ msgid "&RGB Color Cube Distance"
 msgstr "Vzdialenosť farebnej kocky RGB"
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "Presný výskyt"
@@ -909,7 +907,7 @@ msgstr "Uložiť náhľad"
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
-msgstr[0] "%1 bajt (asi %2%)"
+msgstr[0] "1 bajt (asi %2%)"
 msgstr[1] "%1 bajtov (asi %2%)"
 msgstr[2] "%1 bajtov (asi %2%)"
 
@@ -1192,10 +1190,10 @@ msgstr "Zoznam všetkých čitateľných MIME typov obrázkov"
 #: kolourpaint.cpp:72
 #, kde-format
 msgid "Start with new image using given size"
-msgstr ""
+msgstr "Start with new image using given size"
 
 #: kolourpaint.cpp:72
-#, fuzzy, kde-format
+#, kde-format
 msgid "[width]x[height]"
 msgstr "Šírka x výška"
 
@@ -1517,7 +1515,7 @@ msgstr "E&xportovať..."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
-msgstr ""
+msgstr "Export to another file"
 
 #: mainWindow/kpMainWindow_File.cpp:88
 #, kde-kuit-format
@@ -1528,6 +1526,10 @@ msgid ""
 "can keep the last-used save folder independent from the folder of the "
 "current document."
 msgstr ""
+"This saves the document with a different name, podobne ako <interface>Save "
+"As</interface>, but aktuálny document is not changed.<nl/>This way môžete "
+"keep the last-used save folder independent from the folder of aktuálny "
+"document."
 
 #: mainWindow/kpMainWindow_File.cpp:94
 #, kde-format
@@ -1577,9 +1579,7 @@ msgid "Snapshot Delay"
 msgstr "Trvanie snímky"
 
 #: mainWindow/kpMainWindow_File.cpp:609
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] "sekunda"
@@ -1760,16 +1760,15 @@ msgstr "Kresliť vyhladene"
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1, %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
-#, fuzzy, kde-format
-#| msgid "%1,%2 - %3,%4"
+#, kde-format
 msgid "%1, %2 — %3, %4"
 msgstr "%1,%2 - %3,%4"
 
@@ -2011,8 +2010,7 @@ msgid "Zooms in and out of the image"
 msgstr "Priblíži a oddiali obrázok"
 
 #: tools/kpToolZoom.cpp:92
-#, fuzzy, kde-kuit-format
-#| msgid "Click to zoom in/out or left drag to zoom into a specific area."
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Click to zoom in. Right-click to zoom out. Drag to zoom into a specific area."
@@ -2334,8 +2332,7 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr "Nepriblížený režim - miniatúra"
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgid "%1% - Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
 msgstr "%1% - Miniatúra"
 
@@ -2431,18 +2428,13 @@ msgstr ""
 "bodov), mali by ste znížiť toto nastavenie.</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: %1%</p><p align=\"center\">Click to configure.</p>"
+#, kde-format
 msgid "<p>Color similarity: %1%</p><p align=\"center\">Click to configure.</p>"
 msgstr ""
 "<p>Podobnosť farieb: %1%</p><p align=\"center\">Kliknite na nastavenie.</p>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:204
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Color Similarity: Exact Match</p><p align=\"center\">Click to "
-#| "configure.</p>"
+#, kde-format
 msgid ""
 "<p>Color similarity: Exact match</p><p align=\"center\">Click to configure.</"
 "p>"
