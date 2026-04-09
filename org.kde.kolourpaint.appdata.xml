@@ -125,6 +125,7 @@
     <p xml:lang="nl">KolourPaint is een eenvoudig tekenprogramma om snel rasterafbeeldingen te maken. Het is nuttig als een hulpmiddel voor bijwerken en eenvoudige taken voor bewerking van afbeeldingen.</p>
     <p xml:lang="pt-BR">KolourPaint é um programa de desenho simples, que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
     <p xml:lang="ru">KolourPaint — простая программа для рисования и создания растровых изображений. Может быть полезна для внесения небольших правок в изображения.</p>
+    <p xml:lang="sk">KolourPaint je jednoduchý kresliaci program na rýchlu tvorbu rastrových obrázkov. Je užitočný ako touch-up nástroj a na jednoduché úpravy obrázkov.</p>
     <p xml:lang="sl">KolourPaint je preprost program za slikanje za hitro ustvarjanje rastrskih slik. Uporaben je kot orodje za popravke in za preprosta opravila urejanja slik.</p>
     <p xml:lang="sv">KolourPaint är ett enkelt ritprogram för att snabbt skapa punktavbildningar. Det är användbart som förbättringsverktyg och för enkla bildredigeringsuppgifter.</p>
     <p xml:lang="tr">RenkliBoya, tez raster görseller oluşturabileceğiniz basit bir boyama programıdır. Bir rötuş aracı ve basit görsel düzenleme görevleri için kullanışlıdır.</p>
@@ -295,6 +296,7 @@
       <li xml:lang="pt-BR">Seletor de cores</li>
       <li xml:lang="ru">Выбор цвета</li>
       <li xml:lang="sa">रङ्ग पिकर</li>
+      <li xml:lang="sk">Výber farieb</li>
       <li xml:lang="sl">Pobiralnik barv</li>
       <li xml:lang="sv">Färgväljare</li>
       <li xml:lang="tr">Renk seçicisi</li>
