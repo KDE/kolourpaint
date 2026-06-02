@@ -8,24 +8,25 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-05-31 19:11-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #: commands/imagelib/effects/kpEffectBalanceCommand.cpp:17
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:80
@@ -41,7 +42,7 @@ msgstr "يۇمشات"
 #: commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp:30
 #, kde-format
 msgid "Sharpen"
-msgstr "ئېنىقلىق"
+msgstr "ئۇچلا"
 
 #: commands/imagelib/effects/kpEffectClearCommand.cpp:34
 #, kde-format
@@ -61,7 +62,7 @@ msgstr ""
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:81
 #, kde-format
 msgid "Emboss"
-msgstr "تاللىغاننى ئۆچۈر"
+msgstr "قاپارتما"
 
 #: commands/imagelib/effects/kpEffectFlattenCommand.cpp:18
 #: dialogs/imagelib/effects/kpEffectsDialog.cpp:82
@@ -120,7 +121,7 @@ msgstr ""
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:43
 #, kde-format
 msgid "Flip"
-msgstr "Flip"
+msgstr "ئۆرۈ"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:46
 #, kde-format
@@ -130,12 +131,12 @@ msgstr ""
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:48
 #, kde-format
 msgid "Flip horizontally"
-msgstr "گورىزونتال ئۆرۈش"
+msgstr "توغرىسىغا ئۆرۈ"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:50
 #, kde-format
 msgid "Flip vertically"
-msgstr "تىك ئايلاندۇر"
+msgstr "بويىغا ئۆرۈ"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:69
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
@@ -162,7 +163,7 @@ msgstr "چوڭلۇقىنى ئۆزگەرت"
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:85
 #, kde-format
 msgid "Scale"
-msgstr "نىسبىتى"
+msgstr "نىسبەت"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:87
 #, kde-format
@@ -289,7 +290,7 @@ msgstr "بەلگىلەنمىگەن"
 #, kde-format
 msgctxt "Horizontal DPI 'x' Vertical DPI"
 msgid " × "
-msgstr ""
+msgstr " × "
 
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:128
 #: dialogs/imagelib/kpDocumentMetaInfoDialog.cpp:175
@@ -409,7 +410,7 @@ msgstr "ئەسلى:"
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:200
 #, kde-format
 msgid "%1 x %2"
-msgstr "%1 x %2"
+msgstr ""
 
 #: dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp:127
 #: dialogs/kpColorSimilarityDialog.cpp:36
@@ -497,7 +498,7 @@ msgstr "ئېگىزلىك:"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:269
 #, kde-format
 msgid "×"
-msgstr ""
+msgstr "×"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:254
 #, kde-format
@@ -513,11 +514,10 @@ msgstr "پىرسەنت(&P):"
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:276
 #: widgets/imagelib/effects/kpNumInput.cpp:183
 #: widgets/kpDocumentSaveOptionsWidget.cpp:74
-#, fuzzy, kde-format
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp:278
 #, kde-format
@@ -655,7 +655,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Rotate Image"
-msgstr "سۈرەت چۆرگىلىتىش"
+msgstr "سۈرەت چۆرگىلەت"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:41
 #, kde-format
@@ -686,17 +686,17 @@ msgstr "بۇلۇڭ"
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:117
 #, kde-format
 msgid "90 &degrees"
-msgstr "90 گرادۇس(&D)"
+msgstr "90 گىرادۇس(&D)"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:118
 #, kde-format
 msgid "180 d&egrees"
-msgstr "180 گرادۇس(&E)"
+msgstr "180 گىرادۇس(&E)"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:119
 #, kde-format
 msgid "270 de&grees"
-msgstr "270 گرادۇس(&G)"
+msgstr "270 گىرادۇس(&G)"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:121
 #, kde-format
@@ -708,7 +708,7 @@ msgstr ""
 #: dialogs/imagelib/transforms/kpTransformSkewDialog.cpp:89
 #, kde-format
 msgid "degrees"
-msgstr "گرادۇس"
+msgstr "گىرادۇس"
 
 #: dialogs/imagelib/transforms/kpTransformRotateDialog.cpp:230
 #, kde-format
@@ -827,8 +827,7 @@ msgid "&RGB Color Cube Distance"
 msgstr ""
 
 #: dialogs/kpColorSimilarityDialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Exact Match"
+#, kde-format
 msgctxt "@label:spinbox"
 msgid "Exact match"
 msgstr "دەلمۇدەل ماسلىق"
@@ -877,7 +876,7 @@ msgstr ""
 #: document/kpDocument_Save.cpp:51
 #, kde-format
 msgid "<empty>"
-msgstr "<قۇرۇق>"
+msgstr "<بوش>"
 
 #: document/kpDocument_Save.cpp:52
 #, kde-format
@@ -919,10 +918,9 @@ msgid "Could not save image - unable to create temporary file."
 msgstr ""
 
 #: document/kpDocument_Save.cpp:219
-#, fuzzy, kde-format
-#| msgid "Could not open \"%1\"."
+#, kde-format
 msgid "Could not save as \"%1\": %2"
-msgstr "«%1» نى ئاچالمىدى."
+msgstr ""
 
 #: document/kpDocument_Save.cpp:277 document/kpDocument_Save.cpp:312
 #, kde-format
@@ -984,7 +982,7 @@ msgstr ""
 #: imagelib/transforms/kpTransformCrop.cpp:45
 #, kde-format
 msgid "Set as Image"
-msgstr "Set as Image"
+msgstr ""
 
 #: imagelib/transforms/kpTransformCrop_ImageSelection.cpp:201
 #: mainWindow/kpMainWindow_Edit.cpp:312 mainWindow/kpMainWindow_Image.cpp:282
@@ -996,7 +994,7 @@ msgstr ""
 #: kolourpaint.cpp:30
 #, kde-format
 msgid "KolourPaint"
-msgstr "KolourPaint"
+msgstr ""
 
 #: kolourpaint.cpp:32
 #, kde-format
@@ -1006,7 +1004,7 @@ msgstr ""
 #: kolourpaint.cpp:46
 #, kde-format
 msgid "Clarence Dang"
-msgstr "Clarence Dang"
+msgstr ""
 
 #: kolourpaint.cpp:46
 #, kde-format
@@ -1036,12 +1034,12 @@ msgstr ""
 #: kolourpaint.cpp:52
 #, kde-format
 msgid "Kristof Borrey"
-msgstr "Kristof Borrey"
+msgstr ""
 
 #: kolourpaint.cpp:52 kolourpaint.cpp:55 kolourpaint.cpp:56
 #, kde-format
 msgid "Icons"
-msgstr "سىنبەلگىلەر"
+msgstr "سىنبەلگە"
 
 #: kolourpaint.cpp:53
 #, kde-format
@@ -1066,7 +1064,7 @@ msgstr "Nuno Pinheiro"
 #: kolourpaint.cpp:56
 #, kde-format
 msgid "Danny Allen"
-msgstr "Danny Allen"
+msgstr ""
 
 #: kolourpaint.cpp:57
 #, kde-format
@@ -1483,12 +1481,10 @@ msgid "Snapshot Delay"
 msgstr ""
 
 #: mainWindow/kpMainWindow_File.cpp:609
-#, fuzzy, kde-format
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
-msgstr[0] " سېكۇنت"
+msgstr[0] "%v سېكۇنت"
 
 #: mainWindow/kpMainWindow_File.cpp:610
 #, kde-format
@@ -1515,7 +1511,7 @@ msgstr "سۈرەتنى باشقا ئاتتا ساقلاش"
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
-msgstr "ئېكسپورت قىل"
+msgstr "چىقار"
 
 #: mainWindow/kpMainWindow_File.cpp:963
 #, kde-format
@@ -1606,7 +1602,7 @@ msgstr ""
 #: mainWindow/kpMainWindow_Image.cpp:151
 #, kde-format
 msgid "&Invert Colors"
-msgstr ""
+msgstr "ئەكسى رەڭ(&I)"
 
 #: mainWindow/kpMainWindow_Image.cpp:156
 #, kde-format
@@ -1654,12 +1650,12 @@ msgstr ""
 #: mainWindow/kpMainWindow_StatusBar.cpp:179
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:121
 #, kde-format
 msgid "%1, %2"
-msgstr ""
+msgstr "%1، %2"
 
 #: mainWindow/kpMainWindow_StatusBar.cpp:123
 #, kde-format
@@ -1745,7 +1741,7 @@ msgstr "قورال ساندۇقى"
 #: mainWindow/kpMainWindow_View.cpp:41
 #, kde-format
 msgid "Show &Grid"
-msgstr "سېتكا كۆرسەت(&G)"
+msgstr "شادا كۆرسەت(&G)"
 
 #: mainWindow/kpMainWindow_View_Thumbnail.cpp:40
 #, kde-format
@@ -1765,19 +1761,18 @@ msgstr ""
 #: mainWindow/kpMainWindow_View_Zoom.cpp:86
 #, kde-format
 msgid "&Zoom"
-msgstr "كېڭەيت تارايت(&Z)"
+msgstr "نىسبەت(&Z)"
 
 #: scan/sanedialog.cpp:27
-#, fuzzy, kde-format
-#| msgid "Entire Image"
+#, kde-format
 msgctxt "@title:window"
 msgid "Acquire Image"
-msgstr "پۈتۈن سۈرەت"
+msgstr ""
 
 #: scan/sanedialog.cpp:57
 #, kde-format
 msgid "Opening the selected scanner failed."
-msgstr ""
+msgstr "تاللانغان تارىغۇچنى ئاچالمىدى."
 
 #: tools/flow/kpToolBrush.cpp:15
 #, kde-format
@@ -1897,7 +1892,7 @@ msgstr ""
 #: tools/kpToolZoom.cpp:51
 #, kde-format
 msgid "Zoom"
-msgstr "كېڭەيت-تارايت"
+msgstr "نىسبەت"
 
 #: tools/kpToolZoom.cpp:51
 #, kde-format
@@ -2000,7 +1995,7 @@ msgstr ""
 #: tools/rectangular/kpToolEllipse.cpp:21
 #, kde-format
 msgid "Ellipse"
-msgstr "ئېللىپس"
+msgstr "ئېللىپىس"
 
 #: tools/rectangular/kpToolEllipse.cpp:22
 #, kde-format
@@ -2213,11 +2208,9 @@ msgid "Unzoomed Mode - Thumbnail"
 msgstr ""
 
 #: views/kpZoomedThumbnailView.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Thumbnail"
+#, kde-format
 msgid "%1% — Thumbnail"
-msgstr "كىچىك سۈرەت"
+msgstr ""
 
 #: widgets/colorSimilarity/kpColorSimilarityHolder.cpp:42
 #, kde-format
@@ -2341,7 +2334,7 @@ msgstr ""
 #: widgets/imagelib/effects/kpEffectBalanceWidget.cpp:120
 #, kde-format
 msgid "Settings"
-msgstr "تەڭشەكلەر"
+msgstr "تەڭشەك"
 
 #: widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp:27
 #: widgets/imagelib/effects/kpEffectToneEnhanceWidget.cpp:34
@@ -2358,7 +2351,7 @@ msgstr "قوزغات(&N)"
 #: widgets/imagelib/effects/kpEffectFlattenWidget.cpp:98
 #, kde-format
 msgid "Colors"
-msgstr "رەڭلەر"
+msgstr "رەڭ"
 
 #: widgets/imagelib/effects/kpEffectHSVWidget.cpp:25
 #, kde-format
@@ -2514,13 +2507,13 @@ msgstr "سۈزۈك"
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Unlock Panels"
-msgstr ""
+msgstr "كۆزنەكچە قۇلۇپىنى ئاچ"
 
 #: widgets/toolbars/kpColorToolBar.cpp:89
 #, kde-format
 msgctxt "@action:inmenu Panels"
 msgid "Lock Panels"
-msgstr ""
+msgstr "كۆزنەكچىنى قۇلۇپلا"
 
 #: widgets/toolbars/kpColorToolBar.cpp:92
 #, kde-kuit-format
@@ -2531,6 +2524,9 @@ msgid ""
 "other side of the window and have a close button.<nl/>Locked panels are "
 "embedded more cleanly."
 msgstr ""
+"كۆزنەكچىنىڭ «قۇلۇپلا» ياكى «قۇلۇپ ئاچ» ھالىتىنى ئالماشتۇرىدۇ.<nl/>قۇلۇپى "
+"ئېچىلغان كۆزنەكچىنى كۆزنەكنىڭ باشقا بىر تەرىپىگە سۆرىگىلى بولىدۇ ھەمدە ياپ "
+"توپچە كۆرۈنىدۇ.<nl/>قۇلۇپلانغان كۆزنەكچىنىڭ سىڭدۈرمە ئۈنۈمى تېخىمۇ ئېنىق."
 
 #: widgets/toolbars/kpColorToolBar.cpp:263
 #, kde-format
@@ -2552,7 +2548,7 @@ msgstr ""
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:148
 #, kde-format
 msgid "1x1"
-msgstr "1x1"
+msgstr ""
 
 #: widgets/toolbars/options/kpToolWidgetBrush.cpp:156
 #, kde-format
@@ -2593,17 +2589,17 @@ msgstr "تولدۇرۇلمىغان"
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:90
 #, kde-format
 msgid "Fill with Background Color"
-msgstr "تەگلىك رەڭگى بىلەن بوياش"
+msgstr "تەگلىك رەڭ بىلەن تولدۇر"
 
 #: widgets/toolbars/options/kpToolWidgetFillStyle.cpp:93
 #, kde-format
 msgid "Fill with Foreground Color"
-msgstr "ئالدى رەڭگى بىلەن بوياش"
+msgstr "ئالدى رەڭ بىلەن تولدۇر"
 
 #: widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.cpp:20
 #, kde-format
 msgid "Opaque"
-msgstr "گۇڭگا"
+msgstr "تۇتۇق"
 
 #~ msgctxt "Horizontal DPI 'x' Vertical DPI"
 #~ msgid " x "
