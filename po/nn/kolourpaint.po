@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-04-18 15:51+0200\n"
+"PO-Revision-Date: 2026-06-27 15:52+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.07.70\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -2038,7 +2038,7 @@ msgstr "Teiknar kurver"
 #: tools/polygonal/kpToolCurve.cpp:83
 #, kde-format
 msgid "Drag out the start and end points."
-msgstr "Dra ut start- og sluttpunkta."
+msgstr "Dra ut start- og endepunkta."
 
 #: tools/polygonal/kpToolCurve.cpp:116
 #, kde-format
