@@ -41,7 +41,6 @@
 #include <KSharedConfig>
 #include <KStandardAction>
 #include <KStandardShortcut>
-#include <kwidgetsaddons_version.h>
 
 #include "commands/imagelib/kpDocumentMetaInfoCommand.h"
 #include "commands/kpCommandHistory.h"

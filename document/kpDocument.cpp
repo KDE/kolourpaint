@@ -22,7 +22,6 @@
 #include "tools/kpTool.h"
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "widgets/toolbars/kpToolToolBar.h"
-#include <kio_version.h>
 
 #include "kpLogCategories.h"
 #include <KIO/StatJob>
