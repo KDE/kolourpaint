@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-07-03 00:43+0000\n"
 "PO-Revision-Date: 2007-02-26 21:56+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -1403,8 +1403,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:324
 #: mainWindow/kpMainWindow_Colors.cpp:334
-#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:968
-#: mainWindow/kpMainWindow_File.cpp:976
+#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:967
+#: mainWindow/kpMainWindow_File.cpp:975
 #, fuzzy, kde-format
 msgid "&Reload"
 msgstr "Превчита&ј"
@@ -1523,18 +1523,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Вметни од датотека"
 
-#: mainWindow/kpMainWindow_File.cpp:84
+#: mainWindow/kpMainWindow_File.cpp:83
 #, kde-format
 msgid "E&xport..."
 msgstr "Е&кспортирај..."
 
-#: mainWindow/kpMainWindow_File.cpp:86
+#: mainWindow/kpMainWindow_File.cpp:85
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:88
+#: mainWindow/kpMainWindow_File.cpp:87
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1544,55 +1544,55 @@ msgid ""
 "current document."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:94
+#: mainWindow/kpMainWindow_File.cpp:93
 #, kde-format
 msgid "Scan..."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:102
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:107
+#: mainWindow/kpMainWindow_File.cpp:106
 #, kde-format
 msgid "Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:113
+#: mainWindow/kpMainWindow_File.cpp:112
 #, kde-format
 msgid "Reloa&d"
 msgstr "Превчита&ј"
 
-#: mainWindow/kpMainWindow_File.cpp:412
+#: mainWindow/kpMainWindow_File.cpp:411
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:437
+#: mainWindow/kpMainWindow_File.cpp:436
 #, fuzzy, kde-format
 #| msgid "Open Image"
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Отвори слика"
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:606
+#: mainWindow/kpMainWindow_File.cpp:605
 #, kde-format
 msgid "Snapshot Delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:609
+#: mainWindow/kpMainWindow_File.cpp:608
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
@@ -1600,36 +1600,36 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: mainWindow/kpMainWindow_File.cpp:610
+#: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "No delay"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:612
+#: mainWindow/kpMainWindow_File.cpp:611
 #, fuzzy, kde-format
 #| msgid "Paste in &New Window"
 msgid "Hide Main Window"
 msgstr "Вметни во &Нов прозорец"
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:662
 #, kde-format
 msgid "Document Properties"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:867
+#: mainWindow/kpMainWindow_File.cpp:866
 #, fuzzy, kde-format
 #| msgid "Save Image As"
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Зачувај слика како"
 
-#: mainWindow/kpMainWindow_File.cpp:910
+#: mainWindow/kpMainWindow_File.cpp:909
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Е&кспортирај..."
 
-#: mainWindow/kpMainWindow_File.cpp:963
+#: mainWindow/kpMainWindow_File.cpp:962
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1640,7 +1640,7 @@ msgstr ""
 "Превчитувањето ќе ги загуби сите промени од вашето последно зачувување.\n"
 "Дали сте сигурни?"
 
-#: mainWindow/kpMainWindow_File.cpp:971
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1651,14 +1651,14 @@ msgstr ""
 "Превчитувањето ќе ги загуби сите промени.\n"
 "Дали сте сигурни?"
 
-#: mainWindow/kpMainWindow_File.cpp:1178
+#: mainWindow/kpMainWindow_File.cpp:1177
 #, fuzzy, kde-format
 #| msgid "Entire Image"
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Цела слика"
 
-#: mainWindow/kpMainWindow_File.cpp:1251
+#: mainWindow/kpMainWindow_File.cpp:1250
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1667,7 +1667,7 @@ msgstr ""
 "Мора да ја зачувате сликата пред да ја испратите.\n"
 "Дали сакате да ја зачувате?"
 
-#: mainWindow/kpMainWindow_File.cpp:1286
+#: mainWindow/kpMainWindow_File.cpp:1285
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

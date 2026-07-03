@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-07-03 00:43+0000\n"
 "PO-Revision-Date: 2025-12-08 16:29+0100\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -1422,8 +1422,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:324
 #: mainWindow/kpMainWindow_Colors.cpp:334
-#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:968
-#: mainWindow/kpMainWindow_File.cpp:976
+#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:967
+#: mainWindow/kpMainWindow_File.cpp:975
 #, kde-format
 msgid "&Reload"
 msgstr "Neu &laden"
@@ -1533,18 +1533,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Aus Datei einfügen"
 
-#: mainWindow/kpMainWindow_File.cpp:84
+#: mainWindow/kpMainWindow_File.cpp:83
 #, kde-format
 msgid "E&xport..."
 msgstr "E&xportieren ..."
 
-#: mainWindow/kpMainWindow_File.cpp:86
+#: mainWindow/kpMainWindow_File.cpp:85
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr "In eine andere Datei exportieren"
 
-#: mainWindow/kpMainWindow_File.cpp:88
+#: mainWindow/kpMainWindow_File.cpp:87
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1558,88 +1558,88 @@ msgstr ""
 "nicht verändert.<nl/>Auf diese Weise können Sie den zuletzt verwendeten "
 "Speicherort unabhängig vom Ordner des aktuellen Dokuments halten."
 
-#: mainWindow/kpMainWindow_File.cpp:94
+#: mainWindow/kpMainWindow_File.cpp:93
 #, kde-format
 msgid "Scan..."
 msgstr "Scannen ..."
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:102
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Bildschirmfoto aufnehmen"
 
-#: mainWindow/kpMainWindow_File.cpp:107
+#: mainWindow/kpMainWindow_File.cpp:106
 #, kde-format
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: mainWindow/kpMainWindow_File.cpp:113
+#: mainWindow/kpMainWindow_File.cpp:112
 #, kde-format
 msgid "Reloa&d"
 msgstr "Neu &laden"
 
-#: mainWindow/kpMainWindow_File.cpp:412
+#: mainWindow/kpMainWindow_File.cpp:411
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Alle unterstützten Dateien (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:437
+#: mainWindow/kpMainWindow_File.cpp:436
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Bild öffnen"
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Fehler beim Öffnen des Scan-Dialogs."
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Scannen fehlgeschlagen"
 
-#: mainWindow/kpMainWindow_File.cpp:606
+#: mainWindow/kpMainWindow_File.cpp:605
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Verzögerung für Bildschirmfotos"
 
-#: mainWindow/kpMainWindow_File.cpp:609
+#: mainWindow/kpMainWindow_File.cpp:608
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] "%v Sekunde"
 msgstr[1] "%v Sekunden"
 
-#: mainWindow/kpMainWindow_File.cpp:610
+#: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "No delay"
 msgstr "Keine Verzögerung"
 
-#: mainWindow/kpMainWindow_File.cpp:612
+#: mainWindow/kpMainWindow_File.cpp:611
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Hauptfenster ausblenden"
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:662
 #, kde-format
 msgid "Document Properties"
 msgstr "Dokument-Eigenschaften"
 
-#: mainWindow/kpMainWindow_File.cpp:867
+#: mainWindow/kpMainWindow_File.cpp:866
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Bild speichern unter"
 
-#: mainWindow/kpMainWindow_File.cpp:910
+#: mainWindow/kpMainWindow_File.cpp:909
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Exportieren"
 
-#: mainWindow/kpMainWindow_File.cpp:963
+#: mainWindow/kpMainWindow_File.cpp:962
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1651,7 +1651,7 @@ msgstr ""
 "verloren.\n"
 "Sind Sie sicher?"
 
-#: mainWindow/kpMainWindow_File.cpp:971
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1662,13 +1662,13 @@ msgstr ""
 "Beim erneuten Laden gehen alle Änderungen verloren.\n"
 "Sind Sie sicher?"
 
-#: mainWindow/kpMainWindow_File.cpp:1178
+#: mainWindow/kpMainWindow_File.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Bild drucken"
 
-#: mainWindow/kpMainWindow_File.cpp:1251
+#: mainWindow/kpMainWindow_File.cpp:1250
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1677,7 +1677,7 @@ msgstr ""
 "Das Bild muss gespeichert werden, bevor Sie es senden.\n"
 "Möchten Sie es nun speichern?"
 
-#: mainWindow/kpMainWindow_File.cpp:1286
+#: mainWindow/kpMainWindow_File.cpp:1285
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

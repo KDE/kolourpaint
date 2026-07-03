@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-07-03 00:43+0000\n"
 "PO-Revision-Date: 2025-03-18 08:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -1412,8 +1412,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:324
 #: mainWindow/kpMainWindow_Colors.cpp:334
-#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:968
-#: mainWindow/kpMainWindow_File.cpp:976
+#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:967
+#: mainWindow/kpMainWindow_File.cpp:975
 #, kde-format
 msgid "&Reload"
 msgstr "&Перезавантажити"
@@ -1523,18 +1523,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "Вставлення з файла"
 
-#: mainWindow/kpMainWindow_File.cpp:84
+#: mainWindow/kpMainWindow_File.cpp:83
 #, kde-format
 msgid "E&xport..."
 msgstr "Е&кспортувати..."
 
-#: mainWindow/kpMainWindow_File.cpp:86
+#: mainWindow/kpMainWindow_File.cpp:85
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr "Експортувати до іншого файла"
 
-#: mainWindow/kpMainWindow_File.cpp:88
+#: mainWindow/kpMainWindow_File.cpp:87
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1548,54 +1548,54 @@ msgstr ""
 "спосіб ви можете зберігати останню використану теку для зберігання даних "
 "незалежно від теки поточного документа."
 
-#: mainWindow/kpMainWindow_File.cpp:94
+#: mainWindow/kpMainWindow_File.cpp:93
 #, kde-format
 msgid "Scan..."
 msgstr "Сканувати..."
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:102
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "Отримати знімок вікна"
 
-#: mainWindow/kpMainWindow_File.cpp:107
+#: mainWindow/kpMainWindow_File.cpp:106
 #, kde-format
 msgid "Properties"
 msgstr "Властивості"
 
-#: mainWindow/kpMainWindow_File.cpp:113
+#: mainWindow/kpMainWindow_File.cpp:112
 #, kde-format
 msgid "Reloa&d"
 msgstr "Перезаванта&жити"
 
-#: mainWindow/kpMainWindow_File.cpp:412
+#: mainWindow/kpMainWindow_File.cpp:411
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr "Усі підтримувані файли (%1)"
 
-#: mainWindow/kpMainWindow_File.cpp:437
+#: mainWindow/kpMainWindow_File.cpp:436
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "Відкриття зображення"
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr "Не вдалося відкрити діалогове вікно сканування."
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr "Помилка під час сканування"
 
-#: mainWindow/kpMainWindow_File.cpp:606
+#: mainWindow/kpMainWindow_File.cpp:605
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "Затримка знімка"
 
-#: mainWindow/kpMainWindow_File.cpp:609
+#: mainWindow/kpMainWindow_File.cpp:608
 #, kde-format
 msgid "%v second"
 msgid_plural "%v seconds"
@@ -1604,34 +1604,34 @@ msgstr[1] "%v секунди"
 msgstr[2] "%v секунд"
 msgstr[3] "%v секунда"
 
-#: mainWindow/kpMainWindow_File.cpp:610
+#: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "No delay"
 msgstr "Без затримки"
 
-#: mainWindow/kpMainWindow_File.cpp:612
+#: mainWindow/kpMainWindow_File.cpp:611
 #, kde-format
 msgid "Hide Main Window"
 msgstr "Сховати головне вікно"
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:662
 #, kde-format
 msgid "Document Properties"
 msgstr "Властивості документа"
 
-#: mainWindow/kpMainWindow_File.cpp:867
+#: mainWindow/kpMainWindow_File.cpp:866
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "Збереження зображення з новою назвою"
 
-#: mainWindow/kpMainWindow_File.cpp:910
+#: mainWindow/kpMainWindow_File.cpp:909
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "Експорт"
 
-#: mainWindow/kpMainWindow_File.cpp:963
+#: mainWindow/kpMainWindow_File.cpp:962
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1643,7 +1643,7 @@ msgstr ""
 "збереження.\n"
 "Ви впевнені?"
 
-#: mainWindow/kpMainWindow_File.cpp:971
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1654,13 +1654,13 @@ msgstr ""
 "Перезавантаження призведе до втрати всіх змін.\n"
 "Ви впевнені?"
 
-#: mainWindow/kpMainWindow_File.cpp:1178
+#: mainWindow/kpMainWindow_File.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "Друк зображення"
 
-#: mainWindow/kpMainWindow_File.cpp:1251
+#: mainWindow/kpMainWindow_File.cpp:1250
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1669,7 +1669,7 @@ msgstr ""
 "Перед відсиланням ви мусите зберегти зображення.\n"
 "Хочете його зберегти?"
 
-#: mainWindow/kpMainWindow_File.cpp:1286
+#: mainWindow/kpMainWindow_File.cpp:1285
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"

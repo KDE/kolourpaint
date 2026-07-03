@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-07-03 00:43+0000\n"
 "PO-Revision-Date: 2012-06-11 14:07+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -1406,8 +1406,8 @@ msgstr ""
 
 #: mainWindow/kpMainWindow_Colors.cpp:324
 #: mainWindow/kpMainWindow_Colors.cpp:334
-#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:968
-#: mainWindow/kpMainWindow_File.cpp:976
+#: mainWindow/kpMainWindow_Colors.cpp:341 mainWindow/kpMainWindow_File.cpp:967
+#: mainWindow/kpMainWindow_File.cpp:975
 #, kde-format
 msgid "&Reload"
 msgstr "ផ្ទុក​ឡើង​វិញ"
@@ -1517,18 +1517,18 @@ msgctxt "@title:window"
 msgid "Paste From File"
 msgstr "បិទភ្ជាប់​ពី​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:84
+#: mainWindow/kpMainWindow_File.cpp:83
 #, kde-format
 msgid "E&xport..."
 msgstr "នាំចេញ..."
 
-#: mainWindow/kpMainWindow_File.cpp:86
+#: mainWindow/kpMainWindow_File.cpp:85
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Export to another file"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:88
+#: mainWindow/kpMainWindow_File.cpp:87
 #, kde-kuit-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -1538,54 +1538,54 @@ msgid ""
 "current document."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:94
+#: mainWindow/kpMainWindow_File.cpp:93
 #, kde-format
 msgid "Scan..."
 msgstr "ស្កេន..."
 
-#: mainWindow/kpMainWindow_File.cpp:103
+#: mainWindow/kpMainWindow_File.cpp:102
 #, kde-format
 msgid "Acquire Screenshot"
 msgstr "ទទួល​រូបថត​អេក្រង់"
 
-#: mainWindow/kpMainWindow_File.cpp:107
+#: mainWindow/kpMainWindow_File.cpp:106
 #, kde-format
 msgid "Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ"
 
-#: mainWindow/kpMainWindow_File.cpp:113
+#: mainWindow/kpMainWindow_File.cpp:112
 #, kde-format
 msgid "Reloa&d"
 msgstr "ផ្ទុក​ឡើង​វិញ"
 
-#: mainWindow/kpMainWindow_File.cpp:412
+#: mainWindow/kpMainWindow_File.cpp:411
 #, kde-format
 msgid "All Supported Files (%1)"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:437
+#: mainWindow/kpMainWindow_File.cpp:436
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Image"
 msgstr "បើក​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgid "Failed to open scanning dialog."
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:496
+#: mainWindow/kpMainWindow_File.cpp:495
 #, kde-format
 msgctxt "@title:window"
 msgid "Scanning Failed"
 msgstr ""
 
-#: mainWindow/kpMainWindow_File.cpp:606
+#: mainWindow/kpMainWindow_File.cpp:605
 #, kde-format
 msgid "Snapshot Delay"
 msgstr "ពន្យារ​ពេល​កា​រថតរូប"
 
-#: mainWindow/kpMainWindow_File.cpp:609
+#: mainWindow/kpMainWindow_File.cpp:608
 #, fuzzy, kde-format
 #| msgid " second"
 #| msgid_plural " seconds"
@@ -1593,34 +1593,34 @@ msgid "%v second"
 msgid_plural "%v seconds"
 msgstr[0] "វិនាទី"
 
-#: mainWindow/kpMainWindow_File.cpp:610
+#: mainWindow/kpMainWindow_File.cpp:609
 #, kde-format
 msgid "No delay"
 msgstr "គ្មាន​ការ​ពន្យារ"
 
-#: mainWindow/kpMainWindow_File.cpp:612
+#: mainWindow/kpMainWindow_File.cpp:611
 #, kde-format
 msgid "Hide Main Window"
 msgstr "បិទភ្ជាប់​ក្នុង​បង្អួច​ថ្មី"
 
-#: mainWindow/kpMainWindow_File.cpp:663
+#: mainWindow/kpMainWindow_File.cpp:662
 #, kde-format
 msgid "Document Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ​ឯកសារ"
 
-#: mainWindow/kpMainWindow_File.cpp:867
+#: mainWindow/kpMainWindow_File.cpp:866
 #, kde-format
 msgctxt "@title:window"
 msgid "Save Image As"
 msgstr "រក្សាទុក​រូបភាព​ជា"
 
-#: mainWindow/kpMainWindow_File.cpp:910
+#: mainWindow/kpMainWindow_File.cpp:909
 #, kde-format
 msgctxt "@title:window"
 msgid "Export"
 msgstr "នាំចេញ"
 
-#: mainWindow/kpMainWindow_File.cpp:963
+#: mainWindow/kpMainWindow_File.cpp:962
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1631,7 +1631,7 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ដែល​អ្នក​បាន​រក្សាទុក​ចុងក្រោយ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:971
+#: mainWindow/kpMainWindow_File.cpp:970
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
@@ -1642,13 +1642,13 @@ msgstr ""
 "ការ​ផ្ទុកឡើង​វិញ នឹង​បណ្ដាល​ឲ្យ​បាត់បង់​រាល់​ការ​ផ្លាស់ប្ដូរ​ទាំងអស់ ។\n"
 "តើ​អ្នក​ច្បាស់​ហើយ​ឬ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1178
+#: mainWindow/kpMainWindow_File.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Print Image"
 msgstr "បោះពុម្ព​រូបភាព"
 
-#: mainWindow/kpMainWindow_File.cpp:1251
+#: mainWindow/kpMainWindow_File.cpp:1250
 #, kde-format
 msgid ""
 "You must save this image before sending it.\n"
@@ -1657,7 +1657,7 @@ msgstr ""
 "អ្នក​ត្រូវ​តែ​រក្សាទុក​រូបភាព​នេះ​សិន មុន​នឹង​ផ្ញើ​វា ។\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​វា​ឬ​ទេ ?"
 
-#: mainWindow/kpMainWindow_File.cpp:1286
+#: mainWindow/kpMainWindow_File.cpp:1285
 #, kde-format
 msgid ""
 "The document \"%1\" has been modified.\n"
