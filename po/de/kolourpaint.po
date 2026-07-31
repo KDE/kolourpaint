@@ -2412,7 +2412,7 @@ msgstr ""
 "eine Maloperation Pixelbereiche ausschließt, die Sie als ähnlich genug "
 "empfinden, so sollten Sie den Wert erhöhen, um sie in die Aktion mit "
 "einzuschließen.</p><p>Ebenso sollten Sie den Wert verringern, wenn die "
-"Maloperation zu viele Pixel einschließt (z. B. wenn der <b>Farbeimer</b> zu "
+"Maloperation zu viele Pixel einschließt (z. B. wenn der <b>Farbeimer</b> zu "
 "viele Pixel mit Farbe füllt).</p><p>Um dies einzurichten, klicken Sie auf "
 "den Würfel.</p></qt>"
 
@@ -2462,7 +2462,7 @@ msgstr ""
 "eine Maloperation Pixelbereiche ausschließt, die Sie als ähnlich genug "
 "empfinden, so sollten Sie den Wert erhöhen, um sie in die Aktion mit "
 "einzuschließen.</p><p>Ebenso sollten Sie den Wert verringern, wenn die "
-"Maloperation zu viele Pixel einschließt (z. B. wenn der <b>Farbeimer</b> zu "
+"Maloperation zu viele Pixel einschließt (z. B. wenn der <b>Farbeimer</b> zu "
 "viele Pixel mit Farbe füllt).</p></qt>"
 
 #: widgets/colorSimilarity/kpColorSimilarityToolBarItem.cpp:199
