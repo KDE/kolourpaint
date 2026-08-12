@@ -129,17 +129,17 @@ msgstr "اقلب"
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:46
 #, kde-format
 msgid "Flip horizontally and vertically"
-msgstr "اقلب أفقياً أو عمودياً"
+msgstr "اقلب أفقيًا أو عموديًا"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:48
 #, kde-format
 msgid "Flip horizontally"
-msgstr "اقلب أفقياً"
+msgstr "اقلب أفقيًا"
 
 #: commands/imagelib/transforms/kpTransformFlipCommand.cpp:50
 #, kde-format
 msgid "Flip vertically"
-msgstr "اقلب عمودياً"
+msgstr "اقلب عموديًا"
 
 #: commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp:69
 #: commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp:29
@@ -909,12 +909,12 @@ msgstr "احفظ المعاينة"
 #, kde-format
 msgid "1 byte (approx. %2%)"
 msgid_plural "%1 bytes (approx. %2%)"
-msgstr[0] "لا بايتا (تقريباً %2%)"
-msgstr[1] "بايت واحد (تقريباً %2%)"
-msgstr[2] "بايتان (تقريباً %2%)"
-msgstr[3] "%1 بايتات (تقريباً %2%)"
-msgstr[4] "%1 بايتا (تقريباً %2%)"
-msgstr[5] "%1 بايت (تقريباً %2%)"
+msgstr[0] "لا بايتا (تقريبًا %2%)"
+msgstr[1] "بايت واحد (تقريبًا %2%)"
+msgstr[2] "بايتان (تقريبًا %2%)"
+msgstr[3] "%1 بايتات (تقريبًا %2%)"
+msgstr[4] "%1 بايتا (تقريبًا %2%)"
+msgstr[5] "%1 بايت (تقريبًا %2%)"
 
 #: document/kpDocument_Open.cpp:87
 #, kde-format
@@ -979,7 +979,7 @@ msgid ""
 "you sure you want to save at this color depth?</p></qt>"
 msgstr ""
 "<qt><p>إنّ حفظ الصورة في عمق اللون  %1-بت قد يتسبب في نقص في  معلومات اللون. "
-"ستحذف أيضاً الشفافية.</p><p>هل أنت متأكد من أنك تريد الحفظ بهذا العمق اللوني؟ "
+"ستحذف أيضًا الشفافية.</p><p>هل أنت متأكد من أنك تريد الحفظ بهذا العمق اللوني؟ "
 "</p></qt>"
 
 #: document/kpDocument_Save.cpp:103
@@ -1046,7 +1046,7 @@ msgstr "غير قادر على إزالة الحافة الداخلية"
 msgid ""
 "KolourPaint cannot automatically crop the image as its border could not be "
 "located."
-msgstr "الرسام لا يمكنه الحصول آليّاً على الصورة وكذلك الحدود لا يمكن تحديدها."
+msgstr "الرسام لا يمكنه الحصول آليًّا على الصورة وكذلك الحدود لا يمكن تحديدها."
 
 #: imagelib/transforms/kpTransformAutoCrop.cpp:526
 #, kde-format
@@ -1674,7 +1674,7 @@ msgstr "تعيي&ن كصورة (قصّ)"
 #: mainWindow/kpMainWindow_Image.cpp:110
 #, kde-format
 msgid "&Flip (upside down)"
-msgstr "اقلب (رأساً على عقب)"
+msgstr "اقلب (رأسًا على عقب)"
 
 #: mainWindow/kpMainWindow_Image.cpp:115
 #, kde-format
