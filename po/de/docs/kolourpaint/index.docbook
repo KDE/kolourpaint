@@ -116,15 +116,15 @@
 </listitem>
 <listitem>
 <para
->Bearbeitung von Bildschirmfotos - Aufnehmen und verändern</para>
+>Bearbeitung von Bildschirmfotos – Aufnehmen und verändern</para>
 </listitem>
 <listitem>
 <para
->Bildbearbeitung - Fotos und eingescannte Fotos bearbeiten, Effekte anwenden</para>
+>Bildbearbeitung – Fotos und aufgenommene Bilder bearbeiten, Effekte anwenden</para>
 </listitem>
 <listitem>
 <para
->Bearbeitung von Symbolen - Zeichnen von Cliparts und Logos mit Transparenz</para>
+>Bearbeitung von Symbolen – Zeichnen von Cliparts und Logos mit Transparenz</para>
 </listitem>
 </itemizedlist>
 
@@ -207,11 +207,11 @@
 <para
 >Stellen Sie dann im Dialog eine <guilabel
 >Verzögerung für Bildschirmfotos</guilabel
-> ein und aktivieren oder deaktivieren <guilabel
+> in Sekunden ein und aktivieren oder deaktivieren Sie <guilabel
 >Hauptfenster ausblenden</guilabel
-> für die Aufnahme. Haben Sie alles richtig eingestellt, drücken Sie auf <guibutton
+> für die Aufnahme. Haben Sie alles richtig eingestellt, klicken Sie auf <guibutton
 >OK</guibutton
->. Das aufgenommenen Bildschirmfoto wird dann direkt im Bearbeitungsbereich von &kolourpaint; angezeigt. </para>
+>. Das aufgenommene Bildschirmfoto wird anschließend direkt im Bearbeitungsbereich von &kolourpaint; angezeigt. </para>
 </sect1>
 
 <sect1 id="tool-reference">
@@ -223,7 +223,7 @@
 >Werkzeugkastens</interface
 > beschrieben. Sie können diese Tastenkürzel auch mit gedrückten <keycombo action="simul"
 >&Alt;&Shift;</keycombo
->-Tasten benutzen, dies ist sogar bei der Texteingabe erforderlich (die einzelnen Tastenkürzel sind hier abgeschaltet). Um zum Beispiel den Pinsel auszuwählen, drücken Sie <keycombo action="simul"
+>-Tasten verwenden, dies ist sogar bei der Texteingabe erforderlich (die einzelnen Tastenkürzel sind hier deaktiviert). Um zum Beispiel den Pinsel auszuwählen, drücken Sie <keycombo action="simul"
 >&Alt;&Shift;<keycap
 >B</keycap
 ></keycombo
@@ -463,6 +463,19 @@
 > <link linkend="tool-text"
 >Text</link
 > (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>Zoom</link
+> (Z) </member>
 </simplelist>
 
 </sect1>
@@ -515,7 +528,7 @@
 <para
 >Um die Vordergrundfarbe einzustellen, klicken Sie mit der <mousebutton
 >linken</mousebutton
-> Maustaste auf ein Pixel im Bild. Für die Hintergrundfarbe benutzen Sie die <mousebutton
+> Maustaste auf ein Pixel im Bild. Für die Hintergrundfarbe verwenden Sie die <mousebutton
 >rechte</mousebutton
 > Maustaste. &kolourpaint; arbeitet dann mit dem vorher gewählten Werkzeug weiter.</para>
 
@@ -555,7 +568,7 @@
 </title>
 
 <para
->Mit Klicken und Ziehen zeichnen Sie eine Linie - dies legt den Anfangs- und Endpunkt der Kurve fest. Durch Ziehen können Sie bis zu zwei Kontrollpunkte setzen. Um die Kurve ohne diese Kontrollpunkte zu zeichnen, klicken Sie mit der anderen Maustaste. Das Werkzeug Kurve zeichnet eine kubische Bezier-Kurve.</para>
+>Mit Klicken und Ziehen zeichnen Sie eine Linie – dies legt den Anfangs- und Endpunkt der Kurve fest. Durch Ziehen können Sie bis zu zwei Kontrollpunkte setzen. Um die Kurve ohne diese Kontrollpunkte zu zeichnen, klicken Sie mit der anderen Maustaste. Das Werkzeug Kurve zeichnet eine kubische Bezier-Kurve.</para>
 
 <para
 >Die &LMB; zeichnet in der Vordergrundfarbe, die &RMB; in der Hintergrundfarbe.</para>
@@ -626,13 +639,13 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 
 <note>
 <para
->Im Gegensatz zu den anderen Werkzeugen zeichnet der Radierer in der Hintergrundfarbe. Um mit der Vordergrundfarbe zu radieren, benutzen Sie die &RMB;.</para>
+>Im Gegensatz zu den anderen Werkzeugen zeichnet der Radierer in der Hintergrundfarbe. Um mit der Vordergrundfarbe zu radieren, verwenden Sie die &RMB;.</para>
 </note>
 
 <para
 >Der Radierer hat nur eine <link linkend="tool-options"
 >quadratische </link
->Form. Um mit anderen Formen zu radieren, benutzen Sie den <link linkend="tool-brush"
+>Form. Um mit anderen Formen zu radieren, verwenden Sie den <link linkend="tool-brush"
 >Pinsel</link
 > und die &RMB;.</para>
 
@@ -655,13 +668,13 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 </title>
 
 <para
->Klicken und ziehen Sie, um in den Pixeln die Vordergrundfarbe durch die Hintergrundfarbe zu ersetzen. Um alle Pixel auf gleiche Art (aber nicht zwingend genau gleich) in die Vordergrundfarbe umzuwandeln, wie zum Beispiel Bilder mit Dither oder Fotos, benutzen Sie als Einstellung für <link linkend="color-box"
+>Klicken und ziehen Sie, um in den Pixeln die Vordergrundfarbe durch die Hintergrundfarbe zu ersetzen. Um alle Pixel auf gleiche Art (aber nicht zwingend genau gleich) in die Vordergrundfarbe umzuwandeln, wie zum Beispiel Bilder mit Dither oder Fotos, verwenden Sie als Einstellung für <link linkend="color-box"
 >Farbähnlichkeit</link
 > einen anderen Wert als Exakt.</para>
 
 <note>
 <para
->Im Gegensatz zu den anderen Werkzeugen zeichnet der Radierer in der Hintergrundfarbe. Um in den Pixeln die Hintergrundfarbe durch die Vordergrundfarbe zu ersetzen, benutzen Sie die &RMB;.</para>
+>Im Gegensatz zu den anderen Werkzeugen zeichnet der Radierer in der Hintergrundfarbe. Um in den Pixeln die Hintergrundfarbe durch die Vordergrundfarbe zu ersetzen, verwenden Sie die &RMB;.</para>
 </note>
 
 <para
@@ -736,15 +749,15 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 <itemizedlist>
 <listitem>
 <para
->Mit gedrückter &Ctrl;-Taste zeichnen Sie Linien mit Winkeln in 30 Grad-Schritten - dies sind die Linien im roten Diagramm.</para>
+>Mit gedrückter &Ctrl;-Taste zeichnen Sie Linien mit Winkeln in 30 Grad-Schritten – dies sind die Linien im roten Diagramm.</para>
 </listitem>
 <listitem>
 <para
->Mit gedrückter &Shift;-Taste zeichnen Sie Linien mit Winkeln in 45 Grad-Schritten - dies sind die Linien im blauen Diagramm.</para>
+>Mit gedrückter &Shift;-Taste zeichnen Sie Linien mit Winkeln in 45 Grad-Schritten – dies sind die Linien im blauen Diagramm.</para>
 </listitem>
 <listitem>
 <para
->Mit gedrückter &Ctrl;- und &Shift;-Taste zeichnen Sie Linien mit Winkeln in 30 und 45 Grad-Schritten - dies sind die Linien im grünen Diagramm.</para>
+>Mit gedrückter &Ctrl;- und &Shift;-Taste zeichnen Sie Linien mit Winkeln in 30 und 45 Grad-Schritten – dies sind die Linien im grünen Diagramm.</para>
 </listitem>
 </itemizedlist>
 
@@ -835,7 +848,7 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 
 <tip>
 <para
->Sie können auch die Cursor-Tasten benutzen, um die Grenze einer Auswahl zu zeichnen oder sie zu verschieben.</para>
+>Sie können auch die Cursor-Tasten verwenden, um die Grenze einer Auswahl zu zeichnen oder sie zu verschieben.</para>
 </tip>
 
 <para
@@ -855,7 +868,7 @@ format="PNG"/>
 </entry>
 <entry>
 <para
->Es gibt zwei Auswahl-Modi: Deckend (Voreinstellung) und Transparent. Benutzen Sie den transparenten Auswahl-Modus, dann sind alle Pixel in der Hintergrundfarbe transparent (Hintergrund-Subtraktion). Damit können Sie einen Bereich ohne den Hintergrund auswählen. Um die Hintergrund-Subtraktion in einem Bild mit Dither anzuwenden, müssen Sie die  <link linkend="color-box"
+>Es gibt zwei Auswahl-Modi: Deckend (Voreinstellung) und Transparent. Verwenden Sie den transparenten Auswahl-Modus, dann sind alle Pixel in der Hintergrundfarbe transparent (Hintergrund-Subtraktion). Damit können Sie einen Bereich ohne den Hintergrund auswählen. Um die Hintergrund-Subtraktion in einem Bild mit Dither anzuwenden, müssen Sie die  <link linkend="color-box"
 >Farbähnlichkeit</link
 > auf einen anderen Wert als Exakt einstellen.</para>
 </entry>
@@ -865,15 +878,15 @@ format="PNG"/>
 </informaltable>
 
 <para
->Sie können Bildeffekte auf eine Auswahl anwenden - weitere Informationen finden Sie unter <link linkend="image-effects-section"
+>Sie können Bildeffekte auf eine Auswahl anwenden – weitere Informationen finden Sie unter <link linkend="image-effects-section"
 >Bildeffekte</link
 >.</para>
 
 <para
 >Sie können eine Auswahl in eine Datei speichern, indem Sie den Eintrag <guimenuitem
->In Datei kopieren ...</guimenuitem
+>In Datei kopieren …</guimenuitem
 > aus dem Auswahl-Kontextmenü oder den Eintrag <guimenuitem
->In Datei kopieren ...</guimenuitem
+>In Datei kopieren …</guimenuitem
 > aus dem Hauptmenü verwenden. </para>
 </sect1>
 
@@ -960,6 +973,27 @@ format="PNG"/>
 <para
 >Links sehen Sie das Beispielbild mit eingefügtem Text in deckender Vordergrundfarbe und transparenter Hintergrundfarbe. Rechts das Beispielbild mit eingefügtem Text in transparenter Vordergrundfarbe und deckender Hintergrundfarbe.</para>
 </sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>Zoom <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>Die &LMB; vergrößert, die &RMB; verkleinert.</para>
+<para
+>Um einen bestimmten Bereich zu vergrößern, ziehen Sie mit der &LMBn;.</para>
+
+<tip>
+<para
+>Mit einem Doppelklick auf das Symbol des Vergrößerungswerkzeugs verändern Sie Vergrößerungsstufe zu „Auf Seite einpassen“.</para>
+</tip>
+
 </sect1>
 
 <sect1 id="tool-options">
@@ -1282,7 +1316,7 @@ format="PNG"/>
 >Automatisch zuschneiden / Internen Rand entfernen</title>
 
 <para
->Entfernt automatisch den Randbereich eines Bildes oder einer Auswahl. Benutzen Sie ‚Automatisch zuschneiden‘ für eine Zeichnung, die das gesamte Bild oder die Auswahl nicht ausfüllt, wenn Sie den überstehenden Randbereich abschneiden wollen. Verwenden Sie diese Eigenschaft bei einem Randbereich mit Dither, müssen Sie auch die <link linkend="color-box"
+>Entfernt automatisch den Randbereich eines Bildes oder einer Auswahl. Verwenden Sie ‚Automatisch zuschneiden‘ für eine Zeichnung, die das gesamte Bild oder die Auswahl nicht ausfüllt, wenn Sie den überstehenden Randbereich abschneiden möchten. Verwenden Sie diese Eigenschaft bei einem Randbereich mit Dither, müssen Sie auch die <link linkend="color-box"
 >Farbähnlichkeit</link
 > einstellen.</para>
 
@@ -1449,7 +1483,7 @@ format="PNG"/>
 >Dies verringert die Anzahl der im Bild oder der Auswahl benutzten Farben, mit oder ohne Dither. </para>
 
 <para
->Dither ergibt im allgemeinen bessere Ergebnisse, für künstliche Effekte aber können Sie Dither auch abschalten, &eg; erzeugt <guilabel
+>Dither ergibt im allgemeinen bessere Ergebnisse, für künstliche Effekte aber können Sie Dither auch deaktivieren, &eg; erzeugt <guilabel
 >Schwarzweiß</guilabel
 > anstelle von <guilabel
 >Schwarzweiß (Dither)</guilabel
@@ -1477,7 +1511,7 @@ format="PNG"/>
 
 <note>
 <para
->Die Änderung der Anzahl der Farben hier hat keine Auswirkungen auf die Farbtiefe des Dateiformates. Wenn Sie die Farbtiefe ändern wollen, müssen Sie dies im Dialog <quote
+>Die Änderung der Anzahl der Farben hier hat keine Auswirkungen auf die Farbtiefe des Dateiformates. Wenn Sie die Farbtiefe ändern möchten, müssen Sie dies im Dialog <quote
 >Datei speichern</quote
 > eingeben. Beachten Sie aber, das die Änderung der Farbtiefe auch die Anzahl der Farben ändert. </para>
 </note>
@@ -1501,7 +1535,7 @@ format="PNG"/>
 
 <tip>
 <para
->Benutzen Sie den Dialog <link linkend="image-reduce-colors"
+>Verwenden Sie den Dialog <link linkend="image-reduce-colors"
 >Farben reduzieren</link
 >, wenn die Umwandlung ohne Dither erfolgen soll </para>
 </tip>
@@ -1712,10 +1746,10 @@ user selects the next page, the next page should be Autocrop / Remove Internal B
 <para
 >&kolourpaint; </para>
 <para
->Programm Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+>Programm-Copyright &copy; 2003–2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
 
 <para
->Symbole für &kolourpaint; Copyright &copy; 2004, 2005 Kristof Borrey <email
+>Symbole für &kolourpaint;-Copyright &copy; 2004–2005 Kristof Borrey <email
 >borrey@kde.org</email
 >, Nuno Pinheiro <email
 >nf.pinheiro@gmail.com</email
@@ -1724,7 +1758,7 @@ user selects the next page, the next page should be Autocrop / Remove Internal B
 > </para>
 
 <para
->Dokumentation und zusätzliche Vorlagen für die Dokumentation Copyright &copy; 2004, 2005 &Thurston.Dang; &Thurston.Dang.mail;.</para>
+>Dokumentation und zusätzliche Vorlagen für die Dokumentation-Copyright &copy; 2004–2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
 
 <para
 >Teile der Dokumentation mit Genehmigung von <ulink url="http://kolourpaint.sourceforge.net/"
@@ -1739,7 +1773,7 @@ user selects the next page, the next page should be Autocrop / Remove Internal B
 >Diese Programm hat folgende Lizenz:</para>
 
 <para
->Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+>Copyright &copy; 2003–2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
 
 <literallayout
 >All rights reserved.
