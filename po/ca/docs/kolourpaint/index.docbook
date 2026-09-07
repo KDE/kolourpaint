@@ -1539,7 +1539,7 @@ format="PNG"/>
 <para
 >Podeu expressar les dimensions noves en píxels, o com un percentatge de la mida original. Si seleccioneu <guilabel
 >Mantén la relació d'aspecte</guilabel
->, l'amplada i l'alçada s'ampliaran en el mateix percentatge.</para>
+>, l'amplada i l'altura s'ampliaran en el mateix percentatge.</para>
 
 <tip>
 <para
