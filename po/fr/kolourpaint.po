@@ -1899,7 +1899,7 @@ msgstr "Dessiner avec une similitude de couleurs"
 #: mainWindow/kpMainWindow_Tools.cpp:150
 #, kde-format
 msgid "Tool Box"
-msgstr "Boîte à outils"
+msgstr "Boite à outils"
 
 #: mainWindow/kpMainWindow_View.cpp:41
 #, kde-format
