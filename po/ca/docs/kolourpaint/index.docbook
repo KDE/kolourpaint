@@ -817,7 +817,7 @@ sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 >Utilitzeu les eines de selecció per a dibuixar el contorn d'una selecció.</para>
 
 <para
->Per a moure la selecció, feu-hi clic i arrossegueu-la. La vista principal es desplaçarà en conseqüència, permetent que pugueu moure la selecció a una part de la imatge que actualment no es mostra.</para>
+>Per a moure la selecció, feu-hi clic i arrossegueu-la. La vista principal es desplaçarà en conseqüència, això permet que pugueu moure la selecció a una part de la imatge que actualment no es mostra.</para>
 
 <para
 >Podeu fer <link linkend="image-resize-scale"
