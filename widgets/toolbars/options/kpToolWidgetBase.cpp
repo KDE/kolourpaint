@@ -88,7 +88,7 @@ void kpToolWidgetBase::finishConstruction(int fallBackRow, int fallBackCol)
     //       can't really be resized.
     setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 
-    const QPair<int, int> rowColPair = defaultSelectedRowAndCol();
+    const std::pair<int, int> rowColPair = defaultSelectedRowAndCol();
     if (!setSelected(rowColPair.first, rowColPair.second, false /*don't save*/)) {
         if (!setSelected(fallBackRow, fallBackCol)) {
             if (!setSelected(0, 0)) {
@@ -162,7 +162,7 @@ QList<int> kpToolWidgetBase::spreadOutElements(const QList<int> &sizes, int max)
 //---------------------------------------------------------------------
 
 // public
-QPair<int, int> kpToolWidgetBase::defaultSelectedRowAndCol() const
+std::pair<int, int> kpToolWidgetBase::defaultSelectedRowAndCol() const
 {
     int row = -1, col = -1;
 
@@ -177,7 +177,7 @@ QPair<int, int> kpToolWidgetBase::defaultSelectedRowAndCol() const
     qCDebug(kpLogWidgets) << "kpToolWidgetBase(" << objectName() << ")::defaultSelectedRowAndCol() returning row=" << row << " col=" << col;
 #endif
 
-    return qMakePair(row, col);
+    return std::make_pair(row, col);
 }
 
 //---------------------------------------------------------------------

@@ -10,10 +10,11 @@
 
 #include <QFrame>
 #include <QList>
-#include <QPair>
 #include <QPixmap>
 #include <QRect>
 #include <QWidget>
+
+#include <utility>
 
 class QMouseEvent;
 
@@ -42,7 +43,7 @@ private:
 
 public: // (only have to use these if you don't use finishConstruction())
     // (rereads from config file)
-    QPair<int, int> defaultSelectedRowAndCol() const;
+    std::pair<int, int> defaultSelectedRowAndCol() const;
     int defaultSelectedRow() const;
     int defaultSelectedCol() const;
 
