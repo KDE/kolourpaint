@@ -1,0 +1,1811 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY Clarence.Dang
+"<personname
+><firstname
+>Clarence</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Clarence.Dang.mail "<email
+>dang@kde.org</email
+>">
+  <!ENTITY Thurston.Dang
+"<personname
+><firstname
+>Thurston</firstname
+><surname
+>Dang</surname
+></personname
+>">
+  <!ENTITY Thurston.Dang.mail "<email
+>thurston_dang@users.sourceforge.net</email
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE">
+]>
+
+<book id="kolourpaint" lang="&language;">
+
+<bookinfo>
+<title
+>دليل الرسام</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Thurston</firstname
+> <surname
+>Dang</surname
+> </personname
+> &Thurston.Dang.mail; </author>
+
+<othercredit role="reviewer">
+<personname
+><firstname
+>Clarence</firstname
+> <surname
+>Dang</surname
+> </personname>
+</othercredit>
+
+<othercredit role="reviewer"
+>&Lauri.Watts; </othercredit>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2004</year>
+<year
+>2005</year>
+<holder
+>&Thurston.Dang;</holder>
+</copyright>
+
+<legalnotice>
+&FDLNotice;
+</legalnotice>
+<date
+>2018-03-23</date>
+<releaseinfo
+>تطبيقات 18.04</releaseinfo>
+
+<abstract>
+<para
+>الرسام برنامج رسم حر وسهل الاستخدام من كيدي. </para>
+</abstract>
+
+<keywordset>
+<keyword
+>الرسام</keyword>
+<keyword
+>kdegraphics</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>مقدمة</title>
+<para
+>الرسام برنامج رسم حر وسهل الاستخدام من كيدي. إنه مثالي للمهام اليومية مثل:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>الرسم - رسم المخططات و <quote
+>الرسم بالأصابع</quote
+></para>
+</listitem>
+<listitem>
+<para
+>معالجة لقطات الشاشة - جلب لقطات الشاشة وتحريرها</para>
+</listitem>
+<listitem>
+<para
+>معالجة الصور - تحرير الصور والصور المجلوبة وتطبيق التأثيرات</para>
+</listitem>
+<listitem>
+<para
+>تحرير الأيقونات - رسم القصاصات الفنية والشعارات مع الشفافية</para>
+</listitem>
+</itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</chapter>
+
+<chapter id="using-kolourpaint">
+<title
+>استخدام الرسام</title>
+
+<para
+>انقر على الروابط التالية لاستكشاف قدرات الرسام:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><link linkend="tools-chapter"
+>الأدوات</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="working-with-color"
+>العمل مع الألوان</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="view-options-chapter"
+>خيارات العرض</link
+></para>
+</listitem>
+<listitem>
+<para
+><link linkend="image-effects-chapter"
+>تأثيرات الصورة</link
+></para>
+</listitem>
+</itemizedlist>
+</chapter>
+
+<chapter id="tools-chapter">
+<title
+>أدوات</title>
+
+<para
+>يسمح خيار إضافي في قائمة <guimenu
+>الإعدادات</guimenu
+> بتحديد ما إذا كانت الأدوات ترسم مع تنعيم الحواف (مبدئي) أم لا. </para>
+
+<sect1 id="acquiring-screenshots">
+<title
+>جلب لقطات الشاشة</title>
+
+<para
+><quote
+>لقطة الشاشة</quote
+> هي لقطة فورية لما يظهر على شاشة حاسوبك. يمكن أن تكون مفيدة لشرح بعض الإجراءات التي يجب القيام بها للحصول على النتيجة، أو لإظهار المشكلة التي وجدتها. </para>
+<para
+>لجعل لقطة الشاشة جاهزة للتحرير في نافذة الرسام، يمكنك استخدام عنصر <menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>اجلب لقطة شاشة</guimenuitem
+></menuchoice
+> من قائمة الرسام الرئيسة. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>باستخدام الحوار المفتوح، يمكنك تغيير <guilabel
+>تأخير لقطة الشاشة</guilabel
+> (بالثواني)، واختيار <guilabel
+>إخفاء النافذة الرئيسة</guilabel
+> أثناء أخذ اللقطة. عندما تكون مستعدًا لالتقاط الصورة، فقط انقر على <guibutton
+>موافق</guibutton
+>. ستُوضع اللقطة المأخوذة مباشرة في منطقة تحرير الرسام. </para>
+</sect1>
+
+<sect1 id="tool-reference">
+<title
+>مرجع الأدوات</title>
+
+<para
+>الطريقة السريعة لاختيار أداة في الرسام هي الضغط على اختصار المفتاح الواحد المرتبط بها، والموثق أدناه وفي تلميحات <interface
+>صندوق الأدوات</interface
+>. يمكنك أيضًا الضغط باستمرار على <keycombo action="simul"
+>&Alt;&Shift;</keycombo
+> أثناء الضغط على المفتاح، وهو أمر ضروري عند كتابة النص (لأن اختصارات المفتاح الواحد ستُعطل). على سبيل المثال، لاختيار الفرشاة، اضغط على <keycombo action="simul"
+>&Alt;&Shift;<keycap
+>B</keycap
+></keycombo
+> أو B فقط (عندما لا تكتب نصًا). </para>
+
+<simplelist>
+<member
+><link linkend="tool-brush"
+><guiicon
+> <inlinemediaobject
+><imageobject
+><imagedata fileref="tool_brush.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> </guiicon
+></link
+> <link linkend="tool-brush"
+>فرشاة</link
+> (B)</member>
+
+<member
+><link linkend="tool-eraser-clr"
+><guiicon
+> <inlinemediaobject
+><imageobject
+> <imagedata fileref="tool_color_washer.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-clr"
+>ماحي اللون</link
+> (O)</member>
+
+<member
+><link linkend="tool-color-picker"
+><guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_color_picker.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-color-picker"
+>منتقي اللون</link
+> (C) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polyline.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>خطوط متصلة</link
+> (N)</member>
+
+<member
+><link linkend="tool-curve"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_curve.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-curve"
+>منحنى</link
+> (V) </member>
+
+<member
+><link linkend="tool-ellipse"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_ellipse.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-ellipse"
+>بيضاوي</link
+> (E) </member>
+
+<member
+><link linkend="tool-eraser-std"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_eraser.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-eraser-std"
+>ممحاة</link
+> (A) </member>
+
+<member
+><link linkend="tool-flood-fill"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_flood_fill.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-flood-fill"
+>ملء بالفيض</link
+> (F) </member>
+
+<member
+><link linkend="tool-line"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_line.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-line"
+>خط</link
+> (L) </member>
+
+<member
+><link linkend="tool-pen"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_pen.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-pen"
+>قلم</link
+> (P) </member>
+
+<member
+><link linkend="tool-polystar"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_polygon.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-polystar"
+>مضلع</link
+> (G) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>مستطيل</link
+> (R) </member>
+
+<member
+><link linkend="tool-rectangles"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rounded_rectangle.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-rectangles"
+>مستطيل مستدير الزوايا</link
+> (U) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_elliptical_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>تحديد (بيضاوي)</link
+> (I) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_free_form_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>تحديد (شكل حر)</link
+> (M) </member>
+
+<member
+><link linkend="tool-selections"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_rect_selection.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-selections"
+>تحديد (مستطيل)</link
+> (S) </member>
+
+<member
+><link linkend="tool-spraycan"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_spraycan.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-spraycan"
+>علبة بخاخ</link
+> (Y) </member>
+
+<member
+><link linkend="tool-text"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_text.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-text"
+>نص</link
+> (T) </member>
+
+<member
+><link linkend="tool-zoom"
+> <guiicon
+> <inlinemediaobject
+> <imageobject
+> <imagedata fileref="tool_zoom.png" format="PNG"/> </imageobject
+> </inlinemediaobject
+> </guiicon
+> </link
+> <link linkend="tool-zoom"
+>تكبير</link
+> (Z) </member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="tool-brush">
+<title
+>فرشاة <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_brush.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+<para
+>انقر أو انقر مع السحب بالفرشاة للرسم. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="brush_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+
+<entry>
+<para
+>انقر على أحد الأشكال لاختيار شكل الفرشاة. يمكنك استخدام شكل فرشاة دائري، أو مربع، أو مائل، أو مائل عكسي.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة، بينما يرسم زر الفأرة الأيمن بلون الخلفية.</para>
+</sect1>
+
+<sect1 id="tool-color-picker">
+<title
+>منتقي اللون <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_picker.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>لضبط لون الواجهة، انقر بزر الفأرة <mousebutton
+>الأيسر</mousebutton
+> على بكسل. ولضبط لون الخلفية، انقر بزر الفأرة <mousebutton
+>الأيمن</mousebutton
+> على بكسل. سيعود الرسام بعد ذلك إلى الأداة التي اختيرت سابقًا.</para>
+
+</sect1>
+
+<sect1 id="tool-polystar">
+<title
+>الخطوط المتصلة والمضلع <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_polystar.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لرسم خطوط متصلة. تُستخدم أداة المضلع بالطريقة نفسها، ومع ذلك، تُوصل نقطتا البداية والنهاية آليًا لتشكيل مضلع.</para>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة. بينما يرسم زر الفأرة الأيمن بلون الخلفية، وسيعكس أيضًا لون الملء للمضلعات.</para>
+
+<para
+>يمكنك <link linkend="tool-options"
+>ضبط عرض الخط</link
+>. بالنسبة للمضلعات، يمكنك أيضًا <link linkend="tool-options"
+>ضبط نمط الملء</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-curve">
+<title
+>منحنى <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_curve.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لرسم خط - وهذا يحدد نقطتي البداية والنهاية. يمكنك تعيين ما يصل إلى نقطتي تحكم عن طريق السحب. لإنهاء المنحنى دون استخدام كلتا نقطتي التحكم أو أي منهما، انقر على زر الفأرة الآخر. ترسم أداة المنحنى منحنى بيزييه تكعيبي.</para>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة، بينما يرسم زر الفأرة الأيمن بلون الخلفية.</para>
+
+<para
+>يمكنك أيضًا <link linkend="tool-options"
+>ضبط عرض الخط</link
+>.</para>
+
+</sect1>
+
+<sect1 id="tool-ellipse">
+<title
+>بيضاوي <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_ellipse.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لرسم شكل بيضاوي.</para>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة. بينما يرسم زر الفأرة الأيمن بلون الخلفية، وسيعكس لون الملء.</para>
+
+<para
+>يمكنك أيضًا <link linkend="tool-options"
+>ضبط عرض الخط ونمط الملء</link
+>.</para>
+
+<para
+>لمزيد من الوظائف، استخدم مفاتيح التغيير:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>استمر في الضغط على &Shift; واسحب لرسم دائرة.</para>
+</listitem>
+<listitem>
+<para
+>لرسم شكل بيضاوي بنقطة مركز من اختيارك، استمر في الضغط على &Ctrl;، وانقر على نقطة المركز، واسحب حتى يصبح الشكل البيضاوي بالحجم والشكل الصحيحين.</para>
+</listitem>
+<listitem>
+<para
+>لرسم دائرة بنقطة مركز من اختيارك، استمر في الضغط على &Ctrl; و &Shift;، وانقر على نقطة المركز، واسحب حتى تصبح الدائرة بالحجم الصحيح.</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
+<title
+>المماحي</title>
+
+<sect2 id="tool-eraser-std">
+<title
+>ممحاة <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_eraser.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب بالممحاة لمسح الأخطاء.</para>
+
+<note>
+<para
+>على عكس الأدوات الأخرى، ترسم المماحي بلون الخلفية. للرسم بلون الواجهة، استخدم زر الفأرة الأيمن.</para>
+</note>
+
+<para
+>للممحاة <link linkend="tool-options"
+>أشكال مربعة</link
+> فقط. للرسم بأشكال أخرى مثل الدوائر، استخدم <link linkend="tool-brush"
+>الفرشاة</link
+> وزر الفأرة الأيمن.</para>
+
+<tip>
+<para
+>انقر مزدوجًا على أيقونة الممحاة لمسح الصورة بأكملها. هذا يعادل استخدام خيار <link linkend="image-clear"
+>امحُ</link
+> في قائمة الصورة.</para>
+</tip>
+
+</sect2>
+
+<sect2 id="tool-eraser-clr">
+<title
+>ماحي اللون <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_color_washer.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لاستبدال بكسلات لون الواجهة بلون الخلفية. لاستبدال جميع البكسلات المشابهة (ولكن ليس بالضرورة المساوية تمامًا) للون الواجهة، كما في الصور المنتشرة والصور الفوتوغرافية، استخدم إعداد <link linkend="color-box"
+>تشابه الألوان</link
+> بخلاف "مطابق".</para>
+
+<note>
+<para
+>على عكس الأدوات الأخرى، ترسم المماحي بلون الخلفية. لاستبدال بكسلات لون الخلفية بلون الواجهة، استخدم زر الفأرة الأيمن.</para>
+</note>
+
+<para
+>يمكنك ضبط <link linkend="tool-options"
+>حجم الممحاة</link
+>.</para>
+
+<tip>
+<para
+>انقر مزدوجًا على أيقونة ماحي اللون لتطبيقه على الصورة بأكملها.</para>
+</tip>
+</sect2>
+
+</sect1>
+
+<sect1 id="tool-flood-fill">
+<title
+>ملء بالفيض <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_flood_fill.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر لملء منطقة. لملء منطقة منتشرة، استخدم إعداد <link linkend="color-box"
+>تشابه الألوان</link
+> بخلاف "مطابق".</para>
+
+<para
+>يملأ زر الفأرة الأيسر بلون الواجهة، بينما يملأ زر الفأرة الأيمن بلون الخلفية.</para>
+</sect1>
+
+<sect1 id="tool-line">
+<title
+>خط <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_line.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لرسم خط.</para>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة، بينما يرسم زر الفأرة الأيمن بلون الخلفية.</para>
+
+<para
+>يمكنك أيضًا <link linkend="tool-options"
+>ضبط عرض الخط</link
+>.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_30_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="lines_45_deg.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<itemizedlist>
+<listitem>
+<para
+>استمر في الضغط على &Ctrl; لرسم خطوط بزاوية عند أقرب مضاعف لـ 30 درجة - هذه هي الخطوط في المخطط الأحمر.</para>
+</listitem>
+<listitem>
+<para
+>استمر في الضغط على &Shift; لرسم خطوط بزاوية عند أقرب مضاعف لـ 45 درجة - هذه هي الخطوط في المخطط الأزرق.</para>
+</listitem>
+<listitem>
+<para
+>استمر في الضغط على &Ctrl; و &Shift; لرسم خطوط بزاوية عند أقرب مضاعف لـ 30 أو 45 درجة - هذه هي الخطوط في المخطط الأخضر.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-pen">
+<title
+>قلم <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_pen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر لرسم نقطة أو انقر واسحب لرسم خط يدوي حر.</para>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة، بينما يرسم زر الفأرة الأيمن بلون الخلفية. </para>
+
+</sect1>
+
+<sect1 id="tool-rectangles">
+<title
+>مستطيلات <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_rectangles.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لرسم مستطيل. المستطيل مستدير الزوايا هو مستطيل بزوايا مستديرة.</para>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة. بينما يرسم زر الفأرة الأيمن بلون الخلفية، وسيعكس لون الملء.</para>
+
+<para
+>يمكنك أيضًا <link linkend="tool-options"
+>ضبط عرض الخط ونمط الملء</link
+>.</para>
+
+<para
+>لمزيد من الوظائف، استخدم مفاتيح التغيير:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>استمر في الضغط على &Shift; واسحب لرسم مربع.</para>
+</listitem>
+<listitem>
+<para
+>لرسم مستطيل بنقطة مركز من اختيارك، استمر في الضغط على &Ctrl;، وانقر على نقطة المركز، واسحب حتى يصبح المستطيل بالحجم والشكل الصحيحين.</para>
+</listitem>
+<listitem>
+<para
+>لرسم مربع بنقطة مركز من اختيارك، استمر في الضغط على &Ctrl; و &Shift;، وانقر على نقطة المركز، واسحب حتى يصبح المربع بالحجم الصحيح.</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="tool-selections">
+<title
+>التحديدات <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_selections.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>استخدم أدوات التحديد لرسم حدود التحديد.</para>
+
+<para
+>لتحريك التحديد، انقر واسحب فوقه. سينتقل العرض الرئيس كما يلزم للسماح لك بنقل التحديد إلى جزء من الصورة غير معروض حاليًا.</para>
+
+<para
+>يمكنك <link linkend="image-resize-scale"
+>تغيير حجم</link
+> الصورة بأكملها بشكل حر أو <link linkend="image-resize-scale"
+>قياس ناعم</link
+> للتحديد باستخدام المقابض المناسبة. استمر في الضغط على &Shift; أثناء تغيير قياس التحديد بشكل حر للحفاظ على نسبة العرض إلى الارتفاع. يستدعي زر الفأرة الأيمن قائمة سياقية تحتوي على أوامر <guimenu
+>تحرير</guimenu
+> الشائعة و <link linkend="image-effects-section"
+>تأثيرات الصورة</link
+>. </para>
+
+<tip>
+<para
+>يمكنك استخدام مفاتيح الأسهم أثناء رسم حدود التحديد أو أثناء تحريكه.</para>
+</tip>
+
+<para
+>إذا ضغطت باستمرار على &Ctrl; قبل تحريك التحديد، فستقوم بنقل نسخة منه. سيُلطخ التحديد عند تحريكه أثناء الضغط على &Shift;. </para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="selections_opaque_transparent.png"
+format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>هناك وضعان للتحديد: معتم (مبدئي) وشفاف. إذا استخدمت وضع التحديد الشفاف، فستكون جميع بكسلات لون الخلفية شفافة (طرح الخلفية). يتيح لك هذا لصق تحديد بدون الخلفية. لإجراء طرح الخلفية على صورة منتشرة، استخدم إعداد <link linkend="color-box"
+>تشابه الألوان</link
+> بخلاف "مطابق".</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>يمكنك تطبيق تأثيرات الصورة على التحديد - راجع قسم <link linkend="image-effects-section"
+>تأثيرات الصورة</link
+> لمزيد من المعلومات.</para>
+
+<para
+>من الممكن حفظ التحديد في ملف باستخدام عنصر <guimenuitem
+>نسخ إلى ملف...</guimenuitem
+> من قائمة سياق التحديد أو عنصر <menuchoice
+><guimenu
+>تحرير</guimenu
+><guimenuitem
+>نسخ إلى ملف...</guimenuitem
+></menuchoice
+> من القائمة الرئيسة. </para>
+</sect1>
+
+<sect1 id="tool-spraycan">
+<title
+>علبة بخاخ <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_spraycan.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب لرش الرسوم الغرافيتية. استمر في الضغط على زر الفأرة للحصول على رش أكثر تركيزًا.</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="spraycan_patterns.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>انقر على أحد الأشكال لاختيار حجم الرش. يمكنك الاختيار من أحجام الرش 9x9 و 17x17 و 29x29.</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>يرسم زر الفأرة الأيسر بلون الواجهة، بينما يرسم زر الفأرة الأيمن بلون الخلفية.</para>
+
+</sect1>
+
+<sect1 id="tool-text">
+<title
+>نص <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>انقر واسحب منطقة لكتابة النص فيها. بمجرد ظهور الحدود، يمكنك البدء في كتابة النص. انقر واسحب الحدود لتحريكها. يمكنك تغيير حجم مربع النص عن طريق سحب المقابض أو باستخدام حوار <link linkend="image-resize-scale"
+>تغيير الحجم</link
+>. </para>
+
+<tip>
+<para
+>إذا ألغيت اختيار مربع نص، يمكنك استخدام <guimenuitem
+>تراجع</guimenuitem
+> لتحرير النص مرة أخرى.</para>
+</tip>
+
+<sect2 id="tool-text-transparent">
+<title
+>استخدام اللون الشفاف</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_std_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>تظهر الصورة اليسرى الصورة التجريبية. وتظهر الصورة اليمنى إضافة نص بألوان واجهة وخلفية معتمة. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fcc_trans_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>تظهر الصورة اليسرى إضافة نص بألوان واجهة معتمة ولون خلفية شفاف. وتظهر الصورة اليمنى إضافة نص بلون واجهة شفاف ولون خلفية معتم.</para>
+</sect2>
+</sect1>
+
+<sect1 id="tool-zoom">
+<title
+>تكبير <inlinemediaobject
+> <imageobject>
+<imagedata fileref="tool_zoom.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</title>
+
+<para
+>يكبر زر الفأرة الأيسر. ويصغر زر الفأرة الأيمن.</para>
+<para
+>اسحب بزر الفأرة الأيسر للتكبير في منطقة محددة.</para>
+
+<tip>
+<para
+>انقر مزدوجًا على أيقونة أداة التكبير لضبط التكبير على "ملاءمة الصفحة".</para>
+</tip>
+
+</sect1>
+
+<sect1 id="tool-options">
+<title
+>خيارات الأدوات الشائعة</title>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="eraser_shapes.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>انقر على أحد المربعات لاختيار حجم الممحاة. يمكنك الاختيار من مربعات طول ضلعها 2 و 3 و 5 و 9 و 17 و 29 بكسل.</para>
+
+<para
+>يؤثر إعداد حجم الممحاة على <link linkend="tool-erasers"
+>المماحي</link
+>.</para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="line_width.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>انقر على أحد الخطوط لاختيار عرض الخط. يمكنك الاختيار من عروض الخطوط 1 و 2 و 3 و 5 و 8 بكسل.</para>
+
+<para
+>يؤثر إعداد عرض الخط على أدوات <link linkend="tool-polystar"
+>الخطوط المتصلة</link
+>، و <link linkend="tool-curve"
+>منحنى</link
+>، و <link linkend="tool-ellipse"
+>بيضاوي</link
+>، و <link linkend="tool-line"
+>خط</link
+>، و <link linkend="tool-polystar"
+>مضلع</link
+>، و <link linkend="tool-rectangles"
+>مستطيل</link
+> و <link linkend="tool-rectangles"
+>مستطيل مستدير الزوايا</link
+>. </para>
+</entry>
+</row>
+<row>
+<entry>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_style.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</entry>
+<entry>
+<para
+>انقر على أحد المستطيلات لاختيار نمط الملء. يمكنك الاختيار من: بدون ملء، الملء بلون الخلفية، والملء بلون الواجهة.</para
+> <para
+>يؤثر إعداد نمط الملء على أدوات <link linkend="tool-ellipse"
+>بيضاوي</link
+>، و <link linkend="tool-polystar"
+>مضلع</link
+>، و <link linkend="tool-rectangles"
+>مستطيل</link
+> و <link linkend="tool-rectangles"
+>مستطيل مستدير الزوايا</link
+>. </para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect1>
+</chapter>
+
+<chapter id="working-with-color">
+<title
+>العمل مع الألوان</title>
+
+<sect1 id="color-box">
+<title
+>صندوق الألوان</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="color_box.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>صندوق الألوان</phrase>
+</textobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يحتوي صندوق الألوان على 3 أقسام رئيسة: لوحة الألوان الحالية، ولوحة الألوان المختارة، ومنتقي تشابه الألوان.</para>
+
+<para
+>تظهر لوحة الألوان الحالية لون الواجهة الحالي كمربع فوق مربع آخر يمثل لون الخلفية الحالي. عند الرسم بزر الفأرة الأيسر، يُستخدم لون الواجهة، وعند الرسم بزر الفأرة الأيمن يُستخدم لون الخلفية (باستثناء <link linkend="tool-erasers"
+>المماحي</link
+>). يمكنك النقر على السهم مزدوج الرأس لتبديل لوني الواجهة والخلفية. </para>
+
+<para
+>تعرض لوحة الألوان مجموعة من الألوان لتختار منها. يمثل الهرم شبه الشفاف اللون الشفاف. انقر بزر الفأرة الأيسر على لون لضبط لون الواجهة وانقر بزر الفأرة الأيمن على لون لضبط لون الخلفية. يمكنك أيضًا سحب وإفلات أي لون معتم في مربعات لوحة الألوان الحالية. لتحرير لون في لوحة الألوان الحالية أو لوحة الألوان المختارة، انقر مزدوجًا عليه. تتيح لك أداة <link linkend="tool-color-picker"
+>منتقي اللون</link
+> اختيار لون من الصورة. </para>
+
+<para
+>يتيح لك تشابه الألوان العمل بفعالية أكبر مع الصور واللقطات المنتشرة، بطريقة مماثلة لميزة <quote
+>العصا السحرية</quote
+> في برامج الرسم الأخرى. ينطبق هذا على التحديدات الشفافة، بالإضافة إلى أدوات <link linkend="tool-flood-fill"
+>الملء بالفيض</link
+>، و <link linkend="tool-eraser-clr"
+>ماحي اللون</link
+> و <link linkend="image-autocrop"
+>القص الآلي / إزالة الحدود الداخلية</link
+>. انقر مزدوجًا على منتقي تشابه الألوان لاختيار مدى التشابه الذي يجب أن تكون عليه الألوان لتُعتبر متطابقة. عند استخدام التحديدات في الوضع الشفاف، فإن أي لون في التحديد يشبه لون الخلفية سيُجعل شفافًا أيضًا.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>تظهر الصورة اليسرى الصورة التجريبية. وتوضح الصور اليمنى استخدام الملء بالفيض، مع إعدادات تشابه ألوان بنسبة 5% و 15% و 30%. في هذا المثال، مع ضبط تشابه الألوان على <guilabel
+>مطابق</guilabel
+>، فإن الملء بالفيض عند (80، 100) سيملأ بكسلًا واحدًا فقط، لأن البكسلات المحيطة مشابهة ولكن ليست متطابقة. مع زيادة تشابه الألوان، تُعتبر المزيد من البكسلات المتشابهة في اللون متطابقة، وبالتالي يمتد الملء إلى مسافة أبعد. </para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title
+>خيارات العرض</title>
+
+<sect1 id="view-options-section">
+<title
+>مرجع خيارات العرض</title>
+
+<para
+><link linkend="view-zoom"
+>التكبير بدمج الشبكة</link
+></para>
+<para
+><link linkend="view-thumbnail"
+>المصغرة</link
+></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title
+>التكبير بدمج الشبكة</title>
+<para
+>زد مستوى التكبير لتحرير الصور بمزيد من الدقة، أو قلله لرؤية المزيد من الصورة.</para>
+
+<important>
+<para
+>في مستويات التكبير التي ليست من مضاعفات 100%، قد تبدو أجزاء من الصورة وكأنها تتحرك عندما يتفاعل المستخدم معها. قد تحدث أيضًا مشكلات بسيطة أخرى في إعادة الرسم عند مستويات التكبير هذه. </para>
+</important>
+
+<para
+>في مستويات التكبير التي تبلغ 400% أو أكثر وتكون أيضًا من مضاعفات 100%، يمكنك <guimenuitem
+>إظهار الشبكة</guimenuitem
+> لتحرير البكسلات الفردية بدقة أكبر.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>تظهر الصورة الأولى أيقونة أداة <link linkend="tool-text"
+>النص</link
+>، بينما تظهر الصورة الثانية الأيقونة بتكبير 600% مع تفعيل الشبكة.</para>
+
+<tip>
+<para
+>طريقة أخرى للتكبير عند عدم الرسم هي تدوير <mousebutton
+>عجلة</mousebutton
+> الفأرة مع الضغط باستمرار على &Ctrl;. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="view-thumbnail">
+<title
+>المصغرة</title>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para
+>إذا اختير <guimenuitem
+>وضع المصغرة المكبرة</guimenuitem
+>، تُعرض الصورة بأكملها، وتُقاس حسب الضرورة لتناسب نافذة المصغرة (الصورة في أعلى اليمين). </para>
+<para
+>خلاف ذلك، تعرض المصغرة أكبر قدر ممكن من الصورة، بدءًا من أعلى يسار العرض الرئيس (الصورة في أسفل اليمين). </para>
+</sect1>
+
+</chapter>
+
+<chapter id="image-effects-chapter">
+<title
+>تأثيرات الصورة</title>
+
+<sect1 id="image-effects-section">
+<title
+>مرجع تأثيرات الصورة</title>
+<para
+><link linkend="image-autocrop"
+>القص الآلي / إزالة الحدود الداخلية</link
+></para>
+<para
+><link linkend="image-balance"
+>توازن</link
+></para>
+<para
+><link linkend="image-clear"
+>امحُ</link
+></para>
+<para
+><link linkend="image-emboss"
+>بارز</link
+></para>
+<para
+><link linkend="image-flatten"
+>تسطيح</link
+></para>
+<para
+><link linkend="image-flip"
+>اقلب (رأسًا على عقب)</link
+></para>
+<para
+><link linkend="image-invert"
+>اعكس</link
+></para>
+<para
+><link linkend="image-reduce-colors"
+>تقليل الألوان</link
+></para>
+<para
+><link linkend="image-grayscale"
+>الاختزال إلى تدرج الرمادي</link
+></para>
+<para
+><link linkend="image-monochrome"
+>الاختزال إلى أحادي اللون (منتشر)</link
+></para>
+<para
+><link linkend="image-mirror"
+>اعكس (أفقيًّا)</link
+></para>
+<para
+><link linkend="image-resize-scale"
+>تغيير الحجم / القياس</link
+></para>
+<para
+><link linkend="image-rotate"
+>دوّر</link
+></para>
+<para
+><link linkend="image-set-as-image"
+>تعيين كصورة (قص)</link
+></para>
+<para
+><link linkend="image-skew"
+>إمالة</link
+></para>
+<para
+><link linkend="image-soften-sharpen"
+>تنعيم وتحديد</link
+></para>
+<para
+><link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+></para>
+<para
+><link linkend="image-notes"
+>ملاحظات</link
+></para>
+</sect1>
+
+<sect1 id="image-autocrop">
+<title
+>القص الآلي / إزالة الحدود الداخلية</title>
+
+<para
+>يزيل هذا حدود الصورة أو التحديد آليًا. استخدم القص الآلي إذا كان لديك شكل لا يملأ الصورة أو التحديد بالكامل وترغب في إزالة المساحة البيضاء الزائدة. لاستخدام هذه الميزة مع حدود صورة منتشرة، ستحتاج أيضًا إلى استخدام <link linkend="color-box"
+>تشابه الألوان</link
+>.</para>
+
+</sect1>
+
+<sect1 id="image-balance">
+<title
+>توازن</title>
+
+<para
+>يمكن الوصول إلى هذه الميزة من حوار <link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_balance.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يتيح لك هذا ضبط السطوع والتباين وغاما للصورة أو التحديد. </para>
+
+<note>
+<para
+>يقع المقياس الأكثر شيوعًا لغاما (رقم عشري من 0.10 إلى 10.00) بين صندوق القيمة الرقمية لـ <guilabel
+>غاما</guilabel
+> وزر <guibutton
+>صفر</guibutton
+>. </para>
+</note>
+</sect1>
+
+<sect1 id="image-clear">
+<title
+>امحُ</title>
+
+<para
+>يملأ هذا الصورة أو التحديد بأكمله بلون الخلفية.</para>
+
+<tip>
+<para
+>انقر مزدوجًا على أيقونة <link linkend="tool-eraser-std"
+>الممحاة</link
+> لمسح الصورة بأكملها.</para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-emboss">
+<title
+>بارز</title>
+
+<para
+>يمكن الوصول إلى هذه الميزة من حوار <link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_emboss.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>حدد <guilabel
+>تمكين</guilabel
+> لتطبيق تأثير البروز. يؤكد هذا على الحواف ويعطي الصورة أو التحديد &quot;مظهرًا محفورًا&quot;. </para>
+</sect1>
+
+<sect1 id="image-flatten">
+<title
+>تسطيح</title>
+
+<para
+>يمكن الوصول إلى هذه الميزة من حوار <link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_flatten.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يعيد هذا تلوين الصورة بظلال متفاوتة من اللونين المختارين. </para>
+</sect1>
+
+<sect1 id="image-flip">
+<title
+>اقلب (رأسًا على عقب)</title>
+
+<para
+>يقلب هذا الصورة أو التحديد بأكمله عموديًا.</para>
+
+</sect1>
+
+<sect1 id="image-invert">
+<title
+>اعكس</title>
+
+<para
+>يمكن الوصول إلى هذه الميزة من حوار <link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_invert.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يتيح لك هذا عكس قناة RGB واحدة أو أكثر في الصورة أو التحديد. اختر <guilabel
+>الكل</guilabel
+> لتحويل الصورة إلى صورتها السالبة (نيجاتيف) والعكس صحيح. يبدو هذا مضحكًا جدًا بشكل عام.</para>
+
+<tip>
+<para
+>لعكس جميع القنوات بسرعة، لست بحاجة إلى استخدام هذا الحوار. يمكنك بدلًا من ذلك الوصول إلى عنصر <guimenuitem
+>اعكس الألوان</guimenuitem
+> في قائمة <guimenu
+>صورة</guimenu
+> أو <guimenu
+>تحديد</guimenu
+>. يُعرض عنصر <guimenu
+>تحديد</guimenu
+> فقط في شريط القائمة إذا كنت تستخدم إحدى أدوات التحديد. بالإضافة إلى ذلك، يمكنك الوصول إلى هذا الإجراء من القائمة السياقية المفتوحة بالنقر بزر الفأرة الأيمن في منطقة الصورة. </para>
+</tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title
+>اعكس (أفقيًّا)</title>
+
+<para
+>يعكس هذا الصورة أو التحديد بأكمله أفقيًا.</para>
+
+</sect1>
+
+<sect1 id="image-reduce-colors">
+<title
+>تقليل الألوان</title>
+
+<para
+>يمكن الوصول إلى هذه الميزة من حوار <link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_reduce_colors.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يقلل هذا من عدد الألوان المستخدمة في الصورة أو التحديد، مع أو بدون انتشار. </para>
+
+<para
+>يوفر الانتشار نتائج ذات جودة أفضل بشكل عام، ومع ذلك، قد ترغب في تعطيله للحصول على تأثيرات فنية؛ على سبيل المثال استخدام <guilabel
+>أحادي اللون</guilabel
+> بدلًا من <guilabel
+>أحادي اللون (منتشر)</guilabel
+> يعطي تأثير خيالي (سيلويت). </para>
+
+<para
+>تمييز مهم آخر هو أنه بينما سيؤدي <guilabel
+>أحادي اللون (منتشر)</guilabel
+> دائمًا إلى اختزال الصورة أو التحديد بالكامل إلى اللونين الأسود والأبيض، فإن <guilabel
+>أحادي اللون</guilabel
+> سيفعل ذلك فقط إذا كانت الصورة أو التحديد يحتويان على أكثر من لونين. </para>
+
+<tip>
+<para
+>للحصول على صورة أو تحديد أحادي اللون منتشر بسرعة، استخدم عنصر <link linkend="image-monochrome"
+>الاختزال إلى أحادي اللون (منتشر)</link
+> من قائمة <guimenu
+>صورة</guimenu
+> أو <guimenu
+>تحديد</guimenu
+>. يُعرض عنصر <guimenu
+>تحديد</guimenu
+> فقط في شريط القائمة إذا كنت تستخدم إحدى أدوات التحديد. بالإضافة إلى ذلك، يمكنك الوصول إلى هذا الإجراء من القائمة السياقية المفتوحة بالنقر بزر الفأرة الأيمن في منطقة الصورة. </para>
+</tip>
+
+<note>
+<para
+>تغيير عدد الألوان هنا ليس له أي تأثير على عمق اللون لتنسيق الملف. إذا كنت ترغب في تغيير عمق اللون، فيجب عليك اختياره في حوارات حفظ الملفات. لاحظ أنه، وبشكل مربك، فإن تغيير عمق اللون يغير أيضًا عدد الألوان. </para>
+</note>
+</sect1>
+
+<sect1 id="image-grayscale">
+<title
+>الاختزال إلى تدرج الرمادي</title>
+
+<para
+>يختزل هذا الصورة أو التحديد بأكمله إلى تدرج الرمادي.</para>
+
+</sect1>
+
+<sect1 id="image-monochrome">
+<title
+>الاختزال إلى أحادي اللون (منتشر)</title>
+
+<para
+>يختزل هذا الصورة أو التحديد بأكمله إلى الأسود والأبيض.</para>
+
+<tip>
+<para
+>إذا كنت لا تريد انتشار الصورة أو التحديد، استخدم حوار <link linkend="image-reduce-colors"
+>تقليل الألوان</link
+>. </para>
+</tip>
+</sect1>
+
+<sect1 id="image-resize-scale">
+<title
+>تغيير الحجم / القياس</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_resize_scale.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يغير تغيير حجم الصورة أبعاد الصورة دون تطبيق تحويل على المحتويات الموجودة. يؤدي قياس الصورة إلى تمديد المحتويات الموجودة لتناسب الأبعاد الجديدة. يوفر <guibutton
+>القياس الناعم</guibutton
+> عمومًا نتائج بجودة أفضل من القياس العادي، وذلك عن طريق مزج الألوان المتجاورة.</para>
+
+<para
+>يمكنك التعبير عن الأبعاد الجديدة بالبكسل، أو كنسبة مئوية من الحجم الأصلي. إذا اخترت <guilabel
+>الحفاظ على نسبة العرض إلى الارتفاع</guilabel
+>، فسيُقاس العرض والارتفاع بالنسبة المئوية نفسها.</para>
+
+<tip>
+<para
+>يمكنك <guibutton
+>تغيير حجم</guibutton
+> الصورة بأكملها بشكل حر أو <guibutton
+>قياس ناعم</guibutton
+> للتحديد باستخدام المقابض المناسبة. </para>
+</tip>
+
+<note>
+<para
+>يُدعم القياس فقط للتحديدات، ويُدعم تغيير الحجم فقط لمربعات النص. راجع <link linkend="image-notes"
+>ملاحظات</link
+> لمزيد من التفاصيل حول تطبيق هذه التأثيرات.</para>
+</note>
+</sect1>
+
+<sect1 id="image-rotate">
+<title
+>دوّر</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_rotate.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يدور هذا الصورة. يمكنك تحديد زاوية واتجاه الدوران.</para>
+
+<tip>
+<para
+>يمكنك عكس اتجاه الدوران عن طريق تحديد زاوية مخصصة سالبة.</para>
+</tip>
+
+<note>
+<para
+>راجع <link linkend="image-notes"
+>ملاحظات</link
+> للحصول على تفاصيل حول تطبيق هذا التأثير على تحديد. </para>
+</note>
+</sect1>
+
+<sect1 id="image-set-as-image">
+<title
+>تعيين كصورة (قص)</title>
+
+<para
+>سيؤدي هذا إلى تعيين التحديد كصورة.</para>
+
+<note>
+<para
+>هذا متاح فقط عندما يكون لديك تحديد نشط.</para>
+</note>
+</sect1>
+
+<sect1 id="image-skew">
+<title
+>إمالة</title>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_skew.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>يميل هذا الصورة أو التحديد بالكامل أفقيًا و/أو عموديًا.</para>
+
+<note>
+<para
+>راجع <link linkend="image-notes"
+>ملاحظات</link
+> للحصول على تفاصيل حول تطبيق هذا التأثير على تحديد.</para>
+</note>
+</sect1>
+
+<sect1 id="image-soften-sharpen">
+<title
+>تنعيم وتحديد</title>
+
+<para
+>يمكن الوصول إلى هذه الميزة من حوار <link linkend="image-more-effects"
+>المزيد من التأثيرات</link
+>. </para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="image_soften_sharpen.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>استخدم هذا التأثير لتنعيم الصورة أو تحديدها. </para>
+</sect1>
+
+<sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
+<title
+>المزيد من التأثيرات</title>
+
+<para
+>يحتوي هذا الحوار على ميزات <link linkend="image-balance"
+>التوازن</link
+>، و <link linkend="image-emboss"
+>البروز</link
+>، و <link linkend="image-flatten"
+>التسطيح</link
+>، و <link linkend="image-invert"
+>العكس</link
+>، و <link linkend="image-reduce-colors"
+>تقليل الألوان</link
+> و <link linkend="image-soften-sharpen"
+>التنعيم والتحديد</link
+>. </para>
+</sect1>
+
+<sect1 id="image-notes">
+<title
+>ملاحظات</title>
+
+<para
+>قد يؤدي <link linkend="image-resize-scale"
+>تغيير الحجم / القياس</link
+>، و <link linkend="image-rotate"
+>التدوير</link
+> و <link linkend="image-skew"
+>الإمالة</link
+> إلى تغيير أبعاد الصورة. يمكنك عرض الأبعاد الجديدة في الحوار.</para>
+
+<para
+>إذا طبقت هذه التأثيرات على صورة، فسيُغير حجم الصورة إذا لزم الأمر. ومع ذلك، إذا طبقت هذه التأثيرات على تحديد، فلن يُغير حجم الصورة، حتى لو كان التحديد المحول لا يناسبها.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_image_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>دُورت الصورة اليسرى 30 درجة في اتجاه عقارب الساعة لتشكيل الصورة اليمنى. قام الرسام آليًا بتكبير الصورة لاستيعاب المحتويات الأكبر. </para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="rotate_selection_30.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para
+>دُور <emphasis
+>التحديد</emphasis
+> الأيسر 30 درجة في اتجاه عقارب الساعة لتشكيل التحديد الأيمن. ظل حجم الصورة كما هو، وبالتالي لن تكون أجزاء من التحديد مرئية دون <link linkend="image-resize-scale"
+>تغيير حجم</link
+> <emphasis
+>الصورة</emphasis
+>. </para>
+</sect1>
+
+</chapter>
+
+<chapter id="credits">
+<title
+>الحقوق والترخيص</title>
+<epigraph>
+<attribution
+>Carl Tucker</attribution>
+<para
+>قد لا تكون وثائق موجزة؛ قد لا تكون وثائق كاملة؛ لكنها وثائق صادقة. </para>
+</epigraph>
+
+<para
+>الرسام </para>
+<para
+>حقوق نشر البرنامج © 2003، 2004، 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<para
+>حقوق نشر الأيقونات الخاصة بالرسام © 2004، 2005 Kristof Borrey <email
+>borrey@kde.org</email
+>، Nuno Pinheiro <email
+>nf.pinheiro@gmail.com</email
+>، &Danny.Allen; <email
+>dannya40uk@yahoo.co.uk</email
+> </para>
+
+<para
+>حقوق نشر الوثائق والأعمال الفنية الإضافية للوثائق © 2004، 2005 &Thurston.Dang; &Thurston.Dang.mail;</para>
+
+<para
+>أجزاء أُعيد إنتاجها بإذن من <ulink url="http://kolourpaint.sourceforge.net/"
+></ulink
+>.</para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; <para
+>هذا البرنامج مرخص كما يلي:</para>
+
+<para
+>حقوق النشر © 2003، 2004، 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
+
+<literallayout
+>جميع الحقوق محفوظة.
+
+يُسمح بإعادة التوزيع والاستخدام في أشكال المصدر والأشكال الثنائية، مع أو بدون
+تعديل، بشرط استيفاء الشروط التالية:
+
+1. يجب أن تحتفظ عمليات إعادة توزيع كود المصدر بإشعار حقوق النشر أعلاه،
+   وقائمة الشروط هذه وإخلاء المسؤولية التالي.
+
+2. يجب أن تعيد عمليات إعادة التوزيع في شكل ثنائي إنتاج إشعار حقوق النشر أعلاه،
+   وقائمة الشروط هذه وإخلاء المسؤولية التالي في الوثائق و/أو المواد الأخرى المقدمة مع التوزيع.
+
+يُقدم هذا البرنامج من قبل المؤلف كما هو ``بما هو عليه'' وأي ضمانات صريحة أو
+ضمنية، بما في ذلك، على سبيل المثال لا الحصر، الضمانات الضمنية
+للرواج والصلاحية لغرض معين هي ضمانات مُخلى مسؤوليتها.
+لا يجوز بأي حال من الأحوال أن يكون المؤلف مسؤولًا عن أي أضرار مباشرة أو غير مباشرة،
+أو عرضية أو خاصة أو تحذيرية أو تبعية (بما في ذلك، على سبيل المثال
+لا الحصر، شراء سلع أو خدمات بديلة؛ أو فقدان الاستخدام أو البيانات أو الأرباح؛
+أو انقطاع الأعمال) مهما كان سببها ووفقًا لأي نظرية مسؤولية، سواء كانت في عقد،
+أو مسؤولية صارمة، أو ضرر (بما في ذلك الإهمال أو غير ذلك) ينشأ بأي شكل من الأشكال
+عن استخدام هذا البرنامج، حتى لو نُصح بإمكانية حدوث مثل هذا الضرر.
+</literallayout>
+</chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
