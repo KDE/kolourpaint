@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-03 00:43+0000\n"
-"PO-Revision-Date: 2026-11-16 19:21+0300\n"
+"PO-Revision-Date: 2026-11-23 17:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1320,7 +1320,7 @@ msgstr "Başlıksız"
 #: mainWindow/kpMainWindow_Colors.cpp:39
 #, kde-format
 msgid "Use KolourPaint Defaults"
-msgstr "KolourPaint Öntanımlı Değerlerini Kullan"
+msgstr "KolourPaint Varsayılan Değerlerini Kullan"
 
 #: mainWindow/kpMainWindow_Colors.cpp:43
 #, kde-format
@@ -1393,7 +1393,7 @@ msgid ""
 "The default color palette has been modified.\n"
 "Do you want to save it to a file?"
 msgstr ""
-"Öntanımlı renk paleti değiştirildi.\n"
+"Varsayılan renk paleti değiştirildi.\n"
 "Bu paleti bir dosyaya kaydetmek ister misiniz?"
 
 #: mainWindow/kpMainWindow_Colors.cpp:293
@@ -1440,7 +1440,7 @@ msgid ""
 "Reloading will lose all changes.\n"
 "Are you sure?"
 msgstr ""
-"Öntanımlı renk paleti değiştirildi.\n"
+"Varsayılan renk paleti değiştirildi.\n"
 "Yeniden yüklemek tüm değişiklikleri kaybetmenize neden olacaktır.\n"
 "Emin misiniz?"
 
@@ -2726,7 +2726,7 @@ msgstr ""
 #: widgets/toolbars/kpColorToolBar.cpp:263
 #, kde-format
 msgid "KolourPaint Defaults"
-msgstr "KolourPaint Öntanımlı Değerleri"
+msgstr "KolourPaint Varsayılan Değerleri"
 
 #: widgets/toolbars/kpColorToolBar.cpp:274
 #, kde-format
