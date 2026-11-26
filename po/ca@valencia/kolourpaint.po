@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kolourpaint\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-03 00:43+0000\n"
-"PO-Revision-Date: 2026-09-06 17:54+0200\n"
+"PO-Revision-Date: 2026-11-20 15:40+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -989,7 +989,7 @@ msgid ""
 "you sure you want to save at this color depth?</p></qt>"
 msgstr ""
 "<qt><p>Guardar la imatge amb la profunditat baixa de color de %1 bit pot "
-"resultar en pèrdua d'informació del color. També s'eliminarà tota la "
+"provocar la pèrdua d'informació del color. També s'eliminarà tota la "
 "transparència.</p><p>Segur que voleu guardar amb esta profunditat de color?</"
 "p></qt>"
 
@@ -1547,7 +1547,7 @@ msgid ""
 msgstr ""
 "Açò guarda el document amb un nom diferent, de manera similar a "
 "<interface>Anomena i guarda</interface>, però sense canviar el document "
-"actual.<nl/>D'esta manera podeu mantindre la carpeta de guardat en l'últim "
+"actual.<nl/>D'esta manera podeu mantindre la carpeta de guardada en l'últim "
 "ús independent de la carpeta del document actual."
 
 #: mainWindow/kpMainWindow_File.cpp:93
@@ -1800,7 +1800,7 @@ msgstr "%1bpp"
 #: mainWindow/kpMainWindow_View_Zoom.cpp:67
 #, kde-format
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: mainWindow/kpMainWindow_Text.cpp:34
 #, kde-format
